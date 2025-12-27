@@ -257,7 +257,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: Reward.PAC
+				value: Reward.PAC,
+				service: [ServiceEnum.REFRESH_PLAYER]
 			},
 			{
 				rewardType: RewardEnum.SCENARIO,

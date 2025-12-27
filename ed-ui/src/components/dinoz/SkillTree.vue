@@ -129,7 +129,7 @@ watch(props, init, { deep: true });
 </script>
 
 <template>
-	<div :class="`wrapper element-${props.type}`">
+	<div :class="`skill-tree-wrapper element-${props.type}`">
 		<p class="element">
 			<img
 				:src="getImgURL('elements', `elem_${ElementType[props.type].toLowerCase()}`)"
@@ -170,7 +170,7 @@ watch(props, init, { deep: true });
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.skill-tree-wrapper {
 	overflow-x: auto;
 	margin: 8px;
 	padding: 10px;

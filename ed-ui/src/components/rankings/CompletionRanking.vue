@@ -20,7 +20,7 @@
 					:key="ranking.player.id"
 					class="select"
 					:class="(index + 1) % 2 === 0 ? 'even' : ''"
-					@click="goToAccount(ranking.player)"
+					@click="goToAccount({ value: ranking.player.id, label: ranking.player.name })"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}
@@ -59,6 +59,7 @@ import { playerStore } from '../../store/index.js';
 import DZUser from '../common/DZUser.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
+import { SelectOption } from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'CompletionRanking',
@@ -71,8 +72,8 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		goToAccount(player: { id: string; name: string }) {
-			this.$router.push({ name: 'MyAccount', params: { id: player.id } });
+		goToAccount(player: SelectOption<string>) {
+			this.$router.push({ name: 'MyAccount', params: { id: player.value } });
 		},
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);

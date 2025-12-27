@@ -40,7 +40,7 @@ import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { dinozStore, sessionStore } from '../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
@@ -52,6 +52,7 @@ export default defineComponent({
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
 			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
 		};
@@ -79,7 +80,19 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			EventBus.emit('isLoading', false);
-			if (this.npcSpeech.service) {
+
+			if (this.npcSpeech.rewards) {
+				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
+					this.$toast.open({
+						message: this.$t('notification.reward', {
+							rewards: `${quantity} ${this.formatContent(`:item_${item}:`)}`
+						}).toString(),
+						type: 'info'
+					});
+				}
+			}
+
+			if (this.npcSpeech.service && this.npcSpeech.service.length > 0) {
 				EventBus.emit('isLoading', true);
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
@@ -93,6 +106,10 @@ export default defineComponent({
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
 							this.dinozStore.setDinozList(await PlayerService.getDinozList());
+							EventBus.emit('isLoading', false);
+							break;
+						case ServiceEnum.REFRESH_PLAYER:
+							await this.playerStore.update();
 							EventBus.emit('isLoading', false);
 							break;
 						case ServiceEnum.FIGHT:

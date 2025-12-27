@@ -3,6 +3,7 @@ import { Notification } from '@drpg/core/models/notifications/notification';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 import { defineStore } from 'pinia';
+import { PlayerService } from '../services';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -80,6 +81,20 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;
+		},
+		async update() {
+			const commonData = await PlayerService.getLoggedInData();
+			// Set data in sessionStore
+			this.setMoney(commonData.money);
+			this.setClanId(commonData.clanId);
+			this.setPriest(commonData.priest);
+			this.setShopkeeper(commonData.shopkeeper);
+			this.setNotifications(commonData.notifications);
+			this.setPlayerId(commonData.id);
+			this.setPlayerName(commonData.name);
+			this.setPlayerOptions(commonData.playerOptions);
+			this.setAdmin(commonData.admin);
+			this.setDiscoveredSkills(commonData.discoveredSkills);
 		}
 	},
 	persist: {

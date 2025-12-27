@@ -40,13 +40,25 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			items: [] as number[],
+			items: [] as (number | undefined)[],
 			dinozStore: dinozStore()
 		};
 	},
 	computed: {
 		itemNameList() {
 			return itemNameList;
+		}
+	},
+	watch: {
+		'dinozData.maxItems': {
+			handler(newMaxItems: number | undefined) {
+				if (!this.dinozData || newMaxItems === undefined) {
+					return;
+				}
+				this.items = new Array(newMaxItems);
+				this.dinozData.items?.forEach((item, index) => (this.items[index] = item));
+			},
+			immediate: true
 		}
 	},
 	methods: {
@@ -86,8 +98,6 @@ export default defineComponent({
 			});
 			return;
 		}
-		this.items = new Array(this.dinozData.maxItems);
-		this.dinozData.items?.forEach((item, index) => (this.items[index] = item));
 
 		EventBus.on('equipItem', e => {
 			if (!this.dinozData) {

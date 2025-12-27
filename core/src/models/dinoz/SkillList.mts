@@ -1656,7 +1656,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.COEUR_ARDENT, Skill.GRATTEUR, Skill.INVOCATEUR],
+		unlockedFrom: [Skill.COEUR_ARDENT, Skill.ETAT_PRIMAL, Skill.INVOCATEUR],
 		raceId: [RaceEnum.GORILLOZ, RaceEnum.GORILLOZ_DEMON],
 		isBaseSkill: false,
 		isSphereSkill: false,
@@ -1675,7 +1675,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD, ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.GRATTEUR, Skill.VOIE_DE_GAIA, Skill.COMPETENCE_DOUBLE],
+		unlockedFrom: [Skill.ETAT_PRIMAL, Skill.VOIE_DE_GAIA, Skill.COMPETENCE_DOUBLE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {

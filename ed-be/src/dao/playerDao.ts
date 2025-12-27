@@ -875,11 +875,8 @@ export async function getPlayerInventoryDataRequest(playerId: string) {
 					}
 				}
 			},
-			quests: {
-				select: {
-					questId: true,
-					progression: true
-				}
+			rewards: {
+				select: { rewardId: true }
 			}
 		}
 	});

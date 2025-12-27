@@ -35,6 +35,8 @@ export async function rewarder(
 
 	for (const dinoz of team) {
 		for (const reward of rewards) {
+			let showNotification = notification;
+
 			switch (reward.rewardType) {
 				case RewardEnum.STATUS:
 					if (reward.reverse) {
@@ -78,6 +80,10 @@ export async function rewarder(
 						throw new ExpectedError(`Item ${reward.value} doesn't exist.`);
 					}
 
+					if (itemRewarded.itemId === Item.GOBLIN_MERGUEZ) {
+						showNotification = false;
+					}
+
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
 					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
 					if (playerItemData) {
@@ -112,7 +118,7 @@ export async function rewarder(
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 					}
-					if (notification) {
+					if (showNotification) {
 						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					}
 					break;
@@ -121,7 +127,7 @@ export async function rewarder(
 					if (!playerRewards) {
 						throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 					}
-					let rewardDetails = rewardList[reward.value as Reward];
+					const rewardDetails = rewardList[reward.value as Reward];
 					if (!rewardDetails) {
 						throw new ExpectedError(`Reward ${reward.value} doesn't exist.`);
 					}

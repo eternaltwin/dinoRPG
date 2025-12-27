@@ -77,7 +77,6 @@ import { defineComponent } from 'vue';
 
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/constants';
 import { ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
-import { Clan } from '@drpg/prisma';
 import axios from 'axios';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import Flags from '../../components/common/Flags.vue';
@@ -89,6 +88,7 @@ import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
 import { formatNumber, formatText } from '../../utils/formatText';
 import ClanJoinRequest from './ClanJoinRequest.vue';
+import { SelectOption } from '../../components/common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'ClansList',
@@ -131,8 +131,8 @@ export default defineComponent({
 				});
 			}
 		},
-		goToSearchedClan(c: Pick<Clan, 'id' | 'name'>): void {
-			this.$router.push({ name: 'Clan', params: { id: c.id } });
+		goToSearchedClan(c: SelectOption<number>): void {
+			this.$router.push({ name: 'Clan', params: { id: c.value } });
 		},
 		goToHelp() {
 			this.$router.push({

@@ -10,6 +10,10 @@ export const refreshGold = async () => {
 	playerStore().setMoney(+newMoney);
 };
 
+export const getImgURL = (path: string, imgName: string, pixel?: boolean) => {
+	return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url).toString();
+};
+
 export const mixin = {
 	methods: {
 		formatDate(date: string | Date): string {
@@ -25,7 +29,7 @@ export const mixin = {
 			return !value ? '' : formatText(value.toString());
 		},
 		getImgURL(path: string, imgName: string, pixel?: boolean): string {
-			return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url).toString();
+			return getImgURL(path, imgName, pixel);
 		},
 		getSWFUrl(path: string, imgName: string): string {
 			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url).toString();

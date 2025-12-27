@@ -58,6 +58,17 @@
 				/>
 				{{ $t(`levelup.helper`) }}
 			</div>
+			<a
+				class="button"
+				v-if="availableSkills.canRelaunch"
+				@click="retry()"
+				v-tippy="{
+					content: formatContent($t('levelup.pdc')),
+					theme: 'small'
+				}"
+			>
+				{{ $t(`skill.name.PlanDeCarriere`) }}
+			</a>
 			<div class="select">
 				<table>
 					<tbody>
@@ -183,17 +194,7 @@
 					</tbody>
 				</table>
 			</div>
-			<a
-				class="button"
-				v-if="availableSkills.canRelaunch"
-				@click="retry()"
-				v-tippy="{
-					content: formatContent($t('levelup.pdc')),
-					theme: 'small'
-				}"
-			>
-				{{ $t(`skill.name.PlanDeCarriere`) }}
-			</a>
+			<SkillTree :type="availableSkills.element" :dinoz="dinozStore.getDinoz(+id)" />
 		</div>
 	</div>
 </template>
@@ -214,6 +215,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { FBService } from '../services/FBTournamentService.js';
 import DZButton from '../components/common/DZButton.vue';
+import SkillTree from '../components/dinoz/SkillTree.vue';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -223,7 +225,8 @@ export default defineComponent({
 		TitleHeader,
 		Elements,
 		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue')),
-		DZButton
+		DZButton,
+		SkillTree
 	},
 	data() {
 		return {
@@ -474,6 +477,7 @@ export default defineComponent({
 	-webkit-border-radius: 10px;
 	font-size: 10pt;
 	padding: 5px;
+	margin-bottom: 10px;
 }
 .demarcation {
 	border: 1px solid #bc683c;

@@ -2832,6 +2832,23 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			es: 'Aportes al sitio y a la comunidad'
 		}
 	},
+	[StatTracking.MERGUEZ]: {
+		id: StatTracking.MERGUEZ,
+		name: {
+			en: 'Merguez consumed',
+			fr: 'Merguez consommées',
+			de: 'Verzehrte Merguez',
+			es: 'Salchichas consumidas'
+		},
+		rare: 2,
+		unlocks: [],
+		description: {
+			en: 'Number of merguez sausages consumed',
+			fr: 'Nombre de merguez consommées',
+			de: 'Anzahl der verzehrten Merguez',
+			es: 'Cantidad de salchichas consumidas'
+		}
+	},
 	[StatTracking.MEDAL_1]: {
 		id: StatTracking.MEDAL_1,
 		name: {
