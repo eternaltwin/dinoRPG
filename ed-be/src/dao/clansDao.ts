@@ -289,7 +289,7 @@ export async function getClanMembersListRequest(clanId: number) {
 							totalProgression: true
 						},
 						where: {
-							event: event.name
+							event: event?.name
 						}
 					}
 				}

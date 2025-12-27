@@ -30,7 +30,7 @@ export default defineComponent({
 	name: 'LiveStats',
 	computed: {
 		liveStats() {
-			return sessionStore().getLiveStats
+			return sessionStore().getLiveStats;
 		}
 	}
 });

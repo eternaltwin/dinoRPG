@@ -189,7 +189,8 @@ export class OAuth {
 					await updateDinoz(dinoz.id, { life: newHp });
 				}
 
-				if (currentEvents()[0].name === GameEvent.CHRISTMAS) {
+				const event = currentEvents()[0];
+				if (event && event.name === GameEvent.CHRISTMAS) {
 					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
 				}
 

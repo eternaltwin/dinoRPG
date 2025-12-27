@@ -38,7 +38,7 @@ setInterval(() => {
 	const now = Date.now();
 	const TIMEOUT = 60 * 1000;
 
-	let count = 0
+	let count = 0;
 	for (const [uuid, ticket] of activeTickets.entries()) {
 		if (now - ticket.timestamp > TIMEOUT) {
 			activeTickets.delete(uuid);
@@ -46,7 +46,7 @@ setInterval(() => {
 		}
 	}
 	if (count > 0) {
-		LOGGER.info(`[SSE] Information: ${count} tickets ont été timeout.`)
+		LOGGER.info(`[SSE] Information: ${count} tickets ont été timeout.`);
 	}
 	if (activeTickets.size > 100) {
 		LOGGER.warn(`[SSE] Attention: ${activeTickets.size} tickets toujours en attente.`);
