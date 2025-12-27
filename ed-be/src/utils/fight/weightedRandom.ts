@@ -1,6 +1,7 @@
 import seedrandom from 'seedrandom';
 
-const weightedRandom = <T extends { odds: number }>(items: T[], totalOdds: number) => {
+const weightedRandom = <T extends { odds: number }>(items: T[]) => {
+	const totalOdds = items.reduce((acc, item) => acc + item.odds, 0);
 	let i = 0;
 	const weights: number[] = [];
 	for (i = 0; i < items.length; i++) {
