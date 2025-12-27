@@ -123,7 +123,7 @@ export class OAuth {
 					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
 				}
 				await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
-				return {
+				res.send( {
 					money: player.money,
 					dinozCount: await getDinozTotalCount(),
 					dinoz: [],
@@ -133,13 +133,18 @@ export class OAuth {
 					playerOptions: {
 						hasPDA: false,
 						hasPMI: false,
-						hasPAC: false
+						hasPAC: false,
+						skipLevel: player.skipLevel,
+						skipFight: player.skipFight
 					},
 					admin: false,
 					priest: false,
 					shopkeeper: false,
-					notifications: false
-				};
+					notifications: player.notifications,
+					connexionToken: player.connexionToken,
+					discoveredSkills: player.discoveredSkills
+				});
+				return;
 			}
 
 			// Update display name if changed on ET side
@@ -189,7 +194,8 @@ export class OAuth {
 					await updateDinoz(dinoz.id, { life: newHp });
 				}
 
-				if (currentEvents()[0].name === GameEvent.CHRISTMAS) {
+				const event = currentEvents()[0];
+				if (event && event.name === GameEvent.CHRISTMAS) {
 					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
 				}
 

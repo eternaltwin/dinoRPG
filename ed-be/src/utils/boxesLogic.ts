@@ -71,13 +71,12 @@ export function selectBox(completion: number) {
 		{ tier: 3, type: Item.BOX_EPIC, odds: 24 },
 		{ tier: 4, type: Item.BOX_LEGENDARY, odds: 1 }
 	];
-	const totalOdds = boxOdds.reduce((acc, box) => acc + box.odds, 0);
 	const maxRolls = Math.floor(completion / 10) + 1;
 	let reward = boxOdds[0]; // Pick common box as initial reward.
 	let currentRoll = 0;
 	while (currentRoll < maxRolls) {
 		currentRoll++;
-		const boxRoll = weightedRandom(boxOdds, totalOdds);
+		const boxRoll = weightedRandom(boxOdds);
 		// Use the rank to make this ID-agnostic
 		if (boxRoll.tier > reward.tier) {
 			reward = boxRoll;
@@ -93,8 +92,7 @@ export function boxOpening(box: ItemFiche) {
 		throw new ExpectedError(`Special item ${box.itemId} is not implemented`);
 	}
 
-	const totalOdds = myProba.items.reduce((acc, box) => acc + box.odds, 0);
-	const myItem = weightedRandom(myProba.items, totalOdds);
+	const myItem = weightedRandom(myProba.items);
 
 	return { item: myItem.item, quantity: myItem.quantity };
 }

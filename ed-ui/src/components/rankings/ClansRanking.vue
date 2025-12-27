@@ -8,10 +8,10 @@
 			</RouterLink>
 		</i18n-t>
 
-		<DZButton v-if="rankingType === ClanRankingType.TREASURE" @click="switchRanking()">{{
+		<DZButton v-if="eventInProgress && rankingType === ClanRankingType.TREASURE" @click="switchRanking()">{{
 			$t(`ranking.button.clanEvent`)
 		}}</DZButton>
-		<DZButton v-if="rankingType === ClanRankingType.EVENT" @click="switchRanking()">{{
+		<DZButton v-if="eventInProgress && rankingType === ClanRankingType.EVENT" @click="switchRanking()">{{
 			$t(`ranking.button.clanTreasure`)
 		}}</DZButton>
 		<table>
@@ -77,6 +77,7 @@ import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import DZButton from '../common/DZButton.vue';
+import { currentEvents } from '@drpg/core/models/event/Events';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -121,6 +122,9 @@ export default defineComponent({
 	computed: {
 		ClanRankingType() {
 			return ClanRankingType;
+		},
+		eventInProgress() {
+			return currentEvents().length > 0;
 		}
 	},
 	async created(): Promise<void> {

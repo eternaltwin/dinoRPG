@@ -1818,8 +1818,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					{ hp: 2, odds: 5 },
 					{ hp: 3, odds: 3 }
 				];
-				const total = data.reduce((acc, item) => acc + item.odds, 0);
-				const item = weightedRandom(data, total);
+				const item = weightedRandom(data);
 				heal(fightData, fighter, 1 + item.hp, undefined, LifeEffect.Normal, true);
 				break;
 			}

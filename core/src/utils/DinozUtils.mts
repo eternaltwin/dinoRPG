@@ -239,8 +239,10 @@ export const getFollowableDinoz = <
 	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'unavailableReason' | 'followers' | 'skills' | 'life'>
 >(
 	dinozList: T[],
-	potentialFollower: Pick<DinozFiche, 'id' | 'placeId' | 'fight' | 'remaining'>
+	potentialFollower: Pick<DinozFiche, 'id' | 'placeId' | 'fight' | 'remaining'> & {skills: Pick<DinozSkill, 'skillId'>[]}
 ) => {
+	// Brave dinoz cannot follow others
+	if (potentialFollower.skills.some(skill => skill.skillId === Skill.BRAVE)) return [];
 	return dinozList.filter(dinoz => {
 		// Filter out current dinoz
 		if (dinoz.id === potentialFollower.id) {
@@ -258,7 +260,11 @@ export const getFollowableDinoz = <
 		if (dinoz.placeId !== potentialFollower.placeId) {
 			return false;
 		}
-
+		// Filter out brave Dinoz
+		if (dinoz.skills.some(skill => skill.skillId === Skill.BRAVE)) {
+			return false;
+		}
+		
 		if (dinoz.life <= 0) {
 			return false;
 		}

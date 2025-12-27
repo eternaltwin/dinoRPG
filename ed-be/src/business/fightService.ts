@@ -689,11 +689,10 @@ export async function generateMonsterList(
 	while (monsterLevel < teamPowerLevel) {
 		// Already calculted before
 		// const total = ml.reduce((acc, item) => acc + item.odds, 0);
-		const m = weightedRandom(ml, total).monster;
+		const m = weightedRandom(ml).monster;
 		let count = 1;
 		if (m.groups) {
-			const totalGroup = m.groups.reduce((acc, item) => acc + item.odds, 0);
-			const weightedGroup = weightedRandom(m.groups, totalGroup).quantity;
+			const weightedGroup = weightedRandom(m.groups).quantity;
 			count += weightedGroup;
 		}
 		for (let i = 0; i < count; i++) {

@@ -38,10 +38,15 @@ setInterval(() => {
 	const now = Date.now();
 	const TIMEOUT = 60 * 1000;
 
+	let count = 0;
 	for (const [uuid, ticket] of activeTickets.entries()) {
 		if (now - ticket.timestamp > TIMEOUT) {
 			activeTickets.delete(uuid);
+			count++;
 		}
+	}
+	if (count > 0) {
+		LOGGER.info(`[SSE] Information: ${count} tickets ont été timeout.`);
 	}
 	if (activeTickets.size > 100) {
 		LOGGER.warn(`[SSE] Attention: ${activeTickets.size} tickets toujours en attente.`);
@@ -524,14 +529,15 @@ export async function sendSseMessageToUserInChannel(
 	}
 
 	// Get user in channel
-	const player = channel.find(c => c.playerId === playerId);
-	if (!player) {
+	const player = channel.filter(c => c.playerId === playerId);
+	if (player.length === 0) {
 		LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
 		return;
 	}
 
 	// Send message
-	player.res.write(`data: ${JSON.stringify(message)}\n\n`);
+	const data = `data: ${JSON.stringify(message)}\n\n`;
+	player.forEach(p => p.res.write(data));
 }
 
 /**
