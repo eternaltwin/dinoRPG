@@ -74,7 +74,7 @@ onMounted(async () => {
 			<DZSelect
 				v-if="builds.length"
 				id="build-edit"
-				:options="builds.map(build => ({ label: build.name, value: build.id }))"
+				:options="builds.map(build => ({ label: `[${build.player.name}] ${build.name}`, value: build.id }))"
 				v-model="buildId"
 			/>
 			<DZButton v-if="buildId" @click="copyBuild">

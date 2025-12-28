@@ -40,6 +40,7 @@ export const getClanSharedBuilds = (clanId: number) => {
 		where: {
 			shareable: true,
 			player: { ClanMember: { is: { clanId } } }
-		}
+		},
+		include: { player: { select: { id: true, name: true } } }
 	});
 };
