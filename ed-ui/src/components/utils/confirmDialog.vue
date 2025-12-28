@@ -112,6 +112,10 @@ export default {
 	margin-top: 1px;
 }
 
+.simple-confirm-dialog-close {
+	cursor: pointer;
+}
+
 .simple-confirm-dialog-content {
 	padding: 1rem;
 	display: flex;

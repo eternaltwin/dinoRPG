@@ -80,7 +80,7 @@ const props = withDefaults(
 		dinoz?: Pick<DinozFiche, 'skills'>;
 		type: ElementType;
 		treeType?: SkillTreeType;
-		modelValue?: Skill[];
+		buildSkills?: Skill[];
 		selectable?: boolean;
 	}>(),
 	{
@@ -89,7 +89,7 @@ const props = withDefaults(
 	}
 );
 
-const emit = defineEmits<{ 'update:modelValue': [value: Skill[]] }>();
+const emit = defineEmits<{ 'update:buildSkills': [value: Skill[]] }>();
 
 // State
 const tree = ref<Tree>([]);
@@ -154,7 +154,7 @@ const toggleSkillSelection = (skillId: Skill) => {
 	if (!props.selectable) return;
 
 	// Use a Set for efficient add/remove
-	const current = new Set<Skill>(props.modelValue ?? []);
+	const current = new Set<Skill>(props.buildSkills ?? []);
 
 	if (!current.has(skillId)) {
 		// Select skill and its prerequisites
@@ -168,7 +168,7 @@ const toggleSkillSelection = (skillId: Skill) => {
 	}
 
 	const next = Array.from(current);
-	emit('update:modelValue', next);
+	emit('update:buildSkills', next);
 };
 
 // Hooks
@@ -202,7 +202,7 @@ watch(props, init, { deep: true });
 						:class="{
 							learned: skill.learned,
 							base: !skill.unlockedFrom?.length,
-							selected: props.modelValue?.includes(skill.id)
+							selected: props.buildSkills?.includes(skill.id)
 						}"
 						@click="skill.discovered ? toggleSkillSelection(skill.id) : undefined"
 					>
@@ -303,7 +303,13 @@ watch(props, init, { deep: true });
 				}
 
 				&.selected {
-					background-color: #d49459;
+					background-image: repeating-linear-gradient(
+						45deg,
+						transparent,
+						transparent 5px,
+						rgba(0, 0, 0, 0.1) 5px,
+						rgba(0, 0, 0, 0.1) 10px
+					);
 				}
 
 				&:not(.base) {

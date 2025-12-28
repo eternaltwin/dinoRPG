@@ -19,13 +19,13 @@ const toIntArray = (v: unknown) => {
 	if (!numbers.every(Number.isInteger)) throw new ExpectedError('Invalid skills array');
 
 	return numbers;
-}
+};
 
 export const listBuilds = async (req: Request) => {
 	const authed = await auth(req);
 
 	return getPlayerBuilds(authed.id);
-}
+};
 
 export const createNewBuild = async (req: Request) => {
 	const authed = await auth(req);
@@ -33,8 +33,8 @@ export const createNewBuild = async (req: Request) => {
 	const name = String(req.body.name);
 	const shareable = Boolean(req.body.shareable);
 
-	await createBuild(authed.id, skills, name, shareable);
-}
+	return createBuild(authed.id, skills, name, shareable);
+};
 
 export const updateBuild = async (req: Request) => {
 	const authed = await auth(req);
@@ -49,7 +49,7 @@ export const updateBuild = async (req: Request) => {
 	const shareable = Boolean(req.body.shareable);
 
 	await updateBuildSkills(buildId, skills, name, shareable);
-}
+};
 
 export const removeBuild = async (req: Request) => {
 	const authed = await auth(req);
@@ -60,7 +60,7 @@ export const removeBuild = async (req: Request) => {
 	if (!build || build.playerId !== authed.id) throw new ExpectedError('Build not found');
 
 	await deleteBuild(buildId);
-}
+};
 
 export const listClanSharedBuilds = async (req: Request) => {
 	const authed = await auth(req);
@@ -69,7 +69,7 @@ export const listClanSharedBuilds = async (req: Request) => {
 	if (!clanMember) return [];
 
 	return getClanSharedBuilds(clanMember.clanId, authed.id);
-}
+};
 
 export const copySharedBuild = async (req: Request) => {
 	const authed = await auth(req);
@@ -82,7 +82,7 @@ export const copySharedBuild = async (req: Request) => {
 	if (!build.shareable) throw new ExpectedError('Build is not shareable');
 
 	return createBuild(authed.id, build.skills, build.name, build.shareable);
-}
+};
 
 export const assignBuild = async (req: Request) => {
 	const authed = await auth(req);
@@ -99,4 +99,4 @@ export const assignBuild = async (req: Request) => {
 	}
 
 	await assignBuildToDinoz(dinozId, buildId);
-}
+};

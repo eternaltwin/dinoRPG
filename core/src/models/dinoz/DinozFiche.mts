@@ -1,4 +1,12 @@
-import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, UnavailableReason } from '@drpg/prisma';
+import {
+	Concentration,
+	Dinoz,
+	DinozBuild,
+	DinozMission,
+	DinozSkill,
+	DinozStatus,
+	UnavailableReason
+} from '@drpg/prisma';
 import { MissionHUD } from '../missions/missionHUD.mjs';
 import { ActionFiche } from './ActionList.mjs';
 import { DinozRace } from './DinozRace.mjs';
@@ -43,6 +51,7 @@ export interface DinozFiche {
 		npcSpeech: string;
 		npcName: string;
 	};
+	build?: DinozBuild;
 }
 
 // This is the model to use to communicate with the admin panel

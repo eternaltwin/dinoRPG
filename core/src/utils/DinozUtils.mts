@@ -1,6 +1,7 @@
 import {
 	Concentration,
 	type Dinoz,
+	DinozBuild,
 	DinozItem,
 	DinozMission,
 	DinozSkill,
@@ -73,6 +74,7 @@ export const toDinozFiche = (
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 			concentration: Concentration | null;
 			TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
+			build: DinozBuild | null;
 		})[];
 	},
 	activeDinoz: number,
@@ -131,7 +133,8 @@ export const toDinozFiche = (
 		concentration: dinoz.concentration,
 		tournament: dinoz.TournamentTeam.find(team => team.tournamentId === currentTournament?.id)
 			? currentTournament
-			: null
+			: null,
+		build: dinoz.build ?? undefined
 	};
 };
 
@@ -239,7 +242,9 @@ export const getFollowableDinoz = <
 	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'unavailableReason' | 'followers' | 'skills' | 'life'>
 >(
 	dinozList: T[],
-	potentialFollower: Pick<DinozFiche, 'id' | 'placeId' | 'fight' | 'remaining'> & {skills: Pick<DinozSkill, 'skillId'>[]}
+	potentialFollower: Pick<DinozFiche, 'id' | 'placeId' | 'fight' | 'remaining'> & {
+		skills: Pick<DinozSkill, 'skillId'>[];
+	}
 ) => {
 	// Brave dinoz cannot follow others
 	if (potentialFollower.skills.some(skill => skill.skillId === Skill.BRAVE)) return [];
@@ -264,7 +269,7 @@ export const getFollowableDinoz = <
 		if (dinoz.skills.some(skill => skill.skillId === Skill.BRAVE)) {
 			return false;
 		}
-		
+
 		if (dinoz.life <= 0) {
 			return false;
 		}

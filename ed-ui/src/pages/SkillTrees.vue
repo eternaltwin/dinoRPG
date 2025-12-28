@@ -1,30 +1,36 @@
 <script setup lang="ts">
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { getCurrentInstance, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router';
+import { useToast } from 'vue-toast-notification';
+import { formatText } from '..//utils/formatText';
+import DZButton from '../components/common/DZButton.vue';
+import DZCheckbox from '../components/common/DZCheckbox.vue';
+import DZInput from '../components/common/DZInput.vue';
 import SkillTree from '../components/dinoz/SkillTree.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozService } from '../services';
-import { playerStore } from '../store';
-import { useRoute, useRouter } from 'vue-router';
-import { formatText } from '..//utils/formatText';
-import DZCheckbox from '../components/common/DZCheckbox.vue';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import DZInput from '../components/common/DZInput.vue';
-import DZButton from '../components/common/DZButton.vue';
 import { DinozBuildService } from '../services/DinozBuildService';
-import { useToast } from 'vue-toast-notification';
-import { useI18n } from 'vue-i18n';
+import { playerStore } from '../store';
+import DZSelect from '../components/common/DZSelect.vue';
+import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
+import { errorHandler } from '../utils';
 
-// State
-const dinoz = ref<DinozFiche | undefined>(undefined);
+// Utils
 const store = playerStore();
 const router = useRouter();
 const toast = useToast();
 const { t } = useI18n();
-const instance = getCurrentInstance();
 const route = useRoute();
+
+// State
+const dinoz = ref<DinozFiche | undefined>(undefined);
 const buildMode = ref(false);
+const ownBuilds = ref<GetOwnDinozBuildResponse>([]);
+const buildId = ref<string>();
 const buildName = ref('');
 const shareableBuild = ref(false);
 const buildSkills = ref<Record<ElementType, Skill[]>>({
@@ -36,12 +42,14 @@ const buildSkills = ref<Record<ElementType, Skill[]>>({
 	[ElementType.VOID]: []
 });
 
+const allSelectedSkills = computed(() => Object.values(buildSkills.value).flat());
+
 const init = async () => {
 	if (route.params.id) {
 		const dinozId = +route.params.id;
 		if (isNaN(dinozId)) {
-			instance?.proxy?.$toast.open({
-				message: formatText(instance?.proxy?.$t(`toast.unknownDinoz`)),
+			toast.open({
+				message: formatText(t(`toast.unknownDinoz`)),
 				type: 'error'
 			});
 			router.back();
@@ -53,27 +61,94 @@ const init = async () => {
 	}
 };
 
+const resetBuild = () => {
+	buildId.value = undefined;
+	buildName.value = '';
+	shareableBuild.value = false;
+	buildSkills.value = {
+		[ElementType.FIRE]: [],
+		[ElementType.WOOD]: [],
+		[ElementType.WATER]: [],
+		[ElementType.LIGHTNING]: [],
+		[ElementType.AIR]: [],
+		[ElementType.VOID]: []
+	};
+};
+
+const selectBuildToEdit = async () => {
+	if (!buildId.value) return;
+
+	const build = ownBuilds.value.find(b => b.id === buildId.value);
+	if (!build) return;
+
+	buildName.value = build.name;
+	shareableBuild.value = build.shareable;
+
+	// Load skills into buildSkills
+	const skillsByType: Record<ElementType, Skill[]> = {
+		[ElementType.FIRE]: [],
+		[ElementType.WOOD]: [],
+		[ElementType.WATER]: [],
+		[ElementType.LIGHTNING]: [],
+		[ElementType.AIR]: [],
+		[ElementType.VOID]: []
+	};
+
+	build.skills.forEach(skill => {
+		skillsByType[skillList[skill as Skill].element[0]].push(skill);
+	});
+
+	buildSkills.value = skillsByType;
+};
+
 const saveBuild = async () => {
-	const allSelectedSkills = Object.values(buildSkills.value).flat();
+	if (!store.playerId || !buildName.value || !allSelectedSkills.value.length) return;
 
 	try {
-		await DinozBuildService.createBuild(allSelectedSkills, buildName.value, shareableBuild.value);
+		if (buildId.value) {
+			await DinozBuildService.updateBuild(
+				buildId.value,
+				allSelectedSkills.value,
+				buildName.value,
+				shareableBuild.value
+			);
+
+			// Update ownBuilds
+			ownBuilds.value = ownBuilds.value.map(b =>
+				b.id === buildId.value
+					? {
+							...b,
+							name: buildName.value,
+							skills: allSelectedSkills.value,
+							shareable: shareableBuild.value
+						}
+					: b
+			);
+		} else {
+			const newBuild = await DinozBuildService.createBuild(
+				allSelectedSkills.value,
+				buildName.value,
+				shareableBuild.value
+			);
+
+			// Add to ownBuilds
+			ownBuilds.value.push({
+				id: newBuild.id,
+				playerId: store.playerId,
+				name: buildName.value,
+				skills: allSelectedSkills.value,
+				shareable: shareableBuild.value
+			});
+		}
+
 		toast.open({
-			message: formatText(t(`toast.buildSaved`)),
+			message: formatText(t(`toast.buildSaved`, { name: buildName.value })),
 			type: 'success'
 		});
+
 		// Reset build mode
 		buildMode.value = false;
-		buildName.value = '';
-		shareableBuild.value = false;
-		buildSkills.value = {
-			[ElementType.FIRE]: [],
-			[ElementType.WOOD]: [],
-			[ElementType.WATER]: [],
-			[ElementType.LIGHTNING]: [],
-			[ElementType.AIR]: [],
-			[ElementType.VOID]: []
-		};
+		resetBuild();
 	} catch (error) {
 		toast.open({
 			message: formatText(t(`toast.buildSaveError`)),
@@ -82,12 +157,34 @@ const saveBuild = async () => {
 	}
 };
 
+const deleteBuild = async () => {
+	if (!buildId.value) return;
+
+	try {
+		await DinozBuildService.deleteBuild(buildId.value);
+
+		// Remove from ownBuilds
+		ownBuilds.value = ownBuilds.value.filter(b => b.id !== buildId.value);
+
+		toast.open({
+			message: formatText(t(`toast.buildDeleted`, { name: buildName.value })),
+			type: 'success'
+		});
+
+		// Reset build mode
+		buildMode.value = false;
+		resetBuild();
+	} catch (error) {
+		errorHandler.handle(error, toast);
+	}
+};
+
 // Lifecycle hooks
 onMounted(async () => {
 	// Redirect to last page if no PAC
 	if (!store.playerOptions.hasPAC) {
-		instance?.proxy?.$toast.open({
-			message: formatText(instance?.proxy?.$t(`toast.noPAC`)),
+		toast.open({
+			message: formatText(t(`toast.noPAC`)),
 			type: 'error'
 		});
 		router.back();
@@ -95,6 +192,13 @@ onMounted(async () => {
 	}
 
 	await init();
+
+	// Fetch own builds
+	try {
+		ownBuilds.value = await DinozBuildService.getOwn();
+	} catch (error) {
+		errorHandler.handle(error, toast);
+	}
 });
 
 // Watch for changes in the route params
@@ -106,62 +210,88 @@ watch(
 		}
 	}
 );
+
+// Watch for exiting build mode to reset build data
+watch(buildMode, newValue => {
+	if (!newValue) {
+		resetBuild();
+	}
+});
 </script>
 
 <template>
 	<TitleHeader :title="$t('pageTitle.skillTrees')" :header="$t(`skillTrees.title`)" />
-	<DZCheckbox id="buildMode" v-model="buildMode" class="build-mode-checkbox">
-		{{ $t('skillTrees.buildMode') }}
-	</DZCheckbox>
-	<div v-if="buildMode" class="build-form">
-		<DZInput :placeholder="$t('skillTrees.buildName')" v-model="buildName" class="build-name-input" />
-		<DZCheckbox id="shareableBuild" v-model="shareableBuild" class="build-mode-checkbox">
-			{{ $t('skillTrees.shareable') }}
+	<div class="dz-golden-box builds">
+		<DZCheckbox id="buildMode" v-model="buildMode" class="build-mode-checkbox">
+			{{ $t('skillTrees.manageBuilds') }}
 		</DZCheckbox>
-		<DZButton @click="saveBuild">{{ $t('skillTrees.save') }}</DZButton>
+		<div v-if="buildMode" class="build-form">
+			<DZSelect
+				v-if="ownBuilds.length"
+				id="build-edit"
+				:options="ownBuilds.map(build => ({ label: build.name, value: build.id }))"
+				:placeholder="$t('skillTrees.buildToEdit')"
+				v-model="buildId"
+				@change="selectBuildToEdit"
+			/>
+			<DZInput :placeholder="$t('skillTrees.buildName')" v-model="buildName" class="build-name-input" />
+			<DZCheckbox id="shareableBuild" v-model="shareableBuild" class="build-mode-checkbox">
+				{{ $t('skillTrees.shareable') }}
+			</DZCheckbox>
+			<div class="df g8">
+				<DZButton @click="saveBuild" :off="!buildName || !allSelectedSkills.length">
+					{{ $t('skillTrees.save') }}
+				</DZButton>
+				<DZButton v-if="buildId" @click="deleteBuild">
+					<img :src="getImgURL('icons', 'small_delete')" alt="delete" />
+					{{ $t('skillTrees.delete') }}
+				</DZButton>
+			</div>
+		</div>
 	</div>
 	<SkillTree
 		:type="ElementType.FIRE"
 		:dinoz="dinoz"
 		:selectable="buildMode"
-		v-model:modelValue="buildSkills[ElementType.FIRE]"
+		v-model:buildSkills="buildSkills[ElementType.FIRE]"
 	/>
 	<SkillTree
 		:type="ElementType.WOOD"
 		:dinoz="dinoz"
 		:selectable="buildMode"
-		v-model:modelValue="buildSkills[ElementType.WOOD]"
+		v-model:buildSkills="buildSkills[ElementType.WOOD]"
 	/>
 	<SkillTree
 		:type="ElementType.WATER"
 		:dinoz="dinoz"
 		:selectable="buildMode"
-		v-model:modelValue="buildSkills[ElementType.WATER]"
+		v-model:buildSkills="buildSkills[ElementType.WATER]"
 	/>
 	<SkillTree
 		:type="ElementType.LIGHTNING"
 		:dinoz="dinoz"
 		:selectable="buildMode"
-		v-model:modelValue="buildSkills[ElementType.LIGHTNING]"
+		v-model:buildSkills="buildSkills[ElementType.LIGHTNING]"
 	/>
 	<SkillTree
 		:type="ElementType.AIR"
 		:dinoz="dinoz"
 		:selectable="buildMode"
-		v-model:modelValue="buildSkills[ElementType.AIR]"
+		v-model:buildSkills="buildSkills[ElementType.AIR]"
 	/>
 </template>
 
 <style lang="scss" scoped>
-.build-mode-checkbox {
-	margin-left: 8px;
-	color: #bc683c;
+.builds {
+	padding: 8px;
+	line-height: 0;
 }
 
 .build-form {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	align-items: flex-start;
 	gap: 8px;
-	margin: 8px;
+	margin-top: 8px;
 }
 </style>

@@ -82,6 +82,9 @@ export default defineComponent({
 		}
 
 		.content {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
 			padding: 4px 8px;
 
 			&:first-letter {
@@ -102,6 +105,7 @@ export default defineComponent({
 
 	&.off {
 		filter: grayscale(100%);
+		cursor: not-allowed;
 	}
 }
 </style>

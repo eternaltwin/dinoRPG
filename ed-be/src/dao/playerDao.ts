@@ -69,7 +69,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
-					concentration: true
+					concentration: true,
+					build: true
 				},
 				where: {
 					OR: [
@@ -643,7 +644,8 @@ export async function getCommonDataRequest(playerId: string) {
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
-					concentration: true
+					concentration: true,
+					build: true
 				},
 				where: {
 					OR: [

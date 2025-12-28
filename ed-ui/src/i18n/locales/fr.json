@@ -143,7 +143,11 @@
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
-		"basicError": "Une erreur est survenue"
+		"basicError": "Une erreur est survenue",
+		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
+		"buildSaveError": "Une erreur est survenue lors de l'enregistrement du plan de compétences",
+		"buildDeleted": "Le plan de compétences \"{name}\" a été supprimé",
+		"buildAssigned": "Le plan de compétences \"{name}\" a été assigné à votre Dinoz"
 	},
 	"dig": {
 		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -5184,7 +5188,14 @@
 	},
 	"skillTrees": {
 		"title": "Arbres de compétences",
-		"level": "Niv.{level}"
+		"level": "Niv.{level}",
+		"build": "Plan de compétences",
+		"manageBuilds": "Gérer les plans de compétences",
+		"buildName": "Nom du plan",
+		"shareable": "Partageable",
+		"save": "Enregistrer",
+		"delete": "Supprimer",
+		"buildToEdit": "Plan à éditer"
 	},
 	"poll": {
 		"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
