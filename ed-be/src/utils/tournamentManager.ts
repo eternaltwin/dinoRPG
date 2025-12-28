@@ -1,9 +1,9 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { createFirstTournament, getNewLevelLimits } from '../business/tournamentService.js';
+import { createFirstTournament } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
-import { getRandomNumber, shuffle } from './tools.js';
+import {  shuffle } from './tools.js';
 import {
 	MetaData,
 	RawTournamentMatch,
@@ -54,7 +54,7 @@ class TournamentManager {
 
 		const poolsStart = dayjs(qualificationEnd).add(1, 'seconds').toDate();
 
-		const finalsStart = dayjs(qualificationEnd).add(6, 'minutes').toDate();
+		const finalsStart = dayjs(qualificationEnd).add(4, 'minutes').toDate();
 
 		return {
 			qualificationStart,
@@ -100,12 +100,12 @@ class TournamentManager {
 		// Vendredi (Début des finales)
 		times.push(
 			{
-				time: tuesday.add(15, 'minutes').toDate(),
+				time: tuesday.add(4, 'minutes').toDate(),
 				description: 'Finales - Premiers matchs',
 				round: 4
 			},
 			{
-				time: tuesday.add(20, 'minutes').toDate(),
+				time: tuesday.add(5, 'minutes').toDate(),
 				description: 'Finales - Winners/Losers',
 				round: 5
 			}
@@ -114,18 +114,18 @@ class TournamentManager {
 		// Samedi (Finales)
 		times.push(
 			{
-				time: tuesday.add(25, 'minutes').toDate(),
+				time: tuesday.add(6, 'minutes').toDate(),
 				description: 'Finales - Repêchage',
 				round: 6
 			},
 			{
-				time: tuesday.add(30, 'minutes').toDate(),
+				time: tuesday.add(7, 'minutes').toDate(),
 				description: 'Grande Finale',
 				round: 7
 			}
 		);
 
-		const nextMonday = tuesday.add(35, 'minutes');
+		const nextMonday = tuesday.add(8, 'minutes');
 		times.push({
 			time: nextMonday.toDate(),
 			description: 'New tournament',
