@@ -1,10 +1,10 @@
-import { SkillDetails, SkillEffects } from '@drpg/core/models/dinoz/SkillDetails';
+import { SkillDetails, PassiveEffects } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { Dinoz, GameDinozUsage, Player } from '@drpg/prisma';
 import { Skill, uSkillsToPlayerFieldMap } from '@drpg/core/models/dinoz/SkillList';
 
 function applySkillToDinoz(
-	effects: SkillEffects,
+	effects: PassiveEffects,
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
 	event?: GameDinozUsage
 ) {
@@ -43,7 +43,7 @@ function applySkillToDinoz(
 }
 
 function deApplySkillFromDinoz(
-	effects: SkillEffects,
+	effects: PassiveEffects,
 	dinoz: Pick<Dinoz, 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>
 ) {
 	for (const [stat, value] of Object.entries(effects)) {

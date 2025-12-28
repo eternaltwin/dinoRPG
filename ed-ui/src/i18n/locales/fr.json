@@ -394,7 +394,9 @@
 		"bubbleRate": "Taux de bulle",
 		"torchDamage": "Dégâts de la torche",
 		"acidBloodDamage": "Dégâts de sang acide",
-		"baseValue": "Valeur de base"
+		"baseValue": "Valeur de base",
+		"criticalHitChance": "Chance de coup critique",
+		"criticalHitDamage": "Bonus de coup critique"
 	},
 	"item": {
 		"name": {
@@ -4327,7 +4329,8 @@
 			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
 			"arrive": "**{name}** est arrivé !",
 			"resist": "**{dinoz}** a résisté et réduit les dégâts.",
-			"hit": "**{fighter}** a infligé **{damage}** {elements} dégâts à **{target}**.",
+			"hit": "**{fighter}** a effectué un assaut {elements} et a infligé **{damage}** dégâts à **{target}**.",
+			"hit-critical": "**{fighter}** a effectué un assaut {elements} **critique** et a infligé **{damage}** dégâts à **{target}**.",
 			"hit-dodge": "**{target}** a esquivé l'attaque de **{fighter}**.",
 			"hit-skill": "**{fighter}** a infligé **{damage}** {elements} dégâts à **{target}** avec **{skill}**.",
 			"poison": "**{dinoz}** a infligé **{damage} poison** dégâts à **{target}**.",
@@ -4647,6 +4650,7 @@
 			"assaults": "Nombre d'assauts",
 			"evasions": "Nombre d'esquives",
 			"counters": "Nombre de contres",
+			"criticalHits": "Nombre de coup critiques",
 			"poisoned": "Nombre d'adversaires empoisonnés",
 			"poison_damage": "Dégâts de poison infligés",
 			"burn_damage": "Dégâts de brûlure infligés",

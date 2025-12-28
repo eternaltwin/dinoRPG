@@ -3,7 +3,7 @@ import { DetailedFighter, FighterType, FightStatus } from '@drpg/core/models/fig
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
-import { getFighterArmor, getFighterArmorBreak } from './getFighters.js';
+import { getFighterArmor, getFighterArmorBreak, getFighterCriticalHitDamage } from './getFighters.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -146,8 +146,15 @@ export const calculateDamage = (
 	target: DetailedFighter,
 	attack: number,
 	defense: number,
-	isCloseCombat: boolean
+	isCloseCombat: boolean,
+	isCritical: boolean
 ) => {
+	// Apply critical hit damage for assaults
+	if (isCloseCombat && isCritical) {
+		let crit_bonus = getFighterCriticalHitDamage(attacker);
+		attack *= crit_bonus;
+	}
+
 	// Apply random factor
 	const random_attack_bonus = (random() * attack) / 3;
 	attack += random_attack_bonus;

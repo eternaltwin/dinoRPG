@@ -7,6 +7,7 @@ import { BoxType } from './boxOpening.mjs';
 import { SkillFightConditionEnum } from '../dinoz/SkillFightCondition.mjs';
 import { FightStatus } from '../fight/DetailedFighter.mjs';
 import { Operator } from '../enums/Parser.mjs';
+import { Stat } from '../enums/SkillStat.mjs';
 
 export enum Item {
 	POTION_IRMA = 1,
@@ -2167,7 +2168,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 100,
 		sellable: false,
 		price: 0,
-		display: 'cgold'
+		display: 'cgold',
+		passiveEffects: {
+			[Stat.CRITICAL_HIT_CHANCE]: ['x', 1.01]
+		}
 	},
 	// Brings a little bamboo with you in each fight
 	[Item.BAMBOO_FRIEND]: {

@@ -54,6 +54,7 @@ import {
 import {
 	cloneDinoz,
 	getFighterCounter,
+	getFighterCriticalHitChance,
 	getFighterEvasion,
 	getFighterMultihit,
 	getFighterSuperEvasion,
@@ -3923,46 +3924,57 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 /**
  * Test if a fighter succeeds a counter roll.
  * @param fightData Fight data used for seeded random and stats.
- * @param opponent The fighter to roll the counter for.
+ * @param fighter The fighter to roll the counter for.
  * @returns {bool} True if the fighter has succeeded its counter roll.
  */
-const counterTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
+const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const random = fightData.rng();
-	return random < getFighterCounter(opponent);
+	return random < getFighterCounter(fighter);
 };
 
 /**
  * Test if a fighter succeeds a multihit roll.
  * @param fightData Fight data used for seeded random.
- * @param opponent The fighter to roll the multihit for.
+ * @param fighter The fighter to roll the multihit for.
  * @param multiHitCounter Number of multihits
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
-const multiHitTest = (fightData: DetailedFight, opponent: DetailedFighter, multiHitCounter: number) => {
+const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiHitCounter: number) => {
 	const random = fightData.rng();
-	return random < getFighterMultihit(opponent, multiHitCounter);
+	return random < getFighterMultihit(fighter, multiHitCounter);
 };
 
 /**
  * Test if a fighter succeeds an evasion roll.
  * @param fightData Fight data used for seeded random.
- * @param opponent The fighter to roll the evasion  for.
+ * @param fighter The fighter to roll the evasion for.
  * @returns {bool} True if the fighter has succeeded its evasion roll.
  */
-const evasionTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
+const evasionTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const random = fightData.rng();
-	return random < getFighterEvasion(opponent);
+	return random < getFighterEvasion(fighter);
 };
 
 /**
  * Test if a fighter succeeds a super evasion roll.
  * @param fightData Fight data used for seeded random.
- * @param opponent The fighter to roll the super evasion  for.
+ * @param fighter The fighter to roll the super evasion for.
  * @returns {bool} True if the fighter has succeeded its super evasion roll.
  */
-const superEvasionTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
+const superEvasionTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const random = fightData.rng();
-	return random < getFighterSuperEvasion(opponent);
+	return random < getFighterSuperEvasion(fighter);
+};
+
+/**
+ * Test if a fighter succeeds a critical hit roll.
+ * @param fightData Fight data used for seeded random.
+ * @param fighter The fighter to roll the critical hit for.
+ * @returns {bool} True if the fighter has succeeded its critical hit roll.
+ */
+const criticalHitTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
+	const random = fightData.rng();
+	return random < getFighterCriticalHitChance(fighter);
 };
 
 // Have the fighter lose the given number of damage based on its resilience
@@ -4282,9 +4294,16 @@ const attackTarget = (
 		let isSuperDodged = false;
 		let noDamage = false;
 		let break_intangible = false;
+		let isCritical = false;
+
+		// Test for critical hit if it's an assault
+		if (isAssault && criticalHitTest(fightData, attacker)) {
+			isCritical = true;
+			updateStat(fightData, attacker, 'criticalHits', 1);
+		}
 
 		// Get damage
-		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault);
+		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault, isCritical);
 
 		// Apply defensive effects
 		damage = checkDefensiveEffects(
@@ -4377,6 +4396,7 @@ const attackTarget = (
 				fighter: stepFighter(attacker),
 				target: stepFighter(target),
 				damage: evasion ? null : damage, // If the attack was evaded, mark the damage as null
+				critical: isCritical,
 				elements: elements,
 				skill
 			});

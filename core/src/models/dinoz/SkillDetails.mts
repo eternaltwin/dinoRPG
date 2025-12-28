@@ -14,7 +14,7 @@ type OtherAssaults<T> = Exclude<
 	T
 >;
 
-export type SkillEffects = {
+export type PassiveEffects = {
 	[Stat.MAX_HP]?: number;
 	[Stat.HP_REGEN]?: number | ['x', number];
 	[Stat.MAX_FOLLOWERS]?: number;
@@ -96,6 +96,10 @@ export type SkillEffects = {
 	// [Stat.LIGHTNING_MULTIHIT]?: ['x', number];
 	// [Stat.AIR_MULTIHIT]?: ['x', number];
 	// [Stat.VOID_MULTIHIT]?: ['x', number];
+	// Critical Hit Chance
+	[Stat.CRITICAL_HIT_CHANCE]?: ['x', number];
+	// Critical Hit Damage
+	[Stat.CRITICAL_HIT_DAMAGE]?: number;
 };
 
 export interface SkillDetails {
@@ -111,8 +115,8 @@ export interface SkillDetails {
 	raceId?: RaceEnum[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
-	effects?: SkillEffects;
-	globalEffects?: SkillEffects;
+	effects?: PassiveEffects;
+	globalEffects?: PassiveEffects;
 	priority?: number;
 	probability?: number;
 	fightCondition?: SkillFightCondition;

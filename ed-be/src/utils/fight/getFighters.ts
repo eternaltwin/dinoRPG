@@ -156,7 +156,11 @@ export const initializeDinoz = (
 				[SpecialStat.TORCH_DAMAGE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
+				[SpecialStat.CRITICAL_HIT_CHANCE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
+				[SpecialStat.CRITICAL_HIT_DAMAGE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0,
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -304,7 +308,9 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.AIR_SPEED]: dinoz.stats.special[SpecialStat.AIR_SPEED],
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
-				[SpecialStat.ACID_BLOOD_DAMAGE]: 0 // No acid blood for clones
+				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
+				[SpecialStat.CRITICAL_HIT_CHANCE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_CHANCE],
+				[SpecialStat.CRITICAL_HIT_DAMAGE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_DAMAGE]
 			},
 			speed: dinoz.stats.speed
 		},
@@ -487,7 +493,11 @@ export const initializeMonster = (
 				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
 				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
+				[SpecialStat.CRITICAL_HIT_CHANCE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
+				[SpecialStat.CRITICAL_HIT_DAMAGE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -1049,6 +1059,26 @@ export const getFighterArmor = (fighter: DetailedFighter) => {
  */
 export const getFighterArmorBreak = (fighter: DetailedFighter) => {
 	return Math.min(0.9, Math.max(0, fighter.stats.special.armorBreak - 1));
+};
+
+/**
+ * Determine the critical hit chance of the fighter.
+ * The critical hit chance minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the critical hit chance stat stat from.
+ * @returns {number} Returns the critical hit chance of the fighter between 0 an 0.9.
+ */
+export const getFighterCriticalHitChance = (fighter: DetailedFighter) => {
+	return Math.min(0.9, Math.max(0, fighter.stats.special.criticalHitChance - 1));
+};
+
+/**
+ * Determine the critical hit damage of the fighter.
+ * The critical hit damage minimum is 0%. There is no maximum.
+ * @param fighter The fighter to get the critical hit damage stat stat from.
+ * @returns {number} Returns the critical hit damage of the fighter between 0 an 0.9.
+ */
+export const getFighterCriticalHitDamage = (fighter: DetailedFighter) => {
+	return Math.max(0, fighter.stats.special.criticalHitDamage);
 };
 
 export default getFighters;

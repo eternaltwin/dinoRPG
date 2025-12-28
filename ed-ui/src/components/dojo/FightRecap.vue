@@ -46,6 +46,11 @@
 			<td>{{ stats.defense.counters }}</td>
 		</tr>
 		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.criticalHits'))" />
+			<td>{{ stats.attack.criticalHits }}</td>
+			<td>{{ stats.defense.criticalHits }}</td>
+		</tr>
+		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.poisoned'))" />
 			<td>{{ stats.attack.poisoned }}</td>
 			<td>{{ stats.defense.poisoned }}</td>

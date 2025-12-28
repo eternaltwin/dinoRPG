@@ -73,11 +73,15 @@ export enum Stat {
 	// AIR_SUPER_EVASION = 'airSuperEvasion',
 	// VOID_SUPER_EVASION = 'voidSuperEvasion',
 	// Multihits
-	MULTIHIT = 'multihit'
+	MULTIHIT = 'multihit',
 	// FIRE_MULTIHIT = 'fireMultihit',
 	// WOOD_MULTIHIT = 'woodMultihit',
 	// WATER_MULTIHIT = 'waterMultihit',
 	// LIGHTNING_MULTIHIT = 'lightningMultihit',
 	// AIR_MULTIHIT = 'airMultihit',
 	// VOID_MULTIHIT = 'voidMultihit'
+	// Critical Hit Chance
+	CRITICAL_HIT_CHANCE = 'criticalHitChance',
+	// Critical Hit Damage
+	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
 }

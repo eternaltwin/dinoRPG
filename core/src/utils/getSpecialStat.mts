@@ -70,8 +70,12 @@ export enum SpecialStat {
 	WOOD_SPEED = 'woodSpeed',
 	WATER_SPEED = 'waterSpeed',
 	LIGHTNING_SPEED = 'lightningSpeed',
-	AIR_SPEED = 'airSpeed'
+	AIR_SPEED = 'airSpeed',
 	// VOID_SPEED = 'voidSpeed'
+	// Critical Hit Chance
+	CRITICAL_HIT_CHANCE = 'criticalHitChance',
+	// Critical Hit Damage
+	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
 }
 
 // Special statistics handled as a %.
@@ -122,13 +126,15 @@ export enum SpecialStatAsPercent {
 	// AIR_SUPER_EVASION = 'airSuperEvasion',
 	// VOID_SUPER_EVASION = 'voidSuperEvasion',
 	// Multihits
-	MULTIHIT = 'multihit'
+	MULTIHIT = 'multihit',
 	// FIRE_MULTIHIT = 'fireMultihit',
 	// WOOD_MULTIHIT = 'woodMultihit',
 	// WATER_MULTIHIT = 'waterMultihit',
 	// LIGHTNING_MULTIHIT = 'lightningMultihit',
 	// AIR_MULTIHIT = 'airMultihit',
 	// VOID_MULTIHIT = 'voidMultihit'
+	CRITICAL_HIT_CHANCE = 'criticalHitChance',
+	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
 }
 
 export enum UniqueSpecialStatUsedInFights {
@@ -160,8 +166,9 @@ export const BaseSpecialStats = {
 	[SpecialStat.WOOD_SPEED]: 1,
 	[SpecialStat.WATER_SPEED]: 1,
 	[SpecialStat.LIGHTNING_SPEED]: 1,
-	[SpecialStat.AIR_SPEED]: 1
+	[SpecialStat.AIR_SPEED]: 1,
 	// [SpecialStat.VOID_SPEED]: 1
+	[SpecialStat.CRITICAL_HIT_DAMAGE]: 0.5
 };
 
 export const getSpecialStat = (
@@ -251,7 +258,7 @@ export const getSpecialStat = (
 	let base_stat = value;
 	let multiplier = 1;
 	let details: {
-		type: 'skill' | 'status' | 'base';
+		type: 'skill' | 'item' | 'status' | 'base';
 		name: string;
 		percent: boolean;
 		multiplier: boolean;
@@ -351,6 +358,54 @@ export const getSpecialStat = (
 			});
 		}
 	});
+
+	// Apply bonuses from items
+	dinoz.items.forEach(item_id => {
+		const item = itemList[item_id as Item];
+
+		if (!item.passiveEffects) return;
+
+		const effect = item.passiveEffects[stat];
+		const isAddition = typeof effect === 'number';
+
+		if (effect) {
+			let effectValue = 0;
+
+			// Flat value
+			if (isAddition) {
+				effectValue = effect;
+				value += effect;
+			} else {
+				// Multiplier
+				effectValue = effect[1] - 1;
+				multiplier *= effect[1];
+			}
+
+			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
+
+			let finalValue;
+			if (percent) {
+				// Multiply by 100 for a percent
+				finalValue = Math.round(effectValue * 100);
+			} else {
+				// Other use the effect value
+				finalValue = effectValue;
+			}
+			if (base_stat > 0 && !isAddition) {
+				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
+				finalValue += 1;
+			}
+
+			details.push({
+				type: 'item',
+				name: item.name,
+				percent,
+				multiplier: !isAddition,
+				elements: [],
+				value: finalValue
+			});
+		}
+	})
 
 	// Apply bonuses from priest
 	if (stat === SpecialStat.HP_REGEN && PRIEST) {

@@ -277,6 +277,10 @@
 									/>
 									<span>{{ $t(`status.name.${detail.name}`) }}</span>
 								</span>
+								<span v-if="detail.type === 'item'" class="detail-name">
+									<img :src="getImgURL('item', `item_${detail.name}`)" :alt="$t(`item.name.${detail.name}`)" />
+									<span>{{ $t(`item.name.${detail.name}`) }}</span>
+								</span>
 							</li>
 						</ul>
 					</template>
@@ -450,6 +454,15 @@ export default defineComponent({
 				priest
 			);
 
+			// Find global critical value to compute it with elemental speed
+			const global_critical_hit = getSpecialStat(
+				this.dinozData,
+				this.dinozData.status.map(s => s.statusId),
+				this.dinozSkill,
+				SpecialStat.CRITICAL_HIT_CHANCE,
+				priest
+			);
+
 			let global_speed = 1;
 			if (global_speed_special) {
 				global_speed = global_speed_special.value;
@@ -508,6 +521,11 @@ export default defineComponent({
 
 					// Filter out other special stats that are at default value
 					if (special && !special.name.startsWith('speed') && special.value === 100) {
+						special = null;
+					}
+
+					// Filter out critical hit damage if critical hit chance is zero
+					if (special && special.name.startsWith('criticalHitDamage') && global_critical_hit && global_critical_hit.value === 1) {
 						special = null;
 					}
 

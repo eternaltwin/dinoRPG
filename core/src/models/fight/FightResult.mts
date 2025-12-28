@@ -75,6 +75,9 @@ export type FightStats = {
 	// Total assaults by me
 	assaults: number;
 
+	// Total critical hits
+	criticalHits: number;
+
 	// Total assaults on me
 	times_assaulted: number;
 
