@@ -81,8 +81,12 @@
 			"cinema": "Cine",
 			"events": "Eventos",
 			"system": "Ajustes",
+			"stats": "Statistiques en direct",
 			"skipFight": "Mostrar directamente el resultado del combate",
-			"skipLevel": "Saltar la animación de subida de nivel"
+			"skipLevel": "Saltar la animación de subida de nivel",
+			"connectedPlayers": "Joueurs connectés",
+			"totalDinoz": "Nombre total de dinoz",
+			"totalPlayers": "Nombre total de joueurs"
 		}
 	},
 	"toast": {
@@ -376,12 +380,12 @@
 		"evasion": "Esquiva",
 		"superEvasion": "Súper Evasión",
 		"counter": "Contra",
-		"speed": "Durée d'un tour",
-		"fireSpeed": "Durée d'un tour :fire:",
-		"woodSpeed": "Durée d'un tour :wood:",
-		"waterSpeed": "Durée d'un tour :water:",
-		"lightningSpeed": "Durée d'un tour :lightning:",
-		"airSpeed": "Durée d'un tour :air:",
+		"speed": "Duración de un turno",
+		"fireSpeed": "Duración de un turno :fire:",
+		"woodSpeed": "Duración de un turno :wood:",
+		"waterSpeed": "Duración de un turno :water:",
+		"lightningSpeed": "Duración de un turno :lightning:",
+		"airSpeed": "Duración de un turno :air:",
 		"bubbleRate": "Porcentaje de Burbuja",
 		"torchDamage": "Daño de antorcha",
 		"acidBloodDamage": "Daño de sangre ácida",
@@ -3509,8 +3513,8 @@
 	},
 	"myAccount": {
 		"title": "Jugador:",
-		"labrute": "Récompenses La Brute",
-		"labruteTooltip": "Vous pouvez récupérer 1x :irma: par 3 Dinoz actifs tous les jours en finissant tous vos combats sur La Brute.",
+		"labrute": "Recompensas El Bruto",
+		"labruteTooltip": "Puedes recuperar 1 :irma: por cada 3 Dinos activos cada día al finalizar todos tus combates en El Bruto.",
 		"profil": "Perfil de EternalDinoRPG",
 		"options": {
 			"title": "Opciones de Mi Cuenta",
@@ -4225,7 +4229,7 @@
 			"info": "El banner tiene un ratio de 448px de ancho por 100px de largo."
 		},
 		"langs": {
-			"title": "Idiomas:"
+			"title": "Langues"
 		}
 	},
 	"createClan": {
@@ -4467,7 +4471,7 @@
 		"back": "Volver",
 		"bid": "Pujar",
 		"detail": "Ver detalles",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"yourTreasuryNotes": "Tus Bonos del Tesoro",
 		"sellView": {
 			"disclaimer": "Aquí puedes crear tu oferta, que se enviará a los demás Maestros de Dinos. Si vendes un Dino o artículos, no estarán disponibles mientras dure la oferta.",
 			"prepareYourOffer": "Prepara tu oferta",
@@ -4574,6 +4578,7 @@
 		"accessChallenges": "Accede a los desafíos",
 		"testDinoz": "Pon a prueba tu Dino",
 		"fightHistory": "Historial de combates",
+		"tournamentHistory": "Historique des tournois",
 		"team": "Mi Equipo",
 		"tournaments": "Torneos",
 		"build": "Construir mi dojo",

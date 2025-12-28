@@ -81,8 +81,12 @@
 			"cinema": "Theater",
 			"events": "Events",
 			"system": "Settings",
+			"stats": "Statistiques en direct",
 			"skipFight": "Display immediately the outcome of fights",
-			"skipLevel": "Skip level up animation"
+			"skipLevel": "Skip level up animation",
+			"connectedPlayers": "Joueurs connectés",
+			"totalDinoz": "Nombre total de dinoz",
+			"totalPlayers": "Nombre total de joueurs"
 		}
 	},
 	"toast": {
@@ -4225,7 +4229,7 @@
 			"info": "Clan banner has a ratio of 448px large by 100px long."
 		},
 		"langs": {
-			"title": "Languages:"
+			"title": "Langues"
 		}
 	},
 	"createClan": {
@@ -4574,6 +4578,7 @@
 		"accessChallenges": "Access challenges",
 		"testDinoz": "Test your dinoz",
 		"fightHistory": "Fight history",
+		"tournamentHistory": "Historique des tournois",
 		"team": "My team",
 		"tournaments": "Tournaments",
 		"build": "Build my Dojo",
