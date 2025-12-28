@@ -1,14 +1,6 @@
 <template>
-	<div class="dz-radio" :class="{ disabled }">
-		<input
-			:type="'radio'"
-			:id="id"
-			:name="id"
-			:disabled="disabled"
-			:value="valueString"
-			:checked="isChecked"
-			@change="onChange"
-		/>
+	<div class="dz-checkbox" :class="{ disabled }">
+		<input type="checkbox" :id="id" :name="id" :disabled="disabled" :checked="isChecked" @change="onChange" />
 		<span class="icon" :class="{ checked: isChecked }" @click="onIconClick" />
 		<label class="text" :for="id">
 			<slot>{{ label }}</slot>
@@ -16,45 +8,42 @@
 	</div>
 </template>
 
-<script setup lang="ts" generic="T extends string | number | boolean">
+<script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps<{
-	modelValue?: T;
-	value: T;
+	modelValue?: boolean;
 	label?: string;
 	disabled?: boolean;
 	id: string;
 }>();
 
 const emit = defineEmits<{
-	'update:modelValue': [value: T];
-	change: [value: T];
+	'update:modelValue': [value: boolean];
+	change: [value: boolean];
 }>();
 
-const isChecked = computed(() => props.modelValue === props.value);
-const valueString = computed(() => String(props.value));
+const isChecked = computed(() => props.modelValue === true);
 
-const selectValue = () => {
+const toggle = () => {
 	if (props.disabled) return;
-	emit('update:modelValue', props.value);
-	emit('change', props.value);
+	const newValue = !isChecked.value;
+	emit('update:modelValue', newValue);
+	emit('change', newValue);
 };
 
 const onChange = () => {
-	// Native radio fires change only when it becomes checked
-	selectValue();
+	toggle();
 };
 
 const onIconClick = (e: MouseEvent) => {
-	// Delegate to input for consistency
 	e.preventDefault();
-	if (!isChecked.value) selectValue();
+	toggle();
 };
 </script>
 
 <style scoped lang="scss">
-.dz-radio {
+.dz-checkbox {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
@@ -73,18 +62,18 @@ const onIconClick = (e: MouseEvent) => {
 	}
 
 	.icon {
-		width: 9px;
-		height: 9px;
-		background: url('../../assets/button/radio.webp') center / contain no-repeat;
+		width: 16px;
+		height: 16px;
+		background: url('../../assets/button/checkbox.webp') center / contain no-repeat;
 	}
 
 	.icon.checked {
-		background: url('../../assets/button/radio-selected.webp') center / contain no-repeat;
+		background: url('../../assets/button/checkbox-checked.webp') center / contain no-repeat;
 	}
 
 	.text {
 		cursor: pointer;
-		line-height: 9px;
+		line-height: 16px;
 	}
 
 	&:hover .icon {

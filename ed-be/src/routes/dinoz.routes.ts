@@ -29,6 +29,7 @@ import { reincarnate } from '../business/skillService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
+import { assignBuild } from '../business/dinozBuildService.js';
 
 const routes: Router = Router();
 
@@ -666,6 +667,20 @@ routes.post(
 		try {
 			await reincarnate(req);
 			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/:id/build`,
+	[param('id').exists().toInt().isNumeric(), body('buildId').optional().isString()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) return res.status(400).json({ errors: validationResult(req) });
+		try {
+			const response = await assignBuild(req);
+			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
 		}

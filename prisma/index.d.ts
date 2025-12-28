@@ -54,6 +54,11 @@ export type DinozSkillUnlockable = $Result.DefaultSelection<Prisma.$DinozSkillUn
  */
 export type DinozStatus = $Result.DefaultSelection<Prisma.$DinozStatusPayload>
 /**
+ * Model DinozBuild
+ * 
+ */
+export type DinozBuild = $Result.DefaultSelection<Prisma.$DinozBuildPayload>
+/**
  * Model migrations
  * 
  */
@@ -748,6 +753,16 @@ export class PrismaClient<
     * ```
     */
   get dinozStatus(): Prisma.DinozStatusDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dinozBuild`: Exposes CRUD operations for the **DinozBuild** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DinozBuilds
+    * const dinozBuilds = await prisma.dinozBuild.findMany()
+    * ```
+    */
+  get dinozBuild(): Prisma.DinozBuildDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.migrations`: Exposes CRUD operations for the **migrations** model.
@@ -1686,6 +1701,7 @@ export namespace Prisma {
     DinozSkill: 'DinozSkill',
     DinozSkillUnlockable: 'DinozSkillUnlockable',
     DinozStatus: 'DinozStatus',
+    DinozBuild: 'DinozBuild',
     migrations: 'migrations',
     News: 'News',
     Poll: 'Poll',
@@ -1753,7 +1769,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2346,6 +2362,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DinozStatusCountArgs<ExtArgs>
             result: $Utils.Optional<DinozStatusCountAggregateOutputType> | number
+          }
+        }
+      }
+      DinozBuild: {
+        payload: Prisma.$DinozBuildPayload<ExtArgs>
+        fields: Prisma.DinozBuildFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DinozBuildFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DinozBuildFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          findFirst: {
+            args: Prisma.DinozBuildFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DinozBuildFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          findMany: {
+            args: Prisma.DinozBuildFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>[]
+          }
+          create: {
+            args: Prisma.DinozBuildCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          createMany: {
+            args: Prisma.DinozBuildCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DinozBuildCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>[]
+          }
+          delete: {
+            args: Prisma.DinozBuildDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          update: {
+            args: Prisma.DinozBuildUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          deleteMany: {
+            args: Prisma.DinozBuildDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DinozBuildUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DinozBuildUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>[]
+          }
+          upsert: {
+            args: Prisma.DinozBuildUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozBuildPayload>
+          }
+          aggregate: {
+            args: Prisma.DinozBuildAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDinozBuild>
+          }
+          groupBy: {
+            args: Prisma.DinozBuildGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DinozBuildGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DinozBuildCountArgs<ExtArgs>
+            result: $Utils.Optional<DinozBuildCountAggregateOutputType> | number
           }
         }
       }
@@ -6067,6 +6157,7 @@ export namespace Prisma {
     dinozSkill?: DinozSkillOmit
     dinozSkillUnlockable?: DinozSkillUnlockableOmit
     dinozStatus?: DinozStatusOmit
+    dinozBuild?: DinozBuildOmit
     migrations?: migrationsOmit
     news?: NewsOmit
     poll?: PollOmit
@@ -6434,6 +6525,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type DinozBuildCountOutputType
+   */
+
+  export type DinozBuildCountOutputType = {
+    dinozs: number
+  }
+
+  export type DinozBuildCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinozs?: boolean | DinozBuildCountOutputTypeCountDinozsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DinozBuildCountOutputType without action
+   */
+  export type DinozBuildCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuildCountOutputType
+     */
+    select?: DinozBuildCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DinozBuildCountOutputType without action
+   */
+  export type DinozBuildCountOutputTypeCountDinozsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozWhereInput
+  }
+
+
+  /**
    * Count Type NewsCountOutputType
    */
 
@@ -6567,6 +6689,7 @@ export namespace Prisma {
     GameDinoz: number
     pollVotes: number
     Events: number
+    dinozBuilds: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6597,6 +6720,7 @@ export namespace Prisma {
     GameDinoz?: boolean | PlayerCountOutputTypeCountGameDinozArgs
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
     Events?: boolean | PlayerCountOutputTypeCountEventsArgs
+    dinozBuilds?: boolean | PlayerCountOutputTypeCountDinozBuildsArgs
   }
 
   // Custom InputTypes
@@ -6797,6 +6921,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventsWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountDinozBuildsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozBuildWhereInput
   }
 
 
@@ -8432,6 +8563,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
+    buildId: string | null
   }
 
   export type DinozMaxAggregateOutputType = {
@@ -8464,6 +8596,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
+    buildId: string | null
   }
 
   export type DinozCountAggregateOutputType = {
@@ -8496,6 +8629,7 @@ export namespace Prisma {
     unavailableReason: number
     seed: number
     playerId: number
+    buildId: number
     _all: number
   }
 
@@ -8574,6 +8708,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    buildId?: true
   }
 
   export type DinozMaxAggregateInputType = {
@@ -8606,6 +8741,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    buildId?: true
   }
 
   export type DinozCountAggregateInputType = {
@@ -8638,6 +8774,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    buildId?: true
     _all?: true
   }
 
@@ -8757,6 +8894,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string
     playerId: string
+    buildId: string | null
     _count: DinozCountAggregateOutputType | null
     _avg: DinozAvgAggregateOutputType | null
     _sum: DinozSumAggregateOutputType | null
@@ -8808,6 +8946,8 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    buildId?: boolean
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
@@ -8860,6 +9000,8 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    buildId?: boolean
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -8895,6 +9037,8 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    buildId?: boolean
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -8930,10 +9074,12 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    buildId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId" | "buildId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
@@ -8956,11 +9102,13 @@ export namespace Prisma {
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
   }
   export type DinozIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | Dinoz$buildArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -8969,6 +9117,7 @@ export namespace Prisma {
   export type $DinozPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Dinoz"
     objects: {
+      build: Prisma.$DinozBuildPayload<ExtArgs> | null
       catches: Prisma.$DinozCatchPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
       Moderation: Prisma.$ModerationPayload<ExtArgs>[]
@@ -9019,6 +9168,7 @@ export namespace Prisma {
       unavailableReason: $Enums.UnavailableReason | null
       seed: string
       playerId: string
+      buildId: string | null
     }, ExtArgs["result"]["dinoz"]>
     composites: {}
   }
@@ -9413,6 +9563,7 @@ export namespace Prisma {
    */
   export interface Prisma__DinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    build<T extends Dinoz$buildArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$buildArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Moderation<T extends Dinoz$ModerationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$ModerationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9490,6 +9641,7 @@ export namespace Prisma {
     readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
     readonly seed: FieldRef<"Dinoz", 'String'>
     readonly playerId: FieldRef<"Dinoz", 'String'>
+    readonly buildId: FieldRef<"Dinoz", 'String'>
   }
     
 
@@ -9892,6 +10044,25 @@ export namespace Prisma {
      * Limit how many Dinozs to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Dinoz.build
+   */
+  export type Dinoz$buildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    where?: DinozBuildWhereInput
   }
 
   /**
@@ -17226,6 +17397,1133 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DinozStatusInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DinozBuild
+   */
+
+  export type AggregateDinozBuild = {
+    _count: DinozBuildCountAggregateOutputType | null
+    _avg: DinozBuildAvgAggregateOutputType | null
+    _sum: DinozBuildSumAggregateOutputType | null
+    _min: DinozBuildMinAggregateOutputType | null
+    _max: DinozBuildMaxAggregateOutputType | null
+  }
+
+  export type DinozBuildAvgAggregateOutputType = {
+    skills: number | null
+  }
+
+  export type DinozBuildSumAggregateOutputType = {
+    skills: number[]
+  }
+
+  export type DinozBuildMinAggregateOutputType = {
+    id: string | null
+    playerId: string | null
+    shareable: boolean | null
+    name: string | null
+  }
+
+  export type DinozBuildMaxAggregateOutputType = {
+    id: string | null
+    playerId: string | null
+    shareable: boolean | null
+    name: string | null
+  }
+
+  export type DinozBuildCountAggregateOutputType = {
+    id: number
+    playerId: number
+    skills: number
+    shareable: number
+    name: number
+    _all: number
+  }
+
+
+  export type DinozBuildAvgAggregateInputType = {
+    skills?: true
+  }
+
+  export type DinozBuildSumAggregateInputType = {
+    skills?: true
+  }
+
+  export type DinozBuildMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    shareable?: true
+    name?: true
+  }
+
+  export type DinozBuildMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    shareable?: true
+    name?: true
+  }
+
+  export type DinozBuildCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    skills?: true
+    shareable?: true
+    name?: true
+    _all?: true
+  }
+
+  export type DinozBuildAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozBuild to aggregate.
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozBuilds to fetch.
+     */
+    orderBy?: DinozBuildOrderByWithRelationInput | DinozBuildOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DinozBuildWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozBuilds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozBuilds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DinozBuilds
+    **/
+    _count?: true | DinozBuildCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DinozBuildAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DinozBuildSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DinozBuildMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DinozBuildMaxAggregateInputType
+  }
+
+  export type GetDinozBuildAggregateType<T extends DinozBuildAggregateArgs> = {
+        [P in keyof T & keyof AggregateDinozBuild]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDinozBuild[P]>
+      : GetScalarType<T[P], AggregateDinozBuild[P]>
+  }
+
+
+
+
+  export type DinozBuildGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozBuildWhereInput
+    orderBy?: DinozBuildOrderByWithAggregationInput | DinozBuildOrderByWithAggregationInput[]
+    by: DinozBuildScalarFieldEnum[] | DinozBuildScalarFieldEnum
+    having?: DinozBuildScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DinozBuildCountAggregateInputType | true
+    _avg?: DinozBuildAvgAggregateInputType
+    _sum?: DinozBuildSumAggregateInputType
+    _min?: DinozBuildMinAggregateInputType
+    _max?: DinozBuildMaxAggregateInputType
+  }
+
+  export type DinozBuildGroupByOutputType = {
+    id: string
+    playerId: string
+    skills: number[]
+    shareable: boolean
+    name: string
+    _count: DinozBuildCountAggregateOutputType | null
+    _avg: DinozBuildAvgAggregateOutputType | null
+    _sum: DinozBuildSumAggregateOutputType | null
+    _min: DinozBuildMinAggregateOutputType | null
+    _max: DinozBuildMaxAggregateOutputType | null
+  }
+
+  type GetDinozBuildGroupByPayload<T extends DinozBuildGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DinozBuildGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DinozBuildGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DinozBuildGroupByOutputType[P]>
+            : GetScalarType<T[P], DinozBuildGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DinozBuildSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    skills?: boolean
+    shareable?: boolean
+    name?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinozs?: boolean | DinozBuild$dinozsArgs<ExtArgs>
+    _count?: boolean | DinozBuildCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozBuild"]>
+
+  export type DinozBuildSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    skills?: boolean
+    shareable?: boolean
+    name?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozBuild"]>
+
+  export type DinozBuildSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    skills?: boolean
+    shareable?: boolean
+    name?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozBuild"]>
+
+  export type DinozBuildSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    skills?: boolean
+    shareable?: boolean
+    name?: boolean
+  }
+
+  export type DinozBuildOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "skills" | "shareable" | "name", ExtArgs["result"]["dinozBuild"]>
+  export type DinozBuildInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinozs?: boolean | DinozBuild$dinozsArgs<ExtArgs>
+    _count?: boolean | DinozBuildCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DinozBuildIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type DinozBuildIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $DinozBuildPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DinozBuild"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      dinozs: Prisma.$DinozPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      playerId: string
+      skills: number[]
+      shareable: boolean
+      name: string
+    }, ExtArgs["result"]["dinozBuild"]>
+    composites: {}
+  }
+
+  type DinozBuildGetPayload<S extends boolean | null | undefined | DinozBuildDefaultArgs> = $Result.GetResult<Prisma.$DinozBuildPayload, S>
+
+  type DinozBuildCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DinozBuildFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DinozBuildCountAggregateInputType | true
+    }
+
+  export interface DinozBuildDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DinozBuild'], meta: { name: 'DinozBuild' } }
+    /**
+     * Find zero or one DinozBuild that matches the filter.
+     * @param {DinozBuildFindUniqueArgs} args - Arguments to find a DinozBuild
+     * @example
+     * // Get one DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DinozBuildFindUniqueArgs>(args: SelectSubset<T, DinozBuildFindUniqueArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DinozBuild that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DinozBuildFindUniqueOrThrowArgs} args - Arguments to find a DinozBuild
+     * @example
+     * // Get one DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DinozBuildFindUniqueOrThrowArgs>(args: SelectSubset<T, DinozBuildFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DinozBuild that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildFindFirstArgs} args - Arguments to find a DinozBuild
+     * @example
+     * // Get one DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DinozBuildFindFirstArgs>(args?: SelectSubset<T, DinozBuildFindFirstArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DinozBuild that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildFindFirstOrThrowArgs} args - Arguments to find a DinozBuild
+     * @example
+     * // Get one DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DinozBuildFindFirstOrThrowArgs>(args?: SelectSubset<T, DinozBuildFindFirstOrThrowArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DinozBuilds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DinozBuilds
+     * const dinozBuilds = await prisma.dinozBuild.findMany()
+     * 
+     * // Get first 10 DinozBuilds
+     * const dinozBuilds = await prisma.dinozBuild.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dinozBuildWithIdOnly = await prisma.dinozBuild.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DinozBuildFindManyArgs>(args?: SelectSubset<T, DinozBuildFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DinozBuild.
+     * @param {DinozBuildCreateArgs} args - Arguments to create a DinozBuild.
+     * @example
+     * // Create one DinozBuild
+     * const DinozBuild = await prisma.dinozBuild.create({
+     *   data: {
+     *     // ... data to create a DinozBuild
+     *   }
+     * })
+     * 
+     */
+    create<T extends DinozBuildCreateArgs>(args: SelectSubset<T, DinozBuildCreateArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DinozBuilds.
+     * @param {DinozBuildCreateManyArgs} args - Arguments to create many DinozBuilds.
+     * @example
+     * // Create many DinozBuilds
+     * const dinozBuild = await prisma.dinozBuild.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DinozBuildCreateManyArgs>(args?: SelectSubset<T, DinozBuildCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DinozBuilds and returns the data saved in the database.
+     * @param {DinozBuildCreateManyAndReturnArgs} args - Arguments to create many DinozBuilds.
+     * @example
+     * // Create many DinozBuilds
+     * const dinozBuild = await prisma.dinozBuild.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DinozBuilds and only return the `id`
+     * const dinozBuildWithIdOnly = await prisma.dinozBuild.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DinozBuildCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozBuildCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DinozBuild.
+     * @param {DinozBuildDeleteArgs} args - Arguments to delete one DinozBuild.
+     * @example
+     * // Delete one DinozBuild
+     * const DinozBuild = await prisma.dinozBuild.delete({
+     *   where: {
+     *     // ... filter to delete one DinozBuild
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DinozBuildDeleteArgs>(args: SelectSubset<T, DinozBuildDeleteArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DinozBuild.
+     * @param {DinozBuildUpdateArgs} args - Arguments to update one DinozBuild.
+     * @example
+     * // Update one DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DinozBuildUpdateArgs>(args: SelectSubset<T, DinozBuildUpdateArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DinozBuilds.
+     * @param {DinozBuildDeleteManyArgs} args - Arguments to filter DinozBuilds to delete.
+     * @example
+     * // Delete a few DinozBuilds
+     * const { count } = await prisma.dinozBuild.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DinozBuildDeleteManyArgs>(args?: SelectSubset<T, DinozBuildDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DinozBuilds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DinozBuilds
+     * const dinozBuild = await prisma.dinozBuild.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DinozBuildUpdateManyArgs>(args: SelectSubset<T, DinozBuildUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DinozBuilds and returns the data updated in the database.
+     * @param {DinozBuildUpdateManyAndReturnArgs} args - Arguments to update many DinozBuilds.
+     * @example
+     * // Update many DinozBuilds
+     * const dinozBuild = await prisma.dinozBuild.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DinozBuilds and only return the `id`
+     * const dinozBuildWithIdOnly = await prisma.dinozBuild.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DinozBuildUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozBuildUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DinozBuild.
+     * @param {DinozBuildUpsertArgs} args - Arguments to update or create a DinozBuild.
+     * @example
+     * // Update or create a DinozBuild
+     * const dinozBuild = await prisma.dinozBuild.upsert({
+     *   create: {
+     *     // ... data to create a DinozBuild
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DinozBuild we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DinozBuildUpsertArgs>(args: SelectSubset<T, DinozBuildUpsertArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DinozBuilds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildCountArgs} args - Arguments to filter DinozBuilds to count.
+     * @example
+     * // Count the number of DinozBuilds
+     * const count = await prisma.dinozBuild.count({
+     *   where: {
+     *     // ... the filter for the DinozBuilds we want to count
+     *   }
+     * })
+    **/
+    count<T extends DinozBuildCountArgs>(
+      args?: Subset<T, DinozBuildCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DinozBuildCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DinozBuild.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DinozBuildAggregateArgs>(args: Subset<T, DinozBuildAggregateArgs>): Prisma.PrismaPromise<GetDinozBuildAggregateType<T>>
+
+    /**
+     * Group by DinozBuild.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozBuildGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DinozBuildGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DinozBuildGroupByArgs['orderBy'] }
+        : { orderBy?: DinozBuildGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DinozBuildGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDinozBuildGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DinozBuild model
+   */
+  readonly fields: DinozBuildFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DinozBuild.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DinozBuildClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dinozs<T extends DinozBuild$dinozsArgs<ExtArgs> = {}>(args?: Subset<T, DinozBuild$dinozsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DinozBuild model
+   */ 
+  interface DinozBuildFieldRefs {
+    readonly id: FieldRef<"DinozBuild", 'String'>
+    readonly playerId: FieldRef<"DinozBuild", 'String'>
+    readonly skills: FieldRef<"DinozBuild", 'Int[]'>
+    readonly shareable: FieldRef<"DinozBuild", 'Boolean'>
+    readonly name: FieldRef<"DinozBuild", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DinozBuild findUnique
+   */
+  export type DinozBuildFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozBuild to fetch.
+     */
+    where: DinozBuildWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild findUniqueOrThrow
+   */
+  export type DinozBuildFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozBuild to fetch.
+     */
+    where: DinozBuildWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild findFirst
+   */
+  export type DinozBuildFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozBuild to fetch.
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozBuilds to fetch.
+     */
+    orderBy?: DinozBuildOrderByWithRelationInput | DinozBuildOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozBuilds.
+     */
+    cursor?: DinozBuildWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozBuilds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozBuilds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozBuilds.
+     */
+    distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild findFirstOrThrow
+   */
+  export type DinozBuildFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozBuild to fetch.
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozBuilds to fetch.
+     */
+    orderBy?: DinozBuildOrderByWithRelationInput | DinozBuildOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozBuilds.
+     */
+    cursor?: DinozBuildWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozBuilds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozBuilds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozBuilds.
+     */
+    distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild findMany
+   */
+  export type DinozBuildFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozBuilds to fetch.
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozBuilds to fetch.
+     */
+    orderBy?: DinozBuildOrderByWithRelationInput | DinozBuildOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DinozBuilds.
+     */
+    cursor?: DinozBuildWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozBuilds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozBuilds.
+     */
+    skip?: number
+    distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild create
+   */
+  export type DinozBuildCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DinozBuild.
+     */
+    data: XOR<DinozBuildCreateInput, DinozBuildUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild createMany
+   */
+  export type DinozBuildCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DinozBuilds.
+     */
+    data: DinozBuildCreateManyInput | DinozBuildCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DinozBuild createManyAndReturn
+   */
+  export type DinozBuildCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * The data used to create many DinozBuilds.
+     */
+    data: DinozBuildCreateManyInput | DinozBuildCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DinozBuild update
+   */
+  export type DinozBuildUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DinozBuild.
+     */
+    data: XOR<DinozBuildUpdateInput, DinozBuildUncheckedUpdateInput>
+    /**
+     * Choose, which DinozBuild to update.
+     */
+    where: DinozBuildWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild updateMany
+   */
+  export type DinozBuildUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DinozBuilds.
+     */
+    data: XOR<DinozBuildUpdateManyMutationInput, DinozBuildUncheckedUpdateManyInput>
+    /**
+     * Filter which DinozBuilds to update
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * Limit how many DinozBuilds to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DinozBuild updateManyAndReturn
+   */
+  export type DinozBuildUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * The data used to update DinozBuilds.
+     */
+    data: XOR<DinozBuildUpdateManyMutationInput, DinozBuildUncheckedUpdateManyInput>
+    /**
+     * Filter which DinozBuilds to update
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * Limit how many DinozBuilds to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DinozBuild upsert
+   */
+  export type DinozBuildUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DinozBuild to update in case it exists.
+     */
+    where: DinozBuildWhereUniqueInput
+    /**
+     * In case the DinozBuild found by the `where` argument doesn't exist, create a new DinozBuild with this data.
+     */
+    create: XOR<DinozBuildCreateInput, DinozBuildUncheckedCreateInput>
+    /**
+     * In case the DinozBuild was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DinozBuildUpdateInput, DinozBuildUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild delete
+   */
+  export type DinozBuildDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    /**
+     * Filter which DinozBuild to delete.
+     */
+    where: DinozBuildWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozBuild deleteMany
+   */
+  export type DinozBuildDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozBuilds to delete
+     */
+    where?: DinozBuildWhereInput
+    /**
+     * Limit how many DinozBuilds to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DinozBuild.dinozs
+   */
+  export type DinozBuild$dinozsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    cursor?: DinozWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+  }
+
+  /**
+   * DinozBuild without action
+   */
+  export type DinozBuildDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
   }
 
 
@@ -25550,6 +26848,7 @@ export namespace Prisma {
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
+    dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -25686,6 +26985,7 @@ export namespace Prisma {
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
+    dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25731,6 +27031,7 @@ export namespace Prisma {
       GameDinoz: Prisma.$GameDinozPayload<ExtArgs>[]
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
       Events: Prisma.$EventsPayload<ExtArgs>[]
+      dinozBuilds: Prisma.$DinozBuildPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -26189,6 +27490,7 @@ export namespace Prisma {
     GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinozBuilds<T extends Player$dinozBuildsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozBuildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27411,6 +28713,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
+  }
+
+  /**
+   * Player.dinozBuilds
+   */
+  export type Player$dinozBuildsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozBuild
+     */
+    select?: DinozBuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozBuild
+     */
+    omit?: DinozBuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozBuildInclude<ExtArgs> | null
+    where?: DinozBuildWhereInput
+    orderBy?: DinozBuildOrderByWithRelationInput | DinozBuildOrderByWithRelationInput[]
+    cursor?: DinozBuildWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
   }
 
   /**
@@ -74920,7 +76246,8 @@ export namespace Prisma {
     FBTournamentStep: 'FBTournamentStep',
     unavailableReason: 'unavailableReason',
     seed: 'seed',
-    playerId: 'playerId'
+    playerId: 'playerId',
+    buildId: 'buildId'
   };
 
   export type DinozScalarFieldEnum = (typeof DinozScalarFieldEnum)[keyof typeof DinozScalarFieldEnum]
@@ -74986,6 +76313,17 @@ export namespace Prisma {
   };
 
   export type DinozStatusScalarFieldEnum = (typeof DinozStatusScalarFieldEnum)[keyof typeof DinozStatusScalarFieldEnum]
+
+
+  export const DinozBuildScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    skills: 'skills',
+    shareable: 'shareable',
+    name: 'name'
+  };
+
+  export type DinozBuildScalarFieldEnum = (typeof DinozBuildScalarFieldEnum)[keyof typeof DinozBuildScalarFieldEnum]
 
 
   export const MigrationsScalarFieldEnum: {
@@ -76004,6 +77342,8 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    buildId?: UuidNullableFilter<"Dinoz"> | string | null
+    build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
@@ -76055,6 +77395,8 @@ export namespace Prisma {
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    buildId?: SortOrderInput | SortOrder
+    build?: DinozBuildOrderByWithRelationInput
     catches?: DinozCatchOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
     Moderation?: ModerationOrderByRelationAggregateInput
@@ -76109,6 +77451,8 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    buildId?: UuidNullableFilter<"Dinoz"> | string | null
+    build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
@@ -76160,6 +77504,7 @@ export namespace Prisma {
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    buildId?: SortOrderInput | SortOrder
     _count?: DinozCountOrderByAggregateInput
     _avg?: DinozAvgOrderByAggregateInput
     _max?: DinozMaxOrderByAggregateInput
@@ -76200,6 +77545,7 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringWithAggregatesFilter<"Dinoz"> | string
     playerId?: UuidWithAggregatesFilter<"Dinoz"> | string
+    buildId?: UuidNullableWithAggregatesFilter<"Dinoz"> | string | null
   }
 
   export type DinozItemWhereInput = {
@@ -76547,6 +77893,66 @@ export namespace Prisma {
     statusId?: IntWithAggregatesFilter<"DinozStatus"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
     gameDinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
+  }
+
+  export type DinozBuildWhereInput = {
+    AND?: DinozBuildWhereInput | DinozBuildWhereInput[]
+    OR?: DinozBuildWhereInput[]
+    NOT?: DinozBuildWhereInput | DinozBuildWhereInput[]
+    id?: UuidFilter<"DinozBuild"> | string
+    playerId?: UuidFilter<"DinozBuild"> | string
+    skills?: IntNullableListFilter<"DinozBuild">
+    shareable?: BoolFilter<"DinozBuild"> | boolean
+    name?: StringFilter<"DinozBuild"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinozs?: DinozListRelationFilter
+  }
+
+  export type DinozBuildOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    skills?: SortOrder
+    shareable?: SortOrder
+    name?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+    dinozs?: DinozOrderByRelationAggregateInput
+  }
+
+  export type DinozBuildWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DinozBuildWhereInput | DinozBuildWhereInput[]
+    OR?: DinozBuildWhereInput[]
+    NOT?: DinozBuildWhereInput | DinozBuildWhereInput[]
+    playerId?: UuidFilter<"DinozBuild"> | string
+    skills?: IntNullableListFilter<"DinozBuild">
+    shareable?: BoolFilter<"DinozBuild"> | boolean
+    name?: StringFilter<"DinozBuild"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinozs?: DinozListRelationFilter
+  }, "id">
+
+  export type DinozBuildOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    skills?: SortOrder
+    shareable?: SortOrder
+    name?: SortOrder
+    _count?: DinozBuildCountOrderByAggregateInput
+    _avg?: DinozBuildAvgOrderByAggregateInput
+    _max?: DinozBuildMaxOrderByAggregateInput
+    _min?: DinozBuildMinOrderByAggregateInput
+    _sum?: DinozBuildSumOrderByAggregateInput
+  }
+
+  export type DinozBuildScalarWhereWithAggregatesInput = {
+    AND?: DinozBuildScalarWhereWithAggregatesInput | DinozBuildScalarWhereWithAggregatesInput[]
+    OR?: DinozBuildScalarWhereWithAggregatesInput[]
+    NOT?: DinozBuildScalarWhereWithAggregatesInput | DinozBuildScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DinozBuild"> | string
+    playerId?: UuidWithAggregatesFilter<"DinozBuild"> | string
+    skills?: IntNullableListFilter<"DinozBuild">
+    shareable?: BoolWithAggregatesFilter<"DinozBuild"> | boolean
+    name?: StringWithAggregatesFilter<"DinozBuild"> | string
   }
 
   export type migrationsWhereInput = {
@@ -77052,6 +78458,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
+    dinozBuilds?: DinozBuildListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -77117,6 +78524,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozOrderByRelationAggregateInput
     pollVotes?: PollVoteOrderByRelationAggregateInput
     Events?: EventsOrderByRelationAggregateInput
+    dinozBuilds?: DinozBuildOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -77185,6 +78593,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
+    dinozBuilds?: DinozBuildListRelationFilter
   }, "id" | "clanMemberId" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -80036,6 +81445,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -80087,6 +81497,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -80131,6 +81542,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -80182,6 +81594,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -80230,6 +81643,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
   }
 
   export type DinozUpdateManyMutationInput = {
@@ -80290,6 +81704,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DinozItemCreateInput = {
@@ -80576,6 +81991,65 @@ export namespace Prisma {
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozBuildCreateInput = {
+    id?: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+    player: PlayerCreateNestedOneWithoutDinozBuildsInput
+    dinozs?: DinozCreateNestedManyWithoutBuildInput
+  }
+
+  export type DinozBuildUncheckedCreateInput = {
+    id?: string
+    playerId: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+    dinozs?: DinozUncheckedCreateNestedManyWithoutBuildInput
+  }
+
+  export type DinozBuildUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    player?: PlayerUpdateOneRequiredWithoutDinozBuildsNestedInput
+    dinozs?: DinozUpdateManyWithoutBuildNestedInput
+  }
+
+  export type DinozBuildUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    dinozs?: DinozUncheckedUpdateManyWithoutBuildNestedInput
+  }
+
+  export type DinozBuildCreateManyInput = {
+    id?: string
+    playerId: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+  }
+
+  export type DinozBuildUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozBuildUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type migrationsCreateInput = {
@@ -81055,6 +82529,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -81119,6 +82594,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -81183,6 +82659,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -81247,6 +82724,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -84051,6 +85529,23 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type UuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DinozBuildNullableScalarRelationFilter = {
+    is?: DinozBuildWhereInput | null
+    isNot?: DinozBuildWhereInput | null
+  }
+
   export type DinozCatchListRelationFilter = {
     every?: DinozCatchWhereInput
     some?: DinozCatchWhereInput
@@ -84251,6 +85746,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    buildId?: SortOrder
   }
 
   export type DinozAvgOrderByAggregateInput = {
@@ -84305,6 +85801,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    buildId?: SortOrder
   }
 
   export type DinozMinOrderByAggregateInput = {
@@ -84337,6 +85834,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    buildId?: SortOrder
   }
 
   export type DinozSumOrderByAggregateInput = {
@@ -84440,6 +85938,21 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type GameDinozNullableScalarRelationFilter = {
@@ -84704,6 +86217,44 @@ export namespace Prisma {
     statusId?: SortOrder
     dinozId?: SortOrder
     gameDinozId?: SortOrder
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type DinozBuildCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    skills?: SortOrder
+    shareable?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DinozBuildAvgOrderByAggregateInput = {
+    skills?: SortOrder
+  }
+
+  export type DinozBuildMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    shareable?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DinozBuildMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    shareable?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DinozBuildSumOrderByAggregateInput = {
+    skills?: SortOrder
   }
 
   export type BigIntFilter<$PrismaModel = never> = {
@@ -85131,14 +86682,6 @@ export namespace Prisma {
     not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
-  export type IntNullableListFilter<$PrismaModel = never> = {
-    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    has?: number | IntFieldRefInput<$PrismaModel> | null
-    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
-    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -85291,6 +86834,12 @@ export namespace Prisma {
     none?: EventsWhereInput
   }
 
+  export type DinozBuildListRelationFilter = {
+    every?: DinozBuildWhereInput
+    some?: DinozBuildWhereInput
+    none?: DinozBuildWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -85364,6 +86913,10 @@ export namespace Prisma {
   }
 
   export type EventsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DinozBuildOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -85531,18 +87084,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type UuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
-
   export type DojoChallengeHistoryListRelationFilter = {
     every?: DojoChallengeHistoryWhereInput
     some?: DojoChallengeHistoryWhereInput
@@ -85634,21 +87175,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DojoScalarRelationFilter = {
@@ -87536,6 +89062,12 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type DinozBuildCreateNestedOneWithoutDinozsInput = {
+    create?: XOR<DinozBuildCreateWithoutDinozsInput, DinozBuildUncheckedCreateWithoutDinozsInput>
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutDinozsInput
+    connect?: DinozBuildWhereUniqueInput
+  }
+
   export type DinozCatchCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -87800,6 +89332,16 @@ export namespace Prisma {
     set?: $Enums.UnavailableReason | null
   }
 
+  export type DinozBuildUpdateOneWithoutDinozsNestedInput = {
+    create?: XOR<DinozBuildCreateWithoutDinozsInput, DinozBuildUncheckedCreateWithoutDinozsInput>
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutDinozsInput
+    upsert?: DinozBuildUpsertWithoutDinozsInput
+    disconnect?: DinozBuildWhereInput | boolean
+    delete?: DinozBuildWhereInput | boolean
+    connect?: DinozBuildWhereUniqueInput
+    update?: XOR<XOR<DinozBuildUpdateToOneWithWhereWithoutDinozsInput, DinozBuildUpdateWithoutDinozsInput>, DinozBuildUncheckedUpdateWithoutDinozsInput>
+  }
+
   export type DinozCatchUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -88049,6 +89591,10 @@ export namespace Prisma {
     update?: TournamentTeamUpdateWithWhereUniqueWithoutDinozInput | TournamentTeamUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: TournamentTeamUpdateManyWithWhereWithoutDinozInput | TournamentTeamUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: TournamentTeamScalarWhereInput | TournamentTeamScalarWhereInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DinozCatchUncheckedUpdateManyWithoutDinozNestedInput = {
@@ -88508,6 +90054,71 @@ export namespace Prisma {
     update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutStatusInput, GameDinozUpdateWithoutStatusInput>, GameDinozUncheckedUpdateWithoutStatusInput>
   }
 
+  export type DinozBuildCreateskillsInput = {
+    set: number[]
+  }
+
+  export type PlayerCreateNestedOneWithoutDinozBuildsInput = {
+    create?: XOR<PlayerCreateWithoutDinozBuildsInput, PlayerUncheckedCreateWithoutDinozBuildsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDinozBuildsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozCreateNestedManyWithoutBuildInput = {
+    create?: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput> | DinozCreateWithoutBuildInput[] | DinozUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutBuildInput | DinozCreateOrConnectWithoutBuildInput[]
+    createMany?: DinozCreateManyBuildInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
+  export type DinozUncheckedCreateNestedManyWithoutBuildInput = {
+    create?: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput> | DinozCreateWithoutBuildInput[] | DinozUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutBuildInput | DinozCreateOrConnectWithoutBuildInput[]
+    createMany?: DinozCreateManyBuildInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
+  export type DinozBuildUpdateskillsInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type PlayerUpdateOneRequiredWithoutDinozBuildsNestedInput = {
+    create?: XOR<PlayerCreateWithoutDinozBuildsInput, PlayerUncheckedCreateWithoutDinozBuildsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDinozBuildsInput
+    upsert?: PlayerUpsertWithoutDinozBuildsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDinozBuildsInput, PlayerUpdateWithoutDinozBuildsInput>, PlayerUncheckedUpdateWithoutDinozBuildsInput>
+  }
+
+  export type DinozUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput> | DinozCreateWithoutBuildInput[] | DinozUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutBuildInput | DinozCreateOrConnectWithoutBuildInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutBuildInput | DinozUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: DinozCreateManyBuildInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutBuildInput | DinozUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutBuildInput | DinozUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
+  export type DinozUncheckedUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput> | DinozCreateWithoutBuildInput[] | DinozUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutBuildInput | DinozCreateOrConnectWithoutBuildInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutBuildInput | DinozUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: DinozCreateManyBuildInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutBuildInput | DinozUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutBuildInput | DinozUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
   export type BigIntFieldUpdateOperationsInput = {
     set?: bigint | number
     increment?: bigint | number
@@ -88540,10 +90151,6 @@ export namespace Prisma {
     connectOrCreate?: NewsLikeCreateOrConnectWithoutNewsInput | NewsLikeCreateOrConnectWithoutNewsInput[]
     createMany?: NewsLikeCreateManyNewsInputEnvelope
     connect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type EnumNewsTypeFieldUpdateOperationsInput = {
@@ -89061,6 +90668,13 @@ export namespace Prisma {
     connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
   }
 
+  export type DinozBuildCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput> | DinozBuildCreateWithoutPlayerInput[] | DinozBuildUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
+    createMany?: DinozBuildCreateManyPlayerInputEnvelope
+    connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -89278,6 +90892,13 @@ export namespace Prisma {
     connectOrCreate?: EventsCreateOrConnectWithoutPlayerInput | EventsCreateOrConnectWithoutPlayerInput[]
     createMany?: EventsCreateManyPlayerInputEnvelope
     connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+  }
+
+  export type DinozBuildUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput> | DinozBuildCreateWithoutPlayerInput[] | DinozBuildUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
+    createMany?: DinozBuildCreateManyPlayerInputEnvelope
+    connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -89736,6 +91357,20 @@ export namespace Prisma {
     deleteMany?: EventsScalarWhereInput | EventsScalarWhereInput[]
   }
 
+  export type DinozBuildUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput> | DinozBuildCreateWithoutPlayerInput[] | DinozBuildUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
+    upsert?: DinozBuildUpsertWithWhereUniqueWithoutPlayerInput | DinozBuildUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DinozBuildCreateManyPlayerInputEnvelope
+    set?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    disconnect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    delete?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    update?: DinozBuildUpdateWithWhereUniqueWithoutPlayerInput | DinozBuildUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DinozBuildUpdateManyWithWhereWithoutPlayerInput | DinozBuildUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -90162,6 +91797,20 @@ export namespace Prisma {
     update?: EventsUpdateWithWhereUniqueWithoutPlayerInput | EventsUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: EventsUpdateManyWithWhereWithoutPlayerInput | EventsUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: EventsScalarWhereInput | EventsScalarWhereInput[]
+  }
+
+  export type DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput> | DinozBuildCreateWithoutPlayerInput[] | DinozBuildUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
+    upsert?: DinozBuildUpsertWithWhereUniqueWithoutPlayerInput | DinozBuildUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DinozBuildCreateManyPlayerInputEnvelope
+    set?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    disconnect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    delete?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+    update?: DinozBuildUpdateWithWhereUniqueWithoutPlayerInput | DinozBuildUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DinozBuildUpdateManyWithWhereWithoutPlayerInput | DinozBuildUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutDojoInput = {
@@ -92587,6 +94236,17 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -92677,6 +94337,34 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -92715,20 +94403,6 @@ export namespace Prisma {
     _sum?: NestedBigIntFilter<$PrismaModel>
     _min?: NestedBigIntFilter<$PrismaModel>
     _max?: NestedBigIntFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedEnumNewsTypeFilter<$PrismaModel = never> = {
@@ -92826,17 +94500,6 @@ export namespace Prisma {
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
-
-  export type NestedUuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -92873,20 +94536,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumOfferStatusFilter<$PrismaModel = never> = {
@@ -93068,6 +94717,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93117,6 +94767,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93194,6 +94845,28 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    buildId?: UuidNullableFilter<"Dinoz"> | string | null
+  }
+
+  export type DinozBuildCreateWithoutDinozsInput = {
+    id?: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+    player: PlayerCreateNestedOneWithoutDinozBuildsInput
+  }
+
+  export type DinozBuildUncheckedCreateWithoutDinozsInput = {
+    id?: string
+    playerId: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+  }
+
+  export type DinozBuildCreateOrConnectWithoutDinozsInput = {
+    where: DinozBuildWhereUniqueInput
+    create: XOR<DinozBuildCreateWithoutDinozsInput, DinozBuildUncheckedCreateWithoutDinozsInput>
   }
 
   export type DinozCatchCreateWithoutDinozInput = {
@@ -93400,6 +95073,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -93463,6 +95137,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -93509,6 +95184,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93559,6 +95235,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93607,6 +95284,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93656,6 +95334,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93909,6 +95588,33 @@ export namespace Prisma {
     create: XOR<TournamentTeamCreateWithoutDinozInput, TournamentTeamUncheckedCreateWithoutDinozInput>
   }
 
+  export type DinozBuildUpsertWithoutDinozsInput = {
+    update: XOR<DinozBuildUpdateWithoutDinozsInput, DinozBuildUncheckedUpdateWithoutDinozsInput>
+    create: XOR<DinozBuildCreateWithoutDinozsInput, DinozBuildUncheckedCreateWithoutDinozsInput>
+    where?: DinozBuildWhereInput
+  }
+
+  export type DinozBuildUpdateToOneWithWhereWithoutDinozsInput = {
+    where?: DinozBuildWhereInput
+    data: XOR<DinozBuildUpdateWithoutDinozsInput, DinozBuildUncheckedUpdateWithoutDinozsInput>
+  }
+
+  export type DinozBuildUpdateWithoutDinozsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    player?: PlayerUpdateOneRequiredWithoutDinozBuildsNestedInput
+  }
+
+  export type DinozBuildUncheckedUpdateWithoutDinozsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DinozCatchUpsertWithWhereUniqueWithoutDinozInput = {
     where: DinozCatchWhereUniqueInput
     update: XOR<DinozCatchUpdateWithoutDinozInput, DinozCatchUncheckedUpdateWithoutDinozInput>
@@ -94127,6 +95833,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -94190,6 +95897,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -94248,6 +95956,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94298,6 +96007,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -94620,6 +96330,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -94670,6 +96381,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -94813,6 +96525,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94863,6 +96576,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -94992,6 +96706,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -95042,6 +96757,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -95183,6 +96899,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -95233,6 +96950,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -95370,6 +97088,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -95420,6 +97139,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -95479,6 +97199,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -95529,6 +97250,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -95572,6 +97294,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -95622,6 +97345,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -95745,6 +97469,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -95795,6 +97520,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -95908,6 +97634,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -95958,6 +97685,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -96081,6 +97809,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -96131,6 +97860,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -96244,6 +97974,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -96294,6 +98025,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -96417,6 +98149,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -96467,6 +98200,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -96552,6 +98286,399 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
     FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
+  }
+
+  export type PlayerCreateWithoutDinozBuildsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutDinozBuildsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutDinozBuildsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutDinozBuildsInput, PlayerUncheckedCreateWithoutDinozBuildsInput>
+  }
+
+  export type DinozCreateWithoutBuildInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutBuildInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    playerId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutBuildInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput>
+  }
+
+  export type DinozCreateManyBuildInputEnvelope = {
+    data: DinozCreateManyBuildInput | DinozCreateManyBuildInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerUpsertWithoutDinozBuildsInput = {
+    update: XOR<PlayerUpdateWithoutDinozBuildsInput, PlayerUncheckedUpdateWithoutDinozBuildsInput>
+    create: XOR<PlayerCreateWithoutDinozBuildsInput, PlayerUncheckedCreateWithoutDinozBuildsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutDinozBuildsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutDinozBuildsInput, PlayerUncheckedUpdateWithoutDinozBuildsInput>
+  }
+
+  export type PlayerUpdateWithoutDinozBuildsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutDinozBuildsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DinozUpsertWithWhereUniqueWithoutBuildInput = {
+    where: DinozWhereUniqueInput
+    update: XOR<DinozUpdateWithoutBuildInput, DinozUncheckedUpdateWithoutBuildInput>
+    create: XOR<DinozCreateWithoutBuildInput, DinozUncheckedCreateWithoutBuildInput>
+  }
+
+  export type DinozUpdateWithWhereUniqueWithoutBuildInput = {
+    where: DinozWhereUniqueInput
+    data: XOR<DinozUpdateWithoutBuildInput, DinozUncheckedUpdateWithoutBuildInput>
+  }
+
+  export type DinozUpdateManyWithWhereWithoutBuildInput = {
+    where: DinozScalarWhereInput
+    data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyWithoutBuildInput>
   }
 
   export type PollCreateWithoutNewsInput = {
@@ -97029,6 +99156,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPollVotesInput = {
@@ -97092,6 +99220,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPollVotesInput = {
@@ -97225,6 +99354,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPollVotesInput = {
@@ -97288,6 +99418,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -97402,6 +99533,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -97452,6 +99584,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -97511,6 +99644,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -97561,6 +99695,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -98071,6 +100206,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -98120,6 +100256,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -98557,6 +100694,32 @@ export namespace Prisma {
 
   export type EventsCreateManyPlayerInputEnvelope = {
     data: EventsCreateManyPlayerInput | EventsCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozBuildCreateWithoutPlayerInput = {
+    id?: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+    dinozs?: DinozCreateNestedManyWithoutBuildInput
+  }
+
+  export type DinozBuildUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
+    dinozs?: DinozUncheckedCreateNestedManyWithoutBuildInput
+  }
+
+  export type DinozBuildCreateOrConnectWithoutPlayerInput = {
+    where: DinozBuildWhereUniqueInput
+    create: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DinozBuildCreateManyPlayerInputEnvelope = {
+    data: DinozBuildCreateManyPlayerInput | DinozBuildCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -99415,6 +101578,33 @@ export namespace Prisma {
     dailyProgression?: IntFilter<"Events"> | number
   }
 
+  export type DinozBuildUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: DinozBuildWhereUniqueInput
+    update: XOR<DinozBuildUpdateWithoutPlayerInput, DinozBuildUncheckedUpdateWithoutPlayerInput>
+    create: XOR<DinozBuildCreateWithoutPlayerInput, DinozBuildUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DinozBuildUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: DinozBuildWhereUniqueInput
+    data: XOR<DinozBuildUpdateWithoutPlayerInput, DinozBuildUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type DinozBuildUpdateManyWithWhereWithoutPlayerInput = {
+    where: DinozBuildScalarWhereInput
+    data: XOR<DinozBuildUpdateManyMutationInput, DinozBuildUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type DinozBuildScalarWhereInput = {
+    AND?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+    OR?: DinozBuildScalarWhereInput[]
+    NOT?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+    id?: UuidFilter<"DinozBuild"> | string
+    playerId?: UuidFilter<"DinozBuild"> | string
+    skills?: IntNullableListFilter<"DinozBuild">
+    shareable?: BoolFilter<"DinozBuild"> | boolean
+    name?: StringFilter<"DinozBuild"> | string
+  }
+
   export type PlayerCreateWithoutDojoInput = {
     customText?: string | null
     name: string
@@ -99476,6 +101666,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -99539,6 +101730,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -99719,6 +101911,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -99782,6 +101975,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -99932,6 +102126,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -99982,6 +102177,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -100076,6 +102272,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -100126,6 +102323,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -100198,6 +102396,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -100248,6 +102447,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -100342,6 +102542,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -100392,6 +102593,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -100534,6 +102736,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -100597,6 +102800,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -100676,6 +102880,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -100739,6 +102944,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -100802,6 +103008,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -100865,6 +103072,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -100944,6 +103152,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -101007,6 +103216,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -101070,6 +103280,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -101133,6 +103344,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -101212,6 +103424,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -101275,6 +103488,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -101338,6 +103552,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -101401,6 +103616,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -101480,6 +103696,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -101543,6 +103760,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -101606,6 +103824,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -101669,6 +103888,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -101748,6 +103968,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -101811,6 +104032,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -101874,6 +104096,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -101937,6 +104160,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -102016,6 +104240,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -102079,6 +104304,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -102142,6 +104368,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -102205,6 +104432,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -102284,6 +104512,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -102347,6 +104576,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -102410,6 +104640,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -102473,6 +104704,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -102552,6 +104784,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -102615,6 +104848,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -102768,6 +105002,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -102831,6 +105066,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -102944,6 +105180,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -103007,6 +105244,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -103035,6 +105273,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -103085,6 +105324,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -103168,6 +105408,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -103231,6 +105472,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -103321,6 +105563,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -103371,6 +105614,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -103460,6 +105704,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -103523,6 +105768,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -103594,6 +105840,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -103644,6 +105891,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -103727,6 +105975,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -103790,6 +106039,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -103834,6 +106084,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -103884,6 +106135,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -103973,6 +106225,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -104036,6 +106289,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -104064,6 +106318,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -104114,6 +106369,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -104173,6 +106429,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -104223,6 +106480,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -104301,6 +106559,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -104364,6 +106623,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -104443,6 +106703,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -104506,6 +106767,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -104534,6 +106796,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -104584,6 +106847,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -104667,6 +106931,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -104730,6 +106995,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -104774,6 +107040,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -104824,6 +107091,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -104913,6 +107181,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -104976,6 +107245,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanWarCreateWithoutClansInput = {
@@ -105055,6 +107325,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -105118,6 +107389,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -105363,6 +107635,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -105426,6 +107699,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -105666,6 +107940,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -105729,6 +108004,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -105850,6 +108126,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -105913,6 +108190,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -106125,6 +108403,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -106188,6 +108467,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -106303,6 +108583,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -106366,6 +108647,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -106471,6 +108753,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -106534,6 +108817,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -106649,6 +108933,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -106712,6 +108997,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -106853,6 +109139,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -106916,6 +109203,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -107037,6 +109325,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -107100,6 +109389,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -107206,6 +109496,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107256,6 +109547,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -107339,6 +109631,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -107402,6 +109695,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -107470,6 +109764,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -107533,6 +109828,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -107601,6 +109897,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -107664,6 +109961,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -107708,6 +110006,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -107758,6 +110057,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -107847,6 +110147,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -107910,6 +110211,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -107984,6 +110286,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -108047,6 +110350,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -108121,6 +110425,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -108184,6 +110489,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutCreatedConversationsInput = {
@@ -108247,6 +110553,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -108310,6 +110617,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -108400,6 +110708,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -108463,6 +110772,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -108592,6 +110902,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -108655,6 +110966,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -108757,6 +111069,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -108820,6 +111133,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -108944,6 +111258,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -109007,6 +111322,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -109121,6 +111437,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -109184,6 +111501,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -109305,6 +111623,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -109368,6 +111687,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -109517,6 +111837,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -109580,6 +111901,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -109643,6 +111965,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -109706,6 +112029,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -109785,6 +112109,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -109848,6 +112173,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -109911,6 +112237,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -109974,6 +112301,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -110313,6 +112641,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -110376,6 +112705,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -110772,6 +113102,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -110835,6 +113166,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -110963,6 +113295,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -111026,6 +113359,7 @@ export namespace Prisma {
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -111193,6 +113527,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -111243,6 +113578,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -111726,6 +114062,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGameDinozInput = {
@@ -111789,6 +114126,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGameDinozInput = {
@@ -112099,6 +114437,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGameDinozInput = {
@@ -112162,6 +114501,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
@@ -112370,6 +114710,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutEventsInput = {
@@ -112433,6 +114774,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutEventsInput = {
@@ -112512,6 +114854,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutEventsInput = {
@@ -112575,6 +114918,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -112606,6 +114950,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
   }
 
   export type DinozUpdateWithoutConcentrationInput = {
@@ -112634,6 +114979,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -112683,6 +115029,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -112730,6 +115077,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DinozCatchCreateManyDinozInput = {
@@ -112807,6 +115155,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    buildId?: string | null
   }
 
   export type DinozItemCreateManyDinozInput = {
@@ -113031,6 +115380,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -113080,6 +115430,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -113127,6 +115478,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -113341,6 +115693,165 @@ export namespace Prisma {
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
     gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozCreateManyBuildInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    playerId: string
+  }
+
+  export type DinozUpdateWithoutBuildInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutBuildInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateManyWithoutBuildInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
   }
 
   export type NewsLikeCreateManyNewsInput = {
@@ -113598,6 +116109,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    buildId?: string | null
   }
 
   export type PlayerTrackingCreateManyPlayerInput = {
@@ -113701,6 +116213,13 @@ export namespace Prisma {
     event: $Enums.EventType
     totalProgression: number
     dailyProgression: number
+  }
+
+  export type DinozBuildCreateManyPlayerInput = {
+    id?: string
+    skills?: DinozBuildCreateskillsInput | number[]
+    shareable?: boolean
+    name: string
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -114105,6 +116624,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -114154,6 +116674,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -114201,6 +116722,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlayerTrackingUpdateWithoutPlayerInput = {
@@ -114517,6 +117039,29 @@ export namespace Prisma {
     event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     totalProgression?: IntFieldUpdateOperationsInput | number
     dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozBuildUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    dinozs?: DinozUpdateManyWithoutBuildNestedInput
+  }
+
+  export type DinozBuildUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    dinozs?: DinozUncheckedUpdateManyWithoutBuildNestedInput
+  }
+
+  export type DinozBuildUncheckedUpdateManyWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skills?: DinozBuildUpdateskillsInput | number[]
+    shareable?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type DojoTeamCreateManyDojoInput = {
@@ -115142,6 +117687,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -115192,6 +117738,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -115239,6 +117786,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveUpdateWithoutTournamentTeamLeftInput = {
