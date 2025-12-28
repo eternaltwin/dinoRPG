@@ -78,7 +78,11 @@
 							<th class="type">{{ $t('levelup.level') }}</th>
 							<th class="type"></th>
 						</tr>
-						<tr v-for="skill in availableSkills.learnableSkills" :key="skill.skillId">
+						<tr
+							v-for="skill in availableSkills.learnableSkills"
+							:key="skill.skillId"
+							:class="{ 'in-build': dinoz?.build?.skills.some(bs => bs === skill.skillId) }"
+						>
 							<Tippy theme="normal" tag="td" class="name">
 								<div>
 									<div class="skillName">
@@ -197,7 +201,8 @@
 			<SkillTree
 				v-if="playerStore.playerOptions.hasPAC"
 				:type="availableSkills.element"
-				:dinoz="dinozStore.getDinoz(+id)"
+				:dinoz="dinoz"
+				:buildSkills="dinoz?.build?.skills"
 			/>
 		</div>
 	</div>
@@ -220,6 +225,7 @@ import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { FBService } from '../services/FBTournamentService.js';
 import DZButton from '../components/common/DZButton.vue';
 import SkillTree from '../components/dinoz/SkillTree.vue';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -241,7 +247,8 @@ export default defineComponent({
 			skillList,
 			ElementType: ElementType,
 			isSpinOver: false as boolean,
-			position: dinozPlacement
+			position: dinozPlacement,
+			dinoz: undefined as DinozFiche | undefined
 		};
 	},
 	props: {
@@ -351,6 +358,8 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		await this.getLearnableSkills(+this.id, 1);
+
+		this.dinoz = this.dinozStore.getDinoz(+this.id);
 	}
 });
 </script>
@@ -543,6 +552,40 @@ export default defineComponent({
 		border-spacing: 1px;
 		tr {
 			display: table-row;
+
+			&.in-build {
+				td {
+					&.name {
+						background-image: repeating-linear-gradient(
+								45deg,
+								transparent,
+								transparent 5px,
+								rgba(0, 0, 0, 0.1) 5px,
+								rgba(0, 0, 0, 0.1) 10px
+							),
+							url('../assets/background/table_cell.webp');
+						background-position:
+							0px 0px,
+							0px 0px;
+					}
+
+					&.type,
+					&.learn {
+						background-image: repeating-linear-gradient(
+								45deg,
+								transparent,
+								transparent 5px,
+								rgba(0, 0, 0, 0.1) 5px,
+								rgba(0, 0, 0, 0.1) 10px
+							),
+							url('../assets/background/table_cell.webp');
+						background-position:
+							0px 0px,
+							-10px 0px;
+					}
+				}
+			}
+
 			th {
 				font-size: 8pt;
 				letter-spacing: 0pt;

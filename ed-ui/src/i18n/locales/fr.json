@@ -147,7 +147,8 @@
 		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
 		"buildSaveError": "Une erreur est survenue lors de l'enregistrement du plan de compétences",
 		"buildDeleted": "Le plan de compétences \"{name}\" a été supprimé",
-		"buildAssigned": "Le plan de compétences \"{name}\" a été assigné à votre Dinoz"
+		"buildAssigned": "Le plan de compétences \"{name}\" a été assigné à votre Dinoz",
+		"buildCopied": "Le plan de compétences \"{name}\" a été copié dans vos plans de compétences"
 	},
 	"dig": {
 		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -4106,6 +4107,7 @@
 			"members": "Liste des membres",
 			"treasure": "Trésor du Clan",
 			"war": "Infos de guerre",
+			"builds": "Plans de compétences",
 			"discussion": "Fil de discussion",
 			"history": "Historique du Clan",
 			"parameters": "Paramètres"
@@ -4203,6 +4205,10 @@
 				"cancel": "Annuler"
 			}
 		}
+	},
+	"clanBuilds": {
+		"noBuilds": "Aucun plan de compétence n'a encore été partagé.",
+		"copyBuild": "Copier le plan de compétence"
 	},
 	"clanDiscussion": {
 		"action": {

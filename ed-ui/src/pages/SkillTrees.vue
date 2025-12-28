@@ -56,6 +56,19 @@ const init = async () => {
 			return;
 		}
 		dinoz.value = await DinozService.getDinozFiche(dinozId);
+		if (dinoz.value.build) {
+			buildSkills.value = {
+				[ElementType.FIRE]: [],
+				[ElementType.WOOD]: [],
+				[ElementType.WATER]: [],
+				[ElementType.LIGHTNING]: [],
+				[ElementType.AIR]: [],
+				[ElementType.VOID]: []
+			};
+			dinoz.value.build.skills.forEach(skill => {
+				buildSkills.value[skillList[skill as Skill].element[0]].push(skill);
+			});
+		}
 	} else {
 		dinoz.value = undefined;
 	}
@@ -73,6 +86,12 @@ const resetBuild = () => {
 		[ElementType.AIR]: [],
 		[ElementType.VOID]: []
 	};
+
+	if (dinoz.value && dinoz.value.build) {
+		dinoz.value.build.skills.forEach(skill => {
+			buildSkills.value[skillList[skill as Skill].element[0]].push(skill);
+		});
+	}
 };
 
 const selectBuildToEdit = async () => {
@@ -170,6 +189,13 @@ const deleteBuild = async () => {
 			message: formatText(t(`toast.buildDeleted`, { name: buildName.value })),
 			type: 'success'
 		});
+
+		if (dinoz.value?.build?.id === buildId.value) {
+			dinoz.value = {
+				...dinoz.value,
+				build: undefined
+			};
+		}
 
 		// Reset build mode
 		buildMode.value = false;

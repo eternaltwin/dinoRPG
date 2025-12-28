@@ -1545,3 +1545,22 @@ export async function getPlayerDiscoveredSkills(playerId: string) {
 		}
 	});
 }
+
+/**
+ * Get the player data needed for Dinoz Build checks.
+ */
+export async function getPlayerForDinozBuildChecks(playerId: string) {
+	return prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			discoveredSkills: true,
+			rewards: {
+				select: {
+					rewardId: true
+				}
+			}
+		}
+	});
+}

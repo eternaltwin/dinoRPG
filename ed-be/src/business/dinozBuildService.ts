@@ -1,15 +1,16 @@
-import type { Request } from 'express';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { auth, ownsDinoz } from '../dao/playerDao.js';
+import type { Request } from 'express';
 import {
 	assignBuildToDinoz,
 	createBuild,
 	deleteBuild,
 	getBuild,
+	getClanSharedBuilds,
 	getPlayerBuilds,
-	updateBuildSkills,
-	getClanSharedBuilds
+	updateBuildSkills
 } from '../dao/dinozBuildDao.js';
+import { auth, getPlayerForDinozBuildChecks, ownsDinoz } from '../dao/playerDao.js';
 import { prisma } from '../prisma.js';
 
 const toIntArray = (v: unknown) => {
@@ -21,6 +22,14 @@ const toIntArray = (v: unknown) => {
 	return numbers;
 };
 
+const hasPAC = (player: Awaited<ReturnType<typeof getPlayerForDinozBuildChecks>>) => {
+	return player.rewards?.some(r => r.rewardId === Reward.PAC);
+};
+
+const areSkillsDiscovered = (player: Awaited<ReturnType<typeof getPlayerForDinozBuildChecks>>, skills: number[]) => {
+	return skills.every(skillId => player.discoveredSkills.includes(skillId));
+};
+
 export const listBuilds = async (req: Request) => {
 	const authed = await auth(req);
 
@@ -29,8 +38,24 @@ export const listBuilds = async (req: Request) => {
 
 export const createNewBuild = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to create dinoz builds');
+	}
+
 	const skills = toIntArray(req.body.skills);
+
+	if (!areSkillsDiscovered(player, skills)) {
+		throw new ExpectedError('One or more skills have not been discovered');
+	}
+
 	const name = String(req.body.name);
+
+	if (name.length === 0) {
+		throw new ExpectedError('Build name cannot be empty');
+	}
+
 	const shareable = Boolean(req.body.shareable);
 
 	return createBuild(authed.id, skills, name, shareable);
@@ -38,6 +63,12 @@ export const createNewBuild = async (req: Request) => {
 
 export const updateBuild = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to create dinoz builds');
+	}
+
 	const buildId = String(req.params.buildId);
 
 	const build = await getBuild(buildId);
@@ -45,7 +76,17 @@ export const updateBuild = async (req: Request) => {
 	if (!build || build.playerId !== authed.id) throw new ExpectedError('Build not found');
 
 	const skills = toIntArray(req.body.skills);
+
+	if (!areSkillsDiscovered(player, skills)) {
+		throw new ExpectedError('One or more skills have not been discovered');
+	}
+
 	const name = String(req.body.name);
+
+	if (name.length === 0) {
+		throw new ExpectedError('Build name cannot be empty');
+	}
+
 	const shareable = Boolean(req.body.shareable);
 
 	await updateBuildSkills(buildId, skills, name, shareable);
@@ -53,6 +94,12 @@ export const updateBuild = async (req: Request) => {
 
 export const removeBuild = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to delete dinoz builds');
+	}
+
 	const buildId = String(req.params.buildId);
 
 	const build = await getBuild(buildId);
@@ -64,15 +111,26 @@ export const removeBuild = async (req: Request) => {
 
 export const listClanSharedBuilds = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to view clan shared dinoz builds');
+	}
 
 	const clanMember = await prisma.clanMember.findUnique({ where: { playerId: authed.id }, select: { clanId: true } });
 	if (!clanMember) return [];
 
-	return getClanSharedBuilds(clanMember.clanId, authed.id);
+	return getClanSharedBuilds(clanMember.clanId);
 };
 
 export const copySharedBuild = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to copy dinoz builds');
+	}
+
 	const buildId = String(req.params.buildId);
 
 	const build = await getBuild(buildId);
@@ -86,6 +144,12 @@ export const copySharedBuild = async (req: Request) => {
 
 export const assignBuild = async (req: Request) => {
 	const authed = await auth(req);
+	const player = await getPlayerForDinozBuildChecks(authed.id);
+
+	if (!hasPAC(player)) {
+		throw new ExpectedError('PAC is required to assign dinoz builds');
+	}
+
 	const dinozId = +req.params.id;
 	const buildId = req.body.buildId ? String(req.body.buildId) : null;
 

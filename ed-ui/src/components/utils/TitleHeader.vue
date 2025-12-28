@@ -41,7 +41,6 @@ export default defineComponent({
 	.titlePage {
 		color: #71b703;
 		display: inline;
-		float: left;
 		font-family: 'Berlin Sans FB Demi';
 		font-variant: small-caps;
 		font-size: 19px;
