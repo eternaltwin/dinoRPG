@@ -1,7 +1,7 @@
 export class LiveStats {
-	public connectedPlayers: number = 0;
-	public totalPlayers: number = 0;
-	public totalDinoz: number = 0;
+	public connectedPlayers = new Set();
+	public totalPlayers = 0;
+	public totalDinoz = 0;
 
 	constructor(initialData: Partial<LiveStats>) {
 		Object.assign(this, initialData);
@@ -19,21 +19,19 @@ export class LiveStats {
 		this.totalPlayers--;
 	}
 
-	public incrementConnectedPlayers() {
-		this.connectedPlayers++;
+	public addConnectedPlayers(playerId: string) {
+		this.connectedPlayers.add(playerId);
 	}
 
-	public decrementConnectedPlayers() {
-		if (this.connectedPlayers > 0) {
-			this.connectedPlayers--;
-		}
+	public removeConnectedPlayers(playerId: string) {
+		this.connectedPlayers.delete(playerId);
 	}
 
-	public get summary() {
+	public summary() {
 		return {
 			totalDinoz: this.totalDinoz,
 			totalPlayers: this.totalPlayers,
-			connectedPlayers: this.connectedPlayers
+			connectedPlayers: this.connectedPlayers.size
 		};
 	}
 }

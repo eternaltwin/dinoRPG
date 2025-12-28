@@ -31,7 +31,6 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
-const connectionCounts = new Map<string, number>();
 
 // Tickets garbage collector
 setInterval(() => {
@@ -456,11 +455,7 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
 
 	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
-	const count = connectionCounts.get(ticket.playerId) || 0;
-	if (count === 0) {
-		GLOBAL.liveStats.incrementConnectedPlayers(); // Premier onglet !
-	}
-	connectionCounts.set(ticket.playerId, count + 1);
+	GLOBAL.liveStats.addConnectedPlayers(ticket.playerId);
 
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
@@ -500,7 +495,7 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 			);
 
 			if (!isStillConnectedElsewhere) {
-				GLOBAL.liveStats.decrementConnectedPlayers();
+				GLOBAL.liveStats.removeConnectedPlayers(departingPlayer.playerId);
 			}
 		}
 	}

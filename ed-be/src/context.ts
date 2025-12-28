@@ -110,7 +110,7 @@ export class ServerContext {
 		this.liveStats = new LiveStats({
 			totalDinoz: totalDinoz,
 			totalPlayers: totalPlayers,
-			connectedPlayers: 0
+			connectedPlayers: new Set()
 		});
 	}
 }
