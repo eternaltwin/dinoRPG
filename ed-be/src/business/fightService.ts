@@ -394,8 +394,7 @@ export async function rewardFight(
 		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
-	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length;
-	const fprob = getRandomNumber(0, 100) - 10 * napo;
+	const fprob = getRandomNumber(0, 100);
 
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
@@ -409,6 +408,7 @@ export async function rewardFight(
 	for (let i = 2; i <= team.length; i++) {
 		teamSizeMalus -= 0.5 * Math.pow(0.1, i - 2);
 	}
+	// Apply malus only if fgold is above or equal to 1.
 	const malus = fgold >= 1 ? fgold * teamSizeMalus : fgold;
 	gold = Math.round(gold * goldMultiplier * goldFactor * malus);
 
