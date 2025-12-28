@@ -717,10 +717,6 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	gold += Math.round(gold * goldMultiplier);
 
-	// Temp
-	fightResult.winner = true;
-	attacker.hpLost = 0;
-
 	if (fightResult.winner) {
 		await addMoney(authed.id, gold);
 	}
