@@ -194,7 +194,11 @@
 					</tbody>
 				</table>
 			</div>
-			<SkillTree :type="availableSkills.element" :dinoz="dinozStore.getDinoz(+id)" />
+			<SkillTree
+				v-if="playerStore.playerOptions.hasPAC"
+				:type="availableSkills.element"
+				:dinoz="dinozStore.getDinoz(+id)"
+			/>
 		</div>
 	</div>
 </template>
