@@ -21,7 +21,7 @@
 			>
 				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
 			</RouterLink>
-			<DZButton @click="viewAll()">Mark as read</DZButton>
+			<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
 		</div>
 		<div class="rounds">
 			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
