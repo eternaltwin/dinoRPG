@@ -10,10 +10,12 @@ type Events = {
 	resurrect: boolean;
 	toast: toast;
 	refreshDinoz: boolean;
-	refreshInventory: { event: string; item: number };
+	refreshDinozStats: boolean;
+	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;
 	equipItem: Array<DinozItems>;
+	unEquipItem: number;
 	twinoMenu: boolean;
 	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: string };

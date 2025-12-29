@@ -160,7 +160,7 @@ export const initializeDinoz = (
 				[SpecialStat.CRITICAL_HIT_CHANCE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
 				[SpecialStat.CRITICAL_HIT_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,

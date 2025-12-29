@@ -405,7 +405,7 @@ export const getSpecialStat = (
 				value: finalValue
 			});
 		}
-	})
+	});
 
 	// Apply bonuses from priest
 	if (stat === SpecialStat.HP_REGEN && PRIEST) {

@@ -303,7 +303,6 @@ import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat'
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
@@ -403,27 +402,7 @@ export default defineComponent({
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
 		},
-		async loadComponent(): Promise<void> {
-			EventBus.emit('isLoading', true);
-			try {
-				this.dinozSkill = toSkillDetails(this.dinozData.skills);
-				this.sort();
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-
-			if (this.playerStore.playerOptions.hasPAC) {
-				try {
-					this.ownBuilds = await DinozBuildService.getOwn();
-
-					this.dinozBuild = this.dinozData.build?.id;
-				} catch (err) {
-					errorHandler.handle(err, this.$toast);
-				}
-			}
-
+		refreshStats() {
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
@@ -454,7 +433,7 @@ export default defineComponent({
 				priest
 			);
 
-			// Find global critical value to compute it with elemental speed
+			// Find global critical value
 			const global_critical_hit = getSpecialStat(
 				this.dinozData,
 				this.dinozData.status.map(s => s.statusId),
@@ -524,8 +503,13 @@ export default defineComponent({
 						special = null;
 					}
 
-					// Filter out critical hit damage if critical hit chance is zero
-					if (special && special.name.startsWith('criticalHitDamage') && global_critical_hit && global_critical_hit.value === 1) {
+					// Filter out critical hit damage if critical hit chance is default (0%)
+					if (
+						special &&
+						special.name.startsWith('criticalHitDamage') &&
+						global_critical_hit &&
+						global_critical_hit.value === 1
+					) {
 						special = null;
 					}
 
@@ -540,29 +524,33 @@ export default defineComponent({
 					}
 				})
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
+		},
+		async loadComponent(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				this.dinozSkill = toSkillDetails(this.dinozData.skills);
+				this.sort();
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
 
-			// Refresh special stats on EventBus `refreshInventory`
-			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
-				// Remove torchDamage stat if last lighter was unequipped
-				if (event === 'unequip' && item === itemList[Item.ZIPPO].itemId) {
-					if (this.dinozData.items?.filter(i => i === item).length === 1) {
-						this.specialStats = this.specialStats.filter(stat => stat?.name !== SpecialStat.TORCH_DAMAGE);
-					}
-				} else if (event === 'equip' && item === itemList[Item.ZIPPO].itemId) {
-					// Add torchDamage stat if lighter was equipped and no other lighter was equipped
-					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
-						const torchDamage = getSpecialStat(
-							this.dinozData,
-							this.dinozData.status.map(s => s.statusId),
-							this.dinozSkill,
-							SpecialStat.TORCH_DAMAGE
-						);
+			if (this.playerStore.playerOptions.hasPAC) {
+				try {
+					this.ownBuilds = await DinozBuildService.getOwn();
 
-						if (torchDamage) {
-							this.specialStats.push(torchDamage);
-						}
-					}
+					this.dinozBuild = this.dinozData.build?.id;
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
 				}
+			}
+
+			this.refreshStats();
+
+			// Refresh special stats on EventBus `refreshDinozStats`
+			EventBus.on('refreshDinozStats', () => {
+				this.refreshStats();
 			});
 		},
 		async changeDinozBuild() {
@@ -602,7 +590,7 @@ export default defineComponent({
 		}
 	},
 	unmounted() {
-		EventBus.off('refreshInventory');
+		EventBus.off('refreshDinozStats');
 	}
 });
 </script>

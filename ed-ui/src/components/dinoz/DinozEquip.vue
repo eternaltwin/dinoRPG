@@ -77,11 +77,8 @@ export default defineComponent({
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
 				this.items = new Array(this.dinozData.maxItems);
 				backPack.forEach((item, index) => (this.items[index] = item.itemId));
-
-				EventBus.emit('refreshInventory', {
-					event: 'unequip',
-					item
-				});
+				EventBus.emit('unEquipItem', item);
+				EventBus.emit('refreshInventory', true);
 				EventBus.emit('isLoading', false);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
@@ -90,7 +87,6 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		EventBus.off('equipItem');
 		if (!this.dinozData) {
 			this.$toast.open({
 				message: formatText(this.$t(`toast.dinozDataMissing`)),
@@ -107,6 +103,9 @@ export default defineComponent({
 			this.items = new Array(this.dinozData.maxItems);
 			e.forEach((item, index) => (this.items[index] = item.itemId));
 		});
+	},
+	unmounted() {
+		EventBus.off('equipItem');
 	}
 });
 </script>

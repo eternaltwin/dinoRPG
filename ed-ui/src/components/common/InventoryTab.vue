@@ -206,7 +206,6 @@ export default defineComponent({
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
 					EventBus.emit('equipItem', items);
-					// EventBus.emit('refreshDinoz', true);
 					EventBus.emit('isLoading', false);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
