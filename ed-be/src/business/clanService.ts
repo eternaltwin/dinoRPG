@@ -9,10 +9,11 @@ import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import fetch from 'node-fetch';
 import { hatchEgg } from '../business/inventoryService.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { itemList, Item } from '@drpg/core/models/item/ItemList';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 import { prisma } from '../prisma.js';
+import { shuffle } from '../utils/tools.js';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
@@ -51,7 +52,7 @@ import {
 	updateClanTreasure,
 	upsertClanIngredients
 } from '../dao/clansDao.js';
-import {createTournamentTestDinoz} from './forceBruteService.js';
+import { createTournamentTestDinoz } from './forceBruteService.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
@@ -624,7 +625,7 @@ export async function getClanHistoryCount(req: Request) {
 }
 
 interface UserResponse {
-  id: string;
+	id: string;
 }
 
 
@@ -633,11 +634,13 @@ async function createTestUsers() {
 
 	for (let i = 1; i <= 256; i++) {
 		const name = `test${i}`;
-		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536'});
-		const response = await fetch(url, {method: 'POST', headers: {
-			'Content-Type': 'application/json', // Indicate the body content type
-			'Accept': 'application/json' // Tell the server you expect JSON in response
-		}, body: body});
+		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536' });
+		const response = await fetch(url, {
+			method: 'POST', headers: {
+				'Content-Type': 'application/json', // Indicate the body content type
+				'Accept': 'application/json' // Tell the server you expect JSON in response
+			}, body: body
+		});
 
 		if (!response.ok) {
 			const errorData = await response.text();
@@ -655,25 +658,37 @@ async function createTestUsers() {
 			});
 			await addPlayerInRanking(player.id);
 			await createMyDojo(player.id, generateRandomChallenge());
+		}
+	}
+}
 
-			const egg = Object.values(itemList).find(item => item.itemId === 68);
+async function createTestDinoz() {
+	const players = await getTestUsers();
+
+	const eggs = [Item.WINKS_EGG, Item.PIGMOU_EGG, Item.WINKS_EGG,
+	Item.PLANAILLE_EGG, Item.MOUEFFE_EGG, Item.NUAGOZ_EGG, Item.SIRAIN_EGG, Item.SIRAIN_EGG_RARE].map(itemId => itemList[itemId]);
+	for (const player of players) {
+		const numDinoz = (await getAllDinozFromAccount(player.id)).length;
+		const toCreate = 18 - numDinoz;
+		for (let k = 0; k < toCreate; k++) {
+			const egg = eggs[Math.floor(Math.random() * eggs.length)];
 			if (egg === undefined) {
 				throw new ExpectedError('Could not found egg');
 			}
-			await hatchEgg(egg, {id: player.id, lang: 'es'});
-			await hatchEgg(egg, {id: player.id, lang: 'es'});
+			await hatchEgg(egg, { id: player.id, lang: 'es' });
+		}
 
-			const dinoz = await getAllDinozFromAccount(player.id);
-			for (const dino of dinoz) {
-				await updateDinoz(dino.id, {
-					name: 'test',
-					canChangeName: false
-				});
-			}
+		const dinoz = await getAllDinozFromAccount(player.id);
+		let i = 1;
+		for (const dino of dinoz) {
+			await updateDinoz(dino.id, {
+				name: `test ${i}`,
+				canChangeName: false
+			});
+			i++;
+			
 		}
 	}
-
-
 }
 
 async function testDojoTournament() {
@@ -681,8 +696,10 @@ async function testDojoTournament() {
 
 	for (const player of players) {
 		await updateDojoPoints(player.id, 2);
-		const dinoz = await getAllDinozFromAccount(player.id);
+		let dinoz = await getAllDinozFromAccount(player.id);
 		console.log(`player ${player.name} has ${dinoz.length} dinos`);
+		dinoz = shuffle(dinoz);
+		dinoz.length = Math.min(dinoz.length, 2);
 		await simplifyCreateTournamentTeam(player.id, dinoz.map(dino => dino.id));
 	}
 }
@@ -718,6 +735,7 @@ export async function giveClanIngredients(req: Request) {
 	const clan = await getClanMembersListRequest(clanId);
 
 	// await createTestUsers();
+	// await createTestDinoz();
 	await testDojoTournament();
 	// await batchCreateTestDinozForTournament();
 
