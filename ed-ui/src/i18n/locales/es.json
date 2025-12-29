@@ -4624,7 +4624,9 @@
 			"ennemis": "Adversarios",
 			"seeFight": "Ver el combate",
 			"link": "Link",
-			"copyLink": "Copiar el link"
+			"copyLink": "Copiar el link",
+			"tournamentType": "Tipo de torneo",
+			"startDate": "Fecha de inicio"
 		},
 		"fightRecap": {
 			"hpLost": "Cantidad de puntos de vida perdidos :pv:",
