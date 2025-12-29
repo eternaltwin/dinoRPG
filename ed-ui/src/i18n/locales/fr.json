@@ -4664,7 +4664,9 @@
 			"damageVoid": "Dégâts de :void: infligés",
 			"assaultVoid": "Nombre d'assaut :void: réalisés",
 			"hpRemaining": "Vie restante",
-			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné"
+			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Equipe adverse"
 		},
 		"challenge": {
 			"selectChampions": "Choisis tes champions",

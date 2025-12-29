@@ -4654,7 +4654,9 @@
 			"damageVoid": "Daño de :void: infligido",
 			"assaultVoid": "Número de asaltos :void: realizados",
 			"hpRemaining": "Vida restante",
-			"times_poisoned": "Número de veces que un Dino fue envenenado"
+			"times_poisoned": "Número de veces que un Dino fue envenenado",
+			"myTeam": "Mi equipo",
+			"enemyTeam": "Equipo enemigo"
 		},
 		"challenge": {
 			"selectChampions": "Elige a tus campeones",

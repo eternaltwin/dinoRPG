@@ -4654,7 +4654,9 @@
 			"damageVoid": ":void:-Schaden verursacht",
 			"assaultVoid": ":void:-Angriffe ausgeführt",
 			"hpRemaining": "Lebenspunkte übrig",
-			"times_poisoned": "Anzahl vergifteter Dinoz"
+			"times_poisoned": "Anzahl vergifteter Dinoz",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Equipe adverse"
 		},
 		"challenge": {
 			"selectChampions": "Wähle deine Mitstreiter",
