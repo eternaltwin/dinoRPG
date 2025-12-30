@@ -202,18 +202,24 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
  * Get services to call after the NPC talk
  */
 const nextStepServices = (data: NpcData) => {
-	return data.reward?.filter(r => 'service' in r).map(r => 'service' in r ? r.service : []).reduce((acc, curr) => curr ? acc?.concat(curr) : acc, [])
+	return data.reward
+		?.filter(r => 'service' in r)
+		.map(r => ('service' in r ? r.service : []))
+		.reduce((acc, curr) => (curr ? acc?.concat(curr) : acc), []);
 };
 
 /**
  * Get item rewards after the NPC talk
  */
 const getSpeechItemRewards = (data: NpcData) => {
-	return data.reward?.reduce((acc, curr) => {
-		if (curr.rewardType !== RewardEnum.ITEM) return acc;
-		acc[curr.value as Item] = (acc[curr.value as Item] ?? 0) + curr.quantity;
-		return acc;
-	}, {} as Partial<Record<Item, number>>);
+	return data.reward?.reduce(
+		(acc, curr) => {
+			if (curr.rewardType !== RewardEnum.ITEM) return acc;
+			acc[curr.value as Item] = (acc[curr.value as Item] ?? 0) + curr.quantity;
+			return acc;
+		},
+		{} as Partial<Record<Item, number>>
+	);
 };
 
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {

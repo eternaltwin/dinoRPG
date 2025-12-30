@@ -188,7 +188,15 @@ routes.put(
 		body('quests')
 			.isArray()
 			.custom((quests: Record<string, unknown>[]) => {
-				return quests.every(q => q.questId && typeof q.questId === 'number' && q.questId > 0 && q.progression && typeof q.progression === 'number' && q.progression > 0);
+				return quests.every(
+					q =>
+						q.questId &&
+						typeof q.questId === 'number' &&
+						q.questId > 0 &&
+						q.progression &&
+						typeof q.progression === 'number' &&
+						q.progression > 0
+				);
 			})
 	],
 	checkIsAdmin,

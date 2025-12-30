@@ -167,7 +167,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'The Venerable Eye is an extremely rare item. Only the finest warriors can possess it! People say that it has incredibly powerful magical abilities.',
 			fr: "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
 			de: 'Das Auge des Ehrwürdigen ist ein extrem seltener Gegenstand. Nur die größten Krieger können ihn erhalten! Es wird erzählt, dass er unglaublich starke magische Eigenschaften hätte.',
-			es: "El Ojo del Venerable es un objeto extremadamente raro. Solo los más grandes Guerreros consiguen obtenerlo. Se dice que tiene propiedades mágicas increíblemente poderosas."
+			es: 'El Ojo del Venerable es un objeto extremadamente raro. Solo los más grandes Guerreros consiguen obtenerlo. Se dice que tiene propiedades mágicas increíblemente poderosas.'
 		}
 	},
 	[StatTracking.TAURUS]: {

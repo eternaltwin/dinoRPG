@@ -152,24 +152,26 @@ class TournamentManager {
 	 * Returns the indices of the seeding algorithm where even indices are matched against odd indices.
 	 *
 	 * @param numberOfTeams - The number of teams of the tournament. It is assumed that it is a power of 2.
-	*/
+	 */
 	private async seedTournament(numberOfTeams: number): Promise<number[]> {
 		let seeds = [0, 1];
 		while (seeds.length < numberOfTeams) {
 			const newSeeds: number[] = [];
-			seeds.forEach(s => { newSeeds.push(s, 2 * seeds.length - 1 - s); });
+			seeds.forEach(s => {
+				newSeeds.push(s, 2 * seeds.length - 1 - s);
+			});
 			seeds = newSeeds;
 		}
 		return seeds;
 	}
 
-	/** 
-	 * Creates the pools and the teams to be matched in each pool, using a seeding algorithm to arrange the matches, 
+	/**
+	 * Creates the pools and the teams to be matched in each pool, using a seeding algorithm to arrange the matches,
 	 * matching the first team with the last team, the second with the second to last, etc.
 	 *
 	 * If the number of teams is not equal to `QUALIFIED_TEAMS`, byes are given to the first teams. Byes will be
 	 * distributed in a way that the "distance" between byes is maximized.
-	 * 
+	 *
 	 * @param teams - The qualified teams.
 	 */
 	private async createPools(teams: string[]): Promise<RawTournamentMatch[]> {
@@ -178,7 +180,7 @@ class TournamentManager {
 		}
 		const teamsToMatch = [];
 		const indices = await this.seedTournament(this.QUALIFIED_TEAMS);
-		for (let i = 0; 2 * i < teams.length; i ++) {
+		for (let i = 0; 2 * i < teams.length; i++) {
 			// Even indices are matched against odd indices
 			const team1 = teams[indices[2 * i]];
 			const team2 = teams[indices[2 * i + 1]];
@@ -202,7 +204,7 @@ class TournamentManager {
 	): Promise<void> {
 		let team1Dinoz: selectDinozForDojoFight;
 		if (!team1Id) {
-			team1Dinoz = []
+			team1Dinoz = [];
 		} else {
 			team1Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team1Id, prisma));
 		}
@@ -1036,10 +1038,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 						const metadata = JSON.parse(<string>f.metadata) as MetaData;
 						return metadata.matchNumber === 1;
 					});
-					if (
-						winnerBracket &&
-						loserBracket
-					) {
+					if (winnerBracket && loserBracket) {
 						teamsToMatch.push({
 							team: winnerBracket.result ? winnerBracket.tournamentTeamRightId : winnerBracket.tournamentTeamLeftId,
 							poolNumber: 5,
@@ -1076,7 +1075,6 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 						poolNumber: 5,
 						matchNumber: 6
 					});
-				
 				}
 				const tournamentRound = this.translatePools(teamsToMatch);
 				for (const fbPool of tournamentRound) {

@@ -27,7 +27,7 @@ export const apiRoutes = {
 	dojo: '/api/v1/dojo',
 	forum: '/api/v1/forum',
 	events: '/api/v1/events',
-	dinozBuildRoutes: '/api/v1/dinoz-build',
+	dinozBuildRoutes: '/api/v1/dinoz-build'
 } as const;
 
 export const regex = {

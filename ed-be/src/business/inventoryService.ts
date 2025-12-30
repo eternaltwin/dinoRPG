@@ -43,7 +43,10 @@ import { applySkillEffect } from './skillService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { Reward } from '@drpg/core/models/reward/RewardList';
 
-export const getItemMaxQuantity = (playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>, item: ItemFiche) => {
+export const getItemMaxQuantity = (
+	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
+	item: ItemFiche
+) => {
 	if (item.itemId === Item.GOBLIN_MERGUEZ) {
 		if (playerInventoryData.rewards.some(r => r.rewardId === Reward.CARD)) {
 			if (playerInventoryData.shopKeeper) {
@@ -90,7 +93,7 @@ export async function getAllItemsData(req: Request) {
 			id: theItem.itemId,
 			price: theItem.price,
 			quantity: playerInventoryData ? i.quantity : 0,
-			maxQuantity: getItemMaxQuantity(playerInventoryData, theItem),
+			maxQuantity: getItemMaxQuantity(playerInventoryData, theItem)
 		};
 	});
 
