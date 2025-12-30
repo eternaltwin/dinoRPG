@@ -1340,7 +1340,6 @@
 				"fight_win": "Als du versuchst, den Sonderbaren Mann irgendwo zu erblicken, stellst du ohne großartig überrascht zu sein fest, dass er verschwunden ist... Die gute Nachricht ist, dass er bei der Flucht seine Laterne zurückgelassen hat. Diese kannst du benutzen, um dich an finsteren Orten nicht mehr zu verlaufen."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Äh... Hallo?",
 				"approch": "Sich zu nähern versuchen",
 				"run": "Abhauen!",
@@ -2348,7 +2347,7 @@
 			"MaitreElementaire": "Erhöht die Elemente Wasser und Feuer um 2.",
 			"Increvable": "Erhöht alle Abwehr um 2.",
 			"ArmureDeBasalte": "Erhöht die Rüstung um 15%.",
-			"Coque": "Erhöht die Rüstung um 10%.",
+			"Coque": "Erhöht die Rüstung um 5%.",
 			"ChargeCornue": "Erhöht die Stärke des ersten Angriffs um 20%.",
 			"Rock": "Wird zu einem bevorzugten Ziel von Feinden.",
 			"Pietinement": "Hebt die Rüstung von Gegnern auf.",

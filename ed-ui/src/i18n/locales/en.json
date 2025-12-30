@@ -81,12 +81,12 @@
 			"cinema": "Theater",
 			"events": "Events",
 			"system": "Settings",
-			"stats": "Statistiques en direct",
+			"stats": "Live Statistics",
 			"skipFight": "Display immediately the outcome of fights",
 			"skipLevel": "Skip level up animation",
-			"connectedPlayers": "Joueurs connectés",
-			"totalDinoz": "Nombre total de dinoz",
-			"totalPlayers": "Nombre total de joueurs"
+			"connectedPlayers": "Online Players",
+			"totalDinoz": "Total Number of Dinoz",
+			"totalPlayers": "Total Number of Players"
 		}
 	},
 	"toast": {
@@ -1340,7 +1340,6 @@
 				"fight_win": "While you are searching for the strange man, you notice that he has disappeared...\nThe good news is that he dropped his lantern whilst he was running away. You can use this lantern to help guide you in dark places."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Hum... Hello?",
 				"approch": "Approach carefully",
 				"run": "Run away!",
@@ -2348,7 +2347,7 @@
 			"MaitreElementaire": "Increase Water and Fire elements by 2",
 			"Increvable": "Increase all defenses by 2",
 			"ArmureDeBasalte": "Increase armor by 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Increase armor by 5%",
 			"ChargeCornue": "Increase strength of first assault by 20%",
 			"Rock": "Whenever an opponent picks a target for an assault, the Dinoz has 50% chance to become this target.",
 			"Pietinement": "Ignore the armor of opponents when attacking them",
@@ -4229,7 +4228,7 @@
 			"info": "Clan banner has a ratio of 448px large by 100px long."
 		},
 		"langs": {
-			"title": "Langues"
+			"title": "Languages"
 		}
 	},
 	"createClan": {
@@ -4578,7 +4577,7 @@
 		"accessChallenges": "Access challenges",
 		"testDinoz": "Test your dinoz",
 		"fightHistory": "Fight history",
-		"tournamentHistory": "Historique des tournois",
+		"tournamentHistory": "Tournament History",
 		"team": "My team",
 		"tournaments": "Tournaments",
 		"build": "Build my Dojo",

@@ -85,7 +85,7 @@
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau",
 			"connectedPlayers": "Joueurs connectés",
-			"totalDinoz": "Nombre total de dinoz",
+			"totalDinoz": "Nombre total de Dinoz",
 			"totalPlayers": "Nombre total de joueurs"
 		}
 	},
@@ -1345,14 +1345,13 @@
 				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grande surprise qu'il a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les endroits obscurs."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Euh... Bonjour ?",
 				"approch": "Tenter de s'approcher...",
 				"run": "Partir en courant !",
 				"ignore": "L'ignorer",
 				"intro": "Argh ! Vous m'avez fait peur !",
 				"leave": "Euh je vais vous laisser...",
-				"seenWhat": "Vu quoi ",
+				"seenWhat": "Vu quoi ?",
 				"show": "Erk ! Il a l'air dangereux !",
 				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !",
 				"lowLevel": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
@@ -2353,7 +2352,7 @@
 			"MaitreElementaire": "Augmente les éléments Eau et Feu de 2",
 			"Increvable": "Augmente toutes les défenses de 2",
 			"ArmureDeBasalte": "Augmente l'armure de 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Augmente l'armure de 5%",
 			"ChargeCornue": "Augmente la puissance du premier assaut de 20%",
 			"Rock": "À chaque assaut des ennemis, le Dinoz a 50% de chance de devenir leur cible.",
 			"Pietinement": "Annule l'armure des ennemis",

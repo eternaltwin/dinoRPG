@@ -81,12 +81,12 @@
 			"cinema": "Cine",
 			"events": "Eventos",
 			"system": "Ajustes",
-			"stats": "Statistiques en direct",
+			"stats": "Estadísticas en vivo",
 			"skipFight": "Mostrar directamente el resultado del combate",
 			"skipLevel": "Saltar la animación de subida de nivel",
-			"connectedPlayers": "Joueurs connectés",
-			"totalDinoz": "Nombre total de dinoz",
-			"totalPlayers": "Nombre total de joueurs"
+			"connectedPlayers": "Jugadores conectados",
+			"totalDinoz": "Número total de Dinos",
+			"totalPlayers": "Número total de jugadores"
 		}
 	},
 	"toast": {
@@ -1340,7 +1340,6 @@
 				"fight_win": "Buscas la mirada del hombre raro, pero constatas con sorpresa que ha desaparecido... La buena noticia es que ha olvidado su linterna. A partir de ahora podrás usar la linterna para no perderte más en los  lugares oscuros."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Eh... ¿Hola?",
 				"approch": "Intentar acercarse...",
 				"run": "¡Salir corriendo!",
@@ -2348,7 +2347,7 @@
 			"MaitreElementaire": "Aumenta los elementos Fuego y Agua en 2",
 			"Increvable": "Aumenta todas las defensas en 2",
 			"ArmureDeBasalte": "Aumenta la armadura en 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Aumenta la armadura en 5%",
 			"ChargeCornue": "Aumenta la potencia del primer asalto en 20%",
 			"Rock": "El Dino se vuelve objetivo principal de los enemigos",
 			"Pietinement": "Elimina la armadura de los enemigos",
@@ -4229,7 +4228,7 @@
 			"info": "El banner tiene un ratio de 448px de ancho por 100px de largo."
 		},
 		"langs": {
-			"title": "Langues"
+			"title": "Idiomas"
 		}
 	},
 	"createClan": {
@@ -4578,7 +4577,7 @@
 		"accessChallenges": "Accede a los desafíos",
 		"testDinoz": "Pon a prueba tu Dino",
 		"fightHistory": "Historial de combates",
-		"tournamentHistory": "Historique des tournois",
+		"tournamentHistory": "Historial de torneos",
 		"team": "Mi Equipo",
 		"tournaments": "Torneos",
 		"build": "Construir mi dojo",
