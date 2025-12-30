@@ -346,33 +346,89 @@ export async function fightChallenge(req: Request) {
 		);
 	}
 
-	promises.push(removeMoney(authed.id, DOJO_FIGHT_COST));
-	promises.push(increaseCashPrice(tournament.id, DOJO_FIGHT_COST));
-	promises.push(setFightedTeam(myDinozId, player.Dojo.id));
-	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
+	await Promise.all(promises);
 
 	const newChallenge = generateRandomChallenge();
-	promises.push(createChallengeRequest(authed.id, newChallenge));
+	await prisma.$transaction(async tx => {
+		const dojo = await tx.dojo.findUniqueOrThrow({
+			where: { playerId: authed.id },
+			include: { DojoChallengeHistory: true }
+		});
 
-	// Reputation
-	const reputation = fightResult.winner ? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0) : 0;
-	promises.push(giveReputation(reputation, player.Dojo.id));
-	// DOJO challenge history
-	promises.push(
-		archiveChallenge(
-			myDinozId,
-			opponentId,
-			JSON.stringify(activeChallenge),
-			fightArchive.result,
-			challengeWon,
-			player.Dojo.id
-		)
-	);
-	const ranking = await getDojoDataForRanking(authed.id);
-	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
-	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
-	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
-	await Promise.all(promises);
+		await tx.player.update({
+			where: {
+				id: authed.id
+			},
+			data: {
+				money: {
+					decrement: DOJO_FIGHT_COST
+				}
+			}
+		});
+		await tx.tournament.update({
+			where: {
+				id: tournament.id
+			},
+			data: {
+				cashPrice: {
+					increment: DOJO_FIGHT_COST
+				}
+			}
+		});
+		await tx.dojoTeam.update({
+			where: {
+				dojoId_dinozId: {
+					dojoId: dojo.id,
+					dinozId: myDinozId
+				}
+			},
+			data: {
+				fighted: true
+			}
+		});
+		await tx.dojoOpponents.update({
+			where: {
+				dojoId_dinozId: {
+					dinozId: opponentId,
+					dojoId: dojo.id
+				}
+			},
+			data: {
+				fighted: true,
+				achieved: fightArchive.result
+			}
+		});
+
+		const addedReputation = fightResult.winner
+			? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0)
+			: 0;
+		const newReputation = dojo.reputation + addedReputation;
+		const totalCombats = dojo.DojoChallengeHistory.length + 1;
+		const totalVictoires = dojo.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
+		const worth = totalVictoires / totalCombats;
+		const newDojoPoints = Math.round(worth * newReputation);
+
+		await tx.dojo.update({
+			where: { id: dojo.id },
+			data: {
+				reputation: { increment: addedReputation },
+				activeChallenge: newChallenge,
+				DojoChallengeHistory: {
+					create: {
+						myDinozId,
+						opponentId,
+						challenge: JSON.stringify(activeChallenge),
+						victory: fightArchive.result,
+						achieved: challengeWon
+					}
+				}
+			}
+		});
+		await tx.ranking.update({
+			where: { playerId: authed.id },
+			data: { dojo: newDojoPoints }
+		});
+	});
 
 	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory: fightResult.winner };
 }
