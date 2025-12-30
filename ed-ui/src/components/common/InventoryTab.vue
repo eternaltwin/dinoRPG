@@ -175,6 +175,9 @@ export default defineComponent({
 						case ItemEffect.RESURRECT:
 							message = this.$t(`toast.${toast.category}`);
 							break;
+						case ItemEffect.EGG:
+							message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
+							break;
 						default:
 							message =
 								typeof toast.value === 'number'
