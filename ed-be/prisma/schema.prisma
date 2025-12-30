@@ -868,11 +868,8 @@ model ServerState {
 
 enum ServerAction {
   checkBans
-  dojoReset
-  healDinozFount
   healRestingDinoz
   itinerantMerchant
-  dinozShop
   midnightReset
 }
 

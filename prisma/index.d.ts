@@ -310,11 +310,8 @@ export type ServerState = $Result.DefaultSelection<Prisma.$ServerStatePayload>
 export namespace $Enums {
   export const ServerAction: {
   checkBans: 'checkBans',
-  dojoReset: 'dojoReset',
-  healDinozFount: 'healDinozFount',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  dinozShop: 'dinozShop',
   midnightReset: 'midnightReset'
 };
 

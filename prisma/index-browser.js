@@ -840,11 +840,8 @@ exports.EventType = exports.$Enums.EventType = {
 
 exports.ServerAction = exports.$Enums.ServerAction = {
   checkBans: 'checkBans',
-  dojoReset: 'dojoReset',
-  healDinozFount: 'healDinozFount',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  dinozShop: 'dinozShop',
   midnightReset: 'midnightReset'
 };
 
