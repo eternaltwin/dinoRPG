@@ -39,8 +39,9 @@ import NewsType = $Enums.NewsType;
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
-	private readonly TEAMS_PER_POOL = 16;
 	private readonly NUMBER_OF_POOLS = 4;
+	private readonly TEAMS_PER_POOL = this.QUALIFIED_TEAMS / this.NUMBER_OF_POOLS;
+	private readonly MATCHES_PER_POOL = this.TEAMS_PER_POOL / 2;
 
 	constructor(
 		private tournamentId: string,
@@ -147,31 +148,64 @@ class TournamentManager {
 		return tournamentTeam.dinoz.map(d => d.id);
 	}
 
-	private async createPools(teams: string[]): Promise<string[][]> {
-		const shuffledTeams = shuffle(teams);
-		const pools: string[][] = Array(this.NUMBER_OF_POOLS)
-			.fill([])
-			.map(() => []);
-
-		for (let i = 0; i < shuffledTeams.length; i++) {
-			const poolIndex = Math.floor(i / this.TEAMS_PER_POOL);
-			pools[poolIndex].push(shuffledTeams[i]);
+	/**
+	 * Returns the indices of the seeding algorithm where even indices are matched against odd indices.
+	 *
+	 * @param numberOfTeams - The number of teams of the tournament. It is assumed that it is a power of 2.
+	*/
+	private async seedTournament(numberOfTeams: number): Promise<number[]> {
+		let seeds = [0, 1];
+		while (seeds.length < numberOfTeams) {
+			const newSeeds: number[] = [];
+			seeds.forEach(s => { newSeeds.push(s, 2 * seeds.length - 1 - s); });
+			seeds = newSeeds;
 		}
+		return seeds;
+	}
 
-		return pools;
+	/** 
+	 * Creates the pools and the teams to be matched in each pool, using a seeding algorithm to arrange the matches, 
+	 * matching the first team with the last team, the second with the second to last, etc.
+	 *
+	 * If the number of teams is not equal to `QUALIFIED_TEAMS`, byes are given to the first teams. Byes will be
+	 * distributed in a way that the "distance" between byes is maximized.
+	 * 
+	 * @param teams - The qualified teams.
+	 */
+	private async createPools(teams: string[]): Promise<RawTournamentMatch[]> {
+		if (teams.length < this.QUALIFIED_TEAMS) {
+			teams.push(...Array(this.QUALIFIED_TEAMS - teams.length).fill(null));
+		}
+		const teamsToMatch = [];
+		const indices = await this.seedTournament(this.QUALIFIED_TEAMS);
+		for (let i = 0; 2 * i < teams.length; i ++) {
+			// Even indices are matched against odd indices
+			const team1 = teams[indices[2 * i]];
+			const team2 = teams[indices[2 * i + 1]];
+
+			const poolNumber = Math.floor(i / this.MATCHES_PER_POOL);
+			teamsToMatch.push({ team: team1, poolNumber: poolNumber, matchNumber: i % this.MATCHES_PER_POOL });
+			teamsToMatch.push({ team: team2, poolNumber: poolNumber, matchNumber: i % this.MATCHES_PER_POOL });
+		}
+		return teamsToMatch;
 	}
 
 	private async generateAndSaveFight(
-		team1Id: string,
-		team2Id: string | undefined,
+		team1Id: string | null,
+		team2Id: string | null,
 		phase: TournamentPhase,
 		round: number,
 		scheduledFor: Date,
 		prisma: PismaClientLocal,
 		poolNumber: number,
 		matchNumber: number
-	): Promise<{ fightId: string; winnerId: string }> {
-		const team1Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team1Id, prisma));
+	): Promise<void> {
+		let team1Dinoz: selectDinozForDojoFight;
+		if (!team1Id) {
+			team1Dinoz = []
+		} else {
+			team1Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team1Id, prisma));
+		}
 		let team2Dinoz: selectDinozForDojoFight;
 		if (!team2Id) {
 			team2Dinoz = [];
@@ -209,7 +243,7 @@ class TournamentManager {
 			team2Id: team2Id
 		};
 
-		const fightArchive = await prisma.fightArchive.create({
+		await prisma.fightArchive.create({
 			data: {
 				fighters: JSON.stringify(
 					fight.fighters.map(f => {
@@ -239,16 +273,6 @@ class TournamentManager {
 				tournamentTeamRightId: team2Id
 			}
 		});
-
-		// Détermine quelle équipe a gagné
-		let winnerId: string;
-		if (!team2Id) {
-			winnerId = team1Id;
-		} else {
-			winnerId = fight.winner ? team1Id : team2Id;
-		}
-
-		return { fightId: fightArchive.id, winnerId };
 	}
 
 	async getWinnersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
@@ -268,29 +292,20 @@ class TournamentManager {
 		const winners = [];
 
 		for (const match of previousMatches) {
-			if (match.tournamentTeamLeftId && match.metadata) {
+			if (match.metadata) {
 				const meta = JSON.parse(match.metadata) as MetaData;
-				if (!match.tournamentTeamRightId) {
-					winners.push({
-						team: match.tournamentTeamLeftId,
-						poolNumber: meta.poolNumber,
-						matchNumber: meta.matchNumber
-					});
-				} else {
-					winners.push({
-						team: match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId,
-						poolNumber: meta.poolNumber,
-						matchNumber: meta.matchNumber
-					});
-				}
-				// winners.add(match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId);
+				winners.push({
+					team: match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId,
+					poolNumber: meta.poolNumber,
+					matchNumber: meta.matchNumber
+				});
 			}
 		}
 
 		return winners;
 	}
 
-	private async getLoosersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
+	private async getLosersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
 		const previousMatches = await prisma.fightArchive.findMany({
 			where: {
 				tournamentId: this.tournamentId,
@@ -304,21 +319,20 @@ class TournamentManager {
 			}
 		});
 
-		const loosers = [];
+		const losers = [];
 
 		for (const match of previousMatches) {
-			if (match.tournamentTeamRightId && match.tournamentTeamLeftId && match.metadata) {
+			if (match.metadata) {
 				const meta = JSON.parse(match.metadata) as MetaData;
-				loosers.push({
+				losers.push({
 					team: match.result ? match.tournamentTeamRightId : match.tournamentTeamLeftId,
 					poolNumber: meta.poolNumber,
 					matchNumber: meta.matchNumber
 				});
-				// winners.add(match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId);
 			}
 		}
 
-		return loosers;
+		return losers;
 	}
 
 	private async rewardTournament(prisma: PismaClientLocal) {
@@ -363,7 +377,7 @@ class TournamentManager {
 				ranking.add(match.result ? match.tournamentTeamLeft.dojoId : match.tournamentTeamRight.dojoId);
 			}
 		});
-		// Fill with all looser from first round
+		// Fill with all losers from first round
 		allTournamentParticipants.forEach(match => {
 			const metadata = JSON.parse(match.metadata as string) as MetaData;
 			if (metadata.round === 0) {
@@ -891,22 +905,12 @@ LIMIT ${64};`;
 
 			// Pour chaque paire de dinoz dans ce pool
 			for (let i = 0; i < sortedPoolData.length; i += 2) {
-				// S'assurer qu'il y a un deuxième dinoz disponible pour former une paire
-				if (i + 1 < sortedPoolData.length) {
-					matches.push({
-						// Utiliser le plus petit des deux numéros de match comme identifiant de match
-						match: Math.min(sortedPoolData[i].matchNumber, sortedPoolData[i + 1].matchNumber),
-						left: sortedPoolData[i].team,
-						right: sortedPoolData[i + 1].team
-					});
-				} else {
-					matches.push({
-						// Utiliser le plus petit des deux numéros de match comme identifiant de match
-						match: sortedPoolData[i].matchNumber,
-						left: sortedPoolData[i].team,
-						right: undefined
-					});
-				}
+				matches.push({
+					// Utiliser le plus petit des deux numéros de match comme identifiant de match
+					match: Math.min(sortedPoolData[i].matchNumber, sortedPoolData[i + 1].matchNumber),
+					left: sortedPoolData[i].team,
+					right: sortedPoolData[i + 1].team
+				});
 			}
 
 			// Ajouter le pool transformé seulement s'il contient des matches
@@ -966,12 +970,7 @@ WHERE tt."teamCount" = ${teamSize.teamSize}
   AND d."tournamentTeamId" IS NOT NULL
 ORDER BY r.dojo DESC
 LIMIT ${this.QUALIFIED_TEAMS};`;
-					const pools = await this.createPools(qualifiedTeams.map(t => t.tournamentTeamId));
-					pools.forEach((pool, poolIndex) => {
-						pool.forEach((team, teamIndex) => {
-							teamsToMatch.push({ team: team, poolNumber: poolIndex, matchNumber: Math.floor(teamIndex / 2) });
-						});
-					});
+					teamsToMatch = await this.createPools(shuffle(qualifiedTeams).map(t => t.tournamentTeamId));
 				} else {
 					teamsToMatch = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 				}
@@ -1004,19 +1003,19 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 						return { ...m, poolNumber: 5, matchNumber: Math.floor(index / 2) };
 					});
 				} else if (currentState.round === 5) {
-					// Winners fight and loosers fight
+					// Winners fight and losers fight
 					const winnerBracket = await this.getWinnersFromPreviousRound(currentState.round, prisma);
-					const looserBracket = await this.getLoosersFromPreviousRound(currentState.round, prisma);
+					const loserBracket = await this.getLosersFromPreviousRound(currentState.round, prisma);
 					teamsToMatch.push(
 						...winnerBracket.map(m => {
 							return { ...m, matchNumber: 0 };
 						}),
-						...looserBracket.map(m => {
+						...loserBracket.map(m => {
 							return { ...m, matchNumber: 1 };
 						})
 					);
 				} else if (currentState.round === 6) {
-					// Winner from looserBracket vs looser from winnerBracket
+					// Winner from loserBracket vs loser from winnerBracket
 					const lastRound = await prisma.fightArchive.findMany({
 						where: {
 							tournamentId: this.tournamentId,
@@ -1033,17 +1032,13 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 						const metadata = JSON.parse(<string>f.metadata) as MetaData;
 						return metadata.matchNumber === 0;
 					});
-					const looserBracket = lastRound.find(f => {
+					const loserBracket = lastRound.find(f => {
 						const metadata = JSON.parse(<string>f.metadata) as MetaData;
 						return metadata.matchNumber === 1;
 					});
 					if (
 						winnerBracket &&
-						looserBracket &&
-						winnerBracket.tournamentTeamLeftId &&
-						winnerBracket.tournamentTeamRightId &&
-						looserBracket.tournamentTeamRightId &&
-						looserBracket.tournamentTeamLeftId
+						loserBracket
 					) {
 						teamsToMatch.push({
 							team: winnerBracket.result ? winnerBracket.tournamentTeamRightId : winnerBracket.tournamentTeamLeftId,
@@ -1051,15 +1046,15 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 							matchNumber: 5
 						});
 						teamsToMatch.push({
-							team: looserBracket.result ? looserBracket.tournamentTeamLeftId : looserBracket.tournamentTeamRightId,
+							team: loserBracket.result ? loserBracket.tournamentTeamLeftId : loserBracket.tournamentTeamRightId,
 							poolNumber: 5,
 							matchNumber: 5
 						});
 					}
 				} else if (currentState.round === 7) {
 					// Grand final
-					const looserBracketWinner = await this.getWinnersFromPreviousRound(currentState.round, prisma);
-					teamsToMatch.push(...looserBracketWinner);
+					const loserBracketWinner = await this.getWinnersFromPreviousRound(currentState.round, prisma);
+					teamsToMatch.push(...loserBracketWinner);
 					const lastLastRound = await prisma.fightArchive.findMany({
 						where: {
 							tournamentId: this.tournamentId,
@@ -1076,13 +1071,12 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 						throw new Error("Round 5 doesn't have 2 matches");
 					}
 					const winnerBracket = lastLastRound[0];
-					if (winnerBracket.tournamentTeamLeftId && winnerBracket.tournamentTeamRightId) {
-						teamsToMatch.push({
-							team: winnerBracket.result ? winnerBracket.tournamentTeamLeftId : winnerBracket.tournamentTeamRightId,
-							poolNumber: 5,
-							matchNumber: 6
-						});
-					}
+					teamsToMatch.push({
+						team: winnerBracket.result ? winnerBracket.tournamentTeamLeftId : winnerBracket.tournamentTeamRightId,
+						poolNumber: 5,
+						matchNumber: 6
+					});
+				
 				}
 				const tournamentRound = this.translatePools(teamsToMatch);
 				for (const fbPool of tournamentRound) {

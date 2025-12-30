@@ -387,8 +387,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	orderFighters(fightData);
 
 	// Zero the time origin to start from clean origin
-	const firstFighterTime = fightData.fighters[0].time;
-	fightData.fighters.map(fighter => (fighter.time -= firstFighterTime));
+	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
 
 	let overtimePoisonDamage = 10;
 
@@ -402,6 +401,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	// Hack to not play dinoz turn if there are no ennemies (swamp)
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.loser = 'defenders';
+	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
+		fightData.loser = 'attackers';
 	}
 
 	// Fight loop
