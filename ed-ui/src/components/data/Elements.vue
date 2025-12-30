@@ -10,8 +10,9 @@
 			}"
 		>
 			<img :src="getImgURL('elements', `elem_${el}`)" :alt="el" />
-			<div class="df numb"><span :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</span></div>
-
+			<div class="df numb">
+				<span :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -106,7 +107,6 @@ export default defineComponent({
 				}
 			}
 		}
-
 	}
 }
 </style>
