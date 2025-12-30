@@ -85,7 +85,7 @@
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau",
 			"connectedPlayers": "Joueurs connectés",
-			"totalDinoz": "Nombre total de dinoz",
+			"totalDinoz": "Nombre total de Dinoz",
 			"totalPlayers": "Nombre total de joueurs"
 		}
 	},
@@ -143,7 +143,12 @@
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
-		"basicError": "Une erreur est survenue"
+		"basicError": "Une erreur est survenue",
+		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
+		"buildSaveError": "Une erreur est survenue lors de l'enregistrement du plan de compétences",
+		"buildDeleted": "Le plan de compétences \"{name}\" a été supprimé",
+		"buildAssigned": "Le plan de compétences \"{name}\" a été assigné à votre Dinoz",
+		"buildCopied": "Le plan de compétences \"{name}\" a été copié dans vos plans de compétences"
 	},
 	"dig": {
 		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -1340,14 +1345,13 @@
 				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grande surprise qu'il a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les endroits obscurs."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Euh... Bonjour ?",
 				"approch": "Tenter de s'approcher...",
 				"run": "Partir en courant !",
 				"ignore": "L'ignorer",
 				"intro": "Argh ! Vous m'avez fait peur !",
 				"leave": "Euh je vais vous laisser...",
-				"seenWhat": "Vu quoi ",
+				"seenWhat": "Vu quoi ?",
 				"show": "Erk ! Il a l'air dangereux !",
 				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !",
 				"lowLevel": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
@@ -2348,7 +2352,7 @@
 			"MaitreElementaire": "Augmente les éléments Eau et Feu de 2",
 			"Increvable": "Augmente toutes les défenses de 2",
 			"ArmureDeBasalte": "Augmente l'armure de 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Augmente l'armure de 5%",
 			"ChargeCornue": "Augmente la puissance du premier assaut de 20%",
 			"Rock": "À chaque assaut des ennemis, le Dinoz a 50% de chance de devenir leur cible.",
 			"Pietinement": "Annule l'armure des ennemis",
@@ -4102,6 +4106,7 @@
 			"members": "Liste des membres",
 			"treasure": "Trésor du Clan",
 			"war": "Infos de guerre",
+			"builds": "Plans de compétences",
 			"discussion": "Fil de discussion",
 			"history": "Historique du Clan",
 			"parameters": "Paramètres"
@@ -4200,6 +4205,10 @@
 			}
 		}
 	},
+	"clanBuilds": {
+		"noBuilds": "Aucun plan de compétence n'a encore été partagé.",
+		"copyBuild": "Copier le plan de compétence"
+	},
 	"clanDiscussion": {
 		"action": {
 			"create": "Nouveau message",
@@ -4229,7 +4238,7 @@
 			"info": "La bannière a un ratio de 448px de large sur 100px de long."
 		},
 		"langs": {
-			"title": "Langues :"
+			"title": "Langues"
 		}
 	},
 	"createClan": {
@@ -4578,12 +4587,14 @@
 		"accessChallenges": "Accéder aux défis",
 		"testDinoz": "Tester tes Dinoz",
 		"fightHistory": "Historique des combats",
+		"tournamentHistory": "Historique des tournois",
 		"team": "Mon équipe",
 		"tournaments": "Tournois",
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jours au maximum.//",
+		"soon": "Bientôt",
 		"seeFight": "Voir le combat",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
@@ -4624,7 +4635,9 @@
 			"ennemis": "Adversaires",
 			"seeFight": "Voir le combat",
 			"link": "Lien",
-			"copyLink": "Copier le lien"
+			"copyLink": "Copier le lien",
+			"tournamentType": "Type de tournois",
+			"startDate": "Date du début"
 		},
 		"fightRecap": {
 			"hpLost": "Quantité de points de vie perdus :pv:",
@@ -4652,7 +4665,9 @@
 			"damageVoid": "Dégâts de :void: infligés",
 			"assaultVoid": "Nombre d'assaut :void: réalisés",
 			"hpRemaining": "Vie restante",
-			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné"
+			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Equipe adverse"
 		},
 		"challenge": {
 			"selectChampions": "Choisis tes champions",
@@ -5183,7 +5198,14 @@
 	},
 	"skillTrees": {
 		"title": "Arbres de compétences",
-		"level": "Niv.{level}"
+		"level": "Niv.{level}",
+		"build": "Plan de compétences",
+		"manageBuilds": "Gérer les plans de compétences",
+		"buildName": "Nom du plan",
+		"shareable": "Partageable",
+		"save": "Enregistrer",
+		"delete": "Supprimer",
+		"buildToEdit": "Plan à éditer"
 	},
 	"poll": {
 		"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",

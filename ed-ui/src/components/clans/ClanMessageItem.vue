@@ -20,7 +20,7 @@
 					<span v-if="author?.isLeader" class="badge badge--leader">{{ t('clan.icons.crown') }}</span>
 					<span class="badge">{{ topItem }}</span>
 				</div>
-				<div class="date">{{ formatShortDate(date, locale) }}</div>
+				<div class="date">{{ formatShortDate(date) }}</div>
 			</div>
 		</header>
 
@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 type Author = { id: string; name: string; avatarUrl?: string; isLeader?: boolean };
 
@@ -57,38 +58,10 @@ const emit = defineEmits<{
 	(e: 'openProfile', id: string): void;
 }>();
 
-const { t, locale } = useI18n();
-const LOCALE_MAP: Record<string, string> = {
-	en: 'en-US',
-	fr: 'fr-FR',
-	es: 'es-ES',
-	de: 'de-DE'
-};
+const { t } = useI18n();
 
-function formatShortDate(iso: string | number | Date, localeCode: string = 'en', opts?: { timeZone?: string }): string {
-	const date = iso instanceof Date ? iso : new Date(iso);
-	const locale = LOCALE_MAP[localeCode] ?? localeCode;
-
-	const dtf = new Intl.DateTimeFormat(locale, {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: false,
-		...(opts?.timeZone ? { timeZone: opts.timeZone } : {})
-	});
-
-	const parts = dtf.formatToParts(date);
-	const get = (type: Intl.DateTimeFormatPartTypes) => parts.find(p => p.type === type)?.value ?? '';
-
-	const day = get('day').replace('.', '');
-	const month = get('month').replace('.', '').toLowerCase();
-	const year = get('year');
-	const hour = get('hour').padStart(2, '0');
-	const minute = get('minute').padStart(2, '0');
-
-	return `${day} ${month} ${year}, ${hour}:${minute}`;
+function formatShortDate(iso: string | Date): string {
+	return formatDateTime(iso instanceof Date ? iso.toString() : iso);
 }
 </script>
 

@@ -31,7 +31,7 @@
 				<tr
 					v-for="(clan, index) in clansList"
 					:key="clan.id"
-					@click="goToClan(clan)"
+					@click="goToClan({ value: clan.id, label: clan.name })"
 					class="select"
 					:class="{
 						even: (index + 1) % 2 === 0
@@ -78,6 +78,7 @@ import Flags from '../common/Flags.vue';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import DZButton from '../common/DZButton.vue';
 import { currentEvents } from '@drpg/core/models/event/Events';
+import { SelectOption } from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -100,8 +101,8 @@ export default defineComponent({
 				return;
 			}
 		},
-		goToClan(clan: { id: number; name: string }): void {
-			this.$router.push({ name: 'Clan', params: { id: clan.id } });
+		goToClan(clan: SelectOption<number>): void {
+			this.$router.push({ name: 'Clan', params: { id: clan.value } });
 		},
 		changePage(i: number) {
 			this.page += i;

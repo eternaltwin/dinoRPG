@@ -76,6 +76,7 @@ class ForceBruteManager {
 			where: { id: dinozId },
 			select: {
 				id: true,
+				playerId: true,
 				display: true,
 				name: true,
 				level: true,

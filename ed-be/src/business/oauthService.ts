@@ -123,7 +123,7 @@ export class OAuth {
 					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
 				}
 				await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
-				res.send( {
+				res.send({
 					money: player.money,
 					dinozCount: await getDinozTotalCount(),
 					dinoz: [],

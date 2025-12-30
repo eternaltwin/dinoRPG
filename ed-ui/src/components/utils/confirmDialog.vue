@@ -1,9 +1,14 @@
 <template>
 	<div v-if="visible" class="simple-confirm-dialog-mask" @click="rejectDialog">
-		<div class="simple-confirm-dialog" @click.stop>
+		<div class="simple-confirm-dialog dz-box" @click.stop>
 			<header class="simple-confirm-dialog-header">
 				<h3 class="simple-confirm-dialog-title">{{ header }}</h3>
-				<button class="simple-confirm-dialog-close" @click="rejectDialog">&times;</button>
+				<img
+					class="simple-confirm-dialog-close"
+					:src="getImgURL('icons', 'small_delete')"
+					alt="close"
+					@click="rejectDialog"
+				/>
 			</header>
 
 			<section class="simple-confirm-dialog-content">
@@ -12,15 +17,30 @@
 			</section>
 
 			<footer class="simple-confirm-dialog-footer">
-				<button class="btn btn-reject" @click="rejectDialog">{{ rejectLabel }}</button>
-				<button class="btn btn-accept" @click="acceptDialog" @keydown.enter="acceptDialog">{{ acceptLabel }}</button>
+				<DZButton class="btn btn-reject" @click="rejectDialog">
+					<div class="btn-content">
+						<img :src="getImgURL('icons', 'small_delete')" alt="delete" />
+						<span>{{ rejectLabel }}</span>
+					</div>
+				</DZButton>
+				<DZButton class="btn btn-accept" @click="acceptDialog" @keydown.enter="acceptDialog">
+					<div class="btn-content">
+						<img :src="getImgURL('icons', 'small_right')" alt="right" />
+						<span>{{ acceptLabel }}</span>
+					</div>
+				</DZButton>
 			</footer>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
+import { getImgURL } from '../../mixin/mixin.js';
+import DZButton from '../common/DZButton.vue';
 export default {
+	components: {
+		DZButton
+	},
 	name: 'confirmDialog',
 	emits: [
 		'update:visible', // Pour le support de v-model:visible
@@ -34,7 +54,8 @@ export default {
 			currentHeader: '',
 			// Stocker les fonctions de callback pour l'acceptation et le rejet
 			resolveCallback: null,
-			rejectCallback: null
+			rejectCallback: null,
+			getImgURL
 		};
 	},
 	props: {
@@ -77,9 +98,6 @@ export default {
 }
 
 .simple-confirm-dialog {
-	background: white;
-	border-radius: 6px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	width: 90%;
 	max-width: 400px;
 	overflow: hidden;
@@ -89,21 +107,13 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem;
-	border-bottom: 1px solid #eee;
-}
-
-.simple-confirm-dialog-title {
-	margin: 0;
-	font-size: 1.25rem;
+	padding-left: 24px;
+	padding-right: 6px;
+	margin-top: 1px;
 }
 
 .simple-confirm-dialog-close {
-	background: none;
-	border: none;
-	font-size: 1.5rem;
 	cursor: pointer;
-	line-height: 1;
 }
 
 .simple-confirm-dialog-content {
@@ -111,6 +121,7 @@ export default {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+	color: #fdf1c4;
 }
 
 .simple-confirm-dialog-icon {
@@ -120,26 +131,14 @@ export default {
 
 .simple-confirm-dialog-footer {
 	padding: 1rem;
-	border-top: 1px solid #eee;
-	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5rem;
 }
 
-.btn {
-	padding: 0.5rem 1rem;
-	border-radius: 4px;
-	cursor: pointer;
-	margin-left: 0.5rem;
-}
-
-.btn-reject {
-	background-color: #f4f4f4;
-	color: #333;
-	border: 1px solid #ccc;
-}
-
-.btn-accept {
-	background-color: #007bff;
-	color: white;
-	border: 1px solid #007bff;
+.btn-content {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 </style>

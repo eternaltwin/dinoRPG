@@ -407,15 +407,6 @@ export default defineComponent({
 				&:first-child {
 					background-position: 0px 0px;
 				}
-
-				.accept,
-				.deny {
-					&:deep(.content) {
-						display: inline-flex;
-						align-items: center;
-						gap: 4px;
-					}
-				}
 			}
 		}
 	}

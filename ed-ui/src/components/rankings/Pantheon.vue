@@ -126,6 +126,7 @@ import { localStore } from '../../store/index.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { EpicReward } from '@drpg/core/models/reward/EpicReward';
+import { formatDate } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'Pantheon',
@@ -147,13 +148,7 @@ export default defineComponent({
 			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const formatter = new Intl.DateTimeFormat(lang ?? 'fr', { month: 'long' });
-			const day = String(date.getDate()).padStart(2, '0'); // Ajoute un '0' si nécessaire
-			const month = formatter.format(date);
-			const year = date.getFullYear();
-			return `${day} ${month} ${year}`;
+			return formatDate(dateString);
 		},
 		async refreshPantheon() {
 			try {

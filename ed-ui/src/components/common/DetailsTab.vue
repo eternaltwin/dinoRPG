@@ -1,7 +1,16 @@
 <template>
 	<div class="details">
+		<DZSelect
+			v-if="playerStore.playerOptions.hasPAC && ownBuilds.length"
+			id="build-select"
+			:options="ownBuilds.map(build => ({ label: build.name, value: build.id }))"
+			:placeholder="$t('skillTrees.build')"
+			v-model="dinozBuild"
+			@change="changeDinozBuild"
+			class="build-select"
+		/>
 		<p
-			v-if="hasPAC()"
+			v-if="playerStore.playerOptions.hasPAC"
 			class="wrapperMenu"
 			@click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })"
 		>
@@ -298,6 +307,9 @@ import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import DZSelect from './DZSelect.vue';
 import DZRadio from './DZRadio.vue';
 import { TIME_BASE } from '@drpg/core/utils/fightConstants';
+import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
+import { DinozBuildService } from '../../services/DinozBuildService.js';
+import { DinozBuild } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -333,7 +345,9 @@ export default defineComponent({
 				{ label: this.$t('details.sort.energy'), value: 'Energy' },
 				{ label: this.$t('details.sort.type'), value: 'Type' },
 				{ label: this.$t('details.sort.state'), value: 'State' }
-			]
+			],
+			ownBuilds: [] as GetOwnDinozBuildResponse,
+			dinozBuild: undefined as DinozBuild['id'] | undefined
 		};
 	},
 	methods: {
@@ -352,9 +366,6 @@ export default defineComponent({
 		},
 		hasAmulst(): boolean {
 			return this.dinozData?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
-		},
-		hasPAC(): boolean {
-			return this.playerStore.playerOptions.hasPAC;
 		},
 		sort(): void {
 			switch (this.selectedSort) {
@@ -397,6 +408,16 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
+			}
+
+			if (this.playerStore.playerOptions.hasPAC) {
+				try {
+					this.ownBuilds = await DinozBuildService.getOwn();
+
+					this.dinozBuild = this.dinozData.build?.id;
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+				}
 			}
 
 			// Get stats
@@ -525,6 +546,32 @@ export default defineComponent({
 					}
 				}
 			});
+		},
+		async changeDinozBuild() {
+			if (!this.dinozBuild || !this.dinozStore.currentDinozId) {
+				return;
+			}
+
+			try {
+				await DinozService.assignBuild(this.dinozStore.currentDinozId, this.dinozBuild);
+				const currentDinoz = this.dinozStore.getDinoz(this.dinozStore.currentDinozId);
+
+				if (!currentDinoz) {
+					throw new Error('Dinoz not found in store after assigning build');
+				}
+
+				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
+
+				this.dinozStore.setDinoz({
+					...currentDinoz,
+					build
+				});
+
+				this.$toast.success(this.$t('toast.buildAssigned', { name: build?.name ?? '' }).toString());
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
 		}
 	},
 	async mounted(): Promise<void> {
@@ -829,5 +876,9 @@ export default defineComponent({
 
 .ml-4 {
 	margin-left: 4px;
+}
+
+.build-select {
+	width: 100%;
 }
 </style>

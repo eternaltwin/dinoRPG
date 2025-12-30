@@ -21,7 +21,7 @@
 			>
 				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
 			</RouterLink>
-			<DZButton @click="viewAll()">Mark as read</DZButton>
+			<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
 		</div>
 		<div class="rounds">
 			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
@@ -42,7 +42,7 @@
 					</template>
 				</Tippy>
 				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: dinoz.fight })">
-					<span class="name">Soon</span>
+					<span class="name">{{ $t('dojo.soon') }}</span>
 
 					<template #content>
 						<h1>{{ dinoz.name }}</h1>

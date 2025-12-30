@@ -1,3 +1,4 @@
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { mixin } from '../mixin/mixin.js';
 
 export const helpers = {
@@ -40,8 +41,21 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_xp')}" alt="xp">`;
 			case 'irma':
 				return `<img class="text-icon" src="${mixin.methods.getImgURL('item', 'item_irma')}" alt="irma">`;
-			default:
-				throw Error(`Unexpected key for replaced image: ${key}`);
+			default: {
+				if (key.startsWith('item_')) {
+					const itemId = +key.substring(5) as Item;
+					const item = itemList[itemId];
+					if (!item) {
+						console.error(`Item with key ${itemId} not found for replaced image.`);
+						return `:${key}:`;
+					}
+
+					return `<img class="text-icon" src="${mixin.methods.getImgURL('item', `item_${item.name}`)}" alt="${item.name}">`;
+				}
+
+				console.error(`Unexpected key for replaced image: ${key}`);
+				return `:${key}:`;
+			}
 		}
 	}
 };
@@ -84,7 +98,7 @@ export function formatText(text: string) {
 				'xp',
 				'irma'
 			];
-			if (validKeys.includes(iconKey)) {
+			if (validKeys.includes(iconKey) || iconKey.startsWith('item_')) {
 				return helpers.computeImageHtml(iconKey);
 			}
 		}

@@ -155,7 +155,8 @@ exports.Prisma.DinozScalarFieldEnum = {
   FBTournamentStep: 'FBTournamentStep',
   unavailableReason: 'unavailableReason',
   seed: 'seed',
-  playerId: 'playerId'
+  playerId: 'playerId',
+  buildId: 'buildId'
 };
 
 exports.Prisma.DinozItemScalarFieldEnum = {
@@ -200,6 +201,14 @@ exports.Prisma.DinozStatusScalarFieldEnum = {
   statusId: 'statusId',
   dinozId: 'dinozId',
   gameDinozId: 'gameDinozId'
+};
+
+exports.Prisma.DinozBuildScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  skills: 'skills',
+  shareable: 'shareable',
+  name: 'name'
 };
 
 exports.Prisma.MigrationsScalarFieldEnum = {
@@ -848,6 +857,7 @@ exports.Prisma.ModelName = {
   DinozSkill: 'DinozSkill',
   DinozSkillUnlockable: 'DinozSkillUnlockable',
   DinozStatus: 'DinozStatus',
+  DinozBuild: 'DinozBuild',
   migrations: 'migrations',
   News: 'News',
   Poll: 'Poll',

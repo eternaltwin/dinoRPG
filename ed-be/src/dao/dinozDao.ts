@@ -294,7 +294,8 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					concentration: true,
-					TournamentTeam: { select: { tournamentId: true } }
+					TournamentTeam: { select: { tournamentId: true } },
+					build: true
 				},
 				where: {
 					OR: [{ id: dinozId }, { leaderId: dinozId }]
@@ -533,6 +534,7 @@ export async function getDinozForDojoFight(dinozIds: number[]) {
 		where: { id: { in: dinozIds } },
 		select: {
 			id: true,
+			playerId: true,
 			display: true,
 			name: true,
 			level: true,

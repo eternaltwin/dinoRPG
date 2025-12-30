@@ -2,8 +2,8 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<DZTable>
 		<tr>
-			<th class="dinoz-header">Type de tournois</th>
-			<th class="items-header">Date du début</th>
+			<th class="dinoz-header">{{ $t('dojo.history.tournamentType') }}</th>
+			<th class="items-header">{{ $t('dojo.history.startDate') }}</th>
 			<th class="items-header">{{ $t('dojo.history.link') }}</th>
 		</tr>
 		<tr v-for="tournament in history" :key="tournament.id">

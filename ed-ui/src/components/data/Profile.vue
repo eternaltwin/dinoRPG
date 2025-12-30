@@ -38,7 +38,7 @@
 					{{ $t(`myAccount.inscription`) }}
 				</dt>
 				<dd>
-					{{ accountData.subscribeAt }}
+					{{ getFormattedSubscribe() }}
 				</dd>
 				<dt v-if="accountData.clan">
 					{{ $t(`myAccount.clan`) }}
@@ -115,6 +115,7 @@ import { formatText } from '../../utils/formatText.js';
 import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
 import { Tippy } from 'vue-tippy';
+import { formatDate } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'Profile',
@@ -142,6 +143,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getFormattedSubscribe() {
+			return formatDate(this.accountData.subscribedAt);
+		},
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},

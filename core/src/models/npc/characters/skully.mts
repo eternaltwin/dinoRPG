@@ -6,6 +6,7 @@ import { ConditionEnum, Operator } from '../../enums/Parser.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const SKULLY: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -164,7 +165,8 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: Reward.PDA
+				value: Reward.PDA,
+				service: [ServiceEnum.REFRESH_PLAYER]
 			}
 		],
 		nextStep: []

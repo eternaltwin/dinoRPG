@@ -55,7 +55,7 @@
 					@click="goToPage('TournamentHistory')"
 					:src="getImgURL('design', 'dojo_history')"
 					v-tippy="{
-						content: formatContent($t('dojo.fightHistory')),
+						content: formatContent($t('dojo.tournamentHistory')),
 						theme: 'small'
 					}"
 				/>
@@ -122,6 +122,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
 import DojoTimer from '../components/dojo/DojoTimer.vue';
+import { formatDateTime } from '../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'DojoHome',
@@ -201,24 +202,7 @@ export default defineComponent({
 			}
 		},
 		formatDate(oldDate: Date) {
-			const date = new Date(oldDate.toString());
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(oldDate.toString());
 		}
 	},
 	async mounted() {

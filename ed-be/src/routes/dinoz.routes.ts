@@ -29,6 +29,9 @@ import { reincarnate } from '../business/skillService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
+import { assignBuild } from '../business/dinozBuildService.js';
+import { AssignDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
+import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();
 
@@ -665,6 +668,20 @@ routes.post(
 
 		try {
 			await reincarnate(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/:id/build`,
+	[param('id').exists().toInt().isNumeric(), body('buildId').optional().isString()],
+	async (req: Request, res: Response<AssignDinozBuildResponse | ErrorResponse>) => {
+		if (!validationResult(req).isEmpty()) return res.status(400).json({ errors: validationResult(req) });
+		try {
+			await assignBuild(req);
 			return res.status(200).send();
 		} catch (err) {
 			sendError(res, err);

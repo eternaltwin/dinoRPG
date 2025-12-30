@@ -306,6 +306,11 @@ const router = createRouter({
 							component: () => import('../components/clans/ClanWar.vue')
 						},
 						{
+							path: 'builds',
+							name: 'ClanBuilds',
+							component: () => import('../components/clans/ClanBuilds.vue')
+						},
+						{
 							path: 'discussion',
 							name: 'ClanDiscussion',
 							component: () => import('../components/clans/ClanDiscussion.vue')

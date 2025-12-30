@@ -1,5 +1,4 @@
 import { SecretData } from '@drpg/core/models/admin/SecretData';
-import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import {
@@ -130,7 +129,7 @@ routes.put(
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('items')
 			.isArray()
-			.custom((items: any[]) => {
+			.custom((items: Record<string, unknown>[]) => {
 				return items.every(
 					item => typeof item.id === 'number' && item.id > 0 && typeof item.quantity === 'number' && item.quantity > 0
 				);
@@ -159,7 +158,7 @@ routes.put(
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('ingredients')
 			.isArray()
-			.custom((ingredients: any[]) => {
+			.custom((ingredients: Record<string, unknown>[]) => {
 				return ingredients.every(
 					ing => typeof ing.id === 'number' && ing.id > 0 && typeof ing.quantity === 'number' && ing.quantity > 0
 				);
@@ -188,8 +187,16 @@ routes.put(
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('quests')
 			.isArray()
-			.custom((quests: any[]) => {
-				return quests.every(q => q.questId && q.questId > 0 && q.progression && q.progression > 0);
+			.custom((quests: Record<string, unknown>[]) => {
+				return quests.every(
+					q =>
+						q.questId &&
+						typeof q.questId === 'number' &&
+						q.questId > 0 &&
+						q.progression &&
+						typeof q.progression === 'number' &&
+						q.progression > 0
+				);
 			})
 	],
 	checkIsAdmin,
@@ -462,7 +469,7 @@ routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Respons
 	}
 
 	try {
-		const response = await getJobs(req);
+		const response = await getJobs();
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

@@ -13,6 +13,7 @@ export type Rewarder =
 			rewardType: RewardEnum.EPIC;
 			value: number;
 			reverse?: boolean;
+			service?: ServiceEnum[];
 	  }
 	| {
 			rewardType: RewardEnum.ITEM;

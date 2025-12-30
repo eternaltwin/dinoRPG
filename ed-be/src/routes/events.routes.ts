@@ -17,7 +17,7 @@ import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
-const commonPath: string = apiRoutes.events;
+const commonPath = apiRoutes.events;
 
 routes.get(`${commonPath}/tournament/current/:id`, [param('id').exists()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
@@ -114,7 +114,7 @@ routes.get(`${commonPath}/list`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response = await getCurrentEvents(req);
+		const response = await getCurrentEvents();
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

@@ -54,7 +54,7 @@ routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 
 	const sendUpdate = () => {
 		if (!res.writableEnded) {
-			const data = JSON.stringify({ type: SseDataEnum.LIVE_STATS, live_stats: GLOBAL.liveStats.summary });
+			const data = JSON.stringify({ type: SseDataEnum.LIVE_STATS, live_stats: GLOBAL.liveStats.summary() });
 			res.write(`data: ${data}\n\n`);
 		}
 	};

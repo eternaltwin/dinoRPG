@@ -123,7 +123,8 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
-import { Player } from '@drpg/prisma';
+import { SelectOption } from '../common/DZSelect.vue';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'messagerie',
@@ -157,11 +158,18 @@ export default defineComponent({
 			this.creationMode = false;
 			this.newThread = {} as NewThread;
 		},
-		participantThead(p: Pick<Player, 'id' | 'name'>) {
+		participantThead(p: SelectOption<string>) {
+			const participant = {
+				id: p.value,
+				name: p.label
+			};
 			if (!this.newThread.participants) {
-				this.newThread.participants = [p];
-			} else if (!this.newThread.participants.some(e => e.id === p.id) && this.newThread.participants.length < 9) {
-				this.newThread.participants.push(p);
+				this.newThread.participants = [participant];
+			} else if (
+				!this.newThread.participants.some(e => e.id === participant.id) &&
+				this.newThread.participants.length < 9
+			) {
+				this.newThread.participants.push(participant);
 			}
 		},
 		close(): void {
@@ -181,21 +189,7 @@ export default defineComponent({
 			this.notifiedThreads = this.notifiedThreads.filter(t => t !== id);
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const dateFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				day: '2-digit',
-				month: 'long',
-				year: 'numeric'
-			});
-			const formattedDate = dateFormatter.format(date);
-			const timeFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				hour: '2-digit',
-				minute: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(dateString);
 		},
 		async sendMessage() {
 			try {

@@ -1,54 +1,3 @@
-<template>
-	<div class="dz-select" :class="{ open, searchable: !!search }">
-		<button
-			ref="triggerRef"
-			type="button"
-			class="trigger"
-			:id="id"
-			@click="toggle"
-			@keydown.down.prevent="focusNext()"
-			@keydown.up.prevent="focusPrev()"
-			@keydown.enter.prevent="commitFocused()"
-			@keydown.esc.prevent="close"
-		>
-			<span class="label">{{ currentLabel }}</span>
-			<span class="arrow" />
-		</button>
-
-		<div v-if="open" class="panel drpg-scrollbar">
-			<DZInput
-				v-if="search"
-				v-model="searchQuery"
-				type="text"
-				class="search-input"
-				:placeholder="$t('button.search')"
-				@keydown.down.prevent="focusNext()"
-				@keydown.up.prevent="focusPrev()"
-				@keydown.enter.prevent="commitFocused()"
-				@keydown.esc.prevent="close"
-				@input="onSearchInput"
-			/>
-			<ul class="options-list" role="listbox" :aria-labelledby="id">
-				<li v-if="loading" class="opt loading">{{ $t('button.loading') }}</li>
-				<li v-else-if="filteredOptions.length === 0" class="opt empty">{{ $t('button.noResults') }}</li>
-				<li
-					v-else
-					v-for="(option, i) in filteredOptions"
-					:key="String(option.value)"
-					:class="['opt', { selected: isSelected(option.value), focused: i === focusedIndex }]"
-					@mouseenter="focusedIndex = i"
-					@mouseleave="focusedIndex = -1"
-					@mousedown.prevent="select(option.value, $event)"
-					role="option"
-					:aria-selected="isSelected(option.value)"
-				>
-					{{ option.label }}
-				</li>
-			</ul>
-		</div>
-	</div>
-</template>
-
 <script setup lang="ts" generic="T extends string | number">
 import { ref, computed, onMounted, onBeforeUnmount, shallowRef } from 'vue';
 import DZInput from './DZInput.vue';
@@ -65,13 +14,14 @@ const props = withDefaults(
 		options?: SelectOption<T>[];
 		search?: (query: string) => Promise<SelectOption<T>[]>;
 		debounceMs?: number;
+		placeholder?: string;
 	}>(),
 	{
 		debounceMs: 300
 	}
 );
 
-const emit = defineEmits<{ 'update:modelValue': [value: T]; change: [] }>();
+const emit = defineEmits<{ 'update:modelValue': [value: T]; change: [option: SelectOption<T> | undefined] }>();
 
 const open = ref(false);
 const focusedIndex = ref(-1);
@@ -84,7 +34,7 @@ let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 const currentLabel = computed(() => {
 	const data = props.search ? fetchedOptions.value : (props.options ?? []);
 	const found = data.find(o => o.value === props.modelValue);
-	return found ? found.label : '';
+	return found ? found.label : props.search ? '' : (props.placeholder ?? '');
 });
 
 const filteredOptions = computed(() => {
@@ -104,7 +54,10 @@ const select = (v: T, e?: MouseEvent) => {
 	if (e && e.button !== 0) return; // Only left click
 
 	emit('update:modelValue', v);
-	emit('change');
+	emit(
+		'change',
+		filteredOptions.value.find(o => o.value === v)
+	);
 	close();
 };
 
@@ -209,6 +162,57 @@ onBeforeUnmount(() => {
 });
 </script>
 
+<template>
+	<div class="dz-select" :class="{ open, searchable: !!search }">
+		<button
+			ref="triggerRef"
+			type="button"
+			class="trigger"
+			:id="id"
+			@click="toggle"
+			@keydown.down.prevent="focusNext()"
+			@keydown.up.prevent="focusPrev()"
+			@keydown.enter.prevent="commitFocused()"
+			@keydown.esc.prevent="close"
+		>
+			<span class="label">{{ currentLabel }}</span>
+			<span class="arrow" />
+		</button>
+
+		<div v-if="open" class="panel drpg-scrollbar">
+			<DZInput
+				v-if="search"
+				v-model="searchQuery"
+				type="text"
+				class="search-input"
+				:placeholder="placeholder ?? $t('button.search')"
+				@keydown.down.prevent="focusNext()"
+				@keydown.up.prevent="focusPrev()"
+				@keydown.enter.prevent="commitFocused()"
+				@keydown.esc.prevent="close"
+				@input="onSearchInput"
+			/>
+			<ul class="options-list" role="listbox" :aria-labelledby="id">
+				<li v-if="loading" class="opt loading">{{ $t('button.loading') }}</li>
+				<li v-else-if="filteredOptions.length === 0" class="opt empty">{{ $t('button.noResults') }}</li>
+				<li
+					v-else
+					v-for="(option, i) in filteredOptions"
+					:key="String(option.value)"
+					:class="['opt', { selected: isSelected(option.value), focused: i === focusedIndex }]"
+					@mouseenter="focusedIndex = i"
+					@mouseleave="focusedIndex = -1"
+					@mousedown.prevent="select(option.value, $event)"
+					role="option"
+					:aria-selected="isSelected(option.value)"
+				>
+					{{ option.label }}
+				</li>
+			</ul>
+		</div>
+	</div>
+</template>
+
 <style scoped lang="scss">
 .dz-select {
 	position: relative;
@@ -274,6 +278,7 @@ onBeforeUnmount(() => {
 		padding: 0;
 		margin: 0;
 		list-style: none;
+		line-height: normal;
 	}
 
 	.opt {

@@ -35,18 +35,9 @@ export default defineComponent({
 			try {
 				const commonData = await PlayerService.getLoggedInData();
 				// Set data in sessionStore
-				this.playerStore.setMoney(commonData.money);
+				await this.playerStore.update();
 				this.dinozStore.setDinozList(commonData.dinoz);
 				this.dinozStore.setDinozCount(commonData.dinozCount);
-				this.playerStore.setClanId(commonData.clanId);
-				this.playerStore.setPriest(commonData.priest);
-				this.playerStore.setShopkeeper(commonData.shopkeeper);
-				this.playerStore.setNotifications(commonData.notifications);
-				this.playerStore.setPlayerId(commonData.id);
-				this.playerStore.setPlayerName(commonData.name);
-				this.playerStore.setPlayerOptions(commonData.playerOptions);
-				this.playerStore.setAdmin(commonData.admin);
-				this.playerStore.setDiscoveredSkills(commonData.discoveredSkills);
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {

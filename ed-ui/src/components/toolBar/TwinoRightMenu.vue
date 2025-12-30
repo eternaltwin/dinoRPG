@@ -220,6 +220,7 @@ import { deleteCookie } from '../../utils/cookies.js';
 import PlayerOptions from './PlayerOptions.vue';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import LiveStats from './LiveStats.vue';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -259,24 +260,7 @@ export default defineComponent({
 			}
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(dateString);
 		},
 		async readAll() {
 			try {

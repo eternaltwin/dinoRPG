@@ -16,15 +16,15 @@ export interface TournamentSchedule {
 }
 
 export type RawTournamentMatch = {
-	team: string;
+	team: string | null;
 	poolNumber: number;
 	matchNumber: number;
 };
 
 export type TournamentPool = {
 	match: number;
-	right: string | undefined;
-	left: string;
+	right: string | null;
+	left: string | null;
 };
 
 export type TournamentPools = {
@@ -48,8 +48,8 @@ export type MetaData = {
 	poolNumber: number;
 	matchNumber: number;
 	scheduledFor: string;
-	team1Id: string;
-	team2Id: string | undefined;
+	team1Id: string | null;
+	team2Id: string | null;
 };
 
 export type PublicMetada = {

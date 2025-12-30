@@ -167,7 +167,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'The Venerable Eye is an extremely rare item. Only the finest warriors can possess it! People say that it has incredibly powerful magical abilities.',
 			fr: "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
 			de: 'Das Auge des Ehrwürdigen ist ein extrem seltener Gegenstand. Nur die größten Krieger können ihn erhalten! Es wird erzählt, dass er unglaublich starke magische Eigenschaften hätte.',
-			es: "L'Oeil du El Ojo del Venerable es un objeto extremadamente raro. Solo los más grandes Guerreros consiguen obtenerlo. Se dice que tiene propiedades mágicas increíblemente poderosas."
+			es: 'El Ojo del Venerable es un objeto extremadamente raro. Solo los más grandes Guerreros consiguen obtenerlo. Se dice que tiene propiedades mágicas increíblemente poderosas.'
 		}
 	},
 	[StatTracking.TAURUS]: {
@@ -488,7 +488,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'Smogs Medallion',
 			fr: 'Trophée des Smogs',
 			de: '',
-			es: 'Smogs Medallion'
+			es: 'Trofeo de los Smogs'
 		},
 		rare: 0,
 		hidden: true,
@@ -503,7 +503,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'This medallion proves that you have finished the smog quest.',
 			fr: 'Ce trophée prouve que vous avez terminé la quête du Smog.',
 			de: '',
-			es: 'This medallion proves that you have finished the smog quest.'
+			es: 'Este medallón prueba que has terminado la búsqueda del Smog.'
 		}
 	},
 	[StatTracking.MOVES]: {
@@ -2832,6 +2832,23 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			es: 'Aportes al sitio y a la comunidad'
 		}
 	},
+	[StatTracking.MERGUEZ]: {
+		id: StatTracking.MERGUEZ,
+		name: {
+			en: 'Merguez consumed',
+			fr: 'Merguez consommées',
+			de: 'Verzehrte Merguez',
+			es: 'Salchichas consumidas'
+		},
+		rare: 2,
+		unlocks: [],
+		description: {
+			en: 'Number of merguez sausages consumed',
+			fr: 'Nombre de merguez consommées',
+			de: 'Anzahl der verzehrten Merguez',
+			es: 'Cantidad de salchichas consumidas'
+		}
+	},
 	[StatTracking.MEDAL_1]: {
 		id: StatTracking.MEDAL_1,
 		name: {
@@ -3048,7 +3065,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
 			fr: 'Carte de Fidélité Merguez Deluxe',
 			de: 'Merguez-Deluxe-Treuekarte', // TODO: Translation pending review
-			es: 'Tarjeta de Fidelidad Merguez Deluxe' // TODO: Translation pending review
+			es: 'Tarjeta de Fidelidad Salchichas Deluxe'
 		},
 		rare: 0,
 		hidden: true,
@@ -3063,7 +3080,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
 			fr: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
 			de: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			es: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.' // TODO: No translation available
+			es: 'Asada a la perfección y sellada por el Vendedor de Salchichas en persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después de haber devorado una cantidad indecente de salchichas, ahora has sido ascendido al rango de Gran Glotón Oficial.'
 		}
 	},
 	[StatTracking.PAC]: {

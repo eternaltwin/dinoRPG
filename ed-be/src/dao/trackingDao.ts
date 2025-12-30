@@ -4,6 +4,9 @@ import { Prisma } from '@drpg/prisma';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 export function setSpecificStat(stat: string, playerId: string, quantity: number) {
+	if (quantity === 0) {
+		return;
+	}
 	return prisma.playerTracking.upsert({
 		where: { stat_playerId: { stat, playerId } },
 		update: {

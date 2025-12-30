@@ -69,7 +69,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
-					concentration: true
+					concentration: true,
+					build: true
 				},
 				where: {
 					OR: [
@@ -653,7 +654,8 @@ export async function getCommonDataRequest(playerId: string) {
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
-					concentration: true
+					concentration: true,
+					build: true
 				},
 				where: {
 					OR: [
@@ -885,11 +887,8 @@ export async function getPlayerInventoryDataRequest(playerId: string) {
 					}
 				}
 			},
-			quests: {
-				select: {
-					questId: true,
-					progression: true
-				}
+			rewards: {
+				select: { rewardId: true }
 			}
 		}
 	});
@@ -1553,6 +1552,25 @@ export async function getPlayerDiscoveredSkills(playerId: string) {
 		},
 		select: {
 			discoveredSkills: true
+		}
+	});
+}
+
+/**
+ * Get the player data needed for Dinoz Build checks.
+ */
+export async function getPlayerForDinozBuildChecks(playerId: string) {
+	return prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			discoveredSkills: true,
+			rewards: {
+				select: {
+					rewardId: true
+				}
+			}
 		}
 	});
 }

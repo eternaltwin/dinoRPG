@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
 import { onMounted, Ref, ref, watch } from 'vue';
@@ -80,11 +80,16 @@ const props = withDefaults(
 		dinoz?: Pick<DinozFiche, 'skills'>;
 		type: ElementType;
 		treeType?: SkillTreeType;
+		buildSkills?: Skill[];
+		selectable?: boolean;
 	}>(),
 	{
-		treeType: SkillTreeType.VANILLA
+		treeType: SkillTreeType.VANILLA,
+		selectable: false
 	}
 );
+
+const emit = defineEmits<{ 'update:buildSkills': [value: Skill[]] }>();
 
 // State
 const tree = ref<Tree>([]);
@@ -122,6 +127,50 @@ const init = () => {
 	tree.value = tree.value.map(row => row.filter(skill => skill));
 };
 
+const getSkillAndPrerequisites = (skillId: Skill) => {
+	const skill = skillList[skillId];
+	let skills = [skillId];
+
+	skill.unlockedFrom?.forEach(prereqId => {
+		skills = skills.concat(getSkillAndPrerequisites(prereqId));
+	});
+
+	return skills;
+};
+
+const getSkillAndDependents = (skillId: Skill) => {
+	let skills = [skillId];
+
+	Object.values(skillList).forEach(skill => {
+		if (skill.unlockedFrom?.includes(skillId)) {
+			skills = skills.concat(getSkillAndDependents(skill.id));
+		}
+	});
+
+	return skills;
+};
+
+const toggleSkillSelection = (skillId: Skill) => {
+	if (!props.selectable) return;
+
+	// Use a Set for efficient add/remove
+	const current = new Set<Skill>(props.buildSkills ?? []);
+
+	if (!current.has(skillId)) {
+		// Select skill and its prerequisites
+		for (const s of getSkillAndPrerequisites(skillId)) current.add(s);
+	} else {
+		// Deselect skill and its dependents
+		const toRemove = new Set(getSkillAndDependents(skillId));
+		for (const s of Array.from(current)) {
+			if (toRemove.has(s)) current.delete(s);
+		}
+	}
+
+	const next = Array.from(current);
+	emit('update:buildSkills', next);
+};
+
 // Hooks
 onMounted(init);
 
@@ -129,7 +178,7 @@ watch(props, init, { deep: true });
 </script>
 
 <template>
-	<div :class="`wrapper element-${props.type}`">
+	<div :class="`skill-tree-wrapper element-${props.type} ${selectable ? 'selectable' : ''}`">
 		<p class="element">
 			<img
 				:src="getImgURL('elements', `elem_${ElementType[props.type].toLowerCase()}`)"
@@ -150,7 +199,12 @@ watch(props, init, { deep: true });
 						v-for="skill in row"
 						:key="skill.id"
 						:rowspan="skill.rowspan || 1"
-						:class="{ learned: skill.learned, base: !skill.unlockedFrom?.length }"
+						:class="{
+							learned: skill.learned,
+							base: !skill.unlockedFrom?.length,
+							selected: props.buildSkills?.includes(skill.id)
+						}"
+						@click="skill.discovered ? toggleSkillSelection(skill.id) : undefined"
 					>
 						<SkillTooltip v-if="skill.discovered" :skill="skill.id">
 							{{ $t(`skill.name.${skill.name}`) }}
@@ -170,7 +224,7 @@ watch(props, init, { deep: true });
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.skill-tree-wrapper {
 	overflow-x: auto;
 	margin: 8px;
 	padding: 10px;
@@ -248,6 +302,16 @@ watch(props, init, { deep: true });
 					background-color: #d39f63;
 				}
 
+				&.selected {
+					background-image: repeating-linear-gradient(
+						45deg,
+						transparent,
+						transparent 5px,
+						rgba(0, 0, 0, 0.1) 5px,
+						rgba(0, 0, 0, 0.1) 10px
+					);
+				}
+
 				&:not(.base) {
 					position: relative;
 
@@ -261,6 +325,16 @@ watch(props, init, { deep: true });
 						border-top: 3px solid #793f1f;
 					}
 				}
+			}
+		}
+	}
+
+	&.selectable {
+		td {
+			cursor: pointer;
+
+			&:hover {
+				background-color: #c6864a;
 			}
 		}
 	}

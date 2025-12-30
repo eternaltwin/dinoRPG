@@ -81,8 +81,12 @@
 			"cinema": "Cine",
 			"events": "Eventos",
 			"system": "Ajustes",
+			"stats": "Estadísticas en vivo",
 			"skipFight": "Mostrar directamente el resultado del combate",
-			"skipLevel": "Saltar la animación de subida de nivel"
+			"skipLevel": "Saltar la animación de subida de nivel",
+			"connectedPlayers": "Jugadores conectados",
+			"totalDinoz": "Número total de Dinos",
+			"totalPlayers": "Número total de jugadores"
 		}
 	},
 	"toast": {
@@ -376,12 +380,12 @@
 		"evasion": "Esquiva",
 		"superEvasion": "Súper Evasión",
 		"counter": "Contra",
-		"speed": "Durée d'un tour",
-		"fireSpeed": "Durée d'un tour :fire:",
-		"woodSpeed": "Durée d'un tour :wood:",
-		"waterSpeed": "Durée d'un tour :water:",
-		"lightningSpeed": "Durée d'un tour :lightning:",
-		"airSpeed": "Durée d'un tour :air:",
+		"speed": "Duración de un turno",
+		"fireSpeed": "Duración de un turno :fire:",
+		"woodSpeed": "Duración de un turno :wood:",
+		"waterSpeed": "Duración de un turno :water:",
+		"lightningSpeed": "Duración de un turno :lightning:",
+		"airSpeed": "Duración de un turno :air:",
 		"bubbleRate": "Porcentaje de Burbuja",
 		"torchDamage": "Daño de antorcha",
 		"acidBloodDamage": "Daño de sangre ácida",
@@ -1336,7 +1340,6 @@
 				"fight_win": "Buscas la mirada del hombre raro, pero constatas con sorpresa que ha desaparecido... La buena noticia es que ha olvidado su linterna. A partir de ahora podrás usar la linterna para no perderte más en los  lugares oscuros."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Eh... ¿Hola?",
 				"approch": "Intentar acercarse...",
 				"run": "¡Salir corriendo!",
@@ -2344,7 +2347,7 @@
 			"MaitreElementaire": "Aumenta los elementos Fuego y Agua en 2",
 			"Increvable": "Aumenta todas las defensas en 2",
 			"ArmureDeBasalte": "Aumenta la armadura en 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Aumenta la armadura en 5%",
 			"ChargeCornue": "Aumenta la potencia del primer asalto en 20%",
 			"Rock": "El Dino se vuelve objetivo principal de los enemigos",
 			"Pietinement": "Elimina la armadura de los enemigos",
@@ -3509,8 +3512,8 @@
 	},
 	"myAccount": {
 		"title": "Jugador:",
-		"labrute": "Récompenses La Brute",
-		"labruteTooltip": "Vous pouvez récupérer 1x :irma: par 3 Dinoz actifs tous les jours en finissant tous vos combats sur La Brute.",
+		"labrute": "Recompensas El Bruto",
+		"labruteTooltip": "Puedes recuperar 1 :irma: por cada 3 Dinos activos cada día al finalizar todos tus combates en El Bruto.",
 		"profil": "Perfil de EternalDinoRPG",
 		"options": {
 			"title": "Opciones de Mi Cuenta",
@@ -4225,7 +4228,7 @@
 			"info": "El banner tiene un ratio de 448px de ancho por 100px de largo."
 		},
 		"langs": {
-			"title": "Idiomas:"
+			"title": "Idiomas"
 		}
 	},
 	"createClan": {
@@ -4467,7 +4470,7 @@
 		"back": "Volver",
 		"bid": "Pujar",
 		"detail": "Ver detalles",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"yourTreasuryNotes": "Tus Bonos del Tesoro",
 		"sellView": {
 			"disclaimer": "Aquí puedes crear tu oferta, que se enviará a los demás Maestros de Dinos. Si vendes un Dino o artículos, no estarán disponibles mientras dure la oferta.",
 			"prepareYourOffer": "Prepara tu oferta",
@@ -4574,12 +4577,14 @@
 		"accessChallenges": "Accede a los desafíos",
 		"testDinoz": "Pon a prueba tu Dino",
 		"fightHistory": "Historial de combates",
+		"tournamentHistory": "Historial de torneos",
 		"team": "Mi Equipo",
 		"tournaments": "Torneos",
 		"build": "Construir mi dojo",
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
+		"soon": "Pronto",
 		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
@@ -4620,7 +4625,9 @@
 			"ennemis": "Adversarios",
 			"seeFight": "Ver el combate",
 			"link": "Link",
-			"copyLink": "Copiar el link"
+			"copyLink": "Copiar el link",
+			"tournamentType": "Tipo de torneo",
+			"startDate": "Fecha de inicio"
 		},
 		"fightRecap": {
 			"hpLost": "Cantidad de puntos de vida perdidos :pv:",
@@ -4648,7 +4655,9 @@
 			"damageVoid": "Daño de :void: infligido",
 			"assaultVoid": "Número de asaltos :void: realizados",
 			"hpRemaining": "Vida restante",
-			"times_poisoned": "Número de veces que un Dino fue envenenado"
+			"times_poisoned": "Número de veces que un Dino fue envenenado",
+			"myTeam": "Mi equipo",
+			"enemyTeam": "Equipo enemigo"
 		},
 		"challenge": {
 			"selectChampions": "Elige a tus campeones",

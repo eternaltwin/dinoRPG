@@ -508,7 +508,8 @@ export async function buyDinoz(req: Request) {
 				items: [],
 				followers: [],
 				concentration: null,
-				TournamentTeam: []
+				TournamentTeam: [],
+				build: null
 			}
 		]
 	};

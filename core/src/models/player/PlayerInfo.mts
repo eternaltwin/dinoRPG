@@ -4,7 +4,7 @@ import { PlayerStats } from './PlayerStats.mjs';
 export interface PlayerInfo {
 	dinozCount: number;
 	pointCount: number;
-	subscribeAt: string;
+	subscribedAt: string;
 	clan?:
 		| {
 				id: number;

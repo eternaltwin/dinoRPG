@@ -81,8 +81,12 @@
 			"cinema": "Theater",
 			"events": "Events",
 			"system": "Settings",
+			"stats": "Live Statistics",
 			"skipFight": "Display immediately the outcome of fights",
-			"skipLevel": "Skip level up animation"
+			"skipLevel": "Skip level up animation",
+			"connectedPlayers": "Online Players",
+			"totalDinoz": "Total Number of Dinoz",
+			"totalPlayers": "Total Number of Players"
 		}
 	},
 	"toast": {
@@ -1336,7 +1340,6 @@
 				"fight_win": "While you are searching for the strange man, you notice that he has disappeared...\nThe good news is that he dropped his lantern whilst he was running away. You can use this lantern to help guide you in dark places."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Hum... Hello?",
 				"approch": "Approach carefully",
 				"run": "Run away!",
@@ -2344,7 +2347,7 @@
 			"MaitreElementaire": "Increase Water and Fire elements by 2",
 			"Increvable": "Increase all defenses by 2",
 			"ArmureDeBasalte": "Increase armor by 15%",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Increase armor by 5%",
 			"ChargeCornue": "Increase strength of first assault by 20%",
 			"Rock": "Whenever an opponent picks a target for an assault, the Dinoz has 50% chance to become this target.",
 			"Pietinement": "Ignore the armor of opponents when attacking them",
@@ -4225,7 +4228,7 @@
 			"info": "Clan banner has a ratio of 448px large by 100px long."
 		},
 		"langs": {
-			"title": "Languages:"
+			"title": "Languages"
 		}
 	},
 	"createClan": {
@@ -4574,12 +4577,14 @@
 		"accessChallenges": "Access challenges",
 		"testDinoz": "Test your dinoz",
 		"fightHistory": "Fight history",
+		"tournamentHistory": "Tournament History",
 		"team": "My team",
 		"tournaments": "Tournaments",
 		"build": "Build my Dojo",
 		"group": "Group {group}",
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
+		"soon": "Soon",
 		"seeFight": "See the fight",
 		"deleteTeam": "Delete my team",
 		"timer": {
@@ -4620,7 +4625,9 @@
 			"ennemis": "Opponents",
 			"seeFight": "See the fight",
 			"link": "Link",
-			"copyLink": "Copy Link"
+			"copyLink": "Copy Link",
+			"tournamentType": "Type de tournois",
+			"startDate": "Date du début"
 		},
 		"fightRecap": {
 			"hpLost": "Quantity of health points lost :pv:",
@@ -4648,7 +4655,9 @@
 			"damageVoid": ":void: Damage dealt",
 			"assaultVoid": "Number of assaults :void: carried out",
 			"hpRemaining": "Hit points left",
-			"times_poisoned": "Number of times a Dinoz has been poisoned"
+			"times_poisoned": "Number of times a Dinoz has been poisoned",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Equipe adverse"
 		},
 		"challenge": {
 			"selectChampions": "Choose your champions",

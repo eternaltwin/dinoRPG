@@ -8,5 +8,12 @@
     "./ed-be",
     "./core"
   ],
-  "prisma.fileWatcher": false
+  "prisma.fileWatcher": false,
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

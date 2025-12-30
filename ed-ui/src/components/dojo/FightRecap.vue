@@ -2,8 +2,8 @@
 	<DZTable class="small-icons">
 		<tr>
 			<th></th>
-			<th>Mon équipe</th>
-			<th>Equipe adverse</th>
+			<th>{{ $t('dojo.fightRecap.myTeam') }}</th>
+			<th>{{ $t('dojo.fightRecap.enemyTeam') }}</th>
 		</tr>
 		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.hpRemaining'))" />

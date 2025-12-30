@@ -61,6 +61,17 @@
 				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
 			</RouterLink>
 			<RouterLink
+				v-if="isClanMember && playerStore.playerOptions.hasPAC"
+				class="tab"
+				:to="{ name: 'ClanBuilds' }"
+				v-tippy="{
+					content: formatContent($t('clan.tabs.builds')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'act_pac')" :alt="$t('clan.tabs.builds')" />
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember"
 				class="tab"
 				:to="{ name: 'ClanDiscussion' }"

@@ -8,6 +8,7 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { LearnSkillData, ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { http } from '../utils/index.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { AssignDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -176,6 +177,14 @@ export const DinozService = {
 		return http()
 			.post(`/dinoz/${dinozId}/reincarnate`)
 			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async assignBuild(dinozId: number, buildId: string | null) {
+		return http()
+			.put(`/dinoz/${dinozId}/build`, {
+				buildId: buildId
+			})
+			.then(res => Promise.resolve<AssignDinozBuildResponse>(res.data))
 			.catch(err => Promise.reject(err));
 	}
 };

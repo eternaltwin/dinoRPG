@@ -49,7 +49,7 @@
 						v-else
 						@click="goToPage('ShareFight', { archive: dinoz.fight })"
 					>
-						<span class="name">Soon</span>
+						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>
 							<h1>{{ dinoz.name }}</h1>
@@ -89,7 +89,7 @@
 						v-else
 						@click="goToPage('ShareFight', { archive: dinoz.fight })"
 					>
-						<span class="name">Soon</span>
+						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>
 							<h1>{{ dinoz.name }}</h1>

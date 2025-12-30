@@ -35,22 +35,22 @@ const emit = defineEmits<{
 const isChecked = computed(() => props.modelValue === props.value);
 const valueString = computed(() => String(props.value));
 
-function selectValue() {
+const selectValue = () => {
 	if (props.disabled) return;
 	emit('update:modelValue', props.value);
 	emit('change', props.value);
-}
+};
 
-function onChange() {
+const onChange = () => {
 	// Native radio fires change only when it becomes checked
 	selectValue();
-}
+};
 
-function onIconClick(e: MouseEvent) {
+const onIconClick = (e: MouseEvent) => {
 	// Delegate to input for consistency
 	e.preventDefault();
 	if (!isChecked.value) selectValue();
-}
+};
 </script>
 
 <style scoped lang="scss">

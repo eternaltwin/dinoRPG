@@ -16,6 +16,7 @@ export type DinozToGetFighter = Pick<
 	| 'nbrUpAir'
 	| 'display'
 > & {
+	playerId: string | null;
 	items: Pick<DinozItem, 'itemId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];

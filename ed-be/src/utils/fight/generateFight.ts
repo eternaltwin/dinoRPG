@@ -13,7 +13,7 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { randomBetweenSeeded } from './randomBetween.js';
-import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -387,8 +387,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	orderFighters(fightData);
 
 	// Zero the time origin to start from clean origin
-	const firstFighterTime = fightData.fighters[0].time;
-	fightData.fighters.map(fighter => (fighter.time -= firstFighterTime));
+	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
 
 	let overtimePoisonDamage = 10;
 
@@ -402,6 +401,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	// Hack to not play dinoz turn if there are no ennemies (swamp)
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.loser = 'defenders';
+	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
+		fightData.loser = 'attackers';
 	}
 
 	// Fight loop
@@ -565,6 +566,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	const attackersResults: FighterResultFiche[] = fightData.fighters
 		.filter(fighter => fighter.attacker && fighter.type === FighterType.DINOZ)
 		.map(dinoz => ({
+			playerId: dinoz.playerId,
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,
@@ -577,6 +579,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	const defendersResults: FighterResultFiche[] = fightData.fighters
 		.filter(fighter => !fighter.attacker && fighter.type === FighterType.DINOZ)
 		.map(dinoz => ({
+			playerId: dinoz.playerId,
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,

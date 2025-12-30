@@ -37,17 +37,9 @@ export default defineComponent({
 				setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
 				setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
 				// Set data in sessionStore
-				this.playerStore.setMoney(commonData.money);
 				this.dinozStore.setDinozList(commonData.dinoz);
 				this.dinozStore.setDinozCount(commonData.dinozCount);
-				this.playerStore.setClanId(commonData.clanId);
-				this.playerStore.setPriest(commonData.priest);
-				this.playerStore.setShopkeeper(commonData.shopkeeper);
-				this.playerStore.setNotifications(commonData.notifications);
-				this.playerStore.setPlayerId(commonData.id);
-				this.playerStore.setPlayerName(commonData.name);
-				this.playerStore.setPlayerOptions(commonData.playerOptions);
-				this.playerStore.setAdmin(commonData.admin);
+				await this.playerStore.update();
 				EventBus.emit('isLoading', false);
 				this.isLogged = true;
 			} catch (err) {

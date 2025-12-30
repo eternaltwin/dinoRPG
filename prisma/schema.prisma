@@ -47,6 +47,8 @@ model Dinoz {
   unavailableReason  UnavailableReason?
   seed               String                 @default(dbgenerated("uuid_generate_v4()"))
   playerId           String                 @db.Uuid
+  buildId            String?                @db.Uuid
+  build              DinozBuild?            @relation(fields: [buildId], references: [id], onDelete: SetNull)
   catches            DinozCatch[]
   logs               Log[]
   Moderation         Moderation[]
@@ -68,6 +70,7 @@ model Dinoz {
   TournamentTeam     TournamentTeam[]
 
   @@index([playerId], map: "idx_playerId")
+  @@index([buildId])
   @@map("dinoz")
 }
 
@@ -148,6 +151,18 @@ model DinozStatus {
   @@unique([statusId, dinozId])
   @@index([dinozId])
   @@map("dinoz_status")
+}
+
+model DinozBuild {
+  id        String  @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  playerId  String  @db.Uuid
+  player    Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  skills    Int[]   @default([])
+  shareable Boolean @default(false)
+  name      String  @db.VarChar
+  dinozs    Dinoz[]
+
+  @@index([playerId, shareable])
 }
 
 model migrations {
@@ -306,6 +321,7 @@ model Player {
   ips                  String[]           @db.Inet
   pollVotes            PollVote[]
   Events               Events[]
+  dinozBuilds          DinozBuild[]
 
   @@map("player")
 }

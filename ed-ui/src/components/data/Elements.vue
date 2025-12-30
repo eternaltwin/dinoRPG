@@ -1,6 +1,7 @@
 <template>
 	<div class="element">
 		<div
+			class="wrap"
 			v-for="el in elementList"
 			:key="el"
 			v-tippy="{
@@ -9,7 +10,9 @@
 			}"
 		>
 			<img :src="getImgURL('elements', `elem_${el}`)" :alt="el" />
-			<span :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</span>
+			<div class="df numb">
+				<span :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -77,7 +80,7 @@ export default defineComponent({
 	width: 100%;
 	padding-bottom: 2px;
 	justify-content: space-evenly;
-	div {
+	.wrap {
 		box-sizing: border-box;
 		display: flex;
 		justify-content: space-between;
@@ -90,14 +93,18 @@ export default defineComponent({
 		padding-right: 4px;
 
 		cursor: help;
-		span {
-			color: white;
-			font-size: 13.3px;
-			text-align: left;
-			letter-spacing: -0.2pt;
-			margin-bottom: 2px;
-			&.max {
-				color: yellow;
+		.numb {
+			width: 100%;
+			justify-content: center;
+			span {
+				color: white;
+				font-size: 13.3px;
+				text-align: left;
+				letter-spacing: -0.2pt;
+				margin-bottom: 2px;
+				&.max {
+					color: yellow;
+				}
 			}
 		}
 	}

@@ -81,8 +81,12 @@
 			"cinema": "Kino",
 			"events": "Ereignisse",
 			"system": "Einstellungen",
+			"stats": "Aktuelle Statistiken",
 			"skipFight": "Kampfergebnis sofort anzeigen",
-			"skipLevel": "Animation beim Stufenaufstieg überspringen"
+			"skipLevel": "Animation beim Stufenaufstieg überspringen",
+			"connectedPlayers": "Spieler Online",
+			"totalDinoz": "Gesamtzahl der Dinoz",
+			"totalPlayers": "Gesamtzahl der Spieler"
 		}
 	},
 	"toast": {
@@ -903,7 +907,7 @@
 			"mahamuti": "Mahamuti",
 			"santaz": "Santas",
 			"smog": "Smog",
-			"soufflet": "Sumpf",
+			"soufflet": "Wespel",
 			"toufufu": "Tofufu",
 			"triceragnon": "Triceragon"
 		},
@@ -1336,7 +1340,6 @@
 				"fight_win": "Als du versuchst, den Sonderbaren Mann irgendwo zu erblicken, stellst du ohne großartig überrascht zu sein fest, dass er verschwunden ist... Die gute Nachricht ist, dass er bei der Flucht seine Laterne zurückgelassen hat. Diese kannst du benutzen, um dich an finsteren Orten nicht mehr zu verlaufen."
 			},
 			"playerChoice": {
-				"begin": "",
 				"hi": "Äh... Hallo?",
 				"approch": "Sich zu nähern versuchen",
 				"run": "Abhauen!",
@@ -2344,7 +2347,7 @@
 			"MaitreElementaire": "Erhöht die Elemente Wasser und Feuer um 2.",
 			"Increvable": "Erhöht alle Abwehr um 2.",
 			"ArmureDeBasalte": "Erhöht die Rüstung um 15%.",
-			"Coque": "Augmente l'armure de 10%",
+			"Coque": "Erhöht die Rüstung um 5%.",
 			"ChargeCornue": "Erhöht die Stärke des ersten Angriffs um 20%.",
 			"Rock": "Wird zu einem bevorzugten Ziel von Feinden.",
 			"Pietinement": "Hebt die Rüstung von Gegnern auf.",
@@ -4141,7 +4144,7 @@
 			"event": "Ereignispunkte"
 		},
 		"edit": {
-			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitgliedern zu berarbeiten <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
+			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitglied <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> zu bearbeiten.",
 			"right": {
 				"MEMBER_EDIT": "Kann Rechte und Spitznamen der Mitglieder bearbeiten",
 				"PAGE_MANAGE": "Kann Klanseiten verwalten",
@@ -4225,7 +4228,7 @@
 			"info": "Das Banner muss 448px breit und 100px hoch sein."
 		},
 		"langs": {
-			"title": "Sprachen:"
+			"title": "Sprachen"
 		}
 	},
 	"createClan": {
@@ -4560,7 +4563,7 @@
 	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
-		"markAsRead": "Als gelesen markieren",
+		"markAsRead": "Als angeschaut setzen",
 		"noTournament": "Es sind nicht genug Dinoz da, um ein Turnier zu veranstalten. Komm später wieder, nachdem du deine Freunde zum Spiel mitgebracht hast!",
 		"return": "Zurück",
 		"accessTournament": "An Wettkampf teilnehmen",
@@ -4574,12 +4577,14 @@
 		"accessChallenges": "Herausforderungen ansehen",
 		"testDinoz": "Probekampf",
 		"fightHistory": "Kampfverlauf",
+		"tournamentHistory": "Historie der Turniere",
 		"team": "Meine Mannschaft",
 		"tournaments": "Wettkämpfe",
 		"build": "Dojo erbauen",
 		"group": "Gruppe {group}",
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
+		"soon": "Bientôt",
 		"seeFight": "Kampf ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
@@ -4620,7 +4625,9 @@
 			"ennemis": "Gegner",
 			"seeFight": "Kampf ansehen",
 			"link": "Link",
-			"copyLink": "Link kopieren"
+			"copyLink": "Link kopieren",
+			"tournamentType": "Type de tournois",
+			"startDate": "Date du début"
 		},
 		"fightRecap": {
 			"hpLost": "Anzahl verlorener Lebenspunkte :pv:",
@@ -4648,7 +4655,9 @@
 			"damageVoid": ":void:-Schaden verursacht",
 			"assaultVoid": ":void:-Angriffe ausgeführt",
 			"hpRemaining": "Lebenspunkte übrig",
-			"times_poisoned": "Anzahl vergifteter Dinoz"
+			"times_poisoned": "Anzahl vergifteter Dinoz",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Equipe adverse"
 		},
 		"challenge": {
 			"selectChampions": "Wähle deine Mitstreiter",
