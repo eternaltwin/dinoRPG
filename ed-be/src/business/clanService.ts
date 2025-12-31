@@ -737,9 +737,9 @@ export async function giveClanIngredients(req: Request) {
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
 
-	await createTestUsers();
-	await createTestDinoz();
-	// await testDojoTournament();
+	// await createTestUsers();
+	// await createTestDinoz();
+	await testDojoTournament();
 	// await batchCreateTestDinozForTournament();
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
