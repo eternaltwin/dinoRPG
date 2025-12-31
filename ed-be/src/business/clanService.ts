@@ -691,7 +691,7 @@ async function createTestDinoz() {
 
 async function testDojoTournament() {
 	const players = await getTestUsers();
-
+	players.length = Math.min(players.length, 64);
 	for (const player of players) {
 		await updateDojoPoints(player.id, 2);
 		let dinoz = await getAllDinozFromAccount(player.id);
