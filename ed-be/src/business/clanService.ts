@@ -63,24 +63,12 @@ import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import gameConfig from '../config/game.config.js';
-import {
-	createPlayer,
-	getTestUsers,
-} from '../dao/playerDao.js';
-import {
-	getAllDinozFromAccount,
-	updateDinoz,
-} from '../dao/dinozDao.js';
+import { createPlayer, getTestUsers } from '../dao/playerDao.js';
+import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
 import { updateDojoPoints } from '../dao/rankingDao.js';
-import {
-	simplifyCreateTournamentTeam
-} from '../business/tournamentService.js';
-import {
-	createMyDojo,
-} from '../dao/dojoDao.js';
-import {
-	generateRandomChallenge
-} from '../business/dojoService.js';
+import { simplifyCreateTournamentTeam } from '../business/tournamentService.js';
+import { createMyDojo } from '../dao/dojoDao.js';
+import { generateRandomChallenge } from '../business/dojoService.js';
 /**
  * Get all the clans
  * @param req
@@ -628,7 +616,6 @@ interface UserResponse {
 	id: string;
 }
 
-
 async function createTestUsers() {
 	const url = 'http://localhost:50320/api/v1/users';
 
@@ -636,10 +623,12 @@ async function createTestUsers() {
 		const name = `test${i}`;
 		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536' });
 		const response = await fetch(url, {
-			method: 'POST', headers: {
+			method: 'POST',
+			headers: {
 				'Content-Type': 'application/json', // Indicate the body content type
-				'Accept': 'application/json' // Tell the server you expect JSON in response
-			}, body: body
+				Accept: 'application/json' // Tell the server you expect JSON in response
+			},
+			body: body
 		});
 
 		if (!response.ok) {
@@ -665,8 +654,16 @@ async function createTestUsers() {
 async function createTestDinoz() {
 	const players = await getTestUsers();
 
-	const eggs = [Item.WINKS_EGG, Item.PIGMOU_EGG, Item.WINKS_EGG,
-	Item.PLANAILLE_EGG, Item.MOUEFFE_EGG, Item.NUAGOZ_EGG, Item.SIRAIN_EGG, Item.SIRAIN_EGG_RARE].map(itemId => itemList[itemId]);
+	const eggs = [
+		Item.WINKS_EGG,
+		Item.PIGMOU_EGG,
+		Item.WINKS_EGG,
+		Item.PLANAILLE_EGG,
+		Item.MOUEFFE_EGG,
+		Item.NUAGOZ_EGG,
+		Item.SIRAIN_EGG,
+		Item.SIRAIN_EGG_RARE
+	].map(itemId => itemList[itemId]);
 	for (const player of players) {
 		const numDinoz = (await getAllDinozFromAccount(player.id)).length;
 		const toCreate = 18 - numDinoz;
@@ -686,7 +683,6 @@ async function createTestDinoz() {
 				canChangeName: false
 			});
 			i++;
-			
 		}
 	}
 }
@@ -700,7 +696,10 @@ async function testDojoTournament() {
 		console.log(`player ${player.name} has ${dinoz.length} dinos`);
 		dinoz = shuffle(dinoz);
 		dinoz.length = Math.min(dinoz.length, 2);
-		await simplifyCreateTournamentTeam(player.id, dinoz.map(dino => dino.id));
+		await simplifyCreateTournamentTeam(
+			player.id,
+			dinoz.map(dino => dino.id)
+		);
 	}
 }
 
@@ -710,10 +709,12 @@ async function batchCreateTestDinozForTournament() {
 		select: {
 			id: true,
 			participants: true,
-			teamRace: true,
-		},
+			teamRace: true
+		}
 	});
-	console.log(`Tournament ${tournament.id} from ${tournament.teamRace} has ${tournament.participants.length} participants`);
+	console.log(
+		`Tournament ${tournament.id} from ${tournament.teamRace} has ${tournament.participants.length} participants`
+	);
 	let count = 256 - tournament.participants.length;
 	for (const player of players) {
 		if (count <= 0) break;
@@ -738,7 +739,6 @@ export async function giveClanIngredients(req: Request) {
 	// await createTestDinoz();
 	await testDojoTournament();
 	// await batchCreateTestDinozForTournament();
-
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);
