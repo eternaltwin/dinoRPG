@@ -649,6 +649,7 @@ async function createTestUsers() {
 			await createMyDojo(player.id, generateRandomChallenge());
 		}
 	}
+	console.log(`Finished creating test users`);
 }
 
 async function createTestDinoz() {
@@ -685,6 +686,7 @@ async function createTestDinoz() {
 			i++;
 		}
 	}
+	console.log(`Finished creating test dinoz`);
 }
 
 async function testDojoTournament() {
@@ -735,9 +737,9 @@ export async function giveClanIngredients(req: Request) {
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
 
-	// await createTestUsers();
-	// await createTestDinoz();
-	await testDojoTournament();
+	await createTestUsers();
+	await createTestDinoz();
+	// await testDojoTournament();
 	// await batchCreateTestDinozForTournament();
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
