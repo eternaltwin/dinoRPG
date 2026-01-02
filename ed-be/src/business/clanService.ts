@@ -714,7 +714,9 @@ async function batchCreateTestDinozForTournament() {
 			teamRace: true
 		},
 		orderBy: {
-			nextRound: 'desc'
+			participants: {
+				_count: 'asc'
+			}
 		}
 	});
 	console.log(
