@@ -590,6 +590,8 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   seed: 'seed',
   result: 'result',
   playerId: 'playerId',
+  leftPlayerId: 'leftPlayerId',
+  rightPlayerId: 'rightPlayerId',
   tournamentStep: 'tournamentStep',
   slot: 'slot',
   createdDate: 'createdDate',

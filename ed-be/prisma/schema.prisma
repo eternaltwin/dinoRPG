@@ -315,7 +315,9 @@ model Player {
   rewards              PlayerReward[]
   ranking              Ranking?
   Dojo                 Dojo?
-  FightArchive         FightArchive[]
+  FightArchive         FightArchive[]     @relation("PlayerRelation")
+  LeftFightArchives    FightArchive[]     @relation("LeftPlayerRelation")
+  RightFightArchives   FightArchive[]     @relation("RightPlayerRelation")
   FightWatched         FightWatched[]
   GameDinoz            GameDinoz[]
   ips                  String[]           @db.Inet
@@ -737,7 +739,11 @@ model FightArchive {
   seed                  String          @db.VarChar(255)
   result                Boolean         @db.Boolean
   playerId              String?         @db.Uuid
-  player                Player?         @relation(fields: [playerId], references: [id])
+  player                Player?         @relation("PlayerRelation", fields: [playerId], references: [id])
+  leftPlayerId          String?         @db.Uuid
+  leftPlayer            Player?         @relation("LeftPlayerRelation", fields: [leftPlayerId], references: [id])
+  rightPlayerId         String?         @db.Uuid
+  rightPlayer           Player?         @relation("RightPlayerRelation", fields: [rightPlayerId], references: [id])
   tournamentStep        Int             @default(0)
   slot                  Int             @default(0)
   createdDate           DateTime        @default(now()) @db.Timestamp(6)
