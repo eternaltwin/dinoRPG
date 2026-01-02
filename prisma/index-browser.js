@@ -590,6 +590,8 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   seed: 'seed',
   result: 'result',
   playerId: 'playerId',
+  leftPlayerId: 'leftPlayerId',
+  rightPlayerId: 'rightPlayerId',
   tournamentStep: 'tournamentStep',
   slot: 'slot',
   createdDate: 'createdDate',
@@ -840,11 +842,8 @@ exports.EventType = exports.$Enums.EventType = {
 
 exports.ServerAction = exports.$Enums.ServerAction = {
   checkBans: 'checkBans',
-  dojoReset: 'dojoReset',
-  healDinozFount: 'healDinozFount',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  dinozShop: 'dinozShop',
   midnightReset: 'midnightReset'
 };
 

@@ -330,6 +330,7 @@ export function transpileFight(
 					damages: step.damage,
 					lifeFx: hitFx,
 					effect: damageFx
+					// TODO: add way to change color of the text or a "critical" boolean
 				});
 
 				myFighter = fighters.find(f => f.id === step.fighter.id);

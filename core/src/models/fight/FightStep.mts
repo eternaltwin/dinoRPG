@@ -58,6 +58,7 @@ export interface HitStep {
 	fighter: StepFighter;
 	target: StepFighter;
 	damage: number | null;
+	critical: boolean;
 	elements: ElementType[];
 	skill?: Skill;
 }

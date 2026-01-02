@@ -1,6 +1,6 @@
 {
   "name": "@drpg/prisma",
-  "version": "0.17.13",
+  "version": "0.17.14",
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "index-browser.js"

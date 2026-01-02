@@ -864,7 +864,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		}
 	});
 
-	await archiveFight(fightResult, authed.id);
+	await archiveFight(fightResult, authed.id, null);
 
 	// Consume item used
 	for (const fighter of [...fightResult.attackers]) {

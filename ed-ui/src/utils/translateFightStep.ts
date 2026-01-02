@@ -74,12 +74,21 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					target: getFighterName(fightStep.target, t)
 				});
 			} else {
-				return t('fight.step.hit', {
-					fighter: getFighterName(fightStep.fighter, t),
-					damage: fightStep.damage,
-					target: getFighterName(fightStep.target, t),
-					elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
-				});
+				if (fightStep.critical) {
+					return t('fight.step.hit-critical', {
+						fighter: getFighterName(fightStep.fighter, t),
+						damage: fightStep.damage,
+						target: getFighterName(fightStep.target, t),
+						elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
+					});
+				} else {
+					return t('fight.step.hit', {
+						fighter: getFighterName(fightStep.fighter, t),
+						damage: fightStep.damage,
+						target: getFighterName(fightStep.target, t),
+						elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
+					});
+				}
 			}
 		}
 		case 'moveTo':

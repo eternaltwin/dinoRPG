@@ -176,6 +176,14 @@ export async function createClanRequest(
 	if (!creator) {
 		throw new ExpectedError('Creator not found');
 	}
+
+	// Delete existing requests for the player as well
+	await prisma.clanJoinRequest.delete({
+		where: {
+			playerId: playerId
+		}
+	});
+
 	const clan = await prisma.clan.create({
 		data: {
 			name: clanName,

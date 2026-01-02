@@ -310,11 +310,8 @@ export type ServerState = $Result.DefaultSelection<Prisma.$ServerStatePayload>
 export namespace $Enums {
   export const ServerAction: {
   checkBans: 'checkBans',
-  dojoReset: 'dojoReset',
-  healDinozFount: 'healDinozFount',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  dinozShop: 'dinozShop',
   midnightReset: 'midnightReset'
 };
 
@@ -6685,6 +6682,8 @@ export namespace Prisma {
     quests: number
     rewards: number
     FightArchive: number
+    LeftFightArchives: number
+    RightFightArchives: number
     FightWatched: number
     GameDinoz: number
     pollVotes: number
@@ -6716,6 +6715,8 @@ export namespace Prisma {
     quests?: boolean | PlayerCountOutputTypeCountQuestsArgs
     rewards?: boolean | PlayerCountOutputTypeCountRewardsArgs
     FightArchive?: boolean | PlayerCountOutputTypeCountFightArchiveArgs
+    LeftFightArchives?: boolean | PlayerCountOutputTypeCountLeftFightArchivesArgs
+    RightFightArchives?: boolean | PlayerCountOutputTypeCountRightFightArchivesArgs
     FightWatched?: boolean | PlayerCountOutputTypeCountFightWatchedArgs
     GameDinoz?: boolean | PlayerCountOutputTypeCountGameDinozArgs
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
@@ -6892,6 +6893,20 @@ export namespace Prisma {
    * PlayerCountOutputType without action
    */
   export type PlayerCountOutputTypeCountFightArchiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountLeftFightArchivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountRightFightArchivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightArchiveWhereInput
   }
 
@@ -26844,6 +26859,8 @@ export namespace Prisma {
     ranking?: boolean | Player$rankingArgs<ExtArgs>
     Dojo?: boolean | Player$DojoArgs<ExtArgs>
     FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
+    LeftFightArchives?: boolean | Player$LeftFightArchivesArgs<ExtArgs>
+    RightFightArchives?: boolean | Player$RightFightArchivesArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
@@ -26981,6 +26998,8 @@ export namespace Prisma {
     ranking?: boolean | Player$rankingArgs<ExtArgs>
     Dojo?: boolean | Player$DojoArgs<ExtArgs>
     FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
+    LeftFightArchives?: boolean | Player$LeftFightArchivesArgs<ExtArgs>
+    RightFightArchives?: boolean | Player$RightFightArchivesArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
@@ -27027,6 +27046,8 @@ export namespace Prisma {
       ranking: Prisma.$RankingPayload<ExtArgs> | null
       Dojo: Prisma.$DojoPayload<ExtArgs> | null
       FightArchive: Prisma.$FightArchivePayload<ExtArgs>[]
+      LeftFightArchives: Prisma.$FightArchivePayload<ExtArgs>[]
+      RightFightArchives: Prisma.$FightArchivePayload<ExtArgs>[]
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
       GameDinoz: Prisma.$GameDinozPayload<ExtArgs>[]
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
@@ -27486,6 +27507,8 @@ export namespace Prisma {
     ranking<T extends Player$rankingArgs<ExtArgs> = {}>(args?: Subset<T, Player$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Dojo<T extends Player$DojoArgs<ExtArgs> = {}>(args?: Subset<T, Player$DojoArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     FightArchive<T extends Player$FightArchiveArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightArchiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    LeftFightArchives<T extends Player$LeftFightArchivesArgs<ExtArgs> = {}>(args?: Subset<T, Player$LeftFightArchivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    RightFightArchives<T extends Player$RightFightArchivesArgs<ExtArgs> = {}>(args?: Subset<T, Player$RightFightArchivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     FightWatched<T extends Player$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -28599,6 +28622,54 @@ export namespace Prisma {
    * Player.FightArchive
    */
   export type Player$FightArchiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+  }
+
+  /**
+   * Player.LeftFightArchives
+   */
+  export type Player$LeftFightArchivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+  }
+
+  /**
+   * Player.RightFightArchives
+   */
+  export type Player$RightFightArchivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the FightArchive
      */
@@ -66425,6 +66496,8 @@ export namespace Prisma {
     seed: string | null
     result: boolean | null
     playerId: string | null
+    leftPlayerId: string | null
+    rightPlayerId: string | null
     tournamentStep: number | null
     slot: number | null
     createdDate: Date | null
@@ -66444,6 +66517,8 @@ export namespace Prisma {
     seed: string | null
     result: boolean | null
     playerId: string | null
+    leftPlayerId: string | null
+    rightPlayerId: string | null
     tournamentStep: number | null
     slot: number | null
     createdDate: Date | null
@@ -66463,6 +66538,8 @@ export namespace Prisma {
     seed: number
     result: number
     playerId: number
+    leftPlayerId: number
+    rightPlayerId: number
     tournamentStep: number
     slot: number
     createdDate: number
@@ -66498,6 +66575,8 @@ export namespace Prisma {
     seed?: true
     result?: true
     playerId?: true
+    leftPlayerId?: true
+    rightPlayerId?: true
     tournamentStep?: true
     slot?: true
     createdDate?: true
@@ -66517,6 +66596,8 @@ export namespace Prisma {
     seed?: true
     result?: true
     playerId?: true
+    leftPlayerId?: true
+    rightPlayerId?: true
     tournamentStep?: true
     slot?: true
     createdDate?: true
@@ -66536,6 +66617,8 @@ export namespace Prisma {
     seed?: true
     result?: true
     playerId?: true
+    leftPlayerId?: true
+    rightPlayerId?: true
     tournamentStep?: true
     slot?: true
     createdDate?: true
@@ -66642,6 +66725,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId: string | null
+    leftPlayerId: string | null
+    rightPlayerId: string | null
     tournamentStep: number
     slot: number
     createdDate: Date
@@ -66680,6 +66765,8 @@ export namespace Prisma {
     seed?: boolean
     result?: boolean
     playerId?: boolean
+    leftPlayerId?: boolean
+    rightPlayerId?: boolean
     tournamentStep?: boolean
     slot?: boolean
     createdDate?: boolean
@@ -66691,6 +66778,8 @@ export namespace Prisma {
     FBTournamentLeftId?: boolean
     FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66708,6 +66797,8 @@ export namespace Prisma {
     seed?: boolean
     result?: boolean
     playerId?: boolean
+    leftPlayerId?: boolean
+    rightPlayerId?: boolean
     tournamentStep?: boolean
     slot?: boolean
     createdDate?: boolean
@@ -66719,6 +66810,8 @@ export namespace Prisma {
     FBTournamentLeftId?: boolean
     FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66734,6 +66827,8 @@ export namespace Prisma {
     seed?: boolean
     result?: boolean
     playerId?: boolean
+    leftPlayerId?: boolean
+    rightPlayerId?: boolean
     tournamentStep?: boolean
     slot?: boolean
     createdDate?: boolean
@@ -66745,6 +66840,8 @@ export namespace Prisma {
     FBTournamentLeftId?: boolean
     FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66760,6 +66857,8 @@ export namespace Prisma {
     seed?: boolean
     result?: boolean
     playerId?: boolean
+    leftPlayerId?: boolean
+    rightPlayerId?: boolean
     tournamentStep?: boolean
     slot?: boolean
     createdDate?: boolean
@@ -66772,9 +66871,11 @@ export namespace Prisma {
     FBTournamentRightId?: boolean
   }
 
-  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata" | "FBTournamentId" | "FBTournamentLeftId" | "FBTournamentRightId", ExtArgs["result"]["fightArchive"]>
+  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "leftPlayerId" | "rightPlayerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata" | "FBTournamentId" | "FBTournamentLeftId" | "FBTournamentRightId", ExtArgs["result"]["fightArchive"]>
   export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66786,6 +66887,8 @@ export namespace Prisma {
   }
   export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66795,6 +66898,8 @@ export namespace Prisma {
   }
   export type FightArchiveIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
+    leftPlayer?: boolean | FightArchive$leftPlayerArgs<ExtArgs>
+    rightPlayer?: boolean | FightArchive$rightPlayerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
@@ -66807,6 +66912,8 @@ export namespace Prisma {
     name: "FightArchive"
     objects: {
       player: Prisma.$PlayerPayload<ExtArgs> | null
+      leftPlayer: Prisma.$PlayerPayload<ExtArgs> | null
+      rightPlayer: Prisma.$PlayerPayload<ExtArgs> | null
       Tournament: Prisma.$TournamentPayload<ExtArgs> | null
       tournamentTeamLeft: Prisma.$TournamentTeamPayload<ExtArgs> | null
       tournamentTeamRight: Prisma.$TournamentTeamPayload<ExtArgs> | null
@@ -66822,6 +66929,8 @@ export namespace Prisma {
       seed: string
       result: boolean
       playerId: string | null
+      leftPlayerId: string | null
+      rightPlayerId: string | null
       tournamentStep: number
       slot: number
       createdDate: Date
@@ -67227,6 +67336,8 @@ export namespace Prisma {
   export interface Prisma__FightArchiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     player<T extends FightArchive$playerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    leftPlayer<T extends FightArchive$leftPlayerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$leftPlayerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    rightPlayer<T extends FightArchive$rightPlayerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$rightPlayerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Tournament<T extends FightArchive$TournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$TournamentArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     tournamentTeamLeft<T extends FightArchive$tournamentTeamLeftArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamLeftArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     tournamentTeamRight<T extends FightArchive$tournamentTeamRightArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamRightArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -67269,6 +67380,8 @@ export namespace Prisma {
     readonly seed: FieldRef<"FightArchive", 'String'>
     readonly result: FieldRef<"FightArchive", 'Boolean'>
     readonly playerId: FieldRef<"FightArchive", 'String'>
+    readonly leftPlayerId: FieldRef<"FightArchive", 'String'>
+    readonly rightPlayerId: FieldRef<"FightArchive", 'String'>
     readonly tournamentStep: FieldRef<"FightArchive", 'Int'>
     readonly slot: FieldRef<"FightArchive", 'Int'>
     readonly createdDate: FieldRef<"FightArchive", 'DateTime'>
@@ -67687,6 +67800,44 @@ export namespace Prisma {
    * FightArchive.player
    */
   export type FightArchive$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
+  }
+
+  /**
+   * FightArchive.leftPlayer
+   */
+  export type FightArchive$leftPlayerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
+  }
+
+  /**
+   * FightArchive.rightPlayer
+   */
+  export type FightArchive$rightPlayerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Player
      */
@@ -76828,6 +76979,8 @@ export namespace Prisma {
     seed: 'seed',
     result: 'result',
     playerId: 'playerId',
+    leftPlayerId: 'leftPlayerId',
+    rightPlayerId: 'rightPlayerId',
     tournamentStep: 'tournamentStep',
     slot: 'slot',
     createdDate: 'createdDate',
@@ -78454,6 +78607,8 @@ export namespace Prisma {
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     FightArchive?: FightArchiveListRelationFilter
+    LeftFightArchives?: FightArchiveListRelationFilter
+    RightFightArchives?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
@@ -78520,6 +78675,8 @@ export namespace Prisma {
     ranking?: RankingOrderByWithRelationInput
     Dojo?: DojoOrderByWithRelationInput
     FightArchive?: FightArchiveOrderByRelationAggregateInput
+    LeftFightArchives?: FightArchiveOrderByRelationAggregateInput
+    RightFightArchives?: FightArchiveOrderByRelationAggregateInput
     FightWatched?: FightWatchedOrderByRelationAggregateInput
     GameDinoz?: GameDinozOrderByRelationAggregateInput
     pollVotes?: PollVoteOrderByRelationAggregateInput
@@ -78589,6 +78746,8 @@ export namespace Prisma {
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     FightArchive?: FightArchiveListRelationFilter
+    LeftFightArchives?: FightArchiveListRelationFilter
+    RightFightArchives?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
@@ -80741,6 +80900,8 @@ export namespace Prisma {
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
+    leftPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
+    rightPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
     slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
@@ -80752,6 +80913,8 @@ export namespace Prisma {
     FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
     FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    leftPlayer?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    rightPlayer?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
@@ -80768,6 +80931,8 @@ export namespace Prisma {
     seed?: SortOrder
     result?: SortOrder
     playerId?: SortOrderInput | SortOrder
+    leftPlayerId?: SortOrderInput | SortOrder
+    rightPlayerId?: SortOrderInput | SortOrder
     tournamentStep?: SortOrder
     slot?: SortOrder
     createdDate?: SortOrder
@@ -80779,6 +80944,8 @@ export namespace Prisma {
     FBTournamentLeftId?: SortOrderInput | SortOrder
     FBTournamentRightId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
+    leftPlayer?: PlayerOrderByWithRelationInput
+    rightPlayer?: PlayerOrderByWithRelationInput
     Tournament?: TournamentOrderByWithRelationInput
     tournamentTeamLeft?: TournamentTeamOrderByWithRelationInput
     tournamentTeamRight?: TournamentTeamOrderByWithRelationInput
@@ -80798,6 +80965,8 @@ export namespace Prisma {
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
+    leftPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
+    rightPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
     slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
@@ -80809,6 +80978,8 @@ export namespace Prisma {
     FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
     FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    leftPlayer?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    rightPlayer?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
@@ -80825,6 +80996,8 @@ export namespace Prisma {
     seed?: SortOrder
     result?: SortOrder
     playerId?: SortOrderInput | SortOrder
+    leftPlayerId?: SortOrderInput | SortOrder
+    rightPlayerId?: SortOrderInput | SortOrder
     tournamentStep?: SortOrder
     slot?: SortOrder
     createdDate?: SortOrder
@@ -80852,6 +81025,8 @@ export namespace Prisma {
     seed?: StringWithAggregatesFilter<"FightArchive"> | string
     result?: BoolWithAggregatesFilter<"FightArchive"> | boolean
     playerId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
+    leftPlayerId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
+    rightPlayerId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     tournamentStep?: IntWithAggregatesFilter<"FightArchive"> | number
     slot?: IntWithAggregatesFilter<"FightArchive"> | number
     createdDate?: DateTimeWithAggregatesFilter<"FightArchive"> | Date | string
@@ -82525,6 +82700,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -82590,6 +82767,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -82655,6 +82834,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -82720,6 +82901,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -84730,6 +84913,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -84746,6 +84931,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -84770,6 +84957,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -84786,6 +84975,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84806,6 +84997,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -84837,6 +85030,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88582,6 +88777,8 @@ export namespace Prisma {
     seed?: SortOrder
     result?: SortOrder
     playerId?: SortOrder
+    leftPlayerId?: SortOrder
+    rightPlayerId?: SortOrder
     tournamentStep?: SortOrder
     slot?: SortOrder
     createdDate?: SortOrder
@@ -88608,6 +88805,8 @@ export namespace Prisma {
     seed?: SortOrder
     result?: SortOrder
     playerId?: SortOrder
+    leftPlayerId?: SortOrder
+    rightPlayerId?: SortOrder
     tournamentStep?: SortOrder
     slot?: SortOrder
     createdDate?: SortOrder
@@ -88627,6 +88826,8 @@ export namespace Prisma {
     seed?: SortOrder
     result?: SortOrder
     playerId?: SortOrder
+    leftPlayerId?: SortOrder
+    rightPlayerId?: SortOrder
     tournamentStep?: SortOrder
     slot?: SortOrder
     createdDate?: SortOrder
@@ -90640,6 +90841,20 @@ export namespace Prisma {
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
+  export type FightArchiveCreateNestedManyWithoutLeftPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput> | FightArchiveCreateWithoutLeftPlayerInput[] | FightArchiveUncheckedCreateWithoutLeftPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutLeftPlayerInput | FightArchiveCreateOrConnectWithoutLeftPlayerInput[]
+    createMany?: FightArchiveCreateManyLeftPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveCreateNestedManyWithoutRightPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput> | FightArchiveCreateWithoutRightPlayerInput[] | FightArchiveUncheckedCreateWithoutRightPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutRightPlayerInput | FightArchiveCreateOrConnectWithoutRightPlayerInput[]
+    createMany?: FightArchiveCreateManyRightPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
   export type FightWatchedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<FightWatchedCreateWithoutPlayerInput, FightWatchedUncheckedCreateWithoutPlayerInput> | FightWatchedCreateWithoutPlayerInput[] | FightWatchedUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: FightWatchedCreateOrConnectWithoutPlayerInput | FightWatchedCreateOrConnectWithoutPlayerInput[]
@@ -90863,6 +91078,20 @@ export namespace Prisma {
     create?: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput> | FightArchiveCreateWithoutPlayerInput[] | FightArchiveUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: FightArchiveCreateOrConnectWithoutPlayerInput | FightArchiveCreateOrConnectWithoutPlayerInput[]
     createMany?: FightArchiveCreateManyPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput> | FightArchiveCreateWithoutLeftPlayerInput[] | FightArchiveUncheckedCreateWithoutLeftPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutLeftPlayerInput | FightArchiveCreateOrConnectWithoutLeftPlayerInput[]
+    createMany?: FightArchiveCreateManyLeftPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput> | FightArchiveCreateWithoutRightPlayerInput[] | FightArchiveUncheckedCreateWithoutRightPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutRightPlayerInput | FightArchiveCreateOrConnectWithoutRightPlayerInput[]
+    createMany?: FightArchiveCreateManyRightPlayerInputEnvelope
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
@@ -91298,6 +91527,34 @@ export namespace Prisma {
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
     update?: FightArchiveUpdateWithWhereUniqueWithoutPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: FightArchiveUpdateManyWithWhereWithoutPlayerInput | FightArchiveUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUpdateManyWithoutLeftPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput> | FightArchiveCreateWithoutLeftPlayerInput[] | FightArchiveUncheckedCreateWithoutLeftPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutLeftPlayerInput | FightArchiveCreateOrConnectWithoutLeftPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutLeftPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutLeftPlayerInput[]
+    createMany?: FightArchiveCreateManyLeftPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutLeftPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutLeftPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutLeftPlayerInput | FightArchiveUpdateManyWithWhereWithoutLeftPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUpdateManyWithoutRightPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput> | FightArchiveCreateWithoutRightPlayerInput[] | FightArchiveUncheckedCreateWithoutRightPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutRightPlayerInput | FightArchiveCreateOrConnectWithoutRightPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutRightPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutRightPlayerInput[]
+    createMany?: FightArchiveCreateManyRightPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutRightPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutRightPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutRightPlayerInput | FightArchiveUpdateManyWithWhereWithoutRightPlayerInput[]
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
@@ -91740,6 +91997,34 @@ export namespace Prisma {
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
     update?: FightArchiveUpdateWithWhereUniqueWithoutPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: FightArchiveUpdateManyWithWhereWithoutPlayerInput | FightArchiveUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput> | FightArchiveCreateWithoutLeftPlayerInput[] | FightArchiveUncheckedCreateWithoutLeftPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutLeftPlayerInput | FightArchiveCreateOrConnectWithoutLeftPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutLeftPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutLeftPlayerInput[]
+    createMany?: FightArchiveCreateManyLeftPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutLeftPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutLeftPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutLeftPlayerInput | FightArchiveUpdateManyWithWhereWithoutLeftPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput> | FightArchiveCreateWithoutRightPlayerInput[] | FightArchiveUncheckedCreateWithoutRightPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutRightPlayerInput | FightArchiveCreateOrConnectWithoutRightPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutRightPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutRightPlayerInput[]
+    createMany?: FightArchiveCreateManyRightPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutRightPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutRightPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutRightPlayerInput | FightArchiveUpdateManyWithWhereWithoutRightPlayerInput[]
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
@@ -93273,6 +93558,18 @@ export namespace Prisma {
     connect?: PlayerWhereUniqueInput
   }
 
+  export type PlayerCreateNestedOneWithoutLeftFightArchivesInput = {
+    create?: XOR<PlayerCreateWithoutLeftFightArchivesInput, PlayerUncheckedCreateWithoutLeftFightArchivesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutLeftFightArchivesInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerCreateNestedOneWithoutRightFightArchivesInput = {
+    create?: XOR<PlayerCreateWithoutRightFightArchivesInput, PlayerUncheckedCreateWithoutRightFightArchivesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutRightFightArchivesInput
+    connect?: PlayerWhereUniqueInput
+  }
+
   export type TournamentCreateNestedOneWithoutFightsInput = {
     create?: XOR<TournamentCreateWithoutFightsInput, TournamentUncheckedCreateWithoutFightsInput>
     connectOrCreate?: TournamentCreateOrConnectWithoutFightsInput
@@ -93331,6 +93628,26 @@ export namespace Prisma {
     delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutFightArchiveInput, PlayerUpdateWithoutFightArchiveInput>, PlayerUncheckedUpdateWithoutFightArchiveInput>
+  }
+
+  export type PlayerUpdateOneWithoutLeftFightArchivesNestedInput = {
+    create?: XOR<PlayerCreateWithoutLeftFightArchivesInput, PlayerUncheckedCreateWithoutLeftFightArchivesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutLeftFightArchivesInput
+    upsert?: PlayerUpsertWithoutLeftFightArchivesInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutLeftFightArchivesInput, PlayerUpdateWithoutLeftFightArchivesInput>, PlayerUncheckedUpdateWithoutLeftFightArchivesInput>
+  }
+
+  export type PlayerUpdateOneWithoutRightFightArchivesNestedInput = {
+    create?: XOR<PlayerCreateWithoutRightFightArchivesInput, PlayerUncheckedCreateWithoutRightFightArchivesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutRightFightArchivesInput
+    upsert?: PlayerUpsertWithoutRightFightArchivesInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutRightFightArchivesInput, PlayerUpdateWithoutRightFightArchivesInput>, PlayerUncheckedUpdateWithoutRightFightArchivesInput>
   }
 
   export type TournamentUpdateOneWithoutFightsNestedInput = {
@@ -95069,6 +95386,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -95133,6 +95452,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -95829,6 +96150,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -95893,6 +96216,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -98346,6 +98671,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -98410,6 +98737,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -98595,6 +98924,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -98659,6 +98990,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -99153,6 +99486,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
@@ -99217,6 +99552,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
@@ -99351,6 +99688,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
@@ -99415,6 +99754,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -100523,6 +100864,8 @@ export namespace Prisma {
     slot?: number
     createdDate?: Date | string
     metadata?: string | null
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -100538,6 +100881,8 @@ export namespace Prisma {
     steps: string
     seed: string
     result: boolean
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -100558,6 +100903,110 @@ export namespace Prisma {
 
   export type FightArchiveCreateManyPlayerInputEnvelope = {
     data: FightArchiveCreateManyPlayerInput | FightArchiveCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FightArchiveCreateWithoutLeftPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutLeftPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    rightPlayerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveCreateOrConnectWithoutLeftPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput>
+  }
+
+  export type FightArchiveCreateManyLeftPlayerInputEnvelope = {
+    data: FightArchiveCreateManyLeftPlayerInput | FightArchiveCreateManyLeftPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FightArchiveCreateWithoutRightPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutRightPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    leftPlayerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveCreateOrConnectWithoutRightPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput>
+  }
+
+  export type FightArchiveCreateManyRightPlayerInputEnvelope = {
+    data: FightArchiveCreateManyRightPlayerInput | FightArchiveCreateManyRightPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -101455,6 +101904,8 @@ export namespace Prisma {
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
+    leftPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
+    rightPlayerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
     slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
@@ -101465,6 +101916,38 @@ export namespace Prisma {
     FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
     FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutLeftPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutLeftPlayerInput, FightArchiveUncheckedUpdateWithoutLeftPlayerInput>
+    create: XOR<FightArchiveCreateWithoutLeftPlayerInput, FightArchiveUncheckedCreateWithoutLeftPlayerInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutLeftPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutLeftPlayerInput, FightArchiveUncheckedUpdateWithoutLeftPlayerInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutLeftPlayerInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutLeftPlayerInput>
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutRightPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutRightPlayerInput, FightArchiveUncheckedUpdateWithoutRightPlayerInput>
+    create: XOR<FightArchiveCreateWithoutRightPlayerInput, FightArchiveUncheckedCreateWithoutRightPlayerInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutRightPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutRightPlayerInput, FightArchiveUncheckedUpdateWithoutRightPlayerInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutRightPlayerInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutRightPlayerInput>
   }
 
   export type FightWatchedUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -101662,6 +102145,8 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -101726,6 +102211,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -101907,6 +102394,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -101971,6 +102460,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -102732,6 +103223,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -102796,6 +103289,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -102876,6 +103371,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -102940,6 +103437,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103004,6 +103503,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -103068,6 +103569,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -103148,6 +103651,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -103212,6 +103717,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103276,6 +103783,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -103340,6 +103849,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -103420,6 +103931,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -103484,6 +103997,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103548,6 +104063,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -103612,6 +104129,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -103692,6 +104211,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -103756,6 +104277,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103820,6 +104343,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -103884,6 +104409,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -103964,6 +104491,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -104028,6 +104557,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104092,6 +104623,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -104156,6 +104689,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -104236,6 +104771,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -104300,6 +104837,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104364,6 +104903,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -104428,6 +104969,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -104508,6 +105051,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -104572,6 +105117,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104636,6 +105183,8 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -104700,6 +105249,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -104780,6 +105331,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -104844,6 +105397,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104998,6 +105553,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -105062,6 +105619,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -105176,6 +105735,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -105240,6 +105801,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105404,6 +105967,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -105468,6 +106033,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -105700,6 +106267,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -105764,6 +106333,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105971,6 +106542,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -106035,6 +106608,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -106221,6 +106796,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -106285,6 +106862,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -106555,6 +107134,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -106619,6 +107200,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -106699,6 +107282,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -106763,6 +107348,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -106927,6 +107514,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -106991,6 +107580,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -107177,6 +107768,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -107241,6 +107834,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107321,6 +107916,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -107385,6 +107982,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -107631,6 +108230,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -107695,6 +108296,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107936,6 +108539,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -108000,6 +108605,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -108122,6 +108729,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -108186,6 +108795,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -108399,6 +109010,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -108463,6 +109076,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -108579,6 +109194,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -108643,6 +109260,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -108749,6 +109368,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -108813,6 +109434,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -108929,6 +109552,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -108993,6 +109618,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -109135,6 +109762,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -109199,6 +109828,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -109321,6 +109952,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -109385,6 +110018,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -109627,6 +110262,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -109691,6 +110328,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -109760,6 +110399,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -109824,6 +110465,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -109893,6 +110536,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -109957,6 +110602,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -110143,6 +110790,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -110207,6 +110856,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -110282,6 +110933,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -110346,6 +110999,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -110421,6 +111076,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -110485,6 +111142,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -110549,6 +111208,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -110613,6 +111274,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -110704,6 +111367,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -110768,6 +111433,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -110898,6 +111565,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -110962,6 +111631,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111065,6 +111736,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -111129,6 +111802,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111254,6 +111929,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -111318,6 +111995,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -111433,6 +112112,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -111497,6 +112178,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111619,6 +112302,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -111683,6 +112368,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -111833,6 +112520,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -111897,6 +112586,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111961,6 +112652,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -112025,6 +112718,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -112105,6 +112800,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -112169,6 +112866,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -112233,6 +112932,8 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -112297,6 +112998,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -112307,6 +113010,280 @@ export namespace Prisma {
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
     where: PlayerWhereUniqueInput
     create: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
+  }
+
+  export type PlayerCreateWithoutLeftFightArchivesInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutLeftFightArchivesInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutLeftFightArchivesInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutLeftFightArchivesInput, PlayerUncheckedCreateWithoutLeftFightArchivesInput>
+  }
+
+  export type PlayerCreateWithoutRightFightArchivesInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutRightFightArchivesInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutRightFightArchivesInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutRightFightArchivesInput, PlayerUncheckedCreateWithoutRightFightArchivesInput>
   }
 
   export type TournamentCreateWithoutFightsInput = {
@@ -112637,6 +113614,8 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -112701,6 +113680,294 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUpsertWithoutLeftFightArchivesInput = {
+    update: XOR<PlayerUpdateWithoutLeftFightArchivesInput, PlayerUncheckedUpdateWithoutLeftFightArchivesInput>
+    create: XOR<PlayerCreateWithoutLeftFightArchivesInput, PlayerUncheckedCreateWithoutLeftFightArchivesInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutLeftFightArchivesInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutLeftFightArchivesInput, PlayerUncheckedUpdateWithoutLeftFightArchivesInput>
+  }
+
+  export type PlayerUpdateWithoutLeftFightArchivesInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutLeftFightArchivesInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUpsertWithoutRightFightArchivesInput = {
+    update: XOR<PlayerUpdateWithoutRightFightArchivesInput, PlayerUncheckedUpdateWithoutRightFightArchivesInput>
+    create: XOR<PlayerCreateWithoutRightFightArchivesInput, PlayerUncheckedCreateWithoutRightFightArchivesInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutRightFightArchivesInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutRightFightArchivesInput, PlayerUncheckedUpdateWithoutRightFightArchivesInput>
+  }
+
+  export type PlayerUpdateWithoutRightFightArchivesInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutRightFightArchivesInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113009,6 +114276,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -113024,6 +114293,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -113099,6 +114370,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
@@ -113163,6 +114436,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
@@ -113196,6 +114471,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -113211,6 +114488,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -113292,6 +114571,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
@@ -113356,6 +114637,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113403,6 +114686,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
@@ -113418,6 +114703,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -113645,6 +114932,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
@@ -113660,6 +114949,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -113693,6 +114984,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
@@ -113708,6 +115001,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -113932,6 +115227,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -113947,6 +115244,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -114059,6 +115358,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
@@ -114123,6 +115424,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
@@ -114280,6 +115583,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -114295,6 +115600,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -114328,6 +115635,8 @@ export namespace Prisma {
     createdDate?: Date | string
     metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    leftPlayer?: PlayerCreateNestedOneWithoutLeftFightArchivesInput
+    rightPlayer?: PlayerCreateNestedOneWithoutRightFightArchivesInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
@@ -114343,6 +115652,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -114434,6 +115745,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
@@ -114498,6 +115811,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114707,6 +116022,8 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
@@ -114771,6 +116088,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
@@ -114851,6 +116170,8 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
@@ -114915,6 +116236,8 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -116161,6 +117484,48 @@ export namespace Prisma {
     steps: string
     seed: string
     result: boolean
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
+  }
+
+  export type FightArchiveCreateManyLeftPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    rightPlayerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
+  }
+
+  export type FightArchiveCreateManyRightPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    leftPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -116857,6 +118222,8 @@ export namespace Prisma {
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -116872,6 +118239,8 @@ export namespace Prisma {
     steps?: StringFieldUpdateOperationsInput | string
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -116891,6 +118260,132 @@ export namespace Prisma {
     steps?: StringFieldUpdateOperationsInput | string
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FightArchiveUpdateWithoutLeftPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutLeftPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutLeftPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FightArchiveUpdateWithoutRightPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutRightPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutRightPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117532,6 +119027,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -117580,6 +119077,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
@@ -117595,6 +119094,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117614,6 +119115,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117632,6 +119135,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -117650,6 +119155,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -117800,6 +119307,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
@@ -117815,6 +119324,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117834,6 +119345,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117856,6 +119369,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
@@ -117871,6 +119386,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117890,6 +119407,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117931,6 +119450,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -118035,6 +119556,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -118050,6 +119573,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -118069,6 +119594,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -118117,6 +119644,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -118135,6 +119664,8 @@ export namespace Prisma {
     seed: string
     result: boolean
     playerId?: string | null
+    leftPlayerId?: string | null
+    rightPlayerId?: string | null
     tournamentStep?: number
     slot?: number
     createdDate?: Date | string
@@ -118245,6 +119776,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -118260,6 +119793,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -118279,6 +119814,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -118301,6 +119838,8 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    leftPlayer?: PlayerUpdateOneWithoutLeftFightArchivesNestedInput
+    rightPlayer?: PlayerUpdateOneWithoutRightFightArchivesNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
@@ -118316,6 +119855,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -118335,6 +119876,8 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    leftPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
+    rightPlayerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
     slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string

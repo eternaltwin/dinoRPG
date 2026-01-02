@@ -1,3 +1,4 @@
+import { PassiveEffects } from '../dinoz/SkillDetails.mjs';
 import { SkillFightCondition } from '../dinoz/SkillFightCondition.mjs';
 import { ItemType } from '../enums/ItemType.mjs';
 import { ItemEffects } from './ItemEffects.mjs';
@@ -18,6 +19,7 @@ export interface ItemFiche {
 	probability?: number;
 	sellable: boolean;
 	display: string;
+	passiveEffects?: PassiveEffects;
 	fightCondition?: SkillFightCondition;
 }
 

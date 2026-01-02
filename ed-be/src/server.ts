@@ -3,10 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'reflect-metadata';
-import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
 import { scheduleEndedOffersExpiration, scheduleOffersExpiration } from './business/offerService.js';
-import { healRestingDinoz } from './cron/healRestingDinoz.js';
-import { healDinozFount } from './cron/healDinozFount.js';
 import { itinerantMerchant } from './cron/itinerantMerchant.js';
 import { GLOBAL, ServerContext } from './context.js';
 import { readyCheck } from './middleware/readyCheck.js';
@@ -83,9 +80,6 @@ export function main(cx: ServerContext) {
 	});
 
 	scheduleAtStart();
-	resetDinozShopAtMidnight().start();
-	healRestingDinoz().start();
-	healDinozFount().start();
 	itinerantMerchant().start();
 	checkBans().start();
 

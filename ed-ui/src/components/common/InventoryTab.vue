@@ -175,6 +175,9 @@ export default defineComponent({
 						case ItemEffect.RESURRECT:
 							message = this.$t(`toast.${toast.category}`);
 							break;
+						case ItemEffect.EGG:
+							message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
+							break;
 						default:
 							message =
 								typeof toast.value === 'number'
@@ -203,7 +206,6 @@ export default defineComponent({
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
 					EventBus.emit('equipItem', items);
-					// EventBus.emit('refreshDinoz', true);
 					EventBus.emit('isLoading', false);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
