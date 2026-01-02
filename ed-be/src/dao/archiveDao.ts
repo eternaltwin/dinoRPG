@@ -2,7 +2,7 @@ import { prisma } from '../prisma.js';
 import { FighterRecap, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 
-export async function archiveFight(fight: FightProcessResult, playerId: string) {
+export async function archiveFight(fight: FightProcessResult, leftPlayerId: string, rightPlayerId: string | null) {
 	const archive = await prisma.fightArchive.create({
 		data: {
 			fighters: JSON.stringify(
@@ -26,7 +26,9 @@ export async function archiveFight(fight: FightProcessResult, playerId: string) 
 			steps: JSON.stringify(fight.steps),
 			seed: fight.seed,
 			result: fight.winner,
-			player: { connect: { id: playerId } }
+			player: { connect: { id: leftPlayerId } },
+			leftPlayer: { connect: { id: leftPlayerId } },
+			rightPlayer: rightPlayerId ? { connect: { id: rightPlayerId } } : undefined
 		},
 		select: {
 			id: true,

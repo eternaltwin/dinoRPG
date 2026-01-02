@@ -188,7 +188,7 @@ export async function fightFriend(req: Request) {
 		PlaceEnum.DOJO
 	);
 
-	const fightArchive = await archiveFight(fightResult, authed.id);
+	const fightArchive = await archiveFight(fightResult, authed.id, rightId);
 	return { fight: fightArchive, stats: fightResult.stats };
 }
 
@@ -304,7 +304,7 @@ export async function fightChallenge(req: Request) {
 
 	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
 
-	const fightArchive = await archiveFight(fightResult, authed.id);
+	const fightArchive = await archiveFight(fightResult, authed.id, rightTeam.length > 0 ? rightTeam[0].playerId : null);
 
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;

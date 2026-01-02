@@ -10,7 +10,6 @@ import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
-
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
 	private readonly TEAMS_PER_POOL = 16;
@@ -206,7 +205,9 @@ class ForceBruteManager {
 				FBTournamentId: tournamentId,
 				metadata: JSON.stringify(metadata),
 				FBTournamentLeftId: dinoz1,
-				FBTournamentRightId: dinoz2
+				FBTournamentRightId: dinoz2,
+				leftPlayerId: team1Dinoz.playerId,
+				rightPlayerId: team2Dinoz.playerId
 			}
 		});
 
