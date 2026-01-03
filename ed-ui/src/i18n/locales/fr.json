@@ -2238,7 +2238,7 @@
 			"ChasseurDeGeant": "Permet au Dinoz de chasser des animaux moyens dans certains lieux",
 			"CouleeDeLave": "Attaque un ennemi avec un pouvoir de Feu 12",
 			"BouleDeFeu": "Attaque un ennemi avec un pouvoir de Feu 7",
-			"Combustion": "Tous les ennemis perdent des points de vie égaux à leur élément Bois",
+			"Combustion": "Tous les ennemis perdent des points de vie égaux à leur élément Bois (soumis équilibrage)",
 			"ChasseurDeDragon": "Permet au Dinoz de chasser des animaux très rares et dangereux dans certains lieux",
 			"Torche": "Le Dinoz s'enflamme et perd 1 PV par tour. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
 			"AuraIncandescente": "Augmente l'élément Feu de 2",
