@@ -143,7 +143,12 @@
 		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
 		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
 		"noDinozSelected": "Ningún Dino seleccionado",
-		"basicError": "Se ha producido un error"
+		"basicError": "Se ha producido un error",
+		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
+		"buildSaveError": "Une erreur est survenue lors de l'enregistrement du plan de compétences",
+		"buildDeleted": "Le plan de compétences \"{name}\" a été supprimé",
+		"buildAssigned": "Le plan de compétences \"{name}\" a été assigné à votre Dinoz",
+		"buildCopied": "Le plan de compétences \"{name}\" a été copié dans vos plans de compétences"
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -389,7 +394,9 @@
 		"bubbleRate": "Porcentaje de Burbuja",
 		"torchDamage": "Daño de antorcha",
 		"acidBloodDamage": "Daño de sangre ácida",
-		"baseValue": "Valor base"
+		"baseValue": "Valor base",
+		"criticalHitChance": "Probabilidad de golpe crítico",
+		"criticalHitDamage": "Bonus de golpe crítico"
 	},
 	"item": {
 		"name": {
@@ -4101,6 +4108,7 @@
 			"members": "Lista de miembros",
 			"treasure": "Tesoro del Clan",
 			"war": "Información de guerra",
+			"builds": "Plans de compétences",
 			"discussion": "Foro",
 			"history": "Histórico",
 			"parameters": "Configuración"
@@ -4198,6 +4206,10 @@
 				"cancel": "Cancelar"
 			}
 		}
+	},
+	"clanBuilds": {
+		"noBuilds": "Aucun plan de compétence n'a encore été partagé",
+		"copyBuild": "Copier le plan de compétence"
 	},
 	"clanDiscussion": {
 		"action": {
@@ -4317,7 +4329,8 @@
 			"timeLimit": "El combate durará como máximo {time} unidades de tiempo.",
 			"arrive": "**{name}** ¡ha llegado!",
 			"resist": "**{dinoz}** resistió y redujo el daño.",
-			"hit": "**{fighter}** infligió **{damage}** {elements} daño a **{target}**.",
+			"hit": "**{fighter}** a effectué un assaut {elements} et a infligé **{damage}** dégâts à **{target}**.",
+			"hit-critical": "**{fighter}** a effectué un assaut {elements} **critique** et a infligé **{damage}** dégâts à **{target}**.",
 			"hit-dodge": "**{target}** esquivó el ataque de **{fighter}**.",
 			"hit-skill": "**{fighter}** infligió **{damage}** {elements} daño a **{target}** con **{skill}**.",
 			"poison": "**{dinoz}** infligió daño de **{damage} veneno** a **{target}**.",
@@ -4637,6 +4650,7 @@
 			"assaults": "Número de asaltos",
 			"evasions": "Número de ataques esquivados",
 			"counters": "Número de contraataques",
+			"criticalHits": "Número de golpes críticos",
 			"poisoned": "Número de adversarios envenenados",
 			"poison_damage": "Daño de veneno infligido",
 			"burn_damage": "Daño por antorcha infligido",
@@ -5188,7 +5202,14 @@
 	},
 	"skillTrees": {
 		"title": "Árbol de competencias",
-		"level": "Niv.{level}"
+		"level": "Niv.{level}",
+		"build": "Plan de compétences",
+		"manageBuilds": "Gérer les plans de compétences",
+		"buildName": "Nom du plan",
+		"shareable": "Partageable",
+		"save": "Enregistrer",
+		"delete": "Supprimer",
+		"buildToEdit": "Plan à éditer"
 	},
 	"poll": {
 		"choose_option": "La encuesta termina el {date}. Vota por tu elección:",

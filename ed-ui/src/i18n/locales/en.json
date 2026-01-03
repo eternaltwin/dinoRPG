@@ -143,7 +143,12 @@
 		"errorFetchingRankings": "An error occurred when fetching the ranking data.",
 		"maxDinozSelected": "You have selected the maximum number of Dinoz allowed",
 		"noDinozSelected": "No Dinoz selected",
-		"basicError": "An error occurred"
+		"basicError": "An error occurred",
+		"buildSaved": "The skill plan \"{name}\" has been saved",
+		"buildSaveError": "An error occurred when saving the skill plan",
+		"buildDeleted": "The skill plan \"{name}\" has been deleted",
+		"buildAssigned": "The skill plan \"{name}\" has been assigned to your Dinoz",
+		"buildCopied": "The skill plan \"{name}\" has been copied to your skill plans"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -389,7 +394,9 @@
 		"bubbleRate": "Bubble rate",
 		"torchDamage": "Torch damage",
 		"acidBloodDamage": "Acid blood damage",
-		"baseValue": "Base value"
+		"baseValue": "Base value",
+		"criticalHitChance": "Critical Hit Chance",
+		"criticalHitDamage": "Critical Hit Bonus"
 	},
 	"item": {
 		"name": {
@@ -4101,6 +4108,7 @@
 			"members": "Members list",
 			"treasure": "Clan treasure",
 			"war": "War informations",
+			"builds": "Skill Plans",
 			"discussion": "Discussion thread",
 			"history": "Clan history",
 			"parameters": "Settings"
@@ -4198,6 +4206,10 @@
 				"cancel": "Cancel"
 			}
 		}
+	},
+	"clanBuilds": {
+		"noBuilds": "No skill plans have been shared yet",
+		"copyBuild": "Copy the skill plan"
 	},
 	"clanDiscussion": {
 		"action": {
@@ -4317,7 +4329,8 @@
 			"timeLimit": "The fight will last at maximum {time} units of time.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
-			"hit": "**{fighter}** dealt **{damage}** {elements} damage to **{target}**.",
+			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
+			"hit-critical": "**{fighter}** performed a **critical** assault {elements} and dealt **{damage}** damage to **{target}**.",
 			"hit-dodge": "**{target}** dodged the attack of **{fighter}**.",
 			"hit-skill": "**{fighter}** dealt **{damage}** {elements} damage to **{target}** with **{skill}**.",
 			"poison": "**{dinoz}** dealt **{damage} poison** damage to **{target}**.",
@@ -4626,8 +4639,8 @@
 			"seeFight": "See the fight",
 			"link": "Link",
 			"copyLink": "Copy Link",
-			"tournamentType": "Type de tournois",
-			"startDate": "Date du début"
+			"tournamentType": "Type of Tournament",
+			"startDate": "Start Date"
 		},
 		"fightRecap": {
 			"hpLost": "Quantity of health points lost :pv:",
@@ -4637,6 +4650,7 @@
 			"assaults": "Number of assaults",
 			"evasions": "Number of dodges",
 			"counters": "Number of counterattacks",
+			"criticalHits": "Number of Critical Hits",
 			"poisoned": "Number of poisoned opponents",
 			"poison_damage": "Poison damage dealt",
 			"burn_damage": "Burn damage dealt",
@@ -4656,8 +4670,8 @@
 			"assaultVoid": "Number of assaults :void: carried out",
 			"hpRemaining": "Hit points left",
 			"times_poisoned": "Number of times a Dinoz has been poisoned",
-			"myTeam": "Mon équipe",
-			"enemyTeam": "Equipe adverse"
+			"myTeam": "My Team",
+			"enemyTeam": "Opposing Team"
 		},
 		"challenge": {
 			"selectChampions": "Choose your champions",
@@ -5188,7 +5202,14 @@
 	},
 	"skillTrees": {
 		"title": "Skills Tree",
-		"level": "Lv.{level}"
+		"level": "Lv.{level}",
+		"build": "Skill Plan",
+		"manageBuilds": "Manage Skill Plans",
+		"buildName": "Plan Name",
+		"shareable": "Shareable",
+		"save": "Save",
+		"delete": "Delete",
+		"buildToEdit": "Plan to Edit"
 	},
 	"poll": {
 		"choose_option": "The survey ends the {date}, vote for your choice:",
