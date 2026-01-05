@@ -14,6 +14,7 @@ import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import weightedRandom from '../utils/fight/weightedRandom.js';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
@@ -181,42 +182,21 @@ export async function tournamentTargetInfo(req: Request) {
 		},
 		select: {
 			id: true,
-			tournamentTeamLeft: {
+			tournamentTeamLeftId: true,
+			tournamentTeamRightId: true,
+			leftPlayer: {
 				select: {
-					dinoz: {
-						take: 1,
-						select: {
-							id: true,
-							display: true,
-							name: true,
-							player: {
-								select: {
-									id: true,
-									name: true
-								}
-							}
-						}
-					}
+					id: true,
+					name: true
 				}
 			},
-			tournamentTeamRight: {
+			rightPlayer: {
 				select: {
-					dinoz: {
-						take: 1,
-						select: {
-							id: true,
-							display: true,
-							name: true,
-							player: {
-								select: {
-									id: true,
-									name: true
-								}
-							}
-						}
-					}
+					id: true,
+					name: true
 				}
 			},
+			fighters: true,
 			metadata: true,
 			result: true
 		}
@@ -224,18 +204,31 @@ export async function tournamentTargetInfo(req: Request) {
 	if (phase === TournamentPhase.FINALS) {
 		pool = 5;
 	}
-	const returnData = fights
-		.map(f => {
-			return {
-				id: f.id,
-				tournamentTeamLeft: f.tournamentTeamLeft?.dinoz[0],
-				tournamentTeamRight: f.tournamentTeamRight?.dinoz[0],
-				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
-				result: f.result
-			};
-		})
+	const tournamentFights = fights.map(f => {
+		const fighters = JSON.parse(f.fighters) as FighterRecap[]; // fighters are preserved after player deletion
+		fighters.sort((a, b) => a.id - b.id);
+		return {
+			id: f.id,
+			tournamentTeamLeft: f.tournamentTeamLeftId
+				? {
+						dinoz: fighters.filter(fighter => fighter.attacker)[0],
+						player: f.leftPlayer
+					}
+				: null,
+			tournamentTeamRight: f.tournamentTeamRightId
+				? {
+						dinoz: fighters.filter(fighter => !fighter.attacker)[0],
+						player: f.rightPlayer
+					}
+				: null,
+			metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+			result: f.result
+		};
+	}) as PublicTournament[];
+
+	const returnData = tournamentFights
 		.filter(t => t.metadata.phase === phase)
-		.filter(t => t.metadata.poolNumber === pool) as PublicTournament[];
+		.filter(t => t.metadata.poolNumber === pool);
 
 	const watchedFight = await getViewedTournamentFight(
 		authed.id,
@@ -246,18 +239,7 @@ export async function tournamentTargetInfo(req: Request) {
 	if (watchedFight.length === 0 && phase === TournamentPhase.POOLS) {
 		return returnData.filter(t => t.metadata.round === 0);
 	} else if (watchedFight.length === 0 && phase === TournamentPhase.FINALS) {
-		return fights
-			.map(f => {
-				return {
-					id: f.id,
-					tournamentTeamLeft: f.tournamentTeamLeft?.dinoz[0],
-					tournamentTeamRight: f.tournamentTeamRight?.dinoz[0],
-					metadata: JSON.parse(<string>f.metadata) as PublicMetada,
-					result: f.result
-				};
-			})
-			.filter(t => t.metadata.phase === phase)
-			.filter(t => t.metadata.round === 4);
+		return tournamentFights.filter(t => t.metadata.phase === phase).filter(t => t.metadata.round === 4);
 	}
 
 	const poolMatchViewed = watchedFight
