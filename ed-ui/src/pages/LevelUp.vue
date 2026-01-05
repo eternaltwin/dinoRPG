@@ -161,9 +161,7 @@
 								<td class="name unlockable" colspan="4">
 									<div class="skillName">
 										<img :src="getImgURL('icons', 'small_right')" alt="right" />
-										{{ $t(`levelup.unlock1`) }}
-										{{ availableSkills.unlockableSkills.length }}
-										{{ $t(`levelup.unlock2`) }}
+										{{ $t('levelup.unlockSkills', { count: availableSkills.unlockableSkills.length }) }}
 										<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 											<template #content>
 												<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />

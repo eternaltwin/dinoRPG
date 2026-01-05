@@ -2620,6 +2620,7 @@
 			"buyMaxTopNote_part1": "Vous possédez ",
 			"buyMaxTopNote_part2": " exemplaire(s) de cet objet, sur ",
 			"buyMaxTopNote_part3": " maximum.",
+			"buyMaxTopNote": "Vous possédez {own} exemplaire(s) de cet objet, sur {max} maximum.",
 			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
 			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
 			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
@@ -3603,6 +3604,7 @@
 		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
 		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
 		"unlock2": " compétences supplémentaires",
+		"unlockSkills": "Débloquer {count} compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
 		"small": "Ce Dinoz a gagné un niveau !",
 		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
