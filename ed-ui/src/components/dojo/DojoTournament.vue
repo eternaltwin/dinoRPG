@@ -182,19 +182,19 @@ export default defineComponent({
 					const winner1 = this.final[0].result
 						? this.formatDinoz(this.final[0], this.final[0].tournamentTeamLeft)
 						: this.formatDinoz(this.final[0], this.final[0].tournamentTeamRight);
-					const looser1 = this.final[0].result
+					const loser1 = this.final[0].result
 						? this.formatDinoz(this.final[0], this.final[0].tournamentTeamRight)
 						: this.formatDinoz(this.final[0], this.final[0].tournamentTeamLeft);
 					const winner2 = this.final[1].result
 						? this.formatDinoz(this.final[1], this.final[1].tournamentTeamLeft)
 						: this.formatDinoz(this.final[1], this.final[1].tournamentTeamRight);
-					const looser2 = this.final[1].result
+					const loser2 = this.final[1].result
 						? this.formatDinoz(this.final[1], this.final[1].tournamentTeamRight)
 						: this.formatDinoz(this.final[1], this.final[1].tournamentTeamLeft);
 					this.dinozInFights.push(winner1);
 					this.dinozInFights.push(winner2);
-					this.dinozInFights.push(looser1);
-					this.dinozInFights.push(looser2);
+					this.dinozInFights.push(loser1);
+					this.dinozInFights.push(loser2);
 				} else if (
 					this.dinozInFights[this.dinozInFights.length - 1].round === 5 &&
 					this.dinozInFights[this.dinozInFights.length - 1].watched
@@ -202,16 +202,16 @@ export default defineComponent({
 					const winnerWinnerBracket = this.final[2].result
 						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
 						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
-					const looserWinnerBracket = this.final[2].result
+					const loserWinnerBracket = this.final[2].result
 						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight)
 						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft);
-					const winnerLooserBracket = this.final[3].result
+					const winnerLoserBracket = this.final[3].result
 						? this.formatDinoz(this.final[3], this.final[3].tournamentTeamLeft)
 						: this.formatDinoz(this.final[3], this.final[3].tournamentTeamRight);
-					this.dinozInFights.push(looserWinnerBracket);
-					this.dinozInFights.push(winnerLooserBracket);
+					this.dinozInFights.push(loserWinnerBracket);
+					this.dinozInFights.push(winnerLoserBracket);
 					this.dinozInFights.push(winnerWinnerBracket);
-					// this.dinozInFights.push(looserWinnerBracket, winnerLooserBracket, {}, winnerWinnerBracket);
+					// this.dinozInFights.push(loserWinnerBracket, winnerLoserBracket, {}, winnerWinnerBracket);
 				} else if (
 					this.dinozInFights[this.dinozInFights.length - 1].round === 6 &&
 					this.dinozInFights[this.dinozInFights.length - 1].watched
@@ -219,10 +219,10 @@ export default defineComponent({
 					const winnerWinnerBracket = this.final[2].result
 						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
 						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
-					const winnerLooserBracket = this.final[4].result
+					const winnerLoserBracket = this.final[4].result
 						? this.formatDinoz(this.final[4], this.final[4].tournamentTeamLeft)
 						: this.formatDinoz(this.final[4], this.final[4].tournamentTeamRight);
-					this.dinozInFights.push(winnerLooserBracket, winnerWinnerBracket);
+					this.dinozInFights.push(winnerLoserBracket, winnerWinnerBracket);
 				} else if (
 					this.dinozInFights[this.dinozInFights.length - 1].round === 7 &&
 					this.dinozInFights[this.dinozInFights.length - 1].watched
