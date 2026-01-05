@@ -16,12 +16,13 @@
 				<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
 			</div>
 			<div class="rounds">
-				<template v-for="(team, count) in pool.filter(p => p !== undefined)" :key="`${count}${team.fight}`">
+				<template v-for="(team, count) in pool" :key="`${count}${team?.fight ?? 'undefined'}`">
+					<div v-if="!team"><!-- to handle old dojo format --></div>
 					<Tippy
 						tag="div"
 						theme="normal"
 						class="dinoz"
-						v-if="team.show"
+						v-else-if="team.show"
 						:class="{ me: team.player && team.player.id === playerStore.getPlayerId, lost: !team.won && team.watched }"
 						@click="goToPage('ShareFight', { archive: team.fight })"
 					>
