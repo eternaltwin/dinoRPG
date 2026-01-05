@@ -336,26 +336,26 @@ export async function getTournamentFights(req: Request) {
 				select: {
 					id: true,
 					name: true,
-					display: true,
-					player: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
+					display: true
 				}
 			},
 			FBTournamentRight: {
 				select: {
 					id: true,
 					name: true,
-					display: true,
-					player: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
+					display: true
+				}
+			},
+			leftPlayer: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			rightPlayer: {
+				select: {
+					id: true,
+					name: true
 				}
 			}
 		}
@@ -367,8 +367,14 @@ export async function getTournamentFights(req: Request) {
 		.map(f => {
 			return {
 				id: f.id,
-				tournamentTeamLeft: f.FBTournamentLeft,
-				tournamentTeamRight: f.FBTournamentRight,
+				tournamentTeamLeft: {
+					dinoz: f.FBTournamentLeft,
+					player: f.leftPlayer
+				},
+				tournamentTeamRight: {
+					dinoz: f.FBTournamentRight,
+					player: f.rightPlayer
+				},
 				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
 				result: f.result
 			};
@@ -398,8 +404,14 @@ export async function getTournamentFights(req: Request) {
 				}
 				return {
 					id: f.id,
-					tournamentTeamLeft: f.FBTournamentLeft,
-					tournamentTeamRight: f.FBTournamentRight,
+					tournamentTeamLeft: {
+						dinoz: f.FBTournamentLeft,
+						player: f.leftPlayer
+					},
+					tournamentTeamRight: {
+						dinoz: f.FBTournamentRight,
+						player: f.rightPlayer
+					},
 					metadata: JSON.parse(<string>f.metadata) as PublicMetada,
 					result: f.result
 				};
