@@ -1849,6 +1849,7 @@
 		}
 	},
 	"skill": {
+		"properties": "Propriétés",
 		"energy": "Énergie : **{energy}**",
 		"probability": "Probabilité : **{probability}%**",
 		"priority": "Priorité : **{priority}**",

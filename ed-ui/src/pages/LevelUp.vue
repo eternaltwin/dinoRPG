@@ -83,7 +83,12 @@
 							:key="skill.skillId"
 							:class="{ 'in-build': dinoz?.build?.skills.some(bs => bs === skill.skillId) }"
 						>
-							<Tippy theme="normal" tag="td" class="name">
+							<Tippy
+								theme="normal"
+								tag="td"
+								class="name"
+								v-if="skillList[skill.skillId].type === SkillType.A || skillList[skill.skillId].type === SkillType.E"
+							>
 								<div>
 									<div class="skillName">
 										<img
@@ -97,7 +102,7 @@
 									<p class="desc" v-html="formatContent($t(`skill.description.${skillList[skill.skillId].name}`))" />
 								</div>
 								<template #content>
-									<h1>&nbsp;</h1>
+									<h1>{{ $t('skill.properties') }}</h1>
 									<div class="hidden-stats">
 										<p
 											class="desc"
@@ -139,6 +144,25 @@
 									</div>
 								</template>
 							</Tippy>
+							<td
+								class="name"
+								v-if="skillList[skill.skillId].type !== SkillType.A && skillList[skill.skillId].type !== SkillType.E"
+							>
+								<div>
+									<div class="skillName">
+										<img
+											v-for="element in skill.element"
+											:key="element"
+											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+											alt="elementUp"
+										/>
+										<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+									</div>
+									<p class="desc">
+										{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
+									</p>
+								</div>
+							</td>
 							<Tippy theme="normal" tag="td" class="type">
 								{{ skill.type }}
 								<template #content>
@@ -217,6 +241,7 @@ import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { FBService } from '../services/FBTournamentService.js';
 import DZButton from '../components/common/DZButton.vue';
@@ -241,6 +266,7 @@ export default defineComponent({
 			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			tryNumber: 1 as number,
 			skillList,
+			SkillType,
 			ElementType: ElementType,
 			isSpinOver: false as boolean,
 			position: dinozPlacement,
