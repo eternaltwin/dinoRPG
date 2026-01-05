@@ -65,10 +65,7 @@
 						theme="normal"
 						class="dinoz"
 						v-if="team.show"
-						:class="{
-							me: team.player && team.player.id === playerStore.getPlayerId,
-							lost: !team.won && team.watched
-						}"
+						:class="{ me: team.player && team.player.id === playerStore.getPlayerId, lost: !team.won && team.watched }"
 						@click="goToPage('ShareFight', { archive: team.fight })"
 					>
 						<DinozMini v-if="team.dinoz" :display="team.dinoz.display" :width="50" :height="50" class="dinoz-display" />
@@ -608,6 +605,10 @@ export default defineComponent({
 
 			&.lost {
 				filter: grayscale(100%);
+			}
+
+			&.me {
+				background-image: url('../../assets/design/dojo_dino_selected.webp');
 			}
 
 			.name {
