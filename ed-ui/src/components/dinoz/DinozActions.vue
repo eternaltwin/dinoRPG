@@ -141,7 +141,9 @@ export default defineComponent({
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			playerStore: playerStore(),
-			timeUntilMidnight: ''
+			timeUntilMidnight: '',
+			minutesBeforeHour: 60 - new Date().getMinutes(),
+			intervals: [] as number[]
 		};
 	},
 	components: {
@@ -180,6 +182,13 @@ export default defineComponent({
 			const s = seconds.toString().padStart(2, '0');
 
 			this.timeUntilMidnight = `${h}:${m}:${s}`;
+		},
+		computeTimeUntilNextHour() {
+			const now = new Date();
+			this.minutesBeforeHour = 60 - now.getMinutes();
+			if (this.minutesBeforeHour === 0) {
+				this.refreshDinoz();
+			}
 		},
 		async launch(action: ActionFiche) {
 			EventBus.emit('isLoading', true);
@@ -611,10 +620,6 @@ export default defineComponent({
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
 		},
-		minutesBeforeHour() {
-			const day: Date = new Date();
-			return 60 - day.getMinutes();
-		},
 		mission(): MissionHUD | null {
 			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
 			if (!dinoz) return null;
@@ -631,7 +636,12 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
-		setInterval(() => this.computeTimeUntilMidnight(), 1000);
+		const intervalId = setInterval(() => this.computeTimeUntilMidnight(), 1000);
+		const intervalId2 = setInterval(() => this.computeTimeUntilNextHour(), 1000);
+		this.intervals.push(intervalId, intervalId2);
+	},
+	unmounted() {
+		this.intervals.forEach(clearInterval);
 	}
 });
 </script>
