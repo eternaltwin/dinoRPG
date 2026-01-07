@@ -204,70 +204,67 @@ export async function tournamentTargetInfo(req: Request) {
 	if (phase === TournamentPhase.FINALS) {
 		pool = 5;
 	}
-	const tournamentFights = fights.map(f => {
-		const fighters = JSON.parse(f.fighters) as FighterRecap[]; // fighters are preserved after player deletion
-		fighters.sort((a, b) => a.id - b.id);
-		return {
-			id: f.id,
-			tournamentTeamLeft: f.tournamentTeamLeftId
-				? {
-						dinoz: fighters.filter(fighter => fighter.attacker)[0],
-						player: f.leftPlayer
-					}
-				: null,
-			tournamentTeamRight: f.tournamentTeamRightId
-				? {
-						dinoz: fighters.filter(fighter => !fighter.attacker)[0],
-						player: f.rightPlayer
-					}
-				: null,
-			metadata: JSON.parse(<string>f.metadata) as PublicMetada,
-			result: f.result
-		};
-	}) as PublicTournament[];
 
-	const returnData = tournamentFights
+	const returnData = fights
+		.map(f => {
+			const fighters = JSON.parse(f.fighters) as FighterRecap[]; // fighters are preserved after player deletion
+			fighters.sort((a, b) => a.id - b.id);
+			return {
+				id: f.id,
+				tournamentTeamLeft: f.tournamentTeamLeftId
+					? {
+							dinoz: fighters.filter(fighter => fighter.attacker)[0],
+							player: f.leftPlayer
+						}
+					: null,
+				tournamentTeamRight: f.tournamentTeamRightId
+					? {
+							dinoz: fighters.filter(fighter => !fighter.attacker)[0],
+							player: f.rightPlayer
+						}
+					: null,
+				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+				result: f.result
+			};
+		})
 		.filter(t => t.metadata.phase === phase)
-		.filter(t => t.metadata.poolNumber === pool);
+		.filter(t => t.metadata.poolNumber === pool) as PublicTournament[];
 
 	const watchedFight = await getViewedTournamentFight(
 		authed.id,
 		returnData.map(f => f.id)
 	);
 
+	// Fights against byes will be considered automatically watched
+	const poolMatchViewed = returnData.filter(
+		f => !f.tournamentTeamLeft || !f.tournamentTeamRight || watchedFight.map(f => f.fightArchiveId).includes(f.id)
+	);
+
 	let mostAdvancedStep = 0;
-	if (watchedFight.length === 0 && phase === TournamentPhase.POOLS) {
-		return returnData.filter(t => t.metadata.round === 0);
-	} else if (watchedFight.length === 0 && phase === TournamentPhase.FINALS) {
-		return tournamentFights.filter(t => t.metadata.phase === phase).filter(t => t.metadata.round === 4);
-	}
+	if (poolMatchViewed.length === 0) {
+		if (phase === TournamentPhase.FINALS) mostAdvancedStep = 4;
+	} else {
+		mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
 
-	const poolMatchViewed = watchedFight
-		.map(f => {
-			const a = returnData.find(t => t.id === f.fightArchiveId);
-			if (a) return a;
-		})
-		.filter(f => f !== undefined);
-	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
-
-	// Reach next round if all match from this round for this pool ahve been view
-	const poolMatchStep = returnData.filter(f => f.metadata.round === mostAdvancedStep).length;
-	if (
-		(phase === TournamentPhase.POOLS &&
-			poolMatchStep === poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
-		(phase === TournamentPhase.FINALS && poolMatchViewed.length >= 2)
-	) {
-		mostAdvancedStep++;
+		// Reach next round if all match from this round for this pool have been view
+		const poolMatchStep = returnData.filter(f => f.metadata.round === mostAdvancedStep).length;
+		if (
+			(phase === TournamentPhase.POOLS &&
+				poolMatchStep === poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
+			(phase === TournamentPhase.FINALS && poolMatchViewed.length >= 2)
+		) {
+			mostAdvancedStep++;
+		}
 	}
 
 	return returnData
 		.filter(t => {
-			if (t.metadata.round <= mostAdvancedStep || watchedFight.map(f => f.fightArchiveId).includes(t.id)) return true;
+			return t.metadata.round <= mostAdvancedStep;
 		})
 		.map(fight => {
 			return {
 				...fight,
-				watched: watchedFight.map(f => f.fightArchiveId).includes(fight.id)
+				watched: poolMatchViewed.map(f => f.id).includes(fight.id)
 			};
 		});
 }
