@@ -744,8 +744,8 @@ export async function giveClanIngredients(req: Request) {
 
 	// await createTestUsers();
 	// await createTestDinoz();
-	// await testDojoTournament();
-	await batchCreateTestDinozForTournament();
+	await testDojoTournament();
+	// await batchCreateTestDinozForTournament();
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);

@@ -186,7 +186,7 @@ export async function useItem(req: Request) {
 			await createLog(LogType.Revive, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
 			break;
 		case ItemEffect.EGG:
-			const [race, other] = await hatchEgg(item, authed);
+			const race = await hatchEgg(item, authed);
 			feedback = {
 				category: ItemEffect.EGG,
 				value: raceList[race].name
@@ -234,7 +234,7 @@ export async function useItem(req: Request) {
 	return feedback;
 }
 
-export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>): Promise<[RaceEnum, number]> {
+export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	if (!item || !item.effect || item.effect.category != ItemEffect.EGG) {
 		throw new ExpectedError('Missing item, egg effect or item is not an egg');
 	}
@@ -385,7 +385,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 	);
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
-	return [race, dinozCreated.id];
+	return race;
 }
 
 export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
