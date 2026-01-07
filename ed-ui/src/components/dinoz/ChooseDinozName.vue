@@ -5,6 +5,7 @@
 		<div class="dinoz_display">
 			<Suspense>
 				<DinozWithoutFlash
+					:key="dinozData.display"
 					:display="dinozData.display"
 					:life="1"
 					flip

@@ -94,9 +94,7 @@
 										/>
 										<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
 									</div>
-									<p class="desc">
-										{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
-									</p>
+									<p class="desc" v-html="formatContent($t(`skill.description.${skillList[skill.skillId].name}`))" />
 								</div>
 								<template #content>
 									<h1>&nbsp;</h1>

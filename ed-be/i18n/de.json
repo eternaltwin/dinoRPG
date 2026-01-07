@@ -44,8 +44,8 @@
 	"offerInProgress": "Du kannst eine Auktion nicht abbrechen, wenn darauf mindestens ein Gebot besteht.",
 	"maxFollowers": "Du hast die Höchstanzahl einer Gruppe erreicht.",
 	"knownSphereSkill": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
-	"playerNotFound": "Spieler {id} nicht gefunden.",
-	"dinozNotFound": "Dinoz {id} nicht gefunden.",
+	"playerNotFound": "Spieler {{id}} nicht gefunden.",
+	"dinozNotFound": "Dinoz {{id}} nicht gefunden.",
 	"dinozCannotLvlUp": "Der Dinoz kann keine Stufe aufsteigen, da er beim IDT angemeldet ist.",
 	"reincarnationNotPossible": "Die Reinkarnation von Dinoz ist nur auf Stufe 40 möglich.",
 	"reincarnationWithEquippedItems": "Du kannst deinen Dinoz nicht mit ausgerüsteten Gegenständen reinkarnieren.",
@@ -207,7 +207,7 @@
 		"dinozNotPlayer": "Ein Dinoz gehört nicht zum Spieler.",
 		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft",
 		"wrongDinozInTeam": "Deine Mannschaft muss aus 5-10 Dinoz bestehen",
-		"wrongDinozQuantity": "Deine Mannschaft muss aus {qty} Dinoz bestehen.",
+		"wrongDinozQuantity": "Deine Mannschaft muss aus {{qty}} Dinoz bestehen.",
 		"notEnoughGold": "Du hast nicht genügend Gold, um diesen Kampf zu starten",
 		"archiveNotFound": "Archiv nicht gefunden",
 		"inexistantOpponent": "Gegner nicht gefunden",
@@ -306,7 +306,7 @@
 		"frozen": "Dein Dinoz ist eingefroren.",
 		"sacrificed": "Dein Dinoz wurde geopfert.",
 		"selling": "Dein Dinoz wird verkauft.",
-		"superdom": "",
+		"superdom": "Votre Dinoz est au superdom",
 		"resting": "Dein Dinoz ruht sich aus."
 	},
 	"fb_tournament": {
