@@ -15,8 +15,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import { archiveFight, getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { archiveFight, viewFight } from '../dao/archiveDao.js';
 import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
@@ -35,7 +34,7 @@ import GameDinozUsage = $Enums.GameDinozUsage;
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
+import { getTournamentFightsToShow } from '../business/tournamentService.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -318,7 +317,7 @@ export async function createTournamentDinoz(req: Request) {
 	);
 }
 
-export async function getTournamentFights(req: Request) {
+export async function getFBTournamentFights(req: Request) {
 	const authed = await auth(req);
 	const tournamentId = req.params.id as string;
 	let pool = +req.params.pool;
@@ -363,75 +362,17 @@ export async function getTournamentFights(req: Request) {
 	if (phase === TournamentPhase.FINALS) {
 		pool = 17;
 	}
-	const returnData = fights
-		.map(f => {
-			return {
-				id: f.id,
-				tournamentTeamLeft: f.FBTournamentLeft,
-				tournamentTeamRight: f.FBTournamentRight,
-				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
-				result: f.result
-			};
-		})
-		.filter(t => t.metadata.phase === phase)
-		.filter(t => t.metadata.poolNumber === pool) as PublicTournament[];
+	const transformedFights = fights.map(f => {
+		return {
+			id: f.id,
+			tournamentTeamLeft: f.FBTournamentLeft,
+			tournamentTeamRight: f.FBTournamentRight,
+			metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+			result: f.result
+		};
+	}) as PublicTournament[];
 
-	const watchedFight = await getViewedTournamentFight(
-		authed.id,
-		returnData.map(f => f.id)
-	);
-
-	let mostAdvancedStep = 0;
-	if (watchedFight.length === 0 && phase === TournamentPhase.POOLS) {
-		return returnData.filter(t => t.metadata.round === 0);
-	} else if (watchedFight.length === 0 && phase === TournamentPhase.FINALS) {
-		return fights
-			.map(f => {
-				const fighters = JSON.parse(f.fighters) as FighterRecap[];
-				const left = fighters.find(f => f.type === FighterType.DINOZ);
-				if (!left) {
-					throw new Error('Left fighter not found');
-				}
-				const right = fighters.find(f => f.type === FighterType.DINOZ && f.id !== left.id);
-				if (!right) {
-					throw new Error('Right fighter not found');
-				}
-				return {
-					id: f.id,
-					tournamentTeamLeft: f.FBTournamentLeft,
-					tournamentTeamRight: f.FBTournamentRight,
-					metadata: JSON.parse(<string>f.metadata) as PublicMetada,
-					result: f.result
-				};
-			})
-			.filter(t => t.metadata.phase === phase)
-			.filter(t => t.metadata.round === 4);
-	}
-
-	const poolMatchViewed = watchedFight
-		.map(f => {
-			const a = returnData.find(t => t.id === f.fightArchiveId);
-			if (a) return a;
-		})
-		.filter(f => f !== undefined);
-	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
-
-	// Reach next round if all matches from this round for this pool have been viewed
-	const poolMatchStep = returnData.filter(f => f.metadata.round === mostAdvancedStep).length;
-	if (poolMatchStep === poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) {
-		mostAdvancedStep++;
-	}
-
-	return returnData
-		.filter(t => {
-			if (t.metadata.round <= mostAdvancedStep || watchedFight.map(f => f.fightArchiveId).includes(t.id)) return true;
-		})
-		.map(fight => {
-			return {
-				...fight,
-				watched: watchedFight.map(f => f.fightArchiveId).includes(fight.id)
-			};
-		});
+	return await getTournamentFightsToShow(transformedFights, authed.id, phase, pool);
 }
 
 export async function readAllFightFromEventPool(req: Request) {

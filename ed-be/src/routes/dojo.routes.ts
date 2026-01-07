@@ -20,7 +20,7 @@ import {
 	readAllFightFromPool,
 	tournamentInfo,
 	tournamentsHistory,
-	tournamentTargetInfo
+	getDojoTournamentFights
 } from '../business/tournamentService.js';
 
 const routes: Router = Router();
@@ -178,7 +178,7 @@ routes.get(
 		}
 
 		try {
-			const response = await tournamentTargetInfo(req);
+			const response = await getDojoTournamentFights(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
