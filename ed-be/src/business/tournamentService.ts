@@ -14,6 +14,7 @@ import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import weightedRandom from '../utils/fight/weightedRandom.js';
+import { getLatestTournament } from '../dao/tournamentDao.js';
 
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
@@ -25,11 +26,7 @@ export async function createTournamentTeam(req: Request) {
 
 	const teamIds = req.body.team as number[];
 
-	const latestTournament = await prisma.tournament.findFirst({
-		orderBy: {
-			date: 'desc'
-		}
-	});
+	const latestTournament = await getLatestTournament();
 
 	// This shouldn't happen
 	if (!latestTournament) {
@@ -156,17 +153,7 @@ export async function getTournamentTeam(req: Request) {
 
 export async function tournamentInfo(req: Request) {
 	await auth(req);
-	const latestTournament = await prisma.tournament.findFirst({
-		orderBy: {
-			date: 'desc'
-		},
-		select: {
-			teamRace: true,
-			teamSize: true,
-			id: true,
-			levelLimit: true
-		}
-	});
+	const latestTournament = await getLatestTournament();
 	return latestTournament;
 }
 
