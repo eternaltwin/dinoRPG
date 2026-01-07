@@ -268,7 +268,7 @@ export async function tournamentTargetInfo(req: Request) {
 		.filter(f => f !== undefined);
 	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
 
-	// Reach next round if all match from this round for this pool have been view
+	// Reach next round if all matches from this round for this pool have been viewed
 	const poolMatchStep = returnData.filter(f => f.metadata.round === mostAdvancedStep).length;
 	if (poolMatchStep === poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) {
 		mostAdvancedStep++;
