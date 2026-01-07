@@ -272,7 +272,9 @@ class TournamentManager {
 				tournamentId: this.tournamentId,
 				metadata: JSON.stringify(metadata),
 				tournamentTeamLeftId: team1Id,
-				tournamentTeamRightId: team2Id
+				tournamentTeamRightId: team2Id,
+				leftPlayerId: team1Dinoz.length > 0 ? team1Dinoz[0].playerId : null,
+				rightPlayerId: team2Dinoz.length > 0 ? team2Dinoz[0].playerId : null
 			}
 		});
 	}
