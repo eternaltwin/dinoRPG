@@ -1,12 +1,16 @@
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
+import { getMaxXp, getRace } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
 	$Enums,
 	Dinoz,
@@ -20,6 +24,7 @@ import {
 } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
+import { GLOBAL } from '../context.js';
 import {
 	getAllDinozFromAccount,
 	getDinozForLevelUp,
@@ -32,31 +37,31 @@ import {
 	updateDinoz,
 	updateEventDinoz
 } from '../dao/dinozDao.js';
+import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
 import { addSkillToDinoz, removeAllSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import {
 	addMultipleUnlockableSkills,
 	removeAllUnlockableSkillsFromDinoz,
 	removeUnlockableSkillsFromDinoz
 } from '../dao/dinozSkillUnlockableDao.js';
-import { applySkillToDinoz, applyUSkillEffect, computeUSkillEffects, fromBase62 } from '../utils/index.js';
-import { getMaxXp, getRace } from '@drpg/core/utils/DinozUtils';
-import { createLog } from '../dao/logDao.js';
-import { updatePoints } from '../dao/rankingDao.js';
-import { SkillType } from '@drpg/core/models/enums/SkillType';
-import { auth, getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
-import { setSpecificStat } from '../dao/trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { GLOBAL } from '../context.js';
 import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { checkAnnounce } from '../utils/announcer.js';
-import TournamentManager from '../utils/tournamentManager.js';
+import { createLog } from '../dao/logDao.js';
+import { auth, getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
+import { updatePoints } from '../dao/rankingDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
-import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
-import { checkFBCreation } from './forceBruteService.js';
-import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
+import { checkAnnounce } from '../utils/announcer.js';
+import {
+	getDinozUpChance,
+	getLearnableSkills,
+	getRandomUpElement,
+	getUnlockableSkills,
+	reincarnateDinoz
+} from '../utils/dinoz.js';
+import { applySkillToDinoz, applyUSkillEffect, computeUSkillEffects, fromBase62 } from '../utils/index.js';
+import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
+import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 
 /**
@@ -393,18 +398,7 @@ function getNewDinozDataFromLevelUp(
 
 	const allUnlockableSkills = getUnlockableSkills(dinozSkills);
 
-	const upChance = {
-		fire: getElementUpChance(allLearnableSkills, allUnlockableSkills, ElementType.FIRE, dinozRace.upChance.fire),
-		wood: getElementUpChance(allLearnableSkills, allUnlockableSkills, ElementType.WOOD, dinozRace.upChance.wood),
-		water: getElementUpChance(allLearnableSkills, allUnlockableSkills, ElementType.WATER, dinozRace.upChance.water),
-		lightning: getElementUpChance(
-			allLearnableSkills,
-			allUnlockableSkills,
-			ElementType.LIGHTNING,
-			dinozRace.upChance.lightning
-		),
-		air: getElementUpChance(allLearnableSkills, allUnlockableSkills, ElementType.AIR, dinozRace.upChance.air)
-	};
+	const upChance = getDinozUpChance(allLearnableSkills, allUnlockableSkills, dinozRace);
 
 	const dinoz = {
 		id: dinozId,
@@ -453,105 +447,6 @@ function getNewDinozDataFromLevelUp(
 	}
 
 	return dinoz;
-}
-
-/**
- * Return all skills that a dinoz can learn (every elements).
- * If the param "elementWanted" is present, return learnable skills from one specific element.
- */
-export function getLearnableSkills(
-	dinoz: Pick<Dinoz, 'raceId'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[];
-		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
-	},
-	elementWanted?: ElementType
-) {
-	const treeType = getTreeType(dinoz.status);
-	let learnableSkills = structuredClone(Object.values(skillList));
-
-	// Keep all skills which have same type (fire, wood...)
-	if (elementWanted !== undefined) {
-		learnableSkills = learnableSkills.filter(skill => skill.element.some(element => element === elementWanted));
-	}
-
-	// First filter : Keep all skills from same tree (Vanilla or Ether)
-	// Second filter : Keep all skills that are learnable or already learned
-	// Third filter : Remove all skills that dinoz already knows
-	// Fourth filter : Remove all unlockables skills
-	// Fifth filter : Remove all spherical skills (not learnable here)
-	// Sixth filtre : Remove race skills (ex : fly from Pteroz)
-	return learnableSkills
-		.filter(skill => skill.tree === treeType)
-		.filter(skill =>
-			skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
-		)
-		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.id))
-		.filter(skill => !dinoz.unlockableSkills.some(dinozSkill => dinozSkill.skillId === skill.id))
-		.filter(skill => !skill.isSphereSkill)
-		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
-		.map(skill => {
-			return {
-				skillId: skill.id,
-				type: skill.type,
-				element: skill.element
-			};
-		});
-}
-
-/**
- * Return all skills that a dinoz can unlock (every elements).
- * If the param "elementWanted" is present, return unlockable skills from one specific element.
- */
-function getUnlockableSkills(
-	dinoz: {
-		status: Pick<DinozStatus, 'statusId'>[];
-		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
-	},
-	elementWanted?: ElementType
-) {
-	const treeType = getTreeType(dinoz.status);
-	let unlockableSkills = dinoz.unlockableSkills.map(skill => {
-		const foundSkill = Object.values(skillList).find(skills => skills.id === skill.skillId);
-
-		if (!foundSkill) {
-			throw new ExpectedError(`Skill ${skill} doesn't exist.`);
-		}
-		return foundSkill;
-	});
-
-	if (elementWanted !== undefined) {
-		unlockableSkills = unlockableSkills.filter(skill => skill.element.some(element => element === elementWanted));
-	}
-
-	return unlockableSkills
-		.filter(skill => skill.tree === treeType)
-		.map(skill => {
-			return {
-				skillId: skill.id,
-				element: skill.element
-			};
-		});
-}
-
-function getTreeType(status: Pick<DinozStatus, 'statusId'>[]) {
-	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
-		? SkillTreeType.ETHER
-		: SkillTreeType.VANILLA;
-}
-
-// Get up chance for one element
-// If the dinoz can't learn more skill from that element, return 0 -> Element can't be selected at next level.
-function getElementUpChance(
-	learnableSkillsAllElements: Partial<SkillDetails>[],
-	unlockableSkillsAllElements: Partial<SkillDetails>[],
-	element: ElementType,
-	elementValue: number
-) {
-	return learnableSkillsAllElements.some(skill => skill.element?.includes(element)) ||
-		unlockableSkillsAllElements.some(skill => skill.element?.includes(element))
-		? elementValue
-		: 0;
 }
 
 /**

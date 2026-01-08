@@ -426,6 +426,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 			nbrUpAir: true,
 			nbrUpLightning: true,
 			nbrUpFire: true,
+			raceId: true,
 			player: {
 				select: {
 					id: true,
@@ -440,7 +441,8 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				}
 			},
 			status: { select: { statusId: true } },
-			skills: { select: { skillId: true } }
+			skills: { select: { skillId: true } },
+			unlockableSkills: { select: { skillId: true } }
 		}
 	});
 

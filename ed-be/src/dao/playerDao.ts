@@ -444,26 +444,41 @@ export async function getPlayerInfoToReport(playerId: string) {
 		}
 	});
 }
-export async function checkBeforeDeletion(playerId: string) {
+export async function checkBeforeDeletion(playerId: string, tournamentId?: string) {
+	const selectClause: Prisma.PlayerSelect = {
+		offers: true,
+		bids: {
+			where: {
+				offer: {
+					status: {
+						equals: OfferStatus.ONGOING
+					}
+				}
+			}
+		},
+		ClanMember: true,
+		targetedCases: true
+	};
+	if (tournamentId) {
+		const tournamentFilter = {
+			where: {
+				tournamentId: tournamentId
+			}
+		};
+		selectClause.LeftFightArchives = tournamentFilter;
+		selectClause.RightFightArchives = tournamentFilter;
+	}
+
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
 		},
-		select: {
-			offers: true,
-			bids: {
-				where: {
-					offer: {
-						status: {
-							equals: OfferStatus.ONGOING
-						}
-					}
-				}
-			},
-			ClanMember: true,
-			targetedCases: true
-		}
+		select: selectClause
 	});
+	if (player && !tournamentId) {
+		player.LeftFightArchives = [];
+		player.RightFightArchives = [];
+	}
 	return player;
 }
 // Getters

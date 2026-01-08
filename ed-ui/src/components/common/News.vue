@@ -629,6 +629,7 @@ export default defineComponent({
 		.newsTitle {
 			display: flex;
 			gap: 10px;
+			max-width: 80%;
 			.newsImg {
 				border: 1px solid #ffee92;
 				min-width: 80px;
@@ -645,6 +646,7 @@ export default defineComponent({
 				display: flex;
 				flex-direction: column;
 				max-width: 280px;
+				min-width: 0;
 				& h1 {
 					height: auto;
 					max-height: none;
@@ -655,6 +657,8 @@ export default defineComponent({
 					line-height: 1em;
 					opacity: 0.8;
 					background: transparent;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 				& span {
 					font-size: 7.5pt;
@@ -671,6 +675,7 @@ export default defineComponent({
 			align-items: center;
 			margin-top: -22px;
 			margin-right: -12px;
+			margin-left: -25px;
 			min-width: 130px;
 			height: 70px;
 			.newsCounter {

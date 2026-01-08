@@ -7,7 +7,7 @@ import {
 	getCurrentTournament,
 	getFBTournamentOpponent,
 	getPlayerParticipation,
-	getTournamentFights,
+	getFBTournamentFights,
 	readAllFightFromEventPool
 } from '../business/forceBruteService.js';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
@@ -130,7 +130,7 @@ routes.get(
 		}
 
 		try {
-			const response = await getTournamentFights(req);
+			const response = await getFBTournamentFights(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

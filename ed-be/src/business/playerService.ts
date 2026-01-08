@@ -24,6 +24,7 @@ import {
 } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
 import { getAvailableActions } from './dinozService.js';
+import { getLatestTournament } from '../dao/tournamentDao.js';
 
 /**
  * @summary Get data from player on login
@@ -223,23 +224,37 @@ export async function playerToolTip(req: Request) {
 export async function resetAccount(req: Request) {
 	const authed = await auth(req);
 
-	const playerToDelete = await checkBeforeDeletion(authed.id);
+	const latestTournament = await getLatestTournament();
+	const playerToDelete = await checkBeforeDeletion(authed.id, latestTournament?.id);
+
+	if (!playerToDelete) {
+		throw new Error('No player found.');
+	}
 
 	//Check if sell of bids are ongoing
 	if (
-		playerToDelete &&
-		(playerToDelete.bids.length > 0 || playerToDelete.offers.filter(b => b.status === OfferStatus.ONGOING).length > 0)
+		playerToDelete.bids.length > 0 ||
+		playerToDelete.offers.filter(b => b.status === OfferStatus.ONGOING).length > 0
 	) {
 		throw new ExpectedError(translate(`bidsOngoing`, authed));
 	}
 
 	//Check if part of a clan
-	if (playerToDelete && playerToDelete.ClanMember) {
+	if (playerToDelete.ClanMember) {
 		throw new ExpectedError(translate(`inClan`, authed));
 	}
 
-	if (playerToDelete && playerToDelete.targetedCases.length > 0) {
-		throw new ExpectedError(translate(`inClan`, authed));
+	// Check if the player has pending ban requests
+	if (playerToDelete.targetedCases.length > 0) {
+		throw new ExpectedError(translate(`banPending`, authed));
+	}
+
+	// Check if the player qualified for the latest ongoing tournament
+	if (
+		latestTournament !== null &&
+		playerToDelete.LeftFightArchives.length + playerToDelete.RightFightArchives.length > 0
+	) {
+		throw new ExpectedError(translate(`ongoingDojoTournament`, authed));
 	}
 
 	await resetUser(authed.id);

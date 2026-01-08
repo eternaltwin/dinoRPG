@@ -88,11 +88,7 @@
 						<template #content>
 							<div
 								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+									formatContent($t('tooltip.shop.buyMaxTopNote', { own: selectedItem.quantity, max: resolveItem(selectedItem).maxQuantity }))
 								"
 							/>
 							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
@@ -111,11 +107,7 @@
 						<template #content>
 							<div
 								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+									formatContent($t('tooltip.shop.buyMaxTopNote', { own: selectedItem.quantity, max: resolveItem(selectedItem).maxQuantity }))
 								"
 							/>
 							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
@@ -218,11 +210,7 @@
 						<template #content>
 							<div
 								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveIngredient(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+									formatContent($t('tooltip.shop.buyMaxTopNote', { own: selectedItem.quantity, max: resolveItem(selectedItem).maxQuantity }))
 								"
 							/>
 							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
