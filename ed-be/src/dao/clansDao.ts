@@ -173,7 +173,7 @@ export async function createClanRequest(
 		select: {
 			name: true,
 			ClanJoinRequest: true
-		 }
+		}
 	});
 
 	if (!creator) {

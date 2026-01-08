@@ -9,9 +9,11 @@ import {
 	getAdminDashBoard,
 	getAllSecrets,
 	getJobs,
+	getMultiIps,
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	listAllPlayerInformationForAdminDashboard,
+	listPlayerBehindIp,
 	modifyPlayerIngredients,
 	modifyPlayerItems,
 	setPlayerMoney,
@@ -470,6 +472,32 @@ routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Respons
 
 	try {
 		const response = await getJobs();
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/accounts/page/:page`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getMultiIps(+req.params.page);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/accounts/ip/:ip`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await listPlayerBehindIp(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

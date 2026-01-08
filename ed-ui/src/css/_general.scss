@@ -291,3 +291,28 @@ strong {
 			inset 0 0 4px 1px #8d3e17;
 	}
 }
+
+.pagination-controls {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		background-color: transparent;
+		margin: 0 10px;
+		padding: 5px 10px;
+		border: none;
+		cursor: pointer;
+		&:disabled {
+			cursor: not-allowed;
+		}
+		.left,
+		.right {
+			height: auto;
+			width: 10px;
+		}
+		.right {
+			transform: rotate(180deg);
+		}
+	}
+}

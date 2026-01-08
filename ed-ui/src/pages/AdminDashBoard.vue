@@ -42,6 +42,9 @@
 		<li>
 			<a href="#" :class="tabSelected === 12 ? 'active' : ''" @click="setTab(12)"> Polls </a>
 		</li>
+		<li>
+			<a href="#" :class="tabSelected === 13 ? 'active' : ''" @click="setTab(13)"> Multicomptes </a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
@@ -64,6 +67,7 @@
 	<DebugFight v-if="tabSelected === 10" />
 	<ScheduledJobs v-if="tabSelected === 11" />
 	<PollEdit v-if="tabSelected === 12" />
+	<MultiMonitoring v-if="tabSelected === 13" />
 </template>
 
 <script lang="ts">
@@ -89,6 +93,7 @@ import { Player } from '@drpg/prisma';
 import PollEdit from '../components/admin/PollEdit.vue';
 import DZSelect from '../components/common/DZSelect.vue';
 import DZButton from '../components/common/DZButton.vue';
+import MultiMonitoring from '../components/admin/MultiMonitoring.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -98,6 +103,7 @@ interface PlayerSearch {
 export default defineComponent({
 	name: 'AdminDashBoard',
 	components: {
+		MultiMonitoring,
 		ScheduledJobs,
 		DebugFight,
 		GameControl,

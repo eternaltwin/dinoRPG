@@ -797,3 +797,67 @@ export async function getJobs() {
 	console.log(rawJobs)*/
 	return rawJobs;
 }
+
+export async function getMultiIps(page: number) {
+	const suspiciousIps = await prisma.playerIp.groupBy({
+		by: ['ip'],
+		_count: {
+			playerId: true
+		},
+		having: {
+			playerId: {
+				_count: {
+					gt: 5 // IPs avec plus de 5 joueurs
+				}
+			}
+		},
+		where: {
+			player: {
+				banCase: null
+			}
+		},
+		orderBy: {
+			_count: {
+				playerId: 'desc'
+			}
+		},
+		take: 50,
+		skip: 50 * (page - 1)
+	});
+
+	const formated = suspiciousIps.map(ip => ({
+		ip: ip.ip,
+		count: ip._count.playerId
+	}));
+
+	return formated;
+}
+
+export async function listPlayerBehindIp(req: Request) {
+	const ip = atob(req.params.ip);
+
+	const playerList = await prisma.playerIp.findMany({
+		where: {
+			ip,
+			player: {
+				banCaseId: null
+			}
+		},
+		select: {
+			player: {
+				select: {
+					name: true,
+					id: true,
+					lastLogin: true
+				}
+			}
+		},
+		orderBy: {
+			player: {
+				lastLogin: 'desc'
+			}
+		}
+	});
+
+	return playerList.map(p => ({ name: p.player.name, id: p.player.id, lastLogin: p.player.lastLogin }));
+}

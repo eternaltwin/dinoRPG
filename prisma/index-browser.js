@@ -299,8 +299,13 @@ exports.Prisma.PlayerScalarFieldEnum = {
   banCaseId: 'banCaseId',
   discoveredSkills: 'discoveredSkills',
   lastVersionSeen: 'lastVersionSeen',
+  id: 'id'
+};
+
+exports.Prisma.PlayerIpScalarFieldEnum = {
   id: 'id',
-  ips: 'ips'
+  ip: 'ip',
+  playerId: 'playerId'
 };
 
 exports.Prisma.DojoScalarFieldEnum = {
@@ -865,6 +870,7 @@ exports.Prisma.ModelName = {
   NewsLike: 'NewsLike',
   NPC: 'NPC',
   Player: 'Player',
+  PlayerIp: 'PlayerIp',
   Dojo: 'Dojo',
   DojoTeam: 'DojoTeam',
   DojoOpponents: 'DojoOpponents',

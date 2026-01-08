@@ -30,7 +30,7 @@ import {
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
-import { PismaClientLocal } from '../prisma.js';
+import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import sendError from '../utils/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
@@ -155,8 +155,13 @@ export class OAuth {
 			}
 
 			// Update ip address
-			if (ip && !player.ips.includes(ip)) {
-				await setPlayer(player.id, { ips: [...player.ips, ip] });
+			if (ip && !player.ips.find(o => o.ip === ip)) {
+				await prisma.playerIp.create({
+					data: {
+						playerId: player.id,
+						ip: ip
+					}
+				});
 			}
 
 			/*			// Check if user is banned

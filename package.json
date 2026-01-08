@@ -56,7 +56,7 @@
 		"lint:fix": "cd ed-ui && yarn lint:fix",
 		"lint": "yarn prettier --config .prettierrc '**/src/**/*.{mts,ts,json}' --write && yarn lint:fix",
 		"precommit": "yarn prettier",
-		"clean": "rimraf -g ed-ui/ts-out ed-ui/.rollup.cache ed-be/dist core/dist ./node_modules '*/tsconfig.tsbuildinfo' ./.yarn/cache ./.yarn/install ed-ui/node_modules ed-be/node_modules Eternaltwin/node_modules",
+		"clean": "yarn rimraf -g ed-ui/ts-out ed-ui/.rollup.cache ed-be/dist core/dist ./node_modules '*/tsconfig.tsbuildinfo' ./.yarn/cache ./.yarn/install ed-ui/node_modules ed-be/node_modules Eternaltwin/node_modules",
 		"reset": "yarn clean && yarn install && cd Eternaltwin && yarn install",
 		"etwin:run": "cd Eternaltwin && yarn run eternaltwin start",
 		"dev:windows": "yarn concurrently -k -n \"back,front,etwin\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\" \"yarn run etwin:run\"",
