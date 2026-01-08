@@ -201,7 +201,10 @@ export default defineComponent({
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
-					EventBus.emit('equipItem', items);
+					this.dinozStore.setItems(
+						dinozId,
+						items.map(item => item.itemId)
+					);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;

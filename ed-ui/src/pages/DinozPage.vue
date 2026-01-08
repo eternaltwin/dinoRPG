@@ -131,10 +131,10 @@ export default defineComponent({
 				await this.refreshDinoz();
 			}
 		});
-		EventBus.on('equipItem', items => {
-			this.dinozData.items = items.map(i => {
-				return i.itemId;
-			});
+		EventBus.on('equipItem', () => {
+			EventBus.emit('refreshDinozStats', true);
+		});
+		EventBus.on('unEquipItem', () => {
 			EventBus.emit('refreshDinozStats', true);
 		});
 

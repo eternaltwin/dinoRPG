@@ -10,10 +10,20 @@ export const dinozStore = defineStore('dinozStore', {
 	getters: {
 		getDinozList: (state: StoreDinoz) => state.dinozList,
 		getDinoz: (state: StoreDinoz) => {
-			return (dinozId: number) => state.dinozList?.find((dinoz: DinozFiche) => dinoz.id === dinozId);
+			return (dinozId: number) => state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId);
+		},
+		getCurrentDinoz: (state: StoreDinoz) => {
+			return state.dinozList.find((dinoz: DinozFiche) => dinoz.id === state.currentDinozId);
+		},
+		getCurrentDinozInventory: (state: StoreDinoz) => {
+			const dinoz = state.dinozList.find((dinoz: DinozFiche) => dinoz.id === state.currentDinozId);
+			if (!dinoz) throw Error("Dinoz doesn't exist in store.");
+			const items: Array<number> = new Array(dinoz.maxItems);
+			dinoz.items.forEach((item, index) => (items[index] = item));
+			return items;
 		},
 		getNpc: (state: StoreDinoz) => {
-			return (dinozId: number) => state.dinozList?.find((dinoz: DinozFiche) => dinoz.id === dinozId)?.npcAwait;
+			return (dinozId: number) => state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId)?.npcAwait;
 		},
 		getCurrentDinozId: (state: StoreDinoz) => state.currentDinozId
 	},
@@ -40,6 +50,11 @@ export const dinozStore = defineStore('dinozStore', {
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;
+		},
+		setItems(dinozId: number, items: Array<number>): void {
+			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
+			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+			dinozToUpdate.items = items;
 		}
 	},
 	persist: {

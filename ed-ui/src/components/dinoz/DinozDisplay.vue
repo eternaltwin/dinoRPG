@@ -34,7 +34,7 @@
 		</Tippy>
 		<DinozElements :dinozData="dinozData" />
 		<DinozBars :dinozData="dinozData" />
-		<DinozEquip :dinozData="dinozData" />
+		<DinozEquip/>
 		<DinozStatus :dinozStatus="dinozData.status" />
 	</div>
 </template>
