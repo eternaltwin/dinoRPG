@@ -4,7 +4,7 @@
 			<th class="pos">{{ $t('ranking.th.pos') }}</th>
 			<th class="player">{{ $t('ranking.th.player') }}</th>
 			<th>{{ $t('dojo.worth') }}</th>
-			<th>Points</th>
+			<th>{{ $t('dojo.points') }}</th>
 		</tr>
 		<tr
 			v-for="(ranking, index) in rankings"

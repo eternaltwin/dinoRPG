@@ -13,23 +13,23 @@ import {
 	Ranking,
 	TournamentTeam
 } from '@drpg/prisma';
+import { PlayerForConditionCheck } from '../constants.mjs';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
+import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
-import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
-import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
-import { Stat } from '../models/enums/SkillStat.mjs';
-import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
-import { ExpectedError } from './ExpectedError.mjs';
-import { checkCondition } from './checkCondition.mjs';
-import { getHUDObjective } from './MissionUtils.mjs';
-import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
-import { PlayerForConditionCheck } from '../constants.mjs';
-import { Condition } from '../models/npc/NpcConditions.mjs';
-import { placeList } from '../models/place/PlaceList.mjs';
+import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
+import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
 import { TournamentState } from '../models/dojo/tournament.mjs';
+import { Stat } from '../models/enums/SkillStat.mjs';
+import { Condition } from '../models/npc/NpcConditions.mjs';
+import { placeList } from '../models/place/PlaceList.mjs';
+import { checkCondition } from './checkCondition.mjs';
+import { ExpectedError } from './ExpectedError.mjs';
+import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
+import { getHUDObjective } from './MissionUtils.mjs';
 
 type Config = {
 	dinoz: {
@@ -399,15 +399,6 @@ export const possessStatus = (
 	statusId: number
 ) => {
 	return dinoz.status.some(status => status.statusId === statusId);
-};
-
-export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
-	return {
-		id: dinoz.id,
-		name: '?',
-		experience: 0,
-		canChangeName: true
-	};
 };
 
 export const canWinXP = (

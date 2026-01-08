@@ -678,7 +678,7 @@ export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bid
 	if (offer.bids.length > 0) {
 		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
 		if (max.userId) {
-			refundPromises.push(increaseIngredientQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value));
+			refundPromises.push(increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value));
 		}
 	}
 	refundPromises.push(deleteOffer(offer.id));

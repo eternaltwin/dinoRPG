@@ -143,7 +143,12 @@
 		"errorFetchingRankings": "An error occurred when fetching the ranking data.",
 		"maxDinozSelected": "You have selected the maximum number of Dinoz allowed",
 		"noDinozSelected": "No Dinoz selected",
-		"basicError": "An error occurred"
+		"basicError": "An error occurred",
+		"buildSaved": "The skill plan \"{name}\" has been saved",
+		"buildSaveError": "An error occurred when saving the skill plan",
+		"buildDeleted": "The skill plan \"{name}\" has been deleted",
+		"buildAssigned": "The skill plan \"{name}\" has been assigned to your Dinoz",
+		"buildCopied": "The skill plan \"{name}\" has been copied to your skill plans"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -389,7 +394,9 @@
 		"bubbleRate": "Bubble rate",
 		"torchDamage": "Torch damage",
 		"acidBloodDamage": "Acid blood damage",
-		"baseValue": "Base value"
+		"baseValue": "Base value",
+		"criticalHitChance": "Critical Hit Chance",
+		"criticalHitDamage": "Critical Hit Bonus"
 	},
 	"item": {
 		"name": {
@@ -552,7 +559,7 @@
 			"pirhanoz_in_bag": "A Pirhanoz stored in a bag, ready to be deployed into battle when needed!",
 			"devil_ointment": "A strong ointment, doughy, dark coloured, and with an extremely bad odour. You can rub it on your body in order to cure curses!",
 			"land_of_ashes": "This object turns the combat zone into a suffocating furnace. All Dinoz with a Fire element of less than 10 points will no longer use elements A or E for the next three turns.",
-			"abyss": "This object plunges the combat zone into an abyss.\n*All Dinoz* with a *Water element of less than 10 points* will see the strength of their *assaults* drop by 25% for the next three turns.",
+			"abyss": "This object plunges the combat zone into an abyss.\n**All Dinoz** with a **Water element of less than 10 points** will see the strength of their **assaults** drop by 25% for the next three turns.",
 			"amazon": "This object transports the combat zone into the middle of a tropical jungle. All Dinoz with a Wood element of less than 10 points will sleep for the next three turns unless they are subjected to an attack which causes them to lose 10 HP.",
 			"st_elmas_fire": "This object surrounds the combat zone with a powerful magnetic field. All Dinoz with a Lightning element of less than 10 points will lose 5% of their HP for the next three turns.",
 			"uvavu": "This object plunges the combat zone into the middle of a devastating storm. All Dinoz with an Air element of less than 10 points will lose 50% of their speed for the next three turns.",
@@ -2163,24 +2170,24 @@
 			"Force": "Increase the strength of all **assaults** by 1",
 			"Charge": "Increase the strength of the **first assault** by 5",
 			"SangChaud": "Increase the initiative by 4",
-			"Furie": "Increase the strength of **all assaults** by 3 and decreases all defenses by 2",
+			"Furie": "Increase the strength of all **assaults** by 3 and decreases all **defenses** by 2",
 			"ArtsMartiaux": "Increase the strength of **all assaults** by 2",
 			"CoeurArdent": "Increase the strength of all Fire **assaults** by 12 and increase maximum health points by 20",
 			"Kamikaze": "Attack an enemy with a Fire power of 15, then the Dinoz loses half of his life",
 			"Sprint": "Increase the initiative by 6",
 			"ProteinesDinozienne": "Increase endurance by 30%",
 			"Extenuation": "Reduce the enemy's ability to recover energy by 25%",
-			"CarapaceDeMagma": "Increase max HP by 30 and Fire *assaults* by 5",
+			"CarapaceDeMagma": "Increase maximum health points by 30 and Fire **assaults** by 5",
 			"Carapace": "Increase armor by 5%",
-			"Sauvagerie": "Increase the strength of Wood *assaults* by 5",
+			"Sauvagerie": "Increase the strength of Wood **assaults** by 5",
 			"Endurance": "Increase Wood defense by 2",
 			"Vignes": "Decrease initiative of an enemy on the ground by 15",
 			"RenfortsKorgon": "Call a Korgon to help fighting",
 			"Sympathique": "Dinoz can be followed by an additional Dinoz",
-			"Croissance": "Increase the strength of all *assaults* by 1 and increase maximum health points by 20",
+			"Croissance": "Increase the strength of all **assaults** by 1 and increase maximum health points by 20",
 			"EtatPrimal": "Cancel all positive status of enemies and all negatives status on allies",
 			"InstinctSauvage": "Increase Wood element by 2",
-			"LargeMachoire": "Increase the strength of Wood *assaults* by 15",
+			"LargeMachoire": "Increase the strength of Wood **assaults** by 15",
 			"Acrobate": "Increase the Dinoz speed by 15%",
 			"Choc": "Add the value of element Wood to Lightning **assaults** and vice-versa",
 			"OxygenationMusculaire": "Increase endurance by 20%",
@@ -2203,7 +2210,7 @@
 			"AttaqueEclair": "Increase the speed of all Lightning attacks by 40%",
 			"CoupDouble": "Increase the chances of multi-attacks by 20%",
 			"Foudre": "Attack one enemy with a Lightning power 10",
-			"VoieDeKaos": "Increase the strength of Fire and Lightning *assaults* by 6",
+			"VoieDeKaos": "Increase the strength of Fire and Lightning **assaults** by 6",
 			"PlanDeCarriere": "Permet au dinoz de retirer au sort l'élément à chaque changement de niveau. Limited to once per level. ",
 			"Adrenaline": "Increase the speed of all Lightning attacks by 50%",
 			"VoieDeGaia": "Increase the strength of Wood and Lightning defenses by 3",
@@ -2216,7 +2223,7 @@
 			"BarriereElectrifiee": "Increase defense against Air by 20",
 			"Agilite": "Increase strength of all Air **assaults** by 5",
 			"Esquive": "Increase evasion chances by 10%",
-			"Elasticite": "Increase the strength of Air *assaults* by 10 and Air defense by 3",
+			"Elasticite": "Increase the strength of Air *assaults* by 10 and Air **defense** by 3",
 			"MaitriseCorporelle": "Increase the energy recovery speed by 25%",
 			"CompetenceDouble": "Enable the Dinoz to learn the double-skills",
 			"FrenesieCollective": "Increase the speed of all allies by 50% for a medium duration",
@@ -2241,7 +2248,7 @@
 			"SelfControl": "Prevent all negative status and decrease the initiative by 3",
 			"Brave": "The Dinoz won't be able to be part of a Group anymore. Increase the Fire element by 6, maximum life by 50 and speed by 15%.",
 			"Planificateur": "Enable the Dinoz to search an additional square during an excavation",
-			"HeritageFaroe": "Increase the strength of Wood *assaults* by 12 and the armor by 10%",
+			"HeritageFaroe": "Increase the strength of Wood **assaults** by 12 and the armor by 10%",
 			"PrintempsPrecoce": "All the other Dinoz in the Group recover health points up to the Wood element of the Dinoz",
 			"EspritGorilloz": "Call a Gorilloz spirit to help in fight",
 			"GardeForestier": "Increase the Wood defense of all Dinoz in the Group by 3",
@@ -2249,9 +2256,9 @@
 			"Detective": "Enable the Dinoz to find uncommon artifacts in some places",
 			"ExpertEnFouille": "Enable the Dinoz to search an additional square during an excavation",
 			"Cocon": "Increase by 2 the number of HP recovered per hour of resting",
-			"Geant": "Increase all **assaults** strength by 5, the max health points by 30 and decrease the speed by 20%",
+			"Geant": "Increase all **assaults** strength by 5, the maximum health points by 30 and decrease the speed by 20%",
 			"Archeologue": "Enable the Dinoz to find rare or exceptional artifacts in some places\t",
-			"Colosse": "Increase all **assaults** strength by 15, the max health points by 30 and decrease the speed by 20%",
+			"Colosse": "Increase all **assaults** strength by 15, the maximum health points by 50 and decrease the speed by 20%",
 			"Tenacite": "Increases minimum damage by 1",
 			"Charisme": "Dinoz can be followed by an additional dinoz ",
 			"ResistanceALaMagie": "Cancels all negative status of the Dinoz",
@@ -2265,7 +2272,7 @@
 			"Sapeur": "Increase the probability of using combat gear by 50%",
 			"RayonKaarSher": "Attack all the enemies with Water at a strength of 7",
 			"Magasinier": "Increase maximum inventory capacity by 50% (non-cumulative)",
-			"Perception": "Increase the strength of Water **assaults* by 4 and allow the Dinoz to cancel the immaterial effect on each assault. Prevents as well the extra effect of tricky and fatal hits.",
+			"Perception": "Increase the strength of Water **assaults** by 4 and allow the Dinoz to cancel the immaterial effect on each assault. Prevents as well the extra effect of tricky and fatal hits.",
 			"CoupsSournois": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses half of its health points (subject to balancing). Note: it does not affect bosses.",
 			"ApprentiPecheur": "Allow Dinoz to catch small fish in some places",
 			"CoupFatal": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses all of its health points (subject to balancing). Note: it does not affect bosses.",
@@ -2309,7 +2316,7 @@
 			"Analyse": "Choose the best target for each attack",
 			"Cueillette": "Enable Dinoz to gather plants in some places",
 			"Specialiste": "The weakest element is removed from the Dinoz' element wheel.",
-			"TalonDAchille": "Increase the strength of **all assaults** by 2",
+			"TalonDAchille": "Increase the strength of all **assaults** by 2",
 			"OeilDeLynx": "Enable the Dinoz to find exotic plants in some places",
 			"NuageToxique": "Poison all opponents for a medium duration. The poison deals damage strictly equal to the Dinoz Air element.",
 			"HaleineFetive": "Poison all opponents on melee hit for a long duration. The poison deals damage strictly equal to the Dinoz Air element.",
@@ -2374,7 +2381,7 @@
 			"BouclierDinoz": "Automatically protect the Dinoz with the least life points by taking damage in its stead for the duration of the combat",
 			"Courbatures": "Decrease the maximum energy of an opponent by 30%",
 			"ForceControl": "The Dinoz will deal a minimum of 10 damage on assaults",
-			"CourantDeVie": "Increase Water defense by 20 and increases Wood **assaults** by 20",
+			"CourantDeVie": "Increase Water **defense** by 20 and increases Wood **assaults** by 20",
 			"Berserk": "Double **all assault** strength, but prevent the Dinoz from using any E and A skills",
 			"Sharignan": "Copy a skill which has already been used by an opponent and keeps it until the end of the combat",
 			"Amazonie": "All Dinoz (allies and enemies) without at least 10 points in Wood will not be able to use A and E skills during the user's next 3 turns unless they are victim of an attack which costs them at least 10 hit points",
@@ -2389,7 +2396,7 @@
 			"Cleptomane": "Prevent one enemy from using non-magic items during the fight. This takes effect at the beginning of the fight.",
 			"Abysse": "All Dinoz (allies and enemies) without at least 10 points in Water have their assault strength reduced by 25% during the user's next 3 turns",
 			"BanniDesDieux": "Stop the selected enemy from summoning their deity",
-			"TourbillonMagique": "Increase Water *assaults* by 20",
+			"TourbillonMagique": "Increase Water *assaults** by 20",
 			"Hyperventilation": "Decrease the endurance of all opponents by 20%",
 			"TherapieDeGroupe": "The Dinoz will recover as many HP as the enemy team recovers when it uses a healing action",
 			"ReceptacleTesla": "Block A and E sphere lightning skills of a Dinoz",
@@ -2401,7 +2408,7 @@
 			"ReceptacleAerien": "Cancel the type A and E Air spherical skills of a Dinoz for the remainder of the fight",
 			"FeuDeStElme": "Dinoz (allies and enemies) with a lightning element lower than 10 lose 5% of their life each turn for the next 3 turns of the caster",
 			"Oracle": "Double the invocation launch rate in a battle",
-			"ForceDeZeus": "Increase the power of all Lightning *assaults* by 20",
+			"ForceDeZeus": "Increase the power of all Lightning **assaults** by 20",
 			"RemanenceHertzienne": "Increase dodge chance by 20%",
 			"Blanc": "Increase the strength of **all assaults** by 20 if the Dinoz is at Nimbao",
 			"Anaerobie": "Reduce endurance by 25%",
@@ -4101,6 +4108,7 @@
 			"members": "Members list",
 			"treasure": "Clan treasure",
 			"war": "War informations",
+			"builds": "Skill Plans",
 			"discussion": "Discussion thread",
 			"history": "Clan history",
 			"parameters": "Settings"
@@ -4198,6 +4206,10 @@
 				"cancel": "Cancel"
 			}
 		}
+	},
+	"clanBuilds": {
+		"noBuilds": "No skill plans have been shared yet",
+		"copyBuild": "Copy the skill plan"
 	},
 	"clanDiscussion": {
 		"action": {
@@ -4317,7 +4329,8 @@
 			"timeLimit": "The fight will last at maximum {time} units of time.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
-			"hit": "**{fighter}** dealt **{damage}** {elements} damage to **{target}**.",
+			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
+			"hit-critical": "**{fighter}** performed a **critical** assault {elements} and dealt **{damage}** damage to **{target}**.",
 			"hit-dodge": "**{target}** dodged the attack of **{fighter}**.",
 			"hit-skill": "**{fighter}** dealt **{damage}** {elements} damage to **{target}** with **{skill}**.",
 			"poison": "**{dinoz}** dealt **{damage} poison** damage to **{target}**.",
@@ -4626,8 +4639,8 @@
 			"seeFight": "See the fight",
 			"link": "Link",
 			"copyLink": "Copy Link",
-			"tournamentType": "Type de tournois",
-			"startDate": "Date du début"
+			"tournamentType": "Type of Tournament",
+			"startDate": "Start Date"
 		},
 		"fightRecap": {
 			"hpLost": "Quantity of health points lost :pv:",
@@ -4637,6 +4650,7 @@
 			"assaults": "Number of assaults",
 			"evasions": "Number of dodges",
 			"counters": "Number of counterattacks",
+			"criticalHits": "Number of Critical Hits",
 			"poisoned": "Number of poisoned opponents",
 			"poison_damage": "Poison damage dealt",
 			"burn_damage": "Burn damage dealt",
@@ -4656,8 +4670,8 @@
 			"assaultVoid": "Number of assaults :void: carried out",
 			"hpRemaining": "Hit points left",
 			"times_poisoned": "Number of times a Dinoz has been poisoned",
-			"myTeam": "Mon équipe",
-			"enemyTeam": "Equipe adverse"
+			"myTeam": "My Team",
+			"enemyTeam": "Opposing Team"
 		},
 		"challenge": {
 			"selectChampions": "Choose your champions",
@@ -5188,7 +5202,14 @@
 	},
 	"skillTrees": {
 		"title": "Skills Tree",
-		"level": "Lv.{level}"
+		"level": "Lv.{level}",
+		"build": "Skill Plan",
+		"manageBuilds": "Manage Skill Plans",
+		"buildName": "Plan Name",
+		"shareable": "Shareable",
+		"save": "Save",
+		"delete": "Delete",
+		"buildToEdit": "Plan to Edit"
 	},
 	"poll": {
 		"choose_option": "The survey ends the {date}, vote for your choice:",

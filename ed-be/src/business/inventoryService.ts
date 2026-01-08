@@ -1,21 +1,31 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { backpackSlot, useRice } from '@drpg/core/utils/DinozUtils';
+import { Reward } from '@drpg/core/models/reward/RewardList';
+import { backpackSlot } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { $Enums, Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import {
+	$Enums,
+	Dinoz,
+	DinozSkill,
+	DinozSkillUnlockable,
+	DinozStatus,
+	LogType,
+	Player,
+	PlayerItem
+} from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -36,12 +46,11 @@ import { updateQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import { initializeDinoz, learnNextSphereSkill, useRice } from '../utils/dinoz.js';
 import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
 import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
 import UnavailableReason = $Enums.UnavailableReason;
-import { Reward } from '@drpg/core/models/reward/RewardList';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -422,8 +431,10 @@ export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: s
 }
 
 async function useSpecialItem(
-	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
+	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife' | 'level' | 'raceId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
 		player:
 			| (Pick<Player, 'id' | 'cooker' | 'lang' | 'shopKeeper'> & {
 					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
@@ -444,9 +455,10 @@ async function useSpecialItem(
 			}
 			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
 			return { name: 'ointment' };
-		case 'rice':
-			await updateDinoz(dinoz.id, useRice(dinoz));
+		case 'rice': {
+			await useRice(dinoz);
 			return { name: 'rice' };
+		}
 		case 'pampleboum':
 			const initialLife = dinoz.life;
 			const healed = heal(dinoz, 15 * (dinoz.player.cooker ? 1.1 : 1));

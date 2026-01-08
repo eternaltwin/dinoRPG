@@ -50,9 +50,7 @@
 							<h1>
 								{{ $t(`skill.name.${skillList[skillId].name}`) }}
 							</h1>
-							<p>
-								{{ $t(`skill.description.${skillList[skillId].name}`) }}
-							</p>
+							<p v-html="formatContent($t(`skill.description.${skillList[skillId].name}`))" />
 						</template>
 					</Tippy>
 				</template>

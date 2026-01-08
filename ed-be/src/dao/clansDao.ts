@@ -170,19 +170,24 @@ export async function createClanRequest(
 ) {
 	const creator = await prisma.player.findUnique({
 		where: { id: playerId },
-		select: { name: true }
+		select: {
+			name: true,
+			ClanJoinRequest: true
+		 }
 	});
 
 	if (!creator) {
 		throw new ExpectedError('Creator not found');
 	}
 
-	// Delete existing requests for the player as well
-	await prisma.clanJoinRequest.delete({
-		where: {
-			playerId: playerId
-		}
-	});
+	// Delete existing request for the player as well if there is any.
+	if (creator.ClanJoinRequest) {
+		await prisma.clanJoinRequest.delete({
+			where: {
+				id: creator.ClanJoinRequest.id
+			}
+		});
+	}
 
 	const clan = await prisma.clan.create({
 		data: {
