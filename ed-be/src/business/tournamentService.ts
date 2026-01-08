@@ -173,31 +173,21 @@ export async function getTournamentFightsToShow(
 	).map(f => f.fightArchiveId);
 
 	// Fights against byes will be considered automatically watched
-	const watchedFights = targetFights.filter(
-		f => !f.tournamentTeamLeft || !f.tournamentTeamRight || watchedFightIds.includes(f.id)
+	const nonWatchedFights = targetFights.filter(
+		f => f.tournamentTeamLeft && f.tournamentTeamRight && !watchedFightIds.includes(f.id)
 	);
 
-	let mostAdvancedStep = 0;
-	if (watchedFights.length === 0) {
-		if (phase === TournamentPhase.FINALS) mostAdvancedStep = 4;
-	} else {
-		mostAdvancedStep = Math.max(...watchedFights.map(f => f.metadata.round));
-
-		// Reach next round if all match from this round for this pool have been watched
-		const poolMatchStep = targetFights.filter(f => f.metadata.round === mostAdvancedStep).length;
-		if (poolMatchStep === watchedFights.filter(f => f.metadata.round === mostAdvancedStep).length) {
-			mostAdvancedStep++;
-		}
-	}
+	const mostAdvancedStep =
+		nonWatchedFights.length > 0 ? Math.min(...nonWatchedFights.map(f => f.metadata.round)) : null;
 
 	return targetFights
 		.filter(t => {
-			return t.metadata.round <= mostAdvancedStep;
+			return mostAdvancedStep === null || t.metadata.round <= mostAdvancedStep;
 		})
 		.map(fight => {
 			return {
 				...fight,
-				watched: watchedFights.map(f => f.id).includes(fight.id)
+				watched: !nonWatchedFights.map(f => f.id).includes(fight.id)
 			};
 		});
 }
