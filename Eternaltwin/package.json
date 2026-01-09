@@ -1,6 +1,6 @@
 {
   "name": "eternal-twin",
-  "version": "0.17.15",
+  "version": "0.17.16",
   "private": true,
   "scripts": {
     "etwin": "yarn eternaltwin start",
