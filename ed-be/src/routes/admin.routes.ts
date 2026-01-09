@@ -12,7 +12,7 @@ import {
 	getMultiIps,
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
-	listAllPlayerInformationForAdminDashboard,
+	listAllPlayerInformationForAdminDashboard, listOneDinozFromPlayer,
 	listPlayerBehindIp,
 	modifyPlayerIngredients,
 	modifyPlayerItems,
@@ -228,6 +228,25 @@ routes.get(
 
 		try {
 			const response = await listAllDinozFromPlayer(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/dinoz/:id`,
+
+	param('id').exists().isNumeric(),
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await listOneDinozFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

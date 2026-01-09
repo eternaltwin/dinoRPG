@@ -108,6 +108,12 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
+	listOneDinozFromPlayer(id: number): Promise<DinozAdminFiche> {
+		return http()
+			.get(`/admin/dinoz/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
 	updateDinoz(
 		id: number,
 		name?: string,

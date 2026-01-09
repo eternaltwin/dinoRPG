@@ -646,6 +646,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			nbrUpLightning: true,
 			nbrUpAir: true,
 			canChangeName: true,
+			unavailableReason: true,
 			seed: true,
 			player: {
 				select: {

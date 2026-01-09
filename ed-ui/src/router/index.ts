@@ -131,7 +131,76 @@ const router = createRouter({
 				{
 					path: '/admin',
 					name: 'Admin',
-					component: () => import('../pages/AdminDashBoard.vue')
+					component: () => import('../pages/AdminDashBoard.vue'),
+					children: [
+						{
+							path: 'player',
+							name: 'Player',
+							component: () => import('../components/admin/PlayerEdit.vue'),
+							props: route => ({
+								id: route.query.id
+							})
+						},
+						{
+							path: 'dinoz',
+							name: 'Dinoz',
+							component: () => import('../components/admin/DinozEdit.vue'),
+							props: route => ({
+								playerId: route.query.playerId,
+								dinozId: route.query.dinozId
+							})
+						},
+						{
+							path: 'secret',
+							name: 'Secret',
+							component: () => import('../components/admin/SecretEdit.vue')
+						},
+						{
+							path: 'logs',
+							name: 'Logs',
+							component: () => import('../components/admin/LogsView.vue')
+						},
+						{
+							path: 'gamestat',
+							name: 'GameStats',
+							component: () => import('../components/admin/GameStats.vue')
+						},
+						{
+							path: 'moderation',
+							name: 'Moderation',
+							component: () => import('../components/admin/Moderation.vue')
+						},
+						{
+							path: 'bans',
+							name: 'Bans',
+							component: () => import('../components/admin/Banned.vue')
+						},
+						{
+							path: 'game',
+							name: 'Game',
+							component: () => import('../components/admin/GameControl.vue')
+						},
+						{
+							path: 'debug',
+							name: 'Debug',
+							component: () => import('../components/admin/DebugFight.vue')
+						},
+						{
+							path: 'jobs',
+							name: 'Jobs',
+							component: () => import('../components/admin/ScheduledJobs.vue')
+						},
+						{
+							path: 'poll',
+							name: 'Polls',
+							component: () => import('../components/admin/PollEdit.vue')
+						},
+						{
+							path: 'multi',
+							name: 'Multi',
+							component: () => import('../components/admin/MultiMonitoring.vue')
+						}
+					]
 				},
 				{
 					path: '/ingredients',

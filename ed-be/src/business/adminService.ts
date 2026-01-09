@@ -1,5 +1,11 @@
 import { Request } from 'express';
-import { getAllDinozFromAccount, getDinozForDojoFight, getDinozForSkillEffect, updateDinoz } from '../dao/dinozDao.js';
+import {
+	getAllDinozFromAccount,
+	getDinozForDojoFight,
+	getDinozForLevelUp,
+	getDinozForSkillEffect,
+	updateDinoz
+} from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import {
@@ -430,6 +436,19 @@ export async function listAllDinozFromPlayer(req: Request) {
 		};
 	});
 	return dinozListToSend;
+}
+
+/**
+ * @summary List all dinoz from a player
+ * @param req
+ * @param req.params.id {string} PlayerId
+ */
+export async function listOneDinozFromPlayer(req: Request) {
+	const dinoz = await getDinozForLevelUp(+req.params.id);
+	if (!dinoz) {
+		throw new ExpectedError('Dinoz not found')
+	}
+	return {...dinoz, skills: dinoz.skills.map(s => s.skillId), status: dinoz.status.map(s => s.statusId), unlockableSkills: dinoz.unlockableSkills.map(s => s.skillId)};
 }
 
 /**
