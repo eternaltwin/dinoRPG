@@ -22,7 +22,7 @@
 				},
 				"dinocard": {
 					"name": "Dinocard",
-					"description": "Dinocard Rebirth es una nueva versión de Dinocard. ¡Ya hay 150 cartas jugables!"
+					"description": "Dinocard Rebirth es una nueva versión de Dinocard. ¡Ya hay 250 cartas jugables!"
 				},
 				"emush": {
 					"name": "eMush",
@@ -94,19 +94,19 @@
 		"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
 		"dinozAlreadySelling": "Tu Dino ya está a la venta.",
 		"nocookie": "La cookie ha caducado o no es válida; por favor reinicie la importación desde la página Mi cuenta.",
-		"wronglogins": "Los identificadores de Twinoid no son los correctos.",
+		"wronglogins": "Los identificadores de Eternaltwin no son los correctos.",
 		"noPDA": "Necesitas la Piedra en Diamantito Aglomerado para acceder a esta página.",
 		"noPMI": "Necesitas el Pequeño Misionario Ilustrado para acceder a esta página.",
 		"noPAC": "Necesitas el Pergamino de Competencias Compiladas para acceder a esta página.",
-		"dinozListMissing": "Lista de Dinos que faltan",
+		"dinozListMissing": "Lista de Dinos que faltan.",
 		"noFight": "Hoy la marea está perdida en la bruma... No encontrarás ningún monstruo a combatir.",
-		"dinozDataMissing": "Faltan datos de Dino",
+		"dinozDataMissing": "Faltan datos de Dino.",
 		"selectADinozAtMarketFirst": "Primero debes seleccionar un Dino en el mercado.",
-		"unknownDinoz": "Dino desconocido",
+		"unknownDinoz": "Dino desconocido.",
 		"noFollowers": "El Dino no está siendo seguido.",
 		"leaderChanged": "Tu Dino es el nuevo líder del grupo",
-		"missingUser": "Usuario perdido",
-		"missingData": "Datos perdidos",
+		"missingUser": "Usuario perdido.",
+		"missingData": "Datos perdidos.",
 		"labrute": "Recibiste {quantity} :irma:.",
 		"reincarnation": "Tu Dino ha sido reencarnado.",
 		"market": {
@@ -118,8 +118,8 @@
 			"offerClaimed": "Has obtenido lo que ganaste"
 		},
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
-		"heal": "Tu Dino ha recuperado {value} :hp:",
-		"gold": "Recibiste {value} :gold:",
+		"heal": "Tu Dino ha recuperado {value} :hp:.",
+		"gold": "Recibiste {value} :gold:.",
 		"sphere": "Tu Dino ha aprendido la competencia {value}.",
 		"action": "Has consumido {value} :irma: y puedes realizar acciones de nuevo.",
 		"resurrect": "Tu Dino ha resucitado.",
@@ -156,7 +156,7 @@
 	},
 	"api": "Puede consultar nuestra API para probarlo. No olvides tomar tu ficha de autenticación JWT:",
 	"alpha": {
-		"login": "Inicia sesión en Eternal-Twin",
+		"login": "Inicia sesión en Eternaltwin",
 		"homepage": {
 			"part1": "DinoRPG está en una versión alpha abierta al público. Tened cuidado, el juego está repleto de Gupiñones. Al finalizar la versión alpha, el progreso de todos será reiniciado.",
 			"part2": "Toda la información está disponible en:",
@@ -175,7 +175,7 @@
 		"developpers": "Desarrolladores",
 		"thanks": "Agradecimientos",
 		"dinorpg": "DinoRPG",
-		"text1": "Este juego es un proyecto fan de {DinoRPG} de MotionTwin. A menos que se indique lo contrario, todos los elementos gráficos se han extraído del juego y son propiedad de MotionTwin.",
+		"text1": "Este juego es un proyecto fan de {DinoRPG} de Motion Twin. A menos que se indique lo contrario, todos los elementos gráficos se han extraído del juego y son propiedad de Motion Twin.",
 		"text2": "DinoRPG es de código abierto y todo el mundo puede participar. Puedes consultar el código fuente en {Gitlab}.",
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
@@ -2597,13 +2597,7 @@
 		"confirmBanAction": "¿Confirmas este baneo?",
 		"attention": "Atención",
 		"accept": "Sí",
-		"reject": "No",
-		"shop": {
-			"buyMaxConfirm_part1": "¿Realmente deseas comprar la cantidad de",
-			"buyMaxConfirm_part2": " pieza(s) de este artículo por un costo de ",
-			"buyMaxConfirm_part3a": "¿Monedas?",
-			"buyMaxConfirm_part3b": "Napodinos de oro?"
-		}
+		"reject": "No"
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -2617,9 +2611,6 @@
 			"maxQuantity": "Cantidad máxima:"
 		},
 		"shop": {
-			"buyMaxTopNote_part1": "Tienes la cantidad de ",
-			"buyMaxTopNote_part2": " pieza(s) de este artículo, de un máximo de ",
-			"buyMaxTopNote_part3": " pieza(s).",
 			"buyMaxBottomNote": "//Haga clic aquí para llenar el stock de este artículo.//",
 			"invalidQuantity": "Por favor, introduzca una cantidad **válida**.",
 			"invalidQuantity_foot": "//Comprueba si has introducido un número válido o si tienes suficiente espacio.//"
@@ -3599,10 +3590,8 @@
 		"void": "Gana +1 en :neutre: Vacío",
 		"level": "Nivel",
 		"learn": "Aprender",
-		"unlock1": "Desbloquear ",
 		"confirmSkill": "¿Quieres aprender {skill} para pasar al nivel {level}?",
 		"confirmUnlock": "¿Quieres desbloquear {quantity} nuevas habilidades?",
-		"unlock2": " competencias suplementarias",
 		"unlock": "Una vez que se haya desbloqueado, esta habilidad se podrá aprender cuando el Dino gane otro Nivel",
 		"small": "¡El Dino ha subido de nivel!",
 		"pdc": "Permite al Dino retirar una vez su elemento cuando cambie de nivel // Atención, es posible que caiga en el mismo elemento.//",
@@ -4344,7 +4333,7 @@
 			"skillAnnounce": "**{dinoz}** utiliza **{skill}** (-{energy} energía).",
 			"skillActivate": "**{dinoz}** utilizó **{skill}**.",
 			"skillActivate-hit-targets": "**{dinoz}** utilizó **{skill}** en **{targets}** y les infligió, respectivamente, **{damages}**  {elements}.",
-			"skillActivate-heal-targets": "**{dinoz}** utilizó **{skill}** en **{targets}** y los curó **{heals}** {elements} (-{energy} energía).",
+			"skillActivate-heal-targets": "**{dinoz}** utilizó **{skill}** en **{targets}** y los curó **{heals}** {elements}.",
 			"skillExpire": "**{skill}** de **{dinoz}** ha expirado.",
 			"looseHp": "**{fighter}** perdió **{hp} PV**.",
 			"heal": "**{fighter}** se curó **{hp} PV**.",
@@ -4556,7 +4545,7 @@
 		"Fight": "**{player} ({playerId})** luchó y perdió **{hpLost} :pv:**, ganó **{gold} :gold:** y **{xp} :xp:**.",
 		"XPEarned": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** ganó **{xp} :xp:**.",
 		"HPLost": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** perdió **{hpLost} :pv:**.",
-		"Death": "El Dino de **{player} ({playerId})** murió.",
+		"Death": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** murió.",
 		"Revive": "**{player} ({playerId})** revivió al Dino **{dinoz} ({dinozId})**.",
 		"MissionStep": "**{player} ({playerId})** avanzó **{mission}** al **paso {step}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** terminó **{mission}** con Dino **{dinoz} ({dinozId})**.",
@@ -4809,7 +4798,7 @@
 			"fight8-1-22": "_El Dino tiene una penalidad de iniciativa_",
 			"fight8-1-23": "_El Dino tiene un bonus de esquiva_",
 			"fight8-1-24": "_El Dino tiene un bonus de defensa_",
-			"heal": "Cuando un combate termina, tu Dino puede haber perdido puntos de vida. Como buen Maestro debes curarlo para que no muera. Para ello, con las Monedas que ganas puedes comprar diferentes objetos en la Tienda. && && Ve a la sección Inventario desde la ficha de tu Dino para ver la lista de objetos que posees y que puedes usar. Por ejemplo, una **Nube-Hamburguesa** le dará 10 puntos de vida a tu Dino.",
+			"heal": "Cuando un **combate** termina, tu Dino puede haber perdido **puntos de vida**. Como buen Maestro debes curarlo para que no muera. Para ello, con las Monedas :gold: que ganas puedes comprar diferentes objetos en la **Tienda**. && && Ve a la sección **Inventario** desde la ficha de tu Dino para ver la lista de objetos que posees y que puedes usar. Por ejemplo, una **Nube-Hamburguesa** le dará 10 puntos de vida a tu Dino.",
 			"heal2": "Descansar",
 			"heal2-1": "Si tu Dino ha perdido puntos de vida, puede Descansar. Esto le permitirá recuperar automáticamente puntos de vida a medida que pase el tiempo. En contrapartida, no puede realizar ninguna otra acción mientras descansa. && && Al principio tu Dino descansará a un ritmo de 1 punto de vida por hora, pero esto podrá cambiar gracias al aprendizaje de ciertas competencias. && && Puedes hacer que tu Dino deje de descansar en cualquier momento pero tu Dino no puede ganar más de la mitad de sus puntos de vida por medio del descanso.",
 			"death": " Ya sea porque el adversario fuera muy fuerte, o porque tuviera pocos puntos de vida, tu Dino puede morir en una batalla. Cuando muere, **no puede realizar ninguna acción**. Queda inmovilizado hasta que resucita. && && Tienes dos posibilidades para **resucitar** a tu Dino:",
