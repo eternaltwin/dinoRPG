@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -7,7 +7,8 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['trad', 'sry'],
-		initialStep: true
+		initialStep: true,
+		condition: { [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
 	},
 	trad: {
 		stepName: 'trad',
@@ -59,6 +60,26 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	},
 	stop: {
 		stepName: 'stop',
+		nextStep: []
+	},
+	weirdSwamp: {
+		stepName: 'weirdSwamp',
+		nextStep: ['trad', 'swampTreasure'],
+		initialStep: true,
+		condition: { [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN }
+	},
+	swampTreasure: {
+		stepName: 'swampTreasure',
+		nextStep: ['swampLeave'],
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: DinozStatusId.SWAMP_MONSTERS_KNOWN
+			}
+		]
+	},
+	swampLeave: {
+		stepName: 'swampLeave',
 		nextStep: []
 	}
 };

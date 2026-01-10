@@ -35,6 +35,30 @@
 						theme: 'small'
 					}"
 				/>
+				<template v-if="place.placeId === PlaceEnum.MARAIS_COLLANT && showFloodedSwamp">
+					<div class="flooded-swamp" :style="{ left: place.posLeft - 4 + 'px', top: place.posTop - 30 + 'px' }">
+						<img
+							:src="getImgURL('icons', 'act_move')"
+							alt="flooded swamp"
+							v-tippy="{
+								content: formatContent($t(`place.hint.marais.flooded`)),
+								theme: 'small'
+							}"
+						/>
+					</div>
+				</template>
+				<template v-if="place.placeId === PlaceEnum.MARAIS_COLLANT && showFoggedSwamp">
+					<div class="foggy-swamp" :style="{ left: place.posLeft - 4 + 'px', top: place.posTop - 30 + 'px' }">
+						<img
+							:src="getImgURL('icons', 'act_fight')"
+							alt="flooded swamp"
+							v-tippy="{
+								content: formatContent($t(`place.hint.marais.foggy`)),
+								theme: 'small'
+							}"
+						/>
+					</div>
+				</template>
 			</template>
 			<svg
 				version="1.1"
@@ -66,6 +90,10 @@ import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { formatText } from '../../utils/formatText.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
+import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -88,7 +116,9 @@ export default defineComponent({
 			mapReady: false as boolean,
 			lastTouch: { x: 0, y: 0 },
 			containerRect: undefined as DOMRect | undefined,
-			mapImageRect: undefined as DOMRect | undefined
+			mapImageRect: undefined as DOMRect | undefined,
+			PlaceEnum,
+			DinozStatusId
 		};
 	},
 	methods: {
@@ -311,6 +341,32 @@ export default defineComponent({
 	computed: {
 		isMouseDevice() {
 			return window.matchMedia('(pointer:fine)').matches;
+		},
+		showFloodedSwamp() {
+			if (!this.dinozData.status.some(status => status.statusId === DinozStatusId.SWAMP_BUOY)) {
+				return false;
+			}
+
+			const day = dayjs().day();
+
+			if (!SWAMP_FLOODED_DAYS.includes(day)) {
+				return false;
+			}
+
+			return true;
+		},
+		showFoggedSwamp() {
+			if (!this.dinozData.status.some(status => status.statusId === DinozStatusId.SWAMP_LANTERN)) {
+				return false;
+			}
+
+			const day = dayjs().day();
+
+			if (!SWAMP_FOG_DAYS.includes(day)) {
+				return false;
+			}
+
+			return true;
 		}
 	},
 	mounted(): void {
@@ -368,6 +424,40 @@ export default defineComponent({
 	stroke: gray;
 	stroke-width: 1px;
 }
+
+.flooded-swamp,
+.foggy-swamp {
+	position: absolute;
+	width: 24px;
+	font-size: 0;
+	z-index: 200;
+	pointer-events: auto;
+
+	img {
+		width: 24px;
+		height: 24px;
+	}
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		background-color: red;
+		width: 100%;
+		height: 2px;
+		top: 50%;
+		left: 0;
+		transform-origin: center;
+		pointer-events: none;
+	}
+	&::before {
+		transform: translateY(-50%) rotate(45deg);
+	}
+	&::after {
+		transform: translateY(-50%) rotate(-45deg);
+	}
+}
+
 @keyframes blinker {
 	50% {
 		filter: brightness(150%) drop-shadow(0 0 2px white);

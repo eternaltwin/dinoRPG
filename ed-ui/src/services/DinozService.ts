@@ -1,14 +1,13 @@
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { LearnSkillData, ManagePageData } from '@drpg/core/returnTypes/Dinoz';
-import { http } from '../utils/index.js';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { DigResponse, LearnSkillData, ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { AssignDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
+import { http } from '../utils/index.js';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -74,10 +73,10 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	dig(dinozId: number): Promise<Rewarder> {
+	dig(dinozId: number) {
 		return http()
 			.get(`/dinoz/dig/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
+			.then(res => Promise.resolve<DigResponse>(res.data))
 			.catch(err => Promise.reject(err));
 	},
 	getGatherGrid(dinozId: number, gridType: string): Promise<GatherPublicGrid> {

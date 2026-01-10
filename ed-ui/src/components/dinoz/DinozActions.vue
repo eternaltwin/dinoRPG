@@ -119,6 +119,7 @@ import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -135,7 +136,7 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
 			MissionEnum: ConditionEnum,
-			digReward: undefined as Rewarder | undefined,
+			digRewards: undefined as DigResponse | undefined,
 			Action,
 			hpRegen: 1,
 			itinerantName: '' as string,
@@ -310,29 +311,42 @@ export default defineComponent({
 					break;
 				case Action.DIG:
 					try {
-						this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
-						if (this.digReward.rewardType === RewardEnum.GOLD) {
-							this.$toast.open({
-								message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value })),
-								type: 'reward'
+						this.digRewards = await DinozService.dig(parseInt(this.$route.params.id.toString()));
+
+						if (this.digRewards.fight) {
+							this.sessionStore.setFightResult(this.digRewards.fight);
+							this.$router.push({
+								name: 'Fight',
+								params: { dinozId: this.$route.params.id.toString() }
 							});
-						} else if (this.digReward.rewardType === RewardEnum.STATUS) {
-							this.$toast.open({
-								message: formatText(
-									formatText(
-										this.$t(`dig.status`, {
-											item: mixin.methods.formatContent(this.$t(`status.name.${this.digReward.value}`))
-										})
-									)
-								),
-								type: 'success'
-							});
-						} else if (this.digReward.rewardType === RewardEnum.SCENARIO) {
-							if (this.digReward.value === 1 && this.digReward.step === 5) {
+							EventBus.emit('isLoading', false);
+							return;
+						}
+
+						for (const reward of this.digRewards.rewards) {
+							if (reward.rewardType === RewardEnum.GOLD) {
 								this.$toast.open({
-									message: formatText(this.$t(`quest.dig_star_found`)),
-									type: 'info'
+									message: formatText(this.$t(`dig.gold`, { gold: reward.value })),
+									type: 'reward'
 								});
+							} else if (reward.rewardType === RewardEnum.STATUS) {
+								this.$toast.open({
+									message: formatText(
+										formatText(
+											this.$t(`dig.status`, {
+												item: mixin.methods.formatContent(this.$t(`status.name.${reward.value}`))
+											})
+										)
+									),
+									type: 'success'
+								});
+							} else if (reward.rewardType === RewardEnum.SCENARIO) {
+								if (reward.value === 1 && reward.step === 5) {
+									this.$toast.open({
+										message: formatText(this.$t(`quest.dig_star_found`)),
+										type: 'info'
+									});
+								}
 							}
 						}
 					} catch (e) {
@@ -636,8 +650,8 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
-		const intervalId = setInterval(() => this.computeTimeUntilMidnight(), 1000);
-		const intervalId2 = setInterval(() => this.computeTimeUntilNextHour(), 1000);
+		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
+		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
 		this.intervals.push(intervalId, intervalId2);
 	},
 	unmounted() {
