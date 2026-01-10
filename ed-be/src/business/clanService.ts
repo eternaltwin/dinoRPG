@@ -55,6 +55,7 @@ import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/cla
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
+import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 
 /**
  * Get all the clans
@@ -383,7 +384,9 @@ export async function getClanMember(req: Request) {
  * @param req.body.clanMember {ClanMember} clan member with edited fields
  * @returns member
  */
-export async function updateClanMember(req: Request) {
+export async function updateClanMember(
+	req: Request<UpdateClanMemberRequestParams, unknown, UpdateClanMemberRequestBody>
+) {
 	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
