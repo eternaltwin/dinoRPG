@@ -113,7 +113,7 @@ export default defineComponent({
 .tabPanel {
 	position: relative;
 	color: white;
-	width: 95%;
+	width: 100%;
 	top: 6px;
 
 	.tabs {
