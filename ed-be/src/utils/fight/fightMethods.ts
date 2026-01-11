@@ -1343,6 +1343,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
 
+				// Add step for fx
+				fightData.steps.push(activate_step);
+
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
 					// Increase the opponent's time
 					opponent.time += 15 * TIME_FACTOR;
@@ -1353,9 +1356,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 						notification: NotificationList.InitDown
 					});
 				}
-
-				// Add step for fx
-				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.RESISTANCE_A_LA_MAGIE: {
