@@ -2158,7 +2158,16 @@ export const addStatus = (
 	const isBad = BadFightStatus.includes(status);
 
 	// Negate if SELF_CONTROL
-	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
+	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) {
+		// Add announce step
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: fighter.id,
+			skill: Skill.SELF_CONTROL
+		});
+
+		return false;
+	}
 
 	// Handle the immediate effect of the status
 	switch (status) {
