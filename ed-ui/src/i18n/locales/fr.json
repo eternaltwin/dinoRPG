@@ -5206,7 +5206,8 @@
 		"title": "Tournoi de Forcebrut",
 		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs Dinoz créés par d'autres joueurs. Le premier palier est un Dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître Dinoz !",
 		"stage": "Palier {stage}",
-		"fight": "Combattre {opponent}"
+		"fight": "Combattre {opponent}",
+		"statusReward": "Vous avez reçu: {reward}"
 	},
 	"skillTrees": {
 		"title": "Arbres de compétences",

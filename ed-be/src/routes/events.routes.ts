@@ -14,6 +14,8 @@ import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillSe
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 import sendError from '../utils/sendErrors.js';
+import { FBTournamentFightOpponentResponse } from '@drpg/core/returnTypes/Fight';
+import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();
 
@@ -172,17 +174,21 @@ routes.get(
 	}
 );
 
-routes.get(`${commonPath}/fight/:dinozId`, [param('dinozId').exists().toInt()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/fight/:dinozId`,
+	[param('dinozId').exists().toInt()],
+	async (req: Request, res: Response<FBTournamentFightOpponentResponse | ErrorResponse>) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await fightFBTournamentOpponent(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await fightFBTournamentOpponent(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 export default routes;

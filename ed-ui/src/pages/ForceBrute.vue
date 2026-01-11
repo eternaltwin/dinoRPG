@@ -45,23 +45,24 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import { FBService } from '../services/FBTournamentService.js';
-import { errorHandler } from '../utils/index.js';
-import { FBOpponent } from '@drpg/core/models/dojo/ForceBrute';
-import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
-import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
-import { preFightLoader } from '@drpg/core/models/fight/transpiler';
-import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { FighterRecap, FightResult } from '@drpg/core/models/fight/FightResult';
-import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import EventBus from '../events/index.js';
-import FightBounce from '../components/fight/FightBounce.vue';
-import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
+import { FBOpponent } from '@drpg/core/models/dojo/ForceBrute';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { preFightLoader } from '@drpg/core/models/fight/transpiler';
+import { FBTournamentFightOpponentResponse } from '@drpg/core/returnTypes/Fight';
+import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
+import FightBounce from '../components/fight/FightBounce.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events/index.js';
+import { FBService } from '../services/FBTournamentService.js';
+import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
+import { errorHandler } from '../utils/index.js';
+import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 
 export default defineComponent({
 	name: 'ForceBrute',
@@ -79,7 +80,7 @@ export default defineComponent({
 			stage: null as number | null,
 			fightTransformed: undefined as undefined | preFightLoader,
 			displayFight: undefined as undefined | DojoFightResume,
-			fight: undefined as undefined | FightResult,
+			fight: undefined as undefined | FBTournamentFightOpponentResponse,
 			dinoz: undefined as undefined | DinozFiche,
 			lang: localStore().getLanguage ?? 'fr',
 			fightEnded: false as boolean,
@@ -125,7 +126,8 @@ export default defineComponent({
 				this.fightTransformed = {
 					...initPlace,
 					history: nexFight.filter(n => n != undefined),
-					lang: this.lang
+					lang: this.lang,
+					statusReward: this.fight.statusReward
 				};
 				EventBus.emit('isLoading', false);
 			} catch (e) {

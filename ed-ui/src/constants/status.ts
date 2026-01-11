@@ -1,4 +1,10 @@
-export const statusList = {
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+
+export const statusList: {
+	imgName: { [key in DinozStatusId]?: string };
+	id: { [key: string]: DinozStatusId };
+	displayed: { [key in DinozStatusId]?: boolean };
+} = {
 	imgName: {
 		1: 'bouee',
 		2: 'matesc',

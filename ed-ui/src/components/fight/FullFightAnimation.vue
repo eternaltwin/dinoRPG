@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { Fight } from '@eternaltwin/dinorpg_animations';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
+import { Fight } from '@eternaltwin/dinorpg_animations';
+import { defineComponent, PropType } from 'vue';
+import { playerStore } from '../../store';
 
 export default defineComponent({
 	name: 'Fight',
@@ -18,7 +19,8 @@ export default defineComponent({
 	emits: ['animationEnded'],
 	data() {
 		return {
-			loadedFight: {} as Fight
+			loadedFight: {} as Fight,
+			playerStore: playerStore()
 		};
 	},
 	methods: {
@@ -28,12 +30,30 @@ export default defineComponent({
 			const display = this.loadedFight.getDisplay();
 			display.style.maxWidth = '100%';
 			canvas.appendChild(display);
+		},
+		onFightEnd() {
+			this.$emit('animationEnded');
+
+			if (this.fight.statusReward) {
+				this.$toast.success(
+					this.formatContent(
+						this.$t('fb_tournament.statusReward', {
+							reward: `:status_${this.fight.statusReward}: ${this.$t(`status.name.${this.fight.statusReward}`)}`
+						})
+					)
+				);
+			}
 		}
 	},
 	mounted() {
 		this.loadAnimation();
+		if (this.playerStore.getPlayerOptions.skipFight) {
+			this.onFightEnd();
+		}
 		this.loadedFight.onFightEnd = () => {
-			this.$emit('animationEnded');
+			if (!this.playerStore.getPlayerOptions.skipFight) {
+				this.onFightEnd();
+			}
 		};
 	},
 	unmounted() {
