@@ -643,7 +643,7 @@
 			"triceragnon_baby": "This strange little egg seems to be ready to transform into an amazing Dino!",
 			"triceragnon_baby_rare": "This strange little egg seems to be ready to transform into an amazing Dino!",
 			"christmas_egg": "This Christmas egg will surprise you by transforming into either a Santaz or a Triceratops. What a surprise!",
-			"amnesic_rice": "This rice will cause a Dinoz to have amnesia. After eating it a Dinoz forgets its name along with the experience it has gained since its last level up.",
+			"amnesic_rice": "This rice will cause a Dinoz to have amnesia. After eating it a Dinoz forgets its name along with the experience it has gained since its last level up.&&&&//Some urban legend says that this rice can affect the destiny of young Dinoz...//",
 			"tik_bracelet": "This bracelet, created using Caushemesh technology, can restore up to 10 health points each day to the Dinoz who wears it!",
 			"magic_star": "These mysterious stars are scattered throughout Dinoland. Will you be able to find all 7?",
 			"golden_napodino": "Gold Napodinos are solid gold coins dating back to a pre-dinotown civilization. They are highly desired by collectors, and people say that they give luck to Dinoz who choose to carry them.",
@@ -853,7 +853,7 @@
 			"iplain": "A vast white plain stretches for as far as the eye can see, snow is only found on the northern part of the island.",
 			"isnow2": "A forest permanently covered in a blanket of snow stands in the middle of the uniform whiteness of the plains. A timeless calm envelops anyone who dares cross the forest...",
 			"imont": "Considered by everyone as a sacred mountain, Everwest has a sharp peak which few have dared to try to climb. It became sacred during the reign of the former Archdorogon who used to come and meditate at the summit.",
-			"ihaut": "A cavern which seems to have been dug into the summit of the holy mountain. There appears to be some kind of laboratory at the back of the cave. There are numerous vials of every colour stored inside. What kind of research was the former Archdorogon involved in up here...",
+			"ihaut": "A cavern which seems to have been dug into the summit of the holy mountain. There appears to be some kind of laboratory at the back of the cave. There are numerous vials of every color stored inside. What kind of research was the former Archdorogon involved in up here...",
 			"voie": "From far away, the immense observatory imposes its silhouette on the panorama that is open to all and located on Nimbao's tail. It is located on Nimbao's tail. It points its objective towards the surface, the study of stars is probably less integrated than the monitoring of the Caushemesh Mountains.",
 			"observ": "The observatory is also a large bibliotheque that collects an impressive number of books about Dinoland's history. Unfortunately, the books are written in the language of the former Dorogons, so you cannot learn more.",
 			"egout": "The pillar structure supporting the Archidorogon Palace incorporates a whole structure used to transport pure water into the different parts of the Dorogon city.",
@@ -1849,6 +1849,7 @@
 		}
 	},
 	"skill": {
+		"properties": "Properties",
 		"energy": "Energy: **{energy}**",
 		"probability": "Probability: **{probability}%**",
 		"priority": "Priority: **{priority}**",
@@ -2611,6 +2612,7 @@
 			"maxQuantity": "Maximum Quantity:"
 		},
 		"shop": {
+			"buyMaxTopNote": "You own {own} of this item out of a maximum of {max}.",
 			"buyMaxBottomNote": "//Click here to fully stock up on this item.//",
 			"invalidQuantity": "Please enter a **valid** quantity.",
 			"invalidQuantity_foot": "//Make sure the number you've entered is correct and that you have space for it.//"
@@ -3592,6 +3594,7 @@
 		"learn": "Learn",
 		"confirmSkill": "Do you want to learn {skill} for leveling up to level {level}?",
 		"confirmUnlock": "Do you wish to unlock {quantity} new skills?",
+		"unlockSkills": "Unlock {count} additional skills",
 		"unlock": "Once unlocked, this skill can be chosen from the next level",
 		"small": "This dinoz has gained a level!",
 		"pdc": "Thanks to the Career Plan skill, you can freely choose between two level gain possibilities.&& //Please note, it is possible that these two possibilities are identical.//",

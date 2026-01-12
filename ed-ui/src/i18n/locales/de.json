@@ -643,7 +643,7 @@
 			"triceragnon_baby": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
 			"triceragnon_baby_rare": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
 			"christmas_egg": "Dieses Weihnachtliche Ei wird sich entweder in einen Santas oder einen Triceragon verwandeln. Es ist eine Überraschung!",
-			"amnesic_rice": "Diese sehr seltene Reissorte macht vergesslich. Wenn er davon isst, vergisst dein Dinoz seinen Namen und verliert auch alle seine seit dem letzten Stufenaufstieg gesammelten Erfahrungspunkte.",
+			"amnesic_rice": "Diese äußerst seltene Reissorte macht vergesslich. Wenn dein Dinoz davon isst, vergisst er seinen Namen und verliert auch all seine seit dem letzten Stufenaufstieg gesammelten Erfahrungspunkte.&&&&//Gerüchten zufolge kann dieser Reis außerdem das Schicksal junger Dinoz beeinflussen...//",
 			"tik_bracelet": "Dieses Stück Caushemesh-Technologie stellt dem Dinoz, der es trägt, täglich **bis zu 10 Lebenspunkte** wieder her.",
 			"magic_star": "Diese geheimnisvollen Sterne sind über ganz Dinoland verstreut. Wirst du es schaffen, alle 7 zu finden?",
 			"golden_napodino": "Napodinos sind massive Goldmünzen, die von einer prä-dinoländischen Zivilisation verwendet wurden. Sie haben unter Sammlern großen Wert und man erzählt sich, dass sie den Dinoz, die sie bei sich tragen, Glück bringen würden.",
@@ -1849,6 +1849,7 @@
 		}
 	},
 	"skill": {
+		"properties": "Eigenschaften",
 		"energy": "Energie: **{energy}**",
 		"probability": "Wahrscheinlichkeit: **{probability}%**",
 		"priority": "Priorität: **{priority}**",
@@ -2611,6 +2612,7 @@
 			"maxQuantity": "Maximale Anzahl:"
 		},
 		"shop": {
+			"buyMaxTopNote": "Du hast {own} Stück(e) dieses Gegenstands in deinem Besitz von bis zu {max} maximal.",
 			"buyMaxBottomNote": "//Klicke hier, um diesen Gegenstand vollends aufzufüllen.//",
 			"invalidQuantity": "Es ist eine **gültige** Menge erforderlich.",
 			"invalidQuantity_foot": "//Prüfe, ob die Anzahl korrekt ist und ob du Platz dafür hast.//"
@@ -3592,6 +3594,7 @@
 		"learn": "Erlernen",
 		"confirmSkill": "Möchtest du {skill} zum Aufstieg auf Stufe {level} nehmen?",
 		"confirmUnlock": "Möchtest du {quantity} Fähigkeiten freischalten?",
+		"unlockSkills": "{count} zusätzliche Fähigkeiten freischalten",
 		"unlock": "Sobald sie freigeschaltet ist, kann diese Fähigkeit ab der nächsten Stufe ausgewählt werden",
 		"small": "Der Dinoz hat eine neue Stufe erreicht!",
 		"pdc": "Dank der Fähigkeit „Karriereplan“ kannst du beim Stufenaufstieg frei eine von zwei Varianten auswählen.&& //Beachte bitte, dass es vorkommen kann, dass diese beiden identisch sind.//",

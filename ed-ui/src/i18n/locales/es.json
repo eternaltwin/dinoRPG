@@ -643,7 +643,7 @@
 			"triceragnon_baby": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
 			"triceragnon_baby_rare": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
 			"christmas_egg": "Este huevo de Navidad tiene la sorpresa de transformarse en Polvorón o en Tricerithumps. ¡Será una sorpresa!",
-			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...",
+			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...&&&&//Algunos rumores dicen que este arroz también podría afectar el destino de los Dinos jóvenes…//",
 			"tik_bracelet": "Este objeto perteneciente a la tecnología de Caushemesh, ¡puede dar cada día hasta 10 puntos de vida al Dino que lo lleve!",
 			"magic_star": "Estas misteriosas estrellas están repartidas por todo el mundo de Dinoland. ¿Puedes encontrar las 7?",
 			"golden_napodino": "Los Napodinos de oro son piezas de oro macizo provenientes de una civilización pre-dinovillana. Tienen un gran valor para los coleccionistas, y se dice que dan buena suerte a los Dinos que lo lleven consigo.",
@@ -1849,6 +1849,7 @@
 		}
 	},
 	"skill": {
+		"properties": "Propiedades",
 		"energy": "Energía: **{energy}**",
 		"probability": "Probabilidad: **{probability}%**",
 		"priority": "Prioridad: **{priority}**",
@@ -2611,6 +2612,7 @@
 			"maxQuantity": "Cantidad máxima:"
 		},
 		"shop": {
+			"buyMaxTopNote": "Posees {own} ejemplar(es) de este objeto, de un máximo de {max}.",
 			"buyMaxBottomNote": "//Haga clic aquí para llenar el stock de este artículo.//",
 			"invalidQuantity": "Por favor, introduzca una cantidad **válida**.",
 			"invalidQuantity_foot": "//Comprueba si has introducido un número válido o si tienes suficiente espacio.//"
@@ -3592,6 +3594,7 @@
 		"learn": "Aprender",
 		"confirmSkill": "¿Quieres aprender {skill} para pasar al nivel {level}?",
 		"confirmUnlock": "¿Quieres desbloquear {quantity} nuevas habilidades?",
+		"unlockSkills": "Desbloquea {count} competencias adicionales",
 		"unlock": "Una vez que se haya desbloqueado, esta habilidad se podrá aprender cuando el Dino gane otro Nivel",
 		"small": "¡El Dino ha subido de nivel!",
 		"pdc": "Permite al Dino retirar una vez su elemento cuando cambie de nivel // Atención, es posible que caiga en el mismo elemento.//",
