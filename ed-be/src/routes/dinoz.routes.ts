@@ -355,7 +355,7 @@ routes.put(
  *           properties:
  *             placeId:
  *               type: number
- *               description: Id of the destination
+ *               description: Id of the place where the digging happens
  *     responses:
  *       200:
  *         description: Returns a dig response (rewards and/or fight).
