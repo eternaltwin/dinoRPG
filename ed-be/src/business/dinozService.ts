@@ -874,6 +874,11 @@ export async function digWithDinoz(req: Request) {
 
 				if (fight.result) {
 					rewards = rewards.concat(treasure.reward);
+
+					const statusReward = treasure.reward.find(r => r.rewardType === RewardEnum.STATUS);
+					if (statusReward) {
+						fight.statusReward = statusReward.value;
+					}
 				}
 			} else {
 				rewards = rewards.concat(treasure.reward);

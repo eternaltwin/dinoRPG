@@ -37,7 +37,7 @@ export default defineComponent({
 			if (this.fight.statusReward) {
 				this.$toast.success(
 					this.formatContent(
-						this.$t('fb_tournament.statusReward', {
+						this.$t('fight.statusReward', {
 							reward: `:status_${this.fight.statusReward}: ${this.$t(`status.name.${this.fight.statusReward}`)}`
 						})
 					)
