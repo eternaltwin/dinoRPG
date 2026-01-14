@@ -31,6 +31,7 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
+const ticketCountByIP = new Map<string, number>();
 
 // Tickets garbage collector
 setInterval(() => {
@@ -44,9 +45,7 @@ setInterval(() => {
 			count++;
 		}
 	}
-	if (count > 0) {
-		LOGGER.info(`[SSE] Information: ${count} tickets ont été timeout.`);
-	}
+
 	if (activeTickets.size > 100) {
 		LOGGER.warn(`[SSE] Attention: ${activeTickets.size} tickets toujours en attente.`);
 	}
@@ -87,8 +86,16 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		type: serverEventType
 	});
 
-	if (activeTickets.size > 100) {
-		LOGGER.info('There are too many active tickets ! Actual length : ' + activeTickets.size);
+	// Check number of ticket for this IP
+	let ipTicketCount = 0;
+	for (const ticket of activeTickets.values()) {
+		if (ticket.ipAddress === ip) {
+			ipTicketCount++;
+		}
+	}
+
+	if (ipTicketCount > 10) {
+		LOGGER.warn(`[SSE] L'adresse IP ${ip} a ${ipTicketCount} tickets actifs (playerId: ${authed.id})`);
 	}
 
 	return {
