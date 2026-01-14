@@ -255,5 +255,13 @@ export const AdminService = {
 			.get(`/admin/accounts/ip/${ip}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	massBan(list: string[]) {
+		return http()
+			.put(`/admin/massban`, {
+				list: list
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

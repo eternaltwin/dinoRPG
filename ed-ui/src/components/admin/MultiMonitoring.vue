@@ -23,14 +23,17 @@
 	{{ currentIP }}
 	<DZTable>
 		<tr>
+			<th>Select</th>
 			<th>Profile</th>
 			<th>LastLogin</th>
 		</tr>
 		<tr v-for="item in multiList" :key="item.id">
+			<DZCheckbox :id="item.id" v-model="multipleBan" :value="item.id" lass="build-mode-checkbox" />
 			<td><DZUser :user="item"></DZUser></td>
 			<td>{{ formatDate(item.lastLogin) }}</td>
 		</tr>
 	</DZTable>
+	<DZButton v-if="currentIP" @click="massBan()">Mass Ban</DZButton>
 </template>
 
 <script lang="ts">
@@ -41,16 +44,18 @@ import DZTable from '../common/DZTable.vue';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 import DZButton from '../common/DZButton.vue';
 import DZUser from '../common/DZUser.vue';
+import DZCheckbox from "../common/DZCheckbox.vue";
 
 export default defineComponent({
 	name: 'MultiMonitoring',
-	components: { DZUser, DZButton, DZTable },
+	components: {DZCheckbox, DZUser, DZButton, DZTable },
 	data() {
 		return {
 			list: [] as IPList[],
 			currentIP: '' as string,
 			multiList: [] as suspectedPlayer[],
-			currentPage: 1 as number
+			currentPage: 1 as number,
+			multipleBan: [] as string[]
 		};
 	},
 	methods: {
@@ -69,6 +74,13 @@ export default defineComponent({
 		},
 		nextPage() {
 			this.currentPage++;
+		},
+		async massBan() {
+			try {
+				this.multiList = await AdminService.massBan(this.multipleBan)
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		}
 	},
 	async mounted() {

@@ -27,7 +27,7 @@ import {
 	banPlayer,
 	cancelBan,
 	getAllModeration,
-	getPaginatedBannedPlayers,
+	getPaginatedBannedPlayers, multipleBan,
 	takeActionOnReport,
 	updateBan
 } from '../business/moderationService.js';
@@ -517,6 +517,19 @@ routes.get(`${commonPath}/accounts/ip/:ip`, checkIsAdmin, async (req: Request, r
 
 	try {
 		const response = await listPlayerBehindIp(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/massban`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await multipleBan(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

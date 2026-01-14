@@ -1,6 +1,13 @@
 <template>
 	<div class="dz-checkbox" :class="{ disabled }">
-		<input type="checkbox" :id="id" :name="id" :disabled="disabled" :checked="isChecked" @change="onChange" />
+		<input
+			type="checkbox"
+			:id="id"
+			:name="id"
+			:disabled="disabled"
+			:checked="isChecked"
+			@change="onChange"
+		/>
 		<span class="icon" :class="{ checked: isChecked }" @click="onIconClick" />
 		<label class="text" :for="id">
 			<slot>{{ label }}</slot>
@@ -12,24 +19,45 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-	modelValue?: boolean;
+	modelValue?: boolean | string[];
+	value?: string;
 	label?: string;
 	disabled?: boolean;
 	id: string;
 }>();
 
 const emit = defineEmits<{
-	'update:modelValue': [value: boolean];
-	change: [value: boolean];
+	'update:modelValue': [value: boolean | string[]];
+	change: [value: boolean | string[]];
 }>();
 
-const isChecked = computed(() => props.modelValue === true);
+const isChecked = computed(() => {
+	if (Array.isArray(props.modelValue) && props.value !== undefined) {
+		return props.modelValue.includes(props.value);
+	}
+	return props.modelValue === true;
+});
 
 const toggle = () => {
 	if (props.disabled) return;
-	const newValue = !isChecked.value;
-	emit('update:modelValue', newValue);
-	emit('change', newValue);
+
+	if (Array.isArray(props.modelValue) && props.value !== undefined) {
+		const newArray = [...props.modelValue];
+		const index = newArray.indexOf(props.value);
+
+		if (index > -1) {
+			newArray.splice(index, 1);
+		} else {
+			newArray.push(props.value);
+		}
+
+		emit('update:modelValue', newArray);
+		emit('change', newArray);
+	} else {
+		const newValue = !isChecked.value;
+		emit('update:modelValue', newValue);
+		emit('change', newValue);
+	}
 };
 
 const onChange = () => {
