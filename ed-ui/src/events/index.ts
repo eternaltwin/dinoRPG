@@ -10,8 +10,6 @@ type Events = {
 	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;
-	equipItem: Array<DinozItems>;
-	unEquipItem: number;
 	messageToPlayer: { name: string; id: string };
 	connected: boolean;
 };

@@ -113,6 +113,7 @@ export default defineComponent({
 				...this.playerStore.playerOptions
 			});
 			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
+			EventBus.emit('refreshDinozStats', true);
 			this.isReady = true;
 		},
 		async refreshDinoz() {
@@ -131,13 +132,6 @@ export default defineComponent({
 				await this.refreshDinoz();
 			}
 		});
-		EventBus.on('equipItem', () => {
-			EventBus.emit('refreshDinozStats', true);
-		});
-		EventBus.on('unEquipItem', () => {
-			EventBus.emit('refreshDinozStats', true);
-		});
-
 		try {
 			await this.getFiche();
 		} catch (err) {
@@ -148,7 +142,6 @@ export default defineComponent({
 		this.nameChoosen = this.dinozData.name !== '?';
 	},
 	unmounted() {
-		EventBus.off('equipItem');
 		EventBus.off('refreshDinoz');
 	},
 	watch: {

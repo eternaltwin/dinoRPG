@@ -30,8 +30,6 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import EventBus from '../../events/index.js';
 import { dinozStore } from '../../store/index.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -56,6 +54,7 @@ export default defineComponent({
 					dinozId,
 					items.map(item => item.itemId)
 				);
+				EventBus.emit('refreshDinozStats', true);
 				EventBus.emit('refreshInventory', true);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);

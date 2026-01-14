@@ -318,7 +318,6 @@ import { DinozBuild } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'DetailsTab',
-	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		SkillTooltip,
 		DZSelect,
@@ -369,7 +368,11 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
+			const currentDinoz = this.dinozStore.getCurrentDinoz;
+			if (!currentDinoz) {
+				throw new Error('Dinoz not found in store after assigning build');
+			}
+			return currentDinoz.status.some(s => s.statusId === statusList.id.amulst) ?? false;
 		},
 		sort(): void {
 			switch (this.selectedSort) {
@@ -404,11 +407,16 @@ export default defineComponent({
 			return this.$i18n.locale.toLocaleUpperCase();
 		},
 		refreshStats() {
+			const currentDinoz = this.dinozStore.getCurrentDinoz;
+			if (!currentDinoz) {
+				throw new Error('Dinoz not found in store after assigning build');
+			}
+
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
-					this.dinozData,
-					this.dinozData.status.map(s => s.statusId),
+					currentDinoz,
+					currentDinoz.status.map(s => s.statusId),
 					this.dinozSkill,
 					stat as AssaultElement
 				)
@@ -416,8 +424,8 @@ export default defineComponent({
 
 			this.defenseStats = Object.values(DefenseElement).map(stat =>
 				getDefenseStat(
-					this.dinozData,
-					this.dinozData.status.map(s => s.statusId),
+					currentDinoz,
+					currentDinoz.status.map(s => s.statusId),
 					this.dinozSkill,
 					stat as DefenseElement
 				)
@@ -427,8 +435,8 @@ export default defineComponent({
 
 			// Find global speed value to compute it with elemental speed
 			const global_speed_special = getSpecialStat(
-				this.dinozData,
-				this.dinozData.status.map(s => s.statusId),
+				currentDinoz,
+				currentDinoz.status.map(s => s.statusId),
 				this.dinozSkill,
 				SpecialStat.SPEED,
 				priest
@@ -436,8 +444,8 @@ export default defineComponent({
 
 			// Find global critical value
 			const global_critical_hit = getSpecialStat(
-				this.dinozData,
-				this.dinozData.status.map(s => s.statusId),
+				currentDinoz,
+				currentDinoz.status.map(s => s.statusId),
 				this.dinozSkill,
 				SpecialStat.CRITICAL_HIT_CHANCE,
 				priest
@@ -451,8 +459,8 @@ export default defineComponent({
 			this.specialStats = Object.values(SpecialStat)
 				.map(stat => {
 					let special = getSpecialStat(
-						this.dinozData,
-						this.dinozData.status.map(s => s.statusId),
+						currentDinoz,
+						currentDinoz.status.map(s => s.statusId),
 						this.dinozSkill,
 						stat as SpecialStat,
 						priest
@@ -527,8 +535,12 @@ export default defineComponent({
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 		},
 		async loadComponent(): Promise<void> {
+			const currentDinoz = this.dinozStore.getCurrentDinoz;
+			if (!currentDinoz) {
+				throw new Error('Current Dinoz not found in store on load');
+			}
 			try {
-				this.dinozSkill = toSkillDetails(this.dinozData.skills);
+				this.dinozSkill = toSkillDetails(currentDinoz.skills);
 				this.sort();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -539,7 +551,7 @@ export default defineComponent({
 				try {
 					this.ownBuilds = await DinozBuildService.getOwn();
 
-					this.dinozBuild = this.dinozData.build?.id;
+					this.dinozBuild = currentDinoz.build?.id;
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 				}
@@ -559,7 +571,7 @@ export default defineComponent({
 
 			try {
 				await DinozService.assignBuild(this.dinozStore.currentDinozId, this.dinozBuild);
-				const currentDinoz = this.dinozStore.getDinoz(this.dinozStore.currentDinozId);
+				const currentDinoz = this.dinozStore.getCurrentDinoz;
 
 				if (!currentDinoz) {
 					throw new Error('Dinoz not found in store after assigning build');
