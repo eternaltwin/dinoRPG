@@ -15,7 +15,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import { archiveFight, viewFight } from '../dao/archiveDao.js';
+import {archiveFight, getViewedTournamentFight, viewFight} from '../dao/archiveDao.js';
 import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
@@ -335,26 +335,26 @@ export async function getFBTournamentFights(req: Request) {
 				select: {
 					id: true,
 					name: true,
-					display: true,
-					player: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
+					display: true
 				}
 			},
 			FBTournamentRight: {
 				select: {
 					id: true,
 					name: true,
-					display: true,
-					player: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
+					display: true
+				}
+			},
+			leftPlayer: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			rightPlayer: {
+				select: {
+					id: true,
+					name: true
 				}
 			}
 		}
@@ -365,8 +365,14 @@ export async function getFBTournamentFights(req: Request) {
 	const transformedFights = fights.map(f => {
 		return {
 			id: f.id,
-			tournamentTeamLeft: f.FBTournamentLeft,
-			tournamentTeamRight: f.FBTournamentRight,
+			tournamentTeamLeft: {
+				dinoz: f.FBTournamentLeft,
+				player: f.leftPlayer
+			},
+			tournamentTeamRight: {
+				dinoz: f.FBTournamentRight,
+				player: f.rightPlayer
+			},
 			metadata: JSON.parse(<string>f.metadata) as PublicMetada,
 			result: f.result
 		};

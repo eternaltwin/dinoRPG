@@ -62,10 +62,15 @@ export type PublicMetada = {
 	team2Id: string;
 };
 
+export interface TournamentPlayer {
+	id: string;
+	name: string;
+}
+
 export interface PublicTournament {
 	id: string;
-	tournamentTeamLeft: TeamLeader;
-	tournamentTeamRight: TeamLeader;
+	tournamentTeamLeft: TournamentTeam | null;
+	tournamentTeamRight: TournamentTeam | null;
 	metadata: PublicMetada;
 	result: boolean;
 	watched: boolean;
@@ -78,36 +83,27 @@ export interface TournamentHistory {
 }
 
 export type TournamentTeam = {
-	fight: string;
-	won: boolean;
 	dinoz: TeamLeader;
+	player: TournamentPlayer | null;
 };
 
 export type TeamLeader = {
 	id: number;
 	display: string;
 	name: string;
-	player: {
-		id: string;
-		name: string;
-	};
 };
 
 export type DisplayedLeader = {
-	id: number;
-	display: string;
-	name: string;
+	dinoz: TeamLeader | null;
 	fight: string;
 	won: boolean;
 	round: number;
 	pool: number;
 	matchNumber: number;
 	watched: boolean;
+	show: boolean;
 	slot: 'left' | 'right';
-	player: {
-		id: string;
-		name: string;
-	};
+	player: TournamentPlayer | null;
 };
 
 export enum TournamentPhase {
