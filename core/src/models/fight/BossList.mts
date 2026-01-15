@@ -1075,7 +1075,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 12,
 			air: 0
 		},
-		resilience: 30,
+		resilience: 40,
 		gold: 1.5,
 		xp: 50,
 		odds: 100,
@@ -1094,7 +1094,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.MOIGNONS_LIQUIDES,
 			Skill.DELUGE,
 			Skill.REFLEX,
+			Skill.ARMURE_DE_BASALTE,
 			Skill.FEU_DE_ST_ELME,
+			Skill.SOUFFLE_DE_VIE,
 			Skill.FORCE_CONTROL
 		],
 		canBeCaptured: false,
@@ -1140,10 +1142,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.OURANOS,
 			Skill.CUIRASSE,
 			Skill.INSAISISSABLE,
-			Skill.ARMURE_DE_BASALTE,
 			Skill.FORCE_CONTROL,
 			Skill.MISTRAL,
 			Skill.TORNADE,
+			Skill.SOUFFLE_DE_VIE,
 			Skill.HALEINE_FETIVE
 		],
 		canBeCaptured: false,
