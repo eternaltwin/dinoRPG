@@ -44,11 +44,11 @@ import DZTable from '../common/DZTable.vue';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 import DZButton from '../common/DZButton.vue';
 import DZUser from '../common/DZUser.vue';
-import DZCheckbox from "../common/DZCheckbox.vue";
+import DZCheckbox from '../common/DZCheckbox.vue';
 
 export default defineComponent({
 	name: 'MultiMonitoring',
-	components: {DZCheckbox, DZUser, DZButton, DZTable },
+	components: { DZCheckbox, DZUser, DZButton, DZTable },
 	data() {
 		return {
 			list: [] as IPList[],
@@ -77,7 +77,7 @@ export default defineComponent({
 		},
 		async massBan() {
 			try {
-				this.multiList = await AdminService.massBan(this.multipleBan)
+				this.multiList = await AdminService.massBan(this.multipleBan);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
