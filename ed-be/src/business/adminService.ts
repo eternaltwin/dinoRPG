@@ -30,7 +30,7 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { DinozToGetFighter, FightRules, STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
@@ -763,7 +763,8 @@ export async function debugFight(req: Request) {
 		calculateFightBetweenPlayers([dinoz1], false, [dinoz2], false, PlaceEnum.DOJO);
 	}
 	console.log('stop')*/
-	const fight = calculateFightBetweenPlayers(dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
+
+	const fight = calculateFightBetweenPlayers(STANDARD_PVP_RULES, dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
 	return fight;
 }
 

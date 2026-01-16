@@ -56,6 +56,7 @@ import {
 	DOJO_REPUTATION_WIN,
 	DOJO_REPUTATION_CHALLENGE
 } from '@drpg/core/utils/dojoConstants';
+import { DOJO_CHALLENGE_RULES, FightRules, STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -181,6 +182,7 @@ export async function fightFriend(req: Request) {
 	});
 
 	const fightResult = calculateFightBetweenPlayers(
+		STANDARD_PVP_RULES,
 		leftTeam,
 		leftPlayer.cooker,
 		rightTeam,
@@ -302,7 +304,7 @@ export async function fightChallenge(req: Request) {
 		);
 	});
 
-	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
+	const fightResult = calculateFightBetweenPlayers(DOJO_CHALLENGE_RULES, leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
 
 	const fightArchive = await archiveFight(fightResult, authed.id, rightTeam.length > 0 ? rightTeam[0].playerId : null);
 

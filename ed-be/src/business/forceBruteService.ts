@@ -35,6 +35,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
+import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -639,6 +640,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 	opponentGameDinoz.life = opponentGameDinoz.maxLife;
 
 	const fightResult = calculateFightBetweenPlayers(
+		STANDARD_PVP_RULES,
 		[dinoz],
 		dinoz.player.cooker,
 		[{ ...opponentGameDinoz, catches: [] }],

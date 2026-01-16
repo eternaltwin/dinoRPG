@@ -4023,6 +4023,8 @@ const poison = (
 	skill: Skill,
 	duration = FightStatusLength.INFINITE
 ) => {
+	if (!fightData.rules.poisonEnabled) return;
+
 	// No poison if fighter is already poisoned
 	if (hasStatus(fighter, FightStatus.POISONED)) return;
 

@@ -4,7 +4,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents, EventDetails, GameEvent } from '@drpg/core/models/event/Events';
 import { bossList } from '@drpg/core/models/fight/BossList';
-import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { DinozToGetFighter, FightConfiguration, FightRules, MONSTER_FIGHT_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -205,9 +205,7 @@ export function calculateFightVsMonsters(
 		seed: rng_seed,
 
 		// Flags
-		castleFight: false,
-		canUseCapture: true,
-		enableStats: false,
+		rules: MONSTER_FIGHT_RULES,
 
 		// Teams
 		attackerHasCook: player.cooker,
@@ -236,13 +234,14 @@ export function calculateFightVsMonsters(
  * @returns FightProcessResult
  **/
 export function calculateFightBetweenPlayers(
+	rules: FightRules,
 	teamA: DinozToGetFighter[],
 	cookerA: boolean,
 	teamB: DinozToGetFighter[],
 	cookerB: boolean,
 	place: PlaceEnum,
 	timeout?: number,
-	seed?: string
+	seed?: string,
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);
@@ -269,9 +268,7 @@ export function calculateFightBetweenPlayers(
 		timeout: timeout ?? 1000,
 
 		// Flags
-		castleFight: false,
-		canUseCapture: false,
-		enableStats: true,
+		rules,
 
 		// Teams
 		attackerHasCook: cookerA,

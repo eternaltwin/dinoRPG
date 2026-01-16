@@ -23,6 +23,34 @@ export type DinozToGetFighter = Pick<
 	catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
 };
 
+export interface FightRules {
+	castleFight: boolean;
+	canUseCapture: boolean;
+	enableStats: boolean;
+	poisonEnabled: boolean;
+}
+
+export const MONSTER_FIGHT_RULES: FightRules = {
+	castleFight: false,
+	canUseCapture: true,
+	enableStats: false,
+	poisonEnabled: true,
+};
+
+export const DOJO_CHALLENGE_RULES: FightRules = {
+	castleFight: false,
+	canUseCapture: false,
+	enableStats: true,
+	poisonEnabled: true,
+};
+
+export const STANDARD_PVP_RULES: FightRules = {
+	castleFight: false,
+	canUseCapture: false,
+	enableStats: false,
+	poisonEnabled: true,
+};
+
 export interface FightConfiguration {
 	// Seed
 	seed: string;
@@ -30,10 +58,8 @@ export interface FightConfiguration {
 	// (Optional) Timeout, forces the fight to end after some time has elapsed
 	timeout?: number;
 
-	// Flags
-	castleFight: boolean;
-	canUseCapture: boolean;
-	enableStats: boolean;
+	// rules
+	rules: FightRules;
 
 	// Teams
 	attackerHasCook: boolean;
