@@ -239,7 +239,7 @@ class TournamentManager {
 			canUseCapture: false,
 			castleFight: false,
 			enableStats: false,
-			poisonEnabled: tournamentRules.poison,
+			poisonEnabled: tournamentRules.poison
 		};
 
 		const fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);

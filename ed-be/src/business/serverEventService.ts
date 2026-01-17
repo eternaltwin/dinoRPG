@@ -85,7 +85,6 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		type: serverEventType
 	});
 
-
 	return {
 		ticket: uuid
 	};

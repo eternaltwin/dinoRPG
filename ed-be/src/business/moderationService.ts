@@ -228,7 +228,9 @@ export async function banPlayer(req: Request) {
 			banEndDate: banEndDate,
 			bannedUser: { connect: { id: playerId } }
 		});
-		LOGGER.log(`Player ${player.name} (${playerId}) has been banned by ${authed.name}(${authed.id}) until ${banEndDate}`);
+		LOGGER.log(
+			`Player ${player.name} (${playerId}) has been banned by ${authed.name}(${authed.id}) until ${banEndDate}`
+		);
 	}
 }
 
@@ -298,21 +300,24 @@ export async function cancelBan(req: Request) {
 	LOGGER.log(`Player ${player.name} (${playerId})'s ban has been cancelled by ${authed.name} (${authed.id}).`);
 }
 
-
 export async function multipleBan(req: Request) {
-	const authed = await auth(req)
-	const list = req.body.list
+	const authed = await auth(req);
+	const list = req.body.list;
 
 	for (const playerId of list) {
-		const report = await createModerationReport(authed.id, playerId, ModerationReason.multi, `Banned by ${authed.name}`);
+		const report = await createModerationReport(
+			authed.id,
+			playerId,
+			ModerationReason.multi,
+			`Banned by ${authed.name}`
+		);
 		const player = await getPlayerBanInfo(playerId);
-			await setModerationReport(report.id, {
-				sorted: ModerationAction.infiniteBan,
-				banDate: new Date(Date.now()),
-				bannedUser: { connect: { id: playerId } }
-			});
-			LOGGER.log(`Player ${player?.name} (${playerId}) has been banned by ${authed.name}(${authed.id}) indefinitely`);
-
+		await setModerationReport(report.id, {
+			sorted: ModerationAction.infiniteBan,
+			banDate: new Date(Date.now()),
+			bannedUser: { connect: { id: playerId } }
+		});
+		LOGGER.log(`Player ${player?.name} (${playerId}) has been banned by ${authed.name}(${authed.id}) indefinitely`);
 	}
-	console.log(list)
+	console.log(list);
 }

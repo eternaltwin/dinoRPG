@@ -446,9 +446,14 @@ export async function listAllDinozFromPlayer(req: Request) {
 export async function listOneDinozFromPlayer(req: Request) {
 	const dinoz = await getDinozForLevelUp(+req.params.id);
 	if (!dinoz) {
-		throw new ExpectedError('Dinoz not found')
+		throw new ExpectedError('Dinoz not found');
 	}
-	return {...dinoz, skills: dinoz.skills.map(s => s.skillId), status: dinoz.status.map(s => s.statusId), unlockableSkills: dinoz.unlockableSkills.map(s => s.skillId)};
+	return {
+		...dinoz,
+		skills: dinoz.skills.map(s => s.skillId),
+		status: dinoz.status.map(s => s.statusId),
+		unlockableSkills: dinoz.unlockableSkills.map(s => s.skillId)
+	};
 }
 
 /**
@@ -764,7 +769,16 @@ export async function debugFight(req: Request) {
 	}
 	console.log('stop')*/
 
-	const fight = calculateFightBetweenPlayers(STANDARD_PVP_RULES, dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
+	const fight = calculateFightBetweenPlayers(
+		STANDARD_PVP_RULES,
+		dinoz1,
+		false,
+		dinoz2,
+		false,
+		PlaceEnum.DOJO,
+		timeout,
+		seed
+	);
 	return fight;
 }
 

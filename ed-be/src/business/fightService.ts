@@ -4,7 +4,12 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents, EventDetails, GameEvent } from '@drpg/core/models/event/Events';
 import { bossList } from '@drpg/core/models/fight/BossList';
-import { DinozToGetFighter, FightConfiguration, FightRules, MONSTER_FIGHT_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import {
+	DinozToGetFighter,
+	FightConfiguration,
+	FightRules,
+	MONSTER_FIGHT_RULES
+} from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -241,7 +246,7 @@ export function calculateFightBetweenPlayers(
 	cookerB: boolean,
 	place: PlaceEnum,
 	timeout?: number,
-	seed?: string,
+	seed?: string
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);

@@ -304,7 +304,15 @@ export async function fightChallenge(req: Request) {
 		);
 	});
 
-	const fightResult = calculateFightBetweenPlayers(DOJO_CHALLENGE_RULES, leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
+	const fightResult = calculateFightBetweenPlayers(
+		DOJO_CHALLENGE_RULES,
+		leftTeam,
+		false,
+		rightTeam,
+		false,
+		PlaceEnum.DOJO,
+		100
+	);
 
 	const fightArchive = await archiveFight(fightResult, authed.id, rightTeam.length > 0 ? rightTeam[0].playerId : null);
 

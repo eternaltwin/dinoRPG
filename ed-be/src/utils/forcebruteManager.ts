@@ -167,7 +167,14 @@ class ForceBruteManager {
 		);
 		team2Dinoz.life = team2Dinoz.maxLife;
 
-		const fight = calculateFightBetweenPlayers(STANDARD_PVP_RULES, [team1Dinoz], false, [team2Dinoz], false, PlaceEnum.DOJO);
+		const fight = calculateFightBetweenPlayers(
+			STANDARD_PVP_RULES,
+			[team1Dinoz],
+			false,
+			[team2Dinoz],
+			false,
+			PlaceEnum.DOJO
+		);
 
 		const metadata: FBMetaData = {
 			phase: phase,

@@ -34,21 +34,21 @@ export const MONSTER_FIGHT_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: true,
 	enableStats: false,
-	poisonEnabled: true,
+	poisonEnabled: true
 };
 
 export const DOJO_CHALLENGE_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: false,
 	enableStats: true,
-	poisonEnabled: true,
+	poisonEnabled: true
 };
 
 export const STANDARD_PVP_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: false,
 	enableStats: false,
-	poisonEnabled: true,
+	poisonEnabled: true
 };
 
 export interface FightConfiguration {
