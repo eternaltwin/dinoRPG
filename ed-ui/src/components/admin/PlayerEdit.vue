@@ -1,4 +1,9 @@
 <template>
+	<div class="search">
+		<DZSelect id="player-search" v-model="searchedPlayerId" :search="searchPlayer" />
+		<DZButton @click="getPlayer">Edit</DZButton>
+	</div>
+	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
 	<form @submit.prevent="sendUpdate()">
 		<fieldset>
 			<legend>Player details</legend>
@@ -385,13 +390,21 @@
 				</div>
 			</div>
 		</fieldset>
+		<fieldset>
+			<legend>Dinoz</legend>
+			<label class="title" for="dinozSelect">Dinoz: </label>
+			<select id="dinozSelect" v-model="selectedDinozId">
+				<option v-for="dinoz in dinozList" :key="dinoz.id" :value="dinoz.id">{{ dinoz.name }} ({{ dinoz.id }})</option>
+			</select>
+			<DZButton @click="editDinoz">Edit</DZButton>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { AdminService } from '../../services/index.js';
+import { defineComponent } from 'vue';
+import { AdminService, PlayerService } from '../../services/index.js';
 import { epicList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
@@ -400,15 +413,20 @@ import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
-import { Player } from '@drpg/prisma';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
-
+import DZSelect from '../common/DZSelect.vue';
+import EventBus from '../../events';
+import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
+interface PlayerSearch {
+	name: string;
+	id: string;
+}
 const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
 const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
 export default defineComponent({
 	name: 'PlayerEdit',
-	components: { DZButton },
+	components: { DZSelect, DZButton },
 	data() {
 		return {
 			playerFields: {
@@ -441,13 +459,66 @@ export default defineComponent({
 			// TODO: Fix this type, I have no idea what it's supposed to be
 			player: {} as PlayerTypeToSend,
 			banReasons,
-			banActions
+			banActions,
+			searchedPlayerId: '',
+			searchValue: undefined as string | undefined,
+			playerList: [] as Array<PlayerSearch>,
+			displayErrorMessage: false as boolean,
+			dinozList: {} as Array<DinozAdminFiche>,
+			awaitingSearch: false as boolean,
+			selectedDinozId: undefined as number | undefined
 		};
 	},
 	props: {
-		playerProp: { type: Object as PropType<Player>, required: true }
+		id: {
+			type: String,
+			required: false,
+			default: null
+		}
 	},
 	methods: {
+		editDinoz() {
+			this.$router.push({
+				path: '/admin/dinoz',
+				query: { playerId: this.id ?? this.searchedPlayerId, dinozId: this.selectedDinozId }
+			});
+		},
+		async getResults(): Promise<void> {
+			if (this.searchValue && this.searchValue.length >= 3) {
+				this.playerList = await PlayerService.searchPlayers(this.searchValue);
+			}
+		},
+		async getPlayer(): Promise<void> {
+			this.displayErrorMessage = false;
+
+			EventBus.emit('isLoading', true);
+			this.$router.push({ path: this.$route.path, query: { id: this.searchedPlayerId } });
+
+			try {
+				[this.player, this.dinozList] = await Promise.all([
+					AdminService.getplayerInformation(this.searchedPlayerId),
+					AdminService.listAllDinozFromPlayer(this.searchedPlayerId)
+				]);
+				this.sortItemsById();
+				this.sortIngredientsById();
+				this.playerFields.epicOperation = 'add';
+				this.filterEpicList(this.playerFields.epicOperation);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+
+			EventBus.emit('isLoading', false);
+		},
+		async searchPlayer(query: string): Promise<Array<{ value: string; label: string }>> {
+			if (query.length < 3) {
+				return [];
+			}
+			const results = await PlayerService.searchPlayers(query);
+			return results.map(player => ({
+				value: player.id,
+				label: `${player.name} (${player.id.slice(0, 6)})`
+			}));
+		},
 		async sendUpdate(): Promise<void> {
 			// General player update
 			if (
@@ -634,27 +705,44 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-		},
-		mountedPlayer(): void {
-			this.player = this.playerProp;
 		}
 	},
-	mounted(): void {
-		this.mountedPlayer();
-		this.sortItemsById();
-		this.sortIngredientsById();
-		this.playerFields.epicOperation = 'add';
-		this.filterEpicList(this.playerFields.epicOperation);
+	async mounted() {
+		if (this.id) {
+			try {
+				[this.player, this.dinozList] = await Promise.all([
+					AdminService.getplayerInformation(this.id),
+					AdminService.listAllDinozFromPlayer(this.id)
+				]);
+				this.sortItemsById();
+				this.sortIngredientsById();
+				this.playerFields.epicOperation = 'add';
+				this.filterEpicList(this.playerFields.epicOperation);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		}
 	},
 	watch: {
-		playerProp(): void {
-			this.mountedPlayer();
+		searchValue(): void {
+			if (!this.awaitingSearch) {
+				setTimeout(() => {
+					this.getResults();
+					this.awaitingSearch = false;
+				}, 700); // 0.7 sec delay
+			}
+			this.awaitingSearch = true;
 		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+.search {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
 form {
 	width: 100%;
 	margin-top: 20px;

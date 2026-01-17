@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
 import { computed } from 'vue';
 import { Tippy } from 'vue-tippy';
 
@@ -16,8 +17,8 @@ const skill = computed(() => skillList[props.skill]);
 		<template #content>
 			<h1 v-html="formatContent($t(`skill.name.${skillList[skill.id].name}`))" />
 			<p v-html="formatContent($t(`skill.description.${skillList[skill.id].name}`))" />
-			<hr />
-			<div class="stats">
+			<hr v-if="skillList[skill.id].type === SkillType.A || skillList[skill.id].type === SkillType.E" />
+			<div class="stats" v-if="skillList[skill.id].type === SkillType.A || skillList[skill.id].type === SkillType.E">
 				<p v-html="formatContent($t(`skill.energy`, { energy: skill.energy }))" />
 				<p
 					v-if="skill.priority !== undefined && skill.priority !== null"

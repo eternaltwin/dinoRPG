@@ -30,7 +30,6 @@
 	"alreadyOffer": "Vous avez déjà une vente en cours.",
 	"bidsOngoing": "Vous avez encore des enchères en cours.",
 	"inClan": "Vous appartenez toujours à un clan.",
-	"ongoingDojoTournament": "Vous participez à un Tournoi Inter-Dojo actif",
 	"banPending": "Vous avez une demande de banissement en cours.",
 	"AlreadyAtMaxHealth": "Votre Dinoz a déjà sa vie au maximum.",
 	"DinozIsDead": "Votre Dinoz est mort.",
@@ -312,5 +311,6 @@
 	},
 	"fb_tournament": {
 		"noOpponent": "Il n'y a plus personne à combattre pour le moment."
-	}
+	},
+	"ongoingDojoTournament": "Vous participez à un Tournoi Inter-Dojo actif"
 }

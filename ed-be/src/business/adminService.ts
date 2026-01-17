@@ -1,5 +1,11 @@
 import { Request } from 'express';
-import { getAllDinozFromAccount, getDinozForDojoFight, getDinozForSkillEffect, updateDinoz } from '../dao/dinozDao.js';
+import {
+	getAllDinozFromAccount,
+	getDinozForDojoFight,
+	getDinozForLevelUp,
+	getDinozForSkillEffect,
+	updateDinoz
+} from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import {
@@ -433,6 +439,19 @@ export async function listAllDinozFromPlayer(req: Request) {
 }
 
 /**
+ * @summary List all dinoz from a player
+ * @param req
+ * @param req.params.id {string} PlayerId
+ */
+export async function listOneDinozFromPlayer(req: Request) {
+	const dinoz = await getDinozForLevelUp(+req.params.id);
+	if (!dinoz) {
+		throw new ExpectedError('Dinoz not found')
+	}
+	return {...dinoz, skills: dinoz.skills.map(s => s.skillId), status: dinoz.status.map(s => s.statusId), unlockableSkills: dinoz.unlockableSkills.map(s => s.skillId)};
+}
+
+/**
  * @summary Edit a selected player
  * @param req
  * @param req.params.id {number} PlayerId
@@ -796,4 +815,68 @@ export async function getJobs() {
 
 	console.log(rawJobs)*/
 	return rawJobs;
+}
+
+export async function getMultiIps(page: number) {
+	const suspiciousIps = await prisma.playerIp.groupBy({
+		by: ['ip'],
+		_count: {
+			playerId: true
+		},
+		having: {
+			playerId: {
+				_count: {
+					gt: 5 // IPs avec plus de 5 joueurs
+				}
+			}
+		},
+		where: {
+			player: {
+				banCase: null
+			}
+		},
+		orderBy: {
+			_count: {
+				playerId: 'desc'
+			}
+		},
+		take: 50,
+		skip: 50 * (page - 1)
+	});
+
+	const formated = suspiciousIps.map(ip => ({
+		ip: ip.ip,
+		count: ip._count.playerId
+	}));
+
+	return formated;
+}
+
+export async function listPlayerBehindIp(req: Request) {
+	const ip = atob(req.params.ip);
+
+	const playerList = await prisma.playerIp.findMany({
+		where: {
+			ip,
+			player: {
+				banCaseId: null
+			}
+		},
+		select: {
+			player: {
+				select: {
+					name: true,
+					id: true,
+					lastLogin: true
+				}
+			}
+		},
+		orderBy: {
+			player: {
+				lastLogin: 'desc'
+			}
+		}
+	});
+
+	return playerList.map(p => ({ name: p.player.name, id: p.player.id, lastLogin: p.player.lastLogin }));
 }

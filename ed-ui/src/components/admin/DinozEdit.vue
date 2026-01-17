@@ -227,7 +227,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { AdminService } from '../../services/index.js';
 import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
 import { statusList } from '../../constants/index.js';
@@ -262,13 +262,10 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozProp: { type: Object as PropType<DinozAdminFiche>, required: true },
-		playerId: { type: String, required: true }
+		playerId: { type: String, required: true },
+		dinozId: { type: Number, required: true }
 	},
 	methods: {
-		mountedDinoz(): void {
-			this.dinoz = this.dinozProp;
-		},
 		async dinozUpdate(): Promise<void> {
 			EventBus.emit('isLoading', true);
 
@@ -384,8 +381,12 @@ export default defineComponent({
 			}
 		}
 	},
-	mounted(): void {
-		this.mountedDinoz();
+	async mounted() {
+		try {
+			this.dinoz = await AdminService.listOneDinozFromPlayer(this.dinozId);
+		} catch (err) {
+			errorHandler.handle(err, this.$toast);
+		}
 
 		this.skillOperation = 'add';
 		this.filterSkillList(this.skillOperation);
@@ -397,11 +398,6 @@ export default defineComponent({
 		this.filterStatusList(this.statusOperation);
 
 		this.filterUnavailableReason();
-	},
-	watch: {
-		dinozProp(): void {
-			this.mountedDinoz();
-		}
 	}
 });
 </script>

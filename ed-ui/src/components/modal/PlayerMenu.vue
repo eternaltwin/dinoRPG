@@ -20,6 +20,7 @@
 		<div class="report">
 			<p @click="report()">{{ $t('playerMenu.report.signal') }}</p>
 			<p>{{ $t('playerMenu.report.block') }}</p>
+			<p v-if="isAdmin" @click="banPlayer">Ban def user multi</p>
 		</div>
 		<span class="dashed"></span>
 		<div class="profil">
@@ -33,16 +34,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { PlayerService } from '../../services/index.js';
+import { AdminService, PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { Player } from '@drpg/prisma';
+import { playerStore } from '../../store';
 
 export default defineComponent({
 	name: 'PlayerMenu',
 	data() {
 		return {
-			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'customText'>
+			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'customText'>,
+			isAdmin: playerStore().isAdmin
 		};
 	},
 	props: {
@@ -63,6 +66,23 @@ export default defineComponent({
 		report() {
 			if (!this.loadedPlayer) return;
 			EventBus.emit('report', this.loadedPlayer.id);
+		},
+		async banPlayer() {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirmBanAction'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await AdminService.banPlayer(this.playerId, 'multi', 'infiniteBan', '');
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
 		}
 	},
 	async mounted() {

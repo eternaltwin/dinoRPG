@@ -99,6 +99,11 @@ export type NPC = $Result.DefaultSelection<Prisma.$NPCPayload>
  */
 export type Player = $Result.DefaultSelection<Prisma.$PlayerPayload>
 /**
+ * Model PlayerIp
+ * 
+ */
+export type PlayerIp = $Result.DefaultSelection<Prisma.$PlayerIpPayload>
+/**
  * Model Dojo
  * 
  */
@@ -840,6 +845,16 @@ export class PrismaClient<
     * ```
     */
   get player(): Prisma.PlayerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.playerIp`: Exposes CRUD operations for the **PlayerIp** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlayerIps
+    * const playerIps = await prisma.playerIp.findMany()
+    * ```
+    */
+  get playerIp(): Prisma.PlayerIpDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.dojo`: Exposes CRUD operations for the **Dojo** model.
@@ -1707,6 +1722,7 @@ export namespace Prisma {
     NewsLike: 'NewsLike',
     NPC: 'NPC',
     Player: 'Player',
+    PlayerIp: 'PlayerIp',
     Dojo: 'Dojo',
     DojoTeam: 'DojoTeam',
     DojoOpponents: 'DojoOpponents',
@@ -1766,7 +1782,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3025,6 +3041,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PlayerCountArgs<ExtArgs>
             result: $Utils.Optional<PlayerCountAggregateOutputType> | number
+          }
+        }
+      }
+      PlayerIp: {
+        payload: Prisma.$PlayerIpPayload<ExtArgs>
+        fields: Prisma.PlayerIpFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlayerIpFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlayerIpFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          findFirst: {
+            args: Prisma.PlayerIpFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlayerIpFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          findMany: {
+            args: Prisma.PlayerIpFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>[]
+          }
+          create: {
+            args: Prisma.PlayerIpCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          createMany: {
+            args: Prisma.PlayerIpCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PlayerIpCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>[]
+          }
+          delete: {
+            args: Prisma.PlayerIpDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          update: {
+            args: Prisma.PlayerIpUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlayerIpDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlayerIpUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PlayerIpUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>[]
+          }
+          upsert: {
+            args: Prisma.PlayerIpUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerIpPayload>
+          }
+          aggregate: {
+            args: Prisma.PlayerIpAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePlayerIp>
+          }
+          groupBy: {
+            args: Prisma.PlayerIpGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PlayerIpGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlayerIpCountArgs<ExtArgs>
+            result: $Utils.Optional<PlayerIpCountAggregateOutputType> | number
           }
         }
       }
@@ -6163,6 +6253,7 @@ export namespace Prisma {
     newsLike?: NewsLikeOmit
     nPC?: NPCOmit
     player?: PlayerOmit
+    playerIp?: PlayerIpOmit
     dojo?: DojoOmit
     dojoTeam?: DojoTeamOmit
     dojoOpponents?: DojoOpponentsOmit
@@ -6686,6 +6777,7 @@ export namespace Prisma {
     RightFightArchives: number
     FightWatched: number
     GameDinoz: number
+    ips: number
     pollVotes: number
     Events: number
     dinozBuilds: number
@@ -6719,6 +6811,7 @@ export namespace Prisma {
     RightFightArchives?: boolean | PlayerCountOutputTypeCountRightFightArchivesArgs
     FightWatched?: boolean | PlayerCountOutputTypeCountFightWatchedArgs
     GameDinoz?: boolean | PlayerCountOutputTypeCountGameDinozArgs
+    ips?: boolean | PlayerCountOutputTypeCountIpsArgs
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
     Events?: boolean | PlayerCountOutputTypeCountEventsArgs
     dinozBuilds?: boolean | PlayerCountOutputTypeCountDinozBuildsArgs
@@ -6922,6 +7015,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountGameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GameDinozWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountIpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerIpWhereInput
   }
 
   /**
@@ -26547,7 +26647,6 @@ export namespace Prisma {
     discoveredSkills: number
     lastVersionSeen: number
     id: number
-    ips: number
     _all: number
   }
 
@@ -26659,7 +26758,6 @@ export namespace Prisma {
     discoveredSkills?: true
     lastVersionSeen?: true
     id?: true
-    ips?: true
     _all?: true
   }
 
@@ -26778,7 +26876,6 @@ export namespace Prisma {
     discoveredSkills: number[]
     lastVersionSeen: string
     id: string
-    ips: string[]
     _count: PlayerCountAggregateOutputType | null
     _avg: PlayerAvgAggregateOutputType | null
     _sum: PlayerSumAggregateOutputType | null
@@ -26829,7 +26926,6 @@ export namespace Prisma {
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
-    ips?: boolean
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
     ClanJoinRequest?: boolean | Player$ClanJoinRequestArgs<ExtArgs>
@@ -26863,6 +26959,7 @@ export namespace Prisma {
     RightFightArchives?: boolean | Player$RightFightArchivesArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
+    ips?: boolean | Player$ipsArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
@@ -26898,7 +26995,6 @@ export namespace Prisma {
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
-    ips?: boolean
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -26931,7 +27027,6 @@ export namespace Prisma {
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
-    ips?: boolean
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -26964,10 +27059,9 @@ export namespace Prisma {
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
-    ips?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id" | "ips", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -27002,6 +27096,7 @@ export namespace Prisma {
     RightFightArchives?: boolean | Player$RightFightArchivesArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
+    ips?: boolean | Player$ipsArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
@@ -27050,6 +27145,7 @@ export namespace Prisma {
       RightFightArchives: Prisma.$FightArchivePayload<ExtArgs>[]
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
       GameDinoz: Prisma.$GameDinozPayload<ExtArgs>[]
+      ips: Prisma.$PlayerIpPayload<ExtArgs>[]
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
       Events: Prisma.$EventsPayload<ExtArgs>[]
       dinozBuilds: Prisma.$DinozBuildPayload<ExtArgs>[]
@@ -27083,7 +27179,6 @@ export namespace Prisma {
       discoveredSkills: number[]
       lastVersionSeen: string
       id: string
-      ips: string[]
     }, ExtArgs["result"]["player"]>
     composites: {}
   }
@@ -27511,6 +27606,7 @@ export namespace Prisma {
     RightFightArchives<T extends Player$RightFightArchivesArgs<ExtArgs> = {}>(args?: Subset<T, Player$RightFightArchivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     FightWatched<T extends Player$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ips<T extends Player$ipsArgs<ExtArgs> = {}>(args?: Subset<T, Player$ipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinozBuilds<T extends Player$dinozBuildsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozBuildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -27571,7 +27667,6 @@ export namespace Prisma {
     readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly lastVersionSeen: FieldRef<"Player", 'String'>
     readonly id: FieldRef<"Player", 'String'>
-    readonly ips: FieldRef<"Player", 'String[]'>
   }
     
 
@@ -28739,6 +28834,30 @@ export namespace Prisma {
   }
 
   /**
+   * Player.ips
+   */
+  export type Player$ipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    where?: PlayerIpWhereInput
+    orderBy?: PlayerIpOrderByWithRelationInput | PlayerIpOrderByWithRelationInput[]
+    cursor?: PlayerIpWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PlayerIpScalarFieldEnum | PlayerIpScalarFieldEnum[]
+  }
+
+  /**
    * Player.pollVotes
    */
   export type Player$pollVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28826,6 +28945,1081 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PlayerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PlayerIp
+   */
+
+  export type AggregatePlayerIp = {
+    _count: PlayerIpCountAggregateOutputType | null
+    _avg: PlayerIpAvgAggregateOutputType | null
+    _sum: PlayerIpSumAggregateOutputType | null
+    _min: PlayerIpMinAggregateOutputType | null
+    _max: PlayerIpMaxAggregateOutputType | null
+  }
+
+  export type PlayerIpAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PlayerIpSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PlayerIpMinAggregateOutputType = {
+    id: number | null
+    ip: string | null
+    playerId: string | null
+  }
+
+  export type PlayerIpMaxAggregateOutputType = {
+    id: number | null
+    ip: string | null
+    playerId: string | null
+  }
+
+  export type PlayerIpCountAggregateOutputType = {
+    id: number
+    ip: number
+    playerId: number
+    _all: number
+  }
+
+
+  export type PlayerIpAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type PlayerIpSumAggregateInputType = {
+    id?: true
+  }
+
+  export type PlayerIpMinAggregateInputType = {
+    id?: true
+    ip?: true
+    playerId?: true
+  }
+
+  export type PlayerIpMaxAggregateInputType = {
+    id?: true
+    ip?: true
+    playerId?: true
+  }
+
+  export type PlayerIpCountAggregateInputType = {
+    id?: true
+    ip?: true
+    playerId?: true
+    _all?: true
+  }
+
+  export type PlayerIpAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerIp to aggregate.
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerIps to fetch.
+     */
+    orderBy?: PlayerIpOrderByWithRelationInput | PlayerIpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlayerIpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerIps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerIps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlayerIps
+    **/
+    _count?: true | PlayerIpCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PlayerIpAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PlayerIpSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlayerIpMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlayerIpMaxAggregateInputType
+  }
+
+  export type GetPlayerIpAggregateType<T extends PlayerIpAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayerIp]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlayerIp[P]>
+      : GetScalarType<T[P], AggregatePlayerIp[P]>
+  }
+
+
+
+
+  export type PlayerIpGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerIpWhereInput
+    orderBy?: PlayerIpOrderByWithAggregationInput | PlayerIpOrderByWithAggregationInput[]
+    by: PlayerIpScalarFieldEnum[] | PlayerIpScalarFieldEnum
+    having?: PlayerIpScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlayerIpCountAggregateInputType | true
+    _avg?: PlayerIpAvgAggregateInputType
+    _sum?: PlayerIpSumAggregateInputType
+    _min?: PlayerIpMinAggregateInputType
+    _max?: PlayerIpMaxAggregateInputType
+  }
+
+  export type PlayerIpGroupByOutputType = {
+    id: number
+    ip: string
+    playerId: string
+    _count: PlayerIpCountAggregateOutputType | null
+    _avg: PlayerIpAvgAggregateOutputType | null
+    _sum: PlayerIpSumAggregateOutputType | null
+    _min: PlayerIpMinAggregateOutputType | null
+    _max: PlayerIpMaxAggregateOutputType | null
+  }
+
+  type GetPlayerIpGroupByPayload<T extends PlayerIpGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlayerIpGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlayerIpGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlayerIpGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayerIpGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlayerIpSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ip?: boolean
+    playerId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerIp"]>
+
+  export type PlayerIpSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ip?: boolean
+    playerId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerIp"]>
+
+  export type PlayerIpSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ip?: boolean
+    playerId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerIp"]>
+
+  export type PlayerIpSelectScalar = {
+    id?: boolean
+    ip?: boolean
+    playerId?: boolean
+  }
+
+  export type PlayerIpOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ip" | "playerId", ExtArgs["result"]["playerIp"]>
+  export type PlayerIpInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type PlayerIpIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type PlayerIpIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $PlayerIpPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlayerIp"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      ip: string
+      playerId: string
+    }, ExtArgs["result"]["playerIp"]>
+    composites: {}
+  }
+
+  type PlayerIpGetPayload<S extends boolean | null | undefined | PlayerIpDefaultArgs> = $Result.GetResult<Prisma.$PlayerIpPayload, S>
+
+  type PlayerIpCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PlayerIpFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: PlayerIpCountAggregateInputType | true
+    }
+
+  export interface PlayerIpDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlayerIp'], meta: { name: 'PlayerIp' } }
+    /**
+     * Find zero or one PlayerIp that matches the filter.
+     * @param {PlayerIpFindUniqueArgs} args - Arguments to find a PlayerIp
+     * @example
+     * // Get one PlayerIp
+     * const playerIp = await prisma.playerIp.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PlayerIpFindUniqueArgs>(args: SelectSubset<T, PlayerIpFindUniqueArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PlayerIp that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PlayerIpFindUniqueOrThrowArgs} args - Arguments to find a PlayerIp
+     * @example
+     * // Get one PlayerIp
+     * const playerIp = await prisma.playerIp.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PlayerIpFindUniqueOrThrowArgs>(args: SelectSubset<T, PlayerIpFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerIp that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpFindFirstArgs} args - Arguments to find a PlayerIp
+     * @example
+     * // Get one PlayerIp
+     * const playerIp = await prisma.playerIp.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PlayerIpFindFirstArgs>(args?: SelectSubset<T, PlayerIpFindFirstArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerIp that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpFindFirstOrThrowArgs} args - Arguments to find a PlayerIp
+     * @example
+     * // Get one PlayerIp
+     * const playerIp = await prisma.playerIp.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PlayerIpFindFirstOrThrowArgs>(args?: SelectSubset<T, PlayerIpFindFirstOrThrowArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PlayerIps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlayerIps
+     * const playerIps = await prisma.playerIp.findMany()
+     * 
+     * // Get first 10 PlayerIps
+     * const playerIps = await prisma.playerIp.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const playerIpWithIdOnly = await prisma.playerIp.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PlayerIpFindManyArgs>(args?: SelectSubset<T, PlayerIpFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PlayerIp.
+     * @param {PlayerIpCreateArgs} args - Arguments to create a PlayerIp.
+     * @example
+     * // Create one PlayerIp
+     * const PlayerIp = await prisma.playerIp.create({
+     *   data: {
+     *     // ... data to create a PlayerIp
+     *   }
+     * })
+     * 
+     */
+    create<T extends PlayerIpCreateArgs>(args: SelectSubset<T, PlayerIpCreateArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PlayerIps.
+     * @param {PlayerIpCreateManyArgs} args - Arguments to create many PlayerIps.
+     * @example
+     * // Create many PlayerIps
+     * const playerIp = await prisma.playerIp.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PlayerIpCreateManyArgs>(args?: SelectSubset<T, PlayerIpCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PlayerIps and returns the data saved in the database.
+     * @param {PlayerIpCreateManyAndReturnArgs} args - Arguments to create many PlayerIps.
+     * @example
+     * // Create many PlayerIps
+     * const playerIp = await prisma.playerIp.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PlayerIps and only return the `id`
+     * const playerIpWithIdOnly = await prisma.playerIp.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PlayerIpCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerIpCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PlayerIp.
+     * @param {PlayerIpDeleteArgs} args - Arguments to delete one PlayerIp.
+     * @example
+     * // Delete one PlayerIp
+     * const PlayerIp = await prisma.playerIp.delete({
+     *   where: {
+     *     // ... filter to delete one PlayerIp
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PlayerIpDeleteArgs>(args: SelectSubset<T, PlayerIpDeleteArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PlayerIp.
+     * @param {PlayerIpUpdateArgs} args - Arguments to update one PlayerIp.
+     * @example
+     * // Update one PlayerIp
+     * const playerIp = await prisma.playerIp.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PlayerIpUpdateArgs>(args: SelectSubset<T, PlayerIpUpdateArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PlayerIps.
+     * @param {PlayerIpDeleteManyArgs} args - Arguments to filter PlayerIps to delete.
+     * @example
+     * // Delete a few PlayerIps
+     * const { count } = await prisma.playerIp.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PlayerIpDeleteManyArgs>(args?: SelectSubset<T, PlayerIpDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerIps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlayerIps
+     * const playerIp = await prisma.playerIp.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PlayerIpUpdateManyArgs>(args: SelectSubset<T, PlayerIpUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerIps and returns the data updated in the database.
+     * @param {PlayerIpUpdateManyAndReturnArgs} args - Arguments to update many PlayerIps.
+     * @example
+     * // Update many PlayerIps
+     * const playerIp = await prisma.playerIp.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PlayerIps and only return the `id`
+     * const playerIpWithIdOnly = await prisma.playerIp.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PlayerIpUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerIpUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PlayerIp.
+     * @param {PlayerIpUpsertArgs} args - Arguments to update or create a PlayerIp.
+     * @example
+     * // Update or create a PlayerIp
+     * const playerIp = await prisma.playerIp.upsert({
+     *   create: {
+     *     // ... data to create a PlayerIp
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlayerIp we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PlayerIpUpsertArgs>(args: SelectSubset<T, PlayerIpUpsertArgs<ExtArgs>>): Prisma__PlayerIpClient<$Result.GetResult<Prisma.$PlayerIpPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PlayerIps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpCountArgs} args - Arguments to filter PlayerIps to count.
+     * @example
+     * // Count the number of PlayerIps
+     * const count = await prisma.playerIp.count({
+     *   where: {
+     *     // ... the filter for the PlayerIps we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlayerIpCountArgs>(
+      args?: Subset<T, PlayerIpCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlayerIpCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlayerIp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlayerIpAggregateArgs>(args: Subset<T, PlayerIpAggregateArgs>): Prisma.PrismaPromise<GetPlayerIpAggregateType<T>>
+
+    /**
+     * Group by PlayerIp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerIpGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlayerIpGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlayerIpGroupByArgs['orderBy'] }
+        : { orderBy?: PlayerIpGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlayerIpGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayerIpGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlayerIp model
+   */
+  readonly fields: PlayerIpFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlayerIp.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlayerIpClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PlayerIp model
+   */ 
+  interface PlayerIpFieldRefs {
+    readonly id: FieldRef<"PlayerIp", 'Int'>
+    readonly ip: FieldRef<"PlayerIp", 'String'>
+    readonly playerId: FieldRef<"PlayerIp", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PlayerIp findUnique
+   */
+  export type PlayerIpFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerIp to fetch.
+     */
+    where: PlayerIpWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp findUniqueOrThrow
+   */
+  export type PlayerIpFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerIp to fetch.
+     */
+    where: PlayerIpWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp findFirst
+   */
+  export type PlayerIpFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerIp to fetch.
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerIps to fetch.
+     */
+    orderBy?: PlayerIpOrderByWithRelationInput | PlayerIpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerIps.
+     */
+    cursor?: PlayerIpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerIps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerIps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerIps.
+     */
+    distinct?: PlayerIpScalarFieldEnum | PlayerIpScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp findFirstOrThrow
+   */
+  export type PlayerIpFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerIp to fetch.
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerIps to fetch.
+     */
+    orderBy?: PlayerIpOrderByWithRelationInput | PlayerIpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerIps.
+     */
+    cursor?: PlayerIpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerIps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerIps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerIps.
+     */
+    distinct?: PlayerIpScalarFieldEnum | PlayerIpScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp findMany
+   */
+  export type PlayerIpFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerIps to fetch.
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerIps to fetch.
+     */
+    orderBy?: PlayerIpOrderByWithRelationInput | PlayerIpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlayerIps.
+     */
+    cursor?: PlayerIpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerIps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerIps.
+     */
+    skip?: number
+    distinct?: PlayerIpScalarFieldEnum | PlayerIpScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp create
+   */
+  export type PlayerIpCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlayerIp.
+     */
+    data: XOR<PlayerIpCreateInput, PlayerIpUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp createMany
+   */
+  export type PlayerIpCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlayerIps.
+     */
+    data: PlayerIpCreateManyInput | PlayerIpCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PlayerIp createManyAndReturn
+   */
+  export type PlayerIpCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * The data used to create many PlayerIps.
+     */
+    data: PlayerIpCreateManyInput | PlayerIpCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerIp update
+   */
+  export type PlayerIpUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlayerIp.
+     */
+    data: XOR<PlayerIpUpdateInput, PlayerIpUncheckedUpdateInput>
+    /**
+     * Choose, which PlayerIp to update.
+     */
+    where: PlayerIpWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp updateMany
+   */
+  export type PlayerIpUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlayerIps.
+     */
+    data: XOR<PlayerIpUpdateManyMutationInput, PlayerIpUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerIps to update
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * Limit how many PlayerIps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerIp updateManyAndReturn
+   */
+  export type PlayerIpUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * The data used to update PlayerIps.
+     */
+    data: XOR<PlayerIpUpdateManyMutationInput, PlayerIpUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerIps to update
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * Limit how many PlayerIps to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerIp upsert
+   */
+  export type PlayerIpUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlayerIp to update in case it exists.
+     */
+    where: PlayerIpWhereUniqueInput
+    /**
+     * In case the PlayerIp found by the `where` argument doesn't exist, create a new PlayerIp with this data.
+     */
+    create: XOR<PlayerIpCreateInput, PlayerIpUncheckedCreateInput>
+    /**
+     * In case the PlayerIp was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlayerIpUpdateInput, PlayerIpUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp delete
+   */
+  export type PlayerIpDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
+    /**
+     * Filter which PlayerIp to delete.
+     */
+    where: PlayerIpWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerIp deleteMany
+   */
+  export type PlayerIpDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerIps to delete
+     */
+    where?: PlayerIpWhereInput
+    /**
+     * Limit how many PlayerIps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerIp without action
+   */
+  export type PlayerIpDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerIp
+     */
+    select?: PlayerIpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerIp
+     */
+    omit?: PlayerIpOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIpInclude<ExtArgs> | null
   }
 
 
@@ -76586,11 +77780,19 @@ export namespace Prisma {
     banCaseId: 'banCaseId',
     discoveredSkills: 'discoveredSkills',
     lastVersionSeen: 'lastVersionSeen',
-    id: 'id',
-    ips: 'ips'
+    id: 'id'
   };
 
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+  export const PlayerIpScalarFieldEnum: {
+    id: 'id',
+    ip: 'ip',
+    playerId: 'playerId'
+  };
+
+  export type PlayerIpScalarFieldEnum = (typeof PlayerIpScalarFieldEnum)[keyof typeof PlayerIpScalarFieldEnum]
 
 
   export const DojoScalarFieldEnum: {
@@ -78577,7 +79779,6 @@ export namespace Prisma {
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
     id?: UuidFilter<"Player"> | string
-    ips?: StringNullableListFilter<"Player">
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
     ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
@@ -78611,6 +79812,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
+    ips?: PlayerIpListRelationFilter
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
@@ -78645,7 +79847,6 @@ export namespace Prisma {
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
-    ips?: SortOrder
     leaderOf?: ClanOrderByWithRelationInput
     ClanHistory?: ClanHistoryOrderByRelationAggregateInput
     ClanJoinRequest?: ClanJoinRequestOrderByWithRelationInput
@@ -78679,6 +79880,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveOrderByRelationAggregateInput
     FightWatched?: FightWatchedOrderByRelationAggregateInput
     GameDinoz?: GameDinozOrderByRelationAggregateInput
+    ips?: PlayerIpOrderByRelationAggregateInput
     pollVotes?: PollVoteOrderByRelationAggregateInput
     Events?: EventsOrderByRelationAggregateInput
     dinozBuilds?: DinozBuildOrderByRelationAggregateInput
@@ -78716,7 +79918,6 @@ export namespace Prisma {
     skipLevel?: BoolFilter<"Player"> | boolean
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
-    ips?: StringNullableListFilter<"Player">
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
     ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
@@ -78750,6 +79951,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
+    ips?: PlayerIpListRelationFilter
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
@@ -78784,7 +79986,6 @@ export namespace Prisma {
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
-    ips?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
     _avg?: PlayerAvgOrderByAggregateInput
     _max?: PlayerMaxOrderByAggregateInput
@@ -78824,7 +80025,54 @@ export namespace Prisma {
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
     id?: UuidWithAggregatesFilter<"Player"> | string
-    ips?: StringNullableListFilter<"Player">
+  }
+
+  export type PlayerIpWhereInput = {
+    AND?: PlayerIpWhereInput | PlayerIpWhereInput[]
+    OR?: PlayerIpWhereInput[]
+    NOT?: PlayerIpWhereInput | PlayerIpWhereInput[]
+    id?: IntFilter<"PlayerIp"> | number
+    ip?: StringFilter<"PlayerIp"> | string
+    playerId?: UuidFilter<"PlayerIp"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }
+
+  export type PlayerIpOrderByWithRelationInput = {
+    id?: SortOrder
+    ip?: SortOrder
+    playerId?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type PlayerIpWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    playerId_ip?: PlayerIpPlayerIdIpCompoundUniqueInput
+    AND?: PlayerIpWhereInput | PlayerIpWhereInput[]
+    OR?: PlayerIpWhereInput[]
+    NOT?: PlayerIpWhereInput | PlayerIpWhereInput[]
+    ip?: StringFilter<"PlayerIp"> | string
+    playerId?: UuidFilter<"PlayerIp"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }, "id" | "playerId_ip">
+
+  export type PlayerIpOrderByWithAggregationInput = {
+    id?: SortOrder
+    ip?: SortOrder
+    playerId?: SortOrder
+    _count?: PlayerIpCountOrderByAggregateInput
+    _avg?: PlayerIpAvgOrderByAggregateInput
+    _max?: PlayerIpMaxOrderByAggregateInput
+    _min?: PlayerIpMinOrderByAggregateInput
+    _sum?: PlayerIpSumOrderByAggregateInput
+  }
+
+  export type PlayerIpScalarWhereWithAggregatesInput = {
+    AND?: PlayerIpScalarWhereWithAggregatesInput | PlayerIpScalarWhereWithAggregatesInput[]
+    OR?: PlayerIpScalarWhereWithAggregatesInput[]
+    NOT?: PlayerIpScalarWhereWithAggregatesInput | PlayerIpScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PlayerIp"> | number
+    ip?: StringWithAggregatesFilter<"PlayerIp"> | string
+    playerId?: UuidWithAggregatesFilter<"PlayerIp"> | string
   }
 
   export type DojoWhereInput = {
@@ -82670,7 +83918,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -82704,6 +83951,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -82738,7 +83986,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -82771,6 +84018,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -82804,7 +84052,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -82838,6 +84085,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -82872,7 +84120,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -82905,6 +84152,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -82939,7 +84187,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
   }
 
   export type PlayerUpdateManyMutationInput = {
@@ -82970,7 +84217,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
   }
 
   export type PlayerUncheckedUpdateManyInput = {
@@ -83002,7 +84248,44 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
+  }
+
+  export type PlayerIpCreateInput = {
+    ip: string
+    player: PlayerCreateNestedOneWithoutIpsInput
+  }
+
+  export type PlayerIpUncheckedCreateInput = {
+    id?: number
+    ip: string
+    playerId: string
+  }
+
+  export type PlayerIpUpdateInput = {
+    ip?: StringFieldUpdateOperationsInput | string
+    player?: PlayerUpdateOneRequiredWithoutIpsNestedInput
+  }
+
+  export type PlayerIpUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ip?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerIpCreateManyInput = {
+    id?: number
+    ip: string
+    playerId: string
+  }
+
+  export type PlayerIpUpdateManyMutationInput = {
+    ip?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerIpUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ip?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
   }
 
   export type DojoCreateInput = {
@@ -86877,14 +88160,6 @@ export namespace Prisma {
     not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type ClanNullableScalarRelationFilter = {
     is?: ClanWhereInput | null
     isNot?: ClanWhereInput | null
@@ -87023,6 +88298,12 @@ export namespace Prisma {
     none?: GameDinozWhereInput
   }
 
+  export type PlayerIpListRelationFilter = {
+    every?: PlayerIpWhereInput
+    some?: PlayerIpWhereInput
+    none?: PlayerIpWhereInput
+  }
+
   export type EventsListRelationFilter = {
     every?: EventsWhereInput
     some?: EventsWhereInput
@@ -87107,6 +88388,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type PlayerIpOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type EventsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -87144,7 +88429,6 @@ export namespace Prisma {
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
-    ips?: SortOrder
   }
 
   export type PlayerAvgOrderByAggregateInput = {
@@ -87243,6 +88527,37 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
+  }
+
+  export type PlayerIpPlayerIdIpCompoundUniqueInput = {
+    playerId: string
+    ip: string
+  }
+
+  export type PlayerIpCountOrderByAggregateInput = {
+    id?: SortOrder
+    ip?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerIpAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type PlayerIpMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ip?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerIpMinOrderByAggregateInput = {
+    id?: SortOrder
+    ip?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerIpSumOrderByAggregateInput = {
+    id?: SortOrder
   }
   export type JsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -87960,6 +89275,14 @@ export namespace Prisma {
     in?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
 
   export type LogCountOrderByAggregateInput = {
@@ -90640,10 +91963,6 @@ export namespace Prisma {
     set: number[]
   }
 
-  export type PlayerCreateipsInput = {
-    set: string[]
-  }
-
   export type ClanCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -90867,6 +92186,13 @@ export namespace Prisma {
     connectOrCreate?: GameDinozCreateOrConnectWithoutPlayerInput | GameDinozCreateOrConnectWithoutPlayerInput[]
     createMany?: GameDinozCreateManyPlayerInputEnvelope
     connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+  }
+
+  export type PlayerIpCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput> | PlayerIpCreateWithoutPlayerInput[] | PlayerIpUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerIpCreateOrConnectWithoutPlayerInput | PlayerIpCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerIpCreateManyPlayerInputEnvelope
+    connect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
   }
 
   export type PollVoteCreateNestedManyWithoutPlayerInput = {
@@ -91109,6 +92435,13 @@ export namespace Prisma {
     connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
   }
 
+  export type PlayerIpUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput> | PlayerIpCreateWithoutPlayerInput[] | PlayerIpUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerIpCreateOrConnectWithoutPlayerInput | PlayerIpCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerIpCreateManyPlayerInputEnvelope
+    connect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+  }
+
   export type PollVoteUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<PollVoteCreateWithoutPlayerInput, PollVoteUncheckedCreateWithoutPlayerInput> | PollVoteCreateWithoutPlayerInput[] | PollVoteUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PollVoteCreateOrConnectWithoutPlayerInput | PollVoteCreateOrConnectWithoutPlayerInput[]
@@ -91141,11 +92474,6 @@ export namespace Prisma {
   export type PlayerUpdatediscoveredSkillsInput = {
     set?: number[]
     push?: number | number[]
-  }
-
-  export type PlayerUpdateipsInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type ClanUpdateOneWithoutLeaderNestedInput = {
@@ -91584,6 +92912,20 @@ export namespace Prisma {
     update?: GameDinozUpdateWithWhereUniqueWithoutPlayerInput | GameDinozUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: GameDinozUpdateManyWithWhereWithoutPlayerInput | GameDinozUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+  }
+
+  export type PlayerIpUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput> | PlayerIpCreateWithoutPlayerInput[] | PlayerIpUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerIpCreateOrConnectWithoutPlayerInput | PlayerIpCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerIpUpsertWithWhereUniqueWithoutPlayerInput | PlayerIpUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerIpCreateManyPlayerInputEnvelope
+    set?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    disconnect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    delete?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    connect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    update?: PlayerIpUpdateWithWhereUniqueWithoutPlayerInput | PlayerIpUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerIpUpdateManyWithWhereWithoutPlayerInput | PlayerIpUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerIpScalarWhereInput | PlayerIpScalarWhereInput[]
   }
 
   export type PollVoteUpdateManyWithoutPlayerNestedInput = {
@@ -92056,6 +93398,20 @@ export namespace Prisma {
     deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
   }
 
+  export type PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput> | PlayerIpCreateWithoutPlayerInput[] | PlayerIpUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerIpCreateOrConnectWithoutPlayerInput | PlayerIpCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerIpUpsertWithWhereUniqueWithoutPlayerInput | PlayerIpUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerIpCreateManyPlayerInputEnvelope
+    set?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    disconnect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    delete?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    connect?: PlayerIpWhereUniqueInput | PlayerIpWhereUniqueInput[]
+    update?: PlayerIpUpdateWithWhereUniqueWithoutPlayerInput | PlayerIpUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerIpUpdateManyWithWhereWithoutPlayerInput | PlayerIpUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerIpScalarWhereInput | PlayerIpScalarWhereInput[]
+  }
+
   export type PollVoteUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<PollVoteCreateWithoutPlayerInput, PollVoteUncheckedCreateWithoutPlayerInput> | PollVoteCreateWithoutPlayerInput[] | PollVoteUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PollVoteCreateOrConnectWithoutPlayerInput | PollVoteCreateOrConnectWithoutPlayerInput[]
@@ -92096,6 +93452,20 @@ export namespace Prisma {
     update?: DinozBuildUpdateWithWhereUniqueWithoutPlayerInput | DinozBuildUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: DinozBuildUpdateManyWithWhereWithoutPlayerInput | DinozBuildUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+  }
+
+  export type PlayerCreateNestedOneWithoutIpsInput = {
+    create?: XOR<PlayerCreateWithoutIpsInput, PlayerUncheckedCreateWithoutIpsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutIpsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutIpsNestedInput = {
+    create?: XOR<PlayerCreateWithoutIpsInput, PlayerUncheckedCreateWithoutIpsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutIpsInput
+    upsert?: PlayerUpsertWithoutIpsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutIpsInput, PlayerUpdateWithoutIpsInput>, PlayerUncheckedUpdateWithoutIpsInput>
   }
 
   export type PlayerCreateNestedOneWithoutDojoInput = {
@@ -95357,7 +96727,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -95390,6 +96759,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -95424,7 +96794,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -95456,6 +96825,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -96121,7 +97491,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -96154,6 +97523,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -96188,7 +97558,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -96220,6 +97589,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -98641,7 +100011,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -98675,6 +100044,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
   }
@@ -98708,7 +100078,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -98741,6 +100110,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
@@ -98894,7 +100264,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -98928,6 +100297,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
@@ -98961,7 +100331,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -98994,6 +100363,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
@@ -99456,7 +100826,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -99490,6 +100859,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
@@ -99523,7 +100893,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -99556,6 +100925,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
@@ -99658,7 +101028,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -99692,6 +101061,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
@@ -99725,7 +101095,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -99758,6 +101127,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
@@ -101101,6 +102471,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PlayerIpCreateWithoutPlayerInput = {
+    ip: string
+  }
+
+  export type PlayerIpUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    ip: string
+  }
+
+  export type PlayerIpCreateOrConnectWithoutPlayerInput = {
+    where: PlayerIpWhereUniqueInput
+    create: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerIpCreateManyPlayerInputEnvelope = {
+    data: PlayerIpCreateManyPlayerInput | PlayerIpCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PollVoteCreateWithoutPlayerInput = {
     votedAt?: Date | string
     poll: PollCreateNestedOneWithoutVotesInput
@@ -102019,6 +103408,31 @@ export namespace Prisma {
     FBTournamentId?: UuidNullableFilter<"GameDinoz"> | string | null
   }
 
+  export type PlayerIpUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerIpWhereUniqueInput
+    update: XOR<PlayerIpUpdateWithoutPlayerInput, PlayerIpUncheckedUpdateWithoutPlayerInput>
+    create: XOR<PlayerIpCreateWithoutPlayerInput, PlayerIpUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerIpUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerIpWhereUniqueInput
+    data: XOR<PlayerIpUpdateWithoutPlayerInput, PlayerIpUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PlayerIpUpdateManyWithWhereWithoutPlayerInput = {
+    where: PlayerIpScalarWhereInput
+    data: XOR<PlayerIpUpdateManyMutationInput, PlayerIpUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type PlayerIpScalarWhereInput = {
+    AND?: PlayerIpScalarWhereInput | PlayerIpScalarWhereInput[]
+    OR?: PlayerIpScalarWhereInput[]
+    NOT?: PlayerIpScalarWhereInput | PlayerIpScalarWhereInput[]
+    id?: IntFilter<"PlayerIp"> | number
+    ip?: StringFilter<"PlayerIp"> | string
+    playerId?: UuidFilter<"PlayerIp"> | string
+  }
+
   export type PollVoteUpsertWithWhereUniqueWithoutPlayerInput = {
     where: PollVoteWhereUniqueInput
     update: XOR<PollVoteUpdateWithoutPlayerInput, PollVoteUncheckedUpdateWithoutPlayerInput>
@@ -102088,6 +103502,286 @@ export namespace Prisma {
     name?: StringFilter<"DinozBuild"> | string
   }
 
+  export type PlayerCreateWithoutIpsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutIpsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutIpsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutIpsInput, PlayerUncheckedCreateWithoutIpsInput>
+  }
+
+  export type PlayerUpsertWithoutIpsInput = {
+    update: XOR<PlayerUpdateWithoutIpsInput, PlayerUncheckedUpdateWithoutIpsInput>
+    create: XOR<PlayerCreateWithoutIpsInput, PlayerUncheckedCreateWithoutIpsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutIpsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutIpsInput, PlayerUncheckedUpdateWithoutIpsInput>
+  }
+
+  export type PlayerUpdateWithoutIpsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutIpsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
   export type PlayerCreateWithoutDojoInput = {
     customText?: string | null
     name: string
@@ -102116,7 +103810,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -102149,6 +103842,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -102183,7 +103877,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -102215,6 +103908,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -102365,7 +104059,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -102398,6 +104091,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -102432,7 +104126,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -102464,6 +104157,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103194,7 +104888,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -103227,6 +104920,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -103261,7 +104955,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -103293,6 +104986,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -103342,7 +105036,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -103375,6 +105068,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -103409,7 +105103,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -103441,6 +105134,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103474,7 +105168,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -103507,6 +105200,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -103541,7 +105235,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -103573,6 +105266,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -103622,7 +105316,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -103655,6 +105348,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -103689,7 +105383,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -103721,6 +105414,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -103754,7 +105448,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -103787,6 +105480,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -103821,7 +105515,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -103853,6 +105546,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -103902,7 +105596,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -103935,6 +105628,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -103969,7 +105663,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -104001,6 +105694,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104034,7 +105728,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -104067,6 +105760,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -104101,7 +105795,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -104133,6 +105826,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -104182,7 +105876,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -104215,6 +105908,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -104249,7 +105943,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -104281,6 +105974,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104314,7 +106008,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -104347,6 +106040,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -104381,7 +106075,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -104413,6 +106106,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -104462,7 +106156,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -104495,6 +106188,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -104529,7 +106223,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -104561,6 +106254,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104594,7 +106288,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -104627,6 +106320,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -104661,7 +106355,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -104693,6 +106386,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -104742,7 +106436,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -104775,6 +106468,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -104809,7 +106503,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -104841,6 +106534,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -104874,7 +106568,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -104907,6 +106600,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -104941,7 +106635,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -104973,6 +106666,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -105022,7 +106716,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -105055,6 +106748,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -105089,7 +106783,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -105121,6 +106814,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105154,7 +106848,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -105187,6 +106880,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -105221,7 +106915,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -105253,6 +106946,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -105302,7 +106996,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -105335,6 +107028,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -105369,7 +107063,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -105401,6 +107094,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105524,7 +107218,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -105557,6 +107250,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -105591,7 +107285,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -105623,6 +107316,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -105706,7 +107400,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -105739,6 +107432,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -105773,7 +107467,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -105805,6 +107498,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105938,7 +107632,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -105971,6 +107664,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -106005,7 +107699,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -106037,6 +107730,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -106238,7 +107932,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -106271,6 +107964,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -106305,7 +107999,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -106337,6 +108030,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -106513,7 +108207,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -106546,6 +108239,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -106580,7 +108274,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -106612,6 +108305,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -106767,7 +108461,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -106800,6 +108493,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -106834,7 +108528,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -106866,6 +108559,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107105,7 +108799,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -107138,6 +108831,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -107172,7 +108866,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -107204,6 +108897,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -107253,7 +108947,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -107286,6 +108979,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -107320,7 +109014,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -107352,6 +109045,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107485,7 +109179,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -107518,6 +109211,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -107552,7 +109246,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -107584,6 +109277,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -107739,7 +109433,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -107772,6 +109465,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -107806,7 +109500,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -107838,6 +109531,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107887,7 +109581,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
@@ -107920,6 +109613,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -107954,7 +109648,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
@@ -107986,6 +109679,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -108201,7 +109895,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
@@ -108234,6 +109927,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -108268,7 +109962,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
@@ -108300,6 +109993,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -108510,7 +110204,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
@@ -108543,6 +110236,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -108577,7 +110271,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
@@ -108609,6 +110302,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -108700,7 +110394,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
@@ -108733,6 +110426,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -108767,7 +110461,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
@@ -108799,6 +110492,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -108981,7 +110675,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -109014,6 +110707,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -109048,7 +110742,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -109080,6 +110773,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -109165,7 +110859,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -109198,6 +110891,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -109232,7 +110926,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -109264,6 +110957,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -109339,7 +111033,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
@@ -109372,6 +111065,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -109406,7 +111100,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
@@ -109438,6 +111131,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -109523,7 +111217,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
@@ -109556,6 +111249,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -109590,7 +111284,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
@@ -109622,6 +111315,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -109733,7 +111427,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -109766,6 +111459,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -109800,7 +111494,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -109832,6 +111525,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -109923,7 +111617,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -109956,6 +111649,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -109990,7 +111684,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -110022,6 +111715,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -110233,7 +111927,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -110266,6 +111959,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -110300,7 +111994,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -110332,6 +112025,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -110370,7 +112064,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -110403,6 +112096,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -110437,7 +112131,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -110469,6 +112162,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -110507,7 +112201,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -110540,6 +112233,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -110573,7 +112267,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -110606,6 +112299,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -110761,7 +112455,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -110794,6 +112487,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -110828,7 +112522,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -110860,6 +112553,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -110904,7 +112598,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -110937,6 +112630,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -110971,7 +112665,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -111003,6 +112696,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111047,7 +112741,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -111080,6 +112773,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -111113,7 +112807,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -111146,6 +112839,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111179,7 +112873,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -111212,6 +112905,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -111246,7 +112940,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -111278,6 +112971,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -111338,7 +113032,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -111371,6 +113064,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -111405,7 +113099,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -111437,6 +113130,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -111536,7 +113230,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -111569,6 +113262,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -111603,7 +113297,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -111635,6 +113328,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111707,7 +113401,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -111740,6 +113433,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -111774,7 +113468,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -111806,6 +113499,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111900,7 +113594,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -111933,6 +113626,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -111967,7 +113661,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -111999,6 +113692,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -112083,7 +113777,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -112116,6 +113809,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -112150,7 +113844,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -112182,6 +113875,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -112273,7 +113967,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -112306,6 +113999,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -112340,7 +114034,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -112372,6 +114065,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -112491,7 +114185,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -112524,6 +114217,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -112558,7 +114252,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -112590,6 +114283,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -112623,7 +114317,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -112656,6 +114349,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -112690,7 +114384,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -112722,6 +114415,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -112771,7 +114465,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -112804,6 +114497,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -112838,7 +114532,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -112870,6 +114563,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -112903,7 +114597,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -112936,6 +114629,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -112970,7 +114664,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -113002,6 +114695,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -113040,7 +114734,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -113073,6 +114766,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -113107,7 +114801,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -113139,6 +114832,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -113177,7 +114871,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -113210,6 +114903,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -113244,7 +114938,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -113276,6 +114969,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -113585,7 +115279,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -113618,6 +115311,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -113652,7 +115346,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -113684,6 +115377,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113728,7 +115422,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -113761,6 +115454,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -113795,7 +115489,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -113827,6 +115520,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113871,7 +115565,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -113904,6 +115597,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -113938,7 +115632,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -113970,6 +115663,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114340,7 +116034,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -114373,6 +116066,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -114407,7 +116101,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -114439,6 +116132,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -114541,7 +116235,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -114574,6 +116267,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -114608,7 +116302,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -114640,6 +116333,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -115328,7 +117022,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -115361,6 +117054,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
@@ -115395,7 +117089,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -115427,6 +117120,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
@@ -115715,7 +117409,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -115748,6 +117441,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
@@ -115782,7 +117476,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -115814,6 +117507,7 @@ export namespace Prisma {
     LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
@@ -115992,7 +117686,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
@@ -116026,6 +117719,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
   }
@@ -116059,7 +117753,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
-    ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -116092,6 +117785,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
   }
@@ -116140,7 +117834,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
@@ -116174,6 +117867,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
   }
@@ -116207,7 +117901,6 @@ export namespace Prisma {
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
-    ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -116240,6 +117933,7 @@ export namespace Prisma {
     RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
   }
@@ -117567,6 +119261,11 @@ export namespace Prisma {
     FBTournamentId?: string | null
   }
 
+  export type PlayerIpCreateManyPlayerInput = {
+    id?: number
+    ip: string
+  }
+
   export type PollVoteCreateManyPlayerInput = {
     id?: number
     pollId: number
@@ -118496,6 +120195,20 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PlayerIpUpdateWithoutPlayerInput = {
+    ip?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerIpUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ip?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerIpUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ip?: StringFieldUpdateOperationsInput | string
   }
 
   export type PollVoteUpdateWithoutPlayerInput = {

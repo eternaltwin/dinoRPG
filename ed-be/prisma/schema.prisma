@@ -320,12 +320,22 @@ model Player {
   RightFightArchives   FightArchive[]     @relation("RightPlayerRelation")
   FightWatched         FightWatched[]
   GameDinoz            GameDinoz[]
-  ips                  String[]           @db.Inet
+  ips                  PlayerIp[]
   pollVotes            PollVote[]
   Events               Events[]
   dinozBuilds          DinozBuild[]
 
   @@map("player")
+}
+
+model PlayerIp {
+  id       Int    @id @default(autoincrement())
+  ip       String @db.Inet
+  playerId String @db.Uuid
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, ip])
+  @@index([ip])
 }
 
 model Dojo {

@@ -7,6 +7,7 @@ import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
+import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -104,6 +105,12 @@ export const AdminService = {
 	listAllDinozFromPlayer(id: string): Promise<Array<DinozAdminFiche>> {
 		return http()
 			.get(`/admin/playerdinoz/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	listOneDinozFromPlayer(id: number): Promise<DinozAdminFiche> {
+		return http()
+			.get(`/admin/dinoz/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
@@ -234,6 +241,26 @@ export const AdminService = {
 	getScheduledJobs(): Promise<Jobs[]> {
 		return http()
 			.get(`/admin/jobs`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getMultiIPs(page: number): Promise<IPList[]> {
+		return http()
+			.get(`/admin/accounts/page/${page}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	listPlayerBehindIp(ip: string): Promise<suspectedPlayer[]> {
+		return http()
+			.get(`/admin/accounts/ip/${ip}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	massBan(list: string[]) {
+		return http()
+			.put(`/admin/massban`, {
+				list: list
+			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

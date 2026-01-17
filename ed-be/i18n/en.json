@@ -311,5 +311,6 @@
 	},
 	"fb_tournament": {
 		"noOpponent": "There is no one to fight at the moment"
-	}
+	},
+	"ongoingDojoTournament": "You are participating in an ongoing Dojo Tournament"
 }

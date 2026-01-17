@@ -27,7 +27,7 @@ export const statusList = {
 		25: 'palmes',
 		26: 'astone',
 		27: 'totem',
-		28: 'tourna', //NOT IMPLEMENTED YET
+		28: 'tourna',
 		29: 'vmem', //NOT IMPLEMENTED YET
 		30: 'vkill',
 		31: 'fflag',
@@ -97,7 +97,7 @@ export const statusList = {
 		palmes: 25,
 		astone: 26,
 		totem: 27,
-		tourna: 28, //NOT IMPLEMENTED YET
+		tourna: 28,
 		vmem: 29, //NOT IMPLEMENTED YET
 		vkill: 30,
 		fflag: 31,

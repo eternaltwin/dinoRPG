@@ -36,7 +36,7 @@ import { formatText } from '../../utils/formatText.js';
 export default defineComponent({
 	name: 'DinozEquip',
 	props: {
-		dinozData: Object as PropType<DinozFiche>
+		dinozData: { type: Object as PropType<DinozFiche>, required: true }
 	},
 	data() {
 		return {
@@ -50,9 +50,21 @@ export default defineComponent({
 		}
 	},
 	watch: {
+		'dinozData.items': {
+			handler(newItems: number[] | undefined) {
+				if (!this.dinozData || newItems === undefined) {
+					console.error(formatText(this.$t(`toast.dinozDataMissing`)));
+					return;
+				}
+				this.items = new Array(this.dinozData.maxItems);
+				newItems.forEach((item, index) => (this.items[index] = item));
+			},
+			immediate: true
+		},
 		'dinozData.maxItems': {
 			handler(newMaxItems: number | undefined) {
 				if (!this.dinozData || newMaxItems === undefined) {
+					console.error(formatText(this.$t(`toast.dinozDataMissing`)));
 					return;
 				}
 				this.items = new Array(newMaxItems);
@@ -95,17 +107,8 @@ export default defineComponent({
 			return;
 		}
 
-		EventBus.on('equipItem', e => {
-			if (!this.dinozData) {
-				this.$toast.open({ message: formatText(this.$t(`toast.dinozDataMissing`)), type: 'error' });
-				return;
-			}
-			this.items = new Array(this.dinozData.maxItems);
-			e.forEach((item, index) => (this.items[index] = item.itemId));
-		});
-	},
-	unmounted() {
-		EventBus.off('equipItem');
+		this.items = new Array(this.dinozData.maxItems);
+		this.dinozData.items.forEach((item, index) => (this.items[index] = item));
 	}
 });
 </script>
