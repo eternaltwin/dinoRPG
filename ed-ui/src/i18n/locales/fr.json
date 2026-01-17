@@ -884,6 +884,12 @@
 			"fake": "Une île déserte communément appelé l'île de la damnation, où quelques âmes en peine viennent s'échouer. Il fait particulièrement sombre par ici...",
 			"fake2": "Une île déserte communément appelé l'île des feu-follets, ces esprits errants sèment le désespoir et la mort. Il fait particulièrement sombre par ici...",
 			"rechut": "Grâce au morceau d'Orbe Sombre que votre Dinoz possède, vous pouvez revenir à la surface. La lumière omniprésente vous aveugle quelques minutes, il vaut mieux ne pas rester trop longtemps dans le Monde Sombre."
+		},
+		"hint": {
+			"marais": {
+				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
+			}
 		}
 	},
 	"race": {
@@ -1384,14 +1390,19 @@
 				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
 				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
 				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
-				"attack_win": "Bien entendu, Jovébozé n'a rien compris à vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau à Rascaphandre qu'il a sculpté..."
+				"attack_win": "Bien entendu, Jovébozé n'a rien compris à vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau à Rascaphandre qu'il a sculpté...",
+				"weirdSwamp": "Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
+				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
+				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
 			},
 			"playerChoice": {
 				"sry": "... pardon ?!?",
 				"trad": "Aller chercher un traducteur",
 				"go": "Suivre Jovébozé",
 				"attack": "Continuer",
-				"back": "RECULER !!!"
+				"back": "RECULER !!!",
+				"swampTreasure": "... tordu ?!?",
+				"swampLeave": "Je comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2516,7 +2527,9 @@
 			"30": "Vénérable",
 			"23": "Charme de Feu",
 			"24": "Charme Bao",
-			"7": "Pelle Améliorée Cassée"
+			"7": "Pelle Améliorée Cassée",
+			"72": "Bouée du Marais",
+			"73": "Lanterne du Marais"
 		},
 		"description": {
 			"2": "Le Matériel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
@@ -2568,7 +2581,9 @@
 			"30": "Ce Dinoz a vaincu le Vénérable.",
 			"23": "Le Charme de Feu augmente la puissance des attaques de Feu de ce Dinoz.",
 			"24": "Le Charme Bao augmente la défense de ce Dinoz contre les attaques d'Eau.",
-			"7": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau."
+			"7": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
 	"tabs": {
@@ -4154,8 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
 				"CLAN_EDIT_LANG": "Peut changer la langue du Clan"
 			},
-			"nickname": "Surnom du joueur :",
-			"save": "Enregistrer"
+			"nickname": "Surnom du joueur",
+			"save": "Enregistrer",
+			"saved": "Modifications enregistrées avec succès !"
 		},
 		"request": {
 			"title": "Adhésions en attente",
@@ -4259,6 +4275,7 @@
 		"life": "Vie perdue",
 		"experience": "Expérience",
 		"gold": "Or trouvé",
+		"statusReward": "Vous avez reçu: {reward}",
 		"monster": {
 			"goupignon": "Goupignon",
 			"wolf": "Loup",
@@ -4298,7 +4315,9 @@
 			"megawf": "Mega-loup",
 			"baraba": "Barababor",
 			"baratr": "Baratribor",
-			"bamboo": "Bambooz"
+			"bamboo": "Bambooz",
+			"swampmf": "Bourbeoz",
+			"swampmf2": "Brumoz"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -4590,7 +4609,7 @@
 		"seeFinal": "Voir la finale",
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jours au maximum.//",
 		"soon": "Bientôt",
-		"seeFight": "Voir le combat",
+		"seeFight": "Voir le combat de {player}",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
