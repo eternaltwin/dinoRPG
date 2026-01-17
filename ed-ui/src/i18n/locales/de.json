@@ -4169,7 +4169,7 @@
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
 				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
 			},
-			"nickname": "Surnom du joueur",
+			"nickname": "Spitzname des Spielers:",
 			"save": "Speichern",
 			"saved": "Modifications enregistrées avec succès !"
 		},
@@ -4609,7 +4609,7 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Voir le combat de {player}",
+		"seeFight": "Kampf ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
