@@ -69,6 +69,8 @@ import { updateDojoPoints } from '../dao/rankingDao.js';
 import { simplifyCreateTournamentTeam } from '../business/tournamentService.js';
 import { createMyDojo } from '../dao/dojoDao.js';
 import { generateRandomChallenge } from '../business/dojoService.js';
+import { getLatestTournament } from '../dao/tournamentDao.js';
+
 /**
  * Get all the clans
  * @param req
@@ -690,6 +692,8 @@ async function createTestDinoz() {
 }
 
 async function testDojoTournament() {
+	const tournament = await getLatestTournament();
+	if (!tournament) return;
 	const players = await getTestUsers();
 	players.length = Math.min(players.length, 64);
 	for (const player of players) {
@@ -697,7 +701,7 @@ async function testDojoTournament() {
 		let dinoz = await getAllDinozFromAccount(player.id);
 		console.log(`player ${player.name} has ${dinoz.length} dinos`);
 		dinoz = shuffle(dinoz);
-		dinoz.length = Math.min(dinoz.length, 2);
+		dinoz.length = Math.min(dinoz.length, tournament.teamSize);
 		await simplifyCreateTournamentTeam(
 			player.id,
 			dinoz.map(dino => dino.id)

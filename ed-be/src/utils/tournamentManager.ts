@@ -3,7 +3,7 @@ import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { createFirstTournament } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
-import {  shuffle } from './tools.js';
+import { getRandomNumber, shuffle } from './tools.js';
 import {
 	MetaData,
 	RawTournamentMatch,
@@ -604,7 +604,7 @@ class TournamentManager {
 
 		const tournamentFormat = formatTID[1];
 
-		const teamSize = 2;
+		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = 1;
 		const levelLimit = 50;
