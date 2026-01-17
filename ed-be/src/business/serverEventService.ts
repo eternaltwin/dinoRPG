@@ -31,7 +31,6 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
-const ticketCountByIP = new Map<string, number>();
 
 // Tickets garbage collector
 setInterval(() => {
@@ -86,17 +85,6 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		type: serverEventType
 	});
 
-	// Check number of ticket for this IP
-	let ipTicketCount = 0;
-	for (const ticket of activeTickets.values()) {
-		if (ticket.ipAddress === ip) {
-			ipTicketCount++;
-		}
-	}
-
-	if (ipTicketCount > 10) {
-		LOGGER.warn(`[SSE] L'adresse IP ${ip} a ${ipTicketCount} tickets actifs (playerId: ${authed.id})`);
-	}
 
 	return {
 		ticket: uuid
