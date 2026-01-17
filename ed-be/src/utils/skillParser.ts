@@ -2,6 +2,7 @@ import { SkillDetails, PassiveEffects } from '@drpg/core/models/dinoz/SkillDetai
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { Dinoz, GameDinozUsage, Player } from '@drpg/prisma';
 import { Skill, uSkillsToPlayerFieldMap } from '@drpg/core/models/dinoz/SkillList';
+import { MathOperator } from '@drpg/core/models/enums/Parser';
 
 function applySkillToDinoz(
 	effects: PassiveEffects,
@@ -11,7 +12,17 @@ function applySkillToDinoz(
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {
 			case Stat.MAX_HP:
-				dinoz.maxLife += +value;
+				const [operator, val] = value as [MathOperator, number];
+				if (operator === MathOperator.PLUS) {
+					dinoz.maxLife += val;
+				} else if (operator === MathOperator.LESS) {
+					dinoz.maxLife -= val;
+				} else if (operator === MathOperator.MULTIPLY) {
+					dinoz.maxLife *= val;
+				}
+				if (operator === MathOperator.EQUAL) {
+					dinoz.maxLife = val;
+				}
 				break;
 			case Stat.FIRE_ELEMENT:
 				dinoz.nbrUpFire += +value;

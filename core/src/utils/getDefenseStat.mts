@@ -2,6 +2,7 @@ import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
+import { MathOperator } from '../models/enums/Parser.mjs';
 
 export enum DefenseElement {
 	FIRE = 'fire',
@@ -152,8 +153,20 @@ export const getDefenseStat = (
 			const effect = skill.globalEffects[`${elem.name}Defense`];
 
 			if (effect) {
+				const [operator, value] = effect;
+				let valueEffect = 0;
+				switch (operator) {
+					case MathOperator.PLUS:
+						valueEffect += value;
+						break;
+					case MathOperator.LESS:
+						valueEffect -= value;
+						break;
+					default:
+						break;
+				}
 				// Flat value
-				elem.globalBonus += effect;
+				elem.globalBonus += valueEffect;
 
 				details.push({
 					type: 'skill',
@@ -165,7 +178,7 @@ export const getDefenseStat = (
 								.find(([, value]) => value === el)?.[0]
 								.toLocaleLowerCase() || ''
 					),
-					value: effect,
+					value: valueEffect,
 					global: true
 				});
 			}
@@ -179,8 +192,20 @@ export const getDefenseStat = (
 		const effect = skill.effects[`${elementName}Defense`];
 
 		if (effect) {
+			const [operator, value] = effect;
+			let valueEffect = 0;
+			switch (operator) {
+				case MathOperator.PLUS:
+					valueEffect += value;
+					break;
+				case MathOperator.LESS:
+					valueEffect -= value;
+					break;
+				default:
+					break;
+			}
 			// Flat value
-			element.bonus += effect;
+			element.bonus += valueEffect;
 
 			details.push({
 				type: 'skill',
@@ -192,7 +217,7 @@ export const getDefenseStat = (
 							.find(([, value]) => value === el)?.[0]
 							.toLocaleLowerCase() || ''
 				),
-				value: effect
+				value: valueEffect
 			});
 		}
 	});

@@ -30,6 +30,7 @@ import { checkCondition } from './checkCondition.mjs';
 import { ExpectedError } from './ExpectedError.mjs';
 import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
 import { getHUDObjective } from './MissionUtils.mjs';
+import { MathOperator } from '../models/enums/Parser.mjs';
 
 type Config = {
 	dinoz: {
@@ -292,7 +293,21 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 
 	for (const skill of skillsAffectingMaxFollowers) {
 		if (dinoz.skills.some(s => s.skillId === skill.id)) {
-			max += skill.effects?.[Stat.MAX_FOLLOWERS] || 0;
+			const effect = skill.effects?.[Stat.MAX_FOLLOWERS];
+			if (effect) {
+				const [operator, value] = effect;
+				switch (operator) {
+					case MathOperator.PLUS:
+						max += value;
+						break;
+					case MathOperator.LESS:
+						max -= value;
+						break;
+					case MathOperator.EQUAL:
+						max = value;
+						break;
+				}
+			}
 		}
 	}
 

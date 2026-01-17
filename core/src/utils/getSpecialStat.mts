@@ -4,6 +4,7 @@ import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Item, itemList } from '../models/item/ItemList.mjs';
+import { MathOperator } from '../models/enums/Parser.mjs';
 
 export enum SpecialStat {
 	// Unique
@@ -313,19 +314,25 @@ export const getSpecialStat = (
 		if (!skill.effects) return;
 
 		const effect = skill.effects[stat];
-		const isAddition = typeof effect === 'number';
 
 		if (effect) {
-			let effectValue = 0;
-
-			// Flat value
-			if (isAddition) {
-				effectValue = effect;
-				value += effect;
-			} else {
-				// Multiplier
-				effectValue = effect[1] - 1;
-				multiplier *= effect[1];
+			const [operator, effectValue] = effect;
+			let rawValue = effectValue;
+			switch (operator) {
+				case MathOperator.PLUS:
+					value += effectValue;
+					break;
+				case MathOperator.LESS:
+					value -= effectValue;
+					break;
+				case MathOperator.MULTIPLY:
+					value *= effectValue;
+					break;
+				case MathOperator.EQUAL:
+					value = effectValue;
+					break;
+				default:
+					break;
 			}
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
@@ -338,7 +345,7 @@ export const getSpecialStat = (
 				// Other use the effect value
 				finalValue = effectValue;
 			}
-			if (base_stat > 0 && !isAddition) {
+			if (base_stat > 0) {
 				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
 				finalValue += 1;
 			}
@@ -347,14 +354,14 @@ export const getSpecialStat = (
 				type: 'skill',
 				name: skill.name,
 				percent,
-				multiplier: !isAddition,
+				multiplier: operator === MathOperator.MULTIPLY,
 				elements: skill.element.map(
 					el =>
 						Object.entries(ElementType)
 							.find(([, value]) => value === el)?.[0]
 							.toLocaleLowerCase() || ''
 				),
-				value: finalValue
+				value: rawValue
 			});
 		}
 	});
