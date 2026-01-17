@@ -4169,7 +4169,7 @@
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan"
 			},
-			"nickname": "Surnom du joueur",
+			"nickname": "Player's nickname :",
 			"save": "Save",
 			"saved": "Modifications enregistrées avec succès !"
 		},
@@ -4609,7 +4609,7 @@
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"soon": "Soon",
-		"seeFight": "Voir le combat de {player}",
+		"seeFight": "See the fight",
 		"deleteTeam": "Delete my team",
 		"timer": {
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
