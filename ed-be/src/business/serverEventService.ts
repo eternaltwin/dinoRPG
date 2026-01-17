@@ -255,7 +255,7 @@ async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
-		return `${ticket.channel}.${playerData.ClanMember.clan.name}`;
+		return `${ticket.channel}.${playerData.ClanMember.clan.id}`;
 	} else if (ticket.channel === SseChannel.NOTIFICATION) {
 		return ticket.channel;
 	}
