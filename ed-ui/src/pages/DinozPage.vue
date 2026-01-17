@@ -139,10 +139,6 @@ export default defineComponent({
 			});
 			EventBus.emit('refreshDinozStats', true);
 		});
-		EventBus.on('unEquipItem', (itemId: number) => {
-			this.dinozData.items = this.dinozData.items.filter(i => i !== itemId);
-			EventBus.emit('refreshDinozStats', true);
-		});
 		EventBus.emit('isLoading', true);
 		try {
 			await this.getFiche();
@@ -156,7 +152,6 @@ export default defineComponent({
 	},
 	unmounted() {
 		EventBus.off('equipItem');
-		EventBus.off('unEquipItem');
 		EventBus.off('refreshDinoz');
 	},
 	watch: {
