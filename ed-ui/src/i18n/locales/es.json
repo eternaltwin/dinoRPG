@@ -4169,7 +4169,7 @@
 				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
 				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan"
 			},
-			"nickname": "Surnom du joueur",
+			"nickname": "Apodo del jugador:",
 			"save": "Guardar",
 			"saved": "Modifications enregistrées avec succès !"
 		},
@@ -4609,7 +4609,7 @@
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"soon": "Pronto",
-		"seeFight": "Voir le combat de {player}",
+		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
 			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",
