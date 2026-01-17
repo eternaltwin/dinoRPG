@@ -15,7 +15,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import {archiveFight, getViewedTournamentFight, viewFight} from '../dao/archiveDao.js';
+import { archiveFight, viewFight } from '../dao/archiveDao.js';
 import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
