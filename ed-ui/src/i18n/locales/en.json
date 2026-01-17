@@ -884,6 +884,12 @@
 			"fake": "A deserted island, commonly known as the Isle of Damnation, where anguished souls come to die. It's particularly dark here...",
 			"fake2": "A desert island, commonly known as the Isle o' Will-o-the-wisp, these spirits spread hopelessness and death. It's particularly dark over here...",
 			"rechut": "Thanks to the piece of the piece of the Dark Orb you have in your possession, you can return to the surface. The overwhelming brightness blinds you for a few minutes, spending too much time in the Dark World doesn't seem to be a great idea."
+		},
+		"hint": {
+			"marais": {
+				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
+			}
 		}
 	},
 	"race": {
@@ -1384,14 +1390,19 @@
 				"trad": "Nobody here seems to ever understand what Joveboze is saying. You have a feeling that it's a local dialect of the Frishers, or even a language which Joveboze has created himself.",
 				"sry": "Ifyar notrady dont'ome, elsjump inthboat, k?",
 				"go": "Joveboze takes you out to sea, it seems ships avoid this area. After a short wait, you see something in the water: a huge Scorpscuba! If the Atlantean Guard was right, you're about to be attacked. What are you going to do!",
-				"attack_win": "After capturing the Scorpscuba, Joveboze takes you back to Frish Port and begins carving your flute. He hasn't said anything since the Scorpscuba attack though he does occasionally look at you approvingly out of the corner of his eye. After he finishes carving your flute, he gives you a firm handshake, wishes you luck on your future travels and then hands you the Scorpscuba Caller."
+				"attack_win": "After capturing the Scorpscuba, Joveboze takes you back to Frish Port and begins carving your flute. He hasn't said anything since the Scorpscuba attack though he does occasionally look at you approvingly out of the corner of his eye. After he finishes carving your flute, he gives you a firm handshake, wishes you luck on your future travels and then hands you the Scorpscuba Caller.",
+				"weirdSwamp": "Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
+				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
+				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
 			},
 			"playerChoice": {
 				"sry": "... sorry?!?",
 				"trad": "Get an interpreter",
 				"go": "Follow Joveboze",
 				"attack": "Attack!",
-				"back": "TURN BACK!!!"
+				"back": "TURN BACK!!!",
+				"swampTreasure": "... tordu ?!?",
+				"swampLeave": "Je comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2516,7 +2527,9 @@
 			"30": "Venerable",
 			"23": "Fire Charm",
 			"24": "Bao Charm",
-			"7": "Improved Shovel"
+			"7": "Improved Shovel",
+			"72": "Bouée du Marais",
+			"73": "Lanterne du Marais"
 		},
 		"description": {
 			"2": "Climbing Gear enables your Dinoz to climb mountains.",
@@ -2568,7 +2581,9 @@
 			"30": "This Dinoz has defeated the Venerable.",
 			"23": "The Fire Charm increases the strength of your Dinoz Fire attacks.",
 			"24": "Bao Charm increases your Dinoz' defense against Water attacks.",
-			"7": "The upgraded Shovel finally broke, it will have to be fixed before you can use it again."
+			"7": "The upgraded Shovel finally broke, it will have to be fixed before you can use it again.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
 	"tabs": {
@@ -4154,8 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan"
 			},
-			"nickname": "Player's nickname :",
-			"save": "Save"
+			"nickname": "Surnom du joueur",
+			"save": "Save",
+			"saved": "Modifications enregistrées avec succès !"
 		},
 		"request": {
 			"title": "Waiting requests",
@@ -4259,6 +4275,7 @@
 		"life": "Lost life",
 		"experience": "Experience",
 		"gold": "Gold found",
+		"statusReward": "Vous avez reçu: {reward}",
 		"monster": {
 			"goupignon": "Smashroom",
 			"wolf": "Wolf",
@@ -4298,7 +4315,9 @@
 			"megawf": "Mega-wolf",
 			"baraba": "Barababor",
 			"baratr": "Baratribor",
-			"bamboo": "Bambooz"
+			"bamboo": "Bambooz",
+			"swampmf": "Bourbeoz",
+			"swampmf2": "Brumoz"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -4590,7 +4609,7 @@
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"soon": "Soon",
-		"seeFight": "See the fight",
+		"seeFight": "Voir le combat de {player}",
 		"deleteTeam": "Delete my team",
 		"timer": {
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
