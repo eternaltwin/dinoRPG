@@ -233,13 +233,13 @@ export async function getDojoTournamentFights(req: Request) {
 			id: f.id,
 			tournamentTeamLeft: f.tournamentTeamLeftId
 				? {
-						dinoz: fighters.filter(fighter => fighter.attacker)[0],
+						dinoz: fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => fighter.attacker)[0],
 						player: f.leftPlayer
 					}
 				: null,
 			tournamentTeamRight: f.tournamentTeamRightId
 				? {
-						dinoz: fighters.filter(fighter => !fighter.attacker)[0],
+						dinoz: fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => !fighter.attacker)[0],
 						player: f.rightPlayer
 					}
 				: null,
