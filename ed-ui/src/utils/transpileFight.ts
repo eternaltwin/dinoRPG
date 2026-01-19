@@ -149,8 +149,10 @@ export function transpileFight(
 	const history: transpiled[] = [];
 	// Basic tracking of active fighters, this may not cover all cases.
 	const activeFighters: FighterRecap[] = [];
+	// ID of the previous fighter that played a turn
+	let lastFighterId: number | undefined = undefined;
 	// ID of the fighter whose turn it is
-	let currentFighterId = 0;
+	let currentFighterId: number | undefined = undefined;
 	// Assault combo counter of the current fighter
 	let currentFighterCombo = 0;
 	// ID of the fighter countering an assault
@@ -450,6 +452,7 @@ export function transpileFight(
 			case `statusTurn`:
 			case `newTurn`:
 				// Note the ID of the fighter playing a turn and reset the combo and counter stats
+				lastFighterId = currentFighterId;
 				currentFighterId = step.fighter.id;
 				currentFighterCombo = 0;
 				counteringFighterId = 0;
@@ -471,17 +474,18 @@ export function transpileFight(
 					}[]
 				};
 				activeFighters.forEach(activeF => {
-					if (activeF.id !== step.fighter.id) {
-						const myFighter = fighters.find(f => activeF.id === f.id);
-						if (!myFighter) {
-							return;
-						}
-						setFighterEnergy(
-							myFighter,
-							Math.round(myFighter.energy + myFighter.energyRecovery * step.delta * ENERGY_RECOVERY_BASE_FACTOR)
-						);
-						energyStep.fighters.push({ fid: myFighter.id, energy: myFighter.energy });
+					if (lastFighterId !== undefined && lastFighterId === currentFighterId && activeF.id === currentFighterId) {
+						return;
 					}
+					const myFighter = fighters.find(f => activeF.id === f.id);
+					if (!myFighter) {
+						return;
+					}
+					setFighterEnergy(
+						myFighter,
+						Math.round(myFighter.energy + myFighter.energyRecovery * step.delta * ENERGY_RECOVERY_BASE_FACTOR)
+					);
+					energyStep.fighters.push({ fid: myFighter.id, energy: myFighter.energy });
 				});
 				// Update energy of fighters except the one that is playing a new turn.
 				history.push(energyStep as transpiled);
@@ -525,7 +529,7 @@ export function transpileFight(
 					action: DinoAction.ENERGY,
 					fighters: [
 						{
-							fid: step.fid,
+							fid: myFighter.id,
 							energy: myFighter.energy
 						}
 					]
@@ -544,6 +548,7 @@ export function transpileFight(
 					if (!skill) {
 						console.warn(`Cannot find skill ${step.skill}`);
 					}
+					const targetsHit = step.targets.filter(t => t.damages ?? 0 > 0).length;
 					history.push({
 						action: DinoAction.SKILL,
 						skill: resolveSkillVisualEffect(step.skill),
@@ -577,12 +582,14 @@ export function transpileFight(
 							}
 						});
 					}
-					// Remove energy per target hit
-					setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
-					history.push({
-						action: DinoAction.ENERGY,
-						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
-					});
+					// Remove energy per target hit if a at least one target was hit
+					if (targetsHit > 0) {
+						setFighterEnergy(myFighter, myFighter.energy - targetsHit * BASE_ENERGY_COST);
+						history.push({
+							action: DinoAction.ENERGY,
+							fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+						});
+					}
 					myFighter = undefined;
 				} else {
 					history.push({

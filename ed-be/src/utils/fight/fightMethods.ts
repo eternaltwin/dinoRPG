@@ -5192,13 +5192,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 				fighter: stepFighter(attacker),
 				delta: deltaTime
 			});
-		} else {
-			// Log a new turn
-			fightData.steps.push({
-				action: 'newTurn',
-				fighter: stepFighter(attacker),
-				delta: deltaTime
-			});
 		}
 
 		// Set the new current time to fighter's turn
@@ -5320,7 +5313,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// 5th - Update last fighter ID
 	fightData.lastFighterId = attacker.id;
 
-	// 6th - Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
+	// 6th - Pass turn if the fighter does not meet a minimum of energy
 	if (attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		fightData.steps.push({
 			action: 'tired',
@@ -5331,6 +5324,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	}
 
 	// Finally, go on with the figher's turn
+	fightData.steps.push({
+		action: 'newTurn',
+		fighter: stepFighter(attacker),
+		delta: deltaTime
+	});
 
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, attacker);
