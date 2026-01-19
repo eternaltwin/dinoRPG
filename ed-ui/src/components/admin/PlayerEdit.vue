@@ -114,12 +114,12 @@
 				<template v-for="(reward, index) in player.rewards" :key="index">
 					<Tippy theme="normal">
 						<img
-							:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward]}`)"
-							:alt="epicList.imgName[reward]"
+							:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward.rewardId]}`)"
+							:alt="epicList.imgName[reward.rewardId]"
 						/>
 						<template #content>
-							<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
-							<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
+							<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward.rewardId]}`))" />
+							<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward.rewardId]}`))" />
 						</template>
 					</Tippy>
 				</template>
