@@ -13,7 +13,7 @@ import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { Reward } from '@drpg/core/models/reward/RewardList';
+import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { backpackSlot } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
@@ -58,7 +58,7 @@ export const getItemMaxQuantity = (
 	item: ItemFiche
 ) => {
 	if (item.itemId === Item.GOBLIN_MERGUEZ) {
-		if (playerInventoryData.rewards.some(r => r.rewardId === Reward.CARD)) {
+		if (playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)) {
 			if (playerInventoryData.shopKeeper) {
 				return 150;
 			}
@@ -561,7 +561,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		if (!dinozItem) throw new ExpectedError(`This dinoz doesn't have this item equiped`);
 		if (
 			dinozItem.itemId === Item.GOBLIN_MERGUEZ &&
-			dinoz.player.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5)
+			dinoz.player.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)
 		) {
 			if (playerItem >= 100) {
 				throw new ExpectedError(translate('maxQuantityInventory', authed));

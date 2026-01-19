@@ -95,7 +95,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer	 {
+.disclaimer {
 	margin: 10px auto;
 	justify-content: center;
 }

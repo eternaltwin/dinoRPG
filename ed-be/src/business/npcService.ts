@@ -76,6 +76,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	let dinozTalk = dinozBase.npcs.find(npc => npc.npcId === pnj.id);
+	let speechRewards: [Item, number][] = [];
 	// Create NPC's entry at first step for this dinoz
 	if (dinozTalk === undefined) {
 		dinozTalk = await createDinozStep(dinozId, {
@@ -169,7 +170,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Reward statement
 		if (nextStepWantedData.reward !== undefined) {
 			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
-			await rewarder(nextStepWantedData.reward, player.dinoz, authed.id, true);
+			speechRewards = await rewarder(nextStepWantedData.reward, player.dinoz, authed.id, false);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
 			player = await getDinozNPCRequest(dinozId, authed.id);
@@ -194,7 +195,13 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars,
 		service: nextStepServices(nextStepWantedData),
-		rewards: getSpeechItemRewards(nextStepWantedData)
+		rewards: speechRewards.reduce(
+			(acc, [item, quantity]) => {
+				acc[item] = quantity;
+				return acc;
+			},
+			{} as Partial<Record<Item, number>>
+		)
 	};
 }
 

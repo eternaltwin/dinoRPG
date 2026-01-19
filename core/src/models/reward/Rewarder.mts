@@ -20,6 +20,11 @@ export type Rewarder =
 			value: number;
 			quantity: number;
 			reverse?: boolean;
+			notify?: boolean;
+	  }
+	| {
+			rewardType: RewardEnum.MAX_ITEM;
+			value: number;
 	  }
 	| {
 			rewardType: RewardEnum.STATUS;

@@ -19,6 +19,7 @@ import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
+import { getItemMaxQuantity } from '../business/inventoryService.js';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -27,22 +28,24 @@ export async function rewarder(
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
 	playerId: string,
-	notification?: boolean
-) {
+	notify?: boolean
+): Promise<[Item, number][]> {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
 	}
 
+	let actualRewards: [Item, number][] = [];
+
 	for (const dinoz of team) {
 		for (const reward of rewards) {
-			let showNotification = notification;
+			let showNotification = notify ?? true;
 
 			switch (reward.rewardType) {
 				case RewardEnum.STATUS:
 					if (reward.reverse) {
 						await removeStatusFromDinoz(dinoz.id, reward.value);
 					} else {
-						if (dinoz.status.some(status => status.statusId === reward.value)) return;
+						if (dinoz.status.some(status => status.statusId === reward.value)) break;
 						await addStatusToDinoz(dinoz.id, reward.value);
 					}
 					break;
@@ -70,8 +73,29 @@ export async function rewarder(
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
-					if (notification) {
+					if (showNotification) {
 						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					}
+					break;
+				case RewardEnum.MAX_ITEM:
+					const itemRef = Object.values(itemList).find(item => item.itemId === reward.value);
+					if (!itemRef) {
+						throw new ExpectedError(`Item ${reward.value} doesn't exist.`);
+					}
+
+					const playerData = await getPlayerShopOneItemDataRequest(playerId, itemRef.itemId);
+					const playerItemToMaxData = playerData.items.find(item => item.itemId === itemRef.itemId);
+					const maxQuantity = getItemMaxQuantity(playerData, itemRef);
+					if (playerItemToMaxData) {
+						if (playerItemToMaxData.quantity >= maxQuantity) break;
+
+						const actualQuantity = maxQuantity - playerItemToMaxData.quantity;
+
+						await increaseItemQuantity(playerId, itemRef.itemId, actualQuantity);
+						actualRewards.push([itemRef.itemId, actualQuantity]);
+					} else {
+						await insertItem(playerId, { itemId: itemRef.itemId, quantity: maxQuantity });
+						actualRewards.push([itemRef.itemId, maxQuantity]);
 					}
 					break;
 				case RewardEnum.ITEM:
@@ -80,9 +104,7 @@ export async function rewarder(
 						throw new ExpectedError(`Item ${reward.value} doesn't exist.`);
 					}
 
-					if (itemRewarded.itemId === Item.GOBLIN_MERGUEZ) {
-						showNotification = false;
-					}
+					showNotification = reward.notify ?? true;
 
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
 					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
@@ -90,33 +112,17 @@ export async function rewarder(
 						if (reward.reverse) {
 							await decreaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
 						} else {
-							const quantityLimitedByMaxQuantity =
-								(playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity) -
-								playerItemData.quantity;
-							if (
-								playerShopData.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5) &&
-								itemRewarded.itemId === Item.GOBLIN_MERGUEZ
-							) {
-								await increaseItemQuantity(
-									playerId,
-									itemRewarded.itemId,
-									Math.min(playerItemData.quantity + reward.quantity, 100 - playerItemData.quantity)
-								);
-								break;
-							}
-							if (quantityLimitedByMaxQuantity <= 0) break;
+							const maxQuantity = getItemMaxQuantity(playerShopData, itemRewarded);
 
-							await increaseItemQuantity(
-								playerId,
-								itemRewarded.itemId,
-								Math.min(
-									playerItemData.quantity + reward.quantity,
-									playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity
-								) - playerItemData.quantity
-							);
+							if (playerItemData.quantity >= maxQuantity) break;
+
+							const actualQuantity = Math.min(maxQuantity - playerItemData.quantity, reward.quantity);
+							await increaseItemQuantity(playerId, itemRewarded.itemId, actualQuantity);
+							actualRewards.push([itemRewarded.itemId, actualQuantity]);
 						}
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
+						actualRewards.push([itemRewarded.itemId, reward.quantity]);
 					}
 					if (showNotification) {
 						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
@@ -137,9 +143,9 @@ export async function rewarder(
 							player: { connect: { id: playerId } }
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
-					}
-					if (notification && rewardDetails.announced) {
-						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+						if (showNotification && rewardDetails.announced) {
+							await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+						}
 					}
 					break;
 				case RewardEnum.SCENARIO:
@@ -148,7 +154,7 @@ export async function rewarder(
 					} else {
 						await updateQuest(playerId, reward.value, reward.step);
 					}
-					if (notification) {
+					if (showNotification) {
 						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.scenario);
 					}
 					break;
@@ -164,4 +170,6 @@ export async function rewarder(
 			}
 		}
 	}
+
+	return actualRewards;
 }

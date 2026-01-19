@@ -1109,12 +1109,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: string, itemId: 
 					]
 				}
 			},
-			quests: {
-				select: {
-					questId: true,
-					progression: true
-				}
-			}
+			rewards: true
 		}
 	});
 

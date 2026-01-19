@@ -52,6 +52,7 @@ export enum RewardEnum {
 	EXPERIENCE = 'xp',
 	GOLD = 'gold',
 	ITEM = 'item',
+	MAX_ITEM = 'max_item',
 	EPIC = 'epic',
 	SCENARIO = 'scenario',
 	TELEPORT = 'teleport',
