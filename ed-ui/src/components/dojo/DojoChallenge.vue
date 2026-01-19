@@ -26,7 +26,7 @@
 					v-if="victory && !challengeWon"
 					v-html="
 						$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
-							goal: calculateMissedGoal(activeChallenge)
+							goal: formattedGoal
 						})
 					"
 				/>
@@ -91,7 +91,7 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
-import { Challenge, parseChallenge } from '@drpg/core/models/dojo/challenge';
+import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore, playerStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
@@ -170,7 +170,7 @@ export default defineComponent({
 		},
 		calculateMissedGoal(challenge: Challenge) {
 			if (!this.fightStat) return 0;
-			return Math.round(parseChallenge(challenge, this.fightStat));
+			return parseChallenge(challenge, this.fightStat);
 		},
 		selectOpponent(data: number) {
 			const possible = this.opponents.find(d => d.dinoz.id === data);
@@ -252,6 +252,23 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+			}
+		}
+	},
+	computed: {
+		formattedGoal() {
+			if (!this.activeChallenge) return 0;
+			const goal = this.calculateMissedGoal(this.activeChallenge);
+
+			// For percentage based challenges, show up to 2 digits after the comma.
+			if (
+				this.activeChallenge.type === ChallengeType.TakePercentDamage ||
+				this.activeChallenge.type === ChallengeType.AssaultPercentage ||
+				this.activeChallenge.type === ChallengeType.DealPercentDamage
+			) {
+				return goal.toFixed(2);
+			} else {
+				return Math.round(goal);
 			}
 		}
 	},
