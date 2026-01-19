@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`chooseDinoz.pageName`)"></TitleHeader>
+	<DZDisclaimer help round content="chooseDinoz.information" />
 	<div id="chooseDinozName">
-		<DZDisclaimer help round content="chooseDinoz.information" />
 		<div class="dinoz_display">
 			<Suspense>
 				<DinozWithoutFlash
@@ -95,6 +95,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.disclaimer	 {
+	margin: 10px auto;
+	justify-content: center;
+}
 #chooseDinozName {
 	display: flex;
 	flex-wrap: wrap;
