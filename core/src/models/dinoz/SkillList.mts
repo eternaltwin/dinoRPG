@@ -1190,7 +1190,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.ETHER,
-		unlockedFrom: [Skill.BENEDICTION_DARTEMIS],
+		unlockedFrom: [Skill.JOKER],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
