@@ -192,7 +192,9 @@
 									alt="info_button"
 									class="ml-4"
 								/>
-								<span v-if="detail.type === 'skill' || detail.type === 'status'">+{{ detail.value }}</span>
+								<span v-if="detail.type === 'skill' || detail.type === 'status'"
+									>{{ detail.value < 0 ? '-' : '+' }}{{ Math.abs(detail.value) }}</span
+								>
 								<span v-if="detail.type !== 'element' && detail.global" class="detail-name">
 									{{ 'x ' }}
 									<span v-if="detail.element === stat.weak1?.name || detail.element === stat.weak2?.name"> 0.5</span>
