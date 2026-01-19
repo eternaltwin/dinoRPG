@@ -887,7 +887,7 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
 				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
 			}
 		}
@@ -1402,7 +1402,7 @@
 				"attack": "Continuer",
 				"back": "RECULER !!!",
 				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je comprends rien à ce que vous dites..."
+				"swampLeave": "Je ne comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2582,7 +2582,7 @@
 			"23": "Le Charme de Feu augmente la puissance des attaques de Feu de ce Dinoz.",
 			"24": "Le Charme Bao augmente la défense de ce Dinoz contre les attaques d'Eau.",
 			"7": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
 			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
@@ -4275,7 +4275,7 @@
 		"life": "Vie perdue",
 		"experience": "Expérience",
 		"gold": "Or trouvé",
-		"statusReward": "Vous avez reçu: {reward}",
+		"statusReward": "Vous avez reçu : {reward}",
 		"monster": {
 			"goupignon": "Goupignon",
 			"wolf": "Loup",
