@@ -23,6 +23,7 @@ import {
 	BASE_ENERGY_COST,
 	ENERGY_RECOVERY_BASE_FACTOR
 } from '@drpg/core/utils/fightConstants';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -158,7 +159,6 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
-	let dialogBubble = false;
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -215,17 +215,17 @@ export function transpileFight(
 					action: DinoAction.MAXENERGY,
 					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
-				myFighter = undefined;
-				if (dialog && dialogBubble === false) {
-					if (i + 1 < fight.length && fight[i + 1].action !== 'arrive') {
-						dialogBubble = true;
+				if (myFighter.type === 'monster') {
+					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
+					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
 						history.push({
 							action: DinoAction.TALK,
-							fid: dialog.fid,
-							message: t(`quest.${dialog.message}`)
+							fid: myFighter.id,
+							message: t(`quest.${resolvedMonster.text.entrance}`)
 						});
 					}
 				}
+				myFighter = undefined;
 				break;
 			case 'activateEnvironment':
 				break;
@@ -254,11 +254,23 @@ export function transpileFight(
 			case 'cursed':
 				break;
 			case 'death':
+				myFighter = fighters.find(f => f.id === step.fighter.id);
+				if (myFighter && myFighter.type === 'monster') {
+					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
+					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+						history.push({
+							action: DinoAction.TALK,
+							fid: myFighter.id,
+							message: t(`quest.${resolvedMonster.text.entrance}`)
+						});
+					}
+				}
 				history.push({
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
 				activeFighters.filter(f => f.id != step.fighter.id);
+				myFighter = undefined;
 				break;
 			case 'disabledItems':
 				break;

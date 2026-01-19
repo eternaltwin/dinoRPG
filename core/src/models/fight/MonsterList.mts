@@ -40,6 +40,7 @@ export enum Monster {
 	MIMIC = 'MIMIC',
 	EARTH2 = 'EARTH2',
 	KORGON_REINFORCEMENT = 'KORGON_REINFORCEMENT',
+	KORGON_SKULLY = 'KORGON_SKULLY',
 	VEGETOX_GUARD = 'VEGETOX_GUARD',
 	VEGETOX_GUARD_2 = 'VEGETOX_GUARD_2',
 	FRUTOX_DEFENDER = 'FRUTOX_DEFENDER',
@@ -473,6 +474,32 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		],
 		canBeCaptured: true,
 		display: 'korgon'
+	},
+	[Monster.KORGON_SKULLY]: {
+		id: Monster.KORGON_SKULLY,
+		name: 'korgon',
+		hp: 10,
+		elements: {
+			fire: 3,
+			wood: 4,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		resilience: 0,
+		odds: 100,
+		level: 7,
+		zones: [MapZone.JUNGLE],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 2 },
+			{ quantity: 2, odds: 1 }
+		],
+		canBeCaptured: true,
+		display: 'korgon',
+		text: {
+			entrance: 'korgon_start'
+		}
 	},
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
@@ -1558,7 +1585,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		canBeCaptured: true,
-		display: 'brig2'
+		display: 'brig2',
+		text: {
+			entrance: 'baraba_start'
+		}
 	},
 	[Monster.BARATRIBOR]: {
 		id: Monster.BARATRIBOR,
@@ -1579,7 +1609,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		canBeCaptured: true,
-		display: 'brig1'
+		display: 'brig1',
+		text: {
+			entrance: 'boat_start'
+		}
 	},
 	[Monster.ELEMENTAL_DISCIPLE]: {
 		id: Monster.ELEMENTAL_DISCIPLE,
