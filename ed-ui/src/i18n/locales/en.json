@@ -887,7 +887,7 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
 				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
 			}
 		}
@@ -1402,7 +1402,7 @@
 				"attack": "Attack!",
 				"back": "TURN BACK!!!",
 				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je comprends rien à ce que vous dites..."
+				"swampLeave": "Je ne comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2582,7 +2582,7 @@
 			"23": "The Fire Charm increases the strength of your Dinoz Fire attacks.",
 			"24": "Bao Charm increases your Dinoz' defense against Water attacks.",
 			"7": "The upgraded Shovel finally broke, it will have to be fixed before you can use it again.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
 			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
@@ -4275,7 +4275,7 @@
 		"life": "Lost life",
 		"experience": "Experience",
 		"gold": "Gold found",
-		"statusReward": "Vous avez reçu: {reward}",
+		"statusReward": "Vous avez reçu : {reward}",
 		"monster": {
 			"goupignon": "Smashroom",
 			"wolf": "Wolf",
