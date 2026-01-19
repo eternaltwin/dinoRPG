@@ -316,7 +316,7 @@ export const getSpecialStat = (
 
 		const effect = skill.effects[stat];
 
-		if (effect) {
+		if (effect && effect.operator !== MathOperator.ADD_ASSAULT) {
 			value = operatorProcess(value, effect);
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());

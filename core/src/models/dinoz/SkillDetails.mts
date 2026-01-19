@@ -43,11 +43,11 @@ export type PassiveEffects = {
 	[Stat.LIGHTNING_DEFENSE]?: EffectDescriptor;
 	[Stat.AIR_DEFENSE]?: EffectDescriptor;
 	// Assaults
-	[Stat.FIRE_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.FIRE_ASSAULT>;
-	[Stat.WOOD_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.WOOD_ASSAULT>;
-	[Stat.WATER_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.WATER_ASSAULT>;
-	[Stat.LIGHTNING_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
-	[Stat.AIR_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.AIR_ASSAULT>;
+	[Stat.FIRE_ASSAULT]?: EffectDescriptor; // | OtherAssaults<Stat.FIRE_ASSAULT>;
+	[Stat.WOOD_ASSAULT]?: EffectDescriptor; // | OtherAssaults<Stat.WOOD_ASSAULT>;
+	[Stat.WATER_ASSAULT]?: EffectDescriptor; // | OtherAssaults<Stat.WATER_ASSAULT>;
+	[Stat.LIGHTNING_ASSAULT]?: EffectDescriptor; // | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+	[Stat.AIR_ASSAULT]?: EffectDescriptor; // | OtherAssaults<Stat.AIR_ASSAULT>;
 	// Armors
 	[Stat.ARMOR]?: EffectDescriptor;
 	// [Stat.FIRE_ARMOR]?: [MathOperator.MULTIPLY, number];
@@ -103,10 +103,36 @@ export type PassiveEffects = {
 	[Stat.CRITICAL_HIT_DAMAGE]?: EffectDescriptor;
 };
 
-export type EffectDescriptor = {
-	operator: MathOperator;
-	value: number;
-};
+export type EffectDescriptor =
+	| {
+			operator: MathOperator.ADD | MathOperator.MULTIPLY | MathOperator.EQUAL;
+			value: number;
+	  }
+	| {
+			operator: MathOperator.ADD_ASSAULT;
+			valueAssault: OtherAssaults<Stat.FIRE_ASSAULT>;
+			excludedAssault: Stat.FIRE_ASSAULT;
+	  }
+	| {
+			operator: MathOperator.ADD_ASSAULT;
+			valueAssault: OtherAssaults<Stat.WATER_ASSAULT>;
+			excludedAssault: Stat.WATER_ASSAULT;
+	  }
+	| {
+			operator: MathOperator.ADD_ASSAULT;
+			valueAssault: OtherAssaults<Stat.WOOD_ASSAULT>;
+			excludedAssault: Stat.WOOD_ASSAULT;
+	  }
+	| {
+			operator: MathOperator.ADD_ASSAULT;
+			valueAssault: OtherAssaults<Stat.AIR_ASSAULT>;
+			excludedAssault: Stat.AIR_ASSAULT;
+	  }
+	| {
+			operator: MathOperator.ADD_ASSAULT;
+			valueAssault: OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+			excludedAssault: Stat.LIGHTNING_ASSAULT;
+	  };
 
 export interface SkillDetails {
 	id: Skill;

@@ -75,5 +75,6 @@ export enum Comparator {
 export enum MathOperator {
 	ADD = '+',
 	EQUAL = '=',
-	MULTIPLY = 'x'
+	MULTIPLY = 'x',
+	ADD_ASSAULT = '_'
 }

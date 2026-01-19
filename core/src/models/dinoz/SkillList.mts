@@ -1680,8 +1680,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: Stat.LIGHTNING_ASSAULT,
-			[Stat.LIGHTNING_ASSAULT]: Stat.WOOD_ASSAULT
+			[Stat.WOOD_ASSAULT]: {
+				operator: MathOperator.ADD_ASSAULT,
+				valueAssault: Stat.LIGHTNING_ASSAULT,
+				excludedAssault: Stat.WOOD_ASSAULT
+			},
+			[Stat.LIGHTNING_ASSAULT]: {
+				operator: MathOperator.ADD_ASSAULT,
+				valueAssault: Stat.WOOD_ASSAULT,
+				excludedAssault: Stat.LIGHTNING_ASSAULT
+			}
 		}
 	},
 	[Skill.LOUP_GAROU]: {

@@ -3,6 +3,7 @@ import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
+import { MathOperator } from '../models/enums/Parser.mjs';
 
 export enum AssaultElement {
 	FIRE = 'fire',
@@ -83,8 +84,8 @@ export const getAssaultStat = (
 
 		if (effect) {
 			// Flat value
-			if (typeof effect === 'number') {
-				bonus += effect;
+			if (effect.operator !== MathOperator.ADD_ASSAULT) {
+				bonus += effect.value;
 				details.push({
 					type: 'skill',
 					name: skill.name,
@@ -94,12 +95,12 @@ export const getAssaultStat = (
 								.find(([, value]) => value === element)?.[0]
 								.toLocaleLowerCase() || ''
 					),
-					value: effect
+					value: effect.value
 				});
 			} else {
 				// Other element value
 				let otherElementValue = 0;
-				switch (effect) {
+				switch (effect.valueAssault) {
 					case Stat.FIRE_ASSAULT:
 						otherElementValue = dinoz.nbrUpFire || 0;
 						break;
