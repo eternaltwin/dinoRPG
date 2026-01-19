@@ -887,7 +887,7 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
 				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
 			}
 		}
@@ -1402,7 +1402,7 @@
 				"attack": "Continuar",
 				"back": "¡¡¡REGRESAR!!!",
 				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je comprends rien à ce que vous dites..."
+				"swampLeave": "Je ne comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2582,7 +2582,7 @@
 			"23": "El Talismán de Fuego aumenta el poder de los ataques de Fuego de este Dino.",
 			"24": "El Talismán Bao aumenta la defensa de tu Dino contra los ataques de Agua.",
 			"7": "La Pala Mejorada al fin se rompió, tendrás que repararla antes de volver a usarla.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
 			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
@@ -4275,7 +4275,7 @@
 		"life": "Vida perdida",
 		"experience": "Experiencia",
 		"gold": "Oro obtenido",
-		"statusReward": "Vous avez reçu: {reward}",
+		"statusReward": "Vous avez reçu : {reward}",
 		"monster": {
 			"goupignon": "Gupión",
 			"wolf": "Lobo",
