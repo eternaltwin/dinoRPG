@@ -887,7 +887,7 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
 				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
 			}
 		}
@@ -1402,7 +1402,7 @@
 				"attack": "Kurs halten",
 				"back": "ABDREHEN!!!",
 				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je comprends rien à ce que vous dites..."
+				"swampLeave": "Je ne comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2582,7 +2582,7 @@
 			"23": "Die Feuerverzauberung erhöht die Stärke der Feuerangriffe dieses Dinoz.",
 			"24": "Die Bao-Verzauberung erhöht die Abwehr dieses Dinoz gegen Wasserangriffe.",
 			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
 			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
@@ -4275,7 +4275,7 @@
 		"life": "Verlorene LP",
 		"experience": "Erfahrung",
 		"gold": "Gold",
-		"statusReward": "Vous avez reçu: {reward}",
+		"statusReward": "Vous avez reçu : {reward}",
 		"monster": {
 			"goupignon": "Kloppignon",
 			"wolf": "Wolf",
