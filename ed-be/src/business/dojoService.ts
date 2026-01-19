@@ -182,7 +182,7 @@ export async function fightFriend(req: Request) {
 	});
 
 	const fightResult = calculateFightBetweenPlayers(
-		STANDARD_PVP_RULES,
+		DOJO_CHALLENGE_RULES,
 		leftTeam,
 		leftPlayer.cooker,
 		rightTeam,
