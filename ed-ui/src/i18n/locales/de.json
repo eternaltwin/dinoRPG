@@ -887,8 +887,8 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
-				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
+				"flooded": "Der Sumpf ist heute völlig geflutet und es ist unmöglich, herauszukommen.",
+				"foggy": "Der Sumpf derzeit von Nebel umhüllt und es lassen sich keine Monster zum Kämpfen finden."
 			}
 		}
 	},
@@ -4169,9 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
 				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
 			},
-			"nickname": "Spitzname des Spielers:",
+			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
-			"saved": "Modifications enregistrées avec succès !"
+			"saved": "Änderungen erfolgreich gespeichert!"
 		},
 		"request": {
 			"title": "Wartende Anfragen",
@@ -4275,7 +4275,7 @@
 		"life": "Verlorene LP",
 		"experience": "Erfahrung",
 		"gold": "Gold",
-		"statusReward": "Vous avez reçu : {reward}",
+		"statusReward": "Du hast {reward} erhalten!",
 		"monster": {
 			"goupignon": "Kloppignon",
 			"wolf": "Wolf",
@@ -4609,7 +4609,7 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Kampf ansehen",
+		"seeFight": "Kampf von {player} ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
