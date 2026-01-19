@@ -887,8 +887,8 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
-				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
+				"flooded": "El pantano está actualmente inundado. No podrás salir de él.",
+				"foggy": "El pantano está actualmente cubierto de bruma, seguramente no encontrarás ningún monstruo para combatir."
 			}
 		}
 	},
@@ -1391,7 +1391,7 @@
 				"sry": "Site popre ven pa, sino mot'dan lobatou, k?",
 				"go": "Jovebozé te lleva al mar, a una parte que parece ser evitada por los otros barcos... Al acercarte, ves lo que parece ser un enorme Rascafandro a algunas decenas de metros del barco. Si continúas en esta dirección y si el Guardia Atlanteido llevaba razón, vas a ser atacado de un momento a otro... ¡¡cuanto más rápido pase esto mejor!!",
 				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido...",
-				"weirdSwamp": "Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
+				"weirdSwamp": "¿Ha' vi'to algo rarou en el pantano vi'coso? ¡Esho se mouve solo, te digo sho!",
 				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
 				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
 			},
