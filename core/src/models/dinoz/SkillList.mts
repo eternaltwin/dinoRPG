@@ -375,7 +375,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 7]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 7 }
 		}
 	},
 	[Skill.COLERE]: {
@@ -407,11 +407,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 1]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.BRASERO]: {
@@ -469,7 +469,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.PLUS, 4]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 4 }
 		}
 	},
 	[Skill.FURIE]: {
@@ -484,16 +484,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 3],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 3],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 3],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 3],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 3],
-			[Stat.FIRE_DEFENSE]: [MathOperator.LESS, 2],
-			[Stat.WATER_DEFENSE]: [MathOperator.LESS, 2],
-			[Stat.AIR_DEFENSE]: [MathOperator.LESS, 2],
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.LESS, 2],
-			[Stat.WOOD_DEFENSE]: [MathOperator.LESS, 2]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: -2 },
+			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: -2 },
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: -2 },
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: -2 },
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: -2 }
 		}
 	},
 	[Skill.CHASSEUR_DE_GOUPIGNON]: {
@@ -520,11 +520,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 2]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.DETONATION]: {
@@ -560,8 +560,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ELEMENT]: [MathOperator.LESS, 2],
-			[Stat.FIRE_SPEED]: [MathOperator.MULTIPLY, 0.7]
+			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: -2 },
+			[Stat.FIRE_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.7 }
 		}
 	},
 	[Skill.VIGILANCE]: {
@@ -576,7 +576,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
-			[Stat.FIRE_DEFENSE]: [MathOperator.PLUS, 5]
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.COEUR_ARDENT]: {
@@ -591,8 +591,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 20],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 12]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 12 }
 		}
 	},
 	[Skill.COULEE_DE_LAVE]: {
@@ -683,9 +683,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: [MathOperator.MULTIPLY, 1.1],
-			[Stat.MAX_HP]: [MathOperator.PLUS, 20],
-			[Stat.INITIATIVE]: [MathOperator.LESS, 5]
+			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.1 },
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 },
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -5 }
 		}
 	},
 	[Skill.AURA_INCANDESCENTE]: {
@@ -700,7 +700,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ELEMENT]: [MathOperator.PLUS, 2]
+			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.VENGEANCE]: {
@@ -715,7 +715,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: [MathOperator.MULTIPLY, 1.05]
+			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.05 }
 		}
 	},
 	[Skill.COMBUSTION]: {
@@ -842,7 +842,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.LESS, 3]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -3 }
 		}
 	},
 	[Skill.SPRINT]: {
@@ -857,7 +857,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.PLUS, 6]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 6 }
 		}
 	},
 	[Skill.VENDETTA]: {
@@ -872,7 +872,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.METEORES]: {
@@ -914,7 +914,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.15]
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.15 }
 		}
 	},
 	[Skill.MAITRE_ELEMENTAIRE]: {
@@ -929,8 +929,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ELEMENT]: [MathOperator.PLUS, 2],
-			[Stat.FIRE_ELEMENT]: [MathOperator.PLUS, 2]
+			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.SALAMANDRE]: {
@@ -1002,10 +1002,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 50],
-			[Stat.FIRE_ELEMENT]: [MathOperator.PLUS, 6],
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 0.85],
-			[Stat.MAX_FOLLOWERS]: [MathOperator.EQUAL, 0]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
+			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 },
+			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.EQUAL, value: 0 }
 		}
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
@@ -1020,7 +1020,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 1.3]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.3 }
 		}
 	},
 	[Skill.EXTENUATION]: {
@@ -1063,8 +1063,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 30],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 5]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.CRI_DE_GUERRE]: {
@@ -1097,7 +1097,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: [MathOperator.MULTIPLY, 1.3]
+			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.3 }
 		}
 	},
 	[Skill.BENEDICTION_DARTEMIS]: {
@@ -1136,7 +1136,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_DEFENSE]: [MathOperator.PLUS, 20]
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.PAYS_DE_CENDRE]: {
@@ -1208,7 +1208,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 20]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	// WOOD Skills
@@ -1224,7 +1224,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.05]
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.05 }
 		}
 	},
 	[Skill.SAUVAGERIE]: {
@@ -1239,7 +1239,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 5]
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.ENDURANCE]: {
@@ -1254,7 +1254,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
-			[Stat.WOOD_DEFENSE]: [MathOperator.PLUS, 2]
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.LANCEUR_DE_GLAND]: {
@@ -1314,7 +1314,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_FOLLOWERS]: [MathOperator.PLUS, 1]
+			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.TENACITE]: {
@@ -1353,12 +1353,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 20],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 1],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 1]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.GRATTEUR]: {
@@ -1414,7 +1414,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.HP_REGEN]: [MathOperator.MULTIPLY, 2]
+			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
 		}
 	},
 	[Skill.INSTINCT_SAUVAGE]: {
@@ -1429,7 +1429,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ELEMENT]: [MathOperator.PLUS, 2]
+			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.LARGE_MACHOIRE]: {
@@ -1444,7 +1444,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 15]
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 15 }
 		}
 	},
 	[Skill.ACROBATE]: {
@@ -1459,7 +1459,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 0.85]
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 }
 		}
 	},
 	[Skill.PRINTEMPS_PRECOCE]: {
@@ -1489,7 +1489,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_FOLLOWERS]: [MathOperator.PLUS, 1]
+			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.RESISTANCE_A_LA_MAGIE]: {
@@ -1533,8 +1533,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 12],
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.1]
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 12 },
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.1 }
 		}
 	},
 	[Skill.EXPERT_EN_FOUILLE]: {
@@ -1616,13 +1616,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.MAX_HP]: [MathOperator.PLUS, 30],
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 },
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.GARDE_FORESTIER]: {
@@ -1715,13 +1715,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 50],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.OXYGENATION_MUSCULAIRE]: {
@@ -1736,7 +1736,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.VERT]: {
@@ -1804,7 +1804,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 0.85]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 0.85 }
 		}
 	},
 	[Skill.LANCER_DE_ROCHE]: {
@@ -1859,7 +1859,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 50]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 }
 		}
 	},
 	[Skill.CHAMPOLLION]: {
@@ -1886,8 +1886,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_DEFENSE]: [MathOperator.PLUS, 20],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 20]
+			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: 20 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.BERSERK]: {
@@ -1916,7 +1916,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.PLUS, 20]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.MUR_DE_BOUE]: {
@@ -1946,7 +1946,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 100]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 100 }
 		}
 	},
 	[Skill.SHARIGNAN]: {
@@ -2020,7 +2020,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 4]
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 4 }
 		}
 	},
 	[Skill.MUTATION]: {
@@ -2035,7 +2035,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 30]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 }
 		}
 	},
 	[Skill.VITALITE]: {
@@ -2050,7 +2050,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 10]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 10 }
 		}
 	},
 	[Skill.GEL]: {
@@ -2143,7 +2143,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 10]
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 10 }
 		}
 	},
 	[Skill.ECAILLES_LUMINESCENTES]: {
@@ -2159,7 +2159,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.1]
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.1 }
 		}
 	},
 	[Skill.MOIGNONS_LIQUIDES]: {
@@ -2190,7 +2190,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: [MathOperator.PLUS, 25]
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 25 }
 		}
 	},
 	[Skill.PETRIFICATION]: {
@@ -2266,7 +2266,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 10]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 10 }
 		}
 	},
 	[Skill.PECHEUR_CONFIRME]: {
@@ -2308,7 +2308,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 100]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 100 }
 		}
 	},
 	[Skill.SANS_PITIE]: {
@@ -2377,8 +2377,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: [MathOperator.MULTIPLY, 1.1],
-			[Stat.WATER_SPEED]: [MathOperator.MULTIPLY, 1.15]
+			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 },
+			[Stat.WATER_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.15 }
 		}
 	},
 	[Skill.RAYON_KAAR_SHER]: {
@@ -2420,7 +2420,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 20]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.MAITRE_PECHEUR]: {
@@ -2485,11 +2485,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.WATER_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.WOOD_DEFENSE]: [MathOperator.PLUS, 2]
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.ONDINE]: {
@@ -2523,7 +2523,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ELEMENT]: [MathOperator.PLUS, 5]
+			[Stat.WATER_ELEMENT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.LEVIATHAN]: {
@@ -2557,7 +2557,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.HP_REGEN]: [MathOperator.MULTIPLY, 2]
+			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
 		}
 	},
 	[Skill.RADIATIONS_GAMMA]: {
@@ -2572,13 +2572,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 30],
-			[Stat.INITIATIVE]: [MathOperator.LESS, 10],
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 5]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 },
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -10 },
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.BLEU]: {
@@ -2605,7 +2605,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.PLUS, 20]
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.CARAPACE_BLINDEE]: {
@@ -2620,8 +2620,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.5],
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.5 },
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.DIETE_CHROMATIQUE]: {
@@ -2650,7 +2650,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_FOLLOWERS]: [MathOperator.PLUS, 1]
+			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.NEMO]: {
@@ -2720,7 +2720,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 20]
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.HYPERVENTILATION]: {
@@ -2781,7 +2781,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 80]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 80 }
 		}
 	},
 	// LIGHTNING
@@ -2825,7 +2825,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 0.85]
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 }
 		}
 	},
 	[Skill.REFLEX]: {
@@ -2840,7 +2840,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.PLUS, 5]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.CONCENTRATION]: {
@@ -2867,7 +2867,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.LIGHTNING_SPEED]: [MathOperator.MULTIPLY, 0.6]
+			[Stat.LIGHTNING_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.6 }
 		}
 	},
 	[Skill.PARATONNERRE]: {
@@ -2894,7 +2894,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.REGENERESCENCE]: {
@@ -2909,7 +2909,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.HP_REGEN]: [MathOperator.MULTIPLY, 2]
+			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
 		}
 	},
 	[Skill.PREMIERS_SOINS]: {
@@ -2978,8 +2978,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 6],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 6]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 6 }
 		}
 	},
 	[Skill.PLAN_DE_CARRIERE]: {
@@ -3006,7 +3006,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.LIGHTNING_SPEED]: [MathOperator.MULTIPLY, 0.5]
+			[Stat.LIGHTNING_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.5 }
 		}
 	},
 	[Skill.VOIE_DE_GAIA]: {
@@ -3021,8 +3021,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
-			[Stat.WOOD_DEFENSE]: [MathOperator.PLUS, 3],
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.PLUS, 3]
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 3 },
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 3 }
 		}
 	},
 	[Skill.MEDECINE]: {
@@ -3068,7 +3068,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.PLUS, 7]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 7 }
 		}
 	},
 	[Skill.PUREE_SALVATRICE]: {
@@ -3119,11 +3119,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 2]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.SURVIE]: {
@@ -3232,7 +3232,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: [MathOperator.MULTIPLY, 1.15]
+			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.15 }
 		}
 	},
 	[Skill.ELECTROLYSE]: {
@@ -3335,8 +3335,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ELEMENT]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_ELEMENT]: [MathOperator.PLUS, 1]
+			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_ELEMENT]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.ARCHANGE_GENESIF]: {
@@ -3351,8 +3351,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ELEMENT]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_ELEMENT]: [MathOperator.PLUS, 1]
+			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_ELEMENT]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.PRETRE]: {
@@ -3379,7 +3379,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 1.1]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.1 }
 		}
 	},
 	[Skill.STIMULATION_CARDIAQUE]: {
@@ -3394,7 +3394,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.JAUNE]: {
@@ -3449,8 +3449,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: [MathOperator.PLUS, 50],
-			[Stat.INITIATIVE]: [MathOperator.MULTIPLY, 0.15]
+			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
+			[Stat.INITIATIVE]: { operator: MathOperator.MULTIPLY, value: 0.15 }
 		}
 	},
 	[Skill.EINSTEIN]: {
@@ -3477,7 +3477,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 20]
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.ORACLE]: {
@@ -3535,7 +3535,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 20]
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.REMANENCE_HERTZIENNE]: {
@@ -3550,7 +3550,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.AGILITE]: {
@@ -3565,7 +3565,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 5]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.STRATEGIE]: {
@@ -3637,7 +3637,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: [MathOperator.MULTIPLY, 1.1]
+			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 }
 		}
 	},
 	[Skill.SAUT]: {
@@ -3688,8 +3688,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 15],
-			[Stat.AIR_SPEED]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.TORNADE]: {
@@ -3746,10 +3746,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 10]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 10 }
 		},
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 3]
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 3 }
 		}
 	},
 	[Skill.ATTAQUE_PLONGEANTE]: {
@@ -3783,9 +3783,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.WATER_DEFENSE]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.PLUS, 2]
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.SPECIALISTE]: {
@@ -3812,11 +3812,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 2],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 2]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.NUAGE_TOXIQUE]: {
@@ -3859,7 +3859,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: [MathOperator.MULTIPLY, 1.2]
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
 		}
 	},
 	[Skill.PAUME_EJECTABLE]: {
@@ -3998,10 +3998,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: [MathOperator.MULTIPLY, 1.5]
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
 		},
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 3]
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 3 }
 		}
 	},
 	[Skill.PROFESSEUR]: {
@@ -4081,10 +4081,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: [MathOperator.MULTIPLY, 1.5]
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
 		},
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 6]
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 6 }
 		}
 	},
 	[Skill.DJINN]: {
@@ -4149,7 +4149,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: [MathOperator.MULTIPLY, 1.25]
+			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 1.25 }
 		}
 	},
 	[Skill.BLANC]: {
@@ -4176,7 +4176,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 0.75]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 0.75 }
 		}
 	},
 	[Skill.DOUBLE_FACE]: {
@@ -4203,7 +4203,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: [MathOperator.MULTIPLY, 0.85]
+			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 0.85 }
 		}
 	},
 	[Skill.SOUFFLE_DANGE]: {
@@ -4218,7 +4218,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: [MathOperator.PLUS, 20]
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.OURAGAN]: {
@@ -4233,7 +4233,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 20]
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
 		}
 	},
 	[Skill.OURANOS]: {
@@ -4265,7 +4265,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 1.5]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.5 }
 		}
 	},
 	[Skill.LONDUHAUT]: {
@@ -4442,7 +4442,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: [MathOperator.MULTIPLY, 1.05]
+			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.05 }
 		}
 	},
 	[Skill.CHARGE_CORNUE]: {
@@ -4505,7 +4505,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: [MathOperator.MULTIPLY, 1.1]
+			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 }
 		}
 	},
 	[Skill.DEPLACEMENT_INSTANTANE]: {
@@ -4520,7 +4520,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.SUPER_EVASION]: [MathOperator.MULTIPLY, 1.15]
+			[Stat.SUPER_EVASION]: { operator: MathOperator.MULTIPLY, value: 1.15 }
 		}
 	},
 	[Skill.NAPOMAGICIEN]: {
@@ -4547,11 +4547,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.WOOD_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.WATER_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.LIGHTNING_ASSAULT]: [MathOperator.PLUS, 5],
-			[Stat.AIR_ASSAULT]: [MathOperator.PLUS, 5]
+			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
+			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
 		}
 	},
 	[Skill.ORIGINE_CAUSHEMESHENNE]: {
@@ -4625,8 +4625,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: [MathOperator.MULTIPLY, 1.25],
-			[Stat.ENERGY_RECOVERY]: [MathOperator.MULTIPLY, 1.25]
+			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.25 },
+			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 1.25 }
 		}
 	},
 	[Skill.BIGMAGNON]: {
@@ -4660,11 +4660,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: [MathOperator.PLUS, 6],
-			[Stat.WOOD_DEFENSE]: [MathOperator.PLUS, 6],
-			[Stat.WATER_DEFENSE]: [MathOperator.PLUS, 6],
-			[Stat.LIGHTNING_DEFENSE]: [MathOperator.PLUS, 6],
-			[Stat.AIR_DEFENSE]: [MathOperator.PLUS, 6]
+			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 6 },
+			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 6 }
 		}
 	},
 	[Skill.HERCOLUBUS]: {
@@ -5365,8 +5365,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: [MathOperator.LESS, 30],
-			[Stat.SPEED]: [MathOperator.MULTIPLY, 3]
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -30 },
+			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 3 }
 		}
 	},
 	[Skill.CATCH]: {

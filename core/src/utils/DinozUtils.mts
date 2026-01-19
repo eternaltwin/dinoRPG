@@ -31,6 +31,7 @@ import { ExpectedError } from './ExpectedError.mjs';
 import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
 import { getHUDObjective } from './MissionUtils.mjs';
 import { MathOperator } from '../models/enums/Parser.mjs';
+import { operatorProcess } from './helper.mjs';
 
 type Config = {
 	dinoz: {
@@ -295,18 +296,7 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 		if (dinoz.skills.some(s => s.skillId === skill.id)) {
 			const effect = skill.effects?.[Stat.MAX_FOLLOWERS];
 			if (effect) {
-				const [operator, value] = effect;
-				switch (operator) {
-					case MathOperator.PLUS:
-						max += value;
-						break;
-					case MathOperator.LESS:
-						max -= value;
-						break;
-					case MathOperator.EQUAL:
-						max = value;
-						break;
-				}
+				max = operatorProcess(max, effect);
 			}
 		}
 	}

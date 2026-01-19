@@ -73,8 +73,7 @@ export enum Comparator {
 }
 
 export enum MathOperator {
-	PLUS = '+',
-	LESS = '-',
+	ADD = '+',
 	EQUAL = '=',
 	MULTIPLY = 'x'
 }

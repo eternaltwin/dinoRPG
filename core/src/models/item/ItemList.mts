@@ -2170,7 +2170,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 0,
 		display: 'cgold',
 		passiveEffects: {
-			[Stat.CRITICAL_HIT_CHANCE]: [MathOperator.MULTIPLY, 1.01]
+			[Stat.CRITICAL_HIT_CHANCE]: { operator: MathOperator.MULTIPLY, value: 1.01 }
 		}
 	},
 	// Brings a little bamboo with you in each fight

@@ -5,6 +5,7 @@ import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Item, itemList } from '../models/item/ItemList.mjs';
 import { MathOperator } from '../models/enums/Parser.mjs';
+import { operatorProcess } from './helper.mjs';
 
 export enum SpecialStat {
 	// Unique
@@ -316,34 +317,17 @@ export const getSpecialStat = (
 		const effect = skill.effects[stat];
 
 		if (effect) {
-			const [operator, effectValue] = effect;
-			let rawValue = effectValue;
-			switch (operator) {
-				case MathOperator.PLUS:
-					value += effectValue;
-					break;
-				case MathOperator.LESS:
-					value -= effectValue;
-					break;
-				case MathOperator.MULTIPLY:
-					value *= effectValue;
-					break;
-				case MathOperator.EQUAL:
-					value = effectValue;
-					break;
-				default:
-					break;
-			}
+			value = operatorProcess(value, effect);
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
 
 			let finalValue;
 			if (percent) {
 				// Multiply by 100 for a percent
-				finalValue = Math.round(effectValue * 100);
+				finalValue = Math.round(effect.value * 100);
 			} else {
 				// Other use the effect value
-				finalValue = effectValue;
+				finalValue = effect.value;
 			}
 			if (base_stat > 0) {
 				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
@@ -354,14 +338,14 @@ export const getSpecialStat = (
 				type: 'skill',
 				name: skill.name,
 				percent,
-				multiplier: operator === MathOperator.MULTIPLY,
+				multiplier: effect.operator === MathOperator.MULTIPLY,
 				elements: skill.element.map(
 					el =>
 						Object.entries(ElementType)
 							.find(([, value]) => value === el)?.[0]
 							.toLocaleLowerCase() || ''
 				),
-				value: rawValue
+				value: effect.value
 			});
 		}
 	});
@@ -376,16 +360,13 @@ export const getSpecialStat = (
 		const isAddition = typeof effect === 'number';
 
 		if (effect) {
-			let effectValue = 0;
-
-			// Flat value
-			if (isAddition) {
-				effectValue = effect;
-				value += effect;
-			} else {
-				// Multiplier
-				effectValue = effect[1] - 1;
-				multiplier *= effect[1];
+			// let effectValue = 0;
+			let effectValue = operatorProcess(0, effect);
+			if (effect.operator === MathOperator.ADD) {
+				value += effect.value;
+			}
+			if (effect.operator === MathOperator.MULTIPLY) {
+				multiplier *= effect.value;
 			}
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());

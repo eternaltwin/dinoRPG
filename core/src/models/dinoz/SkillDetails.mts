@@ -16,40 +16,40 @@ type OtherAssaults<T> = Exclude<
 >;
 
 export type PassiveEffects = {
-	[Stat.MAX_HP]?: [MathOperator, number];
-	[Stat.HP_REGEN]?: [MathOperator, number];
-	[Stat.MAX_FOLLOWERS]?: [MathOperator, number];
-	[Stat.INITIATIVE]?: [MathOperator, number];
-	[Stat.ENERGY]?: [MathOperator, number];
-	[Stat.ENERGY_RECOVERY]?: [MathOperator, number];
+	[Stat.MAX_HP]?: EffectDescriptor;
+	[Stat.HP_REGEN]?: EffectDescriptor;
+	[Stat.MAX_FOLLOWERS]?: EffectDescriptor;
+	[Stat.INITIATIVE]?: EffectDescriptor;
+	[Stat.ENERGY]?: EffectDescriptor;
+	[Stat.ENERGY_RECOVERY]?: EffectDescriptor;
 	// Elements
-	[Stat.FIRE_ELEMENT]?: [MathOperator, number];
-	[Stat.WOOD_ELEMENT]?: [MathOperator, number];
-	[Stat.WATER_ELEMENT]?: [MathOperator, number];
-	[Stat.LIGHTNING_ELEMENT]?: [MathOperator, number];
-	[Stat.AIR_ELEMENT]?: [MathOperator, number];
+	[Stat.FIRE_ELEMENT]?: EffectDescriptor;
+	[Stat.WOOD_ELEMENT]?: EffectDescriptor;
+	[Stat.WATER_ELEMENT]?: EffectDescriptor;
+	[Stat.LIGHTNING_ELEMENT]?: EffectDescriptor;
+	[Stat.AIR_ELEMENT]?: EffectDescriptor;
 	// Speeds
-	[Stat.SPEED]?: [MathOperator, number];
-	[Stat.FIRE_SPEED]?: [MathOperator, number];
-	[Stat.WOOD_SPEED]?: [MathOperator, number];
-	[Stat.WATER_SPEED]?: [MathOperator, number];
-	[Stat.LIGHTNING_SPEED]?: [MathOperator, number];
-	[Stat.AIR_SPEED]?: [MathOperator, number];
+	[Stat.SPEED]?: EffectDescriptor;
+	[Stat.FIRE_SPEED]?: EffectDescriptor;
+	[Stat.WOOD_SPEED]?: EffectDescriptor;
+	[Stat.WATER_SPEED]?: EffectDescriptor;
+	[Stat.LIGHTNING_SPEED]?: EffectDescriptor;
+	[Stat.AIR_SPEED]?: EffectDescriptor;
 	// [Stat.VOID_SPEED]?: [MathOperator.MULTIPLY, number];
 	// Defenses
-	[Stat.FIRE_DEFENSE]?: [MathOperator, number];
-	[Stat.WOOD_DEFENSE]?: [MathOperator, number];
-	[Stat.WATER_DEFENSE]?: [MathOperator, number];
-	[Stat.LIGHTNING_DEFENSE]?: [MathOperator, number];
-	[Stat.AIR_DEFENSE]?: [MathOperator, number];
+	[Stat.FIRE_DEFENSE]?: EffectDescriptor;
+	[Stat.WOOD_DEFENSE]?: EffectDescriptor;
+	[Stat.WATER_DEFENSE]?: EffectDescriptor;
+	[Stat.LIGHTNING_DEFENSE]?: EffectDescriptor;
+	[Stat.AIR_DEFENSE]?: EffectDescriptor;
 	// Assaults
-	[Stat.FIRE_ASSAULT]?: [MathOperator, number] | OtherAssaults<Stat.FIRE_ASSAULT>;
-	[Stat.WOOD_ASSAULT]?: [MathOperator, number] | OtherAssaults<Stat.WOOD_ASSAULT>;
-	[Stat.WATER_ASSAULT]?: [MathOperator, number] | OtherAssaults<Stat.WATER_ASSAULT>;
-	[Stat.LIGHTNING_ASSAULT]?: [MathOperator, number] | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
-	[Stat.AIR_ASSAULT]?: [MathOperator, number] | OtherAssaults<Stat.AIR_ASSAULT>;
+	[Stat.FIRE_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.FIRE_ASSAULT>;
+	[Stat.WOOD_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.WOOD_ASSAULT>;
+	[Stat.WATER_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.WATER_ASSAULT>;
+	[Stat.LIGHTNING_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+	[Stat.AIR_ASSAULT]?: EffectDescriptor | OtherAssaults<Stat.AIR_ASSAULT>;
 	// Armors
-	[Stat.ARMOR]?: [MathOperator, number];
+	[Stat.ARMOR]?: EffectDescriptor;
 	// [Stat.FIRE_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WOOD_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_ARMOR]?: [MathOperator.MULTIPLY, number];
@@ -57,7 +57,7 @@ export type PassiveEffects = {
 	// [Stat.AIR_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// Counters
-	[Stat.COUNTER]?: [MathOperator, number];
+	[Stat.COUNTER]?: EffectDescriptor;
 	// [Stat.FIRE_COUNTER]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WOOD_COUNTER]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_COUNTER]?: [MathOperator.MULTIPLY, number];
@@ -65,7 +65,7 @@ export type PassiveEffects = {
 	// [Stat.AIR_COUNTER]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_COUNTER]?: [MathOperator.MULTIPLY, number];
 	// Armor ignores
-	[Stat.ARMOR_BREAK]?: [MathOperator, number];
+	[Stat.ARMOR_BREAK]?: EffectDescriptor;
 	// [Stat.ASSAULT_IGNORE_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.FIRE_IGNORE_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_IGNORE_ARMOR]?: [MathOperator.MULTIPLY, number];
@@ -74,7 +74,7 @@ export type PassiveEffects = {
 	// [Stat.AIR_IGNORE_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_IGNORE_ARMOR]?: [MathOperator.MULTIPLY, number];
 	// Evasions
-	[Stat.EVASION]?: [MathOperator, number];
+	[Stat.EVASION]?: EffectDescriptor;
 	// [Stat.FIRE_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WOOD_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_EVASION]?: [MathOperator.MULTIPLY, number];
@@ -82,7 +82,7 @@ export type PassiveEffects = {
 	// [Stat.AIR_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_EVASION]?: [MathOperator.MULTIPLY, number];
 	// Super evasions
-	[Stat.SUPER_EVASION]?: [MathOperator, number];
+	[Stat.SUPER_EVASION]?: EffectDescriptor;
 	// [Stat.FIRE_SUPER_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WOOD_SUPER_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_SUPER_EVASION]?: [MathOperator.MULTIPLY, number];
@@ -90,7 +90,7 @@ export type PassiveEffects = {
 	// [Stat.AIR_SUPER_EVASION]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_SUPER_EVASION]?: [MathOperator.MULTIPLY, number];
 	// Multihits
-	[Stat.MULTIHIT]?: [MathOperator, number];
+	[Stat.MULTIHIT]?: EffectDescriptor;
 	// [Stat.FIRE_MULTIHIT]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WOOD_MULTIHIT]?: [MathOperator.MULTIPLY, number];
 	// [Stat.WATER_MULTIHIT]?: [MathOperator.MULTIPLY, number];
@@ -98,9 +98,14 @@ export type PassiveEffects = {
 	// [Stat.AIR_MULTIHIT]?: [MathOperator.MULTIPLY, number];
 	// [Stat.VOID_MULTIHIT]?: [MathOperator.MULTIPLY, number];
 	// Critical Hit Chance
-	[Stat.CRITICAL_HIT_CHANCE]?: [MathOperator, number];
+	[Stat.CRITICAL_HIT_CHANCE]?: EffectDescriptor;
 	// Critical Hit Damage
-	[Stat.CRITICAL_HIT_DAMAGE]?: [MathOperator, number];
+	[Stat.CRITICAL_HIT_DAMAGE]?: EffectDescriptor;
+};
+
+export type EffectDescriptor = {
+	operator: MathOperator;
+	value: number;
 };
 
 export interface SkillDetails {

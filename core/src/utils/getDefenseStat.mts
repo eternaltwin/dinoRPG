@@ -3,6 +3,7 @@ import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { MathOperator } from '../models/enums/Parser.mjs';
+import { operatorProcess } from './helper.mjs';
 
 export enum DefenseElement {
 	FIRE = 'fire',
@@ -153,18 +154,7 @@ export const getDefenseStat = (
 			const effect = skill.globalEffects[`${elem.name}Defense`];
 
 			if (effect) {
-				const [operator, value] = effect;
-				let valueEffect = 0;
-				switch (operator) {
-					case MathOperator.PLUS:
-						valueEffect += value;
-						break;
-					case MathOperator.LESS:
-						valueEffect -= value;
-						break;
-					default:
-						break;
-				}
+				let valueEffect = operatorProcess(0, effect);
 				// Flat value
 				elem.globalBonus += valueEffect;
 
@@ -192,18 +182,7 @@ export const getDefenseStat = (
 		const effect = skill.effects[`${elementName}Defense`];
 
 		if (effect) {
-			const [operator, value] = effect;
-			let valueEffect = 0;
-			switch (operator) {
-				case MathOperator.PLUS:
-					valueEffect += value;
-					break;
-				case MathOperator.LESS:
-					valueEffect -= value;
-					break;
-				default:
-					break;
-			}
+			let valueEffect = operatorProcess(0, effect);
 			// Flat value
 			element.bonus += valueEffect;
 
