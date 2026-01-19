@@ -341,8 +341,9 @@ export function transpileFight(
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: hitFx,
-					effect: damageFx
-					// TODO: add way to change color of the text or a "critical" boolean
+					effect: damageFx,
+					textColor: step.critical ? 0xffff00 : undefined,
+					textScaleFactor: step.critical ? 3 : undefined
 				});
 
 				myFighter = fighters.find(f => f.id === step.fighter.id);

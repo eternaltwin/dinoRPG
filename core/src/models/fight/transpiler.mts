@@ -218,6 +218,8 @@ export type transpiled =
 				size?: number;
 			};
 			effect?: DamagesEffect;
+			textColor?: number;
+			textScaleFactor?: number;
 	  }
 	| {
 			action: DinoAction.RETURN;
