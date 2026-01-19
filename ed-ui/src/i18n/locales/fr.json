@@ -3833,7 +3833,7 @@
 			"clover": "Gagnant de DinoLoto",
 			"pac": "Parchemin des Aptitudes Compilées",
 			"card": "Carte de Fidélité Merguez Deluxe",
-			"import": "Os D'importasaurus"
+			"beta": "Os de betasaurus"
 		},
 		"description": {
 			"perle": "La perle de la Fontaine permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence.",
@@ -4048,7 +4048,7 @@
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			"card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
-			"import": "Félicitations ! Vous avez importé votre compte sur DinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet Importasaurus. Peut-être est-ce une erreur finalement ?"
+			"beta": "Félicitations ! Vous avez été un des pionners sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
 	"ranking": {
@@ -4615,7 +4615,8 @@
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
-			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes."
+			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
+			"cashPrice": ":gold: Le cash price pour ce tournois est de {cashPrice}:gold: !!"
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojo afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash price est actuellement à **{cashPrice}** :gold:.",
