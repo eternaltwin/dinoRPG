@@ -487,19 +487,18 @@ export async function skipOpponent(req: Request) {
 
 	// If skip generate new batch of opponent
 	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
-		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TREASURE_COUPON,
-						quantity: 1
-					}
-				]),
-				NotificationSeverity.reward
-			)
+		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
+
+		await createNotification(
+			authed.id,
+			JSON.stringify([
+				{
+					rewardType: RewardEnum.ITEM,
+					value: Item.TREASURE_COUPON,
+					quantity: 1
+				}
+			]),
+			NotificationSeverity.reward
 		);
 		await incrementDailyReset(player.Dojo.id);
 	}

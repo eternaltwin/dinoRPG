@@ -198,7 +198,7 @@ export default defineComponent({
 					this.tournamentInfo.levelLimit = tournamentInfo.levelLimit;
 					this.tournamentInfo.teamRace = races;
 					this.tournamentInfo.teamSize = tournamentInfo.teamSize;
-					this.tournamentInfo.cashPrice = tournamentInfo.cashPrice
+					this.tournamentInfo.cashPrice = tournamentInfo.cashPrice;
 				}
 			}
 		},
