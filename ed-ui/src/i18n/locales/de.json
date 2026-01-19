@@ -1391,9 +1391,9 @@
 				"sry": "Wenn do ned praat büs, denn kom ned. Sünsten stieg in det Boad, kla?",
 				"go": "Jové Bozé nimmt dich aufs Meer hinaus zu einem Ort, den andere Boote zu meiden scheinen... Als ihr euch nähert, seht ihr ungefähr ein Dutzend Meter vom Boot entfernt etwas im Wasser. Es sieht aus wie ein riesiger Tiefseeskorp! Wenn ihr euch weiter nähert und falls der Atlantinische Wächter recht hatte, werdet ihr sicherlich angegriffen werden... Jetzt muss man schnell handeln!!!",
 				"attack_win": "Selbstverständlich hatte Jové Bozé nichts von deinen Anweisungen verstanden... Nach deinem ehrenhaften Kampf, nimmt er dich zurück zum Predigerhafen mit. Seit dem Kampf mit dem Tiefseeskorp hat er kein Wort von sich gegeben, aber er beobachtet dich aus dem Augenwinkel und sieht zufrieden aus. Als ihr euch verabschiedet, schüttelt er dir herzlich die Hand als Zeichen seiner Ermutigung zu weiteren Abenteuern. Dabei überreicht dir eine Tiefseeskorp-Lockflöte, die er für dich geschnitzt hat...",
-				"weirdSwamp": "Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
-				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
-				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
+				"weirdSwamp": "Hasche neda wat Oll's do im Sumfe g'seh'n? B'wecht hoat's sia, do sag i!",
+				"swampTreasure": "De Leut sa'n, man find do im Drekata schän' Klunka, wen do im Sumfwahne budd'ls... Aber wende nich schlofe tus, dan hol'n se dei Seel!",
+				"swampLeave": "Mit einem breiten Grinsen gibt dir Jové Bozé irgendwelche Handzeichen und spaziert daraufhin ein Seemannslied summend davon."
 			},
 			"playerChoice": {
 				"sry": "...wie bitte?",
@@ -1401,8 +1401,8 @@
 				"go": "Jové Bozé folgen",
 				"attack": "Kurs halten",
 				"back": "ABDREHEN!!!",
-				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je ne comprends rien à ce que vous dites..."
+				"swampTreasure": "...was Olles?!",
+				"swampLeave": "Ich verstehe kein Wort..."
 			}
 		},
 		"archis": {
@@ -2528,8 +2528,8 @@
 			"23": "Feuerverzauberung",
 			"24": "Bao-Verzauberung",
 			"7": "Verbesserte Schaufel",
-			"72": "Bouée du Marais",
-			"73": "Lanterne du Marais"
+			"72": "Sumpfschwimmreifen",
+			"73": "Sumpflaterne"
 		},
 		"description": {
 			"2": "Die Kletterausrüstung ermöglicht es diesem Dinoz, steile Hänge zu erklimmen.",
