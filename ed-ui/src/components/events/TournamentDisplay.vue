@@ -469,6 +469,11 @@ export default defineComponent({
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
 				font-size: 10px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				max-width: 120%;
+				overflow-wrap: anywhere;
+				text-wrap: nowrap;
 			}
 
 			&:nth-child(1) {
