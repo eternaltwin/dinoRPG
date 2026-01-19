@@ -3,7 +3,7 @@ import { FighterResultFiche, FighterType } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { DialogText, FightText } from '../missions/specialActions.mjs';
+import { FightText } from '../missions/specialActions.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 
 export interface FightResult {
@@ -26,7 +26,6 @@ export interface FightResult {
 	startText?: FightText;
 	endText?: FightText;
 	itemWon?: number;
-	dialog?: DialogText;
 	statusReward?: DinozStatusId;
 }
 

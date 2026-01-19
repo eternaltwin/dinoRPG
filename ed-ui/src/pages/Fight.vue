@@ -87,7 +87,6 @@ export default defineComponent({
 			this.$t,
 			fightResult.result,
 			fightResult.startText,
-			fightResult.dialog,
 			fightResult.endText
 		);
 		if (!nexFight) {

@@ -15,8 +15,3 @@ export interface FightText {
 	type: 'message' | 'announce';
 	text: string;
 }
-
-export interface DialogText {
-	message: string;
-	fid: number;
-}

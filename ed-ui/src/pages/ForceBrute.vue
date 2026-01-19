@@ -116,7 +116,6 @@ export default defineComponent({
 					this.fight.result,
 					undefined,
 					undefined,
-					undefined,
 					true
 				);
 				if (!nexFight) {

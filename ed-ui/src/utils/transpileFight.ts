@@ -16,7 +16,7 @@ import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { DialogText, FightText } from '@drpg/core/models/missions/specialActions';
+import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 import {
 	BASE_ASSAULT_ENERGY_COST,
@@ -24,6 +24,7 @@ import {
 	ENERGY_RECOVERY_BASE_FACTOR
 } from '@drpg/core/utils/fightConstants';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { bossList } from '@drpg/core/models/fight/BossList';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -142,7 +143,6 @@ export function transpileFight(
 	t: TFunction,
 	victory: boolean,
 	startText?: FightText,
-	dialog?: DialogText,
 	endText?: FightText,
 	dojo?: boolean
 ) {
@@ -224,6 +224,15 @@ export function transpileFight(
 							message: t(`quest.${resolvedMonster.text.entrance}`)
 						});
 					}
+				} else if (myFighter.type === 'boss') {
+					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
+					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+						history.push({
+							action: DinoAction.TALK,
+							fid: myFighter.id,
+							message: t(`quest.${resolvedBoss.text.entrance}`)
+						});
+					}
 				}
 				myFighter = undefined;
 				break;
@@ -262,6 +271,15 @@ export function transpileFight(
 							action: DinoAction.TALK,
 							fid: myFighter.id,
 							message: t(`quest.${resolvedMonster.text.entrance}`)
+						});
+					}
+				} else if (myFighter && myFighter.type === 'boss') {
+					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
+					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+						history.push({
+							action: DinoAction.TALK,
+							fid: myFighter.id,
+							message: t(`quest.${resolvedBoss.text.entrance}`)
 						});
 					}
 				}

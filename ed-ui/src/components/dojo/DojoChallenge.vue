@@ -202,7 +202,6 @@ export default defineComponent({
 					fightResult.result,
 					undefined,
 					undefined,
-					undefined,
 					true
 				);
 				if (!nexFight) {
