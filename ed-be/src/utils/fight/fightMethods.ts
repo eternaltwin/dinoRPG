@@ -3998,18 +3998,17 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	const initial_hp = fighter.hp;
 	fighter.hp -= damage;
 
-	// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
-	if (fighter.hp < 0) {
-		fighter.hp = 0;
-		hp_lost = initial_hp;
-	}
-
 	fightData.steps.push({
 		action: 'looseHp',
 		fid: fighter.id,
 		hp: hp_lost,
 		fx
 	});
+
+	// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
+	if (fighter.hp < 0) {
+		fighter.hp = 0;
+	}
 
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
@@ -4389,7 +4388,7 @@ const attackTarget = (
 		target.hp -= damage;
 
 		// Set hp minimum to 0.
-		// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
+		// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
 		if (target.hp < 0) {
 			target.hp = 0;
 		}
