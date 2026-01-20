@@ -74,11 +74,12 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'weirdSwamp',
 		nextStep: ['trad', 'swampTreasure'],
 		initialStep: true,
-		condition:
+		condition:  // Necessary to avoid having multiple initial steps possible at once
 		{
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } } // Necessary to avoid having multiple initial steps possible at once
+				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } }
 			]
 		}
 	},

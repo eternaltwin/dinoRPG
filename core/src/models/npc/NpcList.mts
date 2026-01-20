@@ -211,8 +211,8 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 				{
 					[Operator.AND]: [
 						{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
-						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_BUOY } },
-						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_LANTERN } }
+						{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } }
 					]
 				}
 			]
