@@ -2,40 +2,40 @@
 	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
 
 	<ul class="tabs" style="margin-top: 10px">
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/player"> Player Edit </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/news"> News </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/secret"> Secret </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/logs"> Logs </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/gamestat"> GameStats </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/moderation"> Moderation </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/bans"> Banned </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/game"> Game </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/debug"> Debug </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/jobs"> Jobs </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/poll"> Polls </RouterLink>
 		</li>
-		<li>
+		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
 			<RouterLink to="/admin/multi"> Multicomptes </RouterLink>
 		</li>
 	</ul>
@@ -49,9 +49,15 @@ import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { AdminService } from '../services/index.js';
 import { playerStore } from '../store/index.js';
+import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 
 export default defineComponent({
 	name: 'AdminDashBoard',
+	computed: {
+		AdminRoleFront() {
+			return AdminRoleFront;
+		}
+	},
 	components: {
 		TitleHeader
 	},
@@ -61,6 +67,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		playerStore,
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
 		}
@@ -68,7 +75,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 
-		if (!playerStore().isAdmin) {
+		if (!(playerStore().getRole === AdminRoleFront.ADMIN || playerStore().getRole === AdminRoleFront.AMPHI)) {
 			this.$router.push({
 				name: 'News'
 			});

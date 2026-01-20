@@ -732,7 +732,8 @@ exports.AdminRole = exports.$Enums.AdminRole = {
   ADMIN: 'ADMIN',
   MODERATOR: 'MODERATOR',
   PLAYER: 'PLAYER',
-  BETA: 'BETA'
+  BETA: 'BETA',
+  AMPHI: 'AMPHI'
 };
 
 exports.Lang = exports.$Enums.Lang = {

@@ -476,8 +476,8 @@ export async function listOneDinozFromPlayer(req: Request) {
 export async function editPlayer(req: Request) {
 	const authed = await auth(req);
 
-	let role;
-	switch (req.body.role) {
+	let role = req.body.role;
+	/*	switch (req.body.role) {
 		case 'admin':
 			role = AdminRole.ADMIN;
 			break;
@@ -489,7 +489,7 @@ export async function editPlayer(req: Request) {
 			break;
 		default:
 			role = undefined;
-	}
+	}*/
 
 	const player = {
 		customText: req.body.customText,

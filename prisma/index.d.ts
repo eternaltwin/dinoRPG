@@ -397,7 +397,8 @@ export const AdminRole: {
   ADMIN: 'ADMIN',
   MODERATOR: 'MODERATOR',
   PLAYER: 'PLAYER',
-  BETA: 'BETA'
+  BETA: 'BETA',
+  AMPHI: 'AMPHI'
 };
 
 export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]

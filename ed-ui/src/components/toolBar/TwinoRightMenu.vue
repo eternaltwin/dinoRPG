@@ -124,7 +124,11 @@
 						</svg>
 						<span>{{ $t('topBar.rightMenu.events') }}</span>
 					</RouterLink>
-					<RouterLink v-if="playerStore.isAdmin" class="link" to="/admin">
+					<RouterLink
+						v-if="playerStore.getRole === AdminRole.ADMIN || playerStore.getRole === AdminRole.AMPHI"
+						class="link"
+						to="/admin"
+					>
 						<svg
 							class="svgLinkIcon admin"
 							focusable="false"
@@ -139,7 +143,7 @@
 						</svg>
 						<span>Admin</span>
 					</RouterLink>
-					<RouterLink v-if="playerStore.isAdmin" class="link" to="/forum">
+					<RouterLink v-if="playerStore.getRole === AdminRole.ADMIN" class="link" to="/forum">
 						<svg
 							class="svgLinkIcon admin"
 							focusable="false"
@@ -221,9 +225,15 @@ import PlayerOptions from './PlayerOptions.vue';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import LiveStats from './LiveStats.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
+import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
+	computed: {
+		AdminRole() {
+			return AdminRoleFront;
+		}
+	},
 	components: { LiveStats, PlayerOptions },
 	data() {
 		return {

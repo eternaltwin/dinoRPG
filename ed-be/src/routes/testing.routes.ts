@@ -3,11 +3,12 @@ import { validationResult } from 'express-validator';
 
 import { apiRoutes } from '../constants/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { checkIsAdmin } from '../utils/jwt.js';
+import { checkRole } from '../utils/jwt.js';
 import { calculateFightVsMonsters, generateMonsterList, rewardFight } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
 import sendError from '../utils/sendErrors.js';
 import { LOGGER } from '../context.js';
+import { AdminRole } from '@drpg/prisma';
 
 const routes: Router = Router();
 
@@ -26,7 +27,7 @@ const commonPath: string = apiRoutes.testingRoute;
 	return occurrences;
 }*/
 
-routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/generateMonster/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}

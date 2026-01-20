@@ -943,6 +943,7 @@ enum AdminRole {
   MODERATOR
   PLAYER
   BETA
+  AMPHI
 }
 
 enum LogType {

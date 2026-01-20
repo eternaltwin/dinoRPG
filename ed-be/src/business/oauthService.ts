@@ -6,7 +6,7 @@ import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { LogType } from '@drpg/prisma';
+import { AdminRole, LogType } from '@drpg/prisma';
 import { EternaltwinNodeClient } from '@eternaltwin/client-node';
 import { ErrorCode } from '@eternaltwin/client-node/error';
 import { AuthType } from '@eternaltwin/core/auth/auth-type';
@@ -137,7 +137,7 @@ export class OAuth {
 						skipLevel: player.skipLevel,
 						skipFight: player.skipFight
 					},
-					admin: false,
+					role: AdminRole.PLAYER,
 					priest: false,
 					shopkeeper: false,
 					notifications: player.notifications,
@@ -226,6 +226,7 @@ export class OAuth {
 				d.actions = await getAvailableActions(d, player);
 			}
 
+			console.log(req?.auth);
 			const commonData: PlayerCommonData = {
 				money: player.money,
 				dinozCount: await getDinozTotalCount(),
@@ -241,7 +242,7 @@ export class OAuth {
 					skipLevel: player.skipLevel,
 					skipFight: player.skipFight
 				},
-				admin: req?.auth?.isAdmin || false,
+				role: AdminRole.PLAYER,
 				priest: player.priest,
 				shopkeeper: player.shopKeeper,
 				notifications: player.notifications,

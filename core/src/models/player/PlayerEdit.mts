@@ -1,3 +1,5 @@
+import { AdminRoleFront } from '../enums/AdminRoleFront.mjs';
+
 export interface PlayerEdit {
 	customText?: string;
 	rewards?: string[];
@@ -27,5 +29,5 @@ export interface PlayerEdit {
 	teacher?: boolean;
 	messie?: boolean;
 	matelasseur?: boolean;
-	role?: 'admin' | 'beta' | 'player';
+	role?: AdminRoleFront;
 }

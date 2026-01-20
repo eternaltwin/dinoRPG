@@ -199,6 +199,11 @@ const router = createRouter({
 							path: 'multi',
 							name: 'Multi',
 							component: () => import('../components/admin/MultiMonitoring.vue')
+						},
+						{
+							path: 'news',
+							name: 'News',
+							component: () => import('../components/admin/NewsEdit.vue')
 						}
 					]
 				},

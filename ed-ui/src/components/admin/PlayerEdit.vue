@@ -49,12 +49,10 @@
 				<label class="title" for="role">Role :</label>
 				<input id="role" type="text" v-model="player.role" disabled />
 				<div class="uSkills">
-					<input class="radio" type="radio" value="admin" name="role" v-model="playerFields.role" />
-					<label class="radio" for="admin">admin</label>
-					<input class="radio" type="radio" value="beta" name="role" v-model="playerFields.role" />
-					<label class="radio" for="beta">beta</label>
-					<input class="radio" type="radio" value="player" name="role" v-model="playerFields.role" />
-					<label class="radio" for="player">player</label>
+					<template v-for="role in AdminRoleFront" :key="role">
+						<input class="radio" type="radio" :value="role" name="role" v-model="playerFields.role" />
+						<label class="radio" for="admin">{{ role.toWellFormed() }}</label>
+					</template>
 				</div>
 			</div>
 		</fieldset>
@@ -417,6 +415,7 @@ import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import DZSelect from '../common/DZSelect.vue';
 import EventBus from '../../events';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 interface PlayerSearch {
 	name: string;
 	id: string;
@@ -426,6 +425,11 @@ const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
 export default defineComponent({
 	name: 'PlayerEdit',
+	computed: {
+		AdminRoleFront() {
+			return AdminRoleFront;
+		}
+	},
 	components: { DZSelect, DZButton },
 	data() {
 		return {
