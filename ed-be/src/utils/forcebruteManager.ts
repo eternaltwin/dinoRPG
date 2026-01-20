@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
 	private readonly TEAMS_PER_POOL = 16;
@@ -166,7 +167,14 @@ class ForceBruteManager {
 		);
 		team2Dinoz.life = team2Dinoz.maxLife;
 
-		const fight = calculateFightBetweenPlayers([team1Dinoz], false, [team2Dinoz], false, PlaceEnum.DOJO);
+		const fight = calculateFightBetweenPlayers(
+			STANDARD_PVP_RULES,
+			[team1Dinoz],
+			false,
+			[team2Dinoz],
+			false,
+			PlaceEnum.DOJO
+		);
 
 		const metadata: FBMetaData = {
 			phase: phase,

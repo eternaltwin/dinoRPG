@@ -35,7 +35,6 @@ export type missionRequirement =
 			target: string;
 			startText?: FightText;
 			endText?: FightText;
-			dialog?: DialogText;
 	  }
 	| {
 			actionType: Exclude<

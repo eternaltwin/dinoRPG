@@ -6,7 +6,7 @@ import { ItemFiche } from './ItemFiche.mjs';
 import { BoxType } from './boxOpening.mjs';
 import { SkillFightConditionEnum } from '../dinoz/SkillFightCondition.mjs';
 import { FightStatus } from '../fight/DetailedFighter.mjs';
-import { Operator } from '../enums/Parser.mjs';
+import { MathOperator, Operator } from '../enums/Parser.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
 
 export enum Item {
@@ -2170,7 +2170,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 0,
 		display: 'cgold',
 		passiveEffects: {
-			[Stat.CRITICAL_HIT_CHANCE]: ['x', 1.01]
+			[Stat.CRITICAL_HIT_CHANCE]: { operator: MathOperator.MULTIPLY, value: 1.01 }
 		}
 	},
 	// Brings a little bamboo with you in each fight

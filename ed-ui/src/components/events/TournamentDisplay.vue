@@ -43,16 +43,16 @@
 					<span class="name">{{ team.player?.name ?? '???' }}</span>
 
 					<template #content>
-						<h1>{{ team.dinoz.name }}</h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
+						<h1>{{ team?.dinoz?.name }}</h1>
+						<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
 					</template>
 				</Tippy>
 				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
 					<span class="name">{{ $t('dojo.soon') }}</span>
 
 					<template #content>
-						<h1></h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
+						<h1>{{ team?.dinoz?.name }}</h1>
+						<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
 					</template>
 				</Tippy>
 			</template>
@@ -309,6 +309,10 @@ export default defineComponent({
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
 				font-size: 10px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
 			}
 
 			&:nth-child(1) {
@@ -465,6 +469,11 @@ export default defineComponent({
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
 				font-size: 10px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				max-width: 120%;
+				overflow-wrap: anywhere;
+				text-wrap: nowrap;
 			}
 
 			&:nth-child(1) {

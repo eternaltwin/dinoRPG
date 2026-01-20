@@ -204,6 +204,7 @@ export default defineComponent({
 		'$route.params.id': async function (to) {
 			if (to !== undefined && this.$route.name === 'Clan') {
 				await this.getClan();
+				this.isClanMember = this.playerStore.clanId == Number(this.$route.params.id);
 			}
 		}
 	}

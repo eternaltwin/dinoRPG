@@ -6,10 +6,12 @@
 					<tr>
 						<th colspan="4">
 							<span>{{ $t('clansMembers.request.title') }}</span>
-							<DZDisclaimer v-if="clanMembersList.length >= maxMembers">
-								{{ $t('clansMembers.request.maximum') }}
-							</DZDisclaimer>
 						</th>
+					</tr>
+					<tr>
+						<td colspan="4" v-if="clanMembersList.length >= maxMembers">
+							{{ $t('clansMembers.request.maximum') }}
+						</td>
 					</tr>
 					<tr v-for="request in joinRequestsList" :key="request.id" :class="(request.id + 1) % 2 === 0 ? 'even' : ''">
 						<td>
@@ -114,22 +116,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
+import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { currentEvents } from '@drpg/core/models/event/Events';
 import EventBus from '../../events/index.js';
-import { errorHandler, utils } from '../../utils/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { playerStore } from '../../store';
-import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
-import DZUser from '../common/DZUser.vue';
-import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
-import { currentEvents } from '@drpg/core/models/event/Events';
-import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { errorHandler, utils } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanMembers',
-	components: { DZUser, DZDisclaimer, DZButton },
+	components: { DZUser, DZButton },
 	data() {
 		return {
 			clanMembersList: [] as ClanMember[],

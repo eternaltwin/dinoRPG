@@ -317,10 +317,6 @@ export const M_SKULLY: Mission[] = [
 					endText: {
 						type: 'announce',
 						text: 'baraba_end'
-					},
-					dialog: {
-						fid: -1,
-						message: 'baraba_start'
 					}
 				},
 				displayedAction: 'visitRuin'
@@ -346,10 +342,6 @@ export const M_SKULLY: Mission[] = [
 					endText: {
 						type: 'announce',
 						text: 'boat_end'
-					},
-					dialog: {
-						fid: -1,
-						message: 'boat_start'
 					}
 				},
 				displayedAction: 'enterBoat'
@@ -490,10 +482,6 @@ export const M_SKULLY: Mission[] = [
 					actionType: ConditionEnum.LAUNCH_FIGHT,
 					mobList: [monsterList.KORGON],
 					target: 'korgon',
-					dialog: {
-						fid: -1,
-						message: 'korgon_start'
-					},
 					endText: {
 						type: 'announce',
 						text: 'korgon_end'

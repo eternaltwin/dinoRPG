@@ -24,7 +24,7 @@ import {
 	FightStatus,
 	FightStatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
-import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { DinozToGetFighter, FightConfiguration, FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -64,10 +64,7 @@ export type DetailedFight = {
 	defenderData: {
 		hasCook: boolean;
 	};
-	rules: {
-		canUseCapture: boolean;
-		enableStats: boolean;
-	};
+	rules: FightRules;
 	timeManipulatorUsed?: boolean;
 	temporalStabilityUsed?: boolean;
 	stats: {
@@ -120,10 +117,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		defenderData: {
 			hasCook: config.defenderHasCook
 		},
-		rules: {
-			canUseCapture: config.canUseCapture,
-			enableStats: config.enableStats
-		},
+		rules: config.rules,
 		protectedFighters: [],
 		time: 0,
 		nextStatusTrigger: FIGHT_INFINITE,

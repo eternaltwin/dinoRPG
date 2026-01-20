@@ -1,5 +1,7 @@
+import { FightResult } from '../models/fight/FightResult.mjs';
 import { MissionID } from '../models/missions/missionList.mjs';
 import { NpcName } from '../models/npc/npc.mjs';
+import { Rewarder } from '../models/reward/Rewarder.mjs';
 
 export type MissionsPageData = {
 	id: number;
@@ -36,4 +38,9 @@ export type ManagePageData = {
 export type LearnSkillData = {
 	newMaxExperience: number;
 	discoveredSkill: number;
+};
+
+export type DigResponse = {
+	rewards: Rewarder[];
+	fight: FightResult | null;
 };

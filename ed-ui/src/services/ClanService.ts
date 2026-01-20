@@ -5,6 +5,7 @@ import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { http } from '../utils/index.js';
 import { LocalesEnum } from '../i18n';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
+import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
 
 export const ClanService = {
 	getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
@@ -100,10 +101,10 @@ export const ClanService = {
 	getClanMember(clanId: number, memberId: number) {
 		return http()
 			.get(`/clan/${clanId}/member/${memberId}`)
-			.then(res => Promise.resolve(res.data))
+			.then(res => Promise.resolve<GetClanMemberResponse>(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateClanMember(clanId: number, clanMember: ClanMember) {
+	updateClanMember(clanId: number, clanMember: UpdateClanMemberRequestBody['clanMember']) {
 		return http()
 			.put(`/clan/${clanId}/member`, { clanMember: clanMember })
 			.then(res => Promise.resolve(res.data))

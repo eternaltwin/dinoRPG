@@ -51,6 +51,7 @@ import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
 import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
 import UnavailableReason = $Enums.UnavailableReason;
+import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -142,7 +143,7 @@ export async function useItem(req: Request) {
 		// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
 		const dayOfWeek = currentDate.day();
 		if (
-			(dayOfWeek === 4 || dayOfWeek === 6) &&
+			SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
 			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
 			itemId === itemList[Item.MEAT_PIE].itemId
 		) {

@@ -1,7 +1,9 @@
-import { SkillDetails, PassiveEffects } from '@drpg/core/models/dinoz/SkillDetails';
+import { SkillDetails, PassiveEffects, EffectDescriptor } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { Dinoz, GameDinozUsage, Player } from '@drpg/prisma';
 import { Skill, uSkillsToPlayerFieldMap } from '@drpg/core/models/dinoz/SkillList';
+import { MathOperator } from '@drpg/core/models/enums/Parser';
+import { operatorProcess } from '@drpg/core/utils/helper';
 
 function applySkillToDinoz(
 	effects: PassiveEffects,
@@ -11,22 +13,22 @@ function applySkillToDinoz(
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {
 			case Stat.MAX_HP:
-				dinoz.maxLife += +value;
+				dinoz.maxLife = operatorProcess(dinoz.maxLife, value as EffectDescriptor);
 				break;
 			case Stat.FIRE_ELEMENT:
-				dinoz.nbrUpFire += +value;
+				dinoz.nbrUpFire = operatorProcess(dinoz.nbrUpFire, value as EffectDescriptor);
 				break;
 			case Stat.WATER_ELEMENT:
-				dinoz.nbrUpWater += +value;
+				dinoz.nbrUpWater = operatorProcess(dinoz.nbrUpWater, value as EffectDescriptor);
 				break;
 			case Stat.WOOD_ELEMENT:
-				dinoz.nbrUpWood += +value;
+				dinoz.nbrUpWood = operatorProcess(dinoz.nbrUpWood, value as EffectDescriptor);
 				break;
 			case Stat.AIR_ELEMENT:
-				dinoz.nbrUpAir += +value;
+				dinoz.nbrUpAir = operatorProcess(dinoz.nbrUpAir, value as EffectDescriptor);
 				break;
 			case Stat.LIGHTNING_ELEMENT:
-				dinoz.nbrUpLightning += +value;
+				dinoz.nbrUpLightning = operatorProcess(dinoz.nbrUpLightning, value as EffectDescriptor);
 				break;
 			default:
 				break;

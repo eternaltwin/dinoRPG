@@ -98,7 +98,8 @@ export default defineComponent({
 			this.fightTransformed = {
 				...initPlace,
 				history: nexFight.filter(n => n != undefined),
-				lang: this.lang
+				lang: this.lang,
+				statusReward: this.fight.statusReward
 			};
 		}
 

@@ -7,7 +7,7 @@
 				<td>{{ $t('market.dinoz') }}</td>
 				<td>
 					<div class="df aic">
-						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" @change="toggleSellDinoz" />
+						<DZCheckbox id="sell-dinoz" v-model="sellDinoz" @change="toggleSellDinoz" />
 						<label v-if="dinoz" for="sell-dinoz">
 							{{ $t('market.sellView.sellYourDinoz') }}
 							{{ dinoz.name }}
@@ -140,6 +140,7 @@ import DZInput from '../common/DZInput.vue';
 import { formatText } from '../../utils/formatText.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import DZCheckbox from '../common/DZCheckbox.vue';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -159,11 +160,9 @@ export default defineComponent({
 			totalValue: 0
 		};
 	},
-	components: { DZButton, DZDisclaimer, Tippy, DZHelp, DZInput },
+	components: { DZButton, DZDisclaimer, Tippy, DZHelp, DZInput, DZCheckbox },
 	methods: {
 		toggleSellDinoz() {
-			this.sellDinoz = !this.sellDinoz;
-
 			// Update total value
 			this.totalValue = this.getTotalValue();
 		},

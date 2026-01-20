@@ -1,5 +1,5 @@
 <template>
-	<input :type="type" :value="modelValue ?? value" @input="onInput" v-bind="$attrs" />
+	<input :type="type" :value="modelValue ?? value" @input="onInput" :placeholder="placeholder" v-bind="$attrs" />
 </template>
 
 <script setup lang="ts">
@@ -9,14 +9,15 @@ defineOptions({
 
 const props = defineProps<{
 	type?: string;
-	modelValue?: string | number;
-	value?: string | number;
+	modelValue?: string | number | null;
+	value?: string | number | null;
+	placeholder?: string;
 }>();
 
 const emit = defineEmits<{
-	'update:modelValue': [value: string | number];
-	input: [value: string | number];
-	change: [value: string | number];
+	'update:modelValue': [value: string | number | null];
+	input: [value: string | number | null];
+	change: [value: string | number | null];
 }>();
 
 const getValue = (input: HTMLInputElement): string | number => {

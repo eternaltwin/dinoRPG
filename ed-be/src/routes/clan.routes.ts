@@ -1,6 +1,11 @@
+import {
+	GetClanMemberResponse,
+	UpdateClanMemberRequestBody,
+	UpdateClanMemberRequestParams
+} from '@drpg/core/returnTypes/Clan';
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { apiRoutes } from '../constants/index.js';
+import multer from 'multer';
 import {
 	acceptJoinRequest,
 	createClan,
@@ -35,8 +40,9 @@ import {
 	updateClanMember,
 	updateClanPage
 } from '../business/clanService.js';
-import multer from 'multer';
+import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
+import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();
 
@@ -629,7 +635,7 @@ routes.post(
 routes.get(
 	`${commonPath}/:clanId/member/:memberId`,
 	[param('clanId').exists().toInt().isNumeric(), param('memberId').exists().toInt().isNumeric()],
-	async (req: Request, res: Response) => {
+	async (req: Request, res: Response<GetClanMemberResponse | ErrorResponse>) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
 		}
@@ -662,7 +668,7 @@ routes.get(
 routes.put(
 	`${commonPath}/:clanId/member`,
 	[param('clanId').exists().toInt().isNumeric(), body('clanMember').exists()],
-	async (req: Request, res: Response) => {
+	async (req: Request<UpdateClanMemberRequestParams, unknown, UpdateClanMemberRequestBody>, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
 		}

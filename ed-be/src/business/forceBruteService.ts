@@ -15,7 +15,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import {archiveFight, getViewedTournamentFight, viewFight} from '../dao/archiveDao.js';
+import { archiveFight, viewFight } from '../dao/archiveDao.js';
 import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
@@ -35,6 +35,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
+import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -759,6 +760,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 	opponentGameDinoz.life = opponentGameDinoz.maxLife;
 
 	const fightResult = calculateFightBetweenPlayers(
+		STANDARD_PVP_RULES,
 		[dinoz],
 		dinoz.player.cooker,
 		[{ ...opponentGameDinoz, catches: [] }],
@@ -816,19 +818,24 @@ export async function fightFBTournamentOpponent(req: Request) {
 		}
 	}
 
+	let statusReward: DinozStatusId | undefined = undefined;
 	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
 		switch (dinoz.FBTournamentStep / 10) {
 			case 1:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.BRONZE_MEDAL_FORCEBRUT);
+				statusReward = DinozStatusId.BRONZE_MEDAL_FORCEBRUT;
 				break;
 			case 2:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.SILVER_MEDAL_FORCEBRUT);
+				statusReward = DinozStatusId.SILVER_MEDAL_FORCEBRUT;
 				break;
 			case 3:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.GOLD_MEDAL_FORCEBRUT);
+				statusReward = DinozStatusId.GOLD_MEDAL_FORCEBRUT;
 				break;
 			case 4:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.DIAMOND_MEDAL_FORCEBRUT);
+				statusReward = DinozStatusId.DIAMOND_MEDAL_FORCEBRUT;
 				break;
 			default:
 				break;
@@ -851,6 +858,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 			id: a.dinozId,
 			itemsUsed: a.itemsUsed
 		})),
-		place: PlaceEnum.FORCEBRUT
+		place: PlaceEnum.FORCEBRUT,
+		statusReward
 	};
 }

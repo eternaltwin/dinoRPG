@@ -4,12 +4,17 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents, EventDetails, GameEvent } from '@drpg/core/models/event/Events';
 import { bossList } from '@drpg/core/models/fight/BossList';
-import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import {
+	DinozToGetFighter,
+	FightConfiguration,
+	FightRules,
+	MONSTER_FIGHT_RULES
+} from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item } from '@drpg/core/models/item/ItemList';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { placeList, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
@@ -62,8 +67,11 @@ export async function processFight(req: Request) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 
-	// Marais Collant - No fights on Sunday and Wednesday
-	if ((dayOfWeek === 0 || dayOfWeek === 3) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
+	// Marais Collant - No fight days
+	if (SWAMP_FOG_DAYS.includes(dayOfWeek) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
+		if (!dinozData.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
+			await addStatusToDinoz(dinozData.id, DinozStatusId.WEIRD_SWAMP_SEEN);
+		}
 		throw new ExpectedError(translate(`noFight`, authed));
 	}
 
@@ -141,8 +149,14 @@ export async function fightMonstersAtPlace(
 	const dayOfWeek = dayjs().day();
 	let monsters = await generateMonsterList(team, placeId);
 
-	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
+	// Marais Collant - No fights days.
+	if (SWAMP_FOG_DAYS.includes(dayOfWeek) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
+		for (const dinoz of team) {
+			if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
+				await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
+			}
+		}
 	}
 	const fightResult = calculateFightVsMonsters(team, player, placeId, monsters);
 	const result = await rewardFight(team, monsters, fightResult, placeId, player);
@@ -196,9 +210,7 @@ export function calculateFightVsMonsters(
 		seed: rng_seed,
 
 		// Flags
-		castleFight: false,
-		canUseCapture: true,
-		enableStats: false,
+		rules: MONSTER_FIGHT_RULES,
 
 		// Teams
 		attackerHasCook: player.cooker,
@@ -227,6 +239,7 @@ export function calculateFightVsMonsters(
  * @returns FightProcessResult
  **/
 export function calculateFightBetweenPlayers(
+	rules: FightRules,
 	teamA: DinozToGetFighter[],
 	cookerA: boolean,
 	teamB: DinozToGetFighter[],
@@ -260,9 +273,7 @@ export function calculateFightBetweenPlayers(
 		timeout: timeout ?? 1000,
 
 		// Flags
-		castleFight: false,
-		canUseCapture: false,
-		enableStats: true,
+		rules,
 
 		// Teams
 		attackerHasCook: cookerA,

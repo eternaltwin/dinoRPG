@@ -5,39 +5,42 @@
 			v-if="clanMember"
 			:content="$t('clansMembers.edit.disclaimer', { name: clanMember.player.name })"
 		/>
-		<div class="rights-panel">
+		<div class="panel dz-box">
 			<div class="right-line" v-for="right in rights" :key="right.name">
-				<input type="checkbox" v-model="right.selected" />
-				{{ $t('clansMembers.edit.right.' + right.name) }}
+				<DZCheckbox :id="right.name" :label="$t(`clansMembers.edit.right.${right.name}`)" v-model="right.selected" />
 			</div>
-		</div>
-		<div class="nickname-container" v-if="clanMember">
-			<label for="nickname">{{ $t('clansMembers.edit.nickname') }}</label>
-			<DZInput id="nickname" type="text" v-model="clanMember.nickname" />
+			<DZInput
+				v-if="clanMember"
+				id="nickname"
+				v-model="clanMember.nickname"
+				:placeholder="$t('clansMembers.edit.nickname')"
+			/>
 		</div>
 		<a class="button" @click="updateClanMember()">{{ $t('clansMembers.edit.save') }}</a>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { GetClanMemberResponse } from '@drpg/core/returnTypes/Clan';
+import { defineComponent } from 'vue';
+import DZInput from '../../components/common/DZInput.vue';
 import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
-import DZInput from '../../components/common/DZInput.vue';
+import DZCheckbox from '../common/DZCheckbox.vue';
 
 export default defineComponent({
 	name: 'ClanMemberEdit',
 	components: {
 		DZDisclaimer,
-		DZInput
+		DZInput,
+		DZCheckbox
 	},
 	data() {
 		return {
-			clanMember: undefined as ClanMember | undefined,
+			clanMember: null as GetClanMemberResponse,
 			rights: [] as { name: ClanMemberRight; selected: boolean }[]
 		};
 	},
@@ -62,6 +65,11 @@ export default defineComponent({
 				this.clanMember.rights = this.rights.filter(r => r.selected).map(r => r.name.toString());
 				await ClanService.updateClanMember(Number(this.$route.params.id), this.clanMember);
 				EventBus.emit('isLoading', false);
+
+				this.$toast.open({
+					message: this.$t('clansMembers.edit.saved'),
+					type: 'success'
+				});
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -90,26 +98,13 @@ export default defineComponent({
 	margin: 5px;
 	display: flex;
 	flex-direction: column;
-	.rights-panel {
+	.panel {
 		margin: 0 20px;
+		padding: 26px 8px 8px 8px;
+		color: #ffee92;
 		.right-line {
 			margin-bottom: 5px;
 		}
 	}
 }
-/*.disclaimer {
-	display: flex;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	flex-grow: 2;
-	strong {
-		color: #ffee92;
-	}
-}*/
 </style>

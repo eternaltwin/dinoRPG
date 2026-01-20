@@ -38,6 +38,7 @@ export default defineComponent({
 	// It can be safely removed once we have a wider image.
 	background-size: contain;
 	padding-bottom: 16px;
+	display: flex;
 	.titlePage {
 		color: #71b703;
 		display: inline;

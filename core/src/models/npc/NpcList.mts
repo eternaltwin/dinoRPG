@@ -206,7 +206,15 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 						}
 					]
 				},
-				{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ }
+				{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
+				// Sticky swamp bosses hidden quest
+				{
+					[Operator.AND]: [
+						{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
+						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_BUOY } },
+						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_LANTERN } }
+					]
+				}
 			]
 		},
 		data: JOVEBOZE_RASCA,

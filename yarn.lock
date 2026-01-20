@@ -2315,6 +2315,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eternaltwin/dinorpg_animations@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@eternaltwin/dinorpg_animations@npm:1.0.4"
+  dependencies:
+    "@pixi/filter-drop-shadow": "npm:^5.2.0"
+    "@pixi/filter-glow": "npm:^5.2.1"
+    "@pixi/picture": "npm:^4.0.1"
+    lz-string: "npm:^1.5.0"
+    pixi.js: "npm:^7.3.0"
+  checksum: 10/1425bbd876f0e2f77e47dacc80c167c174a35ebb0ca924f3a1f57eeacb6765e9f7061157da91b2c7e20d57c9507e26de06019f4fd30adc0d01cd6dabd95f617e
+  languageName: node
+  linkType: hard
+
 "@eternaltwin/exe-x86_64-apple-darwin@npm:0.16.4":
   version: 0.16.4
   resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.16.4"
@@ -7137,7 +7150,7 @@ __metadata:
   dependencies:
     "@ckeditor/ckeditor5-vue": "npm:^7.3.0"
     "@drpg/core": "workspace:^"
-    "@eternaltwin/dinorpg_animations": "npm:^1.0.2"
+    "@eternaltwin/dinorpg_animations": "npm:^1.0.4"
     "@types/url-join": "npm:^4.0.3"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"

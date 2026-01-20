@@ -605,7 +605,7 @@ export const getClanBannerImage = async (id: number) => {
 	return image;
 };
 
-export async function updateClanMemberRequest(id: number, clanId: number, rights: string[], nickname: string) {
+export async function updateClanMemberRequest(id: number, clanId: number, rights: string[], nickname: string | null) {
 	const member = await prisma.clanMember.update({
 		where: {
 			id,

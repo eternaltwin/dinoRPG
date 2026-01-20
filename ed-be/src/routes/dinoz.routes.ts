@@ -1,8 +1,10 @@
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
+import { AssignDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
+import { assignBuild } from '../business/dinozBuildService.js';
 import {
 	betaMove,
 	buyDinoz,
@@ -29,8 +31,6 @@ import { reincarnate } from '../business/skillService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
-import { assignBuild } from '../business/dinozBuildService.js';
-import { AssignDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
 import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();
@@ -355,23 +355,27 @@ routes.put(
  *           properties:
  *             placeId:
  *               type: number
- *               description: Id of the destination
+ *               description: Id of the place where the digging happens
  *     responses:
  *       200:
- *         description: Returns an item.
+ *         description: Returns a dig response (rewards and/or fight).
  */
-routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/dig/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response<DigResponse | ErrorResponse>) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response: Rewarder = await digWithDinoz(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await digWithDinoz(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 /**
  * @openapi

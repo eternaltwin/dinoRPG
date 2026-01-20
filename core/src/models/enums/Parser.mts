@@ -71,3 +71,10 @@ export enum Comparator {
 	LESSER = '<',
 	LESSER_EQUAL = '<='
 }
+
+export enum MathOperator {
+	ADD = '+',
+	EQUAL = '=',
+	MULTIPLY = 'x',
+	ADD_ASSAULT = '_'
+}

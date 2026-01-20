@@ -1,3 +1,4 @@
+import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 
 export type preFightLoader = {
@@ -8,6 +9,7 @@ export type preFightLoader = {
 	bottom?: number;
 	ground?: number;
 	lang?: string;
+	statusReward?: DinozStatusId;
 };
 
 export enum DinoAction {

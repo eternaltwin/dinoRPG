@@ -172,9 +172,6 @@ export async function startFightMission(req: Request) {
 	if (mission.actualStep.requirement.startText) {
 		fight.startText = mission.actualStep.requirement.startText;
 	}
-	if (mission.actualStep.requirement.dialog) {
-		fight.dialog = mission.actualStep.requirement.dialog;
-	}
 
 	if (mission.actualStep.requirement.endText) {
 		fight.endText = mission.actualStep.requirement.endText;

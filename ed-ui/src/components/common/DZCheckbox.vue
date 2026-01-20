@@ -1,13 +1,6 @@
 <template>
 	<div class="dz-checkbox" :class="{ disabled }">
-		<input
-			type="checkbox"
-			:id="id"
-			:name="id"
-			:disabled="disabled"
-			:checked="isChecked"
-			@change="onChange"
-		/>
+		<input type="checkbox" :id="id" :name="id" :disabled="disabled" :checked="isChecked" @change="onChange" />
 		<span class="icon" :class="{ checked: isChecked }" @click="onIconClick" />
 		<label class="text" :for="id">
 			<slot>{{ label }}</slot>

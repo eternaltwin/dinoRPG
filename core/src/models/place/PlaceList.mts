@@ -8,6 +8,11 @@ import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GroundEnum } from '../enums/GroundEnum.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
 
+/** Sticky Swamp - No movement on Thursday and Saturday. */
+export const SWAMP_FLOODED_DAYS = [4, 6];
+/** Sticky Swamp - No fights on Wednesday and Sunday. */
+export const SWAMP_FOG_DAYS = [0, 3];
+
 export const placeList: Record<
 	PlaceEnum,
 	{

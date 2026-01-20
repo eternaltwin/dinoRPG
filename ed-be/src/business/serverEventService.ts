@@ -31,7 +31,6 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
-const ticketCountByIP = new Map<string, number>();
 
 // Tickets garbage collector
 setInterval(() => {
@@ -85,18 +84,6 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		timestamp: Date.now(),
 		type: serverEventType
 	});
-
-	// Check number of ticket for this IP
-	let ipTicketCount = 0;
-	for (const ticket of activeTickets.values()) {
-		if (ticket.ipAddress === ip) {
-			ipTicketCount++;
-		}
-	}
-
-	if (ipTicketCount > 10) {
-		LOGGER.warn(`[SSE] L'adresse IP ${ip} a ${ipTicketCount} tickets actifs (playerId: ${authed.id})`);
-	}
 
 	return {
 		ticket: uuid
@@ -268,7 +255,7 @@ async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
-		return `${ticket.channel}.${playerData.ClanMember.clan.name}`;
+		return `${ticket.channel}.${playerData.ClanMember.clan.id}`;
 	} else if (ticket.channel === SseChannel.NOTIFICATION) {
 		return ticket.channel;
 	}

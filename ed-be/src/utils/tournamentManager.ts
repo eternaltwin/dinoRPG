@@ -30,12 +30,13 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { $Enums, NotificationSeverity } from '@drpg/prisma';
+import { $Enums, NotificationSeverity, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
 import NewsType = $Enums.NewsType;
+import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -190,6 +191,7 @@ class TournamentManager {
 	}
 
 	private async generateAndSaveFight(
+		tournamentRules: Pick<Tournament, 'poison'>,
 		team1Id: string | null,
 		team2Id: string | null,
 		phase: TournamentPhase,
@@ -230,7 +232,14 @@ class TournamentManager {
 			);
 		});
 
-		const fight = calculateFightBetweenPlayers(team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+		const rules: FightRules = {
+			canUseCapture: false,
+			castleFight: false,
+			enableStats: false,
+			poisonEnabled: tournamentRules.poison
+		};
+
+		const fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
 
 		const metadata: MetaData = {
 			phase: phase,
@@ -929,6 +938,16 @@ LIMIT ${64};`;
 	async generateNextRound(prisma: PismaClientLocal): Promise<void> {
 		const currentState = await this.getCurrentState(prisma);
 
+		const tournamentRules = await prisma.tournament.findUniqueOrThrow({
+			where: {
+				id: this.tournamentId
+			},
+			select: {
+				poison: true,
+				teamSize: true
+			}
+		});
+
 		// Trouve le prochain créneau prévu
 		const nextMatch = currentState.nextScheduledMatch;
 
@@ -953,14 +972,6 @@ LIMIT ${64};`;
 
 				if (currentState.round === 0) {
 					await this.rewardQualification(prisma);
-					const teamSize = await prisma.tournament.findUniqueOrThrow({
-						where: {
-							id: this.tournamentId
-						},
-						select: {
-							teamSize: true
-						}
-					});
 					// Premier round : on prend les équipes qualifiées
 					const qualifiedTeams: { tournamentTeamId: string }[] = await prisma.$queryRaw`
 					SELECT d."tournamentTeamId"
@@ -968,7 +979,7 @@ FROM dojo d
          JOIN "TournamentTeam" tt ON d."tournamentTeamId" = tt.id
          JOIN player p ON d."playerId" = p.id
          JOIN ranking r ON p.id = r."playerId"
-WHERE tt."teamCount" = ${teamSize.teamSize}
+WHERE tt."teamCount" = ${tournamentRules.teamSize}
   AND d."tournamentTeamId" IS NOT NULL
 ORDER BY r.dojo DESC
 LIMIT ${this.QUALIFIED_TEAMS};`;
@@ -980,6 +991,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 				for (const pool of tournamentRound) {
 					for (const match of pool.matches) {
 						await this.generateAndSaveFight(
+							tournamentRules,
 							match.left,
 							match.right,
 							TournamentPhase.POOLS,
@@ -1080,6 +1092,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 				for (const fbPool of tournamentRound) {
 					for (const match of fbPool.matches) {
 						await this.generateAndSaveFight(
+							tournamentRules,
 							match.left,
 							match.right,
 							TournamentPhase.FINALS,

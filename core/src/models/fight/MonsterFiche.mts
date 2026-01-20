@@ -40,6 +40,10 @@ export type MonsterFiche = {
 	size?: number;
 	dark?: boolean;
 	entrance?: EntranceEffect;
+	text?: {
+		entrance?: string;
+		death?: string;
+	};
 };
 
 export type groupMonster = {

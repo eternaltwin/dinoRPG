@@ -2,13 +2,18 @@
 	<DZDisclaimer help content="market.historyView.lastOffers" />
 	<div class="df jcsb center">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
-		<select :placeholder="$t('market.filter')" @change="changeFilter">
-			<option value="all">{{ $t('market.all') }}</option>
-			<option value="dinoz">{{ $t('market.dinoz') }}</option>
-			<option value="items">{{ $t('market.items') }}</option>
-			<option value="own">{{ $t('market.historyView.yourOwnOffers') }}</option>
-			<option value="bids">{{ $t('market.historyView.yourOwnBids') }}</option>
-		</select>
+		<DZSelect
+			id="offer-history-filter-select"
+			v-model="filter"
+			:options="[
+				{ label: $t('market.all'), value: 'all' },
+				{ label: $t('market.dinoz'), value: 'dinoz' },
+				{ label: $t('market.items'), value: 'items' },
+				{ label: $t('market.historyView.yourOwnOffers'), value: 'own' },
+				{ label: $t('market.historyView.yourOwnBids'), value: 'bids' }
+			]"
+			@change="changeFilter"
+		/>
 	</div>
 	<DZTable>
 		<tr>
@@ -42,6 +47,7 @@ import OfferLine from './OfferLine.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { playerStore } from '../../store/index.js';
+import DZSelect from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'OfferHistory',
@@ -60,7 +66,7 @@ export default defineComponent({
 			playerStore: playerStore()
 		};
 	},
-	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
+	components: { DZButton, DZTable, DZDisclaimer, OfferLine, DZSelect },
 	methods: {
 		// Transform endDate to Date type and add item names
 		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
@@ -95,8 +101,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		async changeFilter(event: Event) {
-			this.filter = (event.target as HTMLSelectElement).value;
+		async changeFilter() {
 			this.currentPage = 1;
 			await this.fetchOffers();
 		},

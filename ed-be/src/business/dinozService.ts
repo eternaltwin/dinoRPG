@@ -9,12 +9,14 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { placeList, SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { shopList } from '@drpg/core/models/shop/ShopList';
@@ -96,10 +98,9 @@ import { getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
-import { fightMonstersAtPlace } from './fightService.js';
+import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 /**
  * @summary Get available action from dinoz
@@ -726,8 +727,11 @@ export async function betaMove(req: Request) {
 	// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
 	const dayOfWeek = currentDate.day();
 
-	// Marais Collant - No movement on Thursday and Saturday.
-	if ((dayOfWeek === 4 || dayOfWeek === 6) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+	// Marais Collant - No movement days.
+	if (SWAMP_FLOODED_DAYS.includes(dayOfWeek) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+		if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
+			await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
+		}
 		throw new ExpectedError(translate('noMovement', authed));
 	}
 
@@ -842,14 +846,49 @@ export async function digWithDinoz(req: Request) {
 		throw new ExpectedError(translate('shovelMine', authed));
 	}
 
-	const digPlace = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
-	let reward: Rewarder[];
-	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, player, dinozId)) {
-		reward = digPlace.reward;
-	} else {
-		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(0, 125) }];
+	const treasures = Object.values(digTreasures).filter(dig => dig.place === dinozData.placeId);
+	let rewards: Rewarder[] = [];
+	let fight: FightResult | null = null;
+	for (const treasure of treasures) {
+		if (treasure.condition && checkCondition(treasure.condition, player, dinozId)) {
+			if (treasure.fight) {
+				// Fetch player data needed for fight
+				const fightPlayer = await getDinozFightDataRequest(dinozId, authed.id);
+				if (!fightPlayer) {
+					throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+				}
+
+				const dinoz = fightPlayer.dinoz.find(d => d.id === dinozId);
+				if (!dinoz) {
+					throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+				}
+
+				if (!isAlive(dinoz)) {
+					throw new ExpectedError(translate('dead', authed));
+				}
+
+				// Fight before reward
+				const fightResult = calculateFightVsMonsters([dinoz], fightPlayer, dinozData.placeId, treasure.fight);
+
+				fight = await rewardFight([dinoz], treasure.fight, fightResult, dinozData.placeId, fightPlayer);
+
+				if (fight.result) {
+					rewards = rewards.concat(treasure.reward);
+
+					const statusReward = treasure.reward.find(r => r.rewardType === RewardEnum.STATUS);
+					if (statusReward) {
+						fight.statusReward = statusReward.value;
+					}
+				}
+			} else {
+				rewards = rewards.concat(treasure.reward);
+			}
+		}
 	}
-	await rewarder(reward, [dinozData], authed.id, false);
+	if (rewards.length === 0 && !fight) {
+		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(0, 125) }];
+	}
+	await rewarder(rewards, [dinozData], authed.id, false);
 
 	//Broke shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
@@ -868,7 +907,10 @@ export async function digWithDinoz(req: Request) {
 		await setSpecificStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 	}
 
-	return reward[0];
+	return {
+		rewards,
+		fight
+	};
 }
 
 export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {

@@ -1,5 +1,7 @@
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { mixin } from '../mixin/mixin.js';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { statusList } from '../constants/status.js';
 
 export const helpers = {
 	computeImageHtml(key: string): string {
@@ -51,6 +53,16 @@ export const helpers = {
 					}
 
 					return `<img class="text-icon" src="${mixin.methods.getImgURL('item', `item_${item.name}`)}" alt="${item.name}">`;
+				} else if (key.startsWith('status_')) {
+					const statusId = +key.substring(7) as DinozStatusId;
+					const statusIcon = statusList.imgName[statusId];
+
+					if (!statusIcon) {
+						console.error(`Status with key ${statusId} not found for replaced image.`);
+						return `:${key}:`;
+					}
+
+					return `<img class="text-icon" src="${mixin.methods.getImgURL('status', `fx_${statusIcon}`)}" alt="status_${statusIcon}">`;
 				}
 
 				console.error(`Unexpected key for replaced image: ${key}`);
@@ -98,7 +110,7 @@ export function formatText(text: string) {
 				'xp',
 				'irma'
 			];
-			if (validKeys.includes(iconKey) || iconKey.startsWith('item_')) {
+			if (validKeys.includes(iconKey) || iconKey.startsWith('item_') || iconKey.startsWith('status_')) {
 				return helpers.computeImageHtml(iconKey);
 			}
 		}

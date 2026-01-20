@@ -1343,6 +1343,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
 
+				// Add step for fx
+				fightData.steps.push(activate_step);
+
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
 					// Increase the opponent's time
 					opponent.time += 15 * TIME_FACTOR;
@@ -1353,9 +1356,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 						notification: NotificationList.InitDown
 					});
 				}
-
-				// Add step for fx
-				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.RESISTANCE_A_LA_MAGIE: {
@@ -2158,7 +2158,16 @@ export const addStatus = (
 	const isBad = BadFightStatus.includes(status);
 
 	// Negate if SELF_CONTROL
-	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
+	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) {
+		// Add announce step
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: fighter.id,
+			skill: Skill.SELF_CONTROL
+		});
+
+		return false;
+	}
 
 	// Handle the immediate effect of the status
 	switch (status) {
@@ -3989,18 +3998,17 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	const initial_hp = fighter.hp;
 	fighter.hp -= damage;
 
-	// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
-	if (fighter.hp < 0) {
-		fighter.hp = 0;
-		hp_lost = initial_hp;
-	}
-
 	fightData.steps.push({
 		action: 'looseHp',
 		fid: fighter.id,
 		hp: hp_lost,
 		fx
 	});
+
+	// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
+	if (fighter.hp < 0) {
+		fighter.hp = 0;
+	}
 
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
@@ -4014,6 +4022,8 @@ const poison = (
 	skill: Skill,
 	duration = FightStatusLength.INFINITE
 ) => {
+	if (!fightData.rules.poisonEnabled) return;
+
 	// No poison if fighter is already poisoned
 	if (hasStatus(fighter, FightStatus.POISONED)) return;
 
@@ -4378,7 +4388,7 @@ const attackTarget = (
 		target.hp -= damage;
 
 		// Set hp minimum to 0.
-		// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
+		// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
 		if (target.hp < 0) {
 			target.hp = 0;
 		}

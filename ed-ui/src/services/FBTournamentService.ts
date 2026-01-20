@@ -2,8 +2,8 @@ import { http } from '../utils/index.js';
 import { FBOpponent, FBParticipation, PublicEvent, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
+import { FBTournamentFightOpponentResponse } from '@drpg/core/returnTypes/Fight';
 
 export const FBService = {
 	getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
@@ -66,10 +66,10 @@ export const FBService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	fightOpponent(id: number): Promise<FightResult> {
+	fightOpponent(id: number) {
 		return http()
 			.get(`/events/fight/${id}`)
-			.then(res => Promise.resolve(res.data))
+			.then(res => Promise.resolve<FBTournamentFightOpponentResponse>(res.data))
 			.catch(err => Promise.reject(err));
 	}
 };

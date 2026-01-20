@@ -169,6 +169,8 @@ function formatShortDate(iso: string | Date): string {
 
 	&__content {
 		white-space: pre-line;
+		overflow-wrap: break-word;
+		word-break: break-all;
 	}
 	.badge {
 		color: #ffee92;

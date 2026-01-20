@@ -70,6 +70,7 @@ import { simplifyCreateTournamentTeam } from '../business/tournamentService.js';
 import { createMyDojo } from '../dao/dojoDao.js';
 import { generateRandomChallenge } from '../business/dojoService.js';
 import { getLatestTournament } from '../dao/tournamentDao.js';
+import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 
 /**
  * Get all the clans
@@ -398,7 +399,9 @@ export async function getClanMember(req: Request) {
  * @param req.body.clanMember {ClanMember} clan member with edited fields
  * @returns member
  */
-export async function updateClanMember(req: Request) {
+export async function updateClanMember(
+	req: Request<UpdateClanMemberRequestParams, unknown, UpdateClanMemberRequestBody>
+) {
 	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
