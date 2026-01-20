@@ -620,6 +620,7 @@ class TournamentManager {
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
+		const poison = tournamentFormat.poison ?? getRandomNumber(1, 2) === 1;
 
 		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({
@@ -628,7 +629,7 @@ class TournamentManager {
 				formatName: tournamentFormat.name,
 				teamSize: teamSize,
 				raceMinimum: raceMinimum,
-				poison: tournamentFormat.poison,
+				poison: poison,
 				teamRace: teamRace.toString(),
 				levelLimit: levelLimit,
 				nextRound: endQualif
@@ -643,44 +644,60 @@ class TournamentManager {
 		const frTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
 			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize, races: raceMinimum, context: raceMinimum === 1 ? 'singleRace' : undefined }),
+			rule1: translateTarget('dojo.teamSize', 'fr', {
+				nb: teamSize,
+				races: raceMinimum,
+				context: raceMinimum === 1 ? 'singleRace' : undefined
+			}),
 			rule2: translateTarget('dojo.raceLimit', 'fr', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
 			}),
-			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
+			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
 			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit }),
 			number: romanize(total + 1)
 		};
 		const esTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
 			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize, races: raceMinimum, context: raceMinimum === 1 ? 'singleRace' : undefined }),
+			rule1: translateTarget('dojo.teamSize', 'es', {
+				nb: teamSize,
+				races: raceMinimum,
+				context: raceMinimum === 1 ? 'singleRace' : undefined
+			}),
 			rule2: translateTarget('dojo.raceLimit', 'es', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
 			}),
-			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
+			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
 			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit }),
 			number: romanize(total + 1)
 		};
 		const enTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
 			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize, races: raceMinimum, context: raceMinimum === 1 ? 'singleRace' : undefined }),
+			rule1: translateTarget('dojo.teamSize', 'en', {
+				nb: teamSize,
+				races: raceMinimum,
+				context: raceMinimum === 1 ? 'singleRace' : undefined
+			}),
 			rule2: translateTarget('dojo.raceLimit', 'en', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
 			}),
-			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
+			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
 			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit }),
 			number: romanize(total + 1)
 		};
 		const deTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
 			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize, races: raceMinimum, context: raceMinimum === 1 ? 'singleRace' : undefined }),
+			rule1: translateTarget('dojo.teamSize', 'de', {
+				nb: teamSize,
+				races: raceMinimum,
+				context: raceMinimum === 1 ? 'singleRace' : undefined
+			}),
 			rule2: translateTarget('dojo.raceLimit', 'de', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
 			}),
-			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
+			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
 			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit }),
 			number: romanize(total + 1)
 		};
