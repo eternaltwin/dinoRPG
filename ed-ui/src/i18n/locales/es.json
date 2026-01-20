@@ -4171,7 +4171,7 @@
 			},
 			"nickname": "Apodo del jugador:",
 			"save": "Guardar",
-			"saved": "Modifications enregistrées avec succès !"
+			"saved": "¡Modificaciones guardadas con éxito!"
 		},
 		"request": {
 			"title": "Solicitudes pendientes",
@@ -4275,7 +4275,7 @@
 		"life": "Vida perdida",
 		"experience": "Experiencia",
 		"gold": "Oro obtenido",
-		"statusReward": "Vous avez reçu : {reward}",
+		"statusReward": "Has recibido: {reward}",
 		"monster": {
 			"goupignon": "Gupión",
 			"wolf": "Lobo",
