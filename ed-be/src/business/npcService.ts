@@ -47,10 +47,12 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ExpectedError(`NPC ${npcName} doesn't exists`);
 	}
 
-	if (req.body.stop !== true && pnj.condition && !checkCondition(pnj.condition, player, dinozId)) {
+	if (req.body.stop) return await handleStopStep(dinozId, pnj, npcName);
+
+	if (pnj.condition && !checkCondition(pnj.condition, player, dinozId)) {
 		throw new ExpectedError(`Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
-	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
+	if (actualPlace.placeId !== pnj.placeId) {
 		throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
@@ -91,8 +93,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			)
 		};
 	} else {
-		if (req.body.stop) return await handleStopStep(dinozId, pnj, npcName);
-
 		const actualStep = Object.values(pnj.data).find(pnj => pnj.stepName === dinozTalk?.step);
 
 		if (!actualStep) {

@@ -86,15 +86,15 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	swampTreasure: {
 		stepName: 'swampTreasure',
 		nextStep: ['swampLeave'],
+	},
+	swampLeave: {
+		stepName: 'swampLeave',
+		nextStep: [],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.SWAMP_MONSTERS_KNOWN
 			}
 		]
-	},
-	swampLeave: {
-		stepName: 'swampLeave',
-		nextStep: []
 	}
 };
