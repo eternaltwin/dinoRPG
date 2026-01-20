@@ -1392,8 +1392,8 @@
 				"go": "Jovebozé te lleva al mar, a una parte que parece ser evitada por los otros barcos... Al acercarte, ves lo que parece ser un enorme Rascafandro a algunas decenas de metros del barco. Si continúas en esta dirección y si el Guardia Atlanteido llevaba razón, vas a ser atacado de un momento a otro... ¡¡cuanto más rápido pase esto mejor!!",
 				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido...",
 				"weirdSwamp": "¿Ha' vi'to algo rarou en el pantano vi'coso? ¡Esho se mouve solo, te digo sho!",
-				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
-				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
+				"swampTreasure": "Dicennnn qu'encontrarás pepitahs si rasga' cuando el fango se empieza a de'controlar… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
+				"swampLeave": "Jovebozé te hace un gesto con la mano sonriendo y se aleja tarareando una canción de marineros."
 			},
 			"playerChoice": {
 				"sry": "... ¡¿perdón?!",
@@ -1401,8 +1401,8 @@
 				"go": "Seguir a Jovebozé",
 				"attack": "Continuar",
 				"back": "¡¡¡REGRESAR!!!",
-				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je ne comprends rien à ce que vous dites..."
+				"swampTreasure": "… ¿¡raro!?",
+				"swampLeave": "No entiendo nada de lo que dices..."
 			}
 		},
 		"archis": {
@@ -2528,8 +2528,8 @@
 			"23": "Talismán de Fuego",
 			"24": "Talismán Bao",
 			"7": "Pala mejorada rota",
-			"72": "Bouée du Marais",
-			"73": "Lanterne du Marais"
+			"72": "Salvavidas del Pantano",
+			"73": "Linterna del Pantano"
 		},
 		"description": {
 			"2": "El Material de Escalada permite a tu Dino escalar las Colinas Escarpadas.",
@@ -2582,8 +2582,8 @@
 			"23": "El Talismán de Fuego aumenta el poder de los ataques de Fuego de este Dino.",
 			"24": "El Talismán Bao aumenta la defensa de tu Dino contra los ataques de Agua.",
 			"7": "La Pala Mejorada al fin se rompió, tendrás que repararla antes de volver a usarla.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
-			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
+			"72": "El estado en constante cambio de este salvavidas permite a tu Dino saber si el Pantano Pegajoso está inundado o no.",
+			"73": "La intensidad de esta linterna permite a tu Dino saber si el Pantano Pegajoso está cubierto de bruma o no."
 		}
 	},
 	"tabs": {
@@ -4169,7 +4169,7 @@
 				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
 				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan"
 			},
-			"nickname": "Apodo del jugador:",
+			"nickname": "Apodo del jugador",
 			"save": "Guardar",
 			"saved": "¡Modificaciones guardadas con éxito!"
 		},
@@ -4609,7 +4609,7 @@
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"soon": "Pronto",
-		"seeFight": "Ver el combate",
+		"seeFight": "Ver el combate de {player}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
 			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",
