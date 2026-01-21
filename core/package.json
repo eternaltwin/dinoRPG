@@ -1,6 +1,6 @@
 {
   "name": "@drpg/core",
-  "version": "0.17.19",
+  "version": "0.17.20",
   "scripts": {
     "build": "yarn tsc --build ./tsconfig.json",
     "prettier": "yarn prettier --config .prettierrc 'src/**/*.mts' --write",
