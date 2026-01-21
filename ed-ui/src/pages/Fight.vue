@@ -54,10 +54,6 @@ export default defineComponent({
 	methods: {
 		onFightEnd() {
 			this.fightEnded = true;
-			if (this.fight) {
-				this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
-				this.moneyGiven = true;
-			}
 		}
 	},
 	created(): void {
@@ -109,11 +105,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {
-		// Give money if not given yet
-		if (this.fight && !this.moneyGiven) {
-			this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
-			this.moneyGiven = true;
-		}
+		this.$refreshGold();
 
 		// Comment this to replay fight with refresh
 		this.loaded = false;

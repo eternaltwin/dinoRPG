@@ -7,7 +7,6 @@ import { AdminRole } from '@drpg/prisma';
 export interface PlayerCommonData {
 	money: number;
 	dinoz: DinozFiche[];
-	dinozCount: number;
 	id: string;
 	connexionToken: string;
 	name: string;
@@ -18,4 +17,9 @@ export interface PlayerCommonData {
 	shopkeeper: boolean;
 	notifications: Notification[];
 	discoveredSkills: Skill[];
+}
+
+export interface PlayerLoginData {
+	id: string;
+	connexionToken: string;
 }

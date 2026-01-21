@@ -5,6 +5,8 @@ import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 import { defineStore } from 'pinia';
 import { PlayerService } from '../services';
 import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
+import { dinozStore } from './dinozStore';
+import { setCookie } from '../utils/cookies';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -85,6 +87,10 @@ export const playerStore = defineStore('playerStore', {
 		},
 		async update() {
 			const commonData = await PlayerService.getLoggedInData();
+			// Set cookies
+			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+			setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
+			setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
 			// Set data in sessionStore
 			this.setMoney(commonData.money);
 			this.setClanId(commonData.clanId);
@@ -96,6 +102,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerOptions(commonData.playerOptions);
 			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
+			dinozStore().setDinozList(commonData.dinoz);
 		}
 	},
 	persist: {

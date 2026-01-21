@@ -15,7 +15,6 @@
 import { defineComponent } from 'vue';
 import { dinozStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
-import { PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
 
@@ -33,23 +32,14 @@ export default defineComponent({
 		async firstLoad() {
 			EventBus.emit('isLoading', true);
 			try {
-				const commonData = await PlayerService.getLoggedInData();
 				// Set data in sessionStore
 				await this.playerStore.update();
-				this.dinozStore.setDinozList(commonData.dinoz);
-				this.dinozStore.setDinozCount(commonData.dinozCount);
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 				return;
 			}
-		},
-		async goToNews() {
-			this.$router.push({
-				name: 'News'
-			});
-			await this.firstLoad();
 		}
 	},
 	async created() {

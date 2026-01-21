@@ -95,6 +95,7 @@ export default defineComponent({
 		async startSseForNotification(): Promise<void> {
 			if (!this.playerStore.getPlayerId) {
 				this.eventSource?.close();
+				return;
 			}
 
 			const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);

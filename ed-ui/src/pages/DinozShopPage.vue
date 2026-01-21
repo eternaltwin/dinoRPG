@@ -121,9 +121,6 @@ export default defineComponent({
 				// Update dinoz list
 				this.dinozStore.setDinozList(dinozStore);
 
-				// Update dinoz count
-				this.dinozStore.setDinozCount((this.dinozStore.getDinozCount ?? 0) + 1);
-
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',

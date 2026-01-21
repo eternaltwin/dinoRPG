@@ -47,7 +47,6 @@ export async function getCommonData(req: Request) {
 
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,
-		dinozCount: await getDinozTotalCount(),
 		dinoz: dinoz,
 		id: playerCommonData.id,
 		connexionToken: playerCommonData.connexionToken,
