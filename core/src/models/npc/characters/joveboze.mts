@@ -51,11 +51,11 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'attack_win',
 		nextStep: [],
 		initialStep: true, // So it can show up after the fight.
-		condition:  // To avoid potential conflict with other fight returns
-		{
+		// To avoid potential conflict with other fight returns
+		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.FRETURN },
-				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
 			]
 		},
 		reward: [
@@ -74,8 +74,8 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'weirdSwamp',
 		nextStep: ['trad', 'swampTreasure'],
 		initialStep: true,
-		condition:  // Necessary to avoid having multiple initial steps possible at once
-		{
+		// Necessary to avoid having multiple initial steps possible at once
+		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
 				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
@@ -85,7 +85,7 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	},
 	swampTreasure: {
 		stepName: 'swampTreasure',
-		nextStep: ['swampLeave'],
+		nextStep: ['swampLeave']
 	},
 	swampLeave: {
 		stepName: 'swampLeave',
