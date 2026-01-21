@@ -884,6 +884,12 @@
 			"fake": "Una isla desierta llamada La Isla de la Condena, donde algunas almas en pena vienen a parar. La oscuridad es muy extraña por aquí...",
 			"fake2": "Una isla desierta llamada \"Isla de las Flamas Extrañas\". Sus espíritus errantes siembran el horror por doquier. Está muy oscuro por aquí...",
 			"rechut": "Gracias al pedazo de Orbe Oscuro que tu Dino posee, puedes volver a la superficie. La luz repentina llega a enceguecer, es mejor no quedarse mucho tiempo en el Mundo Sombra."
+		},
+		"hint": {
+			"marais": {
+				"flooded": "El pantano está actualmente inundado. No podrás salir de él.",
+				"foggy": "El pantano está actualmente cubierto de bruma, seguramente no encontrarás ningún monstruo para combatir."
+			}
 		}
 	},
 	"race": {
@@ -1384,14 +1390,19 @@
 				"trad": "Nadie aquí parece comprender lo que dice Jovebozé. Según la información que has obtenido, parece que habla un dialecto local de Santa Moría, más bien un dialecto propio a Jovebozé...",
 				"sry": "Site popre ven pa, sino mot'dan lobatou, k?",
 				"go": "Jovebozé te lleva al mar, a una parte que parece ser evitada por los otros barcos... Al acercarte, ves lo que parece ser un enorme Rascafandro a algunas decenas de metros del barco. Si continúas en esta dirección y si el Guardia Atlanteido llevaba razón, vas a ser atacado de un momento a otro... ¡¡cuanto más rápido pase esto mejor!!",
-				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido..."
+				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido...",
+				"weirdSwamp": "¿Ha' vi'to algo rarou en el pantano vi'coso? ¡Esho se mouve solo, te digo sho!",
+				"swampTreasure": "Dicennnn qu'encontrarás pepitahs si rasga' cuando el fango se empieza a de'controlar… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
+				"swampLeave": "Jovebozé te hace un gesto con la mano sonriendo y se aleja tarareando una canción de marineros."
 			},
 			"playerChoice": {
 				"sry": "... ¡¿perdón?!",
 				"trad": "Ir a buscar un traductor",
 				"go": "Seguir a Jovebozé",
 				"attack": "Continuar",
-				"back": "¡¡¡REGRESAR!!!"
+				"back": "¡¡¡REGRESAR!!!",
+				"swampTreasure": "… ¿¡raro!?",
+				"swampLeave": "No entiendo nada de lo que dices..."
 			}
 		},
 		"archis": {
@@ -2205,7 +2216,7 @@
 			"Mutation": "Aumenta el máximo de puntos de vida en 30",
 			"PocheVentrale": "Permite al Dino equiparse un objeto de combate suplementario",
 			"Intelligence": "Aumenta la obtención de experiencia al final del combate en un 5%",
-			"Focus": "Aumenta la potencia del próximo *asalto* con un bonus de Rayo 1",
+			"Focus": "Aumenta la potencia del próximo **asalto** con un bonus de Rayo 1",
 			"Celerite": "Aumenta la velocidad del Dino en 15%",
 			"Concentration": "Los **asaltos** siempre son contra el mismo enemigo",
 			"AttaqueEclair": "Aumenta la velocidad de los ataques Rayo en 40%",
@@ -2516,7 +2527,9 @@
 			"30": "Venerable",
 			"23": "Talismán de Fuego",
 			"24": "Talismán Bao",
-			"7": "Pala mejorada rota"
+			"7": "Pala mejorada rota",
+			"72": "Salvavidas del Pantano",
+			"73": "Linterna del Pantano"
 		},
 		"description": {
 			"2": "El Material de Escalada permite a tu Dino escalar las Colinas Escarpadas.",
@@ -2568,7 +2581,9 @@
 			"30": "Este Dino ha vencido al Venerable.",
 			"23": "El Talismán de Fuego aumenta el poder de los ataques de Fuego de este Dino.",
 			"24": "El Talismán Bao aumenta la defensa de tu Dino contra los ataques de Agua.",
-			"7": "La Pala Mejorada al fin se rompió, tendrás que repararla antes de volver a usarla."
+			"7": "La Pala Mejorada al fin se rompió, tendrás que repararla antes de volver a usarla.",
+			"72": "El estado en constante cambio de este salvavidas permite a tu Dino saber si el Pantano Pegajoso está inundado o no.",
+			"73": "La intensidad de esta linterna permite a tu Dino saber si el Pantano Pegajoso está cubierto de bruma o no."
 		}
 	},
 	"tabs": {
@@ -4154,8 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
 				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan"
 			},
-			"nickname": "Apodo del jugador:",
-			"save": "Guardar"
+			"nickname": "Apodo del jugador",
+			"save": "Guardar",
+			"saved": "¡Modificaciones guardadas con éxito!"
 		},
 		"request": {
 			"title": "Solicitudes pendientes",
@@ -4259,6 +4275,7 @@
 		"life": "Vida perdida",
 		"experience": "Experiencia",
 		"gold": "Oro obtenido",
+		"statusReward": "Has recibido: {reward}",
 		"monster": {
 			"goupignon": "Gupión",
 			"wolf": "Lobo",
@@ -4298,7 +4315,9 @@
 			"megawf": "Megalobo",
 			"baraba": "Barababor",
 			"baratr": "Baratribor",
-			"bamboo": "Bambú"
+			"bamboo": "Bambú",
+			"swampmf": "Lodoz",
+			"swampmf2": "Brumoz"
 		},
 		"status": {
 			"asleep": "dormido",
@@ -4590,7 +4609,7 @@
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"soon": "Pronto",
-		"seeFight": "Ver el combate",
+		"seeFight": "Ver el combate de {player}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
 			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",

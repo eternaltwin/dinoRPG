@@ -407,7 +407,7 @@
 			"hot_bread": "Ofenfrisches Brot",
 			"meat_pie": "Fleischpastete",
 			"fight_ration": "Kampfration",
-			"surviving_ration": "TODO",
+			"surviving_ration": "Überlebensration",
 			"goblin_merguez": "Goblin-Merguez",
 			"pampleboum": "Granatenapfel",
 			"sos_helmet": "Rettungshelm",
@@ -417,7 +417,7 @@
 			"refrigerated_shield": "Vereister Schild",
 			"fuca_pill": "Fuca-Dragee",
 			"monochromatic": "Monochrom",
-			"poisonite_shot": "Giftstich",
+			"poisonite_shot": "Gegengiftspritze",
 			"loris_costume": "Lories Kostüm",
 			"vegetox_costume": "Kostüm der Gemüsox-Wache",
 			"goblin_costume": "Koboldkostüm",
@@ -516,7 +516,7 @@
 			"magic_star": "Zauberstern",
 			"golden_napodino": "Gold-Napodino",
 			"bamboo_friend": "Bambooz-Freund",
-			"candle_card": "TODO",
+			"candle_card": "Jubiläumskerze",
 			"christmas_ticket": "Weihnachtsgutschein",
 			"tictac_ticket": "Tack-Ticket",
 			"anniversary_ticket": "Jubiläumsgutschein",
@@ -648,10 +648,10 @@
 			"magic_star": "Diese geheimnisvollen Sterne sind über ganz Dinoland verstreut. Wirst du es schaffen, alle 7 zu finden?",
 			"golden_napodino": "Napodinos sind massive Goldmünzen, die von einer prä-dinoländischen Zivilisation verwendet wurden. Sie haben unter Sammlern großen Wert und man erzählt sich, dass sie den Dinoz, die sie bei sich tragen, Glück bringen würden.",
 			"bamboo_friend": "Ein Bambooz-Freund kommt deinem Dinoz im Kampf zur Hilfe!",
-			"candle_card": "TODO",
+			"candle_card": "Diese Jubiläumskerze gewährt Zugang zum Sandburgspiel am Predigerhafen!",
 			"christmas_ticket": "Ermöglicht es, an der Schneetzeljagd teilzunehmen, um 1.000 Gold, 5.000 Gold oder einen Santas zu gewinnen.",
 			"tictac_ticket": "Mit den Tack-Tickets kannst du in Papy Joes Garten graben und versuchen, den verlorenen Schatz seines Urgroßvaters zu finden.",
-			"anniversary_ticket": "TODO",
+			"anniversary_ticket": "Besuche mit einem deiner Dinoz den Predigerhafen, um deine Jubiläumskarten für das Sandburgspiel auszugeben!",
 			"easter_egg": "Ein Ei von Madame Urma kann einen der zahllosen Gegenstände enthalten, die es im Dinoland gibt. Ob es ein seltener oder ein gewöhnlicher wird, bestimmt allein das Schicksal. Wird das Glück dir hold sein?",
 			"fire_cracker": "Dieser Knaller ermöglicht es dir, in Dinoville Feuerwerk zu zünden, um Schätze zu gewinnen!",
 			"special_potion_irma": "Der berühmte Trank von Madame Irma gewährt dem Dinoz, der es trinkt, **sofort eine neue Aktion**, ohne auf den nächsten Tag warten zu müssen. Du kannst nicht mehr als 3 von ihnen bei dir haben.",
@@ -884,6 +884,12 @@
 			"fake": "Eine verlassene Insel, die gemeinhin als „Insel der Verdammnis“ bezeichnet wird und auf der gequälte Seelen umherstreifen. Hier ist es besonders dunkel...",
 			"fake2": "Eine verlassene Insel, die gemeinhin als „Insel der Irrlichter“ bezeichnet wird, säen diese umherziehenden Geister Tod und Verzweiflung. Hier ist es besonders dunkel...",
 			"rechut": "Dank des Teils der Dunklen Kugel im Besitz deiner Dinoz kannst du an die Oberfläche zurückkehren. Das allgegenwärtige Licht blendet dich für einige Minuten. Es wäre wohl besser, nicht zu viel Zeit in der Dunklen Welt zu verbringen."
+		},
+		"hint": {
+			"marais": {
+				"flooded": "Der Sumpf ist heute völlig geflutet und es ist unmöglich, herauszukommen.",
+				"foggy": "Der Sumpf derzeit von Nebel umhüllt und es lassen sich keine Monster zum Kämpfen finden."
+			}
 		}
 	},
 	"race": {
@@ -1384,14 +1390,19 @@
 				"trad": "Hier scheint kein Mensch zu verstehen, was Jové Bozé von sich gibt. Laut dem, was du rausfinden konntest, ist es wohl irgendein örtlicher Dialekt der Predigerhafener, oder sogar ein eigener Dialekt von Jové Bozé...",
 				"sry": "Wenn do ned praat büs, denn kom ned. Sünsten stieg in det Boad, kla?",
 				"go": "Jové Bozé nimmt dich aufs Meer hinaus zu einem Ort, den andere Boote zu meiden scheinen... Als ihr euch nähert, seht ihr ungefähr ein Dutzend Meter vom Boot entfernt etwas im Wasser. Es sieht aus wie ein riesiger Tiefseeskorp! Wenn ihr euch weiter nähert und falls der Atlantinische Wächter recht hatte, werdet ihr sicherlich angegriffen werden... Jetzt muss man schnell handeln!!!",
-				"attack_win": "Selbstverständlich hatte Jové Bozé nichts von deinen Anweisungen verstanden... Nach deinem ehrenhaften Kampf, nimmt er dich zurück zum Predigerhafen mit. Seit dem Kampf mit dem Tiefseeskorp hat er kein Wort von sich gegeben, aber er beobachtet dich aus dem Augenwinkel und sieht zufrieden aus. Als ihr euch verabschiedet, schüttelt er dir herzlich die Hand als Zeichen seiner Ermutigung zu weiteren Abenteuern. Dabei überreicht dir eine Tiefseeskorp-Lockflöte, die er für dich geschnitzt hat..."
+				"attack_win": "Selbstverständlich hatte Jové Bozé nichts von deinen Anweisungen verstanden... Nach deinem ehrenhaften Kampf, nimmt er dich zurück zum Predigerhafen mit. Seit dem Kampf mit dem Tiefseeskorp hat er kein Wort von sich gegeben, aber er beobachtet dich aus dem Augenwinkel und sieht zufrieden aus. Als ihr euch verabschiedet, schüttelt er dir herzlich die Hand als Zeichen seiner Ermutigung zu weiteren Abenteuern. Dabei überreicht dir eine Tiefseeskorp-Lockflöte, die er für dich geschnitzt hat...",
+				"weirdSwamp": "Na moin noma, mien Jung! Hasche neda wat Oll's do im Sumfe g'seh'n jetze? B'wecht hoat's sia, do sag i!",
+				"swampTreasure": "De Leut sa'n, man find do im Drekata schän' Klunka, wen do im Sumfeswahn budd'ls... Aber wende nich schlofe tus, dan hol'n se dei Seel!",
+				"swampLeave": "Mit einem breiten Grinsen gibt dir Jové Bozé irgendwelche Handzeichen und spaziert daraufhin ein Seemannslied summend davon."
 			},
 			"playerChoice": {
 				"sry": "...wie bitte?",
 				"trad": "Einen Übersetzer suchen gehen",
 				"go": "Jové Bozé folgen",
 				"attack": "Kurs halten",
-				"back": "ABDREHEN!!!"
+				"back": "ABDREHEN!!!",
+				"swampTreasure": "...was Olles?!",
+				"swampLeave": "Ich verstehe kein Wort..."
 			}
 		},
 		"archis": {
@@ -2205,7 +2216,7 @@
 			"Mutation": "Erhöht die maximalen Lebenspunkte um 30.",
 			"PocheVentrale": "Schaltet einen zusätzlichen Ausrüstungsplatz frei.",
 			"Intelligence": "Erhöht die erhaltenen Erfahrungspunkte um 5%.",
-			"Focus": "Erhöht die Stärke des nächsten Angriffs um einen Blitzbonus von 1.",
+			"Focus": "Erhöht die Stärke des nächsten **Angriffs** um einen Blitzbonus von 1.",
 			"Celerite": "Erhöht die Geschwindigkeit des Dinoz um 15%.",
 			"Concentration": "**Angriffe** richten sich immer gegen denselben Gegner.",
 			"AttaqueEclair": "Erhöht die Geschwindigkeit von Blitzangriffen um 40%.",
@@ -2516,7 +2527,9 @@
 			"30": "Der Ehrwürdige",
 			"23": "Feuerverzauberung",
 			"24": "Bao-Verzauberung",
-			"7": "Verbesserte Schaufel"
+			"7": "Verbesserte Schaufel",
+			"72": "Sumpfschwimmreifen",
+			"73": "Sumpflaterne"
 		},
 		"description": {
 			"2": "Die Kletterausrüstung ermöglicht es diesem Dinoz, steile Hänge zu erklimmen.",
@@ -2568,7 +2581,9 @@
 			"30": "Dieser Dinoz hat den Ehrwürdigen bezwungen.",
 			"23": "Die Feuerverzauberung erhöht die Stärke der Feuerangriffe dieses Dinoz.",
 			"24": "Die Bao-Verzauberung erhöht die Abwehr dieses Dinoz gegen Wasserangriffe.",
-			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt."
+			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt.",
+			"72": "Dieser Schwimmreifen ist in einem Zustand fortlaufender Veränderung und ermöglicht es so deinen Dinoz, zu erkennen, ob der Klebrige Sumpf geflutet ist oder nicht.",
+			"73": "Die besondere Intensität dieser Laterne ermöglicht es deinen Dinoz, zu erkennen, ob der Klebrige Sumpf vom Nebel umhüllt ist."
 		}
 	},
 	"tabs": {
@@ -4154,8 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
 				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
 			},
-			"nickname": "Spitzname des Spielers:",
-			"save": "Speichern"
+			"nickname": "Spitzname des Spielers",
+			"save": "Speichern",
+			"saved": "Änderungen erfolgreich gespeichert!"
 		},
 		"request": {
 			"title": "Wartende Anfragen",
@@ -4259,6 +4275,7 @@
 		"life": "Verlorene LP",
 		"experience": "Erfahrung",
 		"gold": "Gold",
+		"statusReward": "Du hast {reward} erhalten!",
 		"monster": {
 			"goupignon": "Kloppignon",
 			"wolf": "Wolf",
@@ -4298,7 +4315,9 @@
 			"megawf": "Megawolf",
 			"baraba": "Barababor",
 			"baratr": "Baratribor",
-			"bamboo": "Bambooz"
+			"bamboo": "Bambooz",
+			"swampmf": "Schlamos",
+			"swampmf2": "Nebulos"
 		},
 		"status": {
 			"asleep": "schlafend",
@@ -4590,7 +4609,7 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Kampf ansehen",
+		"seeFight": "Kampf von {player} ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
