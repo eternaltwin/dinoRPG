@@ -202,7 +202,7 @@ const router = createRouter({
 						},
 						{
 							path: 'news',
-							name: 'News',
+							name: 'NewsAdmin',
 							component: () => import('../components/admin/NewsEdit.vue')
 						}
 					]

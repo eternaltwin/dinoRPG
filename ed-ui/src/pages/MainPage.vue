@@ -1,7 +1,7 @@
 <template>
 	<div class="dinorpg">
 		<div id="centerHeader" v-if="loaded">
-			<a @click="goToNews()" class="linkHome"></a>
+			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
 				<Router-view />
@@ -76,6 +76,7 @@ export default defineComponent({
 	background-position-x: calc(50% + 247px);
 	background-position-y: top;
 	padding-bottom: 50px;
+	padding-top: 15px;
 	.linkHome {
 		grid-area: top;
 		cursor: pointer;
@@ -88,7 +89,6 @@ export default defineComponent({
 	#centerHeader {
 		display: grid;
 		grid-template-areas: 'left top .' 'left center center';
-		padding-top: 15px;
 		grid-template-columns: 1fr 540px 1fr;
 		grid-template-rows: 110px 1fr;
 	}
