@@ -9,7 +9,7 @@
 		round
 		:content="$t(`dojo.timer.${state.phase}`, calculateTimeRemaining(state.nextScheduledMatch))"
 	/>
-	<DZDisclaimer round :content="$t(`dojo.timer.cashPrice`, { cashPrince: state.cashPrice })" />
+	<DZDisclaimer round :content="$t(`dojo.timer.cashPrice`, { cashPrice: state.cashPrice })" />
 </template>
 
 <script lang="ts">
