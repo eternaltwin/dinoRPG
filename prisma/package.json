@@ -11,7 +11,7 @@
       "default": "./index.js"
     },
     "./enums": {
-      "types": "./enums.d.ts",
+      "types": "./index.d.ts",
       "import": "./enums.mjs",
       "default": "./enums.mjs"
     }
