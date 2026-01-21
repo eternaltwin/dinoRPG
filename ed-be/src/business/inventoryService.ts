@@ -563,7 +563,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 			dinozItem.itemId === Item.GOBLIN_MERGUEZ &&
 			dinoz.player.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)
 		) {
-			if (playerItem >= 100) {
+			if (playerItem >= getItemMaxQuantity(dinoz.player, itemToEquip)) {
 				throw new ExpectedError(translate('maxQuantityInventory', authed));
 			}
 
