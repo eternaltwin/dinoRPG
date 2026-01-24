@@ -106,133 +106,133 @@ const helpPageSections: HelpPageConfig[] = [
 		nextItem: 'heal',
 		prevItem: 'move'
 	},
-	// {
-	// 	id: 'heal',
-	// 	nameI18nKey: 'guide.sections.heal',
-	// 	nameImageUrl: { path: 'icons', name: 'small_use' },
-	// 	markdownFile: 'heal',
-	// 	nextItem: 'death',
-	// 	prevItem: 'fight'
-	// },
-	// {
-	// 	id: 'death',
-	// 	nameI18nKey: 'guide.sections.death',
-	// 	nameImageUrl: { path: 'icons', name: 'small_delete' },
-	// 	markdownFile: 'death',
-	// 	nextItem: 'exp',
-	// 	prevItem: 'heal'
-	// },
-	// {
-	// 	id: 'exp',
-	// 	nameI18nKey: 'guide.sections.exp',
-	// 	nameImageUrl: { path: 'icons', name: 'small_xp' },
-	// 	markdownFile: 'exp',
-	// 	nextItem: 'missions',
-	// 	prevItem: 'death'
-	// },
-	// {
-	// 	id: 'missions',
-	// 	nameI18nKey: 'guide.sections.missions',
-	// 	nameImageUrl: { path: 'icons', name: 'small_gold' },
-	// 	markdownFile: 'missions',
-	// 	nextItem: 'status',
-	// 	prevItem: 'exp'
-	// },
-	// {
-	// 	id: 'status',
-	// 	nameI18nKey: 'guide.sections.status',
-	// 	nameImageUrl: { path: 'icons', name: 'small_edit' },
-	// 	markdownFile: 'status',
-	// 	nextItem: 'equipment',
-	// 	prevItem: 'missions'
-	// },
-	// {
-	// 	id: 'equipment',
-	// 	nameI18nKey: 'guide.sections.equipment',
-	// 	nameImageUrl: { path: 'status', name: 'fx_bckpck' },
-	// 	markdownFile: 'equipment',
-	// 	nextItem: 'epic',
-	// 	prevItem: 'status'
-	// },
-	// {
-	// 	id: 'epic',
-	// 	nameI18nKey: 'guide.sections.epic',
-	// 	nameImageUrl: { path: 'icons', name: 'small_mode' },
-	// 	markdownFile: 'epic',
-	// 	nextItem: 'group',
-	// 	prevItem: 'equipment'
-	// },
-	// {
-	// 	id: 'group',
-	// 	nameI18nKey: 'guide.sections.group',
-	// 	nameImageUrl: { path: 'icons', name: 'small_leader' },
-	// 	markdownFile: 'group',
-	// 	nextItem: 'ingredient',
-	// 	prevItem: 'epic'
-	// },
-	// {
-	// 	id: 'ingredient',
-	// 	nameI18nKey: 'guide.sections.ingredient',
-	// 	nameImageUrl: { path: 'status', name: 'fx_pelle' },
-	// 	markdownFile: 'ingredient',
-	// 	nextItem: 'clans',
-	// 	prevItem: 'group'
-	// },
-	// {
-	// 	id: 'clans',
-	// 	nameI18nKey: 'guide.sections.clans',
-	// 	nameImageUrl: { path: 'icons', name: 'small_leader' },
-	// 	markdownFile: 'clans',
-	// 	nextItem: 'dojo',
-	// 	prevItem: 'ingredient'
-	// },
-	// {
-	// 	id: 'dojo',
-	// 	nameI18nKey: 'guide.sections.dojo',
-	// 	nameImageUrl: { path: 'icons', name: 'small_dojo' },
-	// 	markdownFile: 'dojo',
-	// 	nextItem: 'gdc',
-	// 	prevItem: 'clans'
-	// },
-	// {
-	// 	id: 'gdc',
-	// 	nameI18nKey: 'guide.sections.gdc',
-	// 	nameImageUrl: { path: 'icons', name: 'small_attack' },
-	// 	markdownFile: 'gdc',
-	// 	nextItem: 'cdc',
-	// 	prevItem: 'dojo'
-	// },
-	// {
-	// 	id: 'cdc',
-	// 	nameI18nKey: 'guide.sections.cdc',
-	// 	nameImageUrl: { path: 'icons', name: 'small_attack' },
-	// 	markdownFile: 'cdc',
-	// 	nextItem: 'question',
-	// 	prevItem: 'gdc'
-	// },
-	// {
-	// 	id: 'question',
-	// 	nameI18nKey: 'guide.sections.question',
-	// 	nameImageUrl: { path: 'icons', name: 'small_mail' },
-	// 	markdownFile: 'question',
-	// 	nextItem: 'support',
-	// 	prevItem: 'cdc'
-	// },
-	// {
-	// 	id: 'support',
-	// 	nameI18nKey: 'guide.sections.support',
-	// 	nameImageUrl: { path: 'icons', name: 'small_browse_next' },
-	// 	markdownFile: 'support',
-	// 	nextItem: 'security',
-	// 	prevItem: 'question'
-	// },
-	// {
-	// 	id: 'security',
-	// 	nameI18nKey: 'guide.sections.security',
-	// 	nameImageUrl: { path: 'icons', name: 'small_lock' },
-	// 	markdownFile: 'security',
-	// 	prevItem: 'support'
-	// }
+	{
+		id: 'heal',
+		nameI18nKey: 'guide.sections.heal',
+		nameImageUrl: { path: 'icons', name: 'small_use' },
+		markdownFile: 'heal',
+		nextItem: 'death',
+		prevItem: 'fight'
+	},
+	{
+		id: 'death',
+		nameI18nKey: 'guide.sections.death',
+		nameImageUrl: { path: 'icons', name: 'small_delete' },
+		markdownFile: 'death',
+		nextItem: 'exp',
+		prevItem: 'heal'
+	},
+	{
+		id: 'exp',
+		nameI18nKey: 'guide.sections.exp',
+		nameImageUrl: { path: 'icons', name: 'small_xp' },
+		markdownFile: 'exp',
+		nextItem: 'missions',
+		prevItem: 'death'
+	},
+	{
+		id: 'missions',
+		nameI18nKey: 'guide.sections.missions',
+		nameImageUrl: { path: 'icons', name: 'small_gold' },
+		markdownFile: 'missions',
+		nextItem: 'status',
+		prevItem: 'exp'
+	},
+	{
+		id: 'status',
+		nameI18nKey: 'guide.sections.status',
+		nameImageUrl: { path: 'icons', name: 'small_edit' },
+		markdownFile: 'status',
+		nextItem: 'equipment',
+		prevItem: 'missions'
+	},
+	{
+		id: 'equipment',
+		nameI18nKey: 'guide.sections.equipment',
+		nameImageUrl: { path: 'status', name: 'fx_bckpck' },
+		markdownFile: 'equipment',
+		nextItem: 'epic',
+		prevItem: 'status'
+	},
+	{
+		id: 'epic',
+		nameI18nKey: 'guide.sections.epic',
+		nameImageUrl: { path: 'icons', name: 'small_mode' },
+		markdownFile: 'epic',
+		nextItem: 'group',
+		prevItem: 'equipment'
+	},
+	{
+		id: 'group',
+		nameI18nKey: 'guide.sections.group',
+		nameImageUrl: { path: 'icons', name: 'small_leader' },
+		markdownFile: 'group',
+		nextItem: 'ingredient',
+		prevItem: 'epic'
+	},
+	{
+		id: 'ingredient',
+		nameI18nKey: 'guide.sections.ingredient',
+		nameImageUrl: { path: 'status', name: 'fx_pelle' },
+		markdownFile: 'ingredient',
+		nextItem: 'clans',
+		prevItem: 'group'
+	},
+	{
+		id: 'clans',
+		nameI18nKey: 'guide.sections.clans',
+		nameImageUrl: { path: 'icons', name: 'small_leader' },
+		markdownFile: 'clans',
+		nextItem: 'dojo',
+		prevItem: 'ingredient'
+	},
+	{
+		id: 'dojo',
+		nameI18nKey: 'guide.sections.dojo',
+		nameImageUrl: { path: 'icons', name: 'small_dojo' },
+		markdownFile: 'dojo',
+		nextItem: 'gdc',
+		prevItem: 'clans'
+	},
+	{
+		id: 'gdc',
+		nameI18nKey: 'guide.sections.gdc',
+		nameImageUrl: { path: 'icons', name: 'small_attack' },
+		markdownFile: 'gdc',
+		nextItem: 'cdc',
+		prevItem: 'dojo'
+	},
+	{
+		id: 'cdc',
+		nameI18nKey: 'guide.sections.cdc',
+		nameImageUrl: { path: 'icons', name: 'small_attack' },
+		markdownFile: 'cdc',
+		nextItem: 'question',
+		prevItem: 'gdc'
+	},
+	{
+		id: 'question',
+		nameI18nKey: 'guide.sections.question',
+		nameImageUrl: { path: 'icons', name: 'small_mail' },
+		markdownFile: 'question',
+		nextItem: 'support',
+		prevItem: 'cdc'
+	},
+	{
+		id: 'support',
+		nameI18nKey: 'guide.sections.support',
+		nameImageUrl: { path: 'icons', name: 'small_browse_next' },
+		markdownFile: 'support',
+		nextItem: 'security',
+		prevItem: 'question'
+	},
+	{
+		id: 'security',
+		nameI18nKey: 'guide.sections.security',
+		nameImageUrl: { path: 'icons', name: 'small_lock' },
+		markdownFile: 'security',
+		prevItem: 'support'
+	}
 ];
 
 export default defineComponent({
