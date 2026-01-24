@@ -323,7 +323,7 @@ const router = createRouter({
 				{
 					path: '/help',
 					name: 'Help',
-					component: () => import('../pages/HelpPage.vue')
+					component: () => import('../pages/HelpPageRework.vue')
 				},
 				{
 					path: '/faq',
