@@ -264,9 +264,17 @@ export default defineComponent({
 				return;
 			}
 
-			try {
-				const rawMarkdown = await loadHelpPageMarkdown(this.selectedItem.markdownFile, this.currentLanguage);
+			// Update URL hash without triggering navigation
+			const sectionId = this.helpPageSections[this.selectedItemIndex].id;
+			window.history.replaceState(null, '', `#${sectionId}`);
 
+			try {
+				const rawMarkdown = await loadHelpPageMarkdown(
+					'helpPage',
+					this.selectedItem.markdownFile,
+					this.currentLanguage
+				);
+				
 				// Process custom image syntax
 				this.markdownContent = processMarkdownImages(rawMarkdown, this.getImgURL);
 			} catch (error) {
@@ -280,7 +288,9 @@ export default defineComponent({
 		},
 		async showNextItem() {
 			if (this.selectedItem?.nextItem) {
-				const nextIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.nextItem);
+				const nextIndex = this.helpPageSections.findIndex(
+					item => item.id === this.selectedItem?.nextItem
+				);
 				if (nextIndex !== -1) {
 					await this.showContent(nextIndex);
 				}
@@ -288,7 +298,9 @@ export default defineComponent({
 		},
 		async showPrevItem() {
 			if (this.selectedItem?.prevItem) {
-				const prevIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.prevItem);
+				const prevIndex = this.helpPageSections.findIndex(
+					item => item.id === this.selectedItem?.prevItem
+				);
 				if (prevIndex !== -1) {
 					await this.showContent(prevIndex);
 				}
@@ -304,14 +316,41 @@ export default defineComponent({
 		},
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		async loadFromHash() {
+			const hash = this.$route.hash.replace('#', '');
+			
+			if (hash) {
+				// Find the section index by ID
+				const sectionIndex = this.helpPageSections.findIndex(
+					item => item.id === hash
+				);
+				
+				if (sectionIndex !== -1) {
+					this.selectedItemIndex = sectionIndex;
+				} else {
+					// Default to intro
+					this.selectedItemIndex  = 0;
+				}
+			}
+			
+			// Load the markdown for the current (or default) section
+			await this.loadMarkdownForCurrentItem();
 		}
 	},
 	async mounted() {
-		await this.loadMarkdownForCurrentItem();
+		// Check if there's a hash in the URL to load a specific section
+		await this.loadFromHash();
 	},
 	watch: {
 		async currentLanguage() {
 			await this.loadMarkdownForCurrentItem();
+		},
+		// Watch for hash changes in the URL
+		'$route.hash': {
+			async handler() {
+				await this.loadFromHash();
+			}
 		}
 	}
 });
@@ -383,6 +422,7 @@ export default defineComponent({
 				border-radius: 2px;
 				color: #fff1ad;
 				margin-bottom: 10px;
+				// padding: 5px 10px;
 			}
 
 			// Paragraphs
@@ -428,6 +468,9 @@ export default defineComponent({
 				margin-left: 10px;
 				padding-left: 30px;
 				position: relative;
+				// display: flex;
+				// align-items: flex-start;
+				// gap: 8px;
 			}
 
 			// Default bullet point using info_button image
