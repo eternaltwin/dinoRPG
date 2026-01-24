@@ -6,26 +6,26 @@
  * @param language - The language code (e.g., 'en', 'fr')
  * @returns The markdown content as a string
  */
-export async function loadHelpPageMarkdown(markdownFile: string, language: string): Promise<string> {
+export async function loadHelpPageMarkdown(parentFolder: string, markdownFile: string, language: string): Promise<string> {
 	const defaultLanguage = 'fr';
 
 	try {
 		// Try to load the requested language
-		const module = await import(`../i18n/helpPage/${markdownFile}.${language}.md?raw`);
+		const module = await import(`../i18n/${parentFolder}/${markdownFile}.${language}.md?raw`);
 		return module.default;
 	} catch (error) {
 		// If the requested language fails, fall back to French
 		if (language !== defaultLanguage) {
 			try {
-				const module = await import(`../i18n/helpPage/${markdownFile}.${defaultLanguage}.md?raw`);
+				const module = await import(`../i18n/${parentFolder}/${markdownFile}.${defaultLanguage}.md?raw`);
 				return module.default;
 			} catch (fallbackError) {
-				console.error(`Failed to load markdown file: ${markdownFile}.${defaultLanguage}.md`, fallbackError);
-				return `# Error\n\nFailed to load help content for ${markdownFile}`;
+				console.error(`Failed to load fallback markdown file: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`, fallbackError);
+				return `# Error\n\nFailed to load fallback markdown: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`;
 			}
 		} else {
-			console.error(`Failed to load markdown file: ${markdownFile}.${language}.md`, error);
-			return `# Error\n\nFailed to load help content for ${markdownFile}`;
+			console.error(`Failed to load markdown file: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`, error);
+			return `# Error\n\nFailed to load markdown: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`;
 		}
 	}
 }
