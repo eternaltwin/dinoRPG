@@ -113,7 +113,6 @@ export default defineComponent({
 				...this.playerStore.playerOptions
 			});
 			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
-			EventBus.emit('refreshDinozStats', true);
 			this.isReady = true;
 		},
 		async refreshDinoz() {

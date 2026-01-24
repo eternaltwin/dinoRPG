@@ -1,12 +1,10 @@
 import { AxiosError } from 'axios';
 import mitt from 'mitt';
-import { DinozItems } from '@drpg/core/models/item/DinozItems';
 
 type Events = {
 	responseError: AxiosError;
 	toast: toast;
 	refreshDinoz: boolean;
-	refreshDinozStats: boolean;
 	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;
