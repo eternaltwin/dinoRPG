@@ -1,12 +1,10 @@
 import { DinozFiche } from '../dinoz/DinozFiche.mjs';
-import { ModerationReasonFront } from '../enums/ModerationReasonFront.mjs';
-import { ModerationActionFront } from '../enums/ModerationActionFront.mjs';
-import { Player } from '@drpg/prisma';
+import { Player, ModerationReason, ModerationAction } from '@drpg/prisma';
 
 export type ModerationType = {
 	id: number;
-	sorted: ModerationActionFront;
-	reason: ModerationReasonFront;
+	sorted: ModerationAction;
+	reason: ModerationReason;
 	comment: string;
 	reporter: Pick<Player, 'id' | 'name'>;
 	target: Pick<Player, 'id' | 'name' | 'customText'>;
@@ -18,8 +16,8 @@ export type ModerationAdminType = {
 	targetId: string;
 	reporterId: string;
 	comment: string;
-	reason: ModerationReasonFront;
-	sorted?: ModerationActionFront;
+	reason: ModerationReason;
+	sorted?: ModerationAction;
 	dinozId?: number;
 	banDate?: Date;
 	banEndDate?: Date;

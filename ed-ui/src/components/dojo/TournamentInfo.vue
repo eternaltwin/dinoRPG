@@ -50,7 +50,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SelectDinoz from '../dojo/SelectDinoz.vue';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
 import DZButton from '../common/DZButton.vue';
@@ -141,7 +141,7 @@ export default defineComponent({
 					this.tournamentInfo.teamSize = tournamentInfo.teamSize;
 
 					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+						.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 						.filter(d => races.includes(d.race.raceId))
 						.filter(d => d.level <= tournamentInfo.levelLimit)
 						.map(d => {

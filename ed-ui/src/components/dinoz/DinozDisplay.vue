@@ -21,7 +21,7 @@
 					flip
 					:race="dinozData.race.raceId"
 					:key="dinozData.life || dinozData.display"
-					:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
+					:isFrozen="dinozData?.unavailableReason === UnavailableReason.frozen"
 				/>
 				<template #fallback> <Loading /> </template>
 			</Suspense>
@@ -49,7 +49,7 @@ import DinozBars from '../../components/dinoz/DinozBars.vue';
 import DinozEquip from '../../components/dinoz/DinozEquip.vue';
 import DinozStatus from '../../components/dinoz/DinozStatus.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -63,7 +63,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			UnavailableReasonFront,
+			UnavailableReason,
 			dinozStore: dinozStore(),
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement

@@ -130,6 +130,7 @@ export const NotificationSeverity = {
   scenario: 'scenario',
   event: 'event',
   newClanApply: 'newClanApply',
+  clanApplyAccepted: 'clanApplyAccepted',
   message: 'message'
 };
 

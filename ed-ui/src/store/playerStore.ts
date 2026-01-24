@@ -81,6 +81,7 @@ export const playerStore = defineStore('playerStore', {
 		addNotification(notif: Notification): void {
 			this.notifications.push(notif);
 			this.notificationCounter++;
+			this.update();
 		},
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;

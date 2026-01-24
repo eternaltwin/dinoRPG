@@ -26,7 +26,7 @@
 				{{ $t('hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
 			</p>
 			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReasonFront.unfreezing"
+				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
 				help
 			/>
@@ -96,7 +96,7 @@
 <script lang="ts">
 import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -505,7 +505,7 @@ export default defineComponent({
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-						currentDinozList[currentDinoz].unavailableReason = UnavailableReasonFront.frozen;
+						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {
@@ -583,7 +583,7 @@ export default defineComponent({
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
-			return dinoz.unavailableReason === UnavailableReasonFront.selling;
+			return dinoz.unavailableReason === UnavailableReason.selling;
 		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;
@@ -618,8 +618,8 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		UnavailableReasonFront() {
-			return UnavailableReasonFront;
+		UnavailableReason() {
+			return UnavailableReason;
 		},
 		missionName() {
 			if (this.dinoz.missionId) {

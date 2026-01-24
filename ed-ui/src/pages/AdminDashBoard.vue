@@ -2,40 +2,40 @@
 	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
 
 	<ul class="tabs" style="margin-top: 10px">
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/player"> Player Edit </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/news"> News </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/secret"> Secret </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/logs"> Logs </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/gamestat"> GameStats </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/moderation"> Moderation </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/bans"> Banned </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/game"> Game </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/debug"> Debug </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/jobs"> Jobs </RouterLink>
 		</li>
 		<li>
 			<RouterLink to="/admin/poll"> Polls </RouterLink>
 		</li>
-		<li v-if="playerStore().getRole === AdminRoleFront.ADMIN">
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/multi"> Multicomptes </RouterLink>
 		</li>
 	</ul>
@@ -49,21 +49,17 @@ import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { AdminService } from '../services/index.js';
 import { playerStore } from '../store/index.js';
-import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
+import { AdminRole } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	computed: {
-		AdminRoleFront() {
-			return AdminRoleFront;
-		}
-	},
 	components: {
 		TitleHeader
 	},
 	data() {
 		return {
-			tabSelected: 1 as number
+			tabSelected: 1 as number,
+			AdminRole: AdminRole
 		};
 	},
 	methods: {
@@ -75,7 +71,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 
-		if (!(playerStore().getRole === AdminRoleFront.ADMIN || playerStore().getRole === AdminRoleFront.AMPHI)) {
+		if (!(playerStore().getRole === AdminRole.ADMIN || playerStore().getRole === AdminRole.AMPHI)) {
 			this.$router.push({
 				name: 'News'
 			});

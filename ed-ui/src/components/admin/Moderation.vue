@@ -35,7 +35,7 @@
 					{{ mod.sorted ? $t(`report.sorted.${mod.sorted}`) : $t(`report.sorted.open`) }}
 					<select>
 						<option value="null">Pick an action</option>
-						<option v-for="action in ModerationActionFront" :key="action" :value="action" @click="selectAction(action)">
+						<option v-for="action in ModerationAction" :key="action" :value="action" @click="selectAction(action)">
 							{{ action }}
 						</option>
 					</select>
@@ -53,20 +53,19 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { AdminService } from '../../services/index.js';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
-import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonFront';
+import { ModerationReason, ModerationAction } from '@drpg/prisma/enums';
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
 import EventBus from '../../events/index.js';
-import { ModerationActionFront } from '@drpg/core/models/enums/ModerationActionFront';
 
 export default defineComponent({
 	components: { DZButton, DZUser },
 	data() {
 		return {
 			moderationLogs: [] as ModerationType[],
-			selectedAction: null as ModerationActionFront | null,
+			selectedAction: null as ModerationAction | null,
 			page: 1,
-			ModerationActionFront
+			ModerationAction
 		};
 	},
 	methods: {
@@ -74,21 +73,21 @@ export default defineComponent({
 			const m = this.moderationLogs.find(i => i.id === id);
 			if (!m) return '';
 			switch (m.reason) {
-				case ModerationReasonFront.DINOZNAME:
+				case ModerationReason.dinozName:
 					return m.dinoz?.name ?? 'error_dinoz';
-				case ModerationReasonFront.ACCOUNTNAME:
+				case ModerationReason.accountName:
 					return m.target.name;
-				case ModerationReasonFront.AVATAR:
+				case ModerationReason.avatar:
 					return 'noAvatarYet';
-				case ModerationReasonFront.CUSTOMTEXT:
+				case ModerationReason.customText:
 					return m.target.customText;
-				case ModerationReasonFront.MULTI:
+				case ModerationReason.multi:
 					return 'multi';
 				default:
 					return 'error';
 			}
 		},
-		selectAction(action: ModerationActionFront) {
+		selectAction(action: ModerationAction) {
 			this.selectedAction = action;
 		},
 		async takeAction(modId: number) {

@@ -1,17 +1,13 @@
 import { Dinoz, Pantheon, Player } from '@drpg/prisma';
-
-export enum PantheonMotif {
-	EPIC = 'epic',
-	RACE = 'race'
-}
+import { PantheonMotif } from '@drpg/prisma/enums';
 
 export type PantheonDisplay =
 	| (Pick<Pantheon, 'id' | 'playerId' | 'indicator' | 'date'> & {
-			motif: PantheonMotif.RACE;
+			motif: PantheonMotif.race;
 			dinoz: Pick<Dinoz, 'id' | 'name' | 'raceId' | 'display'>;
 			player: Pick<Player, 'id' | 'name'>;
 	  })
 	| (Pick<Pantheon, 'id' | 'playerId' | 'indicator' | 'date'> & {
-			motif: PantheonMotif.EPIC;
+			motif: PantheonMotif.epic;
 			player: Pick<Player, 'id' | 'name'>;
 	  });

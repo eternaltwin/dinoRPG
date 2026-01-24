@@ -60,7 +60,7 @@
 		"reset": "yarn clean && yarn install && cd Eternaltwin && yarn install",
 		"etwin:run": "cd Eternaltwin && yarn run eternaltwin start",
 		"dev:windows": "yarn concurrently -k -n \"back,front,etwin\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\" \"yarn run etwin:run\"",
-		"db:sync:dev": "cd ed-be && yarn db:sync:dev && yarn seed",
+		"db:sync:dev": "cd ed-be && yarn db:sync:dev",
 		"db:migrate:manual": "cd ed-be && yarn db:migrate:manual",
 		"migration": "cd ed-be && yarn migration",
 		"update-version": "node scripts/update-version.js"

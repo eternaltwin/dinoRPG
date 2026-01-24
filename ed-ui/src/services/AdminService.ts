@@ -2,7 +2,7 @@ import { http } from '../utils/index.js';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
@@ -117,7 +117,7 @@ export const AdminService = {
 	updateDinoz(
 		id: number,
 		name?: string,
-		unavailableReason?: UnavailableReasonFront,
+		unavailableReason?: UnavailableReason,
 		unavailableReasonOperation?: string,
 		level?: number,
 		placeId?: number,

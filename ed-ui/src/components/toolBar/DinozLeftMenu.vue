@@ -177,7 +177,7 @@ import EventBus from '../../events/index.js';
 import { dinozStore, localStore, playerStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { utils } from '../../utils/index.js';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
@@ -254,7 +254,7 @@ export default defineComponent({
 	watch: {
 		'dinozStore.getDinozList': {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen));
+				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
 			},
 			deep: true
 		}

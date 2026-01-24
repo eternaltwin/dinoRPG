@@ -1,9 +1,9 @@
-import { UnavailableReasonFront } from './UnavailableReasonFront.mjs';
+import { UnavailableReason } from '@drpg/prisma';
 
 export interface DinozEdit {
 	dinozId?: string;
 	name?: string;
-	unavailableReason?: UnavailableReasonFront;
+	unavailableReason?: UnavailableReason;
 	level?: number;
 	canChangeName?: boolean;
 	life?: number;

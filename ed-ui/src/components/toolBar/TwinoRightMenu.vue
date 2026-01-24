@@ -225,15 +225,10 @@ import PlayerOptions from './PlayerOptions.vue';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import LiveStats from './LiveStats.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
-import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
+import { NotificationSeverity, AdminRole } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
-	computed: {
-		AdminRole() {
-			return AdminRoleFront;
-		}
-	},
 	components: { LiveStats, PlayerOptions },
 	data() {
 		return {
@@ -242,7 +237,8 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			notifications: [] as translatedNotification[],
-			CINEMA_LINK
+			CINEMA_LINK,
+			AdminRole: AdminRole
 		};
 	},
 	methods: {
@@ -282,7 +278,7 @@ export default defineComponent({
 		},
 		translateNotification(notification: Notification): translatedNotification | null {
 			switch (notification.severity) {
-				case 'message':
+				case NotificationSeverity.message:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.message`),
@@ -290,7 +286,7 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
-				case 'offerExpired':
+				case NotificationSeverity.offerExpired:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerExpired`),
@@ -298,7 +294,7 @@ export default defineComponent({
 						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
-				case 'event':
+				case NotificationSeverity.event:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.${notification.message}`),
@@ -306,7 +302,7 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
-				case 'offerEnded':
+				case NotificationSeverity.offerEnded:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerEnded`, JSON.parse(notification.message)),
@@ -314,7 +310,7 @@ export default defineComponent({
 						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
-				case 'offerWon':
+				case NotificationSeverity.offerWon:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerWon`, JSON.parse(notification.message)),
@@ -322,7 +318,7 @@ export default defineComponent({
 						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
-				case 'warning':
+				case NotificationSeverity.warning:
 					// eslint-disable-next-line no-case-declarations
 					const messageWarning = JSON.parse(notification.message);
 					return {
@@ -334,7 +330,7 @@ export default defineComponent({
 						link: null,
 						date: notification.date
 					};
-				case 'ban':
+				case NotificationSeverity.ban:
 					// eslint-disable-next-line no-case-declarations
 					const messageBan = JSON.parse(notification.message);
 					return {
@@ -347,7 +343,7 @@ export default defineComponent({
 						link: null,
 						date: notification.date
 					};
-				case 'newClanApply':
+				case NotificationSeverity.newClanApply:
 					return {
 						id: notification.id,
 						message: this.$t(`notification.clanApply`, {
@@ -357,7 +353,7 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
-				case 'scenario':
+				case NotificationSeverity.scenario:
 					// eslint-disable-next-line no-case-declarations
 					const scenario_reward = JSON.parse(notification.message) as Rewarder[];
 					// eslint-disable-next-line no-case-declarations
@@ -382,7 +378,7 @@ export default defineComponent({
 						link: null,
 						date: notification.date
 					};
-				case 'reward':
+				case NotificationSeverity.reward:
 					// eslint-disable-next-line no-case-declarations
 					const reward = JSON.parse(notification.message) as Rewarder[];
 					// eslint-disable-next-line no-case-declarations
@@ -407,6 +403,16 @@ export default defineComponent({
 						link: null,
 						date: notification.date
 					};
+				case NotificationSeverity.clanApplyAccepted:
+					return {
+						id: notification.id,
+						message: this.$t(`notification.clanApplyAccepted`, {
+							name: notification.message
+						}),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				default:
 					return null;
 			}
@@ -416,6 +422,9 @@ export default defineComponent({
 		EventBus.on('twinoMenu', async e => {
 			this.menuCalled = e;
 		});
+		this.notifications = this.playerStore.getNotifications
+			.map(notif => this.translateNotification(notif))
+			.filter(n => n !== null);
 	},
 	watch: {
 		'playerStore.getNotifications.length': function () {

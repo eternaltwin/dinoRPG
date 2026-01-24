@@ -48,7 +48,7 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import FightRecap from './FightRecap.vue';
 
 export default defineComponent({
@@ -145,7 +145,7 @@ export default defineComponent({
 			return;
 		}
 		this.myDinoz = this.dinozStore.getDinozList
-			.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+			.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 			.map(d => {
 				return {
 					id: d.id,

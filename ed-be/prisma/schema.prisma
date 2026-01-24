@@ -1008,6 +1008,7 @@ enum NotificationSeverity {
   scenario
   event
   newClanApply
+  clanApplyAccepted
   message
 }
 

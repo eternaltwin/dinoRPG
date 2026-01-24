@@ -236,13 +236,13 @@ import EventBus from '../../events/index.js';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DinozEdit',
 	data() {
 		return {
-			UnavailableReasonFront,
+			UnavailableReason,
 			dinozField: {
 				skillList: [],
 				statusList: [],
@@ -258,7 +258,7 @@ export default defineComponent({
 			skillOperation: '' as string,
 			unlockableSkillOperation: '' as string,
 			unavailableReasonOperation: '' as '' | 'add' | 'remove',
-			unavailableReasonListFiltered: [] as Array<UnavailableReasonFront>
+			unavailableReasonListFiltered: [] as Array<UnavailableReason>
 		};
 	},
 	props: {
@@ -373,9 +373,9 @@ export default defineComponent({
 		},
 		filterUnavailableReason(): void {
 			if (this.dinoz.unavailableReason === null) {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront);
+				this.unavailableReasonListFiltered = Object.values(UnavailableReason);
 			} else {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront).filter(
+				this.unavailableReasonListFiltered = Object.values(UnavailableReason).filter(
 					reason => reason === this.dinoz.unavailableReason
 				);
 			}
