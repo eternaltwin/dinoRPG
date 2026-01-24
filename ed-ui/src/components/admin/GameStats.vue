@@ -27,7 +27,6 @@ import { Line } from 'vue-chartjs';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { useLoadingStore } from '../../store';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
@@ -127,17 +126,15 @@ export default defineComponent({
 	methods: {
 		async reload() {
 			if (this.isReloadDisabled) {
-				useLoadingStore().setLoaderOff();
 				return;
 			}
-			useLoadingStore().setLoaderOn();
+
 			try {
 				const fromDate = new Date(this.fromDate);
 				const type = this.type || null;
 
 				this.logs = await LogsService.listByDate(type, fromDate);
 				this.generateChart();
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

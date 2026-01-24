@@ -20,7 +20,6 @@ import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { useLoadingStore } from '../store';
 
 export default defineComponent({
 	name: 'ReplayFight',
@@ -37,7 +36,7 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
-		useLoadingStore().setLoaderOn();
+
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.history as FightStep[];
@@ -63,7 +62,6 @@ export default defineComponent({
 				// lang: this.lang
 			};
 			this.loaded = true;
-			useLoadingStore().setLoaderOff();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

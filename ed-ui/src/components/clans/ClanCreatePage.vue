@@ -29,7 +29,6 @@ import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { ClanPage } from '@drpg/prisma';
 import DZInput from '../common/DZInput.vue';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClanCreatePage',
@@ -48,7 +47,6 @@ export default defineComponent({
 	},
 	methods: {
 		async createClanPage() {
-			useLoadingStore().setLoaderOn();
 			try {
 				const page = await ClanService.createClanPage(
 					this.page.name,
@@ -56,7 +54,7 @@ export default defineComponent({
 					this.page.public,
 					Number(this.$route.params.id)
 				);
-				useLoadingStore().setLoaderOff();
+
 				this.$router.push({ name: 'ClanPage', params: { pageId: page.id } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -64,7 +62,6 @@ export default defineComponent({
 			}
 		},
 		async updateClanPage() {
-			useLoadingStore().setLoaderOn();
 			try {
 				await ClanService.updateClanPage(
 					Number(this.$route.params.pageId),
@@ -73,7 +70,7 @@ export default defineComponent({
 					this.page.public,
 					Number(this.$route.params.id)
 				);
-				useLoadingStore().setLoaderOff();
+
 				this.$router.push({ name: 'ClanPage', params: { pageId: Number(this.$route.params.pageId) } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -91,10 +88,8 @@ export default defineComponent({
 	async mounted() {
 		this.editMode = this.$route.name == 'ClanEditPage';
 		if (this.editMode) {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.page = await ClanService.getClanPage(Number(this.$route.params.pageId));
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

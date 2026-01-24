@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import { DinozBuildService } from '../../services/DinozBuildService';
-import { playerStore, useLoadingStore } from '../../store';
+import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
 import { formatText } from '../../utils/formatText';
 import DZSelect from '../common/DZSelect.vue';
@@ -31,14 +31,13 @@ const build = computed(() => {
 
 const copyBuild = async () => {
 	if (!buildId.value) return;
-	useLoadingStore().setLoaderOn();
+
 	try {
 		await DinozBuildService.copySharedBuild(buildId.value);
 		toast.open({
 			message: formatText(t(`toast.buildCopied`, { name: build.value?.name })),
 			type: 'success'
 		});
-		useLoadingStore().setLoaderOff();
 	} catch (error) {
 		errorHandler.handle(error, toast);
 		return;

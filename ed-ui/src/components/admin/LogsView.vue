@@ -31,7 +31,6 @@ import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { useLoadingStore } from '../../store';
 
 const LogTypes = [
 	'ItemUsed',
@@ -370,17 +369,15 @@ export default defineComponent({
 	methods: {
 		async reload() {
 			if (this.isReloadDisabled) {
-				useLoadingStore().setLoaderOff();
 				return;
 			}
-			useLoadingStore().setLoaderOn();
+
 			try {
 				const page = this.page;
 				const type = this.type;
 				const userId = this.userId || null;
 				const dinozId = this.dinozId || null;
 				this.logs = await LogsService.list(page, type, userId, dinozId);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

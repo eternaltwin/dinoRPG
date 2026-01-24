@@ -2,49 +2,37 @@ import { http } from '../utils/index.js';
 import { FullThread, Message, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
 
 export const MessagerieService = {
-	getThread(threadId: string): Promise<FullThread> {
-		return http()
-			.get(`/messagerie/getThread/${threadId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getThread(threadId: string): Promise<FullThread> {
+		const res = await http().get(`/messagerie/getThread/${threadId}`);
+		return res.data;
 	},
-	getThreads(): Promise<ThreadsBasic[]> {
-		return http()
-			.get(`/messagerie/getThreads`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getThreads(): Promise<ThreadsBasic[]> {
+		const res = await http().get(`/messagerie/getThreads`);
+		return res.data;
 	},
-	loadMessages(threadId: string, page: number): Promise<{ messages: Message[] }> {
-		return http()
-			.get(`/messagerie/loadThread/${threadId}/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async loadMessages(threadId: string, page: number): Promise<{ messages: Message[] }> {
+		const res = await http().get(`/messagerie/loadThread/${threadId}/${page}`);
+		return res.data;
 	},
-	createThread(participants: string[], title: string, message: string): Promise<ThreadsBasic> {
-		return http()
-			.post(`/messagerie/create`, {
-				participants: participants,
-				title: title,
-				message: message
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createThread(participants: string[], title: string, message: string): Promise<ThreadsBasic> {
+		const res = await http().post(`/messagerie/create`, {
+			participants: participants,
+			title: title,
+			message: message
+		});
+		return res.data;
 	},
-	answerThread(thread: string, content: string): Promise<{ messages: Message[] }> {
-		return http()
-			.post(`/messagerie/send/${thread}`, {
-				content: content
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async answerThread(thread: string, content: string): Promise<{ messages: Message[] }> {
+		const res = await http().post(`/messagerie/send/${thread}`, {
+			content: content
+		});
+		return res.data;
 	},
-	pinMessage(thread: string, messageId: number, pin: boolean) {
-		return http()
-			.post(`/messagerie/pin/${thread}`, {
-				messageId: messageId,
-				pin: pin
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async pinMessage(thread: string, messageId: number, pin: boolean) {
+		const res = await http().post(`/messagerie/pin/${thread}`, {
+			messageId: messageId,
+			pin: pin
+		});
+		return res.data;
 	}
 };

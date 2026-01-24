@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { dinozStore, playerStore, useLoadingStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -162,11 +162,10 @@ export default defineComponent({
 					level: d.level
 				};
 			});
-		useLoadingStore().setLoaderOn();
+
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
 			// this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
-			useLoadingStore().setLoaderOff();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

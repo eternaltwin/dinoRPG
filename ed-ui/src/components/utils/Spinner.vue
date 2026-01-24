@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useLoadingStore } from '../../store';
 import { storeToRefs } from 'pinia';
+import { useLoadingStore } from '../../store';
 
 const { isOn } = storeToRefs(useLoadingStore());
 </script>

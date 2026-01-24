@@ -8,190 +8,134 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
 
 export const ClanService = {
-	getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
-		return http()
-			.get(`/clan/ranking/${type}/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
+		const res = await http().get(`/clan/ranking/${type}/${page}`);
+		return res.data;
 	},
-	getClansList(page: number): Promise<ClanLite[]> {
-		return http()
-			.get(`/clan/all/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClansList(page: number): Promise<ClanLite[]> {
+		const res = await http().get(`/clan/all/${page}`);
+		return res.data;
 	},
-	searchClansByName(name: string, page: number): Promise<ClanLite[]> {
-		return http()
-			.get(`/clan/search/${name}/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async searchClansByName(name: string, page: number): Promise<ClanLite[]> {
+		const res = await http().get(`/clan/search/${name}/${page}`);
+		return res.data;
 	},
-	searchClans(name: string): Promise<ClanForSearch[]> {
-		return http()
-			.get(`/clan/search/${name}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async searchClans(name: string): Promise<ClanForSearch[]> {
+		const res = await http().get(`/clan/search/${name}`);
+		return res.data;
 	},
-	getClan(id: number): Promise<ClanLite> {
-		return http()
-			.get(`/clan/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClan(id: number): Promise<ClanLite> {
+		const res = await http().get(`/clan/${id}`);
+		return res.data;
 	},
-	getClanMembersList(id: number): Promise<Array<ClanMember>> {
-		return http()
-			.get(`/clan/${id}/members`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanMembersList(id: number): Promise<Array<ClanMember>> {
+		const res = await http().get(`/clan/${id}/members`);
+		return res.data;
 	},
-	createClan(name: string, description: string, languages: LocalesEnum[]): Promise<ClanLite> {
-		return http()
-			.post(`/clan`, { name, description, languages })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createClan(name: string, description: string, languages: LocalesEnum[]): Promise<ClanLite> {
+		const res = await http().post(`/clan`, { name, description, languages });
+		return res.data;
 	},
-	deleteClan(id: number): Promise<ClanLite> {
-		return http()
-			.delete(`/clan/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async deleteClan(id: number): Promise<ClanLite> {
+		const res = await http().delete(`/clan/${id}`);
+		return res.data;
 	},
-	updateClanBanner(id: number, data: FormData) {
-		return http()
-			.put(`/clan/` + id + `/edit/banner`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateClanBanner(id: number, data: FormData) {
+		const res = await http().put(`/clan/` + id + `/edit/banner`, data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return res.data;
 	},
-	updateClanLangs(id: number, languages: LocalesEnum[]): Promise<LocalesEnum[]> {
-		return http()
-			.put(`/clan/${id}/edit/langs`, { languages })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateClanLangs(id: number, languages: LocalesEnum[]): Promise<LocalesEnum[]> {
+		const res = await http().put(`/clan/${id}/edit/langs`, { languages });
+		return res.data;
 	},
-	joinClan(id: number): Promise<JoinClanResponse> {
-		return http()
-			.post(`/clan/${id}/join`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async joinClan(id: number): Promise<JoinClanResponse> {
+		const res = await http().post(`/clan/${id}/join`);
+		return res.data;
 	},
-	getJoinRequestslist(id: number): Promise<JoinRequestListResponse> {
-		return http()
-			.get(`/clan/${id}/requests`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getJoinRequestslist(id: number): Promise<JoinRequestListResponse> {
+		const res = await http().get(`/clan/${id}/requests`);
+		return res.data;
 	},
-	getSelfJoinRequest(): Promise<PlayerClanJoinRequest | null> {
-		return http()
-			.get(`/clan/request/self`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getSelfJoinRequest(): Promise<PlayerClanJoinRequest | null> {
+		const res = await http().get(`/clan/request/self`);
+		return res.data;
 	},
-	acceptJoinClanRequest(id: number): Promise<ClanMember> {
-		return http()
-			.post(`/clan/request/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async acceptJoinClanRequest(id: number): Promise<ClanMember> {
+		const res = await http().post(`/clan/request/${id}`);
+		return res.data;
 	},
-	denyJoinClanRequest(id: number) {
-		return http()
-			.delete(`/clan/request/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async denyJoinClanRequest(id: number) {
+		const res = await http().delete(`/clan/request/${id}`);
+		return res.data;
 	},
-	getClanMember(clanId: number, memberId: number) {
-		return http()
-			.get(`/clan/${clanId}/member/${memberId}`)
-			.then(res => Promise.resolve<GetClanMemberResponse>(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanMember(clanId: number, memberId: number): Promise<GetClanMemberResponse> {
+		const res = await http().get(`/clan/${clanId}/member/${memberId}`);
+		return res.data;
 	},
-	updateClanMember(clanId: number, clanMember: UpdateClanMemberRequestBody['clanMember']) {
-		return http()
-			.put(`/clan/${clanId}/member`, { clanMember: clanMember })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateClanMember(clanId: number, clanMember: UpdateClanMemberRequestBody['clanMember']) {
+		const res = await http().put(`/clan/${clanId}/member`, { clanMember: clanMember });
+		return res.data;
 	},
-	excludeClanMember(clanId: number, memberId: number) {
-		return http()
-			.delete(`/clan/${clanId}/member/${memberId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async excludeClanMember(clanId: number, memberId: number) {
+		const res = await http().delete(`/clan/${clanId}/member/${memberId}`);
+		return res.data;
 	},
-	leaveClanSelf() {
-		return http()
-			.delete(`/clan/member/self`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async leaveClanSelf() {
+		const res = await http().delete(`/clan/member/self`);
+		return res.data;
 	},
-	getClanPages(clanId: number) {
-		return http()
-			.get(`/clan/${clanId}/pages`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanPages(clanId: number) {
+		const res = await http().get(`/clan/${clanId}/pages`);
+		return res.data;
 	},
-	getClanPage(id: number) {
-		return http()
-			.get(`/clan/page/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanPage(id: number) {
+		const res = await http().get(`/clan/page/${id}`);
+		return res.data;
 	},
-	createClanPage(name: string, content: string, isPublic: boolean, clanId: number) {
-		return http()
-			.post(`/clan/page`, { name: name, content: content, isPublic: isPublic, clanId: clanId })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createClanPage(name: string, content: string, isPublic: boolean, clanId: number) {
+		const res = await http().post(`/clan/page`, { name: name, content: content, isPublic: isPublic, clanId: clanId });
+		return res.data;
 	},
-	updateClanPage(pageId: number, name: string, content: string, isPublic: boolean, clanId: number) {
-		return http()
-			.put(`/clan/${clanId}/page/${pageId}`, { name: name, content: content, isPublic: isPublic })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateClanPage(pageId: number, name: string, content: string, isPublic: boolean, clanId: number) {
+		const res = await http().put(`/clan/${clanId}/page/${pageId}`, {
+			name: name,
+			content: content,
+			isPublic: isPublic
+		});
+		return res.data;
 	},
-	deleteClanPage(pageId: number, clanId: number) {
-		return http()
-			.delete(`/clan/${clanId}/page/${pageId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async deleteClanPage(pageId: number, clanId: number) {
+		const res = await http().delete(`/clan/${clanId}/page/${pageId}`);
+		return res.data;
 	},
-	getClanMessages(clanId: number, page: number) {
-		return http()
-			.get(`/clan/${clanId}/messages/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanMessages(clanId: number, page: number) {
+		const res = await http().get(`/clan/${clanId}/messages/${page}`);
+		return res.data;
 	},
-	getClanHistory(id: number, page: number) {
-		return http()
-			.get(`/clan/${id}/history/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanHistory(id: number, page: number) {
+		const res = await http().get(`/clan/${id}/history/${page}`);
+		return res.data;
 	},
-	getPlayerHasRight(clanId: number, right: string) {
-		return http()
-			.get(`/clan/${clanId}/hasRight/${right}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPlayerHasRight(clanId: number, right: string) {
+		const res = await http().get(`/clan/${clanId}/hasRight/${right}`);
+		return res.data;
 	},
-	getClanMessagesCount(id: number) {
-		return http()
-			.get(`/clan/${id}/messagesCount`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanMessagesCount(id: number) {
+		const res = await http().get(`/clan/${id}/messagesCount`);
+		return res.data;
 	},
-	getClanHistoryCount(clanId: number) {
-		return http()
-			.get(`/clan/${clanId}/historyCount`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanHistoryCount(clanId: number) {
+		const res = await http().get(`/clan/${clanId}/historyCount`);
+		return res.data;
 	},
-	giveIngredient(clanId: number, ingredients: ShopDTO[]) {
-		return http()
-			.put(`/clan/${clanId}/give`, { ingredients: ingredients })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async giveIngredient(clanId: number, ingredients: ShopDTO[]) {
+		const res = await http().put(`/clan/${clanId}/give`, { ingredients: ingredients });
+		return res.data;
 	},
-	getClanTreasure(clanId: number): Promise<ShopDTO[]> {
-		return http()
-			.get(`/clan/${clanId}/treasure`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getClanTreasure(clanId: number): Promise<ShopDTO[]> {
+		const res = await http().get(`/clan/${clanId}/treasure`);
+		return res.data;
 	}
 };

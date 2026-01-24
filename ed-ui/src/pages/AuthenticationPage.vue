@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
-import { dinozStore, localStore, playerStore, useLoadingStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { setCookie } from '../utils/cookies';
 
@@ -28,14 +28,13 @@ export default defineComponent({
 	},
 	methods: {
 		async authenticateToET(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
 				// Set cookies
 				const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 				setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
 				setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
-				useLoadingStore().setLoaderOff();
+
 				this.isLogged = true;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

@@ -26,7 +26,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { DinozService } from '../../services/index.js';
-import { dinozStore, useLoadingStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -57,10 +57,8 @@ export default defineComponent({
 		async nameDinoz(): Promise<void> {
 			// Check if dinoz name matches regex
 			if (this.dinozName) {
-				useLoadingStore().setLoaderOn();
 				try {
 					await DinozService.setDinozName(this.dinozData.id, this.dinozName);
-					useLoadingStore().setLoaderOff();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -87,9 +85,7 @@ export default defineComponent({
 			}
 		}
 	},
-	mounted() {
-		useLoadingStore().setLoaderOff();
-	}
+	mounted() {}
 });
 </script>
 

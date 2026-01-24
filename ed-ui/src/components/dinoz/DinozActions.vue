@@ -114,7 +114,7 @@ import Resurect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
-import { dinozStore, playerStore, sessionStore, useLoadingStore } from '../../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -191,7 +191,6 @@ export default defineComponent({
 			}
 		},
 		async launch(action: ActionFiche) {
-			useLoadingStore().setLoaderOn();
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
@@ -318,7 +317,7 @@ export default defineComponent({
 								name: 'Fight',
 								params: { dinozId: this.$route.params.id.toString() }
 							});
-							useLoadingStore().setLoaderOff();
+
 							return;
 						}
 
@@ -557,7 +556,6 @@ export default defineComponent({
 					console.log(action.name);
 					break;
 			}
-			useLoadingStore().setLoaderOff();
 		},
 		continueMission() {
 			this.NPCModal = undefined;

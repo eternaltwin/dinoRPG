@@ -11,114 +11,84 @@ import {
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export const DojoService = {
-	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState | null }> {
-		return http()
-			.get(`/dojo/`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState | null }> {
+		const res = await http().get(`/dojo/`);
+		return res.data;
 	},
-	fightMyFriend(
+	async fightMyFriend(
 		left: number[],
 		right: number[],
 		rightId: string
 	): Promise<{ fight: DojoFightResume; stats: FullFightStats }> {
-		return http()
-			.put(`/dojo/fight`, {
-				left: left,
-				right: right,
-				rightId: rightId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/dojo/fight`, {
+			left: left,
+			right: right,
+			rightId: rightId
+		});
+		return res.data;
 	},
-	getSharedFight(archive: string): Promise<DojoFightResume> {
-		return http()
-			.get(`/dojo/share/${archive}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getSharedFight(archive: string): Promise<DojoFightResume> {
+		const res = await http().get(`/dojo/share/${archive}`);
+		return res.data;
 	},
-	getMyHistory(page: number): Promise<{ archive: { id: string; fighters: FighterRecap[] }[]; quantity: number }> {
-		return http()
-			.get(`/dojo/history/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getMyHistory(page: number): Promise<{ archive: { id: string; fighters: FighterRecap[] }[]; quantity: number }> {
+		const res = await http().get(`/dojo/history/${page}`);
+		return res.data;
 	},
-	getMyTeam(): Promise<myTeam> {
-		return http()
-			.get(`/dojo/team`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getMyTeam(): Promise<myTeam> {
+		const res = await http().get(`/dojo/team`);
+		return res.data;
 	},
-	createMyTeam(team: number[]): Promise<myTeam> {
-		return http()
-			.put(`/dojo/team`, {
-				team: team
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createMyTeam(team: number[]): Promise<myTeam> {
+		const res = await http().put(`/dojo/team`, {
+			team: team
+		});
+		return res.data;
 	},
-	fightChallenge(
+	async fightChallenge(
 		myDinoz: number,
 		opponent: number
 	): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
-		return http()
-			.put(`/dojo/challenge`, {
-				myDinoz,
-				opponent
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/dojo/challenge`, {
+			myDinoz,
+			opponent
+		});
+		return res.data;
 	},
-	skipOpponent(opponent: number): Promise<boolean> {
-		return http()
-			.put(`/dojo/challenge/skip`, {
-				opponent
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async skipOpponent(opponent: number): Promise<boolean> {
+		const res = await http().put(`/dojo/challenge/skip`, {
+			opponent
+		});
+		return res.data;
 	},
-	getTournamentInfo(): Promise<{ id: string; teamRace: string; teamSize: number; levelLimit: number }> {
-		return http()
-			.get(`/dojo/tournament/`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentInfo(): Promise<{ id: string; teamRace: string; teamSize: number; levelLimit: number }> {
+		const res = await http().get(`/dojo/tournament/`);
+		return res.data;
 	},
-	createTournamentTeam(team: number[]): Promise<void> {
-		return http()
-			.put(`/dojo/tournament/`, {
-				team: team
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createTournamentTeam(team: number[]): Promise<void> {
+		const res = await http().put(`/dojo/tournament/`, {
+			team: team
+		});
+		return res.data;
 	},
-	deleteTournamentTeam(): Promise<void> {
-		return http()
-			.delete(`/dojo/tournament/team`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async deleteTournamentTeam(): Promise<void> {
+		const res = await http().delete(`/dojo/tournament/team`);
+		return res.data;
 	},
-	getTournamentTeam(): Promise<DinozDojoFiche[]> {
-		return http()
-			.get(`/dojo/tournament/team`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentTeam(): Promise<DinozDojoFiche[]> {
+		const res = await http().get(`/dojo/tournament/team`);
+		return res.data;
 	},
-	getTournamentFights(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
-		return http()
-			.get(`/dojo/tournament/${phase}/${id}/${pool}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentFights(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
+		const res = await http().get(`/dojo/tournament/${phase}/${id}/${pool}`);
+		return res.data;
 	},
-	viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
-		return http()
-			.patch(`/dojo/tournament/${phase}/${id}/${pool}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
+		const res = await http().patch(`/dojo/tournament/${phase}/${id}/${pool}`);
+		return res.data;
 	},
-	getTournamentHistory(page: number): Promise<{ count: number; history: TournamentHistory[] }> {
-		return http()
-			.get(`/dojo/tournaments/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentHistory(page: number): Promise<{ count: number; history: TournamentHistory[] }> {
+		const res = await http().get(`/dojo/tournaments/${page}`);
+		return res.data;
 	}
 };

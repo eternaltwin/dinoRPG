@@ -59,7 +59,7 @@ import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import FightBounce from '../components/fight/FightBounce.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { FBService } from '../services/FBTournamentService.js';
-import { dinozStore, localStore, playerStore, sessionStore, useLoadingStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 
@@ -100,7 +100,6 @@ export default defineComponent({
 			}
 		},
 		async launchFight() {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.fight = await FBService.fightOpponent(+this.dinozId);
 				this.sessionStore.setFightResult(this.fight);
@@ -127,7 +126,6 @@ export default defineComponent({
 					lang: this.lang,
 					statusReward: this.fight.statusReward
 				};
-				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

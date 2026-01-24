@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, useLoadingStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
@@ -102,7 +102,6 @@ export default defineComponent({
 			}
 		},
 		async reload(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
@@ -113,7 +112,6 @@ export default defineComponent({
 			}
 			this.information = !this.information;
 			this.$emit('abort');
-			useLoadingStore().setLoaderOff();
 		}
 	},
 	props: {

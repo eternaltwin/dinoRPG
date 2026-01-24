@@ -1,16 +1,12 @@
 import { http } from '../utils/index.js';
 
 export const NotificationService = {
-	readNotification(id: string): Promise<boolean> {
-		return http()
-			.patch(`/notifications/${id}/read`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async readNotification(id: string): Promise<boolean> {
+		const res = await http().patch(`/notifications/${id}/read`);
+		return res.data;
 	},
-	readAllNotification(): Promise<boolean> {
-		return http()
-			.patch(`/notifications/all/read`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async readAllNotification(): Promise<boolean> {
+		const res = await http().patch(`/notifications/all/read`);
+		return res.data;
 	}
 };

@@ -415,7 +415,7 @@ import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import DZSelect from '../common/DZSelect.vue';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { AdminRole } from '@drpg/prisma/enums';
-import { useLoadingStore } from '../../store';
+
 interface PlayerSearch {
 	name: string;
 	id: string;
@@ -496,7 +496,6 @@ export default defineComponent({
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
 
-			useLoadingStore().setLoaderOn();
 			this.$router.push({ path: this.$route.path, query: { id: this.searchedPlayerId } });
 
 			try {
@@ -511,8 +510,6 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
-
-			useLoadingStore().setLoaderOff();
 		},
 		async searchPlayer(query: string): Promise<Array<{ value: string; label: string }>> {
 			if (query.length < 3) {

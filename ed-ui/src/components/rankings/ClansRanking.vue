@@ -78,7 +78,6 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import DZButton from '../common/DZButton.vue';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { SelectOption } from '../common/DZSelect.vue';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -92,10 +91,8 @@ export default defineComponent({
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

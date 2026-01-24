@@ -121,7 +121,7 @@ import ClanHeader from '../../components/clans/ClanHeader.vue';
 import { ClanService } from '../../services/ClanService';
 import { errorHandler } from '../../utils/errorHandler';
 
-import { playerStore, useLoadingStore } from '../../store';
+import { playerStore } from '../../store';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { clanStore } from '../../store/clanStore';
 
@@ -170,10 +170,8 @@ export default defineComponent({
 			}
 		},
 		async getClan(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				await this.clanStore.loadClan(Number(this.$route.params.id));
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

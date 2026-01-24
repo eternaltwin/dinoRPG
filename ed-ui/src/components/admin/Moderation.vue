@@ -56,7 +56,6 @@ import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { ModerationReason, ModerationAction } from '@drpg/prisma/enums';
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	components: { DZButton, DZUser },
@@ -104,7 +103,6 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				useLoadingStore().setLoaderOn();
 				try {
 					await AdminService.takeAction(modId, selectedAction);
 					this.moderationLogs.forEach(l => {
@@ -112,7 +110,6 @@ export default defineComponent({
 							l.sorted = selectedAction;
 						}
 					});
-					useLoadingStore().setLoaderOff();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;

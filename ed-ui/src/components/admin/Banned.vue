@@ -44,7 +44,6 @@ import { AdminService } from '../../services/index.js';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
-import { useLoadingStore } from '../../store';
 
 const ActionTypes = ['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
@@ -60,10 +59,8 @@ export default defineComponent({
 	},
 	methods: {
 		async getBannedPlayers() {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.listBanned = await AdminService.getBannedPlayers(this.page);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -82,23 +79,19 @@ export default defineComponent({
 				return;
 			}
 
-			useLoadingStore().setLoaderOn();
 			try {
 				// Only the action can be updated here
 				await AdminService.updateBan(playerId, this.selectedBanUpdateAction, undefined, undefined, undefined);
 				await this.getBannedPlayers();
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async cancelBan(playerId: string) {
-			useLoadingStore().setLoaderOn();
 			try {
 				await AdminService.cancelBan(playerId);
 				await this.getBannedPlayers();
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

@@ -35,7 +35,6 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import LangSelector from './LangSelector.vue';
 import { LocalesEnum } from '../../i18n';
 import { clanStore } from '../../store/clanStore';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClanParameters',
@@ -54,10 +53,8 @@ export default defineComponent({
 	},
 	methods: {
 		async saveLangs(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				await this.clanStore.updateLang(this.clanStore.getClanId, this.langs);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -72,11 +69,10 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				useLoadingStore().setLoaderOn();
 				try {
 					await ClanService.deleteClan(this.clanStore.getClanId);
 					this.playerStore.setClanId(undefined);
-					useLoadingStore().setLoaderOff();
+
 					this.$router.push({ name: 'ClansList' });
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);

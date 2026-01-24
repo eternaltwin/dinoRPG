@@ -45,7 +45,7 @@ import { MissionService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { missionsList } from '../constants/index.js';
 import MissionInformation from '../components/modal/MissionInformationModal.vue';
-import { sessionStore, useLoadingStore } from '../store/index.js';
+import { sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 
 export default defineComponent({
@@ -73,11 +73,10 @@ export default defineComponent({
 		async reload(): Promise<void> {
 			const dinozId: string = this.$route.params.id.toString();
 			const npc: string = this.$route.params.npc.toString();
-			useLoadingStore().setLoaderOn();
+
 			try {
 				this.missionList = await MissionService.getMissions(dinozId, npc);
 				this.information = !this.information;
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -95,10 +94,9 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
 		const npc: string = this.$route.params.npc.toString();
-		useLoadingStore().setLoaderOn();
+
 		try {
 			this.missionList = await MissionService.getMissions(dinozId, npc);
-			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

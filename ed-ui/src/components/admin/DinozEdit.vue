@@ -236,7 +236,6 @@ import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -267,8 +266,6 @@ export default defineComponent({
 	},
 	methods: {
 		async dinozUpdate(): Promise<void> {
-			useLoadingStore().setLoaderOn();
-
 			try {
 				if (
 					this.dinozField.name ||
@@ -321,12 +318,11 @@ export default defineComponent({
 						message: this.$t('toast.dinozNotFound'),
 						type: 'error'
 					});
-					useLoadingStore().setLoaderOff();
+
 					return;
 				}
 				this.dinoz = refreshDinoz;
 			} catch (err) {
-				useLoadingStore().setLoaderOff();
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
@@ -337,8 +333,6 @@ export default defineComponent({
 			this.filterStatusList(this.statusOperation);
 			this.unavailableReasonOperation = '';
 			this.filterUnavailableReason();
-
-			useLoadingStore().setLoaderOff();
 		},
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {

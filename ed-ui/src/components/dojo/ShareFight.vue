@@ -42,6 +42,7 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
+
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.history as FightStep[];

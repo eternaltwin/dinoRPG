@@ -49,7 +49,7 @@ import { defineComponent } from 'vue';
 import { ClanPage } from '@drpg/prisma';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
-import { playerStore, useLoadingStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText';
@@ -76,24 +76,20 @@ export default defineComponent({
 	},
 	methods: {
 		async joinClan() {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.joinRequest = await ClanService.joinClan(Number(this.$route.params.id));
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getClanPages() {
-			useLoadingStore().setLoaderOn();
 			try {
 				const tmpPages = await ClanService.getClanPages(Number(this.$route.params.id));
 				this.pages = tmpPages
 					.filter(p => p.public)
 					.concat(tmpPages.filter(p => !p.public))
 					.sort((a, b) => a.id - b.id);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -125,10 +121,9 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				useLoadingStore().setLoaderOn();
 				try {
 					await ClanService.deleteClanPage(Number(this.$route.params.pageId), Number(this.$route.params.id));
-					useLoadingStore().setLoaderOff();
+
 					await this.getClanPages();
 					this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 				} catch (err) {

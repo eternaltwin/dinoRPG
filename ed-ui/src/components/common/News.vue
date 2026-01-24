@@ -40,7 +40,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { NewsService } from '../../services/index.js';
-import { localStore, useLoadingStore } from '../../store/index.js';
+import { localStore } from '../../store/index.js';
 import { API_BASE, errorHandler } from '../../utils/index.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import Roadmap from './Roadmap.vue';
@@ -69,25 +69,21 @@ export default defineComponent({
 	},
 	methods: {
 		async overload(page: number) {
-			useLoadingStore().setLoaderOn();
 			try {
 				const newLoad = await NewsService.getNewsFromPage(page);
 				this.batch.push(...newLoad);
 				this.page++;
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return Promise.reject(err);
 			}
 		},
 		async getFirstNews() {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.batch = await NewsService.getNewsFromPage(this.page);
 				if (this.batch.length !== 0) {
 					this.batch[0].hide = false;
 				}
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return Promise.reject(err);

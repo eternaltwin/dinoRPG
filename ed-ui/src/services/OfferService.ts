@@ -1,9 +1,9 @@
-import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
+import { ClaimOfferData } from '@drpg/core/returnTypes/Offer';
 import { http } from '../utils/index.js';
 import { Player } from '@drpg/prisma';
 
 export const OfferService = {
-	getList(
+	async getList(
 		filter: string,
 		sellerId: Player['id'] | null = null,
 		bidderId: Player['id'] | null = null,
@@ -11,53 +11,43 @@ export const OfferService = {
 		page: number = 1,
 		onlyMines: boolean = false
 	) {
-		return http()
-			.get(`/offer/list/${filter}`, {
-				params: {
-					sellerId,
-					bidderId,
-					expired,
-					page,
-					onlyMines
-				}
-			})
-			.then(res => Promise.resolve<OfferGetList>(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().get(`/offer/list/${filter}`, {
+			params: {
+				sellerId,
+				bidderId,
+				expired,
+				page,
+				onlyMines
+			}
+		});
+		return res.data;
 	},
-	createOffer(
+	async createOffer(
 		total: number,
 		ingredients: { name: string; count: number }[],
 		items: { name: string; count: number }[],
 		dinoz?: number
 	) {
-		return http()
-			.put('/offer', {
-				dinoz,
-				total,
-				ingredients,
-				items
-			})
-			.then(() => Promise.resolve())
-			.catch(err => Promise.reject(err));
+		const res = await http().put('/offer', {
+			dinoz,
+			total,
+			ingredients,
+			items
+		});
+		return res.data;
 	},
-	cancelOffer(offerId: number) {
-		return http()
-			.delete(`/offer/${offerId}`)
-			.then(() => Promise.resolve())
-			.catch(err => Promise.reject(err));
+	async cancelOffer(offerId: number) {
+		const res = await http().delete(`/offer/${offerId}`);
+		return res.data;
 	},
-	bidOffer(offerId: number, value: number) {
-		return http()
-			.post(`/offer/${offerId}/bid`, {
-				value
-			})
-			.then(() => Promise.resolve())
-			.catch(err => Promise.reject(err));
+	async bidOffer(offerId: number, value: number) {
+		const res = await http().post(`/offer/${offerId}/bid`, {
+			value
+		});
+		return res.data;
 	},
-	claimOffer(offerId: number) {
-		return http()
-			.post(`/offer/${offerId}/claim`)
-			.then(res => Promise.resolve<ClaimOfferData>(res.data))
-			.catch(err => Promise.reject(err));
+	async claimOffer(offerId: number): Promise<ClaimOfferData> {
+		const res = await http().post(`/offer/${offerId}/claim`);
+		return res.data;
 	}
 };

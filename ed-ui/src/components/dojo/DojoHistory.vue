@@ -57,7 +57,6 @@ import { DojoService } from '../../services/DojoService.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import DZTable from '../common/DZTable.vue';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'DojoHistory',
@@ -78,12 +77,10 @@ export default defineComponent({
 			navigator.clipboard.writeText(`${window.location.origin}/dojo/share/${id}`);
 		},
 		async getHistory() {
-			useLoadingStore().setLoaderOn();
 			try {
 				const archive = await DojoService.getMyHistory(this.currentPage);
 				this.history = archive.archive;
 				this.totalPages = Math.ceil(archive.quantity / 10);
-				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

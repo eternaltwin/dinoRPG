@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZTable from '../common/DZTable.vue';
-import { playerStore, useLoadingStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
@@ -54,10 +54,8 @@ export default defineComponent({
 	},
 	methods: {
 		async getRanking(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.rankings = await PlayerService.getPlayersRanking('dojo', this.page);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

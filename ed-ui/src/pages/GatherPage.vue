@@ -56,7 +56,6 @@ import GatherRewardModal from '../components/modal/GatherRewardModal.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { formatText } from '../utils/formatText.js';
-import { useLoadingStore } from '../store';
 
 export default defineComponent({
 	name: 'GatherPage',
@@ -90,7 +89,6 @@ export default defineComponent({
 			}
 			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
 			if (this.grid.gatherTurn <= 0 || leftSquare - this.clickedBox.length == 0) {
-				useLoadingStore().setLoaderOn();
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
 					// Check if the grid is complete
@@ -109,7 +107,7 @@ export default defineComponent({
 				}
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
-				useLoadingStore().setLoaderOff();
+
 				await this.$refreshGold();
 			}
 		},
@@ -138,11 +136,9 @@ export default defineComponent({
 		}
 	},
 	async created(): Promise<void> {
-		useLoadingStore().setLoaderOn();
 		try {
 			this.grid = await DinozService.getGatherGrid(this.dinozId, this.gatherType);
 			this.loaded = true;
-			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			this.$router.push({

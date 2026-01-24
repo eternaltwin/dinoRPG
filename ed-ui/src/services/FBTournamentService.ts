@@ -6,70 +6,55 @@ import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
 import { FBTournamentFightOpponentResponse } from '@drpg/core/returnTypes/Fight';
 
 export const FBService = {
-	getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
-		return http()
-			.get(`/events/tournament/current/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
+		const res = await http().get(`/events/tournament/current/${id}`);
+		return res.data;
 	},
-	getTournamentParticipation(id: string): Promise<FBParticipation[]> {
-		return http()
-			.get(`/events/tournament/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentParticipation(id: string): Promise<FBParticipation[]> {
+		const res = await http().get(`/events/tournament/${id}`);
+		return res.data;
 	},
-	createTournamentDinoz(name: string, id: string) {
-		return http()
-			.post(`/events/tournament/participation`, {
-				name: name,
-				tournamentId: id
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createTournamentDinoz(name: string, id: string) {
+		const res = await http().post(`/events/tournament/participation`, {
+			name: name,
+			tournamentId: id
+		});
+		return res.data;
 	},
-	levelUp(dinozId: number, tryNumber: number, event: string): Promise<DinozSkillOwnAndUnlockable> {
-		return http()
-			.get(`/events/${event}/${dinozId}/${tryNumber}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async levelUp(dinozId: number, tryNumber: number, event: string): Promise<DinozSkillOwnAndUnlockable> {
+		const res = await http().get(`/events/${event}/${dinozId}/${tryNumber}`);
+		return res.data;
 	},
-	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number, event: string): Promise<LearnSkillData> {
-		return http()
-			.post(`/events/${event}/learnskill/${dinozId}`, {
-				skillIdList: skillIdList,
-				tryNumber: tryNumber
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async learnSkill(
+		dinozId: number,
+		skillIdList: Array<number>,
+		tryNumber: number,
+		event: string
+	): Promise<LearnSkillData> {
+		const res = await http().post(`/events/${event}/learnskill/${dinozId}`, {
+			skillIdList: skillIdList,
+			tryNumber: tryNumber
+		});
+		return res.data;
 	},
-	getCurrentEvent(): Promise<PublicEvent[]> {
-		return http()
-			.get(`/events/list`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getCurrentEvent(): Promise<PublicEvent[]> {
+		const res = await http().get(`/events/list`);
+		return res.data;
 	},
-	getTournamentFights(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
-		return http()
-			.get(`/events/tournament/${phase}/${id}/${pool}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTournamentFights(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
+		const res = await http().get(`/events/tournament/${phase}/${id}/${pool}`);
+		return res.data;
 	},
-	viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
-		return http()
-			.patch(`/events/tournament/${phase}/${id}/${pool}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
+		const res = await http().patch(`/events/tournament/${phase}/${id}/${pool}`);
+		return res.data;
 	},
-	getOpponent(id: number): Promise<FBOpponent> {
-		return http()
-			.get(`/events/opponent/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getOpponent(id: number): Promise<FBOpponent> {
+		const res = await http().get(`/events/opponent/${id}`);
+		return res.data;
 	},
-	fightOpponent(id: number) {
-		return http()
-			.get(`/events/fight/${id}`)
-			.then(res => Promise.resolve<FBTournamentFightOpponentResponse>(res.data))
-			.catch(err => Promise.reject(err));
+	async fightOpponent(id: number): Promise<FBTournamentFightOpponentResponse> {
+		const res = await http().get(`/events/fight/${id}`);
+		return res.data;
 	}
 };

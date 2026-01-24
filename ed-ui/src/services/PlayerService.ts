@@ -10,139 +10,99 @@ import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { Lang, Player } from '@drpg/prisma';
 
 export const PlayerService = {
-	getLoggedInData(): Promise<PlayerCommonData> {
-		return http()
-			.get('/player/commondata')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getLoggedInData(): Promise<PlayerCommonData> {
+		const res = await http().get('/player/commondata');
+		return res.data;
 	},
-	getPlayersRanking(sort: string, page: number): Promise<RankingGetResponse> {
-		return http()
-			.get(`/ranking/${sort}/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPlayersRanking(sort: string, page: number): Promise<RankingGetResponse> {
+		const res = await http().get(`/ranking/${sort}/${page}`);
+		return res.data;
 	},
-	getPlayerData(id: string): Promise<PlayerInfo> {
-		return http()
-			.get(`/player/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPlayerData(id: string): Promise<PlayerInfo> {
+		const res = await http().get(`/player/${id}`);
+		return res.data;
 	},
-	requestImport(server: string): Promise<void> {
-		return http()
-			.put(`/player/import`, {
-				server: server
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async requestImport(server: string): Promise<void> {
+		const res = await http().put(`/player/import`, {
+			server: server
+		});
+		return res.data;
 	},
-	requestImportAPI(code: string, server: string, cookie: string): Promise<ImportResponse> {
-		return http()
-			.put(`/player/importAPI`, {
-				code: code,
-				server: server,
-				cookie: cookie
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async requestImportAPI(code: string, server: string, cookie: string): Promise<ImportResponse> {
+		const res = await http().put(`/player/importAPI`, {
+			code: code,
+			server: server,
+			cookie: cookie
+		});
+		return res.data;
 	},
-	setCustomText(message: string): Promise<void> {
-		return http()
-			.put(`/player/customText`, {
-				message: message
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async setCustomText(message: string): Promise<void> {
+		const res = await http().put(`/player/customText`, {
+			message: message
+		});
+		return res.data;
 	},
-	searchPlayers(name: string): Promise<Array<PlayerSearch>> {
-		return http()
-			.get(`/player/search/${name}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async searchPlayers(name: string): Promise<Array<PlayerSearch>> {
+		const res = await http().get(`/player/search/${name}`);
+		return res.data;
 	},
-	getPlayerMoney(): Promise<string> {
-		return http()
-			.get(`/player/getmoney`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPlayerMoney(): Promise<string> {
+		const res = await http().get(`/player/getmoney`);
+		return res.data;
 	},
-	getDinozList(): Promise<Array<DinozFicheLite>> {
-		return http()
-			.get(`/player/dinozList`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getDinozList(): Promise<Array<DinozFicheLite>> {
+		const res = await http().get(`/player/dinozList`);
+		return res.data;
 	},
-	requestImportTwinoid(code: string): Promise<void> {
-		return http()
-			.put(`/player/importTwinoid`, {
-				code: code
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async requestImportTwinoid(code: string): Promise<void> {
+		const res = await http().put(`/player/importTwinoid`, {
+			code: code
+		});
+		return res.data;
 	},
-	getTwinoGeneralStat(playerId: string): Promise<Array<TwinoStat>> {
-		return http()
-			.get(`/player/twinoStats/${playerId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTwinoGeneralStat(playerId: string): Promise<Array<TwinoStat>> {
+		const res = await http().get(`/player/twinoStats/${playerId}`);
+		return res.data;
 	},
-	getTwinoSpecificStat(playerId: string, type: 'stat', site: number): Promise<Array<SiteStat>> {
-		return http()
-			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTwinoSpecificStat(playerId: string, type: 'stat', site: number): Promise<Array<SiteStat>> {
+		const res = await http().get(`/player/twinoStats/${playerId}/${type}/${site}`);
+		return res.data;
 	},
-	getTwinoSpecificAchiev(playerId: string, type: 'achiev', site: number): Promise<Array<SiteAchiev>> {
-		return http()
-			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getTwinoSpecificAchiev(playerId: string, type: 'achiev', site: number): Promise<Array<SiteAchiev>> {
+		const res = await http().get(`/player/twinoStats/${playerId}/${type}/${site}`);
+		return res.data;
 	},
-	getPosition(playerId: string): Promise<{ position: number }> {
-		return http()
-			.get(`/ranking/${playerId}/get/position`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPosition(playerId: string): Promise<{ position: number }> {
+		const res = await http().get(`/ranking/${playerId}/get/position`);
+		return res.data;
 	},
-	getLBRewards(): Promise<{ quantity: number }> {
-		return http()
-			.get(`/player/labrute`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getLBRewards(): Promise<{ quantity: number }> {
+		const res = await http().get(`/player/labrute`);
+		return res.data;
 	},
-	getCanCreateClan(): Promise<boolean> {
-		return http()
-			.get(`/player/canCreateClan`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getCanCreateClan(): Promise<boolean> {
+		const res = await http().get(`/player/canCreateClan`);
+		return res.data;
 	},
-	getPlayerMenuInfos(playerId: string): Promise<Pick<Player, 'id' | 'name' | 'customText'>> {
-		return http()
-			.get(`/player/smallMenu/${playerId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPlayerMenuInfos(playerId: string): Promise<Pick<Player, 'id' | 'name' | 'customText'>> {
+		const res = await http().get(`/player/smallMenu/${playerId}`);
+		return res.data;
 	},
-	resetAccount(): Promise<void> {
-		return http()
-			.delete(`/player`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async resetAccount(): Promise<void> {
+		const res = await http().delete(`/player`);
+		return res.data;
 	},
-	updatePlayerLanguage(language: Lang): Promise<void> {
-		return http()
-			.put('/player/language', {
-				language: language
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updatePlayerLanguage(language: Lang): Promise<void> {
+		const res = await http().put('/player/language', {
+			language: language
+		});
+		return res.data;
 	},
-	updateSetting(setting: 'skipLevel' | 'skipFight', value: boolean): Promise<void> {
-		return http()
-			.patch(`/player/settings/${setting}`, {
-				setting: value
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateSetting(setting: 'skipLevel' | 'skipFight', value: boolean): Promise<void> {
+		const res = await http().patch(`/player/settings/${setting}`, {
+			setting: value
+		});
+		return res.data;
 	}
 };
 interface PlayerSearch {

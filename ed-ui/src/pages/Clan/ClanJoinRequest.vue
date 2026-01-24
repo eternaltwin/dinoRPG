@@ -17,7 +17,6 @@ import { errorHandler } from '../../utils';
 import { useToast } from 'vue-toast-notification';
 import DZButton from '../../components/common/DZButton.vue';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
-import { useLoadingStore } from '../../store';
 
 type Props = {
 	joinRequest: PlayerClanJoinRequest | null | undefined;
@@ -36,12 +35,10 @@ const goToClan = (clanId: number) => {
 	router.push({ name: 'Clan', params: { id: clanId } });
 };
 const cancelRequest = async (request: PlayerClanJoinRequest) => {
-	useLoadingStore().setLoaderOn();
 	try {
 		await ClanService.denyJoinClanRequest(request.id);
 		emit('cancel', request.id);
 		await refreshGold();
-		useLoadingStore().setLoaderOff();
 	} catch (err) {
 		errorHandler.handle(err, $toast);
 		return;

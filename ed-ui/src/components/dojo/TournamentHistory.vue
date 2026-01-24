@@ -40,7 +40,6 @@ import { errorHandler } from '../../utils/index.js';
 import DZTable from '../common/DZTable.vue';
 import { DojoService } from '../../services/DojoService.js';
 import { TournamentHistory } from '@drpg/core/models/dojo/tournament';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'TournamentHistory',
@@ -57,12 +56,10 @@ export default defineComponent({
 	},
 	methods: {
 		async getHistory() {
-			useLoadingStore().setLoaderOn();
 			try {
 				const archive = await DojoService.getTournamentHistory(this.currentPage);
 				this.history = archive.history;
 				this.totalPages = Math.ceil(archive.count / 10);
-				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

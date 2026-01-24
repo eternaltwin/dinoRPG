@@ -96,7 +96,7 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore, useLoadingStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
@@ -145,7 +145,6 @@ export default defineComponent({
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				useLoadingStore().setLoaderOn();
 				const dinozId = this.$route.params.id as string;
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
@@ -185,14 +184,12 @@ export default defineComponent({
 									: this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
 					}
-					useLoadingStore().setLoaderOff();
 
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'
 					});
 				} catch (error) {
-					useLoadingStore().setLoaderOff();
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
@@ -200,13 +197,11 @@ export default defineComponent({
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				useLoadingStore().setLoaderOn();
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
 					EventBus.emit('equipItem', items);
-					useLoadingStore().setLoaderOff();
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
@@ -260,10 +255,8 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		useLoadingStore().setLoaderOn();
 		try {
 			await this.resfreshInventory();
-			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

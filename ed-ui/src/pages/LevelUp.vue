@@ -233,7 +233,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { dinozStore, playerStore, useLoadingStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -324,11 +324,9 @@ export default defineComponent({
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: number = +this.id;
 
-			useLoadingStore().setLoaderOn();
 			try {
 				if (!this.event) {
 					const { discoveredSkill } = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
-					useLoadingStore().setLoaderOff();
 
 					if (discoveredSkill) {
 						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
@@ -337,7 +335,6 @@ export default defineComponent({
 					this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 				} else {
 					const { discoveredSkill } = await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
-					useLoadingStore().setLoaderOff();
 
 					if (discoveredSkill) {
 						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
@@ -357,15 +354,12 @@ export default defineComponent({
 			this.getLearnableSkills(+this.id, this.tryNumber);
 		},
 		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				if (this.event) {
 					this.availableSkills = await FBService.levelUp(dinozId, tryNumber, this.event);
 				} else {
 					this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
 				}
-
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

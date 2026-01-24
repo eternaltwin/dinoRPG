@@ -29,7 +29,6 @@ import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZCheckbox from '../common/DZCheckbox.vue';
-import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClanMemberEdit',
@@ -46,13 +45,11 @@ export default defineComponent({
 	},
 	methods: {
 		async getClanMember(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.clanMember = await ClanService.getClanMember(
 					Number(this.$route.params.id),
 					Number(this.$route.params.memberId)
 				);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -60,11 +57,10 @@ export default defineComponent({
 		},
 		async updateClanMember(): Promise<void> {
 			if (!this.clanMember) return;
-			useLoadingStore().setLoaderOn();
+
 			try {
 				this.clanMember.rights = this.rights.filter(r => r.selected).map(r => r.name.toString());
 				await ClanService.updateClanMember(Number(this.$route.params.id), this.clanMember);
-				useLoadingStore().setLoaderOff();
 
 				this.$toast.open({
 					message: this.$t('clansMembers.edit.saved'),

@@ -39,7 +39,7 @@ import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { dinozStore, playerStore, sessionStore, useLoadingStore } from '../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
@@ -72,13 +72,12 @@ export default defineComponent({
 			if (choice === 'missions' || choice === 'missions_2') {
 				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 			}
-			useLoadingStore().setLoaderOn();
+
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName ?? '', choice);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
-			useLoadingStore().setLoaderOff();
 
 			if (this.npcSpeech.rewards) {
 				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
@@ -92,24 +91,23 @@ export default defineComponent({
 			}
 
 			if (this.npcSpeech.service && this.npcSpeech.service.length > 0) {
-				useLoadingStore().setLoaderOn();
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
 						case ServiceEnum.CONCENTRATION:
 							await DinozService.concentration(this.dinozId);
-							useLoadingStore().setLoaderOff();
+
 							break;
 						case ServiceEnum.DINOZ:
 							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
-							useLoadingStore().setLoaderOff();
+
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
 							this.dinozStore.setDinozList(await PlayerService.getDinozList());
-							useLoadingStore().setLoaderOff();
+
 							break;
 						case ServiceEnum.REFRESH_PLAYER:
 							await this.playerStore.update();
-							useLoadingStore().setLoaderOff();
+
 							break;
 						case ServiceEnum.FIGHT:
 							try {
@@ -136,7 +134,6 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		useLoadingStore().setLoaderOn();
 		this.npcName = this.$route.params.npc as string;
 		if (this.dialog) {
 			this.npcSpeech = {
@@ -144,7 +141,6 @@ export default defineComponent({
 				speech: this.dialog,
 				playerChoice: []
 			};
-			useLoadingStore().setLoaderOff();
 		} else {
 			const npc = this.dinozStore.getNpc(this.dinozId);
 
@@ -159,7 +155,6 @@ export default defineComponent({
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
 
 				this.loaded = true;
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

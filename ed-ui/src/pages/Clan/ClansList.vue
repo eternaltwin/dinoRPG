@@ -83,7 +83,7 @@ import Flags from '../../components/common/Flags.vue';
 import SearchEntity from '../../components/data/SearchEntity.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { ClanService, PlayerService } from '../../services';
-import { playerStore, useLoadingStore } from '../../store';
+import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
 import { formatNumber, formatText } from '../../utils/formatText';
 import ClanJoinRequest from './ClanJoinRequest.vue';
@@ -151,20 +151,16 @@ export default defineComponent({
 			await this.getClansList();
 		},
 		async getClansList(): Promise<void> {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.clansList = await ClanService.getClansList(this.page);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getClansListByName() {
-			useLoadingStore().setLoaderOn();
 			try {
 				this.clansList = await ClanService.searchClansByName(this.searchClanName, this.page);
-				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

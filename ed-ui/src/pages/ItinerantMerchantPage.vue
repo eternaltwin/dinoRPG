@@ -87,7 +87,7 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/index.js';
 import { IngredientsService } from '../services/IngredientsService';
-import { dinozStore, playerStore, useLoadingStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 import DZInput from '../components/common/DZInput.vue';
@@ -141,7 +141,6 @@ export default defineComponent({
 			}
 			if (res) {
 				try {
-					useLoadingStore().setLoaderOn();
 					const gold = await IngredientsService.sellIngredient(currentDinozId, sellingItems);
 					this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
 					// reset value
@@ -155,7 +154,6 @@ export default defineComponent({
 						type: 'info'
 					});
 					this.playerStore.addMoney(gold.gold);
-					useLoadingStore().setLoaderOff();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -172,7 +170,6 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		useLoadingStore().setLoaderOn();
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
 			const currentDinozId = this.dinozStore.currentDinozId;
@@ -190,7 +187,6 @@ export default defineComponent({
 				return { itemId: i.ingredientId, quantity: 0 };
 			});
 			this.inputValues.push(...tempo);
-			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

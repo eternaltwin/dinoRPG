@@ -2,25 +2,19 @@ import { http } from '../utils/index.js';
 import { forumThreads, posts } from '@drpg/core/models/forum/Forum';
 
 export const ForumService = {
-	getPageThreads(page: number): Promise<forumThreads> {
-		return http()
-			.get(`/forum/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getPageThreads(page: number): Promise<forumThreads> {
+		const res = await http().get(`/forum/${page}`);
+		return res.data;
 	},
-	getThread(threadId: string, page: number): Promise<{ thread: posts; title: string }> {
-		return http()
-			.get(`/forum/${threadId}/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getThread(threadId: string, page: number): Promise<{ thread: posts; title: string }> {
+		const res = await http().get(`/forum/${threadId}/${page}`);
+		return res.data;
 	},
-	createThread(title: string, message: string): Promise<{ thread: posts; title: string }> {
-		return http()
-			.post(`/forum/newThread`, {
-				title: title,
-				message: message
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async createThread(title: string, message: string): Promise<{ thread: posts; title: string }> {
+		const res = await http().post(`/forum/newThread`, {
+			title: title,
+			message: message
+		});
+		return res.data;
 	}
 };
