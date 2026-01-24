@@ -62,10 +62,9 @@ import { WsMsgRequestCreation } from '@drpg/core/models/serverEvents/WsMsgReques
 import { WsMsgRequestDeletion } from '@drpg/core/models/serverEvents/WsMsgRequestDeletion';
 import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
 import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
-import EventBus from '../../events/index.js';
 import { ClanService } from '../../services';
 import { ServerEventsService } from '../../services/ServerEventsService';
-import { playerStore } from '../../store';
+import { playerStore, useLoadingStore } from '../../store';
 import { errorHandler } from '../../utils';
 import Editor from '../common/Editor.vue';
 import { ToastPluginApi } from 'vue-toast-notification';
@@ -193,7 +192,7 @@ onMounted(async () => {
 		return;
 	}
 
-	EventBus.emit('isLoading', true);
+	useLoadingStore().setLoaderOn();
 	try {
 		await getClanMessages();
 		await connectToWs();
@@ -203,7 +202,7 @@ onMounted(async () => {
 		// $toast from the app instance (if registered globally)
 		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
 	} finally {
-		EventBus.emit('isLoading', false);
+		useLoadingStore().setLoaderOff();
 	}
 });
 

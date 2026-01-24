@@ -35,10 +35,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
-import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
 import { formatText } from '../utils/formatText.js';
+import { useLoadingStore } from '../store';
 
 export default defineComponent({
 	name: 'ImportPage',
@@ -56,12 +56,12 @@ export default defineComponent({
 			if (!this.cookie) return;
 			const codeRegex = window.location.search.match(/code=(.*)/);
 			if (!codeRegex) return;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			const code = codeRegex[1];
 			try {
 				this.importData = await PlayerService.requestImportAPI(code, server, this.cookie);
 				this.importOver = true;
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -70,11 +70,11 @@ export default defineComponent({
 		async importTwinoidOnly(): Promise<void> {
 			const codeRegex = window.location.search.match(/code=(.*)/);
 			if (!codeRegex) return;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			const code = codeRegex[1];
 			try {
 				await PlayerService.requestImportTwinoid(code);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

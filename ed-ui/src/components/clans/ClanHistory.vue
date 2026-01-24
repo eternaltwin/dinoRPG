@@ -28,8 +28,7 @@
 import { defineComponent } from 'vue';
 import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
-import { playerStore } from '../../store';
-import EventBus from '../../events/index.js';
+import { playerStore, useLoadingStore } from '../../store';
 import { ClanService } from '../../services';
 import { errorHandler } from '../../utils/index.js';
 
@@ -56,12 +55,12 @@ export default defineComponent({
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		},
 		async getClanHistory(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.history = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
 				const historyCount = await ClanService.getClanHistoryCount(Number(this.$route.params.id));
 				this.maxPage = Math.floor((historyCount.count + 19) / 20);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

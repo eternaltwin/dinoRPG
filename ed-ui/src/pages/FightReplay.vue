@@ -14,13 +14,13 @@
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
-import EventBus from '../events/index.js';
 import { DojoService } from '../services/DojoService.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { useLoadingStore } from '../store';
 
 export default defineComponent({
 	name: 'ReplayFight',
@@ -37,7 +37,7 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
-		EventBus.emit('isLoading', true);
+		useLoadingStore().setLoaderOn();
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.history as FightStep[];
@@ -63,7 +63,7 @@ export default defineComponent({
 				// lang: this.lang
 			};
 			this.loaded = true;
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

@@ -29,7 +29,7 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import EventBus from '../../events/index.js';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useLoadingStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { formatText } from '../../utils/formatText.js';
 
@@ -83,7 +83,7 @@ export default defineComponent({
 				return;
 			}
 
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
@@ -91,7 +91,7 @@ export default defineComponent({
 				backPack.forEach((item, index) => (this.items[index] = item.itemId));
 				EventBus.emit('refreshDinozStats', true);
 				EventBus.emit('refreshInventory', true);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;

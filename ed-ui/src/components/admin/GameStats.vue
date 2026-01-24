@@ -24,10 +24,10 @@ import {
 } from 'chart.js';
 import { defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
-import EventBus from '../../events/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { useLoadingStore } from '../../store';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
@@ -127,17 +127,17 @@ export default defineComponent({
 	methods: {
 		async reload() {
 			if (this.isReloadDisabled) {
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				return;
 			}
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const fromDate = new Date(this.fromDate);
 				const type = this.type || null;
 
 				this.logs = await LogsService.listByDate(type, fromDate);
 				this.generateChart();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

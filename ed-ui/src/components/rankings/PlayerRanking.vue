@@ -56,9 +56,8 @@
 <script lang="ts">
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { defineComponent, PropType } from 'vue';
-import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
-import { playerStore } from '../../store/index.js';
+import { playerStore, useLoadingStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
 import PlayerMenu from '../modal/PlayerMenu.vue';
@@ -97,10 +96,10 @@ export default defineComponent({
 			this.$router.push({ name: 'MyAccount', params: { id: player.value } });
 		},
 		async getRanking(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.rankings = await PlayerService.getPlayersRanking(this.sort, this.page);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

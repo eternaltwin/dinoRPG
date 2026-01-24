@@ -6,10 +6,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { ClanPage } from '@drpg/prisma';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
+import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClanPage',
@@ -21,20 +21,20 @@ export default defineComponent({
 	},
 	methods: {
 		async getClanPage() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.page = await ClanService.getClanPage(Number(this.$route.params.pageId));
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async deleteClanPage() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.page = await ClanService.deleteClanPage(Number(this.$route.params.pageId), Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

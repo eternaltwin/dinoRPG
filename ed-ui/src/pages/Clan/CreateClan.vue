@@ -30,12 +30,11 @@
 import { defineComponent } from 'vue';
 
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { ClanService } from '../../services/ClanService.js';
 import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText.js';
-import { playerStore } from '../../store/index.js';
+import { playerStore, useLoadingStore } from '../../store/index.js';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import DZInput from '../../components/common/DZInput.vue';
 import LangSelector from '../../components/clans/LangSelector.vue';
@@ -61,11 +60,11 @@ export default defineComponent({
 	},
 	methods: {
 		async CreateClan(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const clan = await ClanService.createClan(this.clanName, this.description, this.langs);
 				this.playerStore.setClanId(clan.id);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

@@ -84,8 +84,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
-import { playerStore } from '../store/index.js';
+import { playerStore, useLoadingStore } from '../store/index.js';
 import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { MissionService } from '../services/MissionService.js';
 import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
@@ -155,7 +154,7 @@ export default defineComponent({
 			errorHandler.handle(error, this.$toast);
 			return;
 		}
-		EventBus.emit('isLoading', false);
+		useLoadingStore().setLoaderOff();
 	}
 });
 </script>

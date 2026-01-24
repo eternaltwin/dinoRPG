@@ -17,7 +17,6 @@
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
@@ -43,7 +42,6 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
-		EventBus.emit('isLoading', true);
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.history as FightStep[];
@@ -71,7 +69,6 @@ export default defineComponent({
 			this.leftPlayer = fightResult.leftPlayer;
 			this.rightPlayer = fightResult.rightPlayer;
 			this.loaded = true;
-			EventBus.emit('isLoading', false);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

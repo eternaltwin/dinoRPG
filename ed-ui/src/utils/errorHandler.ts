@@ -1,7 +1,7 @@
 import { ToastPluginApi } from 'vue-toast-notification';
-import EventBus from '../events/index.js';
 import axios from 'axios';
 import { deleteCookie } from './cookies.js';
+import { useLoadingStore } from '../store';
 
 export const errorHandler = {
 	handle(err: unknown, ToastFunction: ToastPluginApi): void {
@@ -16,7 +16,7 @@ export const errorHandler = {
 				deleteCookie(`x-drpg-${channel}-token`);
 			}
 
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		}
 	}
 };

@@ -83,8 +83,7 @@ import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
 import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
-import { dinozStore, sessionStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
+import { dinozStore, sessionStore, useLoadingStore } from '../../store/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -225,7 +224,7 @@ export default defineComponent({
 			if (!this.dinozData.borderPlace?.includes(placeId)) {
 				return;
 			}
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 
 			// Check if dinoz is being sold
 			if (this.dinozData.unavailableReason === UnavailableReason.selling) {
@@ -246,7 +245,7 @@ export default defineComponent({
 						message: formatText(this.$t(`toast.missingData`)),
 						type: 'error'
 					});
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 					return;
 				}
 

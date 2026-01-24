@@ -27,7 +27,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { dinozStore, playerStore } from '../store/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
@@ -61,7 +61,7 @@ export default defineComponent({
 			this.dinozData.name = newName;
 		},
 		async continueMission(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
@@ -72,7 +72,7 @@ export default defineComponent({
 					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				}
 				this.dinozStore.setDinozList(dinozList);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -139,10 +139,10 @@ export default defineComponent({
 			});
 			EventBus.emit('refreshDinozStats', true);
 		});
-		EventBus.emit('isLoading', true);
+		useLoadingStore().setLoaderOn();
 		try {
 			await this.getFiche();
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

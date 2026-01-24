@@ -44,7 +44,7 @@ import { AdminService } from '../../services/index.js';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
-import EventBus from '../../events/index.js';
+import { useLoadingStore } from '../../store';
 
 const ActionTypes = ['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
@@ -60,10 +60,10 @@ export default defineComponent({
 	},
 	methods: {
 		async getBannedPlayers() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.listBanned = await AdminService.getBannedPlayers(this.page);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -82,23 +82,23 @@ export default defineComponent({
 				return;
 			}
 
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				// Only the action can be updated here
 				await AdminService.updateBan(playerId, this.selectedBanUpdateAction, undefined, undefined, undefined);
 				await this.getBannedPlayers();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async cancelBan(playerId: string) {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				await AdminService.cancelBan(playerId);
 				await this.getBannedPlayers();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

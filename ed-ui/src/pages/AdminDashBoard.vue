@@ -45,10 +45,9 @@
 <script lang="ts">
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { defineComponent } from 'vue';
-import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { AdminService } from '../services/index.js';
-import { playerStore } from '../store/index.js';
+import { playerStore, useLoadingStore } from '../store/index.js';
 import { AdminRole } from '@drpg/prisma/enums';
 
 export default defineComponent({
@@ -69,7 +68,7 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
+		useLoadingStore().setLoaderOn();
 
 		if (!(playerStore().getRole === AdminRole.ADMIN || playerStore().getRole === AdminRole.AMPHI)) {
 			this.$router.push({
@@ -78,7 +77,7 @@ export default defineComponent({
 		}
 		try {
 			await AdminService.getDashBoard();
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

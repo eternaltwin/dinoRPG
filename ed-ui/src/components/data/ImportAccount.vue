@@ -18,10 +18,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useLoadingStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'ImportAccount',
@@ -36,12 +35,12 @@ export default defineComponent({
 			this.$emit('closePopin');
 		},
 		async selectImport(lang: string): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			this.$emit('closePopin');
 			try {
 				await PlayerService.requestImport(lang);
 				this.dinozStore.setDinozList([]);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

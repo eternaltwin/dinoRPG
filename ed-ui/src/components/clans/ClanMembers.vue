@@ -121,9 +121,8 @@ import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest'
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { currentEvents } from '@drpg/core/models/event/Events';
-import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
-import { playerStore } from '../../store';
+import { playerStore, useLoadingStore } from '../../store';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZUser from '../common/DZUser.vue';
@@ -164,43 +163,43 @@ export default defineComponent({
 			return new Date(date).toLocaleString('fr-FR');
 		},
 		async getClanMembersList(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.clanMembersList = await ClanService.getClanMembersList(Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getJoinRequestsList(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.joinRequestsList = await ClanService.getJoinRequestslist(Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async acceptRequest(id: number): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const newMember = await ClanService.acceptJoinClanRequest(id);
 				this.addClanMember(newMember);
 				this.removeRequest(id);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async denyRequest(id: number): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				await ClanService.denyJoinClanRequest(id);
 				this.removeRequest(id);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -215,13 +214,13 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				EventBus.emit('isLoading', true);
+				useLoadingStore().setLoaderOn();
 				try {
 					await ClanService.excludeClanMember(Number(this.$route.params.id), id);
 					this.removeMemberFromClan(id);
 					// There's a spot available, refresh the join list.
 					await this.getJoinRequestsList();
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -237,11 +236,11 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				EventBus.emit('isLoading', true);
+				useLoadingStore().setLoaderOn();
 				try {
 					await ClanService.leaveClanSelf();
 					this.playerStore.setClanId(undefined);
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 					this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);

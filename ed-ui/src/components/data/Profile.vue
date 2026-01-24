@@ -104,10 +104,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { dinozStore, localStore, playerStore, useLoadingStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -157,7 +156,7 @@ export default defineComponent({
 				rejectLabel: this.$t('popup.reject'),
 				icon: 'pi pi-trash'
 			});
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			if (res) {
 				try {
 					const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
@@ -171,7 +170,7 @@ export default defineComponent({
 					return;
 				}
 			}
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 		},
 		hasPMI(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PMI);
@@ -180,10 +179,10 @@ export default defineComponent({
 			return this.playerStore.getPlayerId === (this.$route.params.id as string);
 		},
 		async goLB(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const irma = await PlayerService.getLBRewards();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.$toast.open({
 					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity }, irma.quantity)),
 					type: 'info'
@@ -197,10 +196,10 @@ export default defineComponent({
 			this.$router.push({ name: 'DinozMissions' });
 		},
 		async setCustomText(message: string): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				await PlayerService.setCustomText(message);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.customText = message;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

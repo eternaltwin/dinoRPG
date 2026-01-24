@@ -15,8 +15,8 @@
 import { defineComponent } from 'vue';
 import { dinozStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
-import EventBus from '../events/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
+import { useLoadingStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -25,17 +25,18 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			dinozStore: dinozStore(),
+			useLoadingStore: useLoadingStore(),
 			loaded: false as boolean
 		};
 	},
 	methods: {
 		async firstLoad() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				// Set data in sessionStore
 				await this.playerStore.update();
 				this.loaded = true;
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 				return;

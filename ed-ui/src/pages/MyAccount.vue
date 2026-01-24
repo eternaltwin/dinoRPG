@@ -28,8 +28,7 @@ import { defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { playerStore } from '../store/index.js';
-import EventBus from '../events/index.js';
+import { playerStore, useLoadingStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
@@ -57,13 +56,13 @@ export default defineComponent({
 			const accountId = this.$route.params.id as string;
 			if (this.$route.name !== 'MyAccount' || typeof accountId !== 'string' || accountId.length < 10) return;
 			this.dataLoaded = false;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const data = await PlayerService.getPlayerData(accountId);
 				this.accountData = data;
 				data.stats.sort((a, b) => b.quantity - a.quantity);
 				this.dataLoaded = true;
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}

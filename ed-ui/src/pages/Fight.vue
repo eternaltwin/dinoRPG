@@ -3,7 +3,9 @@
 	<div v-show="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
-			<template #fallback> <Loading /> </template>
+			<template #fallback>
+				<Loading />
+			</template>
 		</Suspense>
 		<FightBounce v-if="fight && fightEnded" :fight="fight" :dinozId="dinozId" />
 	</div>
@@ -16,8 +18,7 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
-import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore, sessionStore, useLoadingStore } from '../store';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { formatText } from '../utils/formatText.js';
 import FightBounce from '../components/fight/FightBounce.vue';
@@ -102,7 +103,7 @@ export default defineComponent({
 		if (this.playerStore.getPlayerOptions.skipFight) {
 			this.onFightEnd();
 		}
-		EventBus.emit('isLoading', false);
+		useLoadingStore().setLoaderOff();
 	},
 	unmounted(): void {
 		this.$refreshGold();

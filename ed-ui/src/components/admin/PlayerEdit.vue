@@ -413,9 +413,9 @@ import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import DZSelect from '../common/DZSelect.vue';
-import EventBus from '../../events';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { AdminRole } from '@drpg/prisma/enums';
+import { useLoadingStore } from '../../store';
 interface PlayerSearch {
 	name: string;
 	id: string;
@@ -496,7 +496,7 @@ export default defineComponent({
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
 
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			this.$router.push({ path: this.$route.path, query: { id: this.searchedPlayerId } });
 
 			try {
@@ -512,7 +512,7 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 			}
 
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		},
 		async searchPlayer(query: string): Promise<Array<{ value: string; label: string }>> {
 			if (query.length < 3) {

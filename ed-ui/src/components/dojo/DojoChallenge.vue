@@ -96,7 +96,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
@@ -153,13 +153,13 @@ export default defineComponent({
 	methods: {
 		async composeMyTeam(data: number[]) {
 			const myTeam = data;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const dojo = await DojoService.createMyTeam(myTeam);
 				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.composeTeam = false;
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -191,7 +191,7 @@ export default defineComponent({
 		},
 		async launchChallenge() {
 			if (!this.myFighter.id || !this.opponent.id) return;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const rawFight = await DojoService.fightChallenge(this.myFighter.id, this.opponent.id);
 				const fightResult = rawFight.fight;
@@ -228,13 +228,13 @@ export default defineComponent({
 				}
 
 				await this.$refreshGold();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		},
 		async refresh() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const dojo = await DojoService.getMyTeam();
 				if (dojo.team.length === 0) {
@@ -258,7 +258,7 @@ export default defineComponent({
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
 
 				EventBus.emit('refreshDojo', true);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

@@ -26,8 +26,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../store/index.js';
-import EventBus from '../events/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../store/index.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
@@ -74,7 +73,7 @@ export default defineComponent({
 			const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
 			if (dinozList.length >= 0) {
 				this.dinozStore.setCurrentDinozId(dinozList[0].id);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				return;
 			}
 			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
@@ -92,13 +91,13 @@ export default defineComponent({
 
 		// Check if the dinoz is at the market
 		if (currentDinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 			return;
 		}
 		const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
 		if (dinozList.length > 0) {
 			this.dinozStore.setCurrentDinozId(dinozList[0].id);
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 			return;
 		}
 

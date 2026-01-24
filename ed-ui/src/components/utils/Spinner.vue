@@ -1,5 +1,12 @@
+<script setup lang="ts">
+import { useLoadingStore } from '../../store';
+import { storeToRefs } from 'pinia';
+
+const { isOn } = storeToRefs(useLoadingStore());
+</script>
+
 <template>
-	<div v-show="loading" class="spinner_overlay">
+	<div v-show="isOn" class="spinner_overlay">
 		<div class="loader">
 			<div class="inner one"></div>
 			<div class="inner two"></div>
@@ -7,26 +14,6 @@
 		</div>
 	</div>
 </template>
-
-<script lang="ts">
-import EventBus from '../../events/index.js';
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'Spinner',
-	data() {
-		return {
-			loading: false as boolean
-		};
-	},
-	mounted(): void {
-		EventBus.on('isLoading', e => (this.loading = e));
-	},
-	unmounted() {
-		EventBus.off('isLoading');
-	}
-});
-</script>
 
 <style lang="scss" scoped>
 .loader {

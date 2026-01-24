@@ -24,9 +24,8 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useLoadingStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
-import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
@@ -44,7 +43,7 @@ export default defineComponent({
 	},
 	methods: {
 		async updateMission(status: string) {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId);
 			try {
@@ -53,7 +52,7 @@ export default defineComponent({
 						message: this.$t('toast.missingData'),
 						type: 'error'
 					});
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 					return;
 				}
 				await MissionService.updateMissions(this.dinozId, this.mission.missionId, status);
@@ -64,7 +63,7 @@ export default defineComponent({
 					dinozToUpdate.missionId = undefined;
 				}
 				this.dinozStore.setDinozList(dinozList);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.$emit('reload');
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

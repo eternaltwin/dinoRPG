@@ -37,12 +37,11 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import EventBus from '../../events/index.js';
 import { ClanService, PlayerService } from '../../services/index.js';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import SelectDinoz from './SelectDinoz.vue';
@@ -163,11 +162,11 @@ export default defineComponent({
 					level: d.level
 				};
 			});
-		EventBus.emit('isLoading', true);
+		useLoadingStore().setLoaderOn();
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
 			// this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

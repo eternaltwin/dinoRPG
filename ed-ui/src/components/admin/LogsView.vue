@@ -26,12 +26,12 @@ import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { defineComponent } from 'vue';
 import { missionsList } from '../../constants/missions.js';
 import { placeList } from '../../constants/place.js';
-import EventBus from '../../events/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { useLoadingStore } from '../../store';
 
 const LogTypes = [
 	'ItemUsed',
@@ -370,17 +370,17 @@ export default defineComponent({
 	methods: {
 		async reload() {
 			if (this.isReloadDisabled) {
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				return;
 			}
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const page = this.page;
 				const type = this.type;
 				const userId = this.userId || null;
 				const dinozId = this.dinozId || null;
 				this.logs = await LogsService.list(page, type, userId, dinozId);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

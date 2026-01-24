@@ -65,9 +65,8 @@ import { DinozShopService, DinozService } from '../services/index.js';
 import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
-import { playerStore, dinozStore } from '../store/index.js';
+import { playerStore, dinozStore, useLoadingStore } from '../store/index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import EventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
@@ -103,12 +102,12 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				EventBus.emit('isLoading', true);
+				useLoadingStore().setLoaderOn();
 				let dinozCreated: DinozFiche;
 				try {
 					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
 					await this.$refreshGold();
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -132,11 +131,11 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
+		useLoadingStore().setLoaderOn();
 		// Get dinoz to display
 		try {
 			this.dinozList = await DinozShopService.getDinozFromDinozShop();
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

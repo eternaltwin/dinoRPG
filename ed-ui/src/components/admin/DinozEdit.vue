@@ -232,11 +232,11 @@ import { AdminService } from '../../services/index.js';
 import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
 import { statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -267,7 +267,7 @@ export default defineComponent({
 	},
 	methods: {
 		async dinozUpdate(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 
 			try {
 				if (
@@ -321,12 +321,12 @@ export default defineComponent({
 						message: this.$t('toast.dinozNotFound'),
 						type: 'error'
 					});
-					EventBus.emit('isLoading', false);
+					useLoadingStore().setLoaderOff();
 					return;
 				}
 				this.dinoz = refreshDinoz;
 			} catch (err) {
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
@@ -338,7 +338,7 @@ export default defineComponent({
 			this.unavailableReasonOperation = '';
 			this.filterUnavailableReason();
 
-			EventBus.emit('isLoading', false);
+			useLoadingStore().setLoaderOff();
 		},
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {

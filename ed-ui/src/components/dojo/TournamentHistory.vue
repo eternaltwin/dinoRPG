@@ -37,10 +37,10 @@
 import { defineComponent } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
 import DZTable from '../common/DZTable.vue';
 import { DojoService } from '../../services/DojoService.js';
 import { TournamentHistory } from '@drpg/core/models/dojo/tournament';
+import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'TournamentHistory',
@@ -57,12 +57,12 @@ export default defineComponent({
 	},
 	methods: {
 		async getHistory() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				const archive = await DojoService.getTournamentHistory(this.currentPage);
 				this.history = archive.history;
 				this.totalPages = Math.ceil(archive.count / 10);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

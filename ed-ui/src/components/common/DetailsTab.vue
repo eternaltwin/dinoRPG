@@ -305,7 +305,7 @@ import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat'
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../../store/index.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
@@ -358,10 +358,10 @@ export default defineComponent({
 	methods: {
 		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -528,11 +528,11 @@ export default defineComponent({
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 		},
 		async loadComponent(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.dinozSkill = toSkillDetails(this.dinozData.skills);
 				this.sort();
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

@@ -68,7 +68,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { ClanLite } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
 import { errorHandler, utils } from '../../utils/index.js';
@@ -79,6 +78,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import DZButton from '../common/DZButton.vue';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { SelectOption } from '../common/DZSelect.vue';
+import { useLoadingStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -92,10 +92,10 @@ export default defineComponent({
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

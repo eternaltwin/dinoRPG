@@ -293,9 +293,8 @@ import { ItemShopFiche, ItemShopType } from '@drpg/core/models/shop/ShopFiche';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
 import { ItemShopService } from '../services/index.js';
-import { dinozStore, playerStore } from '../store/index.js';
+import { dinozStore, playerStore, useLoadingStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 import DZInput from '../components/common/DZInput.vue';
@@ -364,7 +363,7 @@ export default defineComponent({
 						itemName: this.$t(`item.name.treasure_coupon`)
 					});
 				}
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 				this.$toast.open({
 					message: formatText(message),
 					type: 'info'
@@ -452,7 +451,7 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res && quantity > 0) {
-				EventBus.emit('isLoading', true);
+				useLoadingStore().setLoaderOn();
 				await this.buyItems(this.selectedItem.id, quantity);
 			}
 		},
@@ -484,7 +483,7 @@ export default defineComponent({
 			}
 		},
 		async loadPage() {
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			this.selectedItem = undefined;
 			// Get shop and its items to display
 			try {
@@ -499,7 +498,7 @@ export default defineComponent({
 					.map(i => {
 						return this.resolveIngredient(i);
 					});
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				this.$router.push({
