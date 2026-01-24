@@ -4048,7 +4048,7 @@
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			"card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
-			"beta": "Félicitations ! Vous avez été un des pionners sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
+			"beta": "Félicitations ! Vous avez été un des pionniers sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
 	"ranking": {
@@ -4619,7 +4619,7 @@
 			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojo afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
 		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
 		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",

@@ -3833,7 +3833,7 @@
 			"clover": "DinoLoto Winner",
 			"pac": "Scroll of Compiled Abilities",
 			"card": "Deluxe Merguez Loyalty Card",
-			"import": "Importosaurus bone"
+			"beta": "Betasaurus Bone"
 		},
 		"description": {
 			"perle": "Using the pearl your Dinoz can recover health at the Fountain of Youth each day.",
@@ -4048,7 +4048,7 @@
 			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
 			"pac": "The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.",
 			"card": "Grilled to perfection and stamped by the **Merguez Seller** himself, this sacred card rewords the most enduring stomachs. After devouring a nasty amount of merguez, you are now promoted to **Official Grand Glutton**.",
-			"import": "Congratulations! You have imported your account to EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Maybe it's a mistake after all?"
+			"beta": "Congratulations! You have been one of the pioneers of DinoRPG. You are ready to take on new challenges such as this betasaurus. Maybe it's all a mishap in the end?"
 		}
 	},
 	"ranking": {
@@ -4615,12 +4615,13 @@
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
 			"pools": ":chrono:: Next group stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
 			"finals": ":chrono:: Next final stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
-			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes."
+			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes.",
+			"cashPrice": ":gold: The cash prize for this tournament is {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
 		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
-		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
-		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash prize is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash prize has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
 			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the crash price of the next tournament.",

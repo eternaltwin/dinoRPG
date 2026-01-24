@@ -213,6 +213,7 @@
 		"inexistantOpponent": "Gegner nicht gefunden",
 		"notFightedOpponent": "Dieser Gegner wurde bereits bezwungen",
 		"teamSize": "Mannschaften bestehen aus {{nb}} Mitgliedern mindestens {{races}} verschiedener Rassen.",
+		"teamSize_singleRace": "Die Mannschaften bestehen aus {{nb}} Mitgliedern.",
 		"raceLimit": "Die für die Teilnahme gestatteten Rassen sind:{{races}}.",
 		"levelLimit": "Die Höchststufe ist auf {{level}} begrenzt",
 		"poison": "Vergiftung ist eingeschaltet",

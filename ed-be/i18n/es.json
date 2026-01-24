@@ -213,6 +213,7 @@
 		"inexistantOpponent": "Adversario no encontrado",
 		"notFightedOpponent": "Adversario ya derrotado",
 		"teamSize": "Los equipos deben estar compuestos por {{nb}} Dinos con al menos {{races}} razas distintas.",
+		"teamSize_singleRace": "Los equipos están formados por {{nb}} miembros.",
 		"raceLimit": "Las razas permitidas para participar son {{races}}.",
 		"levelLimit": "El límite de nivel máximo está fijado en {{level}}.",
 		"poison": "El veneno está activado.",
