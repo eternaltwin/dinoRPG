@@ -57,7 +57,10 @@ export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
 	item: ItemFiche
 ) => {
-	if (item.itemId === Item.GOBLIN_MERGUEZ && playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)) {
+	if (
+		item.itemId === Item.GOBLIN_MERGUEZ &&
+		playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)
+	) {
 		return playerInventoryData.shopKeeper ? 150 : 100;
 	}
 

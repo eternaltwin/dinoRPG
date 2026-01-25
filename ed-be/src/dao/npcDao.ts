@@ -25,6 +25,15 @@ const createDinozStep = async (dinozId: number, npc: Prisma.NPCCreateInput) => {
 };
 
 const updateDinozStep = async (dinoz: number, npcId: number, step: string) => {
+	const testNPC = await prisma.nPC.findFirst({
+		where: {
+			dinozId: dinoz,
+			npcId: npcId
+		}
+	});
+	if (!testNPC) {
+		return;
+	}
 	await prisma.nPC.update({
 		where: {
 			npcId_dinozId: { dinozId: dinoz, npcId }
