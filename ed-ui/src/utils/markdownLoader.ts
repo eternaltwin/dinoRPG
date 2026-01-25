@@ -6,7 +6,11 @@
  * @param language - The language code (e.g., 'en', 'fr')
  * @returns The markdown content as a string
  */
-export async function loadHelpPageMarkdown(parentFolder: string, markdownFile: string, language: string): Promise<string> {
+export async function loadHelpPageMarkdown(
+	parentFolder: string,
+	markdownFile: string,
+	language: string
+): Promise<string> {
 	const defaultLanguage = 'fr';
 
 	try {
@@ -20,7 +24,10 @@ export async function loadHelpPageMarkdown(parentFolder: string, markdownFile: s
 				const module = await import(`../i18n/${parentFolder}/${markdownFile}.${defaultLanguage}.md?raw`);
 				return module.default;
 			} catch (fallbackError) {
-				console.error(`Failed to load fallback markdown file: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`, fallbackError);
+				console.error(
+					`Failed to load fallback markdown file: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`,
+					fallbackError
+				);
 				return `# Error\n\nFailed to load fallback markdown: ${parentFolder}/${markdownFile}.${defaultLanguage}.md`;
 			}
 		} else {
