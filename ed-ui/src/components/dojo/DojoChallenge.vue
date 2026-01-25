@@ -70,11 +70,14 @@
 		</template>
 
 		<template v-if="fightTransformed && fightStat">
-			<div v-show="loaded" class="content">
-				<Suspense>
-					<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
-					<template #fallback> <Loading /> </template>
-				</Suspense>
+			<div id="fightContent">
+				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+				<div v-show="loaded" class="content">
+					<Suspense>
+						<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
+						<template #fallback> <Loading /> </template>
+					</Suspense>
+				</div>
 			</div>
 			<Transition name="bounce">
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
@@ -106,6 +109,7 @@ import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResul
 import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
+import FightersHeader from '../fight/FightersHeader.vue';
 import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
@@ -118,6 +122,7 @@ export default defineComponent({
 		TitleHeader,
 		SelectDinoz,
 		CarousselDinoz,
+		FightersHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FullFightAnimation.vue'))
 	},
 	data() {
@@ -140,7 +145,9 @@ export default defineComponent({
 			fightAnimationEnded: false,
 			dailyReset: 0,
 			playerStore: playerStore(),
-			dojoMaxSeries: DOJO_MAX_SERIES
+			dojoMaxSeries: DOJO_MAX_SERIES,
+			leftPlayer: null as null | { id: string; name: string },
+			rightPlayer: null as null | { id: string; name: string }
 		};
 	},
 	methods: {
@@ -213,6 +220,8 @@ export default defineComponent({
 					history: nexFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
+				this.leftPlayer = fightResult.leftPlayer;
+				this.rightPlayer = fightResult.rightPlayer;
 				this.loaded = true;
 				if (this.playerStore.getPlayerOptions.skipFight) {
 					this.fightAnimationEnded = true;
@@ -303,6 +312,9 @@ $b: 3px;
 		align-self: center;
 		max-width: 95%;
 	}
+}
+#fightContent {
+	align-self: center;
 }
 .debrief {
 	box-sizing: border-box;

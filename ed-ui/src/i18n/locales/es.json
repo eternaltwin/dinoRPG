@@ -4371,7 +4371,9 @@
 		},
 		"event": {
 			"christmas_ticket": "Parece que este monstruo tenía un ticket de Navidad consigo. ¡Qué suerte!"
-		}
+		},
+		"player": "Maestro",
+		"vs": "VS"
 	},
 	"ingredients": {
 		"disclaimer": "Esta página incluye los ingredientes que has obtenido hasta el momento.",

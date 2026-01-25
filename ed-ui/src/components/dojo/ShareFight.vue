@@ -1,13 +1,16 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
-	<template v-if="fightTransformed">
-		<div v-show="loaded" class="content">
-			<Suspense>
-				<FullFightAnimation :fight="fightTransformed" />
-				<template #fallback> <Loading /> </template>
-			</Suspense>
-		</div>
-	</template>
+	<div id="shareFight">
+		<TitleHeader :title="$t('pageTitle.challengeFriend')" />
+		<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+		<template v-if="fightTransformed">
+			<div v-show="loaded" class="content">
+				<Suspense>
+					<FullFightAnimation :fight="fightTransformed" />
+					<template #fallback> <Loading /> </template>
+				</Suspense>
+			</div>
+		</template>
+	</div>
 </template>
 
 <script lang="ts">
@@ -20,17 +23,21 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import FightersHeader from '../fight/FightersHeader.vue';
 
 export default defineComponent({
 	name: 'ShareFight',
 	components: {
 		TitleHeader,
+		FightersHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FullFightAnimation.vue'))
 	},
 	data() {
 		return {
 			fightTransformed: undefined as undefined | preFightLoader,
-			loaded: false
+			loaded: false,
+			leftPlayer: null as null | { id: string; name: string },
+			rightPlayer: null as null | { id: string; name: string }
 		};
 	},
 	methods: {},
@@ -61,6 +68,8 @@ export default defineComponent({
 				history: nexFight.filter(n => n != undefined)
 				// lang: this.lang
 			};
+			this.leftPlayer = fightResult.leftPlayer;
+			this.rightPlayer = fightResult.rightPlayer;
 			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (e) {
@@ -71,6 +80,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#shareFight {
+	align-self: center;
+}
 .subtitle {
 	text-transform: uppercase;
 	font-weight: bold;

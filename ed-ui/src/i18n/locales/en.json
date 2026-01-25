@@ -4371,7 +4371,9 @@
 		},
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
-		}
+		},
+		"player": "Master",
+		"vs": "VS"
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",

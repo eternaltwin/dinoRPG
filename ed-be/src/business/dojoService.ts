@@ -54,6 +54,8 @@ import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
+import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
+import { FullFightStats } from '@drpg/core/models/fight/FightResult';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -139,7 +141,7 @@ export async function getMyTeam(req: Request) {
 	return myDojo;
 }
 
-export async function fightFriend(req: Request) {
+export async function fightFriend(req: Request): Promise<{ fight: DojoFightResume; stats: FullFightStats }> {
 	const left = req.body.left as number[];
 	const right = req.body.right as number[];
 	const rightId = req.body.rightId as string;
@@ -191,21 +193,25 @@ export async function fightFriend(req: Request) {
 	return { fight: fightArchive, stats: fightResult.stats };
 }
 
-export async function getArchivedFight(req: Request) {
+export async function getArchivedFight(req: Request): Promise<DojoFightResume> {
 	const authed = await auth(req);
-	const fight = await getArchivedFightRequest(req.params.id);
+	const fightId = req.params.id;
+	const fight = await getArchivedFightRequest(fightId);
 
 	if (!fight) {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
 
-	await viewFight(authed.id, req.params.id);
+	await viewFight(authed.id, fightId);
 
 	return {
+		id: fightId,
 		fighters: JSON.parse(fight.fighters) as FighterRecap[],
 		result: fight.result,
 		history: JSON.parse(fight.steps) as FightStep[],
-		seed: fight.seed
+		seed: fight.seed,
+		leftPlayer: fight.leftPlayer,
+		rightPlayer: fight.rightPlayer
 	};
 }
 
@@ -250,7 +256,9 @@ function generateRandomChallenge(): Challenge {
 	};
 }
 
-export async function fightChallenge(req: Request) {
+export async function fightChallenge(
+	req: Request
+): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
 	const myDinozId = +req.body.myDinoz;
 	const opponentId = +req.body.opponent;
 
