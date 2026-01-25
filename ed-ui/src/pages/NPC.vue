@@ -69,10 +69,6 @@ export default defineComponent({
 	},
 	methods: {
 		async choiseStep(choice: string): Promise<void | NavigationFailure> {
-			if (choice === 'missions' || choice === 'missions_2') {
-				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
-			}
-
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName ?? '', choice);
 			} catch (e) {
@@ -120,6 +116,9 @@ export default defineComponent({
 							} catch (e) {
 								errorHandler.handle(e, this.$toast);
 							}
+							break;
+						case ServiceEnum.MISSIONS:
+							this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 							break;
 						default:
 							break;

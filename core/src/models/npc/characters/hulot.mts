@@ -3,6 +3,7 @@ import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const HULOT: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -99,8 +100,12 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	curesearch: {
 		stepName: 'curesearch',
-		alias: 'missions',
-		target: 'missions',
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		],
 		nextStep: []
 	},
 	missions: {
@@ -108,7 +113,13 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [{ [ConditionEnum.STATUS]: DinozStatusId.HUMISS }, { [ConditionEnum.MINLEVEL]: 20 }]
 		},
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	lowLevel: {
 		stepName: 'lowLevel',

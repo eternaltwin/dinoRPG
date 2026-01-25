@@ -30,7 +30,13 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	},
 	missions: {
 		stepName: 'missions',
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	no: {
 		stepName: 'no',

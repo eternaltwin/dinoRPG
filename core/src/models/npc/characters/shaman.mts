@@ -4,6 +4,7 @@ import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
 import { Ingredient } from '../../ingredient/ingredientList.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -27,7 +28,13 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[ConditionEnum.STATUS]: DinozStatusId.SHFLAG
 		},
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	charm: {
 		stepName: 'charm',

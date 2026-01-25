@@ -3,6 +3,7 @@ import { NpcData } from '../NpcData.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { Item, itemList } from '../../item/ItemList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const RODEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -44,7 +45,13 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	},
 	missions: {
 		stepName: 'missions',
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	begin_2: {
 		stepName: 'begin_2',
@@ -90,7 +97,13 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	},
 	missions_2: {
 		stepName: 'missions_2',
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	begin_3: {
 		stepName: 'begin_3',
