@@ -26,18 +26,17 @@
 			<div class="markdown">
 				<Markdown :source="markdownContent" />
 			</div>
-			<button @click="showPrevItem" v-if="selectedItem.prevItem" class="next">
+			<DZButton @click="showPrevItem" v-if="selectedItem.prevItem">
 				<img :src="getImgURL('icons', 'small_page_up')" />
 				{{ $t(getPrevItem()?.nameI18nKey || '') }}
-			</button>
-			<button @click="showNextItem" v-if="selectedItem.nextItem" class="next">
+			</DZButton>
+			<DZButton @click="showNextItem" v-if="selectedItem.nextItem">
 				<img :src="getImgURL('icons', 'small_page_down')" />
 				{{ $t(getNextItem()?.nameI18nKey || '') }}
-			</button>
-			<button @click="goToPage('News')" class="next">
-				<img :src="getImgURL('icons', 'small_delete')" />
-				{{ $t(`guide.text.stop`) }}
-			</button>
+			</DZButton>
+			<RouterLink to="/news" class="link">
+				<DZButton><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
+			</RouterLink>
 		</div>
 	</div>
 </template>
@@ -45,6 +44,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZButton from '../components/common/DZButton.vue';
 import Markdown from 'vue3-markdown-it';
 import { loadHelpPageMarkdown, processMarkdownImages } from '../utils/markdownLoader';
 import { localStore } from '../store/index';
@@ -238,6 +238,7 @@ const helpPageSections: HelpPageConfig[] = [
 export default defineComponent({
 	name: 'Help',
 	components: {
+		DZButton,
 		TitleHeader,
 		Markdown
 	},
@@ -252,9 +253,6 @@ export default defineComponent({
 	computed: {
 		selectedItem(): HelpPageConfig | null {
 			return this.helpPageSections[this.selectedItemIndex] || null;
-		},
-		currentLanguage(): string {
-			return this.localStore.getLanguage ?? 'fr';
 		}
 	},
 	methods: {
@@ -266,15 +264,15 @@ export default defineComponent({
 
 			// Update URL hash without triggering navigation
 			const sectionId = this.helpPageSections[this.selectedItemIndex].id;
-			window.history.replaceState(null, '', `#${sectionId}`);
+			this.$router.replace({ hash: `#${sectionId}` });
 
 			try {
 				const rawMarkdown = await loadHelpPageMarkdown(
 					'helpPage',
 					this.selectedItem.markdownFile,
-					this.currentLanguage
+					this.localStore.getLanguage ?? 'fr'
 				);
-				
+
 				// Process custom image syntax
 				this.markdownContent = processMarkdownImages(rawMarkdown, this.getImgURL);
 			} catch (error) {
@@ -288,9 +286,7 @@ export default defineComponent({
 		},
 		async showNextItem() {
 			if (this.selectedItem?.nextItem) {
-				const nextIndex = this.helpPageSections.findIndex(
-					item => item.id === this.selectedItem?.nextItem
-				);
+				const nextIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.nextItem);
 				if (nextIndex !== -1) {
 					await this.showContent(nextIndex);
 				}
@@ -298,9 +294,7 @@ export default defineComponent({
 		},
 		async showPrevItem() {
 			if (this.selectedItem?.prevItem) {
-				const prevIndex = this.helpPageSections.findIndex(
-					item => item.id === this.selectedItem?.prevItem
-				);
+				const prevIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.prevItem);
 				if (prevIndex !== -1) {
 					await this.showContent(prevIndex);
 				}
@@ -319,21 +313,19 @@ export default defineComponent({
 		},
 		async loadFromHash() {
 			const hash = this.$route.hash.replace('#', '');
-			
+
 			if (hash) {
 				// Find the section index by ID
-				const sectionIndex = this.helpPageSections.findIndex(
-					item => item.id === hash
-				);
-				
+				const sectionIndex = this.helpPageSections.findIndex(item => item.id === hash);
+
 				if (sectionIndex !== -1) {
 					this.selectedItemIndex = sectionIndex;
 				} else {
 					// Default to intro
-					this.selectedItemIndex  = 0;
+					this.selectedItemIndex = 0;
 				}
 			}
-			
+
 			// Load the markdown for the current (or default) section
 			await this.loadMarkdownForCurrentItem();
 		}
@@ -342,9 +334,14 @@ export default defineComponent({
 		// Check if there's a hash in the URL to load a specific section
 		await this.loadFromHash();
 	},
+	unmounted() {
+		this.$router.replace({ hash: '' });
+	},
 	watch: {
-		async currentLanguage() {
-			await this.loadMarkdownForCurrentItem();
+		'localStore.getLanguage': {
+			async handler() {
+				await this.loadMarkdownForCurrentItem();
+			}
 		},
 		// Watch for hash changes in the URL
 		'$route.hash': {
@@ -449,7 +446,7 @@ export default defineComponent({
 				display: inline-block;
 				margin: 0 5px 0 0;
 			}
-			
+
 			// Images that are alone in a paragraph should be block-level
 			:deep(p > img:only-child) {
 				display: block;
@@ -506,7 +503,7 @@ export default defineComponent({
 			:deep(a) {
 				color: #71b703;
 				text-decoration: underline;
-				
+
 				&:hover {
 					color: #fce3bc;
 				}
@@ -525,7 +522,7 @@ export default defineComponent({
 				padding: 15px;
 				border-radius: 5px;
 				overflow-x: auto;
-				
+
 				code {
 					background: none;
 					padding: 0;
@@ -565,26 +562,6 @@ export default defineComponent({
 				border: none;
 				border-top: 2px solid rgb(142, 62, 38);
 				margin: 20px 0;
-			}
-		}
-		.next {
-			background-image: url('../assets/button/button.webp');
-			border: none;
-			color: #fff1ad;
-			font-variant: small-caps;
-			font-weight: bold;
-			text-align: center;
-			height: 28px;
-			width: 145px !important;
-			background-repeat: no-repeat;
-			font-size: 7pt;
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-top: 20px;
-			cursor: pointer;
-			&:hover {
-				color: white;
-				background-image: url('../assets/button/button_hover.webp');
 			}
 		}
 	}
