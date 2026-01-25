@@ -143,7 +143,9 @@ export default defineComponent({
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
-			intervals: [] as number[]
+			intervals: [] as number[],
+			mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
+				?.missionHUD
 		};
 	},
 	components: {
@@ -630,11 +632,6 @@ export default defineComponent({
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
-		},
-		mission(): MissionHUD | null {
-			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
-			if (!dinoz) return null;
-			return dinoz.missionHUD;
 		}
 	},
 	watch: {
