@@ -48,7 +48,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../events/index.js';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
@@ -90,7 +89,6 @@ export default defineComponent({
 			}
 			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
 			if (this.grid.gatherTurn <= 0 || leftSquare - this.clickedBox.length == 0) {
-				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
 					// Check if the grid is complete
@@ -109,7 +107,7 @@ export default defineComponent({
 				}
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
-				EventBus.emit('isLoading', false);
+
 				await this.$refreshGold();
 			}
 		},
@@ -138,11 +136,9 @@ export default defineComponent({
 		}
 	},
 	async created(): Promise<void> {
-		EventBus.emit('isLoading', true);
 		try {
 			this.grid = await DinozService.getGatherGrid(this.dinozId, this.gatherType);
 			this.loaded = true;
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			this.$router.push({

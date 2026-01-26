@@ -13,7 +13,7 @@ import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { Reward } from '@drpg/core/models/reward/RewardList';
+import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { backpackSlot } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
@@ -57,14 +57,11 @@ export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
 	item: ItemFiche
 ) => {
-	if (item.itemId === Item.GOBLIN_MERGUEZ) {
-		if (playerInventoryData.rewards.some(r => r.rewardId === Reward.CARD)) {
-			if (playerInventoryData.shopKeeper) {
-				return 150;
-			}
-
-			return 100;
-		}
+	if (
+		item.itemId === Item.GOBLIN_MERGUEZ &&
+		playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)
+	) {
+		return playerInventoryData.shopKeeper ? 150 : 100;
 	}
 
 	if (playerInventoryData.shopKeeper && item.itemType !== ItemType.MAGICAL) {
@@ -507,6 +504,12 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		throw new ExpectedError(`Item n°${itemToEquip.itemId} cannot be equiped`);
 	}
 
+	const playerItemQuantity = dinoz.player.items.find(item => item.itemId === itemId)?.quantity ?? 0;
+
+	if (playerItemQuantity === 0 && equip) {
+		throw new ExpectedError(`You don't have enought ${itemToEquip.itemId}`);
+	}
+
 	if (equip && itemToEquip.itemType === ItemType.MAGICAL) {
 		let magicalItemsEquipped = 0;
 		dinoz.items.forEach(item => {
@@ -520,12 +523,6 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		if (magicalItemsEquipped >= magicalItemsLimit) {
 			throw new ExpectedError(translate('tooManyMagicItemEquiped', authed));
 		}
-	}
-
-	const playerItem = dinoz.player.items.find(item => item.itemId === itemId)?.quantity ?? 0;
-
-	if (playerItem === 0 && equip) {
-		throw new ExpectedError(`You don't have enought ${itemToEquip.itemId}`);
 	}
 
 	if (backpackSlot(dinoz.player.engineer, dinoz) <= dinoz.items.length && equip) {
@@ -543,29 +540,14 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		dinoz.items.push(await addItemToDinoz(dinoz.id, itemToEquip.itemId));
 	} else {
 		if (!dinozItem) throw new ExpectedError(`This dinoz doesn't have this item equiped`);
-		if (
-			dinozItem.itemId === Item.GOBLIN_MERGUEZ &&
-			dinoz.player.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5)
-		) {
-			if (playerItem >= 100) {
-				throw new ExpectedError(translate('maxQuantityInventory', authed));
-			}
-
-			await removeItemFromDinoz(dinoz.id, dinozItem.itemId);
-			await increaseItemQuantity(dinoz.player.id, itemToEquip.itemId, 1);
-			const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem.id);
-			dinoz.items.splice(itemIndex, 1);
-		} else {
-			if (
-				playerItem >= (dinoz.player.shopKeeper ? Math.round(itemToEquip.maxQuantity * 1.5) : itemToEquip.maxQuantity)
-			) {
-				throw new ExpectedError(translate('maxQuantityInventory', authed));
-			}
-			await removeItemFromDinoz(dinoz.id, dinozItem.itemId);
-			await increaseItemQuantity(dinoz.player.id, itemToEquip.itemId, 1);
-			const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem.id);
-			dinoz.items.splice(itemIndex, 1);
+		let itemMaxQuantity = getItemMaxQuantity(dinoz.player, itemToEquip);
+		if (playerItemQuantity >= itemMaxQuantity) {
+			throw new ExpectedError(translate('maxQuantityInventory', authed));
 		}
+		await removeItemFromDinoz(dinoz.id, dinozItem.itemId);
+		await increaseItemQuantity(dinoz.player.id, itemToEquip.itemId, 1);
+		const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem.id);
+		dinoz.items.splice(itemIndex, 1);
 	}
 	return dinoz.items.map(item => {
 		return { itemId: item.itemId };

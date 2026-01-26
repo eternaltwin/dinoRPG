@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -8,7 +8,7 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'begin',
 		nextStep: ['trad', 'sry'],
 		initialStep: true,
-		condition: { [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
+		condition: { [ConditionEnum.STATUS]: DinozStatusId.JVBZ }
 	},
 	trad: {
 		stepName: 'trad',
@@ -50,6 +50,14 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	attack_win: {
 		stepName: 'attack_win',
 		nextStep: [],
+		initialStep: true, // So it can show up after the fight.
+		// To avoid potential conflict with other fight returns
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: DinozStatusId.FRETURN },
+				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
+			]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -66,20 +74,27 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'weirdSwamp',
 		nextStep: ['trad', 'swampTreasure'],
 		initialStep: true,
-		condition: { [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN }
+		// Necessary to avoid having multiple initial steps possible at once
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
+				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } }
+			]
+		}
 	},
 	swampTreasure: {
 		stepName: 'swampTreasure',
-		nextStep: ['swampLeave'],
+		nextStep: ['swampLeave']
+	},
+	swampLeave: {
+		stepName: 'swampLeave',
+		nextStep: [],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.SWAMP_MONSTERS_KNOWN
 			}
 		]
-	},
-	swampLeave: {
-		stepName: 'swampLeave',
-		nextStep: []
 	}
 };

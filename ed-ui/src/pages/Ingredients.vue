@@ -45,7 +45,6 @@ import { defineComponent } from 'vue';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ClanService, IngredientsService } from '../services/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { playerStore } from '../store/index.js';
 import DZInput from '../components/common/DZInput.vue';
@@ -74,14 +73,12 @@ export default defineComponent({
 	},
 	methods: {
 		async load() {
-			EventBus.emit('isLoading', true);
 			try {
 				const unsortedIngredients = await IngredientsService.getAllIngredients();
 				this.ingredientList = this.sortIngredientsById(unsortedIngredients);
 				this.giveAway = this.ingredientList.map(ingredient => {
 					return { ...ingredient, quantity: 0 };
 				});
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

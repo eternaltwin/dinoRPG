@@ -884,6 +884,12 @@
 			"fake": "A deserted island, commonly known as the Isle of Damnation, where anguished souls come to die. It's particularly dark here...",
 			"fake2": "A desert island, commonly known as the Isle o' Will-o-the-wisp, these spirits spread hopelessness and death. It's particularly dark over here...",
 			"rechut": "Thanks to the piece of the piece of the Dark Orb you have in your possession, you can return to the surface. The overwhelming brightness blinds you for a few minutes, spending too much time in the Dark World doesn't seem to be a great idea."
+		},
+		"hint": {
+			"marais": {
+				"flooded": "The swamp is flooded today, you won't be able to get out of it.",
+				"foggy": "The swamp is covered by a thick fog today, you surely won't find any monster to fight."
+			}
 		}
 	},
 	"race": {
@@ -1380,18 +1386,23 @@
 		},
 		"joveboze": {
 			"speech": {
-				"begin": "He'a li'l boy! ya wanto kik old Scorpass?",
+				"begin": "He'a li'l boy! Ya wanto kik old Scorpass?",
 				"trad": "Nobody here seems to ever understand what Joveboze is saying. You have a feeling that it's a local dialect of the Frishers, or even a language which Joveboze has created himself.",
 				"sry": "Ifyar notrady dont'ome, elsjump inthboat, k?",
 				"go": "Joveboze takes you out to sea, it seems ships avoid this area. After a short wait, you see something in the water: a huge Scorpscuba! If the Atlantean Guard was right, you're about to be attacked. What are you going to do!",
-				"attack_win": "After capturing the Scorpscuba, Joveboze takes you back to Frish Port and begins carving your flute. He hasn't said anything since the Scorpscuba attack though he does occasionally look at you approvingly out of the corner of his eye. After he finishes carving your flute, he gives you a firm handshake, wishes you luck on your future travels and then hands you the Scorpscuba Caller."
+				"attack_win": "After capturing the Scorpscuba, Joveboze takes you back to Frish Port and begins carving your flute. He hasn't said anything since the Scorpscuba attack though he does occasionally look at you approvingly out of the corner of his eye. After he finishes carving your flute, he gives you a firm handshake, wishes you luck on your future travels and then hands you the Scorpscuba Caller.",
+				"weirdSwamp": "He'a li'l boy 'gain! Yasaw twisthin inda' mu'y swam'? Mova'tsown, tel' ya!",
+				"swampTreasure": "Sey mey dig'a'nug' when da mudmov'... Watch'ya so'l, ya ready m'boy.",
+				"swampLeave": "Joveboze waves and smiles at you then walks away singing a sea shanty."
 			},
 			"playerChoice": {
 				"sry": "... sorry?!?",
 				"trad": "Get an interpreter",
 				"go": "Follow Joveboze",
 				"attack": "Attack!",
-				"back": "TURN BACK!!!"
+				"back": "TURN BACK!!!",
+				"swampTreasure": "... twisted ?!?",
+				"swampLeave": "I can't make sense of anything you say..."
 			}
 		},
 		"archis": {
@@ -2205,7 +2216,7 @@
 			"Mutation": "Increase maximum health points by 30",
 			"PocheVentrale": "Enable the Dinoz to be equipped with an additional battle item",
 			"Intelligence": "Increase the experience gain at the end of the fight by 5%",
-			"Focus": "Enhance the strength of the *next assault* with a Lightning bonus 1",
+			"Focus": "Enhance the strength of the **next assault** with a Lightning bonus 1",
 			"Celerite": "Increase the Dinoz speed by 15%",
 			"Concentration": "**Assaults** always target the same enemy",
 			"AttaqueEclair": "Increase the speed of all Lightning attacks by 40%",
@@ -2516,7 +2527,9 @@
 			"30": "Venerable",
 			"23": "Fire Charm",
 			"24": "Bao Charm",
-			"7": "Improved Shovel"
+			"7": "Improved Shovel",
+			"72": "Swamp Buoy",
+			"73": "Swamp Lantern"
 		},
 		"description": {
 			"2": "Climbing Gear enables your Dinoz to climb mountains.",
@@ -2568,7 +2581,9 @@
 			"30": "This Dinoz has defeated the Venerable.",
 			"23": "The Fire Charm increases the strength of your Dinoz Fire attacks.",
 			"24": "Bao Charm increases your Dinoz' defense against Water attacks.",
-			"7": "The upgraded Shovel finally broke, it will have to be fixed before you can use it again."
+			"7": "The upgraded Shovel finally broke, it will have to be fixed before you can use it again.",
+			"72": "The constant changing state of this buoy allows your Dinoz to know if the Sticky Swamp is flooded.",
+			"73": "The special light of this lantern allows your Dinoz to know if the Sticky Swamp is covered in fog."
 		}
 	},
 	"tabs": {
@@ -3818,7 +3833,7 @@
 			"clover": "DinoLoto Winner",
 			"pac": "Scroll of Compiled Abilities",
 			"card": "Deluxe Merguez Loyalty Card",
-			"import": "Importosaurus bone"
+			"beta": "Betasaurus Bone"
 		},
 		"description": {
 			"perle": "Using the pearl your Dinoz can recover health at the Fountain of Youth each day.",
@@ -4033,7 +4048,7 @@
 			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
 			"pac": "The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.",
 			"card": "Grilled to perfection and stamped by the **Merguez Seller** himself, this sacred card rewords the most enduring stomachs. After devouring a nasty amount of merguez, you are now promoted to **Official Grand Glutton**.",
-			"import": "Congratulations! You have imported your account to EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Maybe it's a mistake after all?"
+			"beta": "Congratulations! You have been one of the pioneers of DinoRPG. You are ready to take on new challenges such as this betasaurus. Maybe it's all a mishap in the end?"
 		}
 	},
 	"ranking": {
@@ -4154,8 +4169,9 @@
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan"
 			},
-			"nickname": "Player's nickname :",
-			"save": "Save"
+			"nickname": "Player's nickname",
+			"save": "Save",
+			"saved": "Modifications saved successfully!"
 		},
 		"request": {
 			"title": "Waiting requests",
@@ -4259,6 +4275,7 @@
 		"life": "Lost life",
 		"experience": "Experience",
 		"gold": "Gold found",
+		"statusReward": "You received: {reward}",
 		"monster": {
 			"goupignon": "Smashroom",
 			"wolf": "Wolf",
@@ -4298,7 +4315,9 @@
 			"megawf": "Mega-wolf",
 			"baraba": "Barababor",
 			"baratr": "Baratribor",
-			"bamboo": "Bambooz"
+			"bamboo": "Bambooz",
+			"swampmf": "Mudeoz",
+			"swampmf2": "Foggoz"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -4352,7 +4371,9 @@
 		},
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
-		}
+		},
+		"player": "Master",
+		"vs": "VS"
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
@@ -4590,18 +4611,19 @@
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"soon": "Soon",
-		"seeFight": "See the fight",
+		"seeFight": "See {player}'s fight",
 		"deleteTeam": "Delete my team",
 		"timer": {
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
 			"pools": ":chrono:: Next group stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
 			"finals": ":chrono:: Next final stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
-			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes."
+			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes.",
+			"cashPrice": ":gold: The cash prize for this tournament is {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
 		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
-		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
-		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash prize is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash prize has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
 			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the crash price of the next tournament.",

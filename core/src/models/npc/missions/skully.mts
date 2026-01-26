@@ -480,7 +480,7 @@ export const M_SKULLY: Mission[] = [
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.LAUNCH_FIGHT,
-					mobList: [monsterList.KORGON],
+					mobList: [monsterList.KORGON_SKULLY],
 					target: 'korgon',
 					endText: {
 						type: 'announce',

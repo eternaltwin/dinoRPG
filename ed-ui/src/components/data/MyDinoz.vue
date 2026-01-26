@@ -32,7 +32,7 @@ import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { DinozPublicFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
 import { playerStore } from '../../store/index.js';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'MyDinoz',
@@ -46,7 +46,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			UnavailableReasonFront,
+			UnavailableReason,
 			raceList: raceList,
 			statusList: statusList,
 			position: dinozPlacement,

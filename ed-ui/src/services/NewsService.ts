@@ -5,63 +5,45 @@ import { returnType } from '@drpg/core/models/enums/returnCode';
 
 export const NewsService = {
 	async getNewsFromPage(page: number): Promise<NewsGetResponse[]> {
-		return http()
-			.get(`/news/page/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().get(`/news/page/${page}`);
+		return res.data;
 	},
 	async getAllNews(): Promise<Partial<DetailedNews>[]> {
-		return http()
-			.get(`/news/all`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().get(`/news/all`);
+		return res.data;
 	},
 	async getNewsAdmin(id: number): Promise<DetailedNews> {
-		return http()
-			.get(`/news/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().get(`/news/${id}`);
+		return res.data;
 	},
 	async updateNews(data: FormData, id: number): Promise<void> {
-		return http()
-			.put(`/news/update/${id}`, data, {
-				headers: { 'Content-Type': 'multipart/form-data' }
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/news/update/${id}`, data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return res.data;
 	},
 	async createNews(data: FormData, news: string): Promise<DetailedNews> {
-		return http()
-			.put(`/news/create/${news}`, data, {
-				headers: { 'Content-Type': 'multipart/form-data' }
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/news/create/${news}`, data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return res.data;
 	},
 	async deleteNews(id: number): Promise<void> {
-		return http()
-			.delete(`/news/delete/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().delete(`/news/delete/${id}`);
+		return res.data;
 	},
 	async createPoll(data: FormData, news: string): Promise<void> {
-		return http()
-			.put(`/news/createPoll/${news}`, data, {
-				headers: { 'Content-Type': 'multipart/form-data' }
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/news/createPoll/${news}`, data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return res.data;
 	},
 	async votePoll(id: number, option: number): Promise<returnType> {
-		return http()
-			.put(`/news/poll/${id}/${option}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/news/poll/${id}/${option}`);
+		return res.data;
 	},
 	async toggleLike(newsId: number): Promise<{ newsId: number; likes: number; likedByMe: boolean }> {
-		return http()
-			.post(`/news/${newsId}/like`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().post(`/news/${newsId}/like`);
+		return res.data;
 	}
 };

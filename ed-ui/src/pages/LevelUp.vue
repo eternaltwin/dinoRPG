@@ -228,7 +228,6 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
@@ -325,11 +324,9 @@ export default defineComponent({
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: number = +this.id;
 
-			EventBus.emit('isLoading', true);
 			try {
 				if (!this.event) {
 					const { discoveredSkill } = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
-					EventBus.emit('isLoading', false);
 
 					if (discoveredSkill) {
 						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
@@ -338,7 +335,6 @@ export default defineComponent({
 					this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 				} else {
 					const { discoveredSkill } = await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
-					EventBus.emit('isLoading', false);
 
 					if (discoveredSkill) {
 						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
@@ -358,15 +354,12 @@ export default defineComponent({
 			this.getLearnableSkills(+this.id, this.tryNumber);
 		},
 		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				if (this.event) {
 					this.availableSkills = await FBService.levelUp(dinozId, tryNumber, this.event);
 				} else {
 					this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
 				}
-
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

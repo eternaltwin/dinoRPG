@@ -8,7 +8,7 @@
 		</Tippy>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
-			<input type="text" v-model="name" />
+			<DZInput type="text" v-model="name" />
 			<DZButton @click="createDinoz()">{{ $t('button.name') }}</DZButton>
 		</div>
 		<div class="dinozList" v-if="dinoz.length > 0 && currentTournament">
@@ -49,6 +49,7 @@ import { errorHandler } from '../../utils/index.js';
 import { FBService } from '../../services/FBTournamentService.js';
 import { FBParticipation, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
 import DZButton from '../common/DZButton.vue';
+import DZInput from '../../components/common/DZInput.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { formatText } from '../../utils/formatText.js';
@@ -62,7 +63,7 @@ export default defineComponent({
 			return skillList;
 		}
 	},
-	components: { TournamentDisplay, DZDisclaimer, DinozWithoutFlash, DZButton },
+	components: { TournamentDisplay, DZDisclaimer, DinozWithoutFlash, DZButton, DZInput },
 	data() {
 		return {
 			currentTournament: undefined as undefined | PublicFBTournament,

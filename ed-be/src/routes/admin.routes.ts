@@ -22,7 +22,7 @@ import {
 	updatePlayerQuestProgression
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
-import { checkIsAdmin } from '../utils/jwt.js';
+import { checkRole } from '../utils/jwt.js';
 import sendError from '../utils/sendErrors.js';
 import {
 	banPlayer,
@@ -33,23 +33,28 @@ import {
 	takeActionOnReport,
 	updateBan
 } from '../business/moderationService.js';
+import { AdminRole } from '@drpg/prisma';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.adminRoute;
 
-routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/dashboard`,
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response: boolean = await getAdminDashBoard(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response: boolean = await getAdminDashBoard(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 routes.put(
 	`${commonPath}/dinoz/:id`,
@@ -75,7 +80,7 @@ routes.put(
 		body('unlockableSkills').default(undefined).optional({ nullable: true }).exists().isArray(),
 		body('unlockableSkillOperation').default(undefined).optional({ nullable: true }).exists().isString()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -93,7 +98,7 @@ routes.put(
 routes.put(
 	`${commonPath}/gold/:id`,
 	[param('id').exists().isString(), body('operation').exists().isString(), body('gold').exists().toInt().isNumeric()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -111,7 +116,7 @@ routes.put(
 routes.put(
 	`${commonPath}/epic/:id`,
 	[param('id').exists().isString(), body('operation').exists().isString(), body('epicRewardId').exists().isArray()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -139,7 +144,7 @@ routes.put(
 				);
 			})
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -168,7 +173,7 @@ routes.put(
 				);
 			})
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -203,7 +208,7 @@ routes.put(
 				);
 			})
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -222,7 +227,7 @@ routes.put(
 routes.get(
 	`${commonPath}/playerdinoz/:id`,
 	param('id').exists().isString(),
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -241,7 +246,7 @@ routes.get(
 	`${commonPath}/dinoz/:id`,
 
 	param('id').exists().isNumeric(),
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -273,7 +278,7 @@ routes.put(
 		body('messie').default(undefined).optional().exists().toBoolean(),
 		body('matelasseur').default(undefined).optional().exists().toBoolean()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -291,7 +296,7 @@ routes.put(
 routes.get(
 	`${commonPath}/playerinfo/:id`,
 	param('id').exists().isString(),
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -306,7 +311,7 @@ routes.get(
 	}
 );
 
-routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/secret/all`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -322,7 +327,7 @@ routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: R
 routes.put(
 	`${commonPath}/secret/add`,
 	[body('key').exists().isString(), body('value').exists().isString()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -340,7 +345,7 @@ routes.put(
 routes.get(
 	`${commonPath}/moderation/:page`,
 	[param('page').exists().isNumeric()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -361,7 +366,7 @@ routes.put(
 		param('id').exists().toInt().isNumeric(),
 		body('action').exists().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'])
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -379,7 +384,7 @@ routes.put(
 routes.get(
 	`${commonPath}/ban/:page`,
 	[param('page').exists().isNumeric()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -403,7 +408,7 @@ routes.post(
 		body('comment').exists().isString(),
 		body('dinozId').optional().toInt().isNumeric()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -427,7 +432,7 @@ routes.put(
 		body('comment').optional().isString(),
 		body('dinozId').optional({ nullable: true }).toInt().isNumeric()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -445,7 +450,7 @@ routes.put(
 routes.put(
 	`${commonPath}/cancelBan/:id`,
 	[param('id').exists().isString()],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -460,7 +465,7 @@ routes.put(
 	}
 );
 
-routes.delete(`${commonPath}/truncateGame`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.delete(`${commonPath}/truncateGame`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -473,20 +478,24 @@ routes.delete(`${commonPath}/truncateGame`, checkIsAdmin, async (req: Request, r
 	}
 });
 
-routes.get(`${commonPath}/:dinoz1/:dinoz2/:seed/:type`, checkIsAdmin, async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/:dinoz1/:dinoz2/:seed/:type`,
+	checkRole([AdminRole.ADMIN]),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const fight = await debugFight(req);
-		return res.status(200).send(fight);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const fight = await debugFight(req);
+			return res.status(200).send(fight);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
-routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/jobs`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -499,7 +508,7 @@ routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Respons
 	}
 });
 
-routes.get(`${commonPath}/accounts/page/:page`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/accounts/page/:page`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -512,7 +521,7 @@ routes.get(`${commonPath}/accounts/page/:page`, checkIsAdmin, async (req: Reques
 	}
 });
 
-routes.get(`${commonPath}/accounts/ip/:ip`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/accounts/ip/:ip`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -525,7 +534,7 @@ routes.get(`${commonPath}/accounts/ip/:ip`, checkIsAdmin, async (req: Request, r
 	}
 });
 
-routes.put(`${commonPath}/massban`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.put(`${commonPath}/massban`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}

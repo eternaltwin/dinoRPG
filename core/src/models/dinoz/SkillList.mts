@@ -1414,7 +1414,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
+			[Stat.HP_REGEN]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.INSTINCT_SAUVAGE]: {
@@ -2917,7 +2917,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
+			[Stat.HP_REGEN]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
 	[Skill.PREMIERS_SOINS]: {
@@ -3458,7 +3458,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
-			[Stat.INITIATIVE]: { operator: MathOperator.MULTIPLY, value: 0.15 }
+			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -15 }
 		}
 	},
 	[Skill.EINSTEIN]: {

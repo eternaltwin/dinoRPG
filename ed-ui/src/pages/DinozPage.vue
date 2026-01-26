@@ -61,7 +61,6 @@ export default defineComponent({
 			this.dinozData.name = newName;
 		},
 		async continueMission(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
@@ -72,7 +71,6 @@ export default defineComponent({
 					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				}
 				this.dinozStore.setDinozList(dinozList);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -139,10 +137,9 @@ export default defineComponent({
 			});
 			EventBus.emit('refreshDinozStats', true);
 		});
-		EventBus.emit('isLoading', true);
+
 		try {
 			await this.getFiche();
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

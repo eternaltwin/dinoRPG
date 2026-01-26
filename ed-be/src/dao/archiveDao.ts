@@ -3,6 +3,7 @@ import { FighterRecap, FightProcessResult } from '@drpg/core/models/fight/FightR
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 
 export async function archiveFight(fight: FightProcessResult, leftPlayerId: string, rightPlayerId: string | null) {
+	const playerSelect = { select: { id: true, name: true } };
 	const archive = await prisma.fightArchive.create({
 		data: {
 			fighters: JSON.stringify(
@@ -35,7 +36,9 @@ export async function archiveFight(fight: FightProcessResult, leftPlayerId: stri
 			fighters: true,
 			steps: true,
 			seed: true,
-			result: true
+			result: true,
+			leftPlayer: playerSelect,
+			rightPlayer: playerSelect
 		}
 	});
 	return {
@@ -43,7 +46,9 @@ export async function archiveFight(fight: FightProcessResult, leftPlayerId: stri
 		fighters: JSON.parse(archive.fighters) as FighterRecap[],
 		result: archive.result,
 		history: JSON.parse(archive.steps) as FightStep[],
-		seed: archive.seed
+		seed: archive.seed,
+		leftPlayer: archive.leftPlayer,
+		rightPlayer: archive.rightPlayer
 	};
 }
 
@@ -100,6 +105,7 @@ export async function getViewedTournamentFight(playerId: string, tournamentFight
 }
 
 export async function getArchivedFightRequest(archiveId: string) {
+	const playerSelect = { select: { id: true, name: true } };
 	const archive = await prisma.fightArchive.findFirst({
 		where: {
 			id: archiveId
@@ -108,7 +114,9 @@ export async function getArchivedFightRequest(archiveId: string) {
 			fighters: true,
 			steps: true,
 			seed: true,
-			result: true
+			result: true,
+			leftPlayer: playerSelect,
+			rightPlayer: playerSelect
 		}
 	});
 

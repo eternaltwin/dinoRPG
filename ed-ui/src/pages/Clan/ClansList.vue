@@ -82,7 +82,6 @@ import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import Flags from '../../components/common/Flags.vue';
 import SearchEntity from '../../components/data/SearchEntity.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import EventBus from '../../events';
 import { ClanService, PlayerService } from '../../services';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
@@ -152,20 +151,16 @@ export default defineComponent({
 			await this.getClansList();
 		},
 		async getClansList(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				this.clansList = await ClanService.getClansList(this.page);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getClansListByName() {
-			EventBus.emit('isLoading', true);
 			try {
 				this.clansList = await ClanService.searchClansByName(this.searchClanName, this.page);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

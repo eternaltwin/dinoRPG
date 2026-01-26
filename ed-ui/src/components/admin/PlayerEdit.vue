@@ -49,12 +49,10 @@
 				<label class="title" for="role">Role :</label>
 				<input id="role" type="text" v-model="player.role" disabled />
 				<div class="uSkills">
-					<input class="radio" type="radio" value="admin" name="role" v-model="playerFields.role" />
-					<label class="radio" for="admin">admin</label>
-					<input class="radio" type="radio" value="beta" name="role" v-model="playerFields.role" />
-					<label class="radio" for="beta">beta</label>
-					<input class="radio" type="radio" value="player" name="role" v-model="playerFields.role" />
-					<label class="radio" for="player">player</label>
+					<template v-for="role in AdminRole" :key="role">
+						<input class="radio" type="radio" :value="role" name="role" v-model="playerFields.role" />
+						<label class="radio" for="admin">{{ role.toWellFormed() }}</label>
+					</template>
 				</div>
 			</div>
 		</fieldset>
@@ -114,12 +112,12 @@
 				<template v-for="(reward, index) in player.rewards" :key="index">
 					<Tippy theme="normal">
 						<img
-							:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward]}`)"
-							:alt="epicList.imgName[reward]"
+							:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward.rewardId]}`)"
+							:alt="epicList.imgName[reward.rewardId]"
 						/>
 						<template #content>
-							<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
-							<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
+							<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward.rewardId]}`))" />
+							<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward.rewardId]}`))" />
 						</template>
 					</Tippy>
 				</template>
@@ -415,8 +413,9 @@ import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import DZSelect from '../common/DZSelect.vue';
-import EventBus from '../../events';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { AdminRole } from '@drpg/prisma/enums';
+
 interface PlayerSearch {
 	name: string;
 	id: string;
@@ -426,6 +425,11 @@ const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
 export default defineComponent({
 	name: 'PlayerEdit',
+	computed: {
+		AdminRole() {
+			return AdminRole;
+		}
+	},
 	components: { DZSelect, DZButton },
 	data() {
 		return {
@@ -442,7 +446,8 @@ export default defineComponent({
 				quests: [],
 				selectedQuestId: undefined as number | undefined,
 				progressionQuest: undefined as number | undefined,
-				questOperation: ''
+				questOperation: '',
+				AdminRole: AdminRole
 			} as PlayerEdit,
 			banFields: {
 				sorted: undefined as string | undefined,
@@ -491,7 +496,6 @@ export default defineComponent({
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
 
-			EventBus.emit('isLoading', true);
 			this.$router.push({ path: this.$route.path, query: { id: this.searchedPlayerId } });
 
 			try {
@@ -506,8 +510,6 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
-
-			EventBus.emit('isLoading', false);
 		},
 		async searchPlayer(query: string): Promise<Array<{ value: string; label: string }>> {
 			if (query.length < 3) {

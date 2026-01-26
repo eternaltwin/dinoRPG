@@ -3,5 +3,6 @@ export enum ServiceEnum {
 	DINOZ = 'dinoz',
 	REFRESH_DINOZLIST = 'refreshDinozList',
 	REFRESH_PLAYER = 'refreshPlayer',
-	FIGHT = 'fight'
+	FIGHT = 'fight',
+	MISSIONS = 'missions'
 }

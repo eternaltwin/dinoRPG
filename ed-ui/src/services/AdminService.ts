@@ -2,7 +2,7 @@ import { http } from '../utils/index.js';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
@@ -10,64 +10,50 @@ import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 
 export const AdminService = {
-	getDashBoard(): Promise<boolean> {
-		return http()
-			.get(`/admin/dashboard`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getDashBoard(): Promise<boolean> {
+		const res = await http().get(`/admin/dashboard`);
+		return res.data;
 	},
-	givePlayerMoney(id: string, gold: number, operation: string): Promise<number> {
-		return http()
-			.put(`/admin/gold/${id}`, {
-				gold: gold,
-				operation: operation
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async givePlayerMoney(id: string, gold: number, operation: string): Promise<number> {
+		const res = await http().put(`/admin/gold/${id}`, {
+			gold: gold,
+			operation: operation
+		});
+		return res.data;
 	},
-	givePlayerEpicRewards(id: string, epicRewardList: Array<string>, operation: string): Promise<number> {
-		return http()
-			.put(`/admin/epic/${id}`, {
-				epicRewardId: epicRewardList,
-				operation: operation
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async givePlayerEpicRewards(id: string, epicRewardList: Array<string>, operation: string): Promise<number> {
+		const res = await http().put(`/admin/epic/${id}`, {
+			epicRewardId: epicRewardList,
+			operation: operation
+		});
+		return res.data;
 	},
-	modifyPlayerItems(id: string, itemId: number, quantity: number, operation: string): Promise<void> {
-		return http()
-			.put(`/admin/${id}/items`, {
-				operation: operation,
-				items: [{ id: itemId, quantity: quantity }]
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async modifyPlayerItems(id: string, itemId: number, quantity: number, operation: string): Promise<void> {
+		const res = await http().put(`/admin/${id}/items`, {
+			operation: operation,
+			items: [{ id: itemId, quantity: quantity }]
+		});
+		return res.data;
 	},
-	modifyPlayerIngredients(id: string, ingredientId: number, quantity: number, operation: string): Promise<void> {
-		return http()
-			.put(`/admin/${id}/ingredients`, {
-				operation: operation,
-				ingredients: [{ id: ingredientId, quantity: quantity }]
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async modifyPlayerIngredients(id: string, ingredientId: number, quantity: number, operation: string): Promise<void> {
+		const res = await http().put(`/admin/${id}/ingredients`, {
+			operation: operation,
+			ingredients: [{ id: ingredientId, quantity: quantity }]
+		});
+		return res.data;
 	},
-	updateQuest(id: string, questId: number, progression: number, operation: string): Promise<void> {
-		return http()
-			.put(`/admin/${id}/quests`, {
-				operation: operation,
-				quests: [{ questId: questId, progression: progression }]
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateQuest(id: string, questId: number, progression: number, operation: string): Promise<void> {
+		const res = await http().put(`/admin/${id}/quests`, {
+			operation: operation,
+			quests: [{ questId: questId, progression: progression }]
+		});
+		return res.data;
 	},
-	getplayerInformation(id: string): Promise<PlayerTypeToSend> {
-		return http()
-			.get(`/admin/playerinfo/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getplayerInformation(id: string): Promise<PlayerTypeToSend> {
+		const res = await http().get(`/admin/playerinfo/${id}`);
+		return res.data;
 	},
-	updatePlayer(
+	async updatePlayer(
 		id: string,
 		customText?: string,
 		quetzuBought?: number,
@@ -83,41 +69,35 @@ export const AdminService = {
 		matelasseur?: boolean | null,
 		role?: 'admin' | 'player' | 'beta' | null
 	): Promise<void> {
-		return http()
-			.put(`/admin/player/${id}`, {
-				customText: customText,
-				quetzuBought: quetzuBought,
-				dailyGridRewards: dailyGridRewards,
-				leader: leader,
-				engineer: engineer,
-				cooker: cooker,
-				shopKeeper: shopKeeper,
-				merchant: merchant,
-				priest: priest,
-				teacher: teacher,
-				messie: messie,
-				matelasseur: matelasseur,
-				role: role
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/admin/player/${id}`, {
+			customText: customText,
+			quetzuBought: quetzuBought,
+			dailyGridRewards: dailyGridRewards,
+			leader: leader,
+			engineer: engineer,
+			cooker: cooker,
+			shopKeeper: shopKeeper,
+			merchant: merchant,
+			priest: priest,
+			teacher: teacher,
+			messie: messie,
+			matelasseur: matelasseur,
+			role: role
+		});
+		return res.data;
 	},
-	listAllDinozFromPlayer(id: string): Promise<Array<DinozAdminFiche>> {
-		return http()
-			.get(`/admin/playerdinoz/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async listAllDinozFromPlayer(id: string): Promise<Array<DinozAdminFiche>> {
+		const res = await http().get(`/admin/playerdinoz/${id}`);
+		return res.data;
 	},
-	listOneDinozFromPlayer(id: number): Promise<DinozAdminFiche> {
-		return http()
-			.get(`/admin/dinoz/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async listOneDinozFromPlayer(id: number): Promise<DinozAdminFiche> {
+		const res = await http().get(`/admin/dinoz/${id}`);
+		return res.data;
 	},
-	updateDinoz(
+	async updateDinoz(
 		id: number,
 		name?: string,
-		unavailableReason?: UnavailableReasonFront,
+		unavailableReason?: UnavailableReason,
 		unavailableReasonOperation?: string,
 		level?: number,
 		placeId?: number,
@@ -136,132 +116,108 @@ export const AdminService = {
 		skillOperation?: string,
 		unlockableSkills?: Array<string>,
 		unlockableSkillOperation?: string
+	) {
+		const res = await http().put(`/admin/dinoz/${id}`, {
+			name: name,
+			unavailableReason: unavailableReason,
+			unavailableReasonOperation: unavailableReasonOperation,
+			level: level,
+			placeId: placeId,
+			canChangeName: canChangeName,
+			life: life,
+			maxLife: maxLife,
+			experience: experience,
+			nbrUpFire: nbrUpFire,
+			nbrUpWood: nbrUpWood,
+			nbrUpWater: nbrUpWater,
+			nbrUpLightning: nbrUpLightning,
+			nbrUpAir: nbrUpAir,
+			status: status,
+			statusOperation: statusOperation,
+			skills: skills,
+			skillOperation: skillOperation,
+			unlockableSkills: unlockableSkills,
+			unlockableSkillOperation: unlockableSkillOperation
+		});
+		return res.data;
+	},
+	async getAllSecret(): Promise<Array<SecretData>> {
+		const res = await http().get('/admin/secret/all');
+		return res.data;
+	},
+	async pushSecret(key: string, value: string): Promise<Array<SecretData>> {
+		const res = await http().put('/admin/secret/add', {
+			key: key,
+			value: value
+		});
+		return res.data;
+	},
+	async getAllModeration(page: number): Promise<Array<ModerationType>> {
+		const res = await http().get(`/admin/moderation/${page}`);
+		return res.data;
+	},
+	async takeAction(reportId: number, action: string): Promise<void> {
+		const res = await http().put(`/admin/moderation/${reportId}`, {
+			action: action
+		});
+		return res.data;
+	},
+	async getBannedPlayers(page: number): Promise<Array<BannedPlayerType>> {
+		const res = await http().get(`/admin/ban/${page}`);
+		return res.data;
+	},
+	async banPlayer(playerId: string, reason: string, action: string, comment: string, dinozId?: number) {
+		const res = await http().post(`/admin/ban/${playerId}`, {
+			reason: reason,
+			action: action,
+			comment: comment,
+			dinozId: dinozId
+		});
+		return res.data;
+	},
+	async updateBan(
+		playerId: string,
+		action?: string,
+		reason?: string,
+		comment?: string,
+		dinozId?: number
 	): Promise<void> {
-		return http()
-			.put(`/admin/dinoz/${id}`, {
-				name: name,
-				unavailableReason: unavailableReason,
-				unavailableReasonOperation: unavailableReasonOperation,
-				level: level,
-				placeId: placeId,
-				canChangeName: canChangeName,
-				life: life,
-				maxLife: maxLife,
-				experience: experience,
-				nbrUpFire: nbrUpFire,
-				nbrUpWood: nbrUpWood,
-				nbrUpWater: nbrUpWater,
-				nbrUpLightning: nbrUpLightning,
-				nbrUpAir: nbrUpAir,
-				status: status,
-				statusOperation: statusOperation,
-				skills: skills,
-				skillOperation: skillOperation,
-				unlockableSkills: unlockableSkills,
-				unlockableSkillOperation: unlockableSkillOperation
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		const res = await http().put(`/admin/updateBan/${playerId}`, {
+			action: action,
+			reason: reason,
+			comment: comment,
+			dinozId: dinozId
+		});
+		return res.data;
 	},
-	getAllSecret(): Promise<Array<SecretData>> {
-		return http()
-			.get('/admin/secret/all')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async cancelBan(playerId: string): Promise<void> {
+		const res = await http().put(`/admin/cancelBan/${playerId}`);
+		return res.data;
 	},
-	pushSecret(key: string, value: string): Promise<Array<SecretData>> {
-		return http()
-			.put('/admin/secret/add', {
-				key: key,
-				value: value
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async resetGame(): Promise<void> {
+		const res = await http().delete(`/admin/truncateGame`);
+		return res.data;
 	},
-	getAllModeration(page: number): Promise<Array<ModerationType>> {
-		return http()
-			.get(`/admin/moderation/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async debugFight(dinoz1: number, dinoz2: number, seed: string, type: string): Promise<FightProcessResult> {
+		const res = await http().get(`/admin/${dinoz1}/${dinoz2}/${seed}/${type}`);
+		return res.data;
 	},
-	takeAction(reportId: number, action: string): Promise<void> {
-		return http()
-			.put(`/admin/moderation/${reportId}`, {
-				action: action
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getScheduledJobs(): Promise<Jobs[]> {
+		const res = await http().get(`/admin/jobs`);
+		return res.data;
 	},
-	getBannedPlayers(page: number): Promise<Array<BannedPlayerType>> {
-		return http()
-			.get(`/admin/ban/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getMultiIPs(page: number): Promise<IPList[]> {
+		const res = await http().get(`/admin/accounts/page/${page}`);
+		return res.data;
 	},
-	banPlayer(playerId: string, reason: string, action: string, comment: string, dinozId?: number) {
-		return http()
-			.post(`/admin/ban/${playerId}`, {
-				reason: reason,
-				action: action,
-				comment: comment,
-				dinozId: dinozId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async listPlayerBehindIp(ip: string): Promise<suspectedPlayer[]> {
+		const res = await http().get(`/admin/accounts/ip/${ip}`);
+		return res.data;
 	},
-	updateBan(playerId: string, action?: string, reason?: string, comment?: string, dinozId?: number): Promise<void> {
-		return http()
-			.put(`/admin/updateBan/${playerId}`, {
-				action: action,
-				reason: reason,
-				comment: comment,
-				dinozId: dinozId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	cancelBan(playerId: string): Promise<void> {
-		return http()
-			.put(`/admin/cancelBan/${playerId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	resetGame(): Promise<void> {
-		return http()
-			.delete(`/admin/truncateGame`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	debugFight(dinoz1: number, dinoz2: number, seed: string, type: string): Promise<FightProcessResult> {
-		return http()
-			.get(`/admin/${dinoz1}/${dinoz2}/${seed}/${type}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	getScheduledJobs(): Promise<Jobs[]> {
-		return http()
-			.get(`/admin/jobs`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	getMultiIPs(page: number): Promise<IPList[]> {
-		return http()
-			.get(`/admin/accounts/page/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	listPlayerBehindIp(ip: string): Promise<suspectedPlayer[]> {
-		return http()
-			.get(`/admin/accounts/ip/${ip}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	massBan(list: string[]) {
-		return http()
-			.put(`/admin/massban`, {
-				list: list
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async massBan(list: string[]) {
+		const res = await http().put(`/admin/massban`, {
+			list: list
+		});
+		return res.data;
 	}
 };

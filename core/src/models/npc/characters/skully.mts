@@ -130,7 +130,13 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 	},
 	missions: {
 		stepName: 'missions',
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	begin_pda: {
 		stepName: 'begin_pda',

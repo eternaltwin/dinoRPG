@@ -24,7 +24,6 @@ import {
 } from 'chart.js';
 import { defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
-import EventBus from '../../events/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -127,17 +126,15 @@ export default defineComponent({
 	methods: {
 		async reload() {
 			if (this.isReloadDisabled) {
-				EventBus.emit('isLoading', false);
 				return;
 			}
-			EventBus.emit('isLoading', true);
+
 			try {
 				const fromDate = new Date(this.fromDate);
 				const type = this.type || null;
 
 				this.logs = await LogsService.listByDate(type, fromDate);
 				this.generateChart();
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

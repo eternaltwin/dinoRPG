@@ -1,6 +1,7 @@
 import { Skill } from '../dinoz/SkillList.mjs';
 import { Notification } from '../notifications/notification.mjs';
 import { PlayerOptions } from '../player/PlayerOptions.mjs';
+import { AdminRoleFront } from '../enums/AdminRoleFront.mjs';
 
 export interface StorePlayer {
 	money: number;
@@ -8,7 +9,7 @@ export interface StorePlayer {
 	name: string;
 	playerOptions: PlayerOptions;
 	clanId: number | undefined;
-	admin: boolean;
+	role: AdminRoleFront;
 	priest: boolean;
 	shopkeeper: boolean;
 	sortOption: string;

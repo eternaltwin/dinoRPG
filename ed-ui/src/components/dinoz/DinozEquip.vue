@@ -83,7 +83,6 @@ export default defineComponent({
 				return;
 			}
 
-			EventBus.emit('isLoading', true);
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
@@ -91,7 +90,6 @@ export default defineComponent({
 				backPack.forEach((item, index) => (this.items[index] = item.itemId));
 				EventBus.emit('refreshDinozStats', true);
 				EventBus.emit('refreshInventory', true);
-				EventBus.emit('isLoading', false);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;

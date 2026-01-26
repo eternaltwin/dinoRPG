@@ -1,6 +1,7 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const GARDIEN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -30,7 +31,13 @@ export const GARDIEN: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[ConditionEnum.STATUS]: DinozStatusId.GRDMIS
 		},
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	stop: {
 		stepName: 'stop',

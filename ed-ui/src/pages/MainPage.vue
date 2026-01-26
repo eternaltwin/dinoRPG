@@ -1,7 +1,7 @@
 <template>
 	<div class="dinorpg">
 		<div id="centerHeader" v-if="loaded">
-			<a @click="goToNews()" class="linkHome"></a>
+			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
 				<Router-view />
@@ -15,8 +15,6 @@
 import { defineComponent } from 'vue';
 import { dinozStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
-import { PlayerService } from '../services/index.js';
-import EventBus from '../events/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
 
 export default defineComponent({
@@ -31,25 +29,14 @@ export default defineComponent({
 	},
 	methods: {
 		async firstLoad() {
-			EventBus.emit('isLoading', true);
 			try {
-				const commonData = await PlayerService.getLoggedInData();
 				// Set data in sessionStore
 				await this.playerStore.update();
-				this.dinozStore.setDinozList(commonData.dinoz);
-				this.dinozStore.setDinozCount(commonData.dinozCount);
 				this.loaded = true;
-				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 				return;
 			}
-		},
-		async goToNews() {
-			this.$router.push({
-				name: 'News'
-			});
-			await this.firstLoad();
 		}
 	},
 	async created() {
@@ -76,6 +63,7 @@ export default defineComponent({
 	background-position-x: calc(50% + 247px);
 	background-position-y: top;
 	padding-bottom: 50px;
+	padding-top: 15px;
 	.linkHome {
 		grid-area: top;
 		cursor: pointer;
@@ -88,7 +76,6 @@ export default defineComponent({
 	#centerHeader {
 		display: grid;
 		grid-template-areas: 'left top .' 'left center center';
-		padding-top: 15px;
 		grid-template-columns: 1fr 540px 1fr;
 		grid-template-rows: 110px 1fr;
 	}

@@ -20,11 +20,14 @@
 		/>
 	</div>
 	<template v-if="fightTransformed">
-		<div v-show="loaded" class="content">
-			<Suspense>
-				<FullFightAnimation :fight="fightTransformed" />
-				<template #fallback> <Loading /> </template>
-			</Suspense>
+		<div id="fightContent">
+			<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+			<div v-show="loaded" class="content">
+				<Suspense>
+					<FullFightAnimation :fight="fightTransformed" />
+					<template #fallback> <Loading /> </template>
+				</Suspense>
+			</div>
 		</div>
 		<FightRecap :stats="fightStat" />
 		{{ shareLink }}
@@ -39,7 +42,6 @@ import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import EventBus from '../../events/index.js';
 import { ClanService, PlayerService } from '../../services/index.js';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import SelectDinoz from './SelectDinoz.vue';
@@ -48,8 +50,9 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import FightRecap from './FightRecap.vue';
+import FightersHeader from '../fight/FightersHeader.vue';
 
 export default defineComponent({
 	name: 'ChallengeFriend',
@@ -58,6 +61,7 @@ export default defineComponent({
 		TitleHeader,
 		DZDisclaimer,
 		SelectDinoz,
+		FightersHeader,
 		FightRecap,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FullFightAnimation.vue'))
 	},
@@ -76,7 +80,9 @@ export default defineComponent({
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
 			shareLink: '',
-			fightStat: {} as FullFightStats
+			fightStat: {} as FullFightStats,
+			leftPlayer: null as null | { id: string; name: string },
+			rightPlayer: null as null | { id: string; name: string }
 		};
 	},
 	methods: {
@@ -122,6 +128,8 @@ export default defineComponent({
 					history: nexFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
+				this.leftPlayer = fightResult.leftPlayer;
+				this.rightPlayer = fightResult.rightPlayer;
 				this.loaded = true;
 				this.shareLink = `${window.location.origin}/dojo/share/${fightResult.id}`;
 				await this.$refreshGold();
@@ -145,7 +153,7 @@ export default defineComponent({
 			return;
 		}
 		this.myDinoz = this.dinozStore.getDinozList
-			.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+			.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 			.map(d => {
 				return {
 					id: d.id,
@@ -154,11 +162,10 @@ export default defineComponent({
 					level: d.level
 				};
 			});
-		EventBus.emit('isLoading', true);
+
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
 			// this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
-			EventBus.emit('isLoading', false);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
@@ -167,6 +174,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#fightContent {
+	align-self: center;
+}
 .fight {
 	padding-top: 6px;
 	box-sizing: border-box;

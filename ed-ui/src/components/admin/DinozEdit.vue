@@ -232,17 +232,16 @@ import { AdminService } from '../../services/index.js';
 import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
 import { statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DinozEdit',
 	data() {
 		return {
-			UnavailableReasonFront,
+			UnavailableReason,
 			dinozField: {
 				skillList: [],
 				statusList: [],
@@ -258,7 +257,7 @@ export default defineComponent({
 			skillOperation: '' as string,
 			unlockableSkillOperation: '' as string,
 			unavailableReasonOperation: '' as '' | 'add' | 'remove',
-			unavailableReasonListFiltered: [] as Array<UnavailableReasonFront>
+			unavailableReasonListFiltered: [] as Array<UnavailableReason>
 		};
 	},
 	props: {
@@ -267,8 +266,6 @@ export default defineComponent({
 	},
 	methods: {
 		async dinozUpdate(): Promise<void> {
-			EventBus.emit('isLoading', true);
-
 			try {
 				if (
 					this.dinozField.name ||
@@ -321,12 +318,11 @@ export default defineComponent({
 						message: this.$t('toast.dinozNotFound'),
 						type: 'error'
 					});
-					EventBus.emit('isLoading', false);
+
 					return;
 				}
 				this.dinoz = refreshDinoz;
 			} catch (err) {
-				EventBus.emit('isLoading', false);
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
@@ -337,8 +333,6 @@ export default defineComponent({
 			this.filterStatusList(this.statusOperation);
 			this.unavailableReasonOperation = '';
 			this.filterUnavailableReason();
-
-			EventBus.emit('isLoading', false);
 		},
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {
@@ -373,9 +367,9 @@ export default defineComponent({
 		},
 		filterUnavailableReason(): void {
 			if (this.dinoz.unavailableReason === null) {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront);
+				this.unavailableReasonListFiltered = Object.values(UnavailableReason);
 			} else {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront).filter(
+				this.unavailableReasonListFiltered = Object.values(UnavailableReason).filter(
 					reason => reason === this.dinoz.unavailableReason
 				);
 			}

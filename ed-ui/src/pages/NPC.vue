@@ -38,7 +38,6 @@ import { NavigationFailure } from 'vue-router';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
 import { DinozService, NPCService, PlayerService } from '../services/index.js';
 import { dinozStore, playerStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
@@ -70,16 +69,11 @@ export default defineComponent({
 	},
 	methods: {
 		async choiseStep(choice: string): Promise<void | NavigationFailure> {
-			if (choice === 'missions' || choice === 'missions_2') {
-				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
-			}
-			EventBus.emit('isLoading', true);
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName ?? '', choice);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
-			EventBus.emit('isLoading', false);
 
 			if (this.npcSpeech.rewards) {
 				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
@@ -93,24 +87,23 @@ export default defineComponent({
 			}
 
 			if (this.npcSpeech.service && this.npcSpeech.service.length > 0) {
-				EventBus.emit('isLoading', true);
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
 						case ServiceEnum.CONCENTRATION:
 							await DinozService.concentration(this.dinozId);
-							EventBus.emit('isLoading', false);
+
 							break;
 						case ServiceEnum.DINOZ:
 							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
-							EventBus.emit('isLoading', false);
+
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
 							this.dinozStore.setDinozList(await PlayerService.getDinozList());
-							EventBus.emit('isLoading', false);
+
 							break;
 						case ServiceEnum.REFRESH_PLAYER:
 							await this.playerStore.update();
-							EventBus.emit('isLoading', false);
+
 							break;
 						case ServiceEnum.FIGHT:
 							try {
@@ -123,6 +116,9 @@ export default defineComponent({
 							} catch (e) {
 								errorHandler.handle(e, this.$toast);
 							}
+							break;
+						case ServiceEnum.MISSIONS:
+							this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 							break;
 						default:
 							break;
@@ -137,7 +133,6 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
 		this.npcName = this.$route.params.npc as string;
 		if (this.dialog) {
 			this.npcSpeech = {
@@ -145,7 +140,6 @@ export default defineComponent({
 				speech: this.dialog,
 				playerChoice: []
 			};
-			EventBus.emit('isLoading', false);
 		} else {
 			const npc = this.dinozStore.getNpc(this.dinozId);
 
@@ -160,7 +154,6 @@ export default defineComponent({
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
 
 				this.loaded = true;
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

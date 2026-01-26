@@ -118,7 +118,6 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 
 import ClanHeader from '../../components/clans/ClanHeader.vue';
 
-import EventBus from '../../events';
 import { ClanService } from '../../services/ClanService';
 import { errorHandler } from '../../utils/errorHandler';
 
@@ -171,10 +170,8 @@ export default defineComponent({
 			}
 		},
 		async getClan(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				await this.clanStore.loadClan(Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

@@ -1,6 +1,7 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -69,7 +70,13 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			[ConditionEnum.STATUS]: DinozStatusId.DIAN
-		}
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	nothing: {
 		stepName: 'nothing',

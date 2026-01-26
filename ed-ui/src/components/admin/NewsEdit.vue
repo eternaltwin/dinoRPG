@@ -80,7 +80,6 @@
 import { defineComponent } from 'vue';
 import { NewsService } from '../../services/index.js';
 import { DetailedNews } from '@drpg/core/models/news/AllNews';
-import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
@@ -130,7 +129,7 @@ export default defineComponent({
 				this.formData.delete('germanTitle');
 				this.formData.append('germanTitle', this.newsEdit.germanTitle);
 			}
-			EventBus.emit('isLoading', true);
+
 			if (this.batchNews.find(news => news.title === this.newsEdit.title)) {
 				if (this.selectedNews && this.newsEdit.id) {
 					await NewsService.updateNews(this.formData, this.newsEdit.id);
@@ -138,26 +137,23 @@ export default defineComponent({
 					alert(
 						'A recent news with this title already exist. If you wish to edit this existing news, please select it in the drop-down menu.'
 					);
-					EventBus.emit('isLoading', false);
+
 					return;
 				}
 			} else {
 				const news = await NewsService.createNews(this.formData, this.newsEdit.title ?? '');
 				this.batchNews.unshift(news);
 			}
-			EventBus.emit('isLoading', false);
 		},
 		async deleteNews(): Promise<void> {
 			if (this.newsEdit && this.newsEdit.id) {
 				try {
-					EventBus.emit('isLoading', true);
 					await NewsService.deleteNews(this.newsEdit.id);
 					this.batchNews = this.batchNews.filter(news => news.id !== this.newsEdit.id);
 					this.newsEdit = {
 						title: ''
 					};
 					this.selectedNews = false;
-					EventBus.emit('isLoading', false);
 				} catch (e) {
 					errorHandler.handle(e, this.$toast);
 				}
@@ -197,9 +193,7 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		try {
-			EventBus.emit('isLoading', true);
 			await this.getAllNews();
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

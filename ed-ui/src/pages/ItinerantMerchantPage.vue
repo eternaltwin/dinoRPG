@@ -86,7 +86,6 @@ import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/index.js';
-import EventBus from '../events/index.js';
 import { IngredientsService } from '../services/IngredientsService';
 import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
@@ -142,7 +141,6 @@ export default defineComponent({
 			}
 			if (res) {
 				try {
-					EventBus.emit('isLoading', true);
 					const gold = await IngredientsService.sellIngredient(currentDinozId, sellingItems);
 					this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
 					// reset value
@@ -156,7 +154,6 @@ export default defineComponent({
 						type: 'info'
 					});
 					this.playerStore.addMoney(gold.gold);
-					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -173,7 +170,6 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
 			const currentDinozId = this.dinozStore.currentDinozId;
@@ -191,7 +187,6 @@ export default defineComponent({
 				return { itemId: i.ingredientId, quantity: 0 };
 			});
 			this.inputValues.push(...tempo);
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;
@@ -202,10 +197,10 @@ export default defineComponent({
 			if (this.itinerantId < 0) {
 				return;
 			}
-			EventBus.emit('isLoading', true);
+			useLoadingStore().setLoaderOn();
 			try {
 				this.ingredientList = await IngredientShopService.getIngredientsFromIngredientsShop(this.itinerantId);
-				EventBus.emit('isLoading', false);
+				useLoadingStore().setLoaderOff');
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

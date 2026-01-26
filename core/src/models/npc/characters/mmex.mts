@@ -1,5 +1,6 @@
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const MMEX: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -146,7 +147,13 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 	},
 	missions: {
 		stepName: 'missions',
-		nextStep: []
+		nextStep: [],
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.MISSIONS]
+			}
+		]
 	},
 	stop: {
 		stepName: 'stop',

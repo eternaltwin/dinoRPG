@@ -8,13 +8,13 @@
 					<span class="white">
 						{{ $t(`report.specify`) }}
 					</span>
-					<template v-for="moderation in ModerationReasonFront" :key="moderation">
+					<template v-for="moderation in ModerationReason" :key="moderation">
 						<label class="block">
 							<input type="radio" name="report_reason" v-model="reportedReason" :value="moderation" />
 							{{ $t(`report.reason.${moderation}`) }}
 						</label>
 					</template>
-					<select name="dinoz" v-model="selectedDinoz" v-if="reportedReason === ModerationReasonFront.DINOZNAME">
+					<select name="dinoz" v-model="selectedDinoz" v-if="reportedReason === ModerationReason.dinozName">
 						<template v-for="(dinoz, index) in player.dinoz" :key="index">
 							<option :value="dinoz">{{ dinoz.name }}</option>
 						</template>
@@ -41,7 +41,7 @@ import { defineComponent } from 'vue';
 import { Player, Dinoz } from '@drpg/prisma';
 import { ReportService } from '../../services/index.js';
 import DZButton from '../common/DZButton.vue';
-import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonFront';
+import { ModerationReason } from '@drpg/prisma/enums';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 
@@ -51,7 +51,7 @@ export default defineComponent({
 	data() {
 		return {
 			dialogRef: null as HTMLDialogElement | null,
-			ModerationReasonFront: ModerationReasonFront,
+			ModerationReason: ModerationReason,
 			reportedArgument: undefined as undefined | string,
 			selectedDinoz: undefined as undefined | Pick<Dinoz, 'id' | 'name'>,
 			reportedReason: undefined as undefined | string,
@@ -77,7 +77,7 @@ export default defineComponent({
 				});
 				return;
 			}
-			if (this.reportedReason === ModerationReasonFront.DINOZNAME && !this.selectedDinoz) {
+			if (this.reportedReason === ModerationReason.dinozName && !this.selectedDinoz) {
 				this.$toast.open({
 					message: formatText(this.$t('report.errorDinoz')),
 					type: 'info'

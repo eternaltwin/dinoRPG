@@ -483,10 +483,10 @@ export async function checkBeforeDeletion(playerId: string, tournamentId?: strin
 }
 // Getters
 
-export async function getRolePlayer(role: AdminRole) {
+export async function getRolePlayer(role: AdminRole[]) {
 	const players = await prisma.player.findMany({
 		where: {
-			role: role
+			role: { in: role }
 		},
 		select: {
 			id: true
@@ -1119,12 +1119,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: string, itemId: 
 					]
 				}
 			},
-			quests: {
-				select: {
-					questId: true,
-					progression: true
-				}
-			}
+			rewards: true
 		}
 	});
 

@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { useRouter } from 'vue-router';
-import EventBus from '../../events';
 import { ClanService } from '../../services';
 import { refreshGold } from '../../mixin/mixin';
 import { errorHandler } from '../../utils';
@@ -36,12 +35,10 @@ const goToClan = (clanId: number) => {
 	router.push({ name: 'Clan', params: { id: clanId } });
 };
 const cancelRequest = async (request: PlayerClanJoinRequest) => {
-	EventBus.emit('isLoading', true);
 	try {
 		await ClanService.denyJoinClanRequest(request.id);
 		emit('cancel', request.id);
 		await refreshGold();
-		EventBus.emit('isLoading', false);
 	} catch (err) {
 		errorHandler.handle(err, $toast);
 		return;

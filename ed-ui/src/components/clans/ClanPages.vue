@@ -46,7 +46,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { ClanPage } from '@drpg/prisma';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -77,24 +76,20 @@ export default defineComponent({
 	},
 	methods: {
 		async joinClan() {
-			EventBus.emit('isLoading', true);
 			try {
 				this.joinRequest = await ClanService.joinClan(Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getClanPages() {
-			EventBus.emit('isLoading', true);
 			try {
 				const tmpPages = await ClanService.getClanPages(Number(this.$route.params.id));
 				this.pages = tmpPages
 					.filter(p => p.public)
 					.concat(tmpPages.filter(p => !p.public))
 					.sort((a, b) => a.id - b.id);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -126,10 +121,9 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				EventBus.emit('isLoading', true);
 				try {
 					await ClanService.deleteClanPage(Number(this.$route.params.pageId), Number(this.$route.params.id));
-					EventBus.emit('isLoading', false);
+
 					await this.getClanPages();
 					this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 				} catch (err) {

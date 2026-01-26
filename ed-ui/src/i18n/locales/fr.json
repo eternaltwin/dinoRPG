@@ -887,7 +887,7 @@
 		},
 		"hint": {
 			"marais": {
-				"flooded": "Le marais est actuellement inondé, vous ne pouvez pas en sortir.",
+				"flooded": "Le marais est actuellement inondé, vous ne pourrez pas en sortir.",
 				"foggy": "Le marais est actuellement dans la brume, vous ne trouverez surement aucun monstre à combattre."
 			}
 		}
@@ -1391,8 +1391,8 @@
 				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
 				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
 				"attack_win": "Bien entendu, Jovébozé n'a rien compris à vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau à Rascaphandre qu'il a sculpté...",
-				"weirdSwamp": "Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
-				"swampTreasure": "Y z'disent qu'tu trouvaras d'pépites si t'grattes quend l'bourbe s'met à d'déjanter… Mais cha pu s'avaler l'âme si t'es pas couchet !",
+				"weirdSwamp": "Ol'a el chti ga 'cor ! Té n'a vu quèque-chose d'tordu dins l'gluant Maréi ? Cha boug' tout seu, j'te d'mand' !",
+				"swampTreasure": "Y z'disent qu'tu trouv'ras d'pépites si t'grattes quend l'bourbe s'met à d'janter… Mais cha pu chav'ler l'âme si t'pas couchet !",
 				"swampLeave": "Jovébozé vous fait signe de la main en souriant et s'éloigne en chantonnant une chanson de marins."
 			},
 			"playerChoice": {
@@ -1402,7 +1402,7 @@
 				"attack": "Continuer",
 				"back": "RECULER !!!",
 				"swampTreasure": "... tordu ?!?",
-				"swampLeave": "Je comprends rien à ce que vous dites..."
+				"swampLeave": "Je ne comprends rien à ce que vous dites..."
 			}
 		},
 		"archis": {
@@ -2216,7 +2216,7 @@
 			"Mutation": "Augmente les PV max de 30",
 			"PocheVentrale": "Déverrouille un emplacement d'équipement supplémentaire",
 			"Intelligence": "Augmente l'XP gagnée de 5%",
-			"Focus": "Augmente la puissance du prochain assaut d'un bonus de Foudre 1",
+			"Focus": "Augmente la puissance du prochain **assaut** d'un bonus de Foudre 1",
 			"Celerite": "Augmente la vitesse du Dinoz de 15%",
 			"Concentration": "Les **assauts** ciblent toujours le même ennemi",
 			"AttaqueEclair": "Augmente la vitesse des attaques Foudre de 40%",
@@ -2582,7 +2582,7 @@
 			"23": "Le Charme de Feu augmente la puissance des attaques de Feu de ce Dinoz.",
 			"24": "Le Charme Bao augmente la défense de ce Dinoz contre les attaques d'Eau.",
 			"7": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau.",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est innondé ou non.",
+			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
 			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
 		}
 	},
@@ -4048,7 +4048,7 @@
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			"card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
-			"beta": "Félicitations ! Vous avez été un des pionners sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
+			"beta": "Félicitations ! Vous avez été un des pionniers sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
 	"ranking": {
@@ -4275,7 +4275,7 @@
 		"life": "Vie perdue",
 		"experience": "Expérience",
 		"gold": "Or trouvé",
-		"statusReward": "Vous avez reçu: {reward}",
+		"statusReward": "Vous avez reçu : {reward}",
 		"monster": {
 			"goupignon": "Goupignon",
 			"wolf": "Loup",
@@ -4371,7 +4371,9 @@
 		},
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
-		}
+		},
+		"player": "Maître",
+		"vs": "VS"
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
@@ -4588,10 +4590,10 @@
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
-		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournois, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
+		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
 		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
-		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",
+		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
 		"reputation": "Réputation",
 		"points": "Points",
@@ -4616,12 +4618,12 @@
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
-			"cashPrice": ":gold: Le cash price pour ce tournois est de {cashPrice}:gold: !!"
+			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojo afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash price est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash price est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&Le cash price est à présent de **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
 		"challengeFriend": {
 			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
@@ -4669,17 +4671,17 @@
 			"reinforcements": "Nombre de renforts appelés",
 			"petrified": "Nombre d'adversaires pétrifiés",
 			"damageFire": "Dégâts de :fire: infligés",
-			"assaultFire": "Nombre d'assaut :fire: réalisés",
+			"assaultFire": "Nombre d'assauts :fire: réalisés",
 			"damageWater": "Dégâts de :water: infligés",
-			"assaultWater": "Nombre d'assaut :water: réalisés",
+			"assaultWater": "Nombre d'assauts :water: réalisés",
 			"damageWood": "Dégâts de :wood: infligés",
-			"assaultWood": "Nombre d'assaut :wood: réalisés",
+			"assaultWood": "Nombre d'assauts :wood: réalisés",
 			"damageLightning": "Dégâts de :lightning: infligés",
-			"assaultLightning": "Nombre d'assaut :lightning: réalisés",
+			"assaultLightning": "Nombre d'assauts :lightning: réalisés",
 			"damageAir": "Dégâts de :air: infligés",
-			"assaultAir": "Nombre d'assaut :air: réalisés",
+			"assaultAir": "Nombre d'assauts :air: réalisés",
 			"damageVoid": "Dégâts de :void: infligés",
-			"assaultVoid": "Nombre d'assaut :void: réalisés",
+			"assaultVoid": "Nombre d'assauts :void: réalisés",
 			"hpRemaining": "Vie restante",
 			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
 			"myTeam": "Mon équipe",
@@ -4705,7 +4707,7 @@
 				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
 				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
 				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
-				"undefined": "Erreur: aucun challenge sélectionné"
+				"undefined": "Erreur : aucun challenge sélectionné"
 			},
 			"challengeExplanation": {
 				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",
@@ -4867,7 +4869,7 @@
 			"dojos5-2": "**Comment customiser son Dojo ?** Vous avez remarqué le bouton ? Alors vous avez aussi dû remarquer qu'il n'est pas actif pour le moment... En effet, nous travaillons sur cette fonctionnalité, donc un peu de patience.",
 			"dojos5-3": "**Quelle est la fréquence des Tournois Inter-Dojos ?** Tous les mois, au lendemain de la finale du tournoi précédent, une nouvelle phase de qualifications commence. Elle se terminera toujours le dernier jour du mois à minuit, et les jours suivants se passent les phases éliminatoires pour les 256 dojos qualifiés.",
 			"dojos5-4": "**Comment participer au Tournoi Inter-Dojo ?** Pour participer au Tournoi, il faut faire parti des 256 meilleurs Dojos du mois. Le classement permet de connaître le niveau de vos adversaires. Les joueurs réussissant à se qualifier pour les phases finales recevront une récompense.",
-			"dojos5-5": "**Comment gagner un oeuf de Toufufu ?** Il faut que votre Dojo fasse parti des 50 premiers du classement des Dojos à la fin du mois pour gagner cette récompense.",
+			"dojos5-5": "**Comment gagner un œuf de Toufufu ?** Il faut que votre Dojo fasse parti des 50 premiers du classement des Dojos à la fin du mois pour gagner cette récompense.",
 			"dojos5-6": "**Je ne suis pas là tous les jours, comment faire tous mes défis ?** Si vous ne faites pas vos 50 défis dans la journée, ils se cumuleront avec les 50 défis ajoutés le lendemain sans limite de cumul.",
 			"gdc": "Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :",
 			"gdc1": "Le Trésor du Clan",
@@ -5191,7 +5193,8 @@
 		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**.",
 		"FBStarted": "Un nouvel événement est ouvert !",
 		"clanApply": "{name} souhaite rejoindre votre clan !",
-		"message": "Vous avez reçu un nouveau message."
+		"message": "Vous avez reçu un nouveau message.",
+		"clanApplyAccepted": "Le clan {name} a accepté votre demande."
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tous les événements communautaires en cours.",

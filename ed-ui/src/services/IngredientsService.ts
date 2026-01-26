@@ -3,24 +3,18 @@ import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 
 export const IngredientsService = {
-	getAllIngredients(): Promise<Array<IngredientFiche>> {
-		return http()
-			.get(`/ingredients/all`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getAllIngredients(): Promise<Array<IngredientFiche>> {
+		const res = await http().get(`/ingredients/all`);
+		return res.data;
 	},
-	getIngredientsFromIngredientsShop(dinozId: number): Promise<Array<IngredientFiche>> {
-		return http()
-			.get(`/shop/getItinerantShop/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getIngredientsFromIngredientsShop(dinozId: number): Promise<Array<IngredientFiche>> {
+		const res = await http().get(`/shop/getItinerantShop/${dinozId}`);
+		return res.data;
 	},
-	sellIngredient(dinozId: number, ingredients: ShopDTO[]): Promise<{ gold: number }> {
-		return http()
-			.put(`/shop/sellIngredient/${dinozId}`, {
-				ingredients: ingredients
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async sellIngredient(dinozId: number, ingredients: ShopDTO[]): Promise<{ gold: number }> {
+		const res = await http().put(`/shop/sellIngredient/${dinozId}`, {
+			ingredients: ingredients
+		});
+		return res.data;
 	}
 };

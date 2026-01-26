@@ -943,6 +943,7 @@ enum AdminRole {
   MODERATOR
   PLAYER
   BETA
+  AMPHI
 }
 
 enum LogType {
@@ -1007,6 +1008,7 @@ enum NotificationSeverity {
   scenario
   event
   newClanApply
+  clanApplyAccepted
   message
 }
 

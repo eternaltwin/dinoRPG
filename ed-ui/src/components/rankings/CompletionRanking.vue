@@ -51,7 +51,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
@@ -76,10 +75,8 @@ export default defineComponent({
 			this.$router.push({ name: 'MyAccount', params: { id: player.value } });
 		},
 		async getRanking(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				this.rankings = await PlayerService.getPlayersRanking('completion', this.page);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

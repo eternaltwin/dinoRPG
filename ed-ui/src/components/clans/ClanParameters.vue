@@ -53,10 +53,8 @@ export default defineComponent({
 	},
 	methods: {
 		async saveLangs(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				await this.clanStore.updateLang(this.clanStore.getClanId, this.langs);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -71,11 +69,10 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				EventBus.emit('isLoading', true);
 				try {
 					await ClanService.deleteClan(this.clanStore.getClanId);
 					this.playerStore.setClanId(undefined);
-					EventBus.emit('isLoading', false);
+
 					this.$router.push({ name: 'ClansList' });
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);

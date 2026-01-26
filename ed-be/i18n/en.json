@@ -213,6 +213,7 @@
 		"inexistantOpponent": "Opponent not found.",
 		"notFightedOpponent": "Opponent already defeated.",
 		"teamSize": "The teams must be composed of {{nb}} members with a least {{races}} different races.",
+		"teamSize_singleRace": "The team must be formed of {{nb}} members.",
 		"raceLimit": "The authorized races to participate are {{races}}.",
 		"levelLimit": "The maximum level limit is set to {{level}}.",
 		"poison": "Poison is enabled.",

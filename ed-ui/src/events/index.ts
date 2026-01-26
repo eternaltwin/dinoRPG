@@ -5,7 +5,6 @@ import { DinozItems } from '@drpg/core/models/item/DinozItems';
 
 type Events = {
 	responseError: AxiosError;
-	isLoading: boolean;
 	fightResult: FightResult;
 	resurrect: boolean;
 	toast: toast;

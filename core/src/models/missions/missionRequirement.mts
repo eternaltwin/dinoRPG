@@ -2,7 +2,7 @@ import { ConditionEnum } from '../enums/Parser.mjs';
 import { MonsterFiche } from '../fight/MonsterFiche.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { ItemFiche } from '../item/ItemFiche.mjs';
-import { DialogText, FightText } from './specialActions.mjs';
+import { FightText } from './specialActions.mjs';
 
 export type missionRequirement =
 	| {

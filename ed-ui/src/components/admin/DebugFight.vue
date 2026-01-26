@@ -55,7 +55,6 @@ export default defineComponent({
 					fight.winner,
 					undefined,
 					undefined,
-					undefined,
 					true
 				);
 				if (!nexFight) {

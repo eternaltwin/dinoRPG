@@ -68,7 +68,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { ClanLite } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
 import { errorHandler, utils } from '../../utils/index.js';
@@ -92,10 +91,8 @@ export default defineComponent({
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

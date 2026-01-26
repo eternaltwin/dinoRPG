@@ -29,7 +29,8 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.ITEM,
 				value: itemList[Item.GOBLIN_MERGUEZ].itemId,
-				quantity: 5
+				quantity: 5,
+				notify: false
 			}
 		],
 		nextStep: ['thanks']
@@ -93,7 +94,7 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: Reward.CARD
+				value: Reward.MERGUEZ_CARD
 			}
 		],
 		nextStep: []
@@ -101,13 +102,12 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 	merguez_card: {
 		stepName: 'merguez_card',
 		condition: {
-			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 5, '=']
+			[ConditionEnum.PLAYER_EPIC]: Reward.MERGUEZ_CARD
 		},
 		reward: [
 			{
-				rewardType: RewardEnum.ITEM,
-				value: Item.GOBLIN_MERGUEZ,
-				quantity: 100
+				rewardType: RewardEnum.MAX_ITEM,
+				value: Item.GOBLIN_MERGUEZ
 			}
 		],
 		nextStep: ['thanks']

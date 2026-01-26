@@ -4,6 +4,9 @@ import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 import { defineStore } from 'pinia';
 import { PlayerService } from '../services';
+import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
+import { dinozStore } from './dinozStore';
+import { setCookie } from '../utils/cookies';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -18,7 +21,7 @@ export const playerStore = defineStore('playerStore', {
 			skipFight: false,
 			skipLevel: false
 		},
-		admin: false,
+		role: AdminRoleFront.PLAYER,
 		priest: false,
 		shopkeeper: false,
 		sortOption: 'default',
@@ -35,7 +38,7 @@ export const playerStore = defineStore('playerStore', {
 		isPriest: (state: StorePlayer) => state.priest,
 		isShopkeeper: (state: StorePlayer) => state.shopkeeper,
 		getSortOption: (state: StorePlayer) => state.sortOption,
-		isAdmin: (state: StorePlayer) => state.admin,
+		getRole: (state: StorePlayer) => state.role,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
 		getNotifications: (state: StorePlayer) => state.notifications,
 		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills
@@ -56,8 +59,8 @@ export const playerStore = defineStore('playerStore', {
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;
 		},
-		setAdmin(admin: boolean): void {
-			this.admin = admin;
+		setRole(role: AdminRoleFront): void {
+			this.role = role;
 		},
 		setPriest(priest: boolean): void {
 			this.priest = priest;
@@ -78,12 +81,17 @@ export const playerStore = defineStore('playerStore', {
 		addNotification(notif: Notification): void {
 			this.notifications.push(notif);
 			this.notificationCounter++;
+			this.update();
 		},
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;
 		},
 		async update() {
 			const commonData = await PlayerService.getLoggedInData();
+			// Set cookies
+			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+			setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
+			setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
 			// Set data in sessionStore
 			this.setMoney(commonData.money);
 			this.setClanId(commonData.clanId);
@@ -93,8 +101,9 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerId(commonData.id);
 			this.setPlayerName(commonData.name);
 			this.setPlayerOptions(commonData.playerOptions);
-			this.setAdmin(commonData.admin);
+			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
+			dinozStore().setDinozList(commonData.dinoz);
 		}
 	},
 	persist: {

@@ -52,3 +52,4 @@ ed-be/localhost-key.pem
 # Prisma
 prisma/*.js
 prisma/runtime/*
+!prisma/generate-enums-wrapper.js

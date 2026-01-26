@@ -1,5 +1,4 @@
-import { $Enums } from '@drpg/prisma';
-import NotificationSeverity = $Enums.NotificationSeverity;
+import { NotificationSeverity } from '@drpg/prisma/enums';
 
 export interface Notification {
 	id: string;
@@ -13,7 +12,7 @@ export type translatedNotification =
 	| {
 			id: string;
 			message: string;
-			severity: 'offerExpired';
+			severity: NotificationSeverity.offerExpired;
 			link: {
 				name: string;
 				params: {
@@ -25,7 +24,7 @@ export type translatedNotification =
 	| {
 			id: string;
 			message: string;
-			severity: 'offerEnded';
+			severity: NotificationSeverity.offerEnded;
 			link: {
 				name: string;
 				params: {
@@ -37,7 +36,7 @@ export type translatedNotification =
 	| {
 			id: string;
 			message: string;
-			severity: 'offerWon';
+			severity: NotificationSeverity.offerWon;
 			link: {
 				name: string;
 				params: {
@@ -49,14 +48,21 @@ export type translatedNotification =
 	| {
 			id: string;
 			message: string;
-			severity: 'warning' | 'ban';
+			severity: NotificationSeverity.warning | NotificationSeverity.ban;
 			link: null;
 			date: Date;
 	  }
 	| {
 			id: string;
 			message: string;
-			severity: Exclude<NotificationSeverity, 'offerWon' | 'offerEnded' | 'offerExpired' | 'warning' | 'ban'>;
+			severity: Exclude<
+				NotificationSeverity,
+				| NotificationSeverity.offerWon
+				| NotificationSeverity.offerEnded
+				| NotificationSeverity.offerExpired
+				| NotificationSeverity.warning
+				| NotificationSeverity.ban
+			>;
 			link: string | null;
 			date: Date;
 	  };

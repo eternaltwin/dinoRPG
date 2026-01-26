@@ -14,8 +14,9 @@ import {
 	getNewsAdmin
 } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
-import { checkIsAdmin } from '../utils/jwt.js';
+import { checkRole } from '../utils/jwt.js';
 import sendError from '../utils/sendErrors.js';
+import { AdminRole } from '@drpg/prisma';
 
 const routes: Router = Router();
 
@@ -90,7 +91,7 @@ routes.put(
 		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('germanTitle').default(null).optional({ nullable: true }).exists().isString()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -121,7 +122,7 @@ routes.put(
 		body('options').exists(),
 		body('endDate').default(null).optional({ nullable: true }).exists().isDate()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -194,7 +195,7 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
  *       500:
  *         description: Error
  */
-routes.get(`${commonPath}/all`, checkIsAdmin, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/all`, checkRole([AdminRole.ADMIN, AdminRole.AMPHI]), async (req: Request, res: Response) => {
 	try {
 		const response = await getAllNews();
 		return res.status(200).send(response);
@@ -226,7 +227,7 @@ routes.get(`${commonPath}/all`, checkIsAdmin, async (req: Request, res: Response
  */
 routes.get(
 	`${commonPath}/:id`,
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	param('id').exists().toInt().isInt(),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -311,7 +312,7 @@ routes.put(
 		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('germanTitle').default(null).optional({ nullable: true }).exists().isString()
 	],
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -355,7 +356,7 @@ routes.put(
 routes.delete(
 	`${commonPath}/delete/:id`,
 	param('id').exists().toInt().isInt(),
-	checkIsAdmin,
+	checkRole([AdminRole.ADMIN]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

@@ -5,40 +5,28 @@ import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { http } from '../utils/index.js';
 
 export const MissionService = {
-	getMissions(id: string, npc: string): Promise<Array<MissionList>> {
-		return http()
-			.get(`/missions/${id}/${npc}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getMissions(id: string, npc: string): Promise<Array<MissionList>> {
+		const res = await http().get(`/missions/${id}/${npc}`);
+		return res.data;
 	},
-	updateMissions(dinozId: number, missionId: number, status: string): Promise<boolean> {
-		return http()
-			.put(`/missions/update/${dinozId}/${missionId}`, { status: status })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async updateMissions(dinozId: number, missionId: number, status: string): Promise<boolean> {
+		const res = await http().put(`/missions/update/${dinozId}/${missionId}`, { status: status });
+		return res.data;
 	},
-	interactMission(dinozId: string, missionId: number, task: string): Promise<string> {
-		return http()
-			.put(`/missions/step/${dinozId}/`, { missionId: missionId, task: task })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async interactMission(dinozId: string, missionId: number, task: string): Promise<string> {
+		const res = await http().put(`/missions/step/${dinozId}/`, { missionId: missionId, task: task });
+		return res.data;
 	},
-	startFightMission(dinozId: string, missionId: number, task: string): Promise<FightResult> {
-		return http()
-			.put(`/missions/fight/${dinozId}/`, { missionId: missionId, task: task })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async startFightMission(dinozId: string, missionId: number, task: string): Promise<FightResult> {
+		const res = await http().put(`/missions/fight/${dinozId}/`, { missionId: missionId, task: task });
+		return res.data;
 	},
-	finishMission(dinozId: string, missionId: number): Promise<Array<Rewarder>> {
-		return http()
-			.put(`/missions/finish/${dinozId}/`, { missionId: missionId })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async finishMission(dinozId: string, missionId: number): Promise<Array<Rewarder>> {
+		const res = await http().put(`/missions/finish/${dinozId}/`, { missionId: missionId });
+		return res.data;
 	},
-	getGlobalMissions(): Promise<MissionsPageData> {
-		return http()
-			.get('/missions/global')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getGlobalMissions(): Promise<MissionsPageData> {
+		const res = await http().get('/missions/global');
+		return res.data;
 	}
 };

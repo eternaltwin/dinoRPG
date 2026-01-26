@@ -62,7 +62,6 @@ import { WsMsgRequestCreation } from '@drpg/core/models/serverEvents/WsMsgReques
 import { WsMsgRequestDeletion } from '@drpg/core/models/serverEvents/WsMsgRequestDeletion';
 import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
 import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
-import EventBus from '../../events/index.js';
 import { ClanService } from '../../services';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { playerStore } from '../../store';
@@ -193,7 +192,6 @@ onMounted(async () => {
 		return;
 	}
 
-	EventBus.emit('isLoading', true);
 	try {
 		await getClanMessages();
 		await connectToWs();
@@ -202,8 +200,6 @@ onMounted(async () => {
 		isConnectionOk.value = false;
 		// $toast from the app instance (if registered globally)
 		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
-	} finally {
-		EventBus.emit('isLoading', false);
 	}
 });
 

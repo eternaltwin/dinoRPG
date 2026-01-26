@@ -1,7 +1,19 @@
 {
   "name": "@drpg/prisma",
-  "version": "0.17.18",
+  "version": "0.17.21",
   "main": "index.js",
   "types": "index.d.ts",
-  "browser": "index-browser.js"
+  "browser": "index-browser.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "browser": "./index-browser.js",
+      "default": "./index.js"
+    },
+    "./enums": {
+      "types": "./enums.d.ts",
+      "import": "./enums.mjs",
+      "default": "./enums.mjs"
+    }
+  }
 }

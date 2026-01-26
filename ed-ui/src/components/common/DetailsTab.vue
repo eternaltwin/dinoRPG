@@ -358,10 +358,9 @@ export default defineComponent({
 	methods: {
 		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-			EventBus.emit('isLoading', true);
+
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -528,11 +527,9 @@ export default defineComponent({
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 		},
 		async loadComponent(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				this.dinozSkill = toSkillDetails(this.dinozData.skills);
 				this.sort();
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

@@ -21,7 +21,7 @@ import { raceList } from '../models/dinoz/RaceList.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
-import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { TournamentState } from '../models/dojo/tournament.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
@@ -182,7 +182,7 @@ export const toDinozPublicFiche = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		isFrozen: dinoz.unavailableReason === UnavailableReasonFront.frozen,
+		isFrozen: dinoz.unavailableReason === UnavailableReason.frozen,
 		level: dinoz.level,
 		life: dinoz.life,
 		race: getRace(dinoz),

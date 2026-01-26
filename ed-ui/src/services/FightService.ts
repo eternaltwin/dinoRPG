@@ -2,12 +2,10 @@ import { http } from '../utils/index.js';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 export const FightService = {
-	processFight(dinozId: number): Promise<FightResult> {
-		return http()
-			.put(`/fight`, {
-				dinozId: dinozId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async processFight(dinozId: number): Promise<FightResult> {
+		const res = await http().put(`/fight`, {
+			dinozId: dinozId
+		});
+		return res.data;
 	}
 };

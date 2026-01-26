@@ -1,6 +1,6 @@
 {
 	"name": "ed-be",
-	"version": "0.17.18",
+	"version": "0.17.21",
 	"description": "EternalDino API",
 	"scripts": {
 		"serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
@@ -10,11 +10,12 @@
 		"test:debug": "yarn run build && NODE_ENV=development jest --config ./jest.config.json --watchAll",
 		"build": "yarn tsc --build ./tsconfig.json",
 		"start": "yarn run build && node dist/index.js",
-		"db:sync:dev": "yarn prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
+		"db:sync:dev": "yarn prisma migrate dev && yarn seed && yarn prisma:postgenerate && cp ../prisma/package.reference.json ../prisma/package.json",
 		"db:migrate:manual": "yarn prisma migrate dev --create-only",
 		"migration": "yarn prisma migrate deploy",
 		"seed": "node --loader ts-node/esm prisma/seed.ts",
-		"release": "yarn release-it"
+		"release": "yarn release-it",
+		"prisma:postgenerate": "node ../prisma/generate-enums-wrapper.js"
 	},
 	"release-it": {
 		"git": false

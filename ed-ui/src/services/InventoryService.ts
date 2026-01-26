@@ -6,23 +6,16 @@ import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 // For Player's inventory
 
 export const InventoryService = {
-	getAllItemsData(): Promise<Array<ItemFicheDTO>> {
-		return http()
-			.get('/inventory/all')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async getAllItemsData(): Promise<Array<ItemFicheDTO>> {
+		const res = await http().get('/inventory/all');
+		return res.data;
 	},
-
-	useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack> {
-		return http()
-			.get(`/inventory/${dinozId}/${itemId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack> {
+		const res = await http().get(`/inventory/${dinozId}/${itemId}`);
+		return res.data;
 	},
-	equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<Array<DinozItems>> {
-		return http()
-			.put(`/inventory/${dinozId}`, { itemId: itemId, equip: equip })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<Array<DinozItems>> {
+		const res = await http().put(`/inventory/${dinozId}`, { itemId: itemId, equip: equip });
+		return res.data;
 	}
 };

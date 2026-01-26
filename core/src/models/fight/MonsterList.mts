@@ -477,7 +477,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	[Monster.KORGON_SKULLY]: {
 		id: Monster.KORGON_SKULLY,
-		name: 'korgon',
+		name: 'korgon_skully',
 		hp: 10,
 		elements: {
 			fire: 3,
@@ -489,13 +489,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 0,
 		odds: 100,
 		level: 7,
-		zones: [MapZone.JUNGLE],
-		groups: [
-			{ quantity: 0, odds: 0 },
-			{ quantity: 1, odds: 2 },
-			{ quantity: 2, odds: 1 }
-		],
-		canBeCaptured: true,
+		zones: [],
+		canBeCaptured: false,
 		display: 'korgon',
 		text: {
 			entrance: 'korgon_start'

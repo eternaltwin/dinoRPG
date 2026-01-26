@@ -25,7 +25,6 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { GetClanMemberResponse } from '@drpg/core/returnTypes/Clan';
 import { defineComponent } from 'vue';
 import DZInput from '../../components/common/DZInput.vue';
-import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -46,13 +45,11 @@ export default defineComponent({
 	},
 	methods: {
 		async getClanMember(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				this.clanMember = await ClanService.getClanMember(
 					Number(this.$route.params.id),
 					Number(this.$route.params.memberId)
 				);
-				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -60,11 +57,10 @@ export default defineComponent({
 		},
 		async updateClanMember(): Promise<void> {
 			if (!this.clanMember) return;
-			EventBus.emit('isLoading', true);
+
 			try {
 				this.clanMember.rights = this.rights.filter(r => r.selected).map(r => r.name.toString());
 				await ClanService.updateClanMember(Number(this.$route.params.id), this.clanMember);
-				EventBus.emit('isLoading', false);
 
 				this.$toast.open({
 					message: this.$t('clansMembers.edit.saved'),

@@ -26,7 +26,7 @@
 				{{ $t('hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
 			</p>
 			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReasonFront.unfreezing"
+				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
 				help
 			/>
@@ -96,7 +96,7 @@
 <script lang="ts">
 import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { UnavailableReason } from '@drpg/prisma/enums';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -112,7 +112,6 @@ import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
-import EventBus from '../../events/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
@@ -144,7 +143,9 @@ export default defineComponent({
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
-			intervals: [] as number[]
+			intervals: [] as number[],
+			mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
+				?.missionHUD
 		};
 	},
 	components: {
@@ -192,7 +193,6 @@ export default defineComponent({
 			}
 		},
 		async launch(action: ActionFiche) {
-			EventBus.emit('isLoading', true);
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
@@ -319,7 +319,7 @@ export default defineComponent({
 								name: 'Fight',
 								params: { dinozId: this.$route.params.id.toString() }
 							});
-							EventBus.emit('isLoading', false);
+
 							return;
 						}
 
@@ -505,7 +505,7 @@ export default defineComponent({
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-						currentDinozList[currentDinoz].unavailableReason = UnavailableReasonFront.frozen;
+						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {
@@ -558,7 +558,6 @@ export default defineComponent({
 					console.log(action.name);
 					break;
 			}
-			EventBus.emit('isLoading', false);
 		},
 		continueMission() {
 			this.NPCModal = undefined;
@@ -583,7 +582,7 @@ export default defineComponent({
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
-			return dinoz.unavailableReason === UnavailableReasonFront.selling;
+			return dinoz.unavailableReason === UnavailableReason.selling;
 		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;
@@ -618,8 +617,8 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		UnavailableReasonFront() {
-			return UnavailableReasonFront;
+		UnavailableReason() {
+			return UnavailableReason;
 		},
 		missionName() {
 			if (this.dinoz.missionId) {
@@ -633,11 +632,6 @@ export default defineComponent({
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
-		},
-		mission(): MissionHUD | null {
-			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
-			if (!dinoz) return null;
-			return dinoz.missionHUD;
 		}
 	},
 	watch: {

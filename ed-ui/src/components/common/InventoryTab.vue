@@ -145,7 +145,6 @@ export default defineComponent({
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				EventBus.emit('isLoading', true);
 				const dinozId = this.$route.params.id as string;
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
@@ -185,14 +184,12 @@ export default defineComponent({
 									: this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
 					}
-					EventBus.emit('isLoading', false);
 
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'
 					});
 				} catch (error) {
-					EventBus.emit('isLoading', false);
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
@@ -200,13 +197,11 @@ export default defineComponent({
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				EventBus.emit('isLoading', true);
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
 					EventBus.emit('equipItem', items);
-					EventBus.emit('isLoading', false);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
@@ -260,10 +255,8 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
 		try {
 			await this.resfreshInventory();
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;

@@ -58,7 +58,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
 import { DinozService } from '../services/DinozService.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
@@ -132,7 +131,7 @@ export default defineComponent({
 		if (!this.playerStore.playerOptions.hasPDA) {
 			this.$toast.open({ message: formatText(this.$t(`toast.noPDA`)), type: 'error' });
 			this.$router.back();
-			EventBus.emit('isLoading', false);
+
 			return;
 		}
 
@@ -147,7 +146,6 @@ export default defineComponent({
 			}
 			return dinoz;
 		});
-		EventBus.emit('isLoading', false);
 	}
 });
 </script>

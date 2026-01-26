@@ -47,7 +47,6 @@ export async function getCommonData(req: Request) {
 
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,
-		dinozCount: await getDinozTotalCount(),
 		dinoz: dinoz,
 		id: playerCommonData.id,
 		connexionToken: playerCommonData.connexionToken,
@@ -60,7 +59,7 @@ export async function getCommonData(req: Request) {
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel
 		},
-		admin: playerCommonData.role === AdminRole.ADMIN,
+		role: playerCommonData.role,
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
 		notifications: playerCommonData.notifications,

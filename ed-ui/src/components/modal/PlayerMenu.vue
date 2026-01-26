@@ -39,13 +39,14 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { Player } from '@drpg/prisma';
 import { playerStore } from '../../store';
+import { AdminRole } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'PlayerMenu',
 	data() {
 		return {
 			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'customText'>,
-			isAdmin: playerStore().isAdmin
+			isAdmin: playerStore().getRole === AdminRole.ADMIN
 		};
 	},
 	props: {

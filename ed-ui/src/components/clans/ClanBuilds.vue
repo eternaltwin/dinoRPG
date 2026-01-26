@@ -13,7 +13,6 @@ import DZSelect from '../common/DZSelect.vue';
 import SkillTree from '../dinoz/SkillTree.vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import DZButton from '../common/DZButton.vue';
-import EventBus from '../../events';
 
 // Utils
 const store = playerStore();
@@ -32,14 +31,13 @@ const build = computed(() => {
 
 const copyBuild = async () => {
 	if (!buildId.value) return;
-	EventBus.emit('isLoading', true);
+
 	try {
 		await DinozBuildService.copySharedBuild(buildId.value);
 		toast.open({
 			message: formatText(t(`toast.buildCopied`, { name: build.value?.name })),
 			type: 'success'
 		});
-		EventBus.emit('isLoading', false);
 	} catch (error) {
 		errorHandler.handle(error, toast);
 		return;

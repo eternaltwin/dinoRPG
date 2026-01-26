@@ -7,8 +7,8 @@
 		</tr>
 		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.hpRemaining'))" />
-			<td>{{ Math.round((stats.attack.endingHp / stats.attack.startingHp) * 100) }}%</td>
-			<td>{{ Math.round((stats.defense.endingHp / stats.defense.startingHp) * 100) }}%</td>
+			<td>{{ Math.round((stats.attack.endingHp / stats.attack.startingHp) * 100 * 100) / 100 }}%</td>
+			<td>{{ Math.round((stats.defense.endingHp / stats.defense.startingHp) * 100 * 100) / 100 }}%</td>
 		</tr>
 		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.hpLost'))" />

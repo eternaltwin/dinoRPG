@@ -1,4 +1,44 @@
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { Challenge, challengeRanges, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { DOJO_CHALLENGE_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import {
+	DOJO_FIGHT_COST,
+	DOJO_FIGHT_FRIENDS_DINOZ_COST,
+	DOJO_MAX_DAILY_CHALLENGE,
+	DOJO_MAX_SERIES,
+	DOJO_OPPONENT_IN_SERIE,
+	DOJO_REPUTATION_CHALLENGE,
+	DOJO_REPUTATION_WIN
+} from '@drpg/core/utils/dojoConstants';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { Dojo, NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
+import {
+	archiveChallenge,
+	archiveFight,
+	getAllArchivedFightRequest,
+	getArchivedFightRequest,
+	viewFight
+} from '../dao/archiveDao.js';
+import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
+import {
+	addOpponent,
+	cleanCurrentOpponentTeam,
+	createMyDojo,
+	createMyTeamDao,
+	getMyDojoDao,
+	getMyTeamDao,
+	incrementDailyReset,
+	setFightedOpponent
+} from '../dao/dojoDao.js';
+import { createNotification } from '../dao/notificationDao.js';
 import {
 	auth,
 	getDojoChallengePreparationRequest,
@@ -8,55 +48,14 @@ import {
 	increaseCashPrice,
 	removeMoney
 } from '../dao/playerDao.js';
-import {
-	addOpponent,
-	cleanCurrentOpponentTeam,
-	createChallengeRequest,
-	createMyDojo,
-	createMyTeamDao,
-	getMyDojoDao,
-	getMyTeamDao,
-	giveReputation,
-	incrementDailyReset,
-	setFightedOpponent,
-	setFightedTeam
-} from '../dao/dojoDao.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
-import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import {
-	archiveChallenge,
-	archiveFight,
-	getAllArchivedFightRequest,
-	getArchivedFightRequest,
-	viewFight
-} from '../dao/archiveDao.js';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
-import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { calculateFightBetweenPlayers } from './fightService.js';
-import { Challenge, challengeRanges, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
-import { Dojo, NotificationSeverity } from '@drpg/prisma';
-import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import TournamentManager from '../utils/tournamentManager.js';
-import { prisma } from '../prisma.js';
-import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { createNotification } from '../dao/notificationDao.js';
-import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { ItemType } from '@drpg/core/models/enums/ItemType';
-import {
-	DOJO_MAX_SERIES,
-	DOJO_FIGHT_FRIENDS_DINOZ_COST,
-	DOJO_FIGHT_COST,
-	DOJO_OPPONENT_IN_SERIE,
-	DOJO_MAX_DAILY_CHALLENGE,
-	DOJO_REPUTATION_WIN,
-	DOJO_REPUTATION_CHALLENGE
-} from '@drpg/core/utils/dojoConstants';
-import { DOJO_CHALLENGE_RULES, FightRules, STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
+import { prisma } from '../prisma.js';
+import TournamentManager from '../utils/tournamentManager.js';
+import translate from '../utils/translate.js';
+import { calculateFightBetweenPlayers } from './fightService.js';
+import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
+import { FullFightStats } from '@drpg/core/models/fight/FightResult';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -142,7 +141,7 @@ export async function getMyTeam(req: Request) {
 	return myDojo;
 }
 
-export async function fightFriend(req: Request) {
+export async function fightFriend(req: Request): Promise<{ fight: DojoFightResume; stats: FullFightStats }> {
 	const left = req.body.left as number[];
 	const right = req.body.right as number[];
 	const rightId = req.body.rightId as string;
@@ -194,21 +193,25 @@ export async function fightFriend(req: Request) {
 	return { fight: fightArchive, stats: fightResult.stats };
 }
 
-export async function getArchivedFight(req: Request) {
+export async function getArchivedFight(req: Request): Promise<DojoFightResume> {
 	const authed = await auth(req);
-	const fight = await getArchivedFightRequest(req.params.id);
+	const fightId = req.params.id;
+	const fight = await getArchivedFightRequest(fightId);
 
 	if (!fight) {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
 
-	await viewFight(authed.id, req.params.id);
+	await viewFight(authed.id, fightId);
 
 	return {
+		id: fightId,
 		fighters: JSON.parse(fight.fighters) as FighterRecap[],
 		result: fight.result,
 		history: JSON.parse(fight.steps) as FightStep[],
-		seed: fight.seed
+		seed: fight.seed,
+		leftPlayer: fight.leftPlayer,
+		rightPlayer: fight.rightPlayer
 	};
 }
 
@@ -253,7 +256,9 @@ export function generateRandomChallenge(): Challenge {
 	};
 }
 
-export async function fightChallenge(req: Request) {
+export async function fightChallenge(
+	req: Request
+): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
 	const myDinozId = +req.body.myDinoz;
 	const opponentId = +req.body.opponent;
 

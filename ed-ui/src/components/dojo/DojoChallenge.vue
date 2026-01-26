@@ -26,7 +26,7 @@
 					v-if="victory && !challengeWon"
 					v-html="
 						$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
-							goal: calculateMissedGoal(activeChallenge)
+							goal: formattedGoal
 						})
 					"
 				/>
@@ -70,11 +70,14 @@
 		</template>
 
 		<template v-if="fightTransformed && fightStat">
-			<div v-show="loaded" class="content">
-				<Suspense>
-					<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
-					<template #fallback> <Loading /> </template>
-				</Suspense>
+			<div id="fightContent">
+				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+				<div v-show="loaded" class="content">
+					<Suspense>
+						<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
+						<template #fallback> <Loading /> </template>
+					</Suspense>
+				</div>
 			</div>
 			<Transition name="bounce">
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
@@ -91,7 +94,7 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
-import { Challenge, parseChallenge } from '@drpg/core/models/dojo/challenge';
+import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore, playerStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
@@ -106,7 +109,8 @@ import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResul
 import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import FightersHeader from '../fight/FightersHeader.vue';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DojoChallenge',
@@ -118,6 +122,7 @@ export default defineComponent({
 		TitleHeader,
 		SelectDinoz,
 		CarousselDinoz,
+		FightersHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FullFightAnimation.vue'))
 	},
 	data() {
@@ -140,19 +145,20 @@ export default defineComponent({
 			fightAnimationEnded: false,
 			dailyReset: 0,
 			playerStore: playerStore(),
-			dojoMaxSeries: DOJO_MAX_SERIES
+			dojoMaxSeries: DOJO_MAX_SERIES,
+			leftPlayer: null as null | { id: string; name: string },
+			rightPlayer: null as null | { id: string; name: string }
 		};
 	},
 	methods: {
 		async composeMyTeam(data: number[]) {
 			const myTeam = data;
-			EventBus.emit('isLoading', true);
+
 			try {
 				const dojo = await DojoService.createMyTeam(myTeam);
 				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.composeTeam = false;
-				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -170,7 +176,7 @@ export default defineComponent({
 		},
 		calculateMissedGoal(challenge: Challenge) {
 			if (!this.fightStat) return 0;
-			return Math.round(parseChallenge(challenge, this.fightStat));
+			return parseChallenge(challenge, this.fightStat);
 		},
 		selectOpponent(data: number) {
 			const possible = this.opponents.find(d => d.dinoz.id === data);
@@ -184,7 +190,7 @@ export default defineComponent({
 		},
 		async launchChallenge() {
 			if (!this.myFighter.id || !this.opponent.id) return;
-			EventBus.emit('isLoading', true);
+
 			try {
 				const rawFight = await DojoService.fightChallenge(this.myFighter.id, this.opponent.id);
 				const fightResult = rawFight.fight;
@@ -202,7 +208,6 @@ export default defineComponent({
 					fightResult.result,
 					undefined,
 					undefined,
-					undefined,
 					true
 				);
 				if (!nexFight) {
@@ -214,25 +219,25 @@ export default defineComponent({
 					history: nexFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
+				this.leftPlayer = fightResult.leftPlayer;
+				this.rightPlayer = fightResult.rightPlayer;
 				this.loaded = true;
 				if (this.playerStore.getPlayerOptions.skipFight) {
 					this.fightAnimationEnded = true;
 				}
 
 				await this.$refreshGold();
-				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		},
 		async refresh() {
-			EventBus.emit('isLoading', true);
 			try {
 				const dojo = await DojoService.getMyTeam();
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
 					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReasonFront.resting)
+						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 						//.filter(d => d.level >= 10)
 						.map(d => {
 							return {
@@ -250,9 +255,25 @@ export default defineComponent({
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
 
 				EventBus.emit('refreshDojo', true);
-				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+			}
+		}
+	},
+	computed: {
+		formattedGoal() {
+			if (!this.activeChallenge) return 0;
+			const goal = this.calculateMissedGoal(this.activeChallenge);
+
+			// For percentage based challenges, show up to 2 digits after the comma.
+			if (
+				this.activeChallenge.type === ChallengeType.TakePercentDamage ||
+				this.activeChallenge.type === ChallengeType.AssaultPercentage ||
+				this.activeChallenge.type === ChallengeType.DealPercentDamage
+			) {
+				return goal.toFixed(2);
+			} else {
+				return Math.round(goal);
 			}
 		}
 	},
@@ -287,6 +308,9 @@ $b: 3px;
 		align-self: center;
 		max-width: 95%;
 	}
+}
+#fightContent {
+	align-self: center;
 }
 .debrief {
 	box-sizing: border-box;

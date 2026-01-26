@@ -8,9 +8,8 @@
 import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
 import { dinozStore, localStore, playerStore } from '../store/index.js';
-import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
-import { setCookie } from '../utils/cookies.js';
+import { setCookie } from '../utils/cookies';
 
 export default defineComponent({
 	name: 'Authentication',
@@ -29,18 +28,13 @@ export default defineComponent({
 	},
 	methods: {
 		async authenticateToET(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
 				// Set cookies
 				const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 				setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
 				setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
-				// Set data in sessionStore
-				this.dinozStore.setDinozList(commonData.dinoz);
-				this.dinozStore.setDinozCount(commonData.dinozCount);
-				await this.playerStore.update();
-				EventBus.emit('isLoading', false);
+
 				this.isLogged = true;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

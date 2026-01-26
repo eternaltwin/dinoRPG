@@ -2,11 +2,11 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { Item } from '@drpg/core/models/item/ItemList';
-import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { PlayerCommonData, PlayerLoginData } from '@drpg/core/models/player/PlayerCommonData';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { LogType } from '@drpg/prisma';
+import { AdminRole, LogType } from '@drpg/prisma';
 import { EternaltwinNodeClient } from '@eternaltwin/client-node';
 import { ErrorCode } from '@eternaltwin/client-node/error';
 import { AuthType } from '@eternaltwin/core/auth/auth-type';
@@ -18,7 +18,7 @@ import { Config } from 'release-it';
 import urlJoin from 'url-join';
 import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
-import { getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
+import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
 import {
 	archiveOldUsername,
@@ -67,7 +67,7 @@ export class OAuth {
 		}
 	}
 
-	public async token(req: Request, res: Response<PlayerCommonData>) {
+	public async token(req: Request, res: Response<PlayerLoginData>) {
 		// Disable CORS
 		res.header('Access-Control-Allow-Origin', '*');
 
@@ -124,25 +124,8 @@ export class OAuth {
 				}
 				await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
 				res.send({
-					money: player.money,
-					dinozCount: await getDinozTotalCount(),
-					dinoz: [],
 					id: player.id,
-					name: player.name,
-					clanId: player.ClanMember?.clanId,
-					playerOptions: {
-						hasPDA: false,
-						hasPMI: false,
-						hasPAC: false,
-						skipLevel: player.skipLevel,
-						skipFight: player.skipFight
-					},
-					admin: false,
-					priest: false,
-					shopkeeper: false,
-					notifications: player.notifications,
-					connexionToken: player.connexionToken,
-					discoveredSkills: player.discoveredSkills
+					connexionToken: player.connexionToken
 				});
 				return;
 			}
@@ -226,30 +209,10 @@ export class OAuth {
 				d.actions = await getAvailableActions(d, player);
 			}
 
-			const commonData: PlayerCommonData = {
-				money: player.money,
-				dinozCount: await getDinozTotalCount(),
-				dinoz: dinoz,
+			const commonData: PlayerLoginData = {
 				id: player.id,
-				name: player.name,
-				connexionToken: player.connexionToken,
-				clanId: player.ClanMember?.clanId,
-				playerOptions: {
-					hasPDA: player.rewards.some(reward => reward.rewardId === Reward.PDA),
-					hasPMI: player.rewards.some(reward => reward.rewardId === Reward.PMI),
-					hasPAC: player.rewards.some(reward => reward.rewardId === Reward.PAC),
-					skipLevel: player.skipLevel,
-					skipFight: player.skipFight
-				},
-				admin: req?.auth?.isAdmin || false,
-				priest: player.priest,
-				shopkeeper: player.shopKeeper,
-				notifications: player.notifications,
-				discoveredSkills: player.discoveredSkills
+				connexionToken: player.connexionToken
 			};
-
-			// Order dinoz
-			commonData.dinoz = orderDinozList(commonData.dinoz);
 
 			res.send(commonData);
 		} catch (error: unknown) {

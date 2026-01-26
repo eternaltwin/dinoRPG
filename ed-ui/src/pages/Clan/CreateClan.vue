@@ -30,7 +30,6 @@
 import { defineComponent } from 'vue';
 
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { ClanService } from '../../services/ClanService.js';
 import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
@@ -61,11 +60,10 @@ export default defineComponent({
 	},
 	methods: {
 		async CreateClan(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			try {
 				const clan = await ClanService.createClan(this.clanName, this.description, this.langs);
 				this.playerStore.setClanId(clan.id);
-				EventBus.emit('isLoading', false);
+
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

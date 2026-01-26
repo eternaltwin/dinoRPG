@@ -6,9 +6,9 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { $Enums, Lang } from '@drpg/prisma';
+import { Lang, NotificationSeverity, EventType } from '@drpg/prisma';
 import { setSpecificStat } from './trackingDao.js';
-import EventType = $Enums.EventType;
+import { createNotification } from './notificationDao.js';
 
 export async function getAllClansRequest(page: number) {
 	const clans = await prisma.clan.findMany({
@@ -245,7 +245,9 @@ export async function clanJoinRequest(joinId: number) {
 						select: {
 							members: true
 						}
-					}
+					},
+					name: true,
+					id: true
 				}
 			}
 		}
@@ -400,7 +402,8 @@ export async function acceptPlayerJoinRequest(requestId: number, acceptorId: str
 			},
 			clan: {
 				select: {
-					id: true
+					id: true,
+					name: true
 				}
 			}
 		}
@@ -417,6 +420,12 @@ export async function acceptPlayerJoinRequest(requestId: number, acceptorId: str
 	});
 
 	await setSpecificStat(StatTracking.CLANS, joinRequest.playerId, 1);
+	await createNotification(
+		joinRequest.playerId,
+		clanMember.clan.name,
+		NotificationSeverity.clanApplyAccepted,
+		`/clan/${clanMember.clan.id}`
+	);
 
 	return clanMember;
 }

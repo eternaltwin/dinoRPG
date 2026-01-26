@@ -75,7 +75,6 @@ import { defineComponent } from 'vue';
 import { dinozStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import EventBus from '../../events/index.js';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -103,7 +102,6 @@ export default defineComponent({
 			}
 		},
 		async reload(): Promise<void> {
-			EventBus.emit('isLoading', true);
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
@@ -114,7 +112,6 @@ export default defineComponent({
 			}
 			this.information = !this.information;
 			this.$emit('abort');
-			EventBus.emit('isLoading', false);
 		}
 	},
 	props: {

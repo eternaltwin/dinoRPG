@@ -1,17 +1,13 @@
 import { http } from '../utils/index.js';
-import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { PlayerLoginData } from '@drpg/core/models/player/PlayerCommonData';
 
 export const OauthService = {
-	getRedirectUri(): Promise<{ url: string }> {
-		return http()
-			.get('/oauth/redirect')
-			.then(response => response.data)
-			.catch(err => Promise.reject(err));
+	async getRedirectUri(): Promise<{ url: string }> {
+		const res = await http().get('/oauth/redirect');
+		return res.data;
 	},
-	authenticateUser(code: string): Promise<PlayerCommonData> {
-		return http()
-			.get(`/oauth/authenticate/eternal-twin?code=${code}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	async authenticateUser(code: string): Promise<PlayerLoginData> {
+		const res = await http().get(`/oauth/authenticate/eternal-twin?code=${code}`);
+		return res.data;
 	}
 };
