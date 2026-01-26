@@ -712,7 +712,7 @@ async function testDojoTournament() {
 	}
 }
 
-async function batchCreateTestDinozForTournament() {
+async function batchCreateTestDinozForFBTournament() {
 	const players = await getTestUsers();
 	const tournament = await prisma.fBTournament.findFirstOrThrow({
 		select: {
