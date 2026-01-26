@@ -38,12 +38,22 @@
 		</tbody>
 	</table>
 	<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>
+	<DZButton @click="createTestUsers()"> Create Test Users </DZButton>
+	<DZButton @click="createTestDinoz()"> Create Test Dinoz </DZButton>
+	<div>
+		<DZButton @click="registerTestUsersToDojo()"> Register users to Dojo </DZButton>
+		<DZInput type="number" min="0" v-model="numDojoTournament" />
+	</div>
+	<div>
+		<DZButton @click="registerTestUsersToFBTournament()"> Register users to FB Tournament </DZButton>
+		<DZInput type="number" min="0" v-model="numFBTournament" />
+	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
-import { ClanService, IngredientsService } from '../services/index.js';
+import { ClanService, IngredientsService, TestingService } from '../services/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import { playerStore } from '../store/index.js';
@@ -51,6 +61,7 @@ import DZInput from '../components/common/DZInput.vue';
 import DZButton from '../components/common/DZButton.vue';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import TournamentHistory from '../components/dojo/TournamentHistory.vue';
 
 export default defineComponent({
 	name: 'Ingredients',
@@ -65,7 +76,9 @@ export default defineComponent({
 			ingredientList: [] as Array<IngredientFiche>,
 			playerStore: playerStore(),
 			bidValue: 0,
-			giveAway: [] as Array<IngredientFiche>
+			giveAway: [] as Array<IngredientFiche>,
+			numDojoTournament: 0,
+			numFBTournament: 0
 		};
 	},
 	async mounted(): Promise<void> {
@@ -123,6 +136,74 @@ export default defineComponent({
 					return;
 				}
 				await this.load();
+			}
+		},
+		async createTestUsers() {
+			const res = await this.$confirm({
+				message: 'Are you sure you want to create test users?',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await TestingService.createTestUsers();
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		async createTestDinoz() {
+			const res = await this.$confirm({
+				message: 'Are you sure you want to create test dinoz for each test user?',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await TestingService.createTestDinoz();
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		async registerTestUsersToDojo() {
+			const res = await this.$confirm({
+				message: `Are you sure you want to register ${this.numDojoTournament} test users to the Dojo tournament?`,
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await TestingService.registerTestUsersToDojo(this.numDojoTournament);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		async registerTestUsersToFBTournament() {
+			const res = await this.$confirm({
+				message: `Are you sure you want to register ${this.numFBTournament} test users to the FB tournament?`,
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await TestingService.registerTestUsersToFBTournament(this.numFBTournament);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
 			}
 		}
 	},

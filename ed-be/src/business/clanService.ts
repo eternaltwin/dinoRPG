@@ -7,13 +7,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
-import fetch from 'node-fetch';
-import { hatchEgg } from '../business/inventoryService.js';
-import { itemList, Item } from '@drpg/core/models/item/ItemList';
-import { addPlayerInRanking } from '../dao/rankingDao.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
-import { prisma } from '../prisma.js';
-import { shuffle } from '../utils/tools.js';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
@@ -52,7 +46,6 @@ import {
 	updateClanTreasure,
 	upsertClanIngredients
 } from '../dao/clansDao.js';
-import { createTournamentTestDinoz } from './forceBruteService.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
@@ -62,14 +55,6 @@ import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/cla
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
-import gameConfig from '../config/game.config.js';
-import { createPlayer, getTestUsers } from '../dao/playerDao.js';
-import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
-import { updateDojoPoints } from '../dao/rankingDao.js';
-import { simplifyCreateTournamentTeam } from '../business/tournamentService.js';
-import { createMyDojo } from '../dao/dojoDao.js';
-import { generateRandomChallenge } from '../business/dojoService.js';
-import { getLatestTournament } from '../dao/tournamentDao.js';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 
 /**
@@ -617,126 +602,6 @@ export async function getClanHistoryCount(req: Request) {
 	return { count };
 }
 
-interface UserResponse {
-	id: string;
-}
-
-async function createTestUsers() {
-	const url = 'http://localhost:50320/api/v1/users';
-
-	for (let i = 1; i <= 256; i++) {
-		const name = `test${i}`;
-		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536' });
-		const response = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json', // Indicate the body content type
-				Accept: 'application/json' // Tell the server you expect JSON in response
-			},
-			body: body
-		});
-
-		if (!response.ok) {
-			const errorData = await response.text();
-			console.error(`Request failed while creating ${name} with status ${response.status} ${errorData}`);
-		} else {
-			const data = (await response.json()) as UserResponse;
-
-			const user_id = data.id;
-			const user_name = name;
-			const player = await createPlayer({
-				id: user_id,
-				name: user_name,
-				money: gameConfig.general.initialMoney,
-				quetzuBought: 0
-			});
-			await addPlayerInRanking(player.id);
-			await createMyDojo(player.id, generateRandomChallenge());
-		}
-	}
-	console.log(`Finished creating test users`);
-}
-
-async function createTestDinoz() {
-	const players = await getTestUsers();
-
-	const eggs = [
-		Item.WINKS_EGG,
-		Item.PIGMOU_EGG,
-		Item.WINKS_EGG,
-		Item.PLANAILLE_EGG,
-		Item.MOUEFFE_EGG,
-		Item.NUAGOZ_EGG,
-		Item.SIRAIN_EGG,
-		Item.SIRAIN_EGG_RARE
-	].map(itemId => itemList[itemId]);
-	for (const player of players) {
-		const numDinoz = (await getAllDinozFromAccount(player.id)).length;
-		const toCreate = 18 - numDinoz;
-		for (let k = 0; k < toCreate; k++) {
-			const egg = eggs[Math.floor(Math.random() * eggs.length)];
-			if (egg === undefined) {
-				throw new ExpectedError('Could not found egg');
-			}
-			await hatchEgg(egg, { id: player.id, lang: 'es' });
-		}
-
-		const dinoz = await getAllDinozFromAccount(player.id);
-		let i = 1;
-		for (const dino of dinoz) {
-			await updateDinoz(dino.id, {
-				name: `test ${i}`,
-				canChangeName: false
-			});
-			i++;
-		}
-	}
-	console.log(`Finished creating test dinoz`);
-}
-
-async function testDojoTournament() {
-	const tournament = await getLatestTournament();
-	if (!tournament) return;
-	const players = await getTestUsers();
-	players.length = Math.min(players.length, 64);
-	for (const player of players) {
-		await updateDojoPoints(player.id, 2);
-		let dinoz = await getAllDinozFromAccount(player.id);
-		console.log(`player ${player.name} has ${dinoz.length} dinos`);
-		dinoz = shuffle(dinoz);
-		dinoz.length = Math.min(dinoz.length, tournament.teamSize);
-		await simplifyCreateTournamentTeam(
-			player.id,
-			dinoz.map(dino => dino.id)
-		);
-	}
-}
-
-async function batchCreateTestDinozForFBTournament() {
-	const players = await getTestUsers();
-	const tournament = await prisma.fBTournament.findFirstOrThrow({
-		select: {
-			id: true,
-			participants: true,
-			teamRace: true
-		},
-		orderBy: {
-			participants: {
-				_count: 'asc'
-			}
-		}
-	});
-	console.log(
-		`Tournament ${tournament.id} from ${tournament.teamRace} has ${tournament.participants.length} participants`
-	);
-	let count = 256 - tournament.participants.length;
-	for (const player of players) {
-		if (count <= 0) break;
-		await createTournamentTestDinoz(player.id, player.name, tournament.id);
-		count--;
-	}
-}
-
 /**
  * Give clan a set of ingredients
  * @param req
@@ -748,11 +613,6 @@ export async function giveClanIngredients(req: Request) {
 	const authed = await auth(req);
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
-
-	// await createTestUsers();
-	// await createTestDinoz();
-	await testDojoTournament();
-	// await batchCreateTestDinozForTournament();
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);
