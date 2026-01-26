@@ -61,7 +61,6 @@ import DZInput from '../components/common/DZInput.vue';
 import DZButton from '../components/common/DZButton.vue';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import TournamentHistory from '../components/dojo/TournamentHistory.vue';
 
 export default defineComponent({
 	name: 'Ingredients',
