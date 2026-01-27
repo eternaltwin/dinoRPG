@@ -1,3 +1,7 @@
+---
+order: 3
+---
+
 Une fois votre Dinoz acheté, il vous est demandé de lui donner un Nom, comme par exemple ici :
 
 ![Écran de nommmage](@guide/name)

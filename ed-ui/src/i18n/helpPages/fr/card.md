@@ -1,3 +1,7 @@
+---
+order: 5
+---
+
 La **Fiche** de votre Dinoz est l'endroit où vous pouvez à la fois voir l'**état** de votre Dinoz et effectuer un certain nombre d'**actions**. Elle se présente sous la forme suivante :
 
 ![Fiche du Dinoz](@guide/card)
