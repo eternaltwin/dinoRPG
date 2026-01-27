@@ -1,3 +1,12 @@
+---
+order: 1
+icon:
+  path: icons
+  name: small_home
+---
+
+# Introduction
+
 Bienvenue sur **DinoRPG** !
 
 Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou plusieurs petites créatures sauvages nommées les **Dinoz**. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure.

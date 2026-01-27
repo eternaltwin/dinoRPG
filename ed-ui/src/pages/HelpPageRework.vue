@@ -1,42 +1,46 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t(`topBar.rightMenu.guide`)" />
-	<div class="intro">
-		<div class="menu">
-			<ul class="list">
-				<li
-					v-for="(item, index) in helpPageSections"
-					:key="item.id"
-					@click="showContent(index)"
-					:class="{ selected: selectedItemIndex === index }"
-				>
-					<img v-if="item.nameImageUrl" :src="getImgURL(item.nameImageUrl.path, item.nameImageUrl.name)" alt="Image" />
-					{{ $t(item.nameI18nKey) }}
-				</li>
-			</ul>
-		</div>
-		<div class="image">
-			<img :src="getImgURL('design', 'rocky_01')" />
-		</div>
-	</div>
-	<div class="showContent">
-		<div v-if="selectedItem" class="content">
-			<div class="titleContent">
-				<h3>{{ $t(selectedItem.nameI18nKey) }}</h3>
+	<div v-if="isLoading" class="loading">Loading...</div>
+	<div v-else>
+		<div class="intro">
+			<div class="menu">
+				<ul class="list">
+					<li
+						v-for="(section, index) in helpPageSections"
+						:key="section.id"
+						@click="showContent(index)"
+						:class="{ selected: selectedSectionIndex === index }"
+					>
+						<img 
+							v-if="section.metadata.icon" 
+							:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)" 
+							alt="Icon" 
+						/>
+						{{ $t(`guide.sections.${section.id}`) }}
+					</li>
+				</ul>
 			</div>
-			<div class="markdown">
-				<Markdown :source="markdownContent" />
+			<div class="image">
+				<img :src="getImgURL('design', 'rocky_01')" />
 			</div>
-			<DZButton @click="showPrevItem" v-if="selectedItem.prevItem">
-				<img :src="getImgURL('icons', 'small_page_up')" />
-				{{ $t(getPrevItem()?.nameI18nKey || '') }}
-			</DZButton>
-			<DZButton @click="showNextItem" v-if="selectedItem.nextItem">
-				<img :src="getImgURL('icons', 'small_page_down')" />
-				{{ $t(getNextItem()?.nameI18nKey || '') }}
-			</DZButton>
-			<RouterLink to="/news" class="link">
-				<DZButton><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
-			</RouterLink>
+		</div>
+		<div class="showContent">
+			<div v-if="selectedSection" class="content">
+				<div class="markdown">
+					<Markdown :source="markdownContent" />
+				</div>
+				<DZButton @click="showPrevItem" class="next" v-if="hasPrevious">
+					<img :src="getImgURL('icons', 'small_page_up')" />
+					{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex - 1].id}`) }}
+				</DZButton>
+				<DZButton @click="showNextItem" class="next" v-if="hasNext">
+					<img :src="getImgURL('icons', 'small_page_down')" />
+					{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex + 1].id}`) }}
+				</DZButton>
+				<RouterLink to="/news" class="link">
+					<DZButton class="next"><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
+				</RouterLink>
+			</div>
 		</div>
 	</div>
 </template>
@@ -46,293 +50,188 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZButton from '../components/common/DZButton.vue';
 import Markdown from 'vue3-markdown-it';
-import { loadHelpPageMarkdown, processMarkdownImages } from '../utils/markdownLoader';
+import {MarkdownWithMetadata, loadAllHelpPages, processMarkdownImages } from '../utils/markdownLoader';
 import { localStore } from '../store/index';
 
-interface HelpPageConfig {
-	id: string;
-	nameI18nKey: string;
-	nameImageUrl?: { path: string; name: string };
-	markdownFile: string;
-	nextItem?: string;
-	prevItem?: string;
-}
 
-const helpPageSections: HelpPageConfig[] = [
-	{
-		id: 'intro',
-		nameI18nKey: 'guide.sections.intro',
-		nameImageUrl: { path: 'icons', name: 'small_home' },
-		markdownFile: 'intro',
-		nextItem: 'adopt'
-	},
-	{
-		id: 'adopt',
-		nameI18nKey: 'guide.sections.adopt',
-		nameImageUrl: { path: 'design', name: 'small_member' },
-		markdownFile: 'adopt',
-		nextItem: 'name',
-		prevItem: 'intro'
-	},
-	{
-		id: 'name',
-		nameI18nKey: 'guide.sections.name',
-		nameImageUrl: { path: 'icons', name: 'small_question' },
-		markdownFile: 'name',
-		nextItem: 'card',
-		prevItem: 'adopt'
-	},
-	{
-		id: 'card',
-		nameI18nKey: 'guide.sections.card',
-		nameImageUrl: { path: 'status', name: 'fx_ccard' },
-		markdownFile: 'card',
-		nextItem: 'move',
-		prevItem: 'name'
-	},
-	{
-		id: 'move',
-		nameI18nKey: 'guide.sections.move',
-		nameImageUrl: { path: 'icons', name: 'small_follow' },
-		markdownFile: 'move',
-		nextItem: 'fight',
-		prevItem: 'card'
-	},
-	{
-		id: 'fight',
-		nameI18nKey: 'guide.sections.fight',
-		nameImageUrl: { path: 'icons', name: 'small_fire' },
-		markdownFile: 'fight',
-		nextItem: 'heal',
-		prevItem: 'move'
-	},
-	{
-		id: 'heal',
-		nameI18nKey: 'guide.sections.heal',
-		nameImageUrl: { path: 'icons', name: 'small_use' },
-		markdownFile: 'heal',
-		nextItem: 'death',
-		prevItem: 'fight'
-	},
-	{
-		id: 'death',
-		nameI18nKey: 'guide.sections.death',
-		nameImageUrl: { path: 'icons', name: 'small_delete' },
-		markdownFile: 'death',
-		nextItem: 'exp',
-		prevItem: 'heal'
-	},
-	{
-		id: 'exp',
-		nameI18nKey: 'guide.sections.exp',
-		nameImageUrl: { path: 'icons', name: 'small_xp' },
-		markdownFile: 'exp',
-		nextItem: 'missions',
-		prevItem: 'death'
-	},
-	{
-		id: 'missions',
-		nameI18nKey: 'guide.sections.missions',
-		nameImageUrl: { path: 'icons', name: 'small_gold' },
-		markdownFile: 'missions',
-		nextItem: 'status',
-		prevItem: 'exp'
-	},
-	{
-		id: 'status',
-		nameI18nKey: 'guide.sections.status',
-		nameImageUrl: { path: 'icons', name: 'small_edit' },
-		markdownFile: 'status',
-		nextItem: 'equipment',
-		prevItem: 'missions'
-	},
-	{
-		id: 'equipment',
-		nameI18nKey: 'guide.sections.equipment',
-		nameImageUrl: { path: 'status', name: 'fx_bckpck' },
-		markdownFile: 'equipment',
-		nextItem: 'epic',
-		prevItem: 'status'
-	},
-	{
-		id: 'epic',
-		nameI18nKey: 'guide.sections.epic',
-		nameImageUrl: { path: 'icons', name: 'small_mode' },
-		markdownFile: 'epic',
-		nextItem: 'group',
-		prevItem: 'equipment'
-	},
-	{
-		id: 'group',
-		nameI18nKey: 'guide.sections.group',
-		nameImageUrl: { path: 'icons', name: 'small_leader' },
-		markdownFile: 'group',
-		nextItem: 'ingredient',
-		prevItem: 'epic'
-	},
-	{
-		id: 'ingredient',
-		nameI18nKey: 'guide.sections.ingredient',
-		nameImageUrl: { path: 'status', name: 'fx_pelle' },
-		markdownFile: 'ingredient',
-		nextItem: 'clans',
-		prevItem: 'group'
-	},
-	{
-		id: 'clans',
-		nameI18nKey: 'guide.sections.clans',
-		nameImageUrl: { path: 'icons', name: 'small_leader' },
-		markdownFile: 'clans',
-		nextItem: 'dojo',
-		prevItem: 'ingredient'
-	},
-	{
-		id: 'dojo',
-		nameI18nKey: 'guide.sections.dojo',
-		nameImageUrl: { path: 'icons', name: 'small_dojo' },
-		markdownFile: 'dojo',
-		nextItem: 'gdc',
-		prevItem: 'clans'
-	},
-	{
-		id: 'gdc',
-		nameI18nKey: 'guide.sections.gdc',
-		nameImageUrl: { path: 'icons', name: 'small_attack' },
-		markdownFile: 'gdc',
-		nextItem: 'cdc',
-		prevItem: 'dojo'
-	},
-	{
-		id: 'cdc',
-		nameI18nKey: 'guide.sections.cdc',
-		nameImageUrl: { path: 'icons', name: 'small_attack' },
-		markdownFile: 'cdc',
-		nextItem: 'question',
-		prevItem: 'gdc'
-	},
-	{
-		id: 'question',
-		nameI18nKey: 'guide.sections.question',
-		nameImageUrl: { path: 'icons', name: 'small_mail' },
-		markdownFile: 'question',
-		nextItem: 'support',
-		prevItem: 'cdc'
-	},
-	{
-		id: 'support',
-		nameI18nKey: 'guide.sections.support',
-		nameImageUrl: { path: 'icons', name: 'small_browse_next' },
-		markdownFile: 'support',
-		nextItem: 'security',
-		prevItem: 'question'
-	},
-	{
-		id: 'security',
-		nameI18nKey: 'guide.sections.security',
-		nameImageUrl: { path: 'icons', name: 'small_lock' },
-		markdownFile: 'security',
-		prevItem: 'support'
-	}
-];
+// export interface HelpPageSection {
+// 	id: string;
+// 	nameImageUrl?: { path: string; name: string };
+// }
+
+// // Minimal configuration - just the unique data per section
+// export const helpPageSections: Record<string, HelpPageSection> = {
+// 	intro: { id: 'intro', nameImageUrl: { path: 'icons', name: 'small_home' } },
+// 	adopt: { id: 'adopt', nameImageUrl: { path: 'design', name: 'small_member' } },
+// 	name: { id: 'name', nameImageUrl: { path: 'icons', name: 'small_question' } },
+// 	card: { id: 'card', nameImageUrl: { path: 'status', name: 'fx_ccard' } },
+// 	move: { id: 'move', nameImageUrl: { path: 'icons', name: 'small_follow' } },
+// 	fight: { id: 'fight', nameImageUrl: { path: 'icons', name: 'small_fire' } },
+// 	heal: { id: 'heal', nameImageUrl: { path: 'icons', name: 'small_use' } },
+// 	death: { id: 'death', nameImageUrl: { path: 'icons', name: 'small_delete' } },
+// 	exp: { id: 'exp', nameImageUrl: { path: 'icons', name: 'small_xp' } },
+// 	missions: { id: 'missions', nameImageUrl: { path: 'icons', name: 'small_gold' } },
+// 	status: { id: 'status', nameImageUrl: { path: 'icons', name: 'small_edit' } },
+// 	equipment: { id: 'equipment', nameImageUrl: { path: 'status', name: 'fx_bckpck' } },
+// 	epic: { id: 'epic', nameImageUrl: { path: 'icons', name: 'small_mode' } },
+// 	group: { id: 'group', nameImageUrl: { path: 'icons', name: 'small_leader' } },
+// 	ingredient: { id: 'ingredient', nameImageUrl: { path: 'status', name: 'fx_pelle' } },
+// 	clans: { id: 'clans', nameImageUrl: { path: 'icons', name: 'small_leader' } },
+// 	dojo: { id: 'dojo', nameImageUrl: { path: 'icons', name: 'small_dojo' } },
+// 	gdc: { id: 'gdc', nameImageUrl: { path: 'icons', name: 'small_attack' } },
+// 	cdc: { id: 'cdc', nameImageUrl: { path: 'icons', name: 'small_attack' } },
+// 	question: { id: 'question', nameImageUrl: { path: 'icons', name: 'small_mail' } },
+// 	support: { id: 'support', nameImageUrl: { path: 'icons', name: 'small_browse_next' } },
+// 	security: { id: 'security', nameImageUrl: { path: 'icons', name: 'small_lock' } }
+// };
+
+// Order of sections (this defines prev/next automatically)
+// export const helpPageOrder = [
+// 	'intro', 'adopt', 'name', 'card', 'move', 'fight', 'heal', 'death',
+// 	'exp', 'missions', 'status', 'equipment', 'epic', 'group', 'ingredient',
+// 	'clans', 'dojo', 'gdc', 'cdc', 'question', 'support', 'security'
+// ];
 
 export default defineComponent({
 	name: 'Help',
 	components: {
-		DZButton,
 		TitleHeader,
+		DZButton,
 		Markdown
 	},
 	data() {
 		return {
-			helpPageSections,
-			selectedItemIndex: 0,
+			helpPageSections: [] as Array<MarkdownWithMetadata>,
+			isLoading: false,
+			// helpPageOrder,
+			// currentMetadata: {} as MarkdownMetadata,
+			selectedSectionIndex: 0,
 			markdownContent: '',
 			localStore: localStore()
 		};
 	},
 	computed: {
-		selectedItem(): HelpPageConfig | null {
-			return this.helpPageSections[this.selectedItemIndex] || null;
+		selectedSectionId(): string {
+        	return this.helpPageSections[this.selectedSectionIndex].id ?? '';
+		},
+		selectedSection(): MarkdownWithMetadata | null {
+			return this.helpPageSections[this.selectedSectionIndex] || null ;
+		},
+		hasPrevious(): boolean {
+			return this.selectedSectionIndex > 0;
+		},
+		hasNext(): boolean {
+			return this.selectedSectionIndex < this.helpPageSections.length - 1;
 		}
 	},
 	methods: {
-		async loadMarkdownForCurrentItem() {
-			if (!this.selectedItem) {
-				this.markdownContent = '';
-				return;
-			}
+		// async loadMarkdownForCurrentItem() {
+		// 	if (!this.selectedSection) {
+		// 		this.markdownContent = '';
+		// 		return;
+		// 	}
 
-			// Update URL hash without triggering navigation
-			const sectionId = this.helpPageSections[this.selectedItemIndex].id;
-			this.$router.replace({ hash: `#${sectionId}` });
-
+		// 	try {
+		// 		const { content, metadata } =  await loadHelpPageMarkdown(
+		// 			'helpPage',
+		// 			this.selectedSectionId,
+		// 			this.localStore.getLanguage ?? 'fr'
+		// 		);
+				
+		// 		this.currentMetadata = metadata;
+		// 		// Process custom image syntax
+		// 		this.markdownContent = processMarkdownImages(content, this.getImgURL);
+		// 	} catch (error) {
+		// 		console.error('Error loading markdown:', error);
+		// 		this.markdownContent = '# Error\n\nFailed to load help content.';
+		// 	}
+		// },
+		async loadAllSections() {
+			this.isLoading = true;
 			try {
-				const rawMarkdown = await loadHelpPageMarkdown(
-					'helpPage',
-					this.selectedItem.markdownFile,
-					this.localStore.getLanguage ?? 'fr'
-				);
+				// Load all markdown files for the current language
+				const pages = await loadAllHelpPages(this.localStore.getLanguage ?? 'fr');
+				
+				// Process images for each page
+				this.helpPageSections = pages.map(page => ({
+					...page,
+					content: processMarkdownImages(page.content, this.getImgURL)
+				}));
 
-				// Process custom image syntax
-				this.markdownContent = processMarkdownImages(rawMarkdown, this.getImgURL);
+				// // Load all markdown files
+				// for (const sectionId of helpPageSections) {
+				// 	const { content, metadata } = await loadHelpPageMarkdown(
+				// 		'helpPage',
+				// 		sectionId,
+				// 		this.localStore.getLanguage ?? 'fr'
+				// 	);
+					
+				// 	loadedSections.push({
+				// 		id: sectionId,
+				// 		metadata,
+				// 		content: processMarkdownImages(content, this.getImgURL)
+				// 	});
+				// }
+				
+				// Sort by order from frontmatter
+				this.helpPageSections.sort((a, b) => {
+					const orderA = a.metadata.order ?? 999;
+					const orderB = b.metadata.order ?? 999;
+					return orderA - orderB;
+				});
+				
+
+				console.log(`Loaded ${this.helpPageSections.length} sections`);
+				
+				this.isLoading = false;
 			} catch (error) {
-				console.error('Error loading markdown:', error);
-				this.markdownContent = '# Error\n\nFailed to load help content.';
+				console.error('Error loading help sections:', error);
+				this.isLoading = false;
 			}
 		},
 		async showContent(index: number) {
-			this.selectedItemIndex = index;
-			await this.loadMarkdownForCurrentItem();
+			this.selectedSectionIndex = index;
+			// await this.loadMarkdownForCurrentItem();
+			// Update URL hash without triggering navigation
+			const sectionId = this.helpPageSections[index].id;
+			this.$router.replace({ hash: `#${sectionId}` });
 		},
 		async showNextItem() {
-			if (this.selectedItem?.nextItem) {
-				const nextIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.nextItem);
-				if (nextIndex !== -1) {
-					await this.showContent(nextIndex);
-				}
+			if (this.hasNext) {
+				await this.showContent(this.selectedSectionIndex + 1);
 			}
 		},
 		async showPrevItem() {
-			if (this.selectedItem?.prevItem) {
-				const prevIndex = this.helpPageSections.findIndex(item => item.id === this.selectedItem?.prevItem);
-				if (prevIndex !== -1) {
-					await this.showContent(prevIndex);
-				}
+			if (this.hasPrevious) {
+				await this.showContent(this.selectedSectionIndex - 1);
 			}
-		},
-		getNextItem(): HelpPageConfig | undefined {
-			if (!this.selectedItem?.nextItem) return undefined;
-			return this.helpPageSections.find(item => item.id === this.selectedItem?.nextItem);
-		},
-		getPrevItem(): HelpPageConfig | undefined {
-			if (!this.selectedItem?.prevItem) return undefined;
-			return this.helpPageSections.find(item => item.id === this.selectedItem?.prevItem);
-		},
-		goToPage(pageName: string) {
-			this.$router.push({ name: pageName });
 		},
 		async loadFromHash() {
 			const hash = this.$route.hash.replace('#', '');
-
+			
 			if (hash) {
 				// Find the section index by ID
-				const sectionIndex = this.helpPageSections.findIndex(item => item.id === hash);
-
+				const sectionIndex = this.helpPageSections.findIndex(
+					section => section.id === hash
+				);;
+				
 				if (sectionIndex !== -1) {
-					this.selectedItemIndex = sectionIndex;
+					this.selectedSectionIndex = sectionIndex;
 				} else {
 					// Default to intro
-					this.selectedItemIndex = 0;
+					this.selectedSectionIndex = 0;
 				}
 			}
 
 			// Load the markdown for the current (or default) section
-			await this.loadMarkdownForCurrentItem();
+			// await this.loadMarkdownForCurrentItem();
 		}
 	},
 	async mounted() {
+		// Load all sections on mount
+		await this.loadAllSections();
 		// Check if there's a hash in the URL to load a specific section
-		await this.loadFromHash();
+		this.loadFromHash();
 	},
 	unmounted() {
 		this.$router.replace({ hash: '' });
@@ -340,7 +239,7 @@ export default defineComponent({
 	watch: {
 		'localStore.getLanguage': {
 			async handler() {
-				await this.loadMarkdownForCurrentItem();
+				await this.loadAllSections();
 			}
 		},
 		// Watch for hash changes in the URL
@@ -404,12 +303,21 @@ export default defineComponent({
 				font-variant: small-caps;
 			}
 		}
+		.next {
+			font-variant: small-caps;
+			font-weight: bold;
+			text-align: center;
+			height: 28px;
+			width: 145px !important;
+			font-size: 7pt;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 20px;
+		}
 		.markdown {
 			margin-top: 15px;
 			margin-left: 10px;
 
-			// Headings styling
-			:deep(h1),
 			:deep(h2),
 			:deep(h3),
 			:deep(h4),
@@ -420,6 +328,19 @@ export default defineComponent({
 				color: #fff1ad;
 				margin-bottom: 10px;
 				// padding: 5px 10px;
+			}
+
+			// Headings styling
+			:deep(h1) {
+				height: fit-content;
+				background-image: url('../assets/design/title_h1.webp');
+				background-position: left bottom;
+				background-repeat: no-repeat;
+				padding-bottom: 22px;
+				padding-left: 5px;
+				color: #71b703;
+				font-variant: small-caps;
+				font-size: 20px;
 			}
 
 			// Paragraphs
