@@ -1,3 +1,10 @@
+---
+order: 6
+icon:
+  path: icons
+  name: small_fire
+---
+
 Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monstres. Les différents protagonistes rejoignent alors le combat qui se déroule de façon automatique :
 
 Image
