@@ -520,7 +520,7 @@ export async function sendSseMessageToUserInChannel(
 	// Get user in channel
 	const player = channel.filter(c => c.playerId === playerId);
 	if (player.length === 0) {
-		LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
+		// LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
 		return;
 	}
 
