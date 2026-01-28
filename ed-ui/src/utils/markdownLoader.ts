@@ -1,5 +1,5 @@
 export interface MarkdownMetadata {
-	order?: number,
+	order?: number;
 	icon?: {
 		path: string;
 		name: string;
@@ -7,7 +7,7 @@ export interface MarkdownMetadata {
 }
 
 export interface MarkdownWithMetadata {
-	id: string,
+	id: string;
 	content: string;
 	metadata: MarkdownMetadata;
 }
@@ -33,9 +33,9 @@ function extractFrontmatter(markdown: string): { metadata: MarkdownMetadata; con
 	// Simple YAML parser for our use case
 	const metadata: MarkdownMetadata = {};
 	const lines = frontmatterText.split('\n');
-	
+
 	let currentKey: string | null = null;
-	let currentObject: any = null;
+	let currentObject: Record<string, string> | null = null;
 
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -49,15 +49,19 @@ function extractFrontmatter(markdown: string): { metadata: MarkdownMetadata; con
 			// Top-level property
 			const [key, value] = trimmed.split(':').map(s => s.trim());
 			currentKey = key;
-			
+
 			if (!value) {
 				// It's an object, prepare to receive nested properties
 				currentObject = {};
-				(metadata as any)[key] = currentObject;
+				if (key === 'icon') {
+					metadata.icon = currentObject as { path: string; name: string };
+				}
 			} else {
 				currentObject = null;
 				// Convert order to number if it's the order field
-				(metadata as any)[key] = key === 'order' ? parseInt(value, 10) : value;
+				if (key === 'order') {
+					metadata.order = parseInt(value, 10);
+				}
 			}
 		}
 	}
@@ -66,80 +70,84 @@ function extractFrontmatter(markdown: string): { metadata: MarkdownMetadata; con
 }
 
 /**
- * Loads all markdown files from a language folder in the help folder
+ * Loads all markdown files from a language folder
  * Uses Vite's import.meta.glob to discover and load all .md files
- * 
+ *
  * @param language - The language code (e.g., 'en', 'fr')
  * @returns Array of markdown files with their metadata
  */
 export async function loadAllHelpPages(language: string): Promise<MarkdownWithMetadata[]> {
 	const defaultLanguage = 'fr';
-	let modules: Record<string, any>;
-	
+
 	try {
-		// Try to load files from the requested language folder
-		// Note: the glob string cannot be a dynamic literal
-		const langModules = import.meta.glob('../i18n/helpPages/**/*.md', { 
+		// Load all markdown files from all language folders
+		// Pattern is relative to the file where import.meta.glob is called
+		const allModules = import.meta.glob<{ default: string }>('../i18n/helpPages/**/*.md', {
 			query: '?raw',
-			eager: false 
+			eager: false
 		});
 
-		console.log('All modules found:', Object.keys(langModules));
-		
+		console.log('All modules found:', Object.keys(allModules));
+
 		// Filter for the specific language
-		const filteredModules: Record<string, any> = {};
-		for (const [path, loader] of Object.entries(langModules)) {
-			if (path.includes(`/helpPages/${language}/`)) {
+		const languagePattern = `/helpPages/${language}/`;
+		const filteredModules: Record<string, () => Promise<{ default: string }>> = {};
+
+		for (const [path, loader] of Object.entries(allModules)) {
+			if (path.includes(languagePattern)) {
 				filteredModules[path] = loader;
 			}
 		}
-		
+
+		console.log(`Modules for ${language}:`, Object.keys(filteredModules));
+
 		// If no files found for the requested language, fall back to default
 		if (Object.keys(filteredModules).length === 0 && language !== defaultLanguage) {
-			for (const [path, loader] of Object.entries(langModules)) {
-				if (path.includes(`/helpPages/${defaultLanguage}/`)) {
+			const defaultPattern = `/helpPages/${defaultLanguage}/`;
+			for (const [path, loader] of Object.entries(allModules)) {
+				if (path.includes(defaultPattern)) {
 					filteredModules[path] = loader;
 				}
 			}
+			console.log(`Fallback to ${defaultLanguage}:`, Object.keys(filteredModules));
 		}
-		
-		modules = filteredModules;
+
+		const pages: MarkdownWithMetadata[] = [];
+
+		for (const [path, loader] of Object.entries(filteredModules)) {
+			try {
+				// Extract the filename (without extension) as the ID
+				const filename = path.split('/').pop()?.replace('.md', '') || '';
+
+				// Load the module
+				const module = await loader();
+				const rawContent = module.default;
+
+				// Extract frontmatter and content
+				const { metadata, content } = extractFrontmatter(rawContent);
+
+				pages.push({
+					id: filename,
+					metadata,
+					content
+				});
+			} catch (error) {
+				console.error(`Error loading ${path}:`, error);
+			}
+		}
+
+		console.log(`Loaded ${pages.length} pages`);
+		return pages;
 	} catch (error) {
-		console.error(`Error loading help pages:`, error);
+		console.error('Error in loadAllHelpPages:', error);
 		return [];
 	}
-	
-	const pages: MarkdownWithMetadata[] = [];
-	
-	for (const [path, loader] of Object.entries(modules)) {
-		try {
-			// Extract the filename (without extension) as the ID
-			const filename = path.split('/').pop()?.replace('.md', '') || '';
-			
-			// Load the module
-			const module = await loader();
-			const rawContent = module.default || module;
-			
-			// Extract frontmatter and content
-			const { metadata, content } = extractFrontmatter(rawContent);
-			
-			pages.push({
-				id: filename,
-				metadata,
-				content
-			});
-		} catch (error) {
-			console.error(`Error loading ${path}:`, error);
-		}
-	}
-	
-	return pages;
 }
 
 /**
  * Loads a markdown file for a specific help page section and language
  * Falls back to French if the requested language file is not found
- * 
+ *
  * @param parentFolder - The base name of the parent folder that contains the markdown files
  * @param markdownFile - The base name of the markdown file (e.g., 'intro')
  * @param language - The language code (e.g., 'en', 'fr')
@@ -169,7 +177,7 @@ export async function loadMarkdownPage(
 					`Failed to load fallback markdown file: ${parentFolder}/${defaultLanguage}/${markdownFile}.md`,
 					fallbackError
 				);
-				return { 
+				return {
 					id: markdownFile,
 					content: `# Error\n\nFailed to load fallback markdown: ${parentFolder}/${defaultLanguage}/${markdownFile}.md`,
 					metadata: {}
@@ -180,8 +188,8 @@ export async function loadMarkdownPage(
 			return {
 				id: markdownFile,
 				content: `# Error\n\nFailed to load markdown: ${parentFolder}/${defaultLanguage}/${markdownFile}.md`,
-				metadata: {},
-			}
+				metadata: {}
+			};
 		}
 	}
 }
@@ -189,15 +197,12 @@ export async function loadMarkdownPage(
 /**
  * Processes markdown content to replace custom image syntax with actual image URLs
  * Converts: ![alt](@path/name) to <img src="..." alt="..." />
- * 
+ *
  * @param markdown - The raw markdown content
  * @param getImgURL - Function to resolve image URLs (from component)
  * @returns Processed markdown with resolved image paths
  */
-export function processMarkdownImages(
-	markdown: string,
-	getImgURL: (path: string, name: string) => string
-): string {
+export function processMarkdownImages(markdown: string, getImgURL: (path: string, name: string) => string): string {
 	// Match ![alt text](@path/name) pattern
 	const imageRegex = /!\[([^\]]*)\]\(@([^/]+)\/([^)]+)\)/g;
 
