@@ -11,10 +11,10 @@
 						@click="showContent(index)"
 						:class="{ selected: selectedSectionIndex === index }"
 					>
-						<img 
-							v-if="section.metadata.icon" 
-							:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)" 
-							alt="Icon" 
+						<img
+							v-if="section.metadata.icon"
+							:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)"
+							alt="Icon"
 						/>
 						{{ $t(`guide.sections.${section.id}`) }}
 					</li>
@@ -27,7 +27,7 @@
 		<div class="showContent">
 			<div v-if="selectedSection" class="content">
 				<div class="markdown">
-					<Markdown :source="markdownContent" />
+					<Markdown :source="selectedSection.content" />
 				</div>
 				<DZButton @click="showPrevItem" class="next" v-if="hasPrevious">
 					<img :src="getImgURL('icons', 'small_page_up')" />
@@ -50,9 +50,8 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZButton from '../components/common/DZButton.vue';
 import Markdown from 'vue3-markdown-it';
-import {MarkdownWithMetadata, loadAllHelpPages, processMarkdownImages } from '../utils/markdownLoader';
+import { MarkdownWithMetadata, loadAllHelpPages, processMarkdownImages } from '../utils/markdownLoader';
 import { localStore } from '../store/index';
-
 
 // export interface HelpPageSection {
 // 	id: string;
@@ -106,16 +105,16 @@ export default defineComponent({
 			// helpPageOrder,
 			// currentMetadata: {} as MarkdownMetadata,
 			selectedSectionIndex: 0,
-			markdownContent: '',
+			// markdownContent: '',
 			localStore: localStore()
 		};
 	},
 	computed: {
 		selectedSectionId(): string {
-        	return this.helpPageSections[this.selectedSectionIndex].id ?? '';
+			return this.helpPageSections[this.selectedSectionIndex].id ?? '';
 		},
 		selectedSection(): MarkdownWithMetadata | null {
-			return this.helpPageSections[this.selectedSectionIndex] || null ;
+			return this.helpPageSections[this.selectedSectionIndex] || null;
 		},
 		hasPrevious(): boolean {
 			return this.selectedSectionIndex > 0;
@@ -137,7 +136,7 @@ export default defineComponent({
 		// 			this.selectedSectionId,
 		// 			this.localStore.getLanguage ?? 'fr'
 		// 		);
-				
+
 		// 		this.currentMetadata = metadata;
 		// 		// Process custom image syntax
 		// 		this.markdownContent = processMarkdownImages(content, this.getImgURL);
@@ -151,7 +150,7 @@ export default defineComponent({
 			try {
 				// Load all markdown files for the current language
 				const pages = await loadAllHelpPages(this.localStore.getLanguage ?? 'fr');
-				
+
 				// Process images for each page
 				this.helpPageSections = pages.map(page => ({
 					...page,
@@ -165,24 +164,23 @@ export default defineComponent({
 				// 		sectionId,
 				// 		this.localStore.getLanguage ?? 'fr'
 				// 	);
-					
+
 				// 	loadedSections.push({
 				// 		id: sectionId,
 				// 		metadata,
 				// 		content: processMarkdownImages(content, this.getImgURL)
 				// 	});
 				// }
-				
+
 				// Sort by order from frontmatter
 				this.helpPageSections.sort((a, b) => {
 					const orderA = a.metadata.order ?? 999;
 					const orderB = b.metadata.order ?? 999;
 					return orderA - orderB;
 				});
-				
 
 				console.log(`Loaded ${this.helpPageSections.length} sections`);
-				
+
 				this.isLoading = false;
 			} catch (error) {
 				console.error('Error loading help sections:', error);
@@ -208,13 +206,11 @@ export default defineComponent({
 		},
 		async loadFromHash() {
 			const hash = this.$route.hash.replace('#', '');
-			
+
 			if (hash) {
 				// Find the section index by ID
-				const sectionIndex = this.helpPageSections.findIndex(
-					section => section.id === hash
-				);;
-				
+				const sectionIndex = this.helpPageSections.findIndex(section => section.id === hash);
+
 				if (sectionIndex !== -1) {
 					this.selectedSectionIndex = sectionIndex;
 				} else {
