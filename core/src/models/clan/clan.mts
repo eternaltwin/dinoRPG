@@ -4,6 +4,7 @@ export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDat
 	members: Pick<ClanMember, 'id'>[];
 	leader: Pick<Player, 'id' | 'name'>;
 	totalScore?: number;
+	bannerUrl?: string;
 };
 
 export type ClanForSearch = Pick<Clan, 'id' | 'name'>;

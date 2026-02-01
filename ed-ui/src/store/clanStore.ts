@@ -20,6 +20,10 @@ export const clanStore = defineStore('clanStore', {
 				this.clan.langs.splice(0);
 				this.clan.langs.push(...(await ClanService.updateClanLangs(clanId, languages)));
 			}
+		},
+		updateBanner(bannerUrl: string): void {
+			if (!this.clan) return;
+			this.clan.bannerUrl = bannerUrl;
 		}
 	},
 	persist: {

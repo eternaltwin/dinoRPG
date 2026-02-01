@@ -19,7 +19,6 @@ type Events = {
 	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: string };
 	connected: boolean;
-	clanBannerUpdated: string;
 	confirmDialog: boolean;
 };
 

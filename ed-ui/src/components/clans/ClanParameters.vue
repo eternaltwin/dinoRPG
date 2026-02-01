@@ -28,9 +28,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { ClanService } from '../../services/ClanService.js';
-import { errorHandler } from '../../utils/errorHandler.js';
-import { playerStore } from '../../store/playerStore.js';
+import { ClanService } from '../../services';
+import { errorHandler } from '../../utils';
+import { playerStore } from '../../store';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import LangSelector from './LangSelector.vue';
 import { LocalesEnum } from '../../i18n';
@@ -110,7 +110,7 @@ export default defineComponent({
 				const reader = new FileReader();
 				reader.onload = e => {
 					this.filePreviewUrl = e.target?.result as string;
-					EventBus.emit('clanBannerUpdated', this.filePreviewUrl);
+					this.clanStore.updateBanner(this.filePreviewUrl);
 				};
 				reader.readAsDataURL(file);
 				form.delete('file');

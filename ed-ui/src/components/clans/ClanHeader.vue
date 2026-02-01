@@ -44,8 +44,8 @@
 				<Flags :langs="clanStore.getClan?.langs" />
 			</div>
 		</div>
-		<div class="banner" v-if="bannerDataUrl">
-			<img class="banner-img" :src="bannerDataUrl" alt="banner" />
+		<div class="banner" v-if="clanStore.getClan?.bannerUrl">
+			<img class="banner-img" :src="clanStore.getClan.bannerUrl" alt="banner" />
 		</div>
 		<div class="bottom-info">
 			<p class="creation-date">
@@ -61,10 +61,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
-import { API_BASE, utils } from '../../utils/index.js';
+import { API_BASE, utils } from '../../utils';
 import DZUser from '../common/DZUser.vue';
 import { clanStore } from '../../store/clanStore';
-import EventBus from '../../events';
 import Flags from '../common/Flags.vue';
 
 export default defineComponent({
@@ -107,9 +106,6 @@ export default defineComponent({
 	},
 	mounted() {
 		this.loadBanner();
-		EventBus.on('clanBannerUpdated', (dataUrl: string) => {
-			this.bannerDataUrl = dataUrl;
-		});
 	},
 	watch: {
 		'clanStore.getClanId'(newVal: number | null) {
