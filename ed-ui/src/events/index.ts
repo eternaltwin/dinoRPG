@@ -12,8 +12,6 @@ type Events = {
 	report: string | undefined;
 	equipItem: Array<DinozItems>;
 	unEquipItem: number;
-	twinoMenu: boolean;
-	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: string };
 	connected: boolean;
 };

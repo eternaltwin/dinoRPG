@@ -49,15 +49,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { localStore, playerStore, sessionStore } from '../../store';
-import EventBus from '../../events/index.js';
+import { localStore, playerStore, sessionStore, useMenuStore } from '../../store';
 import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
-import { useMenuStore } from '../../store/menuStore';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -88,7 +86,7 @@ export default defineComponent({
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
 		},
 		openMenu() {
-			EventBus.emit('twinoMenu', true);
+			useMenuStore().setTwinoMenuOpened(true);
 		},
 		openDinoz() {
 			useMenuStore().setDinozMenuOpened(true);

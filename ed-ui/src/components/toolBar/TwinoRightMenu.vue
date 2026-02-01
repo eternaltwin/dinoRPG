@@ -1,10 +1,10 @@
 <template>
 	<!--	<div  class="modal">-->
 	<Transition name="opacity">
-		<div v-show="menuCalled" class="backDrop" @click="close()"></div>
+		<div v-show="isTwinoidMenuOpened" class="backDrop" @click="close()"></div>
 	</Transition>
 	<Transition name="slide">
-		<div v-show="menuCalled" class="root">
+		<div v-show="isTwinoidMenuOpened" class="root">
 			<div class="player">
 				<div class="close">
 					<button @click="close" class="burgerClose">
@@ -211,10 +211,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { dinozStore, localStore, playerStore, useMenuStore } from '../../store';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
-import { NotificationService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
+import { NotificationService } from '../../services';
+import { errorHandler } from '../../utils';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
@@ -232,7 +232,6 @@ export default defineComponent({
 	components: { LiveStats, PlayerOptions },
 	data() {
 		return {
-			menuCalled: false,
 			localStore: localStore(),
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
@@ -241,6 +240,11 @@ export default defineComponent({
 			AdminRole: AdminRole
 		};
 	},
+	computed: {
+		isTwinoidMenuOpened(): boolean {
+			return useMenuStore().isTwinoMenuOpened;
+		}
+	},
 	methods: {
 		logOff(): void {
 			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
@@ -248,10 +252,10 @@ export default defineComponent({
 			deleteCookie(`x-drpg-${channel}-user`);
 			this.dinozStore.$reset();
 			this.playerStore.$reset();
-			this.menuCalled = false;
+			useMenuStore().setTwinoMenuOpened(false);
 		},
 		close() {
-			this.menuCalled = false;
+			useMenuStore().setTwinoMenuOpened(false);
 		},
 		messagerie() {
 			EventBus.emit('message', true);
@@ -419,9 +423,6 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		EventBus.on('twinoMenu', async e => {
-			this.menuCalled = e;
-		});
 		this.notifications = this.playerStore.getNotifications
 			.map(notif => this.translateNotification(notif))
 			.filter(n => n !== null);
