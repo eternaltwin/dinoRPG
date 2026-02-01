@@ -84,7 +84,7 @@ export default defineComponent({
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
-		loadBanner() {
+		loadBanner(): void {
 			const bannerImg = new Image();
 			bannerImg.crossOrigin = 'anonymous'; // To prevent tainted canvas issues
 			bannerImg.src = `${API_BASE}/clan/${this.clanStore.getClanId}/banner`;

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import EventBus from '../events/index.js';
 import { getCookie } from '../utils/cookies.js';
+import { useMenuStore } from '../store/menuStore';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -434,7 +435,7 @@ router.beforeEach(to => {
 		}
 	}
 	EventBus.emit('twinoMenu', false);
-	EventBus.emit('dinozMenu', false);
+	useMenuStore().setDinozMenuOpened(false);
 });
 
 export default router;

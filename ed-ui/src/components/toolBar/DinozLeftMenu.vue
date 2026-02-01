@@ -1,9 +1,9 @@
 <template>
 	<Transition name="opacity">
-		<div v-show="menuCalled" class="backDrop" @click="close()"></div>
+		<div v-show="isMenuOpened" class="backDrop" @click="close()"></div>
 	</Transition>
 	<Transition name="slide">
-		<div v-show="menuCalled" class="root">
+		<div v-show="isMenuOpened" class="root">
 			<div class="player">
 				<div class="money">{{ beautifulMoney }} <img :src="getImgURL('icons', 'small_gold')" alt="or" /></div>
 				<div class="close">
@@ -173,15 +173,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { dinozStore, localStore, playerStore, useMenuStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
-import { utils } from '../../utils/index.js';
+import { utils } from '../../utils';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
-import { placeList } from '../../constants/index.js';
+import { placeList } from '../../constants';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 
 export default defineComponent({
@@ -189,7 +188,6 @@ export default defineComponent({
 	components: { DinozMini },
 	data() {
 		return {
-			menuCalled: false,
 			localStore: localStore(),
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
@@ -209,11 +207,14 @@ export default defineComponent({
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
+		},
+		isMenuOpened(): boolean {
+			return useMenuStore().isDinozMenuOpened;
 		}
 	},
 	methods: {
 		close() {
-			this.menuCalled = false;
+			useMenuStore().setDinozMenuOpened(false);
 		},
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
@@ -259,11 +260,6 @@ export default defineComponent({
 			deep: true
 		}
 		// Removed watcher for currentDinozId as it's a computed property and should not be assigned directly
-	},
-	mounted() {
-		EventBus.on('dinozMenu', async e => {
-			this.menuCalled = e;
-		});
 	}
 });
 </script>

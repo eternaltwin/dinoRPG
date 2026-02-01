@@ -57,6 +57,7 @@ import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
+import { useMenuStore } from '../../store/menuStore';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -90,7 +91,7 @@ export default defineComponent({
 			EventBus.emit('twinoMenu', true);
 		},
 		openDinoz() {
-			EventBus.emit('dinozMenu', true);
+			useMenuStore().setDinozMenuOpened(true);
 		},
 		async startSseForNotification(): Promise<void> {
 			if (!this.playerStore.getPlayerId) {

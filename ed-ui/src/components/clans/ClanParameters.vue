@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import { ClanService } from '../../services';
 import { errorHandler } from '../../utils';
 import { playerStore } from '../../store';
