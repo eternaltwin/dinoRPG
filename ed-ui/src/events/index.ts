@@ -18,7 +18,6 @@ type Events = {
 	twinoMenu: boolean;
 	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: string };
-	refreshDojo: boolean;
 	connected: boolean;
 	clanBannerUpdated: string;
 	confirmDialog: boolean;

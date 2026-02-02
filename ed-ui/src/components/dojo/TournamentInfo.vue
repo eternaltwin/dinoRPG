@@ -44,7 +44,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { dinozStore, localStore, playerStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
 import { DojoBasic } from '@drpg/core/models/dojo/dojoBasic';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler, utils } from '../../utils/index.js';
@@ -158,15 +157,6 @@ export default defineComponent({
 		formatDate(oldDate: Date) {
 			return formatDateTime(oldDate.toString());
 		}
-	},
-	async mounted() {
-		EventBus.on('refreshDojo', async e => {
-			if (e) await this.refresh();
-		});
-		await this.refresh();
-	},
-	unmounted() {
-		EventBus.off('refreshDojo');
 	}
 });
 </script>

@@ -91,12 +91,11 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, dojoStore, playerStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
@@ -147,7 +146,8 @@ export default defineComponent({
 			playerStore: playerStore(),
 			dojoMaxSeries: DOJO_MAX_SERIES,
 			leftPlayer: null as null | { id: string; name: string },
-			rightPlayer: null as null | { id: string; name: string }
+			rightPlayer: null as null | { id: string; name: string },
+			dojoStore: dojoStore()
 		};
 	},
 	methods: {
@@ -253,8 +253,6 @@ export default defineComponent({
 					this.dailyReset = dojo.dailyReset;
 				}
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
-
-				EventBus.emit('refreshDojo', true);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -282,7 +280,7 @@ export default defineComponent({
 	},
 	watch: {
 		fightAnimationEnded() {
-			EventBus.emit('refreshDojo', true);
+			this.dojoStore.update();
 		}
 	}
 });
