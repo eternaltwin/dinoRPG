@@ -7,6 +7,7 @@ import { PlayerService } from '../services';
 import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 import { dinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
+import {NotificationSeverity} from "@drpg/prisma/enums";
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -81,7 +82,9 @@ export const playerStore = defineStore('playerStore', {
 		addNotification(notif: Notification): void {
 			this.notifications.push(notif);
 			this.notificationCounter++;
-			this.update();
+			if (notif.severity === NotificationSeverity.clanApplyAccepted) {
+				this.update();
+			}
 		},
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;
