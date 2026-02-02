@@ -140,7 +140,7 @@ export default defineComponent({
 					this.tournamentInfo.teamSize = tournamentInfo.teamSize;
 
 					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason !== UnavailableReason.frozen)
+						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 						.filter(d => races.includes(d.race.raceId))
 						.filter(d => d.level <= tournamentInfo.levelLimit)
 						.map(d => {
