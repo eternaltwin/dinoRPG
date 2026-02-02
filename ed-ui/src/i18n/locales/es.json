@@ -1391,8 +1391,8 @@
 				"sry": "Site popre ven pa, sino mot'dan lobatou, k?",
 				"go": "Jovebozé te lleva al mar, a una parte que parece ser evitada por los otros barcos... Al acercarte, ves lo que parece ser un enorme Rascafandro a algunas decenas de metros del barco. Si continúas en esta dirección y si el Guardia Atlanteido llevaba razón, vas a ser atacado de un momento a otro... ¡¡cuanto más rápido pase esto mejor!!",
 				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido...",
-				"weirdSwamp": "¿Ha' vi'to algo rarou en el pantano vi'coso? ¡Esho se mouve solo, te digo sho!",
-				"swampTreasure": "Dicennnn qu'encontrarás pepitahs si rasga' cuando el fango se empieza a de'controlar… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
+				"weirdSwamp": "¡Hol'a, d' nuev' chavalico! ¿Tú ha' vi'to algo reto'cido n'el pantano vi'coso? ¡Esho se mouve solo, t' digo sho!",
+				"swampTreasure": "Dicennnn qu'encontrarásh pepitahs si rasga' cuando el fango se empieza a mouver… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
 				"swampLeave": "Jovebozé te hace un gesto con la mano sonriendo y se aleja tarareando una canción de marineros."
 			},
 			"playerChoice": {
@@ -1401,7 +1401,7 @@
 				"go": "Seguir a Jovebozé",
 				"attack": "Continuar",
 				"back": "¡¡¡REGRESAR!!!",
-				"swampTreasure": "… ¿¡raro!?",
+				"swampTreasure": "… ¿¡retorcido!?",
 				"swampLeave": "No entiendo nada de lo que dices..."
 			}
 		},
@@ -5193,7 +5193,8 @@
 		"rewardScenario": "Has progresado en el escenario **{scenario}**.",
 		"FBStarted": "¡Un nuevo evento ha comenzado!",
 		"clanApply": "¡{name} quiere unirse a tu clan!",
-		"message": "Has recibido un nuevo mensaje."
+		"message": "Has recibido un nuevo mensaje.",
+		"clanApplyAccepted": "El clan {name} ha aceptado tu solicitud."
 	},
 	"events": {
 		"disclaimer": "Aquí encontrará todos los eventos comunitarios en curso.",

@@ -3833,7 +3833,7 @@
 			"clover": "Gagnant de DinoLoto",
 			"pac": "Schriftrolle der Gesammelten Fähigkeiten",
 			"card": "Merguez-Treuekarte Deluxe",
-			"beta": "Os de betasaurus"
+			"beta": "Knochen des Betasaurus"
 		},
 		"description": {
 			"perle": "Die Perle aus dem Brunnen ermöglicht allen deinen Dinoz, sich jeden Tag am Jungbrunnen erholen.",
@@ -4048,7 +4048,7 @@
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.",
 			"card": "Bis zur Perfektion gegrillt und vom **Merguez-Verkäufer** höchstpersönlich abgestempelt, belohnt diese sagenumwobene Karte die ausdauerndsten Mägen. Nachdem du eine unerhörte Anzahl Merguez-Würstchen verschlungen hast, erhieltst du den Ehrentitel des **Offiziellen Grandiosen Gourmands**.",
-			"beta": "Félicitations ! Vous avez été un des pionniers sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
+			"beta": "Herzlichen Glückwunsch! Du warst einer der Pioniere von Dino-RPG. Und nun bist du bereit für brandneue Herausforderungen wie diesen Betasaurus. Ob es wohl doch ein Fehler gewesen ist?"
 		}
 	},
 	"ranking": {
@@ -4371,7 +4371,9 @@
 		},
 		"event": {
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
-		}
+		},
+		"player": "Meister",
+		"vs": "VS"
 	},
 	"ingredients": {
 		"disclaimer": "Diese Seite erfasst alle Zutaten, die mithilfe von Sammelfähigkeiten zusammengetragen worden sind.",
@@ -4616,7 +4618,7 @@
 			"pools": ":chrono: Die nächste Runde der Gruppenphase wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"finals": ":chrono: Die nächste Finalrunde wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"nextQualif": ":chrono: Die nächste Qualifikation wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
-			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
+			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!"
 		},
 		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
 		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
@@ -5191,7 +5193,8 @@
 		"rewardScenario": "Du hast im Szenario „**{scenario}**“ Fortschritt erzielt.",
 		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
 		"clanApply": "{name} möchte deinem Klan beitreten!",
-		"message": "Du hast eine neue Nachricht erhalten."
+		"message": "Du hast eine neue Nachricht erhalten.",
+		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen."
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",

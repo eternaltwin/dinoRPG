@@ -5193,7 +5193,8 @@
 		"rewardScenario": "You made progress in the scenario **{scenario}**.",
 		"FBStarted": "A new event has started!",
 		"clanApply": "{name} would like to join your clan!",
-		"message": "You have received a new message."
+		"message": "You have received a new message.",
+		"clanApplyAccepted": "The clan {name} accepted your application."
 	},
 	"events": {
 		"disclaimer": "Here you will find all ongoing community events.",
