@@ -5,7 +5,12 @@
 				<DinozWithoutFlash :display="dinoz.display" :life="1" flip :isFrozen="dinoz.isFrozen" />
 				<template #fallback><Loading /></template>
 			</Suspense>
-			<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
+			<RouterLink class="name" :to="`/dino/${dinoz.id}`" v-if="myAccount">
+				<div class="link">
+					{{ dinoz.name }}
+				</div>
+			</RouterLink>
+			<div class="name" v-else>
 				{{ dinoz.name }}
 			</div>
 			<div class="dinozInfo">
@@ -73,10 +78,6 @@ export default defineComponent({
 				return `position: absolute; left: ${left}px; top: ${top}px;`;
 			}
 			return 'top: -15px; left: -15px;';
-		},
-		goToDinoz(dinozId: number) {
-			if (!this.myAccount) return;
-			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
 		updateSortedDinozList() {
 			this.sortedDinozList =
@@ -149,6 +150,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #52646b;
 	background-color: transparent;
+	text-decoration: none;
 }
 .dinozInfo {
 	text-align: center;
