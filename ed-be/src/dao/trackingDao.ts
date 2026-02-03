@@ -27,7 +27,7 @@ export async function getEveryStatTop3() {
 			SELECT stat, "playerId", quantity,
 				ROW_NUMBER() OVER (PARTITION BY stat ORDER BY quantity DESC) AS row_number
 			FROM "playerTracking"
-			WHERE stat IN (${Prisma.join(Object.values(StatTracking))})
+			WHERE stat IN (${Prisma.join(Object.values(StatTracking))}) AND quantity > 1
 		) AS s
 		LEFT JOIN "player" p ON s."playerId" = p.id
 		WHERE s.row_number <= 3

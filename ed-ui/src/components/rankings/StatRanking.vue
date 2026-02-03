@@ -107,6 +107,10 @@ onMounted(async () => {
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			font-weight: bold;
 			margin-bottom: 10px;
+			img {
+				width: auto;
+				max-height: 12px;
+			}
 		}
 
 		.stat-player {
