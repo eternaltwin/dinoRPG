@@ -19,6 +19,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@eternaltwin/dinorpg_animations": "^1.0.4",
+    "@vueuse/core": "^14.2.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
     "ckeditor5": "^45.0.0",

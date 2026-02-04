@@ -4535,6 +4535,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-bluetooth@npm:^0.0.21":
+  version: 0.0.21
+  resolution: "@types/web-bluetooth@npm:0.0.21"
+  checksum: 10/f8796dc9f67ee556a2c895ee7d6c4f62b2a8c52963c3d5e81a2938d3313130f9f7330ff82a6a3dceb63217ba615020e1d4cca8842d469ba6d8ac782853d47d0d
+  languageName: node
+  linkType: hard
+
 "@types/webpack-env@npm:^1.15.2":
   version: 1.18.4
   resolution: "@types/webpack-env@npm:1.18.4"
@@ -5052,6 +5059,35 @@ __metadata:
   version: 3.5.8
   resolution: "@vue/shared@npm:3.5.8"
   checksum: 10/33e3ba56c87dc05a1ad97e65cac74ec4eaeb93e051a05167b06841e34f3b96b7af043b15a157f17db01fdce81cb7b53ff6c93a91edb4bcfaf21ef29bf4041f64
+  languageName: node
+  linkType: hard
+
+"@vueuse/core@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@vueuse/core@npm:14.2.0"
+  dependencies:
+    "@types/web-bluetooth": "npm:^0.0.21"
+    "@vueuse/metadata": "npm:14.2.0"
+    "@vueuse/shared": "npm:14.2.0"
+  peerDependencies:
+    vue: ^3.5.0
+  checksum: 10/b7161e1a8f6ad6069b7f5eb2e00ee505ac09d72a9b39b5d48a5fefa029995e09c04222a768f57bd6a13e39b279c4945b0da7c35d00ec3145d24ba6c86d8b4ebd
+  languageName: node
+  linkType: hard
+
+"@vueuse/metadata@npm:14.2.0":
+  version: 14.2.0
+  resolution: "@vueuse/metadata@npm:14.2.0"
+  checksum: 10/9799ee604bc52441d3ea67b1e68580e62c711505a8f65062e950e90e1eafcd9b05eba6b23e8c31e3044bef0d16c42df9495afc5c88216f40ea2025c7a0d44c67
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:14.2.0":
+  version: 14.2.0
+  resolution: "@vueuse/shared@npm:14.2.0"
+  peerDependencies:
+    vue: ^3.5.0
+  checksum: 10/94fded2155c8a482aa5d75f7200ba09ef3d538de66103d0972d73a9d00a67521543b4d5a495ef4b15b43401313a541b9421e99062a380c9586c42b1117c75ac9
   languageName: node
   linkType: hard
 
@@ -7159,6 +7195,7 @@ __metadata:
     "@vue/cli-plugin-typescript": "npm:^5.0.8"
     "@vue/eslint-config-prettier": "npm:^8.0.0"
     "@vue/eslint-config-typescript": "npm:^12.0.0"
+    "@vueuse/core": "npm:^14.2.0"
     axios: "npm:^1.6.0"
     chart.js: "npm:^4.4.2"
     ckeditor5: "npm:^45.0.0"
