@@ -1,6 +1,11 @@
 ---
 order: 3
+icon:
+  path: icons
+  name: small_question
 ---
+
+# Nommer son Dinoz
 
 Une fois votre Dinoz acheté, il vous est demandé de lui donner un Nom, comme par exemple ici :
 

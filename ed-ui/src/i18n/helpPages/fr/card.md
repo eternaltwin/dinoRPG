@@ -1,6 +1,11 @@
 ---
-order: 5
+order: 4
+icon:
+  path: status
+  name: fx_ccard
 ---
+
+# La Fiche du Dinoz
 
 La **Fiche** de votre Dinoz est l'endroit où vous pouvez à la fois voir l'**état** de votre Dinoz et effectuer un certain nombre d'**actions**. Elle se présente sous la forme suivante :
 

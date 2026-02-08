@@ -1,3 +1,10 @@
+---
+order: 1
+icon:
+  path: icons
+  name: small_home
+---
+
 Welcome to **DinoRPG** !
 
 Here, you play as a **Dinoz Master**, you can adopt and plays multiple wild creatures named **Dinoz**. You can explore the world of Dinoland, battle and evolve your Dinoz, complete Missions, and fulfill the numerous Quests you encounter during your adventure.

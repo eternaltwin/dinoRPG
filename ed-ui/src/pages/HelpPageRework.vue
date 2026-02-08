@@ -1,46 +1,43 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t(`topBar.rightMenu.guide`)" />
-	<div v-if="isLoading" class="loading">Loading...</div>
-	<div v-else>
-		<div class="intro">
-			<div class="menu">
-				<ul class="list">
-					<li
-						v-for="(section, index) in helpPageSections"
-						:key="section.id"
-						@click="showContent(index)"
-						:class="{ selected: selectedSectionIndex === index }"
-					>
-						<img
-							v-if="section.metadata.icon"
-							:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)"
-							alt="Icon"
-						/>
-						{{ $t(`guide.sections.${section.id}`) }}
-					</li>
-				</ul>
-			</div>
-			<div class="image">
-				<img :src="getImgURL('design', 'rocky_01')" />
-			</div>
+	<div class="intro">
+		<div class="menu">
+			<ul class="list">
+				<li
+					v-for="(section, index) in helpPageSections"
+					:key="section.id"
+					@click="showContent(index)"
+					:class="{ selected: selectedSectionIndex === index }"
+				>
+					<img
+						v-if="section.metadata.icon"
+						:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)"
+						alt="Icon"
+					/>
+					{{ $t(`guide.sections.${section.id}`) }}
+				</li>
+			</ul>
 		</div>
-		<div class="showContent">
-			<div v-if="selectedSection" class="content">
-				<div class="markdown">
-					<Markdown :source="selectedSection.content" />
-				</div>
-				<DZButton @click="showPrevItem" class="next" v-if="hasPrevious">
-					<img :src="getImgURL('icons', 'small_page_up')" />
-					{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex - 1].id}`) }}
-				</DZButton>
-				<DZButton @click="showNextItem" class="next" v-if="hasNext">
-					<img :src="getImgURL('icons', 'small_page_down')" />
-					{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex + 1].id}`) }}
-				</DZButton>
-				<RouterLink to="/news" class="link">
-					<DZButton class="next"><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
-				</RouterLink>
+		<div class="image">
+			<img :src="getImgURL('design', 'rocky_01')" />
+		</div>
+	</div>
+	<div class="showContent">
+		<div v-if="selectedSection" class="content">
+			<div class="markdown">
+				<Markdown :source="selectedSection.content" />
 			</div>
+			<DZButton @click="showPrevItem" class="next" v-if="hasPrevious">
+				<img :src="getImgURL('icons', 'small_page_up')" />
+				{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex - 1].id}`) }}
+			</DZButton>
+			<DZButton @click="showNextItem" class="next" v-if="hasNext">
+				<img :src="getImgURL('icons', 'small_page_down')" />
+				{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex + 1].id}`) }}
+			</DZButton>
+			<RouterLink to="/news" class="link">
+				<DZButton class="next"><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
+			</RouterLink>
 		</div>
 	</div>
 </template>
@@ -101,7 +98,7 @@ export default defineComponent({
 	data() {
 		return {
 			helpPageSections: [] as Array<MarkdownWithMetadata>,
-			isLoading: false,
+			// isLoading: false,
 			// helpPageOrder,
 			// currentMetadata: {} as MarkdownMetadata,
 			selectedSectionIndex: 0,
@@ -146,7 +143,7 @@ export default defineComponent({
 		// 	}
 		// },
 		async loadAllSections() {
-			this.isLoading = true;
+			// this.isLoading = true;
 			try {
 				// Load all markdown files for the current language
 				const pages = await loadAllHelpPages(this.localStore.getLanguage ?? 'fr');
@@ -179,12 +176,10 @@ export default defineComponent({
 					return orderA - orderB;
 				});
 
-				console.log(`Loaded ${this.helpPageSections.length} sections`);
-
-				this.isLoading = false;
+				// this.isLoading = false;
 			} catch (error) {
 				console.error('Error loading help sections:', error);
-				this.isLoading = false;
+				// this.isLoading = false;
 			}
 		},
 		async showContent(index: number) {
@@ -322,6 +317,7 @@ export default defineComponent({
 				background-color: rgb(142, 62, 38);
 				border-radius: 2px;
 				color: #fff1ad;
+				margin-top: 20px;
 				margin-bottom: 10px;
 				// padding: 5px 10px;
 			}
@@ -365,6 +361,9 @@ export default defineComponent({
 			}
 
 			// Images that are alone in a paragraph should be block-level
+			// Note: this works if the image is the **only** HTML element.
+			// So if a sentence has only an image and not other generated HTML element, then it will make the image a standalone block.
+			// The simple way to avoid that is to add some bolding (with **<text>**) in the Markdown or another image.
 			:deep(p > img:only-child) {
 				display: block;
 			}
@@ -403,12 +402,12 @@ export default defineComponent({
 			}
 
 			// Hide default bullet when list item starts with an image
-			:deep(li:has(> img:first-child)::before) {
+			:deep(li:has(> p > img:first-child)::before) {
 				display: none;
 			}
 
 			// Style for custom bullet images (first child)
-			:deep(li img:first-child) {
+			:deep(li > p > img:first-child) {
 				flex-shrink: 0;
 				margin-left: -30px;
 				margin-right: 0;
