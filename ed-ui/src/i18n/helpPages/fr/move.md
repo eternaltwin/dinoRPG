@@ -1,6 +1,11 @@
 ---
-order: 4
+order: 5
+icon:
+  path: icons
+  name: small_follow
 ---
+
+# Se Déplacer
 
 L'Univers de Dinoland est constitué de nombreux endroits à découvrir. Cest différents lieux sont reliés par des chemins que votre Dinoz peut emprunter en se déplaçant. Pour **déplacer** votre Dinoz, il suffit de cliquer sur le point suivant de la Carte. La Carte de Dinoland est affichée de cette manière :
 
