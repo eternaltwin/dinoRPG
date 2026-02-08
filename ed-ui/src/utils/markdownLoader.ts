@@ -87,8 +87,6 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 			eager: false
 		});
 
-		console.log('All modules found:', Object.keys(allModules));
-
 		// Filter for the specific language
 		const languagePattern = `/helpPages/${language}/`;
 		const filteredModules: Record<string, () => Promise<{ default: string }>> = {};
@@ -98,8 +96,6 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 				filteredModules[path] = loader;
 			}
 		}
-
-		console.log(`Modules for ${language}:`, Object.keys(filteredModules));
 
 		// If no files found for the requested language, fall back to default
 		if (Object.keys(filteredModules).length === 0 && language !== defaultLanguage) {
@@ -136,7 +132,6 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 			}
 		}
 
-		console.log(`Loaded ${pages.length} pages`);
 		return pages;
 	} catch (error) {
 		console.error('Error in loadAllHelpPages:', error);

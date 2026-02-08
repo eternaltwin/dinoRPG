@@ -1,3 +1,10 @@
+---
+order: 2
+icon:
+  path: design
+  name: small_member
+---
+
 To start the game, you must adopt a creature. Follow these steps:
 
 ![Adoption screen](@guide/adopt)
