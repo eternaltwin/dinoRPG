@@ -13,7 +13,7 @@ import {
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { placeList, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
@@ -43,6 +43,7 @@ import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 
 /**
  * @summary Process a fight
@@ -467,7 +468,12 @@ export async function rewardFight(
 	const merguezPerPlayer: Record<string, number> = {};
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
-			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			const itemRef = itemList[itemUsed];
+
+			// Remove only classic items
+			if (itemRef.itemType === ItemType.CLASSIC) {
+				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
 
 			if (fighter.playerId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.playerId]) {

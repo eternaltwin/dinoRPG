@@ -36,6 +36,10 @@ import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -692,11 +696,22 @@ export async function fightFBTournamentOpponent(req: Request) {
 	await archiveFight(fightResult, authed.id, null);
 
 	// Consume item used
+	let merguezUsed = 0;
 	for (const fighter of [...fightResult.attackers]) {
 		for (const itemUsed of fighter.itemsUsed) {
-			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			const itemRef = itemList[itemUsed];
+
+			// Remove only classic items
+			if (itemRef.itemType === ItemType.CLASSIC) {
+				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
+
+			if (itemUsed === Item.GOBLIN_MERGUEZ) {
+				merguezUsed++
+			}
 		}
 	}
+	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
 
 	let statusReward: DinozStatusId | undefined = undefined;
 	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
