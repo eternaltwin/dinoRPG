@@ -16,7 +16,7 @@ import {
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { addMoney } from '../dao/playerDao.js';
 import { DISCORD, LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
@@ -37,6 +37,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
 import NewsType = $Enums.NewsType;
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -217,9 +218,12 @@ class TournamentManager {
 			team2Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team2Id, prisma));
 		}
 
-		// Remove items from dinoz for the fight and set life to maxLife
 		team1Dinoz.map(d => {
-			d.items = [];
+			// Keep only magic items
+			d.items = d.items.filter(i =>
+				Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
+			);
+			// Set life to max
 			d.life = d.maxLife;
 			// Remove Trou noir, Sylphides and Hypnose
 			d.skills = d.skills.filter(
@@ -227,7 +231,11 @@ class TournamentManager {
 			);
 		});
 		team2Dinoz.map(d => {
-			d.items = [];
+			// Keep only magic items
+			d.items = d.items.filter(i =>
+				Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
+			);
+			// Set life to max
 			d.life = d.maxLife;
 			// Remove Trou noir, Sylphides and Hypnose
 			d.skills = d.skills.filter(
@@ -239,7 +247,9 @@ class TournamentManager {
 			canUseCapture: false,
 			castleFight: false,
 			enableStats: false,
-			poisonEnabled: tournamentRules.poison
+			poisonEnabled: tournamentRules.poison,
+			canUseEquipment: true,
+			canUsePermanentEquipmentOnly: true
 		};
 
 		const fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
@@ -269,8 +279,9 @@ class TournamentManager {
 							energy: f.energy,
 							maxEnergy: f.maxEnergy,
 							energyRecovery: f.energyRecovery,
-							dark: undefined,
-							size: undefined
+							dark: f.dark,
+							size: f.size,
+							entrance: f.entrance
 						};
 					})
 				),

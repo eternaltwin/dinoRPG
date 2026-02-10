@@ -699,15 +699,10 @@ export async function fightFBTournamentOpponent(req: Request) {
 	let merguezUsed = 0;
 	for (const fighter of [...fightResult.attackers]) {
 		for (const itemUsed of fighter.itemsUsed) {
-			const itemRef = itemList[itemUsed];
-
-			// Remove only classic items
-			if (itemRef.itemType === ItemType.CLASSIC) {
-				await removeItemFromDinoz(fighter.dinozId, itemUsed);
-			}
+			await removeItemFromDinoz(fighter.dinozId, itemUsed);
 
 			if (itemUsed === Item.GOBLIN_MERGUEZ) {
-				merguezUsed++
+				merguezUsed++;
 			}
 		}
 	}

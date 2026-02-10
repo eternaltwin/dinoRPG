@@ -28,27 +28,39 @@ export interface FightRules {
 	canUseCapture: boolean;
 	enableStats: boolean;
 	poisonEnabled: boolean;
+	canUseEquipment: boolean;
+	// Permanent means non-consumable.
+	canUsePermanentEquipmentOnly: boolean;
 }
 
+// Regular fight rules: no castle, no stats, capture enabled, poison enabled, all equipment.
 export const MONSTER_FIGHT_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: true,
 	enableStats: false,
-	poisonEnabled: true
+	poisonEnabled: true,
+	canUseEquipment: true,
+	canUsePermanentEquipmentOnly: false
 };
 
+// Dojo challenge rules: no castle, no capture, stats enabled, poison enabled, only permanent equipment.
 export const DOJO_CHALLENGE_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: false,
 	enableStats: true,
-	poisonEnabled: true
+	poisonEnabled: true,
+	canUseEquipment: true,
+	canUsePermanentEquipmentOnly: true
 };
 
+// Regular PVP fight rules: no castle, no stats, no capture, poison enabled, all equipment.
 export const STANDARD_PVP_RULES: FightRules = {
 	castleFight: false,
 	canUseCapture: false,
 	enableStats: false,
-	poisonEnabled: true
+	poisonEnabled: true,
+	canUseEquipment: true,
+	canUsePermanentEquipmentOnly: false
 };
 
 export interface FightConfiguration {
