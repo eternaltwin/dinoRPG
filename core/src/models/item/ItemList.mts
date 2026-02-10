@@ -2163,7 +2163,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		name: 'golden_napodino',
 		canBeEquipped: true,
 		canBeUsedNow: false,
-		itemType: ItemType.CLASSIC,
+		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 100,
 		sellable: false,
