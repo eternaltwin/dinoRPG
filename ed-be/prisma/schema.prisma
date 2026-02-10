@@ -615,6 +615,14 @@ model ClanWar {
   clans     Clan[]
 }
 
+model ClanEvent {
+  id        String        @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventType ClanEventType
+  startDate DateTime      @db.Timestamp(6)
+  endDate   DateTime      @db.Timestamp(6)
+  config    String        @db.Text
+}
+
 model ClanIngredient {
   id           Int  @id @default(autoincrement())
   ingredientId Int
@@ -1044,4 +1052,9 @@ enum NewsType {
 enum EventType {
   CHRISTMAS
   VALENTINE
+}
+
+enum ClanEventType {
+  war
+  mana_war
 }

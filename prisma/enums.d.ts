@@ -214,6 +214,18 @@ export namespace PantheonMotif {
 
 export type PantheonMotif = typeof PantheonMotif[keyof typeof PantheonMotif];
 
+export const ClanEventType: {
+  readonly war: 'war';
+  readonly mana_war: 'mana_war'
+};
+
+export namespace ClanEventType {
+  export type war = 'war';
+  export type mana_war = 'mana_war'
+}
+
+export type ClanEventType = typeof ClanEventType[keyof typeof ClanEventType];
+
 export const ModerationReason: {
   readonly multi: 'multi';
   readonly dinozName: 'dinozName';
@@ -344,6 +356,7 @@ export const $Enums: {
   readonly OfferStatus: typeof OfferStatus;
   readonly LogType: typeof LogType;
   readonly PantheonMotif: typeof PantheonMotif;
+  readonly ClanEventType: typeof ClanEventType;
   readonly ModerationReason: typeof ModerationReason;
   readonly ModerationAction: typeof ModerationAction;
   readonly NotificationSeverity: typeof NotificationSeverity;
