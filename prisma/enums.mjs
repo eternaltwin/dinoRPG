@@ -101,6 +101,11 @@ export const PantheonMotif = {
   epic: 'epic'
 };
 
+export const ClanEventType = {
+  war: 'war',
+  mana_war: 'mana_war'
+};
+
 export const ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
@@ -164,6 +169,7 @@ export const $Enums = {
   OfferStatus,
   LogType,
   PantheonMotif,
+  ClanEventType,
   ModerationReason,
   ModerationAction,
   NotificationSeverity,

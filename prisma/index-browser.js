@@ -496,6 +496,14 @@ exports.Prisma.ClanWarScalarFieldEnum = {
   dateEnd: 'dateEnd'
 };
 
+exports.Prisma.ClanEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  config: 'config'
+};
+
 exports.Prisma.ClanIngredientScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
@@ -808,6 +816,11 @@ exports.PantheonMotif = exports.$Enums.PantheonMotif = {
   epic: 'epic'
 };
 
+exports.ClanEventType = exports.$Enums.ClanEventType = {
+  war: 'war',
+  mana_war: 'mana_war'
+};
+
 exports.ModerationReason = exports.$Enums.ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
@@ -905,6 +918,7 @@ exports.Prisma.ModelName = {
   Clan: 'Clan',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',
+  ClanEvent: 'ClanEvent',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',
