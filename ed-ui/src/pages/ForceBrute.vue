@@ -142,6 +142,9 @@ export default defineComponent({
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
+	},
+	unmounted() {
+		this.$refreshGold();
 	}
 });
 </script>
