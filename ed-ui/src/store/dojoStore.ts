@@ -11,13 +11,16 @@ export const dojoStore = defineStore('dojoStore', {
 		TournamentTeam: undefined,
 		currentTournament: null,
 		rank: 0,
-		worth: 0
+		worth: 0,
+		tournamentInfo: undefined,
+		myTeam: []
 	}),
 	getters: {
 		getReputation: (state: StoreDojo) => state.reputation,
 		getWorth: (state: StoreDojo) => state.worth,
 		getRank: (state: StoreDojo) => state.rank,
-		getState: (state: StoreDojo) => state.currentTournament
+		getState: (state: StoreDojo) => state.currentTournament,
+		getTeam: (state: StoreDojo) => state.myTeam
 		// getDojo: (state: StoreDojo) => state.dojo,
 		// getTournament: (state: StoreDojo) => state.tournament
 	},
@@ -36,6 +39,14 @@ export const dojoStore = defineStore('dojoStore', {
 			const totalFight = this.DojoChallengeHistory.length;
 			const worth = Math.round((totalVictory / totalFight) * 100);
 			this.worth = isNaN(worth) ? 0 : worth;
+			this.tournamentInfo = await DojoService.getTournamentInfo();
+			this.myTeam = await DojoService.getTournamentTeam();
+		},
+		async updateTeam() {
+			this.myTeam = await DojoService.getTournamentTeam();
+		},
+		deleteTeam() {
+			this.myTeam = [];
 		}
 	},
 	persist: {
