@@ -38,9 +38,9 @@ import { NavigationFailure } from 'vue-router';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { dinozStore, playerStore, sessionStore } from '../store/index.js';
-import { errorHandler } from '../utils/index.js';
+import { DinozService, NPCService, PlayerService } from '../services';
+import { dinozStore, playerStore, sessionStore, useDinozStore } from '../store';
+import { errorHandler } from '../utils';
 
 export default defineComponent({
 	name: 'NPC',
@@ -141,7 +141,7 @@ export default defineComponent({
 				playerChoice: []
 			};
 		} else {
-			const npc = this.dinozStore.getNpc(this.dinozId);
+			const npc = useDinozStore().getCurrentDinoz.npcAwait;
 
 			let step = 'begin';
 

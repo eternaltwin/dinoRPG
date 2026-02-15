@@ -2,6 +2,31 @@ import { defineStore } from 'pinia';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { StoreDinoz } from '@drpg/core/models/store/StoreDinoz';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { computed, ComputedRef, ref, Ref } from 'vue';
+
+export const useDinozStore = defineStore('dinozStore', () => {
+	const dinozList: Ref<DinozFiche[]> = ref([]);
+	const currentDinozId: Ref<number | undefined> = ref();
+
+	const getCurrentDinoz: ComputedRef<DinozFiche> = computed((): DinozFiche => {
+		const dinoz: DinozFiche | undefined = dinozList.value.find(
+			(dinoz: DinozFiche) => dinoz.id === currentDinozId.value
+		);
+		if (!dinoz) throw Error("Dinoz doesn't exist in store.");
+		return dinoz;
+	});
+
+	const setCurrentDinozId = (dinozId: number): void => {
+		currentDinozId.value = dinozId;
+	};
+
+	return {
+		dinozList,
+		currentDinozId,
+		getCurrentDinoz,
+		setCurrentDinozId
+	};
+});
 
 export const dinozStore = defineStore('dinozStore', {
 	state: (): StoreDinoz => ({
@@ -17,18 +42,6 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinoz = state.dinozList.find((dinoz: DinozFiche) => dinoz.id === state.currentDinozId);
 			if (!dinoz) throw Error("Dinoz doesn't exist in store.");
 			return dinoz;
-		},
-		getDinozInventory: (state: StoreDinoz) => {
-			return (dinozId: number | undefined) => {
-				const dinoz = state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId);
-				if (!dinoz) throw Error("Dinoz doesn't exist in store.");
-				const items: Array<number> = new Array(dinoz.maxItems);
-				dinoz.items.forEach((item, index) => (items[index] = item));
-				return items;
-			};
-		},
-		getNpc: (state: StoreDinoz) => {
-			return (dinozId: number) => state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId)?.npcAwait;
 		},
 		getCurrentDinozId: (state: StoreDinoz) => state.currentDinozId
 	},

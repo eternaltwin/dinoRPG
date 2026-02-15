@@ -1,6 +1,6 @@
 <template>
 	<div class="equip">
-		<template v-for="(item, index) in dinozStore.getDinozInventory(dinozStore.getCurrentDinozId)" :key="index">
+		<template v-for="(item, index) in getInventory" :key="index">
 			<Tippy
 				@click="unequip(item)"
 				theme="normal"
@@ -26,10 +26,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { errorHandler } from '../../utils/errorHandler.js';
-import { InventoryService } from '../../services/InventoryService.js';
+import { errorHandler } from '../../utils';
+import { InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useDinozStore } from '../../store';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -41,9 +42,15 @@ export default defineComponent({
 	computed: {
 		itemNameList() {
 			return itemNameList;
+		},
+		getInventory(): number[] {
+			const dinoz: DinozFiche = useDinozStore().getCurrentDinoz;
+			const placesToFill: number = dinoz.maxItems - dinoz.items.length;
+			return dinoz.items.concat(new Array(placesToFill).fill(undefined));
 		}
 	},
 	methods: {
+		useDinozStore,
 		async unequip(itemId: number) {
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
