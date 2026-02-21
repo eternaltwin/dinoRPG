@@ -4313,7 +4313,7 @@ const attackTarget = (
 			damage,
 			elements,
 			isAssault,
-			skill ? skillList[skill].type !== SkillType.I : false
+			skill ? skillList[skill].type === SkillType.I : false,
 		);
 
 		// Check for assault dodge
@@ -4489,7 +4489,7 @@ const attackTarget = (
 		target: target,
 		isAssault: isAssault,
 		evasion: evasion,
-		hpLost: totalDamage
+		hpLost: totalDamage,
 	};
 };
 
@@ -4500,7 +4500,7 @@ const checkDefensiveEffects = (
 	damage: number,
 	elements: ElementType[],
 	isCloseCombat: boolean,
-	isInvocation: boolean
+	isInvocation: boolean,
 ) => {
 	// Reduce damage by bulle percentage
 	if (
@@ -4516,7 +4516,7 @@ const checkDefensiveEffects = (
 		// Don't trigger for VOID
 		!elements.includes(ElementType.VOID)
 	) {
-		damage = Math.round(damage * (1 - target.stats.special.bubbleRate));
+		damage = Math.max(Math.round(damage * (1 - target.stats.special.bubbleRate)), 1);
 
 		fightData.steps.push({
 			action: 'attach',
