@@ -35,7 +35,7 @@ export function initOpentelemetry(config: Config): NodeSDK {
 			// Express instrumentation expects HTTP layer to be instrumented
 			new HttpInstrumentation(),
 			new ExpressInstrumentation({
-				ignoreLayersType: [ExpressLayerType.MIDDLEWARE, ExpressLayerType.REQUEST_HANDLER, ExpressLayerType.ROUTER]
+				ignoreLayersType: [ExpressLayerType.MIDDLEWARE, ExpressLayerType.REQUEST_HANDLER]
 			}),
 			new prismaInstrumentation.PrismaInstrumentation()
 		]
