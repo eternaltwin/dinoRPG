@@ -638,78 +638,79 @@ export async function getLBResponseInformation(playerId: string) {
 
 export async function getCommonDataRequest(playerId: string) {
 	return withSpan(getCommonDataRequest.name, async () => {
-		const player = await prisma.player.findUnique({
-			where: {
-				id: playerId
-			},
-			select: {
-				id: true,
-				connexionToken: true,
-				name: true,
-				money: true,
-				lang: true,
-				engineer: true,
-				priest: true,
-				shopKeeper: true,
-				lastLogin: true,
-				ips: true,
-				skipFight: true,
-				skipLevel: true,
-				discoveredSkills: true,
-				ClanMember: { select: { clanId: true } },
-				notifications: {
-					select: { id: true, message: true, severity: true, link: true, date: true },
-					where: { read: false }
-				},
-				dinoz: {
-					select: {
-						id: true,
-						leaderId: true,
-						display: true,
-						name: true,
-						life: true,
-						maxLife: true,
-						experience: true,
-						placeId: true,
-						level: true,
-						order: true,
-						raceId: true,
-						unavailableReason: true,
-						missions: true,
-						nbrUpFire: true,
-						nbrUpWood: true,
-						nbrUpWater: true,
-						nbrUpLightning: true,
-						nbrUpAir: true,
-						remaining: true,
-						fight: true,
-						gather: true,
-						items: { select: { itemId: true } },
-						status: { select: { statusId: true } },
-						skills: { select: { skillId: true, state: true } },
-						followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
-						TournamentTeam: { select: { tournamentId: true } },
-						concentration: true,
-						build: true
+		const [player, dinoz] = await Promise.all([
+			prisma.player.findUnique({
+				where: { id: playerId },
+				select: {
+					id: true,
+					connexionToken: true,
+					name: true,
+					money: true,
+					lang: true,
+					engineer: true,
+					priest: true,
+					shopKeeper: true,
+					lastLogin: true,
+					ips: true,
+					skipFight: true,
+					skipLevel: true,
+					discoveredSkills: true,
+					ClanMember: { select: { clanId: true } },
+					notifications: {
+						select: { id: true, message: true, severity: true, link: true, date: true },
+						where: { read: false }
 					},
-					where: {
-						OR: [
-							{ unavailableReason: null },
-							{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-						]
-					},
-					orderBy: [{ order: 'asc' }, { name: 'asc' }]
+					rewards: true,
+					matelasseur: true,
+					items: { select: { itemId: true, quantity: true } },
+					quests: { select: { questId: true, progression: true } },
+					ranking: { select: { dinozCount: true, points: true } },
+					role: true
+				}
+			}),
+			prisma.dinoz.findMany({
+				where: {
+					playerId,
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
 				},
-				rewards: true,
-				matelasseur: true,
-				items: { select: { itemId: true, quantity: true } },
-				quests: { select: { questId: true, progression: true } },
-				ranking: { select: { dinozCount: true, points: true } },
-				role: true
-			}
-		});
+				select: {
+					id: true,
+					leaderId: true,
+					display: true,
+					name: true,
+					life: true,
+					maxLife: true,
+					experience: true,
+					placeId: true,
+					level: true,
+					order: true,
+					raceId: true,
+					unavailableReason: true,
+					missions: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					remaining: true,
+					fight: true,
+					gather: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true, state: true } },
+					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
+					TournamentTeam: { select: { tournamentId: true } },
+					concentration: true,
+					build: true
+				},
+				orderBy: [{ order: 'asc' }, { name: 'asc' }]
+			})
+		]);
 
-		return player;
+		return player ? { ...player, dinoz } : null;
 	});
 }
 

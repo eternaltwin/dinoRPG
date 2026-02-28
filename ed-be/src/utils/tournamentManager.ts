@@ -38,6 +38,7 @@ import { romanize } from 'romans';
 import NewsType = $Enums.NewsType;
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { invalidateTournamentCache } from './tournament.cache.js';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -360,6 +361,7 @@ class TournamentManager {
 	}
 
 	private async rewardTournament(prisma: PismaClientLocal) {
+		invalidateTournamentCache();
 		const tournament = await prisma.tournament.findUniqueOrThrow({
 			where: {
 				id: this.tournamentId
@@ -606,6 +608,7 @@ class TournamentManager {
 
 	async initializeTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		LOGGER.log(`initializeTournament in progress, cleaning dojoOpponents, dojoTeam and dojoChallengeHistory.`);
+		invalidateTournamentCache();
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
 		// Reset all dojo
@@ -1170,11 +1173,13 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 		if (nextPlannedMatch.time <= new Date() && matches > 0) {
 			await this.generateNextRound(prisma);
 		}
+		invalidateTournamentCache();
 
 		scheduleJob(`tournament_${this.tournamentId}`, nextPlannedMatch.time, () => this.generateNextRound(prisma));
 	}
 
 	async rewardQualification(prisma: PismaClientLocal): Promise<void> {
+		invalidateTournamentCache();
 		const allRewarded = await prisma.ranking.findMany({
 			where: {
 				dojo: {

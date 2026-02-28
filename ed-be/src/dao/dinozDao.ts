@@ -5,6 +5,7 @@ import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import { GLOBAL } from '../context.js';
 import { withSpan } from '../utils/tracing.js';
+import { getActiveTeamsCached } from '../utils/tournament.cache.js';
 
 // Getters
 
@@ -221,24 +222,23 @@ export async function getDinozPlace(dinozId: number) {
 
 export async function isDinozInTournament(dinozId: number) {
 	return withSpan(isDinozInTournament.name, async () => {
-		const tournament = await TournamentManager.getActiveTeams(prisma);
-		if (tournament) {
-			const dinoz = await prisma.dinoz.findUnique({
-				where: { id: dinozId },
-				select: {
-					id: true,
-					TournamentTeam: { select: { tournamentId: true, id: true } }
-				}
-			});
-			if (!dinoz) {
-				throw new ExpectedError(`Cannot find dinoz`);
-			}
+		const tournament = await getActiveTeamsCached(prisma);
+		if (!tournament) return false;
 
-			const dinozTournamentTeam = dinoz.TournamentTeam.find(t => t.tournamentId === tournament.id);
-			return !!(dinozTournamentTeam && tournament.winners.some(t => t.tournamentTeamId === dinozTournamentTeam.id));
-		} else {
-			return false;
-		}
+		const dinoz = await prisma.dinoz.findUnique({
+			where: { id: dinozId },
+			select: {
+				TournamentTeam: {
+					where: { tournamentId: tournament.id },
+					select: { id: true }
+				}
+			}
+		});
+
+		if (!dinoz?.TournamentTeam.length) return false;
+
+		const dinozTeamId = dinoz.TournamentTeam[0].id;
+		return tournament.winners.some(t => t.tournamentTeamId === dinozTeamId);
 	});
 }
 
