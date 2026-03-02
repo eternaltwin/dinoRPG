@@ -166,11 +166,9 @@ function formatShortDate(iso: string | Date): string {
 	.divide-x > * + * {
 		border-left: 1px solid #8e3e25 !important;
 	}
-
 	&__content {
 		white-space: pre-line;
-		overflow-wrap: break-word;
-		word-break: break-all;
+		word-break: break-word;
 	}
 	.badge {
 		color: #ffee92;
