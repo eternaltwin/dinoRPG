@@ -26548,6 +26548,7 @@ export namespace Prisma {
     quetzuBought: number | null
     clanMemberId: number | null
     dailyGridRewards: number | null
+    archivedSiteId: number | null
     banCaseId: number | null
     discoveredSkills: number | null
   }
@@ -26557,6 +26558,7 @@ export namespace Prisma {
     quetzuBought: number | null
     clanMemberId: number | null
     dailyGridRewards: number | null
+    archivedSiteId: number | null
     banCaseId: number | null
     discoveredSkills: number[]
   }
@@ -26586,6 +26588,8 @@ export namespace Prisma {
     dailyGridRewards: number | null
     skipFight: boolean | null
     skipLevel: boolean | null
+    shareArchivedData: boolean | null
+    archivedSiteId: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
     id: string | null
@@ -26616,6 +26620,8 @@ export namespace Prisma {
     dailyGridRewards: number | null
     skipFight: boolean | null
     skipLevel: boolean | null
+    shareArchivedData: boolean | null
+    archivedSiteId: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
     id: string | null
@@ -26646,6 +26652,8 @@ export namespace Prisma {
     dailyGridRewards: number
     skipFight: number
     skipLevel: number
+    shareArchivedData: number
+    archivedSiteId: number
     banCaseId: number
     discoveredSkills: number
     lastVersionSeen: number
@@ -26659,6 +26667,7 @@ export namespace Prisma {
     quetzuBought?: true
     clanMemberId?: true
     dailyGridRewards?: true
+    archivedSiteId?: true
     banCaseId?: true
     discoveredSkills?: true
   }
@@ -26668,6 +26677,7 @@ export namespace Prisma {
     quetzuBought?: true
     clanMemberId?: true
     dailyGridRewards?: true
+    archivedSiteId?: true
     banCaseId?: true
     discoveredSkills?: true
   }
@@ -26697,6 +26707,8 @@ export namespace Prisma {
     dailyGridRewards?: true
     skipFight?: true
     skipLevel?: true
+    shareArchivedData?: true
+    archivedSiteId?: true
     banCaseId?: true
     lastVersionSeen?: true
     id?: true
@@ -26727,6 +26739,8 @@ export namespace Prisma {
     dailyGridRewards?: true
     skipFight?: true
     skipLevel?: true
+    shareArchivedData?: true
+    archivedSiteId?: true
     banCaseId?: true
     lastVersionSeen?: true
     id?: true
@@ -26757,6 +26771,8 @@ export namespace Prisma {
     dailyGridRewards?: true
     skipFight?: true
     skipLevel?: true
+    shareArchivedData?: true
+    archivedSiteId?: true
     banCaseId?: true
     discoveredSkills?: true
     lastVersionSeen?: true
@@ -26875,6 +26891,8 @@ export namespace Prisma {
     dailyGridRewards: number
     skipFight: boolean
     skipLevel: boolean
+    shareArchivedData: boolean
+    archivedSiteId: number | null
     banCaseId: number | null
     discoveredSkills: number[]
     lastVersionSeen: string
@@ -26925,6 +26943,8 @@ export namespace Prisma {
     dailyGridRewards?: boolean
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -26994,6 +27014,8 @@ export namespace Prisma {
     dailyGridRewards?: boolean
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -27026,6 +27048,8 @@ export namespace Prisma {
     dailyGridRewards?: boolean
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -27058,13 +27082,15 @@ export namespace Prisma {
     dailyGridRewards?: boolean
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "shareArchivedData" | "archivedSiteId" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -27178,6 +27204,8 @@ export namespace Prisma {
       dailyGridRewards: number
       skipFight: boolean
       skipLevel: boolean
+      shareArchivedData: boolean
+      archivedSiteId: number | null
       banCaseId: number | null
       discoveredSkills: number[]
       lastVersionSeen: string
@@ -27666,6 +27694,8 @@ export namespace Prisma {
     readonly dailyGridRewards: FieldRef<"Player", 'Int'>
     readonly skipFight: FieldRef<"Player", 'Boolean'>
     readonly skipLevel: FieldRef<"Player", 'Boolean'>
+    readonly shareArchivedData: FieldRef<"Player", 'Boolean'>
+    readonly archivedSiteId: FieldRef<"Player", 'Int'>
     readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly lastVersionSeen: FieldRef<"Player", 'String'>
@@ -77780,6 +77810,8 @@ export namespace Prisma {
     dailyGridRewards: 'dailyGridRewards',
     skipFight: 'skipFight',
     skipLevel: 'skipLevel',
+    shareArchivedData: 'shareArchivedData',
+    archivedSiteId: 'archivedSiteId',
     banCaseId: 'banCaseId',
     discoveredSkills: 'discoveredSkills',
     lastVersionSeen: 'lastVersionSeen',
@@ -79778,6 +79810,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
+    shareArchivedData?: BoolFilter<"Player"> | boolean
+    archivedSiteId?: IntNullableFilter<"Player"> | number | null
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
@@ -79846,6 +79880,8 @@ export namespace Prisma {
     dailyGridRewards?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
+    shareArchivedData?: SortOrder
+    archivedSiteId?: SortOrderInput | SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -79919,6 +79955,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
+    shareArchivedData?: BoolFilter<"Player"> | boolean
+    archivedSiteId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
@@ -79985,6 +80023,8 @@ export namespace Prisma {
     dailyGridRewards?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
+    shareArchivedData?: SortOrder
+    archivedSiteId?: SortOrderInput | SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -80024,6 +80064,8 @@ export namespace Prisma {
     dailyGridRewards?: IntWithAggregatesFilter<"Player"> | number
     skipFight?: BoolWithAggregatesFilter<"Player"> | boolean
     skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
+    shareArchivedData?: BoolWithAggregatesFilter<"Player"> | boolean
+    archivedSiteId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
@@ -83918,6 +83960,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -83985,6 +84029,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -84052,6 +84098,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -84119,6 +84167,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -84186,6 +84236,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -84217,6 +84269,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -84247,6 +84301,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -88428,6 +88484,8 @@ export namespace Prisma {
     dailyGridRewards?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
+    shareArchivedData?: SortOrder
+    archivedSiteId?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -88439,6 +88497,7 @@ export namespace Prisma {
     quetzuBought?: SortOrder
     clanMemberId?: SortOrder
     dailyGridRewards?: SortOrder
+    archivedSiteId?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
   }
@@ -88468,6 +88527,8 @@ export namespace Prisma {
     dailyGridRewards?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
+    shareArchivedData?: SortOrder
+    archivedSiteId?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
@@ -88498,6 +88559,8 @@ export namespace Prisma {
     dailyGridRewards?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
+    shareArchivedData?: SortOrder
+    archivedSiteId?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
@@ -88508,6 +88571,7 @@ export namespace Prisma {
     quetzuBought?: SortOrder
     clanMemberId?: SortOrder
     dailyGridRewards?: SortOrder
+    archivedSiteId?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
   }
@@ -96727,6 +96791,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -96793,6 +96859,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -97491,6 +97559,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -97557,6 +97627,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -100011,6 +100083,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -100077,6 +100151,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -100264,6 +100340,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -100330,6 +100408,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -100826,6 +100906,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -100892,6 +100974,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -101028,6 +101112,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -101094,6 +101180,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -103530,6 +103618,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -103596,6 +103686,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -103678,6 +103770,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -103744,6 +103838,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -103810,6 +103906,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -103876,6 +103974,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -104059,6 +104159,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -104125,6 +104227,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -104888,6 +104992,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -104954,6 +105060,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -105036,6 +105144,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -105102,6 +105212,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -105168,6 +105280,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -105234,6 +105348,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -105316,6 +105432,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -105382,6 +105500,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -105448,6 +105568,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -105514,6 +105636,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -105596,6 +105720,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -105662,6 +105788,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -105728,6 +105856,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -105794,6 +105924,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -105876,6 +106008,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -105942,6 +106076,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -106008,6 +106144,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -106074,6 +106212,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -106156,6 +106296,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -106222,6 +106364,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -106288,6 +106432,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -106354,6 +106500,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -106436,6 +106584,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -106502,6 +106652,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -106568,6 +106720,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -106634,6 +106788,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -106716,6 +106872,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -106782,6 +106940,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -106848,6 +107008,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -106914,6 +107076,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -106996,6 +107160,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -107062,6 +107228,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -107218,6 +107386,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -107284,6 +107454,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -107400,6 +107572,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -107466,6 +107640,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -107632,6 +107808,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -107698,6 +107876,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -107932,6 +108112,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -107998,6 +108180,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -108207,6 +108391,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -108273,6 +108459,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -108461,6 +108649,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -108527,6 +108717,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -108799,6 +108991,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -108865,6 +109059,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -108947,6 +109143,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -109013,6 +109211,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -109179,6 +109379,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -109245,6 +109447,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -109433,6 +109637,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -109499,6 +109705,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -109581,6 +109789,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -109647,6 +109857,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -109895,6 +110107,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -109961,6 +110175,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -110204,6 +110420,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -110270,6 +110488,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -110394,6 +110614,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -110460,6 +110682,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -110675,6 +110899,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -110741,6 +110967,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -110859,6 +111087,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -110925,6 +111155,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -111033,6 +111265,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -111099,6 +111333,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -111217,6 +111453,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -111283,6 +111521,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -111427,6 +111667,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -111493,6 +111735,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -111617,6 +111861,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -111683,6 +111929,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -111927,6 +112175,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -111993,6 +112243,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -112064,6 +112316,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112130,6 +112384,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -112201,6 +112457,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112267,6 +112525,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112455,6 +112715,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112521,6 +112783,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -112598,6 +112862,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112664,6 +112930,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -112741,6 +113009,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112807,6 +113077,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112873,6 +113145,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112939,6 +113213,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113032,6 +113308,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113098,6 +113376,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113230,6 +113510,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113296,6 +113578,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113401,6 +113685,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113467,6 +113753,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113594,6 +113882,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113660,6 +113950,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113777,6 +114069,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113843,6 +114137,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113967,6 +114263,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114033,6 +114331,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114185,6 +114485,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -114251,6 +114553,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -114317,6 +114621,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114383,6 +114689,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114465,6 +114773,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -114531,6 +114841,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -114597,6 +114909,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114663,6 +114977,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114734,6 +115050,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114800,6 +115118,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114871,6 +115191,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114937,6 +115259,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -115279,6 +115603,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -115345,6 +115671,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -115422,6 +115750,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -115488,6 +115818,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -115565,6 +115897,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -115631,6 +115965,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -116034,6 +116370,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -116100,6 +116438,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -116235,6 +116575,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -116301,6 +116643,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -117022,6 +117366,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -117088,6 +117434,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -117409,6 +117757,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -117475,6 +117825,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -117686,6 +118038,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -117752,6 +118106,8 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -117834,6 +118190,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -117900,6 +118258,8 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string

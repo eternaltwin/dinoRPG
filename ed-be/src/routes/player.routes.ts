@@ -3,6 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import {
 	canCreateClan,
 	getAccountData,
+	getArchivedData,
 	getCommonData,
 	getDinozList,
 	playerToolTip,
@@ -348,6 +349,19 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isUUID()], async (req: Req
 	}
 });
 
+routes.get(`${commonPath}/:id/archived`, [param('id').exists().isUUID()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getArchivedData(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
 routes.delete(commonPath, [], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -411,20 +425,16 @@ routes.put(
 	}
 );
 
-routes.patch(
-	`${commonPath}/settings/:setting`,
-	[param('setting').exists(), body('setting').exists().isBoolean()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-		try {
-			const response = await updatePlayerSettings(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
+routes.patch(`${commonPath}/settings/:setting`, [param('setting').exists()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
 	}
-);
+	try {
+		const response = await updatePlayerSettings(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;

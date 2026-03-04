@@ -284,6 +284,8 @@ model Player {
   dailyGridRewards     Int                @default(0)
   skipFight            Boolean            @default(false)
   skipLevel            Boolean            @default(false)
+	shareArchivedData    Boolean            @default(false)
+	archivedSiteId       Int?
   banCaseId            Int?               @unique
   discoveredSkills     Int[]              @default([])
   lastVersionSeen      String             @default("0.16.3")

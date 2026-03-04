@@ -45,6 +45,7 @@
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 	"playerNotFound": "Le joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
 	"dinozNotFound": "Le Dinoz {{id}} n'a pas été trouvé.",
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",

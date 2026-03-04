@@ -84,6 +84,8 @@
 			"stats": "Statistiques en direct",
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau",
+			"archivedSiteId": "Site historique",
+			"shareArchivedData": "Partager ses stats twinoid",
 			"connectedPlayers": "Joueurs connectés",
 			"totalDinoz": "Nombre total de Dinoz",
 			"totalPlayers": "Nombre total de joueurs"
@@ -3538,9 +3540,11 @@
 		},
 		"twinoidgoals": {
 			"name": "Statistiques DinoRPG",
+			"archivedTitle": "Statistiques Archivées Twinoid",
 			"points": "points",
 			"linkStats": "Statistiques",
 			"linkGains": "Gains",
+			"seeStats": "Voir les stats archivé",
 			"help": {
 				"question": "Que signifient ces compteurs ?",
 				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"

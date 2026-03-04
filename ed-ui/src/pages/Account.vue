@@ -10,7 +10,21 @@
 			<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
 		</div>
 		<div class="cards">
-			<TwinoidGoals :accountStats="accountData.stats"></TwinoidGoals>
+			<div>
+				<TwinoidGoals
+					title="$t(`myAccount.twinoidgoals.archivedTitle`)"
+					v-if="displayArchivedStats && archivedStats"
+					:accountStats="archivedStats"
+				></TwinoidGoals>
+				<TwinoidGoals
+					v-else
+					:title="$t(`myAccount.twinoidgoals.name`)"
+					:accountStats="accountData.stats"
+				></TwinoidGoals>
+				<DZButton v-if="accountData.archivedTwinoidId" @click="loadArchivedStats">
+					{{ $t(`myAccount.twinoidgoals.seeStats`) }}
+				</DZButton>
+			</div>
 			<div class="profilCard">
 				<Profile :accountData="accountData"></Profile>
 				<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
@@ -34,17 +48,22 @@ import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
 import EpicRewards from '../components/data/EpicRewards.vue';
 import TwinoidGoals from '../components/data/TwinoidGoals.vue';
+import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
-	name: 'MyAccount',
+	name: 'Account',
 	data() {
 		return {
 			playerStore: playerStore(),
 			accountData: {} as PlayerInfo,
-			dataLoaded: false as boolean
+			archivedStats: undefined as PlayerStats[] | undefined,
+			dataLoaded: false as boolean,
+			displayArchivedStats: false
 		};
 	},
 	components: {
+		DZButton,
 		TitleHeader,
 		MyDinoz,
 		Profile,
@@ -54,7 +73,7 @@ export default defineComponent({
 	methods: {
 		async checkAndLoadAccount(): Promise<void> {
 			const accountId = this.$route.params.id as string;
-			if (this.$route.name !== 'MyAccount' || typeof accountId !== 'string' || accountId.length < 10) return;
+			if (this.$route.name !== 'Account' || typeof accountId !== 'string' || accountId.length < 10) return;
 			this.dataLoaded = false;
 
 			try {
@@ -64,6 +83,23 @@ export default defineComponent({
 				this.dataLoaded = true;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async loadArchivedStats() {
+			const accountId = this.$route.params.id as string;
+			if (this.displayArchivedStats) {
+				this.displayArchivedStats = false;
+			} else {
+				if (!this.archivedStats) {
+					try {
+						this.archivedStats = await PlayerService.getArchivedPlayerData(accountId);
+						this.archivedStats.sort((a, b) => b.quantity - a.quantity);
+					} catch (err) {
+						errorHandler.handle(err, this.$toast);
+					}
+				}
+
+				this.displayArchivedStats = true;
 			}
 		}
 	},

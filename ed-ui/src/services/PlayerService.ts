@@ -8,6 +8,7 @@ import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { Lang, Player } from '@drpg/prisma';
+import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 
 export const PlayerService = {
 	async getLoggedInData(): Promise<PlayerCommonData> {
@@ -20,6 +21,10 @@ export const PlayerService = {
 	},
 	async getPlayerData(id: string): Promise<PlayerInfo> {
 		const res = await http().get(`/player/${id}`);
+		return res.data;
+	},
+	async getArchivedPlayerData(id: string): Promise<PlayerStats[]> {
+		const res = await http().get(`/player/${id}/archived`);
 		return res.data;
 	},
 	async requestImport(server: string): Promise<void> {
@@ -98,7 +103,10 @@ export const PlayerService = {
 		});
 		return res.data;
 	},
-	async updateSetting(setting: 'skipLevel' | 'skipFight', value: boolean): Promise<void> {
+	async updateSetting(
+		setting: 'skipLevel' | 'skipFight' | 'archivedSiteId' | 'shareArchivedData',
+		value: boolean | number
+	): Promise<void> {
 		const res = await http().patch(`/player/settings/${setting}`, {
 			setting: value
 		});

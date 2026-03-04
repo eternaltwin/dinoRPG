@@ -25,6 +25,29 @@
 				<span class="slider round"></span>
 			</label>
 		</div>
+		<div class="parameter">
+			<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+				<path
+					d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"
+				></path>
+			</svg>
+			<span class="param" v-html="formatContent($t('topBar.rightMenu.archivedSiteId'))"></span>
+			<select id="archivedSite" v-model="archivedSiteId" style="min-width: 160px">
+				<option v-for="site of possibleSites" :key="site.value" :value="site.value">{{ site.label }}</option>
+			</select>
+		</div>
+		<div class="parameter">
+			<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+				<path
+					d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"
+				></path>
+			</svg>
+			<span class="param" v-html="formatContent($t('topBar.rightMenu.shareArchivedData'))"></span>
+			<label class="switch">
+				<input type="checkbox" v-model="shareArchivedData" />
+				<span class="slider round"></span>
+			</label>
+		</div>
 	</div>
 </template>
 
@@ -39,7 +62,15 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			skipFight: playerStore().getPlayerOptions.skipFight,
-			skipLevel: playerStore().getPlayerOptions.skipLevel
+			skipLevel: playerStore().getPlayerOptions.skipLevel,
+			archivedSiteId: playerStore().getPlayerOptions.archivedSiteId,
+			shareArchivedData: playerStore().getPlayerOptions.shareArchivedData,
+			possibleSites: [
+				{ label: `www.dinorpg.com (FR)`, value: 2 },
+				{ label: `en.dinorpg.com (EN)`, value: 3 },
+				{ label: `es.dinorpg.com (ES)`, value: 45 },
+				{ label: `www.dinorpg.de (DE)`, value: 5 }
+			]
 		};
 	},
 	watch: {
@@ -56,6 +87,22 @@ export default defineComponent({
 				skipFight: this.skipFight
 			});
 			PlayerService.updateSetting('skipFight', this.skipFight);
+		},
+		archivedSiteId() {
+			if (this.archivedSiteId) {
+				this.playerStore.setPlayerOptions({
+					...this.playerStore.playerOptions,
+					archivedSiteId: this.archivedSiteId
+				});
+				PlayerService.updateSetting('archivedSiteId', this.archivedSiteId);
+			}
+		},
+		shareArchivedData() {
+			this.playerStore.setPlayerOptions({
+				...this.playerStore.playerOptions,
+				shareArchivedData: this.shareArchivedData
+			});
+			PlayerService.updateSetting('shareArchivedData', this.shareArchivedData);
 		}
 	}
 });
