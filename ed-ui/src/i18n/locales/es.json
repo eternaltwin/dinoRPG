@@ -180,9 +180,9 @@
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
 	"import": {
-		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en EternalDinoRPG.&&&Todos tus Dinos, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus Dinos.&&&Las misiones llevadas a cabo por tus Dinos no se guardarán. Algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus Dinos. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de DinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación Twinoid cuando se te solicite.&&&Cuantos más Dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus Dinos de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
+		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en DinoRPG.&&&Todos tus Dinos, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus Dinos.&&&Las misiones llevadas a cabo por tus Dinos no se guardarán. Algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus Dinos. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de DinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación Twinoid cuando se te solicite.&&&Cuantos más Dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus Dinos de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
 		"imported": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido importada! && ¡{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, se han guardado del servidor {server}!&& &&Una nueva importación eliminará lo que está actualmente guardado.",
-		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de EternalDinoRPG! &&{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, han sido eliminados. Ahora puedes volver a importar.",
+		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de DinoRPG! &&{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, han sido eliminados. Ahora puedes volver a importar.",
 		"disclaimer2": "Puedes guardar tus trofeos y estadísticas de Twinoid haciendo clic en el botón de abajo."
 	},
 	"element": {
@@ -519,7 +519,6 @@
 			"candle_card": "Vela de Aniversario",
 			"christmas_ticket": "Ticket de Navidad",
 			"tictac_ticket": "Ticket Taque",
-			"anniversary_ticket": "Vela de Aniversario",
 			"easter_egg": "Huevo de la Bruja Lula",
 			"fire_cracker": "Petardo mágico",
 			"special_potion_irma": "Poción especial de la Bruja Lola",
@@ -651,7 +650,6 @@
 			"candle_card": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
 			"christmas_ticket": "Este Ticket de Navidad te permite acceder al juego de caza de nieves en Dinovilla.",
 			"tictac_ticket": "Los Tickets Taque te permitirán excavar en el jardín de Papy Jose. Podrás encontrar tesoros escondidos por su tatarabuelo.",
-			"anniversary_ticket": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
 			"easter_egg": "Un huevo de Lula permite ganar un objeto entre todos los que existen en Dinoland. Objeto raro o común, ¡Hoy puede ser tu día de suerte!",
 			"fire_cracker": "¡Con este petardo lanzarás los fuegos artificiales en Dinovilla que te harán ganar tesoros!",
 			"special_potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente. Solo puedes llevar 3.",
@@ -2296,7 +2294,7 @@
 			"MaitreNageur": "Aumenta el elemento Agua en 5",
 			"KarateSousMarin": "Aumenta el poder de todos los **asaltos** de Agua en 10",
 			"Sumo": "Aumenta el máximo de puntos de vida en 100",
-			"SansPitie": "Elige el objetivo con menos puntos de vida en cada *asalto*",
+			"SansPitie": "Elige el objetivo con menos puntos de vida en cada **asalto**",
 			"CloneAqueux": "Crea un clon del Dino con 1 punto de vida. El clon solo hereda las estadísticas base de quien lo invoca (ataque, defensa, esquiva, multi-golpes, contraataque y golpe crítico).",
 			"GriffesEmpoisonnees": "Si uno de los **asaltos** de Agua del Dino toca a un enemigo, este queda envenenado por una duración media y el veneno inflige 14 de daño",
 			"Cuisinier": "Aumenta el beneficio de vida de los objetos en 10% para todos los Dinos",
@@ -3529,7 +3527,7 @@
 		"title": "Jugador:",
 		"labrute": "Recompensas El Bruto",
 		"labruteTooltip": "Puedes recuperar 1 :irma: por cada 3 Dinos activos cada día al finalizar todos tus combates en El Bruto.",
-		"profil": "Perfil de EternalDinoRPG",
+		"profil": "Perfil de DinoRPG",
 		"options": {
 			"title": "Opciones de Mi Cuenta",
 			"fight": "Mostrar combates",
@@ -3538,7 +3536,7 @@
 			"retour": "Volver"
 		},
 		"twinoidgoals": {
-			"name": "Estadísticas de EternalDinoRPG",
+			"name": "Estadísticas de DinoRPG",
 			"points": "Puntos",
 			"linkStats": "Estadísticas",
 			"linkGains": "Ganancias",
@@ -4301,7 +4299,6 @@
 			"goblin": "Goblin",
 			"bat": "Ratón Fiera",
 			"ronciv": "Roncívor",
-			"gardien": "Guardián Arbólico",
 			"grdien": "Guardián Arbólico",
 			"rkrgns": "Refuerzos Korgon",
 			"egrllz": "Espíritu Gorilos",
