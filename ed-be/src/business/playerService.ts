@@ -31,6 +31,7 @@ import { ArchivedPlayerStats } from '@drpg/core/models/player/ArchivedPlayerStat
 import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 import { ETUser } from '@drpg/core/models/player/ETUser';
 import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
+import { GLOBAL } from '../context.js';
 
 /**
  * @summary Get data from player on login
@@ -109,7 +110,8 @@ export async function getAccountData(req: Request) {
 
 	let etUser: ETUser | null = null;
 	if ((authed.id === playerId || playerInfo.shareArchivedData) && playerInfo.archivedSiteId) {
-		const response = await fetch(`https://eternaltwin.org/api/v1/users/${playerId}`);
+		console.log(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
+		const response = await fetch(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
 		etUser = (await response.json()) as ETUser;
 	}
 
@@ -139,7 +141,7 @@ export async function getArchivedData(req: Request) {
 	const playerId = req.params.id;
 	const authed = await auth(req);
 
-	const response = await fetch(`https://eternaltwin.org/api/v1/users/${playerId}`);
+	const response = await fetch(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
 	const etUser = (await response.json()) as ETUser;
 	const player = await getPlayerArchivedSiteId(playerId);
 	if (etUser.links?.twinoid.current?.user.id && player?.archivedSiteId) {
@@ -152,7 +154,7 @@ export async function getArchivedData(req: Request) {
 
 async function getArchivedStats(archivedTwinoidId: string, siteId: number) {
 	const response = await fetch(
-		`https://eternaltwin.org/api/v1/archive/twinoid/users/${archivedTwinoidId}/rewards/${siteId}`
+		`${GLOBAL.config.eternaltwin.url}api/v1/archive/twinoid/users/${archivedTwinoidId}/rewards/${siteId}`
 	);
 	const archivedPlayer = (await response.json()) as ArchivedPlayer;
 	return archivedPlayer.stats;
