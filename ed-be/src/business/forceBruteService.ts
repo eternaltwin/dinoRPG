@@ -282,7 +282,6 @@ export async function createTournamentDinoz(req: Request) {
 				break;
 		}
 	}
-	//TODO add a chance to get rare display (1%)
 
 	const newDinoz: Prisma.GameDinozCreateInput = {
 		name: req.body.name,
