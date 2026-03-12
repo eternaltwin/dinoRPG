@@ -104,7 +104,7 @@
 		"selectADinozAtMarketFirst": "Vous devez d'abord amener un Dinoz au marché.",
 		"unknownDinoz": "Dinoz inconnu.",
 		"noFollowers": "Le Dinoz n'est pas suivi.",
-		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
+		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe.",
 		"missingUser": "Utilisateur manquant.",
 		"missingData": "Données manquantes.",
 		"labrute": "Vous avez obtenu {quantity} :irma:.",
@@ -971,7 +971,7 @@
 			"fou": "Homme bizarre",
 			"garde_atlante": "Garde Atlante",
 			"joveboze": "Jovébozé",
-			"archis": "ArchiSage",
+			"archis": "Archisage",
 			"hydargol": "Maître Hydargol",
 			"padamoine": "Apprenti padamoine",
 			"hulot": "Nicolas Mulot",
@@ -1327,13 +1327,13 @@
 		"gardien": {
 			"speech": {
 				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement âgé et semble empreint d'une grande sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
-				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange  et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage  sur votre tête : poc !",
-				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous  constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage  sur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre plus grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"playerChoice": {
 				"missions": "Consulter la liste des Missions",
 				"shake": "Secouer un peu cet arbre",
-				"item": "Aie ! Qu'est-ce que c'est ?"
+				"item": "Aïe ! Qu'est-ce que c'est ?"
 			}
 		},
 		"fou": {
@@ -1342,8 +1342,8 @@
 				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
 				"approch": "À peine faites-vous un pas dans sa direction que l'homme bondit, terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard, sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
 				"run": "Vous prenez vos jambes à votre cou !",
-				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se  dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle bruyamment...",
-				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur ! Moi je les ai vus !",
+				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle bruyamment...",
+				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur ! Moi je l'ai vus !",
 				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter un regard derrière vous...",
 				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
 				"lowLevel": "NOOOOOOOOONNNN !!!!!&&N'y allez pas, c'est beaucoup trop dangereux pour vous, sombre fou ! Revenez le combattre lorsque votre Dinoz sera plus puissant. Je ne veux pas vous offrir de potions d'ange.",
@@ -1368,10 +1368,10 @@
 				"begin": "L'accès au Dôme Soulaflotte n'est possible qu'en utilisant un Rascaphandre.",
 				"rasca": "Un Rascaphandre est un gros poisson avec des arêtes creuses. Il est capable de stocker une grande quantité d'oxygène et ainsi d'emmener son maître jusqu'aux profondeurs où se situe le Dôme Soulaflotte, sans que celui-ci ne meure asphyxié.",
 				"where": "Les Rascaphandres sont nombreux dans les eaux des alentours, il faut juste savoir les appeler.",
-				"call": "(soupir)... En fait, il faut un objet particulier : un appeau à Rascaphandre. C'est une petite flûte que l'on plonge dans l'eau et qui imite les ondes du grand requin noir maléfique des abysses pestilentielles, le repas préféré des Rascaphandres. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
+				"call": "(soupir)... En fait, il faut un objet particulier : un appeau à Rascaphandre. C'est une petite flûte que l'on plonge dans l'eau et qui imite les ondes du grand requin noir maléfique des abysses pestilentiels, le repas préféré des Rascaphandres. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
 				"appeau": "Oui. L'appeau à Rascaphandre est fabriqué avec des arêtes de vieux Rascaphandre. Mais plus ils sont vieux, plus ils ont mauvais caractère et ils deviennent alors très dangereux...",
 				"old": "J'ai un ami pêcheur au Port de Prêche, si vous n'avez pas peur du danger, je peux lui demander de vous emmener chasser le vieux Rascaphandre géant... Allez le voir de ma part, il s'appelle Jovébozé.",
-				"thanks": "Je vous souhaite un bon séjour sur les Iles Atlantéinées."
+				"thanks": "Je vous souhaite un bon séjour sur les Îles Atlantéinées."
 			},
 			"playerChoice": {
 				"rasca": "Un quoi ?!?",
@@ -1408,7 +1408,7 @@
 				"begin": "Au centre du Dôme se trouve la résidence de l'Archisage. Il s'agit d'un titre honorifique donné à un Archimage devenu trop vieux pour pouvoir utiliser ses pouvoirs magiques. Il n'en reste pas moins un personnage doué d'une très grande connaissance, même si ses propos peuvent parfois sembler confus.",
 				"enigm": "Bonjour bonjour bonjour ! Que viens-tu chercher ici ? Tu cherches quelque chose ? Puis-je t'aider ?",
 				"next": "Ah ! Ne dis rien ! Je sais, je suis sûr, certain, tout à fait ! Tu cherches un GRAND TRÉSOR !",
-				"tresor": "Alors écoute, voilà je vais te dire. Écoute-moi. Oui. Je vais te raconter. Si tu me rapportes. Oui tout cela. Tu veux savoir quoi ? et surtout quoi n'est pas !",
+				"tresor": "Alors écoute, voilà je vais te dire. Écoute-moi. Oui. Je vais te raconter. Si tu me rapportes. Oui tout cela. Tu veux savoir quoi ? Et surtout quoi n'est pas !",
 				"quoi": "Alors écoute. Mon premier est collant, mon deuxième basaltique, mon troisième est de l'eau pure. Il te faudra un outil, ça oui. Un outil pour trouver tout cela. Reviens me voir et je t'apprendrai le trésor, mais attention au danger ! F-O-E !",
 				"show_win": "Oh ! Bravo ! Bravo ! Merci pour tout ça, et surtout bravo ! Voilà, c'est fait, ton Dinoz a un GRAND TRÉSOR !"
 			},
@@ -1429,8 +1429,8 @@
 				"where": "...trouve... mon... apprenti padamoine... Zzz... zzz...",
 				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!! Je t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
 				"act": "Youhouhhh !!! C'est génial ! Regarde... je flotte !",
-				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
-				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
+				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GÉNIAL !!!",
+				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
 				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fais attention, la Forêt au-delà est très dangereuse !"
 			},
@@ -1451,7 +1451,7 @@
 		},
 		"padamoine": {
 			"speech": {
-				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Iles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
+				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Îles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
 				"help": "C'est vrai, vous acceptez de m'aider ?? Merci beaucoup !",
 				"get": "Vous avez l'air digne de confiance. Tenez, je vous confie ces feuilles de nénuphar, et que la Sainte Force soit avec vous !"
 			},
@@ -1463,26 +1463,26 @@
 		"hulot": {
 			"speech": {
 				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
-				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"A la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
+				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"À la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
 				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
 				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici : un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
 				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
 				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
 				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
-				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! A la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fauna": "Entre les Roncivores, les Korgons et les Fauve-Souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! À la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
 				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
 				"explore": "Ça serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
 				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
 				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
-				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amenées étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut-être m'aider à Drouver un remède ? ...",
+				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amenées étaient comme qui dirait... euh toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut-être m'aider à Drouver un remède ? ...",
 				"sickstatus": "Alors, vous avez trouvé un rebède ?",
 				"better": "Le remède que vous m'avez amené a été très efficace !",
-				"lowLevel": "Oh mince... Tu n'es visiblement pas assez fort pour que je te confie des missions. Je ne voudrais pas que ton Dinoz se blesse. Revient me voir lorsque tu auras pris quelques niveaux de plus !",
+				"lowLevel": "Oh mince... Vous n'êtes visiblement pas assez forts pour que je vous confie des missions. Je ne voudrais pas que votre Dinoz se blesse. Revenez me voir lorsqu'il aura pris quelques niveaux de plus !",
 				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
 				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez-moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire.",
-				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unités.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
-				"pac_flam": "Ce fut rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu ailles chercher une plume de Coqdur. Tu penses en être capable ?",
-				"pac_coq": "Voilà, je ne peux rien faire de plus pour toi. Il faudrait que tu mènes tes recherches pour comprendre comment l'utiliser."
+				"pac_kazka": "Très bien ! Passons à présent aux cendres de Flammèches. Il m'en faut 42 unités.&& Regardez comment j'ai bien avancé, le parchemin est en train de sécher.",
+				"pac_flam": "Ce fut rapide ! Pendant que je termine de vous préparer l'encre il faudrait que vous alliez chercher une plume de Coqdur. Vous pensez en être capables ?",
+				"pac_coq": "Voilà, je ne peux rien faire de plus pour vous. Il faudrait que vous meniez vos recherches pour comprendre comment l'utiliser."
 			},
 			"playerChoice": {
 				"welcome": "Lui parler",
@@ -1505,7 +1505,7 @@
 				"pac_shine": "Et cette racine qui brille, un avis dessus ?",
 				"pac_progress": "Vous saurez m'aider ?",
 				"pac_kazka": "J'ai toute l'encre nécessaire !",
-				"pac_flam": "Voici les 42 unités de cendres de flamèches !",
+				"pac_flam": "Voici les 42 unités de cendres de Flammèches !",
 				"pac_coq": "Montrer la plume"
 			}
 		},
@@ -1513,18 +1513,18 @@
 			"speech": {
 				"begin": ".........",
 				"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
-				"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
+				"talk": "Uh ?!??? Quoi ?? Tu peux me VOIR ?!? ..... Grrrrr....",
 				"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
 				"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
 				"talk2": "Vite ! J'ai BESOIN de ce Riz !",
 				"begin_2": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
-				"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
-				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+				"qual2": "Au lieu de dire des conneries, tu ferais mieux d'essayer de remplir ta mission...",
+				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherche il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
 				"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
-				"ether": "Après des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Cela nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+				"ether": "Après des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Éther, un savant mélange des éléments Air et Vide. Cela nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
 				"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
 				"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?",
-				"begin_3": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+				"begin_3": "Pour ton information, les Dinoz Sombres que tu as rencontrés jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
 				"next_2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
 			},
 			"playerChoice": {
@@ -1537,7 +1537,7 @@
 				"qual2": "Surement de la mauvaise qualité...",
 				"qual": "Surement de la mauvaise qualité...",
 				"caush": "Caushemesh ?",
-				"ether": "L'Ether ?",
+				"ether": "L'Éther ?",
 				"next": "Et...",
 				"more": "...",
 				"missions_2": "Accepter une mission.",
@@ -1573,7 +1573,7 @@
 		"pteroz": {
 			"speech": {
 				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
-				"fight_win": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des Ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"fight_win": "Vous avez vaincu un Pteroz ! Vous obtenez le Trophée des Pteroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
 				"leave": "Ouf ! Un pas de plus et ce Dinoz vous attaquait !"
 			},
 			"playerChoice": {
@@ -1594,8 +1594,8 @@
 		},
 		"rocky": {
 			"speech": {
-				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
-				"fight_win": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !",
+				"begin": "Une étrange pierre se dresse au milieu du chemin, son emplacement ne semble pas très naturel... Que désirez-vous faire ?",
+				"fight_win": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal, moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !",
 				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
 				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou...."
 			},
@@ -1609,7 +1609,7 @@
 		"vener": {
 			"speech": {
 				"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
-				"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
+				"bye": "Vous avez raison, il y a des fois dans la vie où il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
 				"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DÉJEUNER !!!",
 				"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
 				"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ÉNERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
@@ -1633,7 +1633,7 @@
 				"fight2": "Je vais vous ÉCRASER !",
 				"perdu": "Je me suis perdu en venant ici et...",
 				"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
-				"deal": "J'ai une affaire EN OR a vous proposer !",
+				"deal": "J'ai une affaire EN OR à vous proposer !",
 				"auto": "Pourrais-je avoir un autographe ?"
 			}
 		},
@@ -1643,9 +1643,9 @@
 				"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
 				"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé ! Heureusement que j'avais emmené des batteries à la fraise de rechange ! Merci, très cher ami, merci de votre aide si aimablement proposée...",
 				"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique. Mon (SiAvUaEs) est cassé comme une noisette, et je ne peux donc pas rentrer chez moi, sur (PuOsEniLa) !",
-				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
-				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prèt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
-				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Éclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débrouissailler ! Ah !",
+				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des cristaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
+				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prêt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
+				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Éclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débroussailler ! Ah !",
 				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant...",
 				"begin_first_star": "Le Guide a dit : \"Un mégaloup t'attend dans la capitale !\"",
 				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !",
@@ -1653,13 +1653,13 @@
 				"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
 				"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
 				"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
-				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient parait-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
+				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient paraît-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
 				"star6": "Uhm... Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\". Tout un programme...",
 				"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\". Courage !",
 				"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !",
 				"begin_plume": ".... Ouiiiiii !!! Merci ! Merci ! Merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
-				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
-				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
+				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvée dans ton monde !",
+				"give": "L'Être Étrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brûlé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
 			},
 			"playerChoice": {
 				"no": "Pas question",
@@ -1684,17 +1684,17 @@
 		"skully": {
 			"speech": {
 				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
-				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
+				"arg": "Un FANTÔMEE ?!!??? Aaaahh !! Où ça !! Où ça ??",
 				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !",
 				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout... Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!! ... enfin presque.",
 				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler. D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
 				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
 				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, (une fois de plus si ça se trouve) ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
-				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ca n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
+				"uhm": "Je te raconte tout ça ! Oh oh oh ! Mais ça n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
 				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris,  oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu aprés m'avoir vu, les gens m'oublient aussitôt !",
-				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
+				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHÉRI !!!",
 				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
-				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeller les détails...",
+				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeler les détails...",
 				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ca va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
 				"accept": "OH OH OH OH OH !! Alors, s'il te plait Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
 				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
