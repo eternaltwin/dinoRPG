@@ -42,7 +42,7 @@ import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import { updateQuest } from '../dao/questsDao.js';
+import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
@@ -144,7 +144,7 @@ export async function useItem(req: Request) {
 			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
 			itemId === itemList[Item.MEAT_PIE].itemId
 		) {
-			await updateQuest(dinoz.player.id, Scenario.STAR, 4);
+			await upsertQuest(dinoz.player.id, Scenario.STAR, 4);
 			await increaseItemQuantity(dinoz.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));

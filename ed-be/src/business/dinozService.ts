@@ -87,7 +87,7 @@ import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGather
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
-import { updateQuest } from '../dao/questsDao.js';
+import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { getSpecificSecret } from '../dao/secretDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -807,7 +807,7 @@ export async function resurrectDinoz(req: Request) {
 
 	const starQuest = dinozData.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 7);
 	if (starQuest && dinozData.placeId === PlaceEnum.JUNGLE_SAUVAGE) {
-		await updateQuest(dinozData.player.id, Scenario.STAR, 8);
+		await upsertQuest(dinozData.player.id, Scenario.STAR, 8);
 		await increaseItemQuantity(dinozData.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
 		return {
 			category: ItemEffect.QUEST,

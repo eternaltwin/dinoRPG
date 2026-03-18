@@ -13,11 +13,10 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Dinoz, DinozStatus, LogType, NotificationSeverity, PantheonMotif } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import { createQuest, updateQuest } from '../dao/questsDao.js';
+import { upsertQuest} from '../dao/questsDao.js';
 import { checkAnnounce } from './announcer.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
-import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { getItemMaxQuantity } from '../business/inventoryService.js';
 
@@ -149,14 +148,8 @@ export async function rewarder(
 					}
 					break;
 				case RewardEnum.SCENARIO:
-					if (reward.step === 1) {
-						await createQuest(playerId, reward.value);
-					} else {
-						await updateQuest(playerId, reward.value, reward.step);
-					}
-					if (showNotification) {
-						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.scenario);
-					}
+					await upsertQuest(playerId, reward.value, reward.step);
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.scenario);
 					break;
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });

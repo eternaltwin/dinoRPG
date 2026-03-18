@@ -1,21 +1,16 @@
 import { prisma } from '../prisma.js';
 
-export async function createQuest(playerId: string, questId: number) {
-	return prisma.playerQuest.create({
-		data: {
+export async function upsertQuest(playerId: string, questId: number, step: number) {
+	return prisma.playerQuest.upsert({
+		where: {
+			questId_playerId: { questId, playerId }
+		},
+		update: { progression: step, tracking: 0 },
+		create: {
 			questId: questId,
 			progression: 1,
 			player: { connect: { id: playerId } }
 		}
-	});
-}
-
-export async function updateQuest(playerId: string, questId: number, step: number) {
-	return prisma.playerQuest.update({
-		where: {
-			questId_playerId: { questId, playerId }
-		},
-		data: { progression: step, tracking: 0 }
 	});
 }
 
