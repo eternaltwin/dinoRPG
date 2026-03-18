@@ -13,7 +13,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Dinoz, DinozStatus, LogType, NotificationSeverity, PantheonMotif } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import { upsertQuest} from '../dao/questsDao.js';
+import { upsertQuest } from '../dao/questsDao.js';
 import { checkAnnounce } from './announcer.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
