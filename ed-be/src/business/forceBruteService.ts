@@ -665,27 +665,30 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	gold += Math.round(gold * goldMultiplier);
 
+	let levelup = false;
+	let xp = 0;
 	if (fightResult.winner) {
 		await addMoney(authed.id, gold);
+		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
+		xp = calculateXPBonus(dinoz, xp, dinoz.player);
+		const max = getMaxXp(dinoz);
+
+		if (dinoz.experience >= max) {
+			// No xp if the dinoz was already at max
+			levelup = true;
+			xp = 0;
+		} else if (dinoz.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
+			levelup = true;
+		}
 	}
-	let xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
-	xp = calculateXPBonus(dinoz, xp, dinoz.player);
-	const max = getMaxXp(dinoz);
-	let levelup = false;
-	if (dinoz.experience >= max) {
-		// No xp if the dinoz was already at max
-		levelup = true;
-		xp = 0;
-	} else if (dinoz.experience + xp >= max) {
-		// Else, allow xp overflow (should happen only once) and raise levelup flag
-		levelup = true;
-	}
+
 	await updateDinoz(dinoz.id, {
 		life: {
 			decrement: attacker.hpLost
 		},
 		experience: {
-			increment: fightResult.winner ? xp : 0
+			increment: xp
 		},
 		FBTournamentStep: {
 			increment: fightResult.winner ? 1 : 0
