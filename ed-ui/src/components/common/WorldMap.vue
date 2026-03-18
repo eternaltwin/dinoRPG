@@ -299,6 +299,7 @@ export default defineComponent({
 			const actualPlace: PlaceDisplayed | undefined = placeList.find(place => place.placeId === this.dinozData.placeId);
 			const x1 = (((actualPlace?.posLeft ?? 0) + 8.5) / mapImage.width) * mapX;
 			const y1 = (((actualPlace?.posTop ?? 0) + 8.5) / mapImage.height) * mapY;
+			this.svgLines = new Array<svgLines>();
 
 			this.dinozData.borderPlace?.forEach(closePlace => {
 				const place = placeList.find(place => place.placeId === closePlace);
