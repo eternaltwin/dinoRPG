@@ -44,8 +44,8 @@
 				<Flags :langs="clanStore.getClan?.langs" />
 			</div>
 		</div>
-		<div class="banner" v-if="clanStore.getClan?.bannerUrl">
-			<img class="banner-img" :src="clanStore.getClan.bannerUrl" alt="banner" />
+		<div class="banner" v-if="bannerDataUrl">
+			<img class="banner-img" :src="bannerDataUrl" alt="banner" />
 		</div>
 		<div class="bottom-info">
 			<p class="creation-date">
