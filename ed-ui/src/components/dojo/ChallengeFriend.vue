@@ -98,7 +98,8 @@ export default defineComponent({
 							display: d.display,
 							level: d.level
 						};
-					});
+					})
+					.sort((a, b) => b.level - a.level);
 				this.opponentId = playerId;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -161,7 +162,8 @@ export default defineComponent({
 					display: d.display,
 					level: d.level
 				};
-			});
+			})
+			.sort((a, b) => b.level - a.level);
 
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
