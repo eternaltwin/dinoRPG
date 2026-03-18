@@ -78,6 +78,8 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 	const dinozId = +req.params.id;
 
 	const authed = await auth(req);
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const dinozTournament = await isDinozInTournament(dinozId);
 	let dinozSkills;
 
 	if (event) {
@@ -89,8 +91,6 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 	if (!dinozSkills) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
-	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-	const dinozTournament = await isDinozInTournament(dinozId);
 
 	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	if (!canLevelUp) {
