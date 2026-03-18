@@ -35,3 +35,5 @@ export const regex = {
 };
 
 export const wsTicketMaxTime = 300000; // 5 minutes (in ms)
+
+export const SHARED_DINOZ_OPERATIONS_LOCK = 999001;
