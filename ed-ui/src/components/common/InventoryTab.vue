@@ -300,7 +300,9 @@ export default defineComponent({
 			}
 		}
 		td {
-			vertical-align: top;
+			vertical-align: middle;
+			padding-top: 3px;
+			padding-bottom: 3px;
 			height: 34.5px;
 		}
 	}
@@ -354,15 +356,15 @@ export default defineComponent({
 	font-variant: small-caps;
 	cursor: help;
 	img {
-		float: left;
 		position: relative;
 		margin-right: 5px;
 		border: 1px solid #ae6733;
-		vertical-align: bottom;
+		vertical-align: middle;
 	}
 	p {
-		padding-top: 10px;
-		padding-bottom: 10px;
+		display: inline-block;
+		vertical-align: middle;
+		max-width: calc(100% - 45px);
 	}
 }
 .type {
@@ -377,7 +379,6 @@ export default defineComponent({
 .act {
 	padding-left: 5px;
 	display: flex;
-	justify-content: center;
 	align-content: space-evenly;
 	align-items: center;
 	a {
@@ -395,7 +396,6 @@ export default defineComponent({
 	padding-left: 4px;
 	padding-right: 4px;
 	vertical-align: center;
-
 	& > div {
 		height: 100%;
 		display: flex;
