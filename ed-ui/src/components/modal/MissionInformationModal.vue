@@ -24,7 +24,7 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useDinozStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -62,6 +62,7 @@ export default defineComponent({
 					dinozToUpdate.missionId = undefined;
 				}
 				this.dinozStore.setDinozList(dinozList);
+				useDinozStore().setDinozList(dinozList);
 
 				this.$emit('reload');
 			} catch (err) {

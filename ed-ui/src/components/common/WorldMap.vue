@@ -83,7 +83,7 @@ import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
 import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
-import { dinozStore, sessionStore } from '../../store/index.js';
+import { dinozStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -249,24 +249,24 @@ export default defineComponent({
 				}
 
 				if (moveTry.result) {
-					this.dinozStore.setDinozList(
-						dinozList.map(dinoz => {
-							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-								this.dinozStore.clearNpc(dinoz.id);
-								if (dinoz.life !== 0) {
-									// Update dinoz place
-									dinoz.placeId = place.alias || placeId;
+					const dinozs: Array<DinozFiche> = dinozList.map(dinoz => {
+						if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+							this.dinozStore.clearNpc(dinoz.id);
+							if (dinoz.life !== 0) {
+								// Update dinoz place
+								dinoz.placeId = place.alias || placeId;
 
-									// Update dinoz HP
-									dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
-								} else {
-									//Remove dead dinoz from the party
-									dinoz.leaderId = null;
-								}
+								// Update dinoz HP
+								dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+							} else {
+								//Remove dead dinoz from the party
+								dinoz.leaderId = null;
 							}
-							return dinoz;
-						})
-					);
+						}
+						return dinoz;
+					});
+					this.dinozStore.setDinozList(dinozs);
+					useDinozStore().setDinozList(dinozs);
 				}
 
 				this.$router.push({
