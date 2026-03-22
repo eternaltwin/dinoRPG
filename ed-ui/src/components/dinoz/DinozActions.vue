@@ -114,7 +114,7 @@ import Resurect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
-import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
+import { dinozStore, playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -421,6 +421,7 @@ export default defineComponent({
 						}
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						useDinozStore().setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -458,6 +459,7 @@ export default defineComponent({
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						useDinozStore().setDinozList(orderDinozList(currentDinozList));
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -482,6 +484,7 @@ export default defineComponent({
 						}
 
 						this.dinozStore.setDinozList(orderDinozList(dinozList));
+						useDinozStore().setDinozList(orderDinozList(dinozList));
 
 						this.$toast.open({ message: formatText(this.$t(`toast.leaderChanged`)), type: 'success' });
 
@@ -507,6 +510,7 @@ export default defineComponent({
 						}
 						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
+						useDinozStore().setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -569,6 +573,7 @@ export default defineComponent({
 			dinozToUpdate.missionHUD = null;
 			dinozToUpdate.missionId = undefined;
 			this.dinozStore.setDinoz(dinozToUpdate);
+			useDinozStore().setDinoz(dinozToUpdate);
 			this.$emit('endMission');
 		},
 		async validateMission() {

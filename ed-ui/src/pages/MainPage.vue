@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
 
@@ -23,7 +23,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
 			loaded: false as boolean
 		};
 	},

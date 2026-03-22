@@ -565,7 +565,7 @@ export default defineComponent({
 			}
 
 			try {
-				await DinozService.assignBuild(useDinozStore().currentDinozId, this.dinozBuild);
+				await DinozService.assignBuild(useDinozStore().getCurrentDinoz.id, this.dinozBuild);
 				const currentDinoz = useDinozStore().getCurrentDinoz;
 				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
 

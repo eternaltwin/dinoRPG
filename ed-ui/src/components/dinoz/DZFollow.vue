@@ -41,7 +41,7 @@ import { DinozService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, useDinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { formatText } from '../../utils/formatText.js';
 import DinozMini from './DinozMini.vue';
@@ -99,22 +99,23 @@ export default defineComponent({
 					return;
 				}
 
-				this.dinozStore.setDinozList(
-					orderDinozList(
-						currentDinozList.map(dinoz => {
-							if (dinoz.id === +this.$route.params.id) {
-								dinoz.leaderId = targetId;
-							} else if (dinoz.id === targetId) {
-								dinoz.followers.push({
-									id: +this.$route.params.id,
-									fight: targetDinoz.fight,
-									remaining: targetDinoz.remaining
-								});
-							}
-							return dinoz;
-						})
-					)
+				const dinozs: Array<DinozFiche> = orderDinozList(
+					currentDinozList.map(dinoz => {
+						if (dinoz.id === +this.$route.params.id) {
+							dinoz.leaderId = targetId;
+						} else if (dinoz.id === targetId) {
+							dinoz.followers.push({
+								id: +this.$route.params.id,
+								fight: targetDinoz.fight,
+								remaining: targetDinoz.remaining
+							});
+						}
+						return dinoz;
+					})
 				);
+
+				this.dinozStore.setDinozList(dinozs);
+				useDinozStore().setDinozList(dinozs);
 				EventBus.emit('refreshDinoz', true);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
