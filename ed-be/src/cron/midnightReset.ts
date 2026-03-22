@@ -83,8 +83,8 @@ const midnightReset = async () => {
 		);
 	} catch (err) {
 		LOGGER.error(`Cannot perform midnight actions: ${err}`);
-		scheduleJob('midnightReset', tommorow, () => midnightReset());
 	}
+	scheduleJob('midnightReset', tommorow, () => midnightReset());
 };
 
 export { midnightReset };
