@@ -11,6 +11,8 @@ import Loading from './components/utils/Loading.vue';
 import clickOutside from './directives/clickOutside.js';
 import ConfirmPlugin from './mixin/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -25,6 +27,8 @@ const vueTippyProps = {
 		offset: [10, 20]
 	}
 };
+
+dayjs.extend(utc);
 
 const app = createApp(App);
 const pnia = createPinia().use(piniaPluginPersistedstate);

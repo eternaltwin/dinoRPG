@@ -346,7 +346,7 @@ export default defineComponent({
 				return false;
 			}
 
-			const day = dayjs().day();
+			const day = dayjs().utc().day();
 
 			if (!SWAMP_FLOODED_DAYS.includes(day)) {
 				return false;
@@ -359,7 +359,7 @@ export default defineComponent({
 				return false;
 			}
 
-			const day = dayjs().day();
+			const day = dayjs().utc().day();
 
 			if (!SWAMP_FOG_DAYS.includes(day)) {
 				return false;
