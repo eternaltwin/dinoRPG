@@ -34,7 +34,9 @@ export const dinozStore = defineStore('dinozStore', {
 		currentDinozId: undefined
 	}),
 	getters: {
-		getDinozList: (state: StoreDinoz) => state.dinozList,
+		getDinozList: (state: StoreDinoz) => {
+			return state.dinozList.sort((a, b) => (a.order ?? a.id) - (b.order ?? b.id));
+		},
 		getDinoz: (state: StoreDinoz) => {
 			return (dinozId: number) => state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId);
 		},
