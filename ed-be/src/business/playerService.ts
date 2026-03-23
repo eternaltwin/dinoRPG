@@ -108,11 +108,9 @@ export async function getAccountData(req: Request) {
 		throw new ExpectedError(`Player ${playerId} doesn't have a ranking.`);
 	}
 
-	let etUser: ETUser | null = null;
+	let archivedData: PlayerStats[] = [];
 	if ((authed.id === playerId || playerInfo.shareArchivedData) && playerInfo.archivedSiteId) {
-		console.log(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
-		const response = await fetch(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
-		etUser = (await response.json()) as ETUser;
+		archivedData = await getArchivedData(req);
 	}
 
 	const infoToSend: PlayerInfo = {
@@ -131,7 +129,7 @@ export async function getAccountData(req: Request) {
 		customText: playerInfo.customText,
 		completion: playerInfo.ranking.completion,
 		stats: convertToPlayerStats(playerInfo.playerTracking),
-		archivedTwinoidId: etUser?.links?.twinoid?.current?.user.id
+		archivedData
 	};
 
 	return infoToSend;
@@ -139,7 +137,6 @@ export async function getAccountData(req: Request) {
 
 export async function getArchivedData(req: Request) {
 	const playerId = req.params.id;
-	const authed = await auth(req);
 
 	const response = await fetch(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
 	const etUser = (await response.json()) as ETUser;
@@ -148,7 +145,7 @@ export async function getArchivedData(req: Request) {
 		const archivedStats = await getArchivedStats(etUser.links.twinoid.current.user.id, player.archivedSiteId);
 		return archivedStats.map(toPlayerStats);
 	} else {
-		throw new ExpectedError(translate('archivedPlayerNotFound', authed, { id: playerId }));
+		return [];
 	}
 }
 

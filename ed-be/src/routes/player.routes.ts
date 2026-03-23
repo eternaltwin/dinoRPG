@@ -3,7 +3,6 @@ import { body, param, validationResult } from 'express-validator';
 import {
 	canCreateClan,
 	getAccountData,
-	getArchivedData,
 	getCommonData,
 	getDinozList,
 	playerToolTip,
@@ -343,19 +342,6 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isUUID()], async (req: Req
 
 	try {
 		const response = await getAccountData(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
-	}
-});
-
-routes.get(`${commonPath}/:id/archived`, [param('id').exists().isUUID()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	try {
-		const response = await getArchivedData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

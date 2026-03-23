@@ -11,19 +11,14 @@
 		</div>
 		<div class="cards">
 			<div>
-				<TwinoidGoals
-					title="$t(`myAccount.twinoidgoals.archivedTitle`)"
-					v-if="displayArchivedStats && archivedStats"
-					:accountStats="archivedStats"
-				></TwinoidGoals>
-				<TwinoidGoals
-					v-else
-					:title="$t(`myAccount.twinoidgoals.name`)"
-					:accountStats="accountData.stats"
-				></TwinoidGoals>
-				<DZButton v-if="accountData.archivedTwinoidId" @click="loadArchivedStats">
-					{{ $t(`myAccount.twinoidgoals.seeStats`) }}
-				</DZButton>
+				<transition name="fade">
+					<TwinoidGoals :key="statsTitle" :title="statsTitle" :accountStats="statsToDisplay"></TwinoidGoals>
+				</transition>
+				<div id="stats-actions">
+					<DZButton v-if="hasArchivedData" @click="displayArchivedStats = !displayArchivedStats">
+						{{ statsButtonTitle }}
+					</DZButton>
+				</div>
 			</div>
 			<div class="profilCard">
 				<Profile :accountData="accountData"></Profile>
@@ -48,7 +43,6 @@ import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
 import EpicRewards from '../components/data/EpicRewards.vue';
 import TwinoidGoals from '../components/data/TwinoidGoals.vue';
-import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
@@ -57,7 +51,6 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			accountData: {} as PlayerInfo,
-			archivedStats: undefined as PlayerStats[] | undefined,
 			dataLoaded: false as boolean,
 			displayArchivedStats: false
 		};
@@ -84,23 +77,24 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
+		}
+	},
+	computed: {
+		hasArchivedData() {
+			return this.accountData.archivedData.length > 0;
 		},
-		async loadArchivedStats() {
-			const accountId = this.$route.params.id as string;
-			if (this.displayArchivedStats) {
-				this.displayArchivedStats = false;
-			} else {
-				if (!this.archivedStats) {
-					try {
-						this.archivedStats = await PlayerService.getArchivedPlayerData(accountId);
-						this.archivedStats.sort((a, b) => b.quantity - a.quantity);
-					} catch (err) {
-						errorHandler.handle(err, this.$toast);
-					}
-				}
-
-				this.displayArchivedStats = true;
-			}
+		statsTitle() {
+			return this.displayArchivedStats
+				? this.$t(`myAccount.twinoidgoals.archivedTitle`)
+				: this.$t(`myAccount.twinoidgoals.name`);
+		},
+		statsToDisplay() {
+			return this.displayArchivedStats ? this.accountData.archivedData : this.accountData.stats;
+		},
+		statsButtonTitle() {
+			return this.displayArchivedStats
+				? this.$t(`myAccount.twinoidgoals.seeStats`)
+				: this.$t(`myAccount.twinoidgoals.seeArchivedStats`);
 		}
 	},
 	mounted() {
@@ -186,5 +180,21 @@ export default defineComponent({
 			display: none;
 		}
 	}
+}
+
+.fade-enter-active {
+	transition: all 1s 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	transform: rotateY(-180deg);
+	opacity: 0;
+}
+
+#stats-actions {
+	display: flex;
+	justify-content: center;
+	padding-top: 4px;
 }
 </style>

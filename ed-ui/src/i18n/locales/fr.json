@@ -3544,7 +3544,8 @@
 			"points": "points",
 			"linkStats": "Statistiques",
 			"linkGains": "Gains",
-			"seeStats": "Voir les stats archivé",
+			"seeArchivedStats": "Voir les stats archivé",
+			"seeStats": "Voir les stats",
 			"help": {
 				"question": "Que signifient ces compteurs ?",
 				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"

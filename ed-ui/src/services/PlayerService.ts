@@ -8,7 +8,6 @@ import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { Lang, Player } from '@drpg/prisma';
-import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 
 export const PlayerService = {
 	async getLoggedInData(): Promise<PlayerCommonData> {
@@ -21,10 +20,6 @@ export const PlayerService = {
 	},
 	async getPlayerData(id: string): Promise<PlayerInfo> {
 		const res = await http().get(`/player/${id}`);
-		return res.data;
-	},
-	async getArchivedPlayerData(id: string): Promise<PlayerStats[]> {
-		const res = await http().get(`/player/${id}/archived`);
 		return res.data;
 	},
 	async requestImport(server: string): Promise<void> {
