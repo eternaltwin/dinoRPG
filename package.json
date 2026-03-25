@@ -71,7 +71,8 @@
 			"ed-ui/",
 			"core/",
 			"prisma/",
-			"Eternaltwin/"
+			"Eternaltwin/",
+			"dino-renderer/"
 		]
 	},
 	"packageManager": "yarn@4.10.3",
@@ -83,8 +84,5 @@
 		"release-it": "^17.6.0",
 		"rimraf": "^5.0.5",
 		"typescript": "^5.7.2"
-	},
-	"dependencies": {
-		"@eternaltwin/dinorpg_animations": "^1.0.2"
 	}
 }

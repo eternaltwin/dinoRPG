@@ -300,7 +300,7 @@
 		"demons": "nur Dämonen"
 	},
 	"announce": {
-		"dinoz": "Glückwunsch an {{player}}, dessen Dinoz {{dinoz}} als $t(position.{{position}}) $t(race.{{race}}) die Stufe {{level}} erreicht hat!",
+		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) die Stufe {{level}} erreicht hat!",
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"UnavailableReason": {

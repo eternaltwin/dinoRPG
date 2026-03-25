@@ -1,5 +1,6 @@
 import { prisma } from '../prisma.js';
 import { PantheonMotif, Dinoz, Player, Prisma } from '@drpg/prisma';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function getPantheonFromType(type: PantheonMotif) {
 	return await prisma.pantheon.findMany({
@@ -54,6 +55,17 @@ export async function addPlayerToPantheon(type: PantheonMotif, player: Pick<Play
 		}
 	});
 }
+
+export const getPantheonIllus = async (id: number) => {
+	const news = await prisma.pantheon.findUnique({
+		where: { id },
+		select: { image: true }
+	});
+
+	if (!news) throw new ExpectedError('Pantheon image not found');
+
+	return news;
+};
 
 export async function getPantheons(
 	type: PantheonMotif,

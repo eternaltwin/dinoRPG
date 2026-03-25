@@ -252,11 +252,11 @@
 		"28": "Triceragnon"
 	},
 	"position": {
-		"1": "premier",
-		"2": "deuxième",
-		"3": "troisième",
-		"4": "quatrième",
-		"5": "cinquième"
+		"1": "Premier",
+		"2": "Deuxième",
+		"3": "Troisième",
+		"4": "Quatrième",
+		"5": "Cinquième"
 	},
 	"reward": {
 		"perle": "Perle de la Fontaine",
@@ -300,7 +300,7 @@
 		"demons": "uniquement les démons"
 	},
 	"announce": {
-		"dinoz": "Félicitation à {{player}} pour son Dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
+		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
 	},
 	"UnavailableReason": {

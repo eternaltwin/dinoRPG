@@ -5,6 +5,7 @@ import { addDinozToPantheon, addPlayerToPantheon, getPantheonFromType } from '..
 import { translateAll } from './translate.js';
 import { getPlayerForAnnounce } from '../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
+import { renderSdino, renderBigDino } from '@drpg/renderer';
 
 export async function checkAnnounce(type: PantheonMotif, id: string, extension: number | string) {
 	if (GLOBAL.config.eternaltwin.channel !== 'production') return;
@@ -12,6 +13,7 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 	switch (type) {
 		case PantheonMotif.race:
 			const dinoz = await getDinozForAnnounce(+id);
+			const big: Buffer = await renderBigDino(dinoz.display);
 			const raceAtThisLevel = pantheon
 				.filter(p => p.dinoz?.raceId === dinoz.raceId)
 				.filter(p => p.indicator === dinoz.level);
@@ -21,14 +23,14 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 			if (raceAtThisLevel.length <= 4) {
 				DISCORD.sendPantheonNotification(
 					translateAll('announce.dinoz', {
-						player: dinoz.player.name,
 						position: raceAtThisLevel.length + 1,
-						dinoz: dinoz.name,
 						race: dinoz.raceId,
 						level: dinoz.level
-					})
+					}),
+					dinoz.player,
+					big
 				);
-				await addDinozToPantheon(type, dinoz, undefined);
+				await addDinozToPantheon(type, dinoz, big);
 			}
 			break;
 		case PantheonMotif.epic:
@@ -43,7 +45,8 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 							player: player.name,
 							position: rewardQuantityInPantheon.length + 1,
 							reward: reward.name
-						})
+						}),
+						player
 					);
 				}
 			}

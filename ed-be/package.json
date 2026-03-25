@@ -24,6 +24,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@drpg/core": "workspace:^",
+		"@drpg/renderer": "workspace:^",
 		"@eternaltwin/client-node": "0.16.4",
 		"@eternaltwin/core": "^0.16.0",
 		"@eternaltwin/oauth-client-http": "^0.16.1",

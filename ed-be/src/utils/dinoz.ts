@@ -312,10 +312,7 @@ export const useRice = async (
 		newDinozData.seed = randomUUID();
 		// Set next ups similarly to initialization and reincarnation
 		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
-		newDinozData.nextUpAltElementId = getRandomUpElement(
-			upChance,
-			newDinozData.seed + GLOBAL.config.salt + 'pdc'
-		);
+		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
 	}
 	await updateDinoz(dinoz.id, newDinozData);
 };

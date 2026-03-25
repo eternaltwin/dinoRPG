@@ -89,7 +89,8 @@ export async function getDinozForAnnounce(dinozId: number) {
 				id: true,
 				level: true,
 				raceId: true,
-				name: true
+				name: true,
+				display: true
 			}
 		});
 	});

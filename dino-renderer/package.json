@@ -1,0 +1,32 @@
+{
+	"name": "@drpg/renderer",
+	"version": "1.0.0",
+	"description": "Renders DinoRPG dinos to PNG using @eternaltwin/dinorpg_animations + Puppeteer",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+		"build:watch": "tsc --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@eternaltwin/dinorpg_animations": "^1.0.8",
+		"finalhandler": "^1.2.0",
+		"puppeteer": "^22.0.0",
+		"serve-static": "^1.15.0"
+	},
+	"devDependencies": {
+		"@types/finalhandler": "^1.2.3",
+		"@types/node": "^20.0.0",
+		"@types/puppeteer": "^7.0.4",
+		"@types/serve-static": "^1.15.5",
+		"typescript": "^5.4.0"
+	}
+}

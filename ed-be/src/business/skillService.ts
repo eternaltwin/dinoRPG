@@ -260,7 +260,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 	await updateDinoz(newDinozData.id, newDinozData);
 
 	if (newDinozData.level % 10 === 0) {
-		checkAnnounce(PantheonMotif.race, newDinozData.id.toString(), newDinozData.display);
+		await checkAnnounce(PantheonMotif.race, newDinozData.id.toString(), newDinozData.display);
 	}
 
 	// Update player points
