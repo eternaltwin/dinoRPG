@@ -22,6 +22,10 @@
 		"puppeteer": "^22.0.0",
 		"serve-static": "^1.15.0"
 	},
+	"files": [
+		"./dist/**/*.(mjs|map|mts|js|ts)",
+		"./src/"
+	],
 	"devDependencies": {
 		"@types/finalhandler": "^1.2.3",
 		"@types/node": "^20.0.0",
