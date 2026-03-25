@@ -12,9 +12,9 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc",
-		"build:watch": "tsc --watch",
-		"typecheck": "tsc --noEmit"
+		"build": "yarn tsc",
+		"build:watch": "yarn tsc --watch",
+		"typecheck": "yarn tsc --noEmit"
 	},
 	"dependencies": {
 		"@eternaltwin/dinorpg_animations": "^1.0.8",
