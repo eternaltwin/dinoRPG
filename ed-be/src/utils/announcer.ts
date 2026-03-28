@@ -5,7 +5,7 @@ import { addDinozToPantheon, addPlayerToPantheon, getPantheonFromType } from '..
 import { translateAll } from './translate.js';
 import { getPlayerForAnnounce } from '../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
-import { renderSdino, renderBigDino } from '@drpg/renderer';
+import { renderBigDino } from '@drpg/renderer';
 
 export async function checkAnnounce(type: PantheonMotif, id: string, extension: number | string) {
 	if (GLOBAL.config.eternaltwin.channel !== 'production') return;

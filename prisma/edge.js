@@ -899,7 +899,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Projets\\dinorpg\\prisma",
+      "value": "/home/sylvainh/ssd/Workspace/Eternal-Twin/dinorpg/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -908,7 +908,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-1.1.x",
         "native": true
       },
       {
@@ -924,7 +924,11 @@ const config = {
       "nativeDistinct",
       "relationJoins"
     ],
+<<<<<<< HEAD
     "sourceFilePath": "C:\\Projets\\dinorpg\\ed-be\\prisma\\schema.prisma",
+=======
+    "sourceFilePath": "/home/sylvainh/ssd/Workspace/Eternal-Twin/dinorpg/ed-be/prisma/schema.prisma",
+>>>>>>> 6a07a3ac7 (fix: ordering of pre-hit steps for group attacks)
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
