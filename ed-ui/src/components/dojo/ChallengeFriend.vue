@@ -119,14 +119,22 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t, fightResult.result);
-				if (!nexFight) {
+				const nextFight = transpileFight(
+					structuredClone(toRaw(fighters)),
+					fightSteps,
+					this.$t,
+					fightResult.result,
+					undefined,
+					undefined,
+					true
+				);
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
+					history: nextFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
 				this.leftPlayer = fightResult.leftPlayer;
