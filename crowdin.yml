@@ -1,7 +1,10 @@
 files:
   - source: /ed-ui/src/i18n/locales/fr.json
     translation: /ed-ui/src/i18n/locales/%two_letters_code%.json
+  - source: /ed-ui/src/i18n/helpPages/fr/*.md
+    translation: /ed-ui/src/i18n/helpPages/%two_letters_code%/%original_file_name%.md
   - source: /ed-be/i18n/fr.json
     translation: /ed-be/i18n/%two_letters_code%.json
 commit_message: "feat(i18n): crowdin translations"
 pull_request_title: "Crowdin translations"
+preserve_hierarchy: true
