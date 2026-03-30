@@ -4,13 +4,17 @@
 		<div class="menu">
 			<ul class="list">
 				<li
-					v-for="(item, index) in items"
-					:key="index"
-					@click="showContent(item)"
-					:class="{ selected: selectedItemIndex === index }"
+					v-for="(section, index) in helpPageSections"
+					:key="section.id"
+					@click="showContent(index)"
+					:class="{ selected: selectedSectionIndex === index }"
 				>
-					<img v-if="item.nameImageUrl" :src="getImgURL(item.nameImageUrl.path, item.nameImageUrl.name)" alt="Image" />
-					{{ item.name }}
+					<img
+						v-if="section.metadata.icon"
+						:src="getImgURL(section.metadata.icon.path, section.metadata.icon.name)"
+						alt="Icon"
+					/>
+					{{ $t(`guide.sections.${section.id}`) }}
 				</li>
 			</ul>
 		</div>
@@ -19,42 +23,21 @@
 		</div>
 	</div>
 	<div class="showContent">
-		<div v-if="selectedItem" class="content">
-			<div class="titleContent">
-				<h3>{{ selectedItem.name }}</h3>
+		<div v-if="selectedSection" class="content">
+			<div class="markdown">
+				<Markdown :source="selectedSection.content" />
 			</div>
-			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="sectionContent">
-				<h3 class="titleSection">{{ section.name }}</h3>
-				<ul v-if="section.texts" class="textContent">
-					<li v-for="(text, i) in section.texts" :key="i">
-						<p v-html="formatContent(text)" />
-					</li>
-				</ul>
-				<img
-					v-if="section.ImageUrl"
-					:src="getImgURL(section.ImageUrl.path, section.ImageUrl.name)"
-					alt="Image"
-					class="imageContent"
-				/>
-				<ul v-if="section.listItems" class="listItemsContent">
-					<li v-for="(item, i) in section.listItems" :key="i">
-						<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-						<span v-html="formatContent(item.text)" />
-					</li>
-				</ul>
-			</div>
-			<button @click="showPrevItem" v-if="selectedItem.prevItem !== undefined" class="next">
+			<DZButton @click="showPrevItem" class="next" v-if="hasPrevious">
 				<img :src="getImgURL('icons', 'small_page_up')" />
-				{{ items[selectedItem.prevItem].name }}
-			</button>
-			<button @click="showNextItem" v-if="selectedItem.nextItem !== undefined" class="next">
+				{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex - 1].id}`) }}
+			</DZButton>
+			<DZButton @click="showNextItem" class="next" v-if="hasNext">
 				<img :src="getImgURL('icons', 'small_page_down')" />
-				{{ items[selectedItem.nextItem].name }}
-			</button>
-			<button @click="goToPage('News')" class="next">
-				<img :src="getImgURL('icons', 'small_delete')" />
-				{{ $t(`guide.text.stop`) }}
-			</button>
+				{{ $t(`guide.sections.${helpPageSections[selectedSectionIndex + 1].id}`) }}
+			</DZButton>
+			<RouterLink to="/news" class="link">
+				<DZButton class="next"><img :src="getImgURL('icons', 'small_delete')" />{{ $t('guide.text.stop') }}</DZButton>
+			</RouterLink>
 		</div>
 	</div>
 </template>
@@ -62,496 +45,113 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-
-type HelpPageImage = {
-	path: string;
-	name: string;
-};
-
-type HelpPageListItem = {
-	imageUrl?: HelpPageImage;
-	text: string;
-};
-
-type HelpPageContentSection = {
-	name?: string;
-	texts?: string[];
-	ImageUrl?: HelpPageImage;
-	listItems?: HelpPageListItem[];
-};
-
-type HelpPageItem = {
-	name: string;
-	nameImageUrl?: HelpPageImage;
-	contentSections: HelpPageContentSection[];
-	nextItem?: number;
-	prevItem?: number;
-};
+import DZButton from '../components/common/DZButton.vue';
+import Markdown from 'vue3-markdown-it';
+import { MarkdownWithMetadata, loadAllHelpPages, processMarkdownImages } from '../utils/markdownLoader';
+import { localStore } from '../store/index';
 
 export default defineComponent({
 	name: 'Help',
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZButton,
+		Markdown
 	},
 	data() {
 		return {
-			selectedItemIndex: 0
+			helpPageSections: [] as Array<MarkdownWithMetadata>,
+			selectedSectionIndex: 0,
+			localStore: localStore()
 		};
 	},
 	computed: {
-		items(): HelpPageItem[] {
-			return [
-				{
-					name: this.$t('guide.sections.intro'),
-					nameImageUrl: { path: 'icons', name: 'small_home' },
-					contentSections: [{ texts: [this.$t('guide.text.intro')] }],
-					nextItem: 1
-				},
-				{
-					name: this.$t('guide.sections.adopt'),
-					nameImageUrl: { path: 'design', name: 'small_member' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.adopt')],
-							ImageUrl: { path: 'guide', name: 'adopt' }
-						},
-						{ texts: [this.$t('guide.text.adopt2')] }
-					],
-					nextItem: 2,
-					prevItem: 0
-				},
-				{
-					name: this.$t('guide.sections.name'),
-					nameImageUrl: { path: 'icons', name: 'small_question' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.name')], ImageUrl: { path: 'guide', name: 'name' } },
-						{ texts: [this.$t('guide.text.name2')] }
-					],
-					nextItem: 3,
-					prevItem: 1
-				},
-				{
-					name: this.$t('guide.sections.card'),
-					nameImageUrl: { path: 'status', name: 'fx_ccard' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.card')], ImageUrl: { path: 'guide', name: 'card' } },
-						{
-							texts: [this.$t('guide.text.card2')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.card2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.card2-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.card2-3') }
-							]
-						},
-						{ texts: [this.$t('guide.text.card3')] }
-					],
-					nextItem: 4,
-					prevItem: 2
-				},
-				{
-					name: this.$t('guide.sections.move'),
-					nameImageUrl: { path: 'icons', name: 'small_follow' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.move')], ImageUrl: { path: 'guide', name: 'move' } },
-						{
-							texts: [this.$t('guide.text.move2')],
-							listItems: [{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.move2-1') }]
-						},
-						{ texts: [this.$t('guide.text.move3')] }
-					],
-					nextItem: 5,
-					prevItem: 3
-				},
-				{
-					name: this.$t('guide.sections.fight'),
-					nameImageUrl: { path: 'icons', name: 'small_fire' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.fight')], ImageUrl: { path: 'guide', name: 'fight' } },
-						{
-							texts: [this.$t('guide.text.fight2')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-4') }
-							]
-						},
-						{
-							name: this.$t('guide.text.fight3'),
-							texts: [this.$t('guide.text.fight3-1')],
-							listItems: [
-								{ imageUrl: { path: 'elements', name: 'elem_fire' }, text: this.$t('guide.text.fight3-1-1') },
-								{ imageUrl: { path: 'elements', name: 'elem_wood' }, text: this.$t('guide.text.fight3-1-2') },
-								{ imageUrl: { path: 'elements', name: 'elem_water' }, text: this.$t('guide.text.fight3-1-3') },
-								{ imageUrl: { path: 'elements', name: 'elem_lightning' }, text: this.$t('guide.text.fight3-1-4') },
-								{ imageUrl: { path: 'elements', name: 'elem_air' }, text: this.$t('guide.text.fight3-1-5') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.fight3-2')],
-							ImageUrl: { path: 'guide', name: 'elements' }
-						},
-						{ texts: [this.$t('guide.text.fight3-3')] },
-						{
-							name: this.$t('guide.text.fight4'),
-							texts: [this.$t('guide.text.fight4-1')],
-							ImageUrl: { path: 'guide', name: 'assault' }
-						},
-						{
-							texts: [this.$t('guide.text.fight4-2')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-4') }
-							]
-						},
-						{ texts: [this.$t('guide.text.fight4-3')] },
-						{ name: this.$t('guide.text.fight5'), texts: [this.$t('guide.text.fight5-1')] },
-						{ name: this.$t('guide.text.fight6'), texts: [this.$t('guide.text.fight6-1')] },
-						{ name: this.$t('guide.text.fight7'), ImageUrl: { path: 'guide', name: 'energy' } },
-						{ texts: [this.$t('guide.text.fight7-1')] },
-						{
-							name: this.$t('guide.text.fight8'),
-							texts: [this.$t('guide.text.fight8-1')],
-							listItems: [
-								{ imageUrl: { path: 'guide', name: 'status_sleep' }, text: this.$t('guide.text.fight8-1-1') },
-								{ imageUrl: { path: 'guide', name: 'status_untouchable' }, text: this.$t('guide.text.fight8-1-2') },
-								{ imageUrl: { path: 'guide', name: 'status_slow_down' }, text: this.$t('guide.text.fight8-1-3') },
-								{ imageUrl: { path: 'guide', name: 'status_faster' }, text: this.$t('guide.text.fight8-1-4') },
-								{ imageUrl: { path: 'guide', name: 'status_petrified' }, text: this.$t('guide.text.fight8-1-5') },
-								{ imageUrl: { path: 'guide', name: 'status_assault_bonus' }, text: this.$t('guide.text.fight8-1-6') },
-								{ imageUrl: { path: 'guide', name: 'status_poisoned' }, text: this.$t('guide.text.fight8-1-7') },
-								{ imageUrl: { path: 'guide', name: 'status_locked' }, text: this.$t('guide.text.fight8-1-8') },
-								{ imageUrl: { path: 'guide', name: 'status_dazzled' }, text: this.$t('guide.text.fight8-1-9') },
-								{ imageUrl: { path: 'guide', name: 'status_protected' }, text: this.$t('guide.text.fight8-1-10') },
-								{ imageUrl: { path: 'guide', name: 'status_mute' }, text: this.$t('guide.text.fight8-1-11') },
-								{ imageUrl: { path: 'guide', name: 'status_sharingan' }, text: this.$t('guide.text.fight8-1-12') },
-								{
-									imageUrl: { path: 'guide', name: 'status_blocked_inventory' },
-									text: this.$t('guide.text.fight8-1-13')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_energy_penalty' }, text: this.$t('guide.text.fight8-1-14') },
-								{ imageUrl: { path: 'guide', name: 'status_energy_bonus' }, text: this.$t('guide.text.fight8-1-15') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_fire' }, text: this.$t('guide.text.fight8-1-16') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_wood' }, text: this.$t('guide.text.fight8-1-17') },
-								{
-									imageUrl: { path: 'guide', name: 'status_bonus_def_water' },
-									text: this.$t('guide.text.fight8-1-18')
-								},
-								{
-									imageUrl: { path: 'guide', name: 'status_bonus_def_lightning' },
-									text: this.$t('guide.text.fight8-1-19')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_air' }, text: this.$t('guide.text.fight8-1-20') },
-								{
-									imageUrl: { path: 'guide', name: 'status_initiative_bonus' },
-									text: this.$t('guide.text.fight8-1-21')
-								},
-								{
-									imageUrl: { path: 'guide', name: 'status_initiative_penalty' },
-									text: this.$t('guide.text.fight8-1-22')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_dodge_bonus' }, text: this.$t('guide.text.fight8-1-23') },
-								{ imageUrl: { path: 'guide', name: 'status_def_bonus' }, text: this.$t('guide.text.fight8-1-24') }
-							]
-						}
-					],
-					nextItem: 6,
-					prevItem: 4
-				},
-				{
-					name: this.$t('guide.sections.heal'),
-					nameImageUrl: { path: 'icons', name: 'small_use' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.heal')],
-							ImageUrl: { path: 'guide', name: 'heal' }
-						},
-						{ name: this.$t('guide.text.heal2'), texts: [this.$t('guide.text.heal2-1')] }
-					],
-					nextItem: 7,
-					prevItem: 5
-				},
-				{
-					name: this.$t('guide.sections.death'),
-					nameImageUrl: { path: 'icons', name: 'small_delete' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.death')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death-2') }
-							]
-						},
-						{ texts: [this.$t('guide.text.death2')] }
-					],
-					nextItem: 8,
-					prevItem: 6
-				},
-				{
-					name: this.$t('guide.sections.exp'),
-					nameImageUrl: { path: 'icons', name: 'small_xp' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.exp')], ImageUrl: { path: 'guide', name: 'exp' } },
-						{ name: this.$t('guide.text.exp2'), texts: [this.$t('guide.text.exp2-1')] },
-						{ name: this.$t('guide.text.exp3'), texts: [this.$t('guide.text.exp3-1')] }
-					],
-					nextItem: 9,
-					prevItem: 7
-				},
-				{
-					name: this.$t('guide.sections.missions'),
-					nameImageUrl: { path: 'icons', name: 'small_gold' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.missions')], ImageUrl: { path: 'guide', name: 'missions' } },
-						{ texts: [this.$t('guide.text.missions2')] }
-					],
-					nextItem: 10,
-					prevItem: 8
-				},
-				{
-					name: this.$t('guide.sections.status'),
-					nameImageUrl: { path: 'icons', name: 'small_edit' },
-					contentSections: [{ texts: [this.$t('guide.text.status')] }],
-					nextItem: 11,
-					prevItem: 9
-				},
-				{
-					name: this.$t('guide.sections.equipment'),
-					nameImageUrl: { path: 'status', name: 'fx_bckpck' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.equipment')], ImageUrl: { path: 'guide', name: 'equipment' } },
-						{ texts: [this.$t('guide.text.equipment2')] }
-					],
-					nextItem: 12,
-					prevItem: 10
-				},
-				{
-					name: this.$t('guide.sections.epic'),
-					nameImageUrl: { path: 'icons', name: 'small_mode' },
-					contentSections: [{ texts: [this.$t('guide.text.epic')] }],
-					nextItem: 13,
-					prevItem: 11
-				},
-				{
-					name: this.$t('guide.sections.group'),
-					nameImageUrl: { path: 'icons', name: 'small_leader' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.group')], ImageUrl: { path: 'guide', name: 'group' } },
-						{ texts: [this.$t('guide.text.group2')] }
-					],
-					nextItem: 14,
-					prevItem: 12
-				},
-				{
-					name: this.$t('guide.sections.ingredient'),
-					nameImageUrl: { path: 'status', name: 'fx_pelle' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.ingredient')], ImageUrl: { path: 'guide', name: 'gather' } },
-						{ texts: [this.$t('guide.text.ingredient2')] }
-					],
-					nextItem: 15,
-					prevItem: 13
-				},
-				{
-					name: this.$t('guide.sections.clans'),
-					nameImageUrl: { path: 'icons', name: 'small_leader' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.clans')] },
-						{ name: this.$t('guide.text.clans1'), texts: [this.$t('guide.text.clans1-1')] },
-						{ name: this.$t('guide.text.clans2'), texts: [this.$t('guide.text.clans2-1')] }
-					],
-					nextItem: 16,
-					prevItem: 14
-				},
-				{
-					name: this.$t('guide.sections.dojo'),
-					nameImageUrl: { path: 'icons', name: 'small_dojo' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.dojos')],
-							listItems: [{ imageUrl: { path: 'icons', name: 'act_train' }, text: this.$t('guide.text.dojos-1') }]
-						},
-						{ texts: [this.$t('guide.text.dojos-2')] },
-						{ name: this.$t('guide.text.dojos1'), texts: [this.$t('guide.text.dojos1-1')] },
-						{
-							name: this.$t('guide.text.dojos2'),
-							texts: [this.$t('guide.text.dojos2-1')],
-							listItems: [{ imageUrl: { path: 'icons', name: 'act_defi' }, text: this.$t('guide.text.dojos2-2') }]
-						},
-						{
-							name: this.$t('guide.text.dojos3'),
-							texts: [this.$t('guide.text.dojos3-1')],
-							listItems: [{ imageUrl: { path: 'icons', name: 'act_tournament' }, text: this.$t('guide.text.dojos3-2') }]
-						},
-						{ texts: [this.$t('guide.text.dojos3-3')] },
-						{
-							name: this.$t('guide.text.dojos4'),
-							listItems: [{ imageUrl: { path: 'icons', name: 'act_historique' }, text: this.$t('guide.text.dojos4-1') }]
-						},
-						{
-							name: this.$t('guide.text.dojos5'),
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-4') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-5') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-6') }
-							]
-						}
-					],
-					nextItem: 17,
-					prevItem: 15
-				},
-				{
-					name: this.$t('guide.sections.gdc'),
-					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.gdc')] },
-						{
-							name: this.$t('guide.text.gdc1'),
-							texts: [this.$t('guide.text.gdc1-1')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-4') }
-							]
-						},
-						{
-							name: this.$t('guide.text.gdc2'),
-							texts: [this.$t('guide.text.gdc2-1')],
-							ImageUrl: { path: 'guide', name: 'castle' }
-						},
-						{
-							texts: [this.$t('guide.text.gdc2-2')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-2') }
-							]
-						},
-						{ name: this.$t('guide.text.gdc3'), texts: [this.$t('guide.text.gdc3-1')] },
-						{
-							name: this.$t('guide.text.gdc4'),
-							texts: [this.$t('guide.text.gdc4-1')],
-							ImageUrl: { path: 'guide', name: 'attack_castle' }
-						},
-						{
-							name: this.$t('guide.text.gdc5'),
-							texts: [this.$t('guide.text.gdc5-1')],
-							ImageUrl: { path: 'guide', name: 'def_castle' }
-						},
-						{ name: this.$t('guide.text.gdc6'), texts: [this.$t('guide.text.gdc6-1')] }
-					],
-					nextItem: 18,
-					prevItem: 16
-				},
-				{
-					name: this.$t('guide.sections.cdc'),
-					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.cdc')] },
-						{ name: this.$t('guide.text.cdc1'), texts: [this.$t('guide.text.cdc1-1')] },
-						{
-							name: this.$t('guide.text.cdc2'),
-							texts: [this.$t('guide.text.cdc2-1')],
-							ImageUrl: { path: 'guide', name: 'battle_cdc' }
-						},
-						{ texts: [this.$t('guide.text.cdc2-2')] },
-						{ name: this.$t('guide.text.cdc3'), texts: [this.$t('guide.text.cdc3-1')] },
-						{
-							name: this.$t('guide.text.cdc4'),
-							texts: [this.$t('guide.text.cdc4-1')],
-							ImageUrl: { path: 'guide', name: 'position_cdc' }
-						},
-						{ texts: [this.$t('guide.text.cdc4-2')] }
-					],
-					nextItem: 19,
-					prevItem: 17
-				},
-				{
-					name: this.$t('guide.sections.question'),
-					nameImageUrl: { path: 'icons', name: 'small_mail' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.questions')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions4') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions5') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions6') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions7') }
-							]
-						}
-					],
-					nextItem: 20,
-					prevItem: 18
-				},
-				{
-					name: this.$t('guide.sections.support'),
-					nameImageUrl: { path: 'icons', name: 'small_browse_next' },
-					contentSections: [
-						{ name: this.$t('guide.text.support'), texts: [this.$t('guide.text.support-1')] },
-						{
-							texts: [this.$t('guide.text.support1')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support1-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support1-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support1-3') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.support2')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support2-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support2-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support2-4') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.support3')],
-							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support3-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support3-2') }
-							]
-						},
-						{ name: this.$t('guide.text.support4'), texts: [this.$t('guide.text.support4-1')] }
-					],
-					nextItem: 21,
-					prevItem: 19
-				},
-				{
-					name: this.$t('guide.sections.security'),
-					nameImageUrl: { path: 'icons', name: 'small_lock' },
-					contentSections: [{ name: this.$t('guide.text.security'), texts: [this.$t('guide.text.security-1')] }],
-					prevItem: 20
-				}
-			];
+		selectedSectionId(): string {
+			return this.helpPageSections[this.selectedSectionIndex].id ?? '';
 		},
-		selectedItem() {
-			return this.items[this.selectedItemIndex] || null;
+		selectedSection(): MarkdownWithMetadata | null {
+			return this.helpPageSections[this.selectedSectionIndex] || null;
+		},
+		hasPrevious(): boolean {
+			return this.selectedSectionIndex > 0;
+		},
+		hasNext(): boolean {
+			return this.selectedSectionIndex < this.helpPageSections.length - 1;
 		}
 	},
 	methods: {
-		showContent(item) {
-			this.selectedItemIndex = this.items.indexOf(item);
-		},
-		showNextItem() {
-			if (this.selectedItem && this.selectedItem.nextItem !== undefined) {
-				this.selectedItemIndex = this.selectedItem.nextItem;
+		async loadAllSections() {
+			try {
+				// Load all markdown files for the current language
+				const pages = await loadAllHelpPages(this.localStore.getLanguage ?? 'fr');
+
+				// Process images for each page
+				this.helpPageSections = pages.map(page => ({
+					...page,
+					content: processMarkdownImages(page.content, this.getImgURL)
+				}));
+
+				// Sort by order from frontmatter
+				this.helpPageSections.sort((a, b) => {
+					const orderA = a.metadata.order ?? 999;
+					const orderB = b.metadata.order ?? 999;
+					return orderA - orderB;
+				});
+			} catch (error) {
+				console.error('Error loading help sections:', error);
 			}
 		},
-		showPrevItem() {
-			if (this.selectedItem && this.selectedItem.prevItem !== undefined) {
-				this.selectedItemIndex = this.selectedItem.prevItem;
+		async showContent(index: number) {
+			this.selectedSectionIndex = index;
+			// Update URL hash without triggering navigation
+			const sectionId = this.helpPageSections[index].id;
+			this.$router.replace({ hash: `#${sectionId}` });
+		},
+		async showNextItem() {
+			if (this.hasNext) {
+				await this.showContent(this.selectedSectionIndex + 1);
 			}
 		},
-		goToPage(pageName: string) {
-			this.$router.push({ name: pageName });
+		async showPrevItem() {
+			if (this.hasPrevious) {
+				await this.showContent(this.selectedSectionIndex - 1);
+			}
+		},
+		async loadFromHash() {
+			const hash = this.$route.hash.replace('#', '');
+
+			if (hash) {
+				// Find the section index by ID
+				const sectionIndex = this.helpPageSections.findIndex(section => section.id === hash);
+
+				if (sectionIndex !== -1) {
+					this.selectedSectionIndex = sectionIndex;
+				} else {
+					// Default to intro
+					this.selectedSectionIndex = 0;
+				}
+			}
+		}
+	},
+	async mounted() {
+		// Load all sections on mount
+		await this.loadAllSections();
+		// Check if there's a hash in the URL to load a specific section
+		this.loadFromHash();
+	},
+	unmounted() {
+		this.$router.replace({ hash: '' });
+	},
+	watch: {
+		'localStore.getLanguage': {
+			async handler() {
+				await this.loadAllSections();
+			}
+		},
+		// Watch for hash changes in the URL
+		'$route.hash': {
+			async handler() {
+				await this.loadFromHash();
+			}
 		}
 	}
 });
@@ -608,64 +208,190 @@ export default defineComponent({
 				font-variant: small-caps;
 			}
 		}
-		:deep(strong) {
-			color: rgb(142, 62, 38);
-		}
-		:deep(i) {
-			color: rgb(142, 62, 38);
-		}
-		.sectionContent {
-			margin-top: 15px;
-			margin-left: 10px;
-			.titleSection {
-				background-color: rgb(142, 62, 38);
-				border-radius: 2px;
-				color: #fff1ad;
-				margin-bottom: 10px;
-			}
-			.textContent {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				list-style: none;
-			}
-			.imageContent {
-				margin-bottom: 10px;
-				margin-top: 10px;
-				max-width: -moz-available;
-				max-width: -webkit-fill-available;
-				max-width: stretch;
-			}
-			.listItemsContent {
-				list-style: none;
-				margin-top: 12px;
-				& li {
-					margin-top: 10px;
-					margin-left: 10px;
-					& img {
-						margin-right: 8px;
-					}
-				}
-			}
-		}
 		.next {
-			background-image: url('../assets/button/button.webp');
-			border: none;
-			color: #fff1ad;
 			font-variant: small-caps;
 			font-weight: bold;
 			text-align: center;
 			height: 28px;
 			width: 145px !important;
-			background-repeat: no-repeat;
 			font-size: 7pt;
 			margin-left: 10px;
 			margin-right: 10px;
 			margin-top: 20px;
-			cursor: pointer;
-			&:hover {
-				color: white;
-				background-image: url('../assets/button/button_hover.webp');
+		}
+		.markdown {
+			margin-top: 15px;
+			margin-left: 10px;
+
+			:deep(h2),
+			:deep(h3),
+			:deep(h4),
+			:deep(h5),
+			:deep(h6) {
+				background-color: rgb(142, 62, 38);
+				border-radius: 2px;
+				color: #fff1ad;
+				margin-top: 20px;
+				margin-bottom: 10px;
+				// padding: 5px 10px;
+			}
+
+			// Headings styling
+			:deep(h1) {
+				height: fit-content;
+				background-image: url('../assets/design/title_h1.webp');
+				background-position: left bottom;
+				background-repeat: no-repeat;
+				padding-bottom: 22px;
+				padding-left: 5px;
+				color: #71b703;
+				font-variant: small-caps;
+				font-size: 20px;
+			}
+
+			// Paragraphs
+			:deep(p) {
+				margin: 10px 0;
+				display: block;
+			}
+
+			// Strong and italic
+			:deep(strong) {
+				color: rgb(142, 62, 38);
+			}
+
+			:deep(i),
+			:deep(em) {
+				color: rgb(142, 62, 38);
+			}
+
+			// Images - inline by default
+			:deep(img) {
+				max-width: 100%;
+				height: auto;
+				vertical-align: middle;
+				display: inline-block;
+				margin: 0 5px 0 0;
+			}
+
+			// Images that are alone in a paragraph should be block-level
+			// Note: this works if the image is the **only** HTML element.
+			// So if a sentence has only an image and not other generated HTML element, then it will make the image a standalone block.
+			// The simple way to avoid that is to add some bolding (with **<text>**) in the Markdown or another image.
+			:deep(p > img:only-child) {
+				display: block;
+			}
+
+			// Lists
+			:deep(ul),
+			:deep(ol) {
+				list-style: none;
+				margin-top: 12px;
+				padding-left: 0;
+			}
+
+			:deep(li) {
+				margin-top: 10px;
+				margin-left: 10px;
+				padding-left: 30px;
+				position: relative;
+				// display: flex;
+				// align-items: flex-start;
+				// gap: 8px;
+			}
+
+			// Default bullet point using info_button image
+			:deep(ul li::before) {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 7px;
+				width: 7px;
+				height: 7px;
+				background-image: url('../assets/design/info_button.webp');
+				background-size: 7px 7px;
+				background-repeat: no-repeat;
+				background-position: center;
+				flex-shrink: 0;
+			}
+
+			// Hide default bullet when list item starts with an image
+			:deep(li:has(> p > img:first-child)::before) {
+				display: none;
+			}
+
+			// Style for custom bullet images (first child)
+			:deep(li > p > img:first-child) {
+				flex-shrink: 0;
+				margin-left: -30px;
+				margin-right: 0;
+				width: auto;
+				height: auto;
+			}
+
+			// Links
+			:deep(a) {
+				color: #71b703;
+				text-decoration: underline;
+
+				&:hover {
+					color: #fce3bc;
+				}
+			}
+
+			// Code blocks
+			:deep(code) {
+				background-color: rgba(0, 0, 0, 0.2);
+				padding: 2px 6px;
+				border-radius: 3px;
+				font-family: monospace;
+			}
+
+			:deep(pre) {
+				background-color: rgba(0, 0, 0, 0.2);
+				padding: 15px;
+				border-radius: 5px;
+				overflow-x: auto;
+
+				code {
+					background: none;
+					padding: 0;
+				}
+			}
+
+			// Blockquotes
+			:deep(blockquote) {
+				border-left: 4px solid rgb(142, 62, 38);
+				padding-left: 15px;
+				margin: 15px 0;
+				font-style: italic;
+				color: #fce3bc;
+			}
+
+			// Tables
+			:deep(table) {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 15px 0;
+			}
+
+			:deep(th),
+			:deep(td) {
+				border: 1px solid rgb(142, 62, 38);
+				padding: 8px;
+				text-align: left;
+			}
+
+			:deep(th) {
+				background-color: rgb(142, 62, 38);
+				color: #fff1ad;
+			}
+
+			// Horizontal rules
+			:deep(hr) {
+				border: none;
+				border-top: 2px solid rgb(142, 62, 38);
+				margin: 20px 0;
 			}
 		}
 	}
