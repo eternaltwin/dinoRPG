@@ -784,6 +784,7 @@ exports.LogType = exports.$Enums.LogType = {
   AdminUpdateQuest: 'AdminUpdateQuest',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
   AdminUpdateSecret: 'AdminUpdateSecret',
+  AdminUpdateClan: 'AdminUpdateClan',
   IngredientSold: 'IngredientSold',
   XPEarned: 'XPEarned',
   HPLost: 'HPLost',
