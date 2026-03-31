@@ -134,6 +134,7 @@ export const LogType: {
   readonly AdminUpdateQuest: 'AdminUpdateQuest';
   readonly AdminUpdatePlayer: 'AdminUpdatePlayer';
   readonly AdminUpdateSecret: 'AdminUpdateSecret';
+  readonly AdminUpdateClan: 'AdminUpdateClan';
   readonly IngredientSold: 'IngredientSold';
   readonly XPEarned: 'XPEarned';
   readonly HPLost: 'HPLost';
@@ -183,6 +184,7 @@ export namespace LogType {
   export type AdminUpdateQuest = 'AdminUpdateQuest';
   export type AdminUpdatePlayer = 'AdminUpdatePlayer';
   export type AdminUpdateSecret = 'AdminUpdateSecret';
+  export type AdminUpdateClan = 'AdminUpdateClan';
   export type IngredientSold = 'IngredientSold';
   export type XPEarned = 'XPEarned';
   export type HPLost = 'HPLost';
