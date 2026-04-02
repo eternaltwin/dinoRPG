@@ -219,5 +219,52 @@ export const AdminService = {
 			list: list
 		});
 		return res.data;
+	},
+	async searchClans(name: string) {
+		const res = await http().get(`/admin/clans/search/${name}`);
+		return res.data;
+	},
+	async getClanDetails(id: number) {
+		const res = await http().get(`/admin/clans/${id}`);
+		return res.data;
+	},
+	async updateClanName(id: number, name: string) {
+		const res = await http().patch(`/admin/clans/${id}/name`, { name });
+		return res.data;
+	},
+	async updateClanLangs(id: number, langs: string[]) {
+		const res = await http().patch(`/admin/clans/${id}/langs`, { langs });
+		return res.data;
+	},
+	async removeClanBanner(id: number) {
+		const res = await http().delete(`/admin/clans/${id}/banner`);
+		return res.data;
+	},
+	async updateClanPage(pageId: number, data: { name: string; content: string }) {
+		const res = await http().put(`/admin/clans/pages/${pageId}`, data);
+		return res.data;
+	},
+	async deleteClanPage(pageId: number) {
+		const res = await http().delete(`/admin/clans/pages/${pageId}`);
+		return res.data;
+	},
+	async setClanLeader(id: number, newLeaderId: string) {
+		const res = await http().patch(`/admin/clans/${id}/leader`, { newLeaderId });
+		return res.data;
+	},
+	async kickClanMemberAdmin(playerId: string) {
+		return await http().delete(`/admin/clans/member/${playerId}`);
+	},
+	async deleteClan(id: number) {
+		const res = await http().delete(`/admin/clans/${id}`);
+		return res.data;
+	},
+	async updateClanTreasureGold(id: number, amount: number, operation: 'add' | 'remove') {
+		const res = await http().patch(`/admin/clans/${id}/treasure/gold`, { amount, operation });
+		return res.data;
+	},
+	async updateClanTreasureIngredients(id: number, ingredientId: number, quantity: number, operation: 'add' | 'remove') {
+		const res = await http().patch(`/admin/clans/${id}/treasure/ingredients`, { ingredientId, quantity, operation });
+		return res.data;
 	}
 };
