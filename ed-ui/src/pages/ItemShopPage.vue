@@ -294,7 +294,7 @@ import { shopList } from '@drpg/core/models/shop/ShopList';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { ItemShopService } from '../services/index.js';
-import { dinozStore, playerStore, useDinozStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 import DZInput from '../components/common/DZInput.vue';
@@ -304,7 +304,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
 			itemList: [] as Array<ItemFiche>,
 			ingredientList: [] as IngredientFiche[],
 			fullItems: [] as ItemShopFiche[],
