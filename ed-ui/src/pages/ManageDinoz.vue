@@ -121,7 +121,6 @@ export default defineComponent({
 					return d;
 				});
 
-				this.dinozStore.setDinozList(dinozs);
 				useDinozStore().setDinozList(dinozs);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);

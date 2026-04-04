@@ -98,7 +98,6 @@ export default defineComponent({
 
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
-							this.dinozStore.setDinozList(await PlayerService.getDinozList());
 							useDinozStore().setDinozList(await PlayerService.getDinozList());
 
 							break;

@@ -66,7 +66,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		this.tab = +this.$route.params.tab;
 
-		const currentDinozId = useDinozStore().getCurrentDinoz.id;
+		const currentDinozId = useDinozStore().getCurrentDinozId;
 
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {

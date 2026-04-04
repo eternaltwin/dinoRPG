@@ -500,7 +500,7 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				this.$router.push({
 					name: 'DinozPage',
-					params: { id: useDinozStore().getCurrentDinoz.id }
+					params: { id: useDinozStore().getCurrentDinozId }
 				});
 				return;
 			}
