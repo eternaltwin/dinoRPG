@@ -99,7 +99,6 @@ export default defineComponent({
 		getLeaderGroup(dinoz: DinozFiche) {
 			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
 			if (!currentDinozId) return false;
-			// if (!this.currentDinozId) return false;
 			const selectedDinoz = this.dinozStore.getDinoz(currentDinozId);
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader

@@ -128,7 +128,6 @@ export default defineComponent({
 			return dinoz;
 		});
 
-		this.dinozStore.setDinozList(dinozs);
 		useDinozStore().setDinozList(dinozs);
 		this.sessionStore.setFightResult(undefined);
 	}

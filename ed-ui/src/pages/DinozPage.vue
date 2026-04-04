@@ -65,7 +65,6 @@ export default defineComponent({
 					dinozToUpdate.missionId = this.dinozData.missionId;
 					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				}
-				this.dinozStore.setDinozList(dinozList);
 				useDinozStore().setDinozList(dinozList);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -104,7 +103,6 @@ export default defineComponent({
 					}
 				});
 			}
-			this.dinozStore.setDinozList(dinozList);
 			useDinozStore().setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
 				...this.playerStore.playerOptions

@@ -560,7 +560,7 @@ export default defineComponent({
 			}
 		},
 		async changeDinozBuild() {
-			if (!this.dinozBuild || !useDinozStore().currentDinozId) {
+			if (!this.dinozBuild || !useDinozStore().getCurrentDinoz.id) {
 				return;
 			}
 
@@ -569,10 +569,7 @@ export default defineComponent({
 				const currentDinoz = useDinozStore().getCurrentDinoz;
 				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
 
-				this.dinozStore.setDinoz({
-					...currentDinoz,
-					build
-				});
+				useDinozStore().setDinoz({ ...currentDinoz, build });
 
 				this.$toast.success(this.$t('toast.buildAssigned', { name: build?.name ?? '' }).toString());
 			} catch (err) {

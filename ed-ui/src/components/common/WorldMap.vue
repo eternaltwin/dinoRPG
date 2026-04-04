@@ -249,7 +249,7 @@ export default defineComponent({
 				}
 
 				if (moveTry.result) {
-					const dinozs: Array<DinozFiche> = dinozList.map(dinoz => {
+					useDinozStore().setDinozList(dinozList.map(dinoz => {
 						if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
 							this.dinozStore.clearNpc(dinoz.id);
 							if (dinoz.life !== 0) {
@@ -264,9 +264,7 @@ export default defineComponent({
 							}
 						}
 						return dinoz;
-					});
-					this.dinozStore.setDinozList(dinozs);
-					useDinozStore().setDinozList(dinozs);
+					}));
 				}
 
 				this.$router.push({

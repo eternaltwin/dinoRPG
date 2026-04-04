@@ -114,7 +114,6 @@ export default defineComponent({
 					})
 				);
 
-				this.dinozStore.setDinozList(dinozs);
 				useDinozStore().setDinozList(dinozs);
 				EventBus.emit('refreshDinoz', true);
 			} catch (e) {

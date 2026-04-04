@@ -78,7 +78,6 @@ export default defineComponent({
 
 				dinozToUpdate.name = this.dinozName;
 
-				this.dinozStore.setDinozList(dinozList);
 				useDinozStore().setDinozList(dinozList);
 
 				// Set parent's data to display dinoz page

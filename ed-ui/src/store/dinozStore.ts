@@ -18,16 +18,16 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 
 	const getCurrentDinozId: ComputedRef<number | undefined> = computed((): number | undefined => {
 		return currentDinozId.value;
-	})
+	});
 
 	const setDinozList = (dinozs: Array<DinozFiche>): void => {
 		dinozList.value = dinozs;
-	}
+	};
 
 	const setDinoz = (dinoz: DinozFiche): void => {
 		const dinozToUpdate = dinozList.value.findIndex(dinozs => dinozs.id === dinoz.id);
 		dinozList.value.splice(dinozToUpdate, 1, dinoz);
-	}
+	};
 
 	const setCurrentDinozId = (dinozId: number): void => {
 		currentDinozId.value = dinozId;
@@ -60,17 +60,9 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinoz = state.dinozList.find((dinoz: DinozFiche) => dinoz.id === state.currentDinozId);
 			if (!dinoz) throw Error("Dinoz doesn't exist in store.");
 			return dinoz;
-		},
-		getCurrentDinozId: (state: StoreDinoz) => state.currentDinozId
+		}
 	},
 	actions: {
-		setDinozList(dinozList: Array<DinozFiche>): void {
-			this.dinozList = dinozList;
-		},
-		setDinoz(dinoz: DinozFiche): void {
-			const dinozToUpdate = this.dinozList.findIndex(dinozs => dinozs.id === dinoz.id);
-			this.dinozList.splice(dinozToUpdate, 1, dinoz);
-		},
 		setDinozSkillState(dinozId: number, skill: Skill, state: boolean): void {
 			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");

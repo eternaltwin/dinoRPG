@@ -139,7 +139,6 @@ export default defineComponent({
 
 			const newDinozList = commonData.dinoz.map(d => d.id);
 			const oldDinozList = dinozList.map(d => d.id);
-			this.dinozStore.setDinozList(commonData.dinoz);
 			useDinozStore().setDinozList(commonData.dinoz);
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });

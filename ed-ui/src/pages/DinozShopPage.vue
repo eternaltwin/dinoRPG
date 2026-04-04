@@ -116,7 +116,6 @@ export default defineComponent({
 				dinozStore.push(dinozCreated);
 
 				// Update dinoz list
-				this.dinozStore.setDinozList(dinozStore);
 				useDinozStore().setDinozList(dinozStore);
 
 				// Go to dinoz page

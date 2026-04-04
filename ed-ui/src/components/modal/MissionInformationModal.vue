@@ -61,7 +61,6 @@ export default defineComponent({
 				} else {
 					dinozToUpdate.missionId = undefined;
 				}
-				this.dinozStore.setDinozList(dinozList);
 				useDinozStore().setDinozList(dinozList);
 
 				this.$emit('reload');

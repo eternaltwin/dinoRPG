@@ -20,16 +20,11 @@
 import { defineComponent } from 'vue';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, useDinozStore } from '../../store/index.js';
+import { useDinozStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'ImportAccount',
 	emits: ['closePopin'],
-	data() {
-		return {
-			dinozStore: dinozStore()
-		};
-	},
 	methods: {
 		closePopin(): void {
 			this.$emit('closePopin');
@@ -38,7 +33,6 @@ export default defineComponent({
 			this.$emit('closePopin');
 			try {
 				await PlayerService.requestImport(lang);
-				this.dinozStore.setDinozList([]);
 				useDinozStore().setDinozList([]);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

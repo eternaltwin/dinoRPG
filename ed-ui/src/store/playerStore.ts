@@ -106,7 +106,6 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerOptions(commonData.playerOptions);
 			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
-			dinozStore().setDinozList(commonData.dinoz);
 			useDinozStore().setDinozList(commonData.dinoz);
 		}
 	},

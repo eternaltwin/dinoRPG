@@ -274,7 +274,7 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		try {
-			const currentDinozId = useDinozStore().getCurrentDinoz.id;
+			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {
