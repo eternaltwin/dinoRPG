@@ -1,5 +1,4 @@
 ---
-order: 2
 icon:
   path: design
   name: small_member
