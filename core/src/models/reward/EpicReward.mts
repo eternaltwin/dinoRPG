@@ -3,4 +3,12 @@ export interface EpicReward {
 	name: string;
 	displayed: boolean;
 	announced: boolean;
+	type: RewardType;
+}
+
+export enum RewardType {
+	PVE,
+	WAR,
+	CDC,
+	SPECIAL
 }
