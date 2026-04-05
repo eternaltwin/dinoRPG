@@ -34,6 +34,7 @@ import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import sendError from '../utils/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
+import { eventState } from './clanWar.js';
 
 export class OAuth {
 	#oauthClient: RfcOauthClient;

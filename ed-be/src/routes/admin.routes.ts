@@ -10,6 +10,7 @@ import {
 	getAllSecrets,
 	getJobs,
 	getMultiIps,
+	getOngoingEvent,
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	listAllPlayerInformationForAdminDashboard,
@@ -18,6 +19,7 @@ import {
 	modifyPlayerIngredients,
 	modifyPlayerItems,
 	setPlayerMoney,
+	startClanWarEvent,
 	truncateAll,
 	updatePlayerQuestProgression,
 	getClanDetailsAdmin,
@@ -846,5 +848,31 @@ routes.patch(
 		}
 	}
 );
+
+routes.put(`${commonPath}/event/start`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await startClanWarEvent(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/event`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getOngoingEvent(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;

@@ -22,7 +22,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, LogType } from '@drpg/prisma';
+import { AdminRole, ClanEventType, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
@@ -46,6 +46,8 @@ import {
 	deleteClanMember,
 	updateClanLanguagesRequest
 } from '../dao/clansDao.js';
+import dayjs from 'dayjs';
+import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1120,4 +1122,54 @@ export async function updateClanTreasureIngredients(
 		where: { clanId },
 		select: { ingredientId: true, quantity: true }
 	});
+}
+
+export async function startClanWarEvent(req: Request) {
+	const start = req.body.start;
+	const duration = req.body.duration;
+	const places = req.body.places as number[];
+	const winnerReward = req.body.winner;
+	const podiumReward = req.body.podium;
+	const participantReward = req.body.participant;
+
+	const startTime = dayjs(start).startOf('day').toDate();
+	const endTime = dayjs(startTime).add(duration, 'weeks').endOf('day').toDate();
+
+	const warPlaces = places.filter(p => Object.values(PlaceEnum).includes(p)).map(p => p as PlaceEnum);
+	const config: ClanEventConfig = {
+		eventType: ClanEventType.war,
+		rewards: {
+			winner: winnerReward as Reward,
+			podium: podiumReward as Reward,
+			participant: participantReward as Reward
+		},
+		fight: {
+			attackTime: 100,
+			defenderTotal: 100,
+			defenderActiveMax: 50
+		},
+		swampEnable: true,
+		warPlaces: warPlaces
+	};
+
+	const event = await prisma.clanEvent.create({
+		data: {
+			eventType: ClanEventType.war,
+			startDate: startTime,
+			endDate: endTime,
+			config: JSON.stringify(config)
+		}
+	});
+	// scheduleJob(event.id)
+}
+
+export async function getOngoingEvent(req: Request) {
+	const events = await prisma.clanEvent.findMany({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
 }

@@ -26,6 +26,7 @@ import dojoRoutes from './dojo.routes.js';
 import forumRoutes from './forum.routes.js';
 import eventsRoutes from './events.routes.js';
 import dinozBuildRoutes from './dinozBuild.routes.js';
+import clanWarRoutes from './clan.war.routes.js';
 import { OAuth } from '../business/oauthService.js';
 import { prisma } from '../prisma.js';
 import { apiRoutes } from '../constants/index.js';
@@ -50,6 +51,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(missionsRoutes);
 	app.use(newsRoutes);
 	app.use(npcRoutes);
+	app.use(clanWarRoutes);
 	// app.use(oauthRoutes);
 	app.use(playerRoutes);
 	app.use(shopRoutes);
