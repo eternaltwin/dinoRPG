@@ -1,3 +1,7 @@
+/**
+ * Possible Frontmatter metadata fields.
+ * If you need a new field, at it here with matching name.
+ */ 
 export interface MarkdownMetadata {
 	order?: number;
 	icon?: {
@@ -70,11 +74,14 @@ function extractFrontmatter(markdown: string): { metadata: MarkdownMetadata; con
 }
 
 /**
- * Loads all markdown files from a language folder
- * Uses Vite's import.meta.glob to discover and load all .md files
+ * Loads all markdown files from the helpPages folder.
+ * Uses Vite's import.meta.glob to discover and load all .md files.
+ * 
+ * The ID and order information of the help page are contained in its name.
+ * Other metadata (like icon and path) is stored in the frontmatter of the markdown file.
  *
  * @param language - The language code (e.g., 'en', 'fr')
- * @returns Array of markdown files with their metadata
+ * @returns Array of markdown files with their id, metadata and content
  */
 export async function loadAllHelpPages(language: string): Promise<MarkdownWithMetadata[]> {
 	const defaultLanguage = 'fr';
@@ -88,11 +95,11 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 		});
 
 		// Filter for the specific language
-		const languagePattern = `/helpPages/${language}/`;
+		const pathPattern = `/helpPages/${language}/`;
 		const filteredModules: Record<string, () => Promise<{ default: string }>> = {};
 
 		for (const [path, loader] of Object.entries(allModules)) {
-			if (path.includes(languagePattern)) {
+			if (path.includes(pathPattern)) {
 				filteredModules[path] = loader;
 			}
 		}
@@ -115,15 +122,21 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 				// Extract the filename (without extension) as the ID
 				const filename = path.split('/').pop()?.replace('.md', '') || '';
 
+				// Parse the numeric prefix and the slug separately
+				const match = filename.match(/^(\d+)-(.+)$/);
+				const order = match ? parseInt(match[1], 10) : undefined;
+				const id = match ? match[2] : filename;
+
 				// Load the module
 				const module = await loader();
 				const rawContent = module.default;
 
 				// Extract frontmatter and content
 				const { metadata, content } = extractFrontmatter(rawContent);
+				metadata.order = order;
 
 				pages.push({
-					id: filename,
+					id,
 					metadata,
 					content
 				});
@@ -140,7 +153,7 @@ export async function loadAllHelpPages(language: string): Promise<MarkdownWithMe
 }
 
 /**
- * Loads a markdown file for a specific help page section and language
+ * Loads a single markdown file for a specific folder and language
  * Falls back to French if the requested language file is not found
  *
  * @param parentFolder - The base name of the parent folder that contains the markdown files
