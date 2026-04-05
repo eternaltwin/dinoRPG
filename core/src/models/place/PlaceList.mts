@@ -29,6 +29,7 @@ export const placeList: Record<
 		top?: number;
 		bottom?: number;
 		itinerant?: boolean;
+		warPlace?: boolean;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -48,7 +49,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_port',
 		top: 140,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.PLACE_DU_MARCHE]: {
 		placeId: PlaceEnum.PLACE_DU_MARCHE,
@@ -58,7 +60,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 'city2',
 		top: 155,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.PAPY_JOE]: {
 		placeId: PlaceEnum.PAPY_JOE,
@@ -69,7 +72,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_papy',
 		top: 165,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.FORCEBRUT]: {
 		placeId: PlaceEnum.FORCEBRUT,
@@ -80,7 +84,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_frcbrt',
 		top: 120,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.DINOVILLE]: {
 		placeId: PlaceEnum.DINOVILLE,
@@ -92,7 +97,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_dnv',
 		top: 155,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.UNIVERSITE]: {
 		placeId: PlaceEnum.UNIVERSITE,
@@ -103,7 +109,8 @@ export const placeList: Record<
 		specialGather: GatherType.DAILY,
 		ground: GroundEnum.NONE,
 		background: 's_univ',
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
@@ -114,7 +121,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_fountj',
 		top: 170,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.COLLINES_ESCARPEES]: {
 		placeId: PlaceEnum.COLLINES_ESCARPEES,
@@ -125,7 +133,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_colesc',
 		top: 130,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.GO_TO_GRAND_TOUT_CHAUD]: {
 		placeId: PlaceEnum.GO_TO_GRAND_TOUT_CHAUD,
@@ -319,7 +328,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_chutes',
 		top: 110,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.GO_TO_DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.GO_TO_DOME_SOULAFLOTTE,
@@ -340,7 +350,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_baobob',
 		top: 130,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
@@ -364,7 +375,8 @@ export const placeList: Record<
 		ground: GroundEnum.WATER,
 		background: 'swp_clear',
 		top: 160,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.MINES_DE_CORAIL]: {
 		placeId: PlaceEnum.MINES_DE_CORAIL,
@@ -375,7 +387,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_corail',
 		top: 150,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.ILE_WAIKIKI]: {
 		placeId: PlaceEnum.ILE_WAIKIKI,
@@ -386,7 +399,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_ilewkk',
 		top: 110,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,
@@ -490,7 +504,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_pentes',
 		top: 130,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.FORGES_DU_GTC]: {
 		placeId: PlaceEnum.FORGES_DU_GTC,
@@ -501,7 +516,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_forges',
 		top: 110,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.RUINES_ASHPOUK]: {
 		placeId: PlaceEnum.RUINES_ASHPOUK,
@@ -512,7 +528,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_rashpk',
 		top: 160,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.FOSSELAVE]: {
 		placeId: PlaceEnum.FOSSELAVE,
@@ -523,7 +540,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_fosslv',
 		top: 110,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.REPAIRE_DU_VENERABLE]: {
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
@@ -534,7 +552,8 @@ export const placeList: Record<
 		ground: GroundEnum.NONE,
 		background: 's_vener',
 		top: 130,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.TUNNEL_SOUS_LA_BRANCHE]: {
 		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
@@ -544,7 +563,8 @@ export const placeList: Record<
 		ground: GroundEnum.DIRT,
 		background: 's_tunel',
 		top: 130,
-		itinerant: true
+		itinerant: true,
+		warPlace: true
 	},
 	[PlaceEnum.GORGES_PROFONDES]: {
 		placeId: PlaceEnum.GORGES_PROFONDES,

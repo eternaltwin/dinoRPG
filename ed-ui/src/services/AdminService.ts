@@ -8,6 +8,7 @@ import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
+import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
 
 export const AdminService = {
 	async getDashBoard(): Promise<boolean> {
@@ -218,6 +219,14 @@ export const AdminService = {
 		const res = await http().put(`/admin/massban`, {
 			list: list
 		});
+		return res.data;
+	},
+	async startClanWarEvent(form: EventForm) {
+		const res = await http().put(`/admin/event/start`, form);
+		return res.data;
+	},
+	async getOngoingEvent(): Promise<OngoingEvent[]> {
+		const res = await http().get(`/admin/event`);
 		return res.data;
 	},
 	async searchClans(name: string) {

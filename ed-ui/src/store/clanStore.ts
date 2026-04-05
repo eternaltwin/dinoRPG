@@ -5,11 +5,17 @@ import { LocalesEnum } from '../i18n';
 
 export const clanStore = defineStore('clanStore', {
 	state: (): StoreClan => ({
-		clan: undefined
+		clan: undefined,
+		clanEvent: undefined
 	}),
 	getters: {
 		getClan: (state: StoreClan) => state.clan,
-		getClanId: (state: StoreClan) => state.clan?.id ?? 0
+		getClanId: (state: StoreClan) => state.clan?.id ?? 0,
+		getOngoingEvent: (state: StoreClan) => {
+			if (state.clanEvent && state.clanEvent.endDate > new Date()) {
+				return state.clanEvent.id;
+			}
+		}
 	},
 	actions: {
 		async loadClan(clanId: number) {
@@ -24,6 +30,9 @@ export const clanStore = defineStore('clanStore', {
 		updateBanner(bannerUrl: string): void {
 			if (!this.clan) return;
 			this.clan.bannerUrl = bannerUrl;
+		},
+		setClanEvent(clanEvent: { id: string; endDate: Date } | undefined): void {
+			this.clanEvent = clanEvent;
 		}
 	},
 	persist: {

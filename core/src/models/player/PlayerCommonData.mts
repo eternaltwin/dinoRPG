@@ -11,6 +11,7 @@ export interface PlayerCommonData {
 	connexionToken: string;
 	name: string;
 	clanId: number | undefined;
+	clanEvent?: { id: string; endDate: Date };
 	playerOptions: PlayerOptions;
 	role: AdminRole;
 	priest: boolean;

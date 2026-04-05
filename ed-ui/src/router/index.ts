@@ -164,6 +164,11 @@ const router = createRouter({
 							component: () => import('../components/admin/SecretEdit.vue')
 						},
 						{
+							path: 'event',
+							name: 'EventCreation',
+							component: () => import('../components/admin/EventCreation.vue')
+						},
+						{
 							path: 'logs',
 							name: 'Logs',
 							component: () => import('../components/admin/LogsView.vue')
