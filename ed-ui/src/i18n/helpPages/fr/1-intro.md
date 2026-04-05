@@ -1,5 +1,4 @@
 ---
-order: 1
 icon:
   path: icons
   name: small_home

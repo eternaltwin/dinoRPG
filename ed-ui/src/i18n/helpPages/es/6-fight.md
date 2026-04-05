@@ -1,5 +1,4 @@
 ---
-order: 6
 icon:
   path: icons
   name: small_fire
