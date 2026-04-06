@@ -10,7 +10,7 @@ Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monst
 
 ![Combattre un monstre](@guide/fight)
 
-Les monstres et votre Dinoz attaquent au tout à tour, en fonction de leur **initiative**, de leur **vitesse**, et de leur **énergie**. À chaque coup, l'adversaire perd des **points de vie** ![pv](@icons/small_pv) qui sont affichés. Il faut que votre Dinoz tue tous les monstres pour pouvoir remporter le combat.
+Les monstres et votre Dinoz attaquent au tour à tour, en fonction de leur **initiative**, de leur **vitesse**, et de leur **énergie**. À chaque coup, l'adversaire perd des **points de vie** ![pv](@icons/small_pv) qui sont affichés. Il faut que votre Dinoz tue tous les monstres pour pouvoir remporter le combat.
 
 Lors de son tour, votre Dinoz peut effectuer une ou plusieurs des actions suivantes suivant son énergie :
 

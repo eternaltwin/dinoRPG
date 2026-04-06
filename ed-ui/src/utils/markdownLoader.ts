@@ -1,7 +1,7 @@
 /**
  * Possible Frontmatter metadata fields.
  * If you need a new field, at it here with matching name.
- */ 
+ */
 export interface MarkdownMetadata {
 	order?: number;
 	icon?: {
@@ -76,7 +76,7 @@ function extractFrontmatter(markdown: string): { metadata: MarkdownMetadata; con
 /**
  * Loads all markdown files from the helpPages folder.
  * Uses Vite's import.meta.glob to discover and load all .md files.
- * 
+ *
  * The ID and order information of the help page are contained in its name.
  * Other metadata (like icon and path) is stored in the frontmatter of the markdown file.
  *
