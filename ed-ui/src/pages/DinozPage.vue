@@ -21,7 +21,7 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { dinozStore, playerStore } from '../store/index.js';
+import { dinozStore, playerStore, useDinozStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
@@ -65,7 +65,7 @@ export default defineComponent({
 					dinozToUpdate.missionId = this.dinozData.missionId;
 					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				}
-				this.dinozStore.setDinozList(dinozList);
+				useDinozStore().setDinozList(dinozList);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -103,11 +103,11 @@ export default defineComponent({
 					}
 				});
 			}
-			this.dinozStore.setDinozList(dinozList);
+			useDinozStore().setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
 				...this.playerStore.playerOptions
 			});
-			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
+			useDinozStore().setCurrentDinozId(+dinozId);
 			this.isReady = true;
 		},
 		async refreshDinoz() {

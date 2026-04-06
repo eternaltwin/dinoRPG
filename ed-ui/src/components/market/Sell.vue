@@ -129,7 +129,7 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { IngredientsService } from '../../services/IngredientsService.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Tippy } from 'vue-tippy';
@@ -274,7 +274,7 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		try {
-			const currentDinozId = this.dinozStore.getCurrentDinozId;
+			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {

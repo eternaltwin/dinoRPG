@@ -4,7 +4,7 @@ import { StoreDinoz } from '@drpg/core/models/store/StoreDinoz';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { computed, ComputedRef, ref, Ref } from 'vue';
 
-export const useDinozStore = defineStore('dinozStore', () => {
+export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
 	const currentDinozId: Ref<number | undefined> = ref();
 
@@ -16,6 +16,19 @@ export const useDinozStore = defineStore('dinozStore', () => {
 		return dinoz;
 	});
 
+	const getCurrentDinozId: ComputedRef<number | undefined> = computed((): number | undefined => {
+		return currentDinozId.value;
+	});
+
+	const setDinozList = (dinozs: Array<DinozFiche>): void => {
+		dinozList.value = dinozs;
+	};
+
+	const setDinoz = (dinoz: DinozFiche): void => {
+		const dinozToUpdate = dinozList.value.findIndex(dinozs => dinozs.id === dinoz.id);
+		dinozList.value.splice(dinozToUpdate, 1, dinoz);
+	};
+
 	const setCurrentDinozId = (dinozId: number): void => {
 		currentDinozId.value = dinozId;
 	};
@@ -24,6 +37,9 @@ export const useDinozStore = defineStore('dinozStore', () => {
 		dinozList,
 		currentDinozId,
 		getCurrentDinoz,
+		getCurrentDinozId,
+		setDinozList,
+		setDinoz,
 		setCurrentDinozId
 	};
 });
@@ -44,17 +60,9 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinoz = state.dinozList.find((dinoz: DinozFiche) => dinoz.id === state.currentDinozId);
 			if (!dinoz) throw Error("Dinoz doesn't exist in store.");
 			return dinoz;
-		},
-		getCurrentDinozId: (state: StoreDinoz) => state.currentDinozId
+		}
 	},
 	actions: {
-		setDinozList(dinozList: Array<DinozFiche>): void {
-			this.dinozList = dinozList;
-		},
-		setDinoz(dinoz: DinozFiche): void {
-			const dinozToUpdate = this.dinozList.findIndex(dinozs => dinozs.id === dinoz.id);
-			this.dinozList.splice(dinozToUpdate, 1, dinoz);
-		},
 		setDinozSkillState(dinozId: number, skill: Skill, state: boolean): void {
 			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
@@ -74,9 +82,6 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 			dinozToUpdate.npcAwait = undefined;
-		},
-		setCurrentDinozId(dinozId: number): void {
-			this.currentDinozId = dinozId;
 		},
 		setItems(dinozId: number, items: Array<number>): void {
 			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);

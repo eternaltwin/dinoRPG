@@ -96,7 +96,7 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
@@ -139,7 +139,7 @@ export default defineComponent({
 
 			const newDinozList = commonData.dinoz.map(d => d.id);
 			const oldDinozList = dinozList.map(d => d.id);
-			this.dinozStore.setDinozList(commonData.dinoz);
+			useDinozStore().setDinozList(commonData.dinoz);
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
 		},

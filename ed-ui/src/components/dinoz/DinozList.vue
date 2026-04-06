@@ -5,7 +5,7 @@
 			:key="index"
 			:class="{
 				dead: dinoz.life === 0,
-				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
+				selected: useDinozStore.getCurrentDinozId ? dinoz.id === useDinozStore.getCurrentDinozId : dinoz.id === pageId,
 				light: true,
 				group: getLeaderGroup(dinoz),
 				exhausted: dinoz.remaining === 0 && !dinoz.fight
@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
@@ -78,12 +78,10 @@ import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DinozList',
-	props: {
-		currentDinozId: { type: Number, required: false }
-	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			useDinozStore: useDinozStore(),
 			playerStore: playerStore(),
 			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
 			hasPDA: false as boolean
@@ -99,8 +97,9 @@ export default defineComponent({
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			if (!this.currentDinozId) return false;
-			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId);
+			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
+			if (!currentDinozId) return false;
+			const selectedDinoz = this.dinozStore.getDinoz(currentDinozId);
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader
 			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
@@ -118,7 +117,7 @@ export default defineComponent({
 			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
 				return true;
 			}
-			if (dinoz.id === this.currentDinozId) {
+			if (dinoz.id === currentDinozId) {
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);

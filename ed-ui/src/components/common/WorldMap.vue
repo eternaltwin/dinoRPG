@@ -83,7 +83,7 @@ import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
 import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
-import { dinozStore, sessionStore } from '../../store/index.js';
+import { dinozStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -249,7 +249,7 @@ export default defineComponent({
 				}
 
 				if (moveTry.result) {
-					this.dinozStore.setDinozList(
+					useDinozStore().setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
 								this.dinozStore.clearNpc(dinoz.id);

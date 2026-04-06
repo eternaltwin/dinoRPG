@@ -18,10 +18,11 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, localStore, playerStore, sessionStore } from '../store';
+import { dinozStore, localStore, playerStore, sessionStore, useDinozStore } from '../store';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { formatText } from '../utils/formatText.js';
 import FightBounce from '../components/fight/FightBounce.vue';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'Fight',
@@ -119,15 +120,15 @@ export default defineComponent({
 			return;
 		}
 
-		this.dinozStore.setDinozList(
-			dinozList.map(dinoz => {
-				if (dinoz.id === this.dinozId || dinoz.leaderId === this.dinozId) {
-					// Update dinoz HP
-					dinoz.life -= this.fight?.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
-				}
-				return dinoz;
-			})
-		);
+		const dinozs: Array<DinozFiche> = dinozList.map(dinoz => {
+			if (dinoz.id === this.dinozId || dinoz.leaderId === this.dinozId) {
+				// Update dinoz HP
+				dinoz.life -= this.fight?.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+			}
+			return dinoz;
+		});
+
+		useDinozStore().setDinozList(dinozs);
 		this.sessionStore.setFightResult(undefined);
 	}
 });

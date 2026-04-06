@@ -52,7 +52,7 @@
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<DinozList :currentDinozId="currentDinozId()"></DinozList>
+		<DinozList />
 		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
@@ -77,7 +77,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import { defineComponent } from 'vue';
 import DinozList from '../../components/dinoz/DinozList.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
 
 export default defineComponent({
@@ -125,7 +125,7 @@ export default defineComponent({
 			return import.meta.env.MODE === 'development';
 		},
 		currentDinozId(): number | undefined {
-			return this.dinozStore.getCurrentDinozId;
+			return useDinozStore().getCurrentDinozId;
 		},
 		getPlaceImage(place: string | null) {
 			if (!place) return;
