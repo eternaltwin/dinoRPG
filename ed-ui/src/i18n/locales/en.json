@@ -1511,7 +1511,7 @@
 		},
 		"rodeur": {
 			"speech": {
-				"begin": "**Tip:** ",
+				"begin": ".........",
 				"go": "Pheeww! It's better to be careful when around strangers, you never know what's going to happen...",
 				"talk": "What? You can see me? .... Argh! ....",
 				"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
