@@ -3392,7 +3392,7 @@
 				"garde": "A fruit falls near you. While you are bending over to pick it up, a big purse full of gold falls out of nowhere and hits you on the head! Plunk!"
 			},
 			"wishes": {
-				"tosscoin": "You throw a coin into the Falls and wait a few minutes... Nothing happens so you decide to grant the wish yourself by eliminating the population of monsters yourself.",
+				"tosscoin": "You throw a coin into the Falls and wait a few minutes... Nothing happens so you decide to grant the wish yourself by eliminating the population of monsters on your own.",
 				"garde": "Many fruits fall from the tree..."
 			},
 			"newplt": {
@@ -3405,7 +3405,7 @@
 			},
 			"gshop": {
 				"bucket": "You find a little branch in the bucket...",
-				"garde": "The text on the wooden sign has changed! It now reads:« Keep the blossoming branch as a proof of our gratitude.»"
+				"garde": "The text on the wooden sign has changed! It now reads: \"Keep the blossoming branch as a proof of our gratitude.\""
 			},
 			"seqact": {
 				"auree": "I can't hear any more growling coming from the path ... that's a good sign, isn't it?"
