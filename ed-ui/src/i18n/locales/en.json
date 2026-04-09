@@ -4712,7 +4712,7 @@
 				"takeRawDmg": "Too bad, you have taken {goal} too much damage.",
 				"takePrctDmg": "Too bad, you've lost {goal}% too much life.",
 				"assault": "Too bad, you are missing {goal} assault(s) to succeed.",
-				"assaultPrct": "Too bad, you are {goal}% assaults.",
+				"assaultPrct": "Too bad, you're {goal}% short on assaults.",
 				"maxDmg": "Too bad, you have inflicted {goal} too much damage.",
 				"minPrctDmg": "Too bad, you should have done {goal}% more damage.",
 				"counter": "Too bad, you should have done {goal} more counters.",
