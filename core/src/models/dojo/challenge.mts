@@ -65,7 +65,7 @@ export function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			// Challenge is successful if attack lost less than N HP, i.e <= 0
 			return stats.attack.hpLost - challenge.goal;
 		case ChallengeType.TakePercentDamage:
-			// Challenge is successful if attack lot less than X% of HP, i.e <= 0
+			// Challenge is successful if attack lost less than X% of HP, i.e <= 0
 			return ((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 - challenge.goal;
 		case ChallengeType.Assault:
 			// Challenge is successful if attack did at least N assaults, i.e <= 0

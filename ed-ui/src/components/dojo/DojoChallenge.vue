@@ -69,6 +69,8 @@
 			></CarousselDinoz>
 		</template>
 
+		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
+
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
 				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
@@ -83,8 +85,6 @@
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
 			</Transition>
 		</template>
-
-		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 	</div>
 </template>
 
@@ -201,7 +201,7 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(
+				const nextFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,
 					this.$t,
@@ -210,14 +210,13 @@ export default defineComponent({
 					undefined,
 					true
 				);
-				if (!nexFight) {
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
-					// lang: this.lang
+					history: nextFight.filter(n => n != undefined)
 				};
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
