@@ -3605,10 +3605,10 @@
 		"void": "Gains +1 :neutre: Void",
 		"level": "Lvl.",
 		"learn": "Learn",
-		"confirmSkill": "Do you want to learn {skill} for leveling up to level {level}?",
+		"confirmSkill": "Do you want to learn {skill} for level {level}?",
 		"confirmUnlock": "Do you wish to unlock {quantity} new skills?",
 		"unlockSkills": "Unlock {count} additional skills",
-		"unlock": "Once unlocked, this skill can be chosen from the next level",
+		"unlock": "Once unlocked, this skill can be selected starting from the next level",
 		"small": "This Dinoz has gained a level!",
 		"pdc": "Thanks to the Career Plan skill, you can freely choose between two level gain possibilities.&& //Please note, it is possible that these two possibilities are identical.//",
 		"helperUnlock": {
