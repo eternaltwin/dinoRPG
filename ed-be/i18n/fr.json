@@ -49,6 +49,10 @@
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
+	"error": {
+		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
+		"notYourDinoz": "Ce Dinoz n'est pas le votre"
+	},
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Votre compte est encore trop jeune.",
