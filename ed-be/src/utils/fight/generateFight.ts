@@ -370,7 +370,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
 		const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
 
-		fightData.loser = left < right ? 'attackers' : 'defenders';
+		fightData.loser = left <= right ? 'attackers' : 'defenders';
 	}
 
 	const winner = fightData.loser === 'defenders';

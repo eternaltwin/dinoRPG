@@ -306,19 +306,29 @@ export default defineComponent({
 				}
 			} catch (error) {
 				//Do nothing
+				console.error(error);
 			}
 		},
-		unlockSkill(): void {
-			if (!this.availableSkills) {
+		async unlockSkill(): Promise<void> {
+			if (!this.availableSkills || !this.availableSkills.unlockableSkills) {
+				console.warn(`No skills to unlock`);
 				return;
 			}
-			if (confirm(this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills?.length }))) {
-				if (!this.availableSkills.unlockableSkills) {
-					return;
+			try {
+				const prompt = await this.$confirm({
+					message: this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills.length }),
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popup.reject'),
+					icon: 'pi pi-trash'
+				});
+				if (prompt) {
+					const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
+					this.learnSkillAndSetStore(skillIdList);
 				}
-				const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
-
-				this.learnSkillAndSetStore(skillIdList);
+			} catch (error) {
+				//Do nothing
+				console.error(error);
 			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
