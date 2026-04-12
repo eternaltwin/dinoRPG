@@ -80,6 +80,7 @@ export const LogType = {
   AdminUpdateQuest: 'AdminUpdateQuest',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
   AdminUpdateSecret: 'AdminUpdateSecret',
+  AdminUpdateClan: 'AdminUpdateClan',
   IngredientSold: 'IngredientSold',
   XPEarned: 'XPEarned',
   HPLost: 'HPLost',

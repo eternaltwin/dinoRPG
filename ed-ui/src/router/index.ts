@@ -142,6 +142,14 @@ const router = createRouter({
 							})
 						},
 						{
+							path: 'clan',
+							name: 'AdminClan',
+							component: () => import('../components/admin/ClanEdit.vue'),
+							props: route => ({
+								id: route.query.id
+							})
+						},
+						{
 							path: 'dinoz',
 							name: 'Dinoz',
 							component: () => import('../components/admin/DinozEdit.vue'),
