@@ -61,6 +61,8 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					time: fightStep.time
 				})
 			];
+		case 'timeOut':
+			return [t(`fight.step.${fightStep.action}`)];
 		case 'prepare':
 			// eslint-disable-next-line no-case-declarations
 			const actions: string[] = [];
