@@ -96,13 +96,13 @@
       },
       "default": "./sql.js"
     },
-		"./enums": {
-			"types": "./enums.d.ts",
-			"import": "./enums.mjs",
-			"default": "./enums.mjs"
-		},
+    "./enums": {
+      "types": "./enums.d.ts",
+      "import": "./enums.mjs",
+      "default": "./enums.mjs"
+    },
     "./*": "./*"
   },
-  "version": "6.5.0",
+  "version": "0.17.26",
   "sideEffects": false
 }
