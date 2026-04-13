@@ -927,6 +927,7 @@ enum ModerationReason {
   accountName
   avatar
   customText
+  other
 }
 
 enum ModerationAction {

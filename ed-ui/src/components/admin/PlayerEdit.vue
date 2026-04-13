@@ -420,7 +420,7 @@ interface PlayerSearch {
 	name: string;
 	id: string;
 }
-const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
+const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName', 'other'];
 const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
 export default defineComponent({

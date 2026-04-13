@@ -82,6 +82,8 @@ export default defineComponent({
 					return m.target.customText;
 				case ModerationReason.multi:
 					return 'multi';
+				case ModerationReason.other:
+					return 'other';
 				default:
 					return 'error';
 			}

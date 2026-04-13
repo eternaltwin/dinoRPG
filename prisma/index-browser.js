@@ -812,7 +812,8 @@ exports.ModerationReason = exports.$Enums.ModerationReason = {
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other'
 };
 
 exports.ModerationAction = exports.$Enums.ModerationAction = {

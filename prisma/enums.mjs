@@ -106,7 +106,8 @@ export const ModerationReason = {
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other'
 };
 
 export const ModerationAction = {

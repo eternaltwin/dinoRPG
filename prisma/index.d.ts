@@ -365,7 +365,8 @@ export const ModerationReason: {
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other'
 };
 
 export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]

@@ -418,7 +418,7 @@ routes.post(
 	[
 		param('id').exists().isString(),
 		body('action').exists().isString().isIn(['shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
-		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText', 'other']),
 		body('comment').exists().isString(),
 		body('dinozId').optional().toInt().isNumeric()
 	],
@@ -442,7 +442,7 @@ routes.put(
 	[
 		param('id').exists().isString(),
 		body('action').optional().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
-		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText', 'other']),
 		body('comment').optional().isString(),
 		body('dinozId').optional({ nullable: true }).toInt().isNumeric()
 	],

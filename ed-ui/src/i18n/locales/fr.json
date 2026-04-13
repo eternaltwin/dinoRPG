@@ -5131,7 +5131,8 @@
 			"avatar": "Avatar inapproprié",
 			"accountName": "Nom de joueur inapproprié",
 			"dinozName": "Nom de Dinoz inapproprié",
-			"multi": "Ce joueur utilise plusieurs comptes"
+			"multi": "Ce joueur utilise plusieurs comptes",
+			"other": "Autre"
 		},
 		"sorted": {
 			"open": "À traiter",
@@ -5185,7 +5186,8 @@
 			"customText": "votre description personnalisée",
 			"multi": "une suspiscion de multicompte",
 			"dinozName": "un nom de Dinoz offensant",
-			"avatar": "un avatar offensant"
+			"avatar": "un avatar offensant",
+			"other": "une autre raison"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
