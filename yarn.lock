@@ -1867,6 +1867,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@drpg/prisma@workspace:prisma":
+  version: 0.0.0-use.local
+  resolution: "@drpg/prisma@workspace:prisma"
+  languageName: unknown
+  linkType: soft
+
 "@drpg/renderer@workspace:^, @drpg/renderer@workspace:dino-renderer":
   version: 0.0.0-use.local
   resolution: "@drpg/renderer@workspace:dino-renderer"
@@ -12330,12 +12336,6 @@ __metadata:
   checksum: 10/a3e806fb0b635818964d472d35d27e21a4e17150c679047f5501e1f23bd4aa806adf660f0c0d35214a210d5d440da6896c2e86156da55f221a57938278dc326e
   languageName: node
   linkType: hard
-
-"prisma-client-5cfd25e722e83b5e243d9f666d901a164f7407adb1eee73fe06472124809e937@workspace:prisma":
-  version: 0.0.0-use.local
-  resolution: "prisma-client-5cfd25e722e83b5e243d9f666d901a164f7407adb1eee73fe06472124809e937@workspace:prisma"
-  languageName: unknown
-  linkType: soft
 
 "prisma@npm:^6.5.0":
   version: 6.5.0
