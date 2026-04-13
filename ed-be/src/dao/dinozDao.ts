@@ -1087,7 +1087,7 @@ export async function checkFrozenDinoz(dinozId: number) {
 				followers: true,
 				leaderId: true,
 				player: true,
-				placeId: true,
+				placeId: true
 			}
 		});
 	});

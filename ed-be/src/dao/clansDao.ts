@@ -1127,27 +1127,27 @@ export async function getFullClanTreasure(clanId: number) {
 }
 
 export async function updateClanName(clanId: number, name: string) {
-    return withSpan(updateClanName.name, async () => {
-        return await prisma.clan.update({
-            where: { id: clanId },
-            data: { name: name }
-        });
-    });
+	return withSpan(updateClanName.name, async () => {
+		return await prisma.clan.update({
+			where: { id: clanId },
+			data: { name: name }
+		});
+	});
 }
 
 export async function updateClanLeader(clanId: number, newLeaderId: string) {
-    return withSpan(updateClanLeader.name, async () => {
-        return await prisma.clan.update({
-            where: { id: clanId },
-            data: { leaderId: newLeaderId }
-        });
-    });
+	return withSpan(updateClanLeader.name, async () => {
+		return await prisma.clan.update({
+			where: { id: clanId },
+			data: { leaderId: newLeaderId }
+		});
+	});
 }
 
 export async function deleteClanMember(playerId: string) {
-    return withSpan(deleteClanMember.name, async () => {
-        return await prisma.clanMember.delete({
-            where: { playerId: playerId }
-        });
-    });
+	return withSpan(deleteClanMember.name, async () => {
+		return await prisma.clanMember.delete({
+			where: { playerId: playerId }
+		});
+	});
 }

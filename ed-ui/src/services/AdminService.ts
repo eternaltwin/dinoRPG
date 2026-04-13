@@ -266,5 +266,9 @@ export const AdminService = {
 	async updateClanTreasureIngredients(id: number, ingredientId: number, quantity: number, operation: 'add' | 'remove') {
 		const res = await http().patch(`/admin/clans/${id}/treasure/ingredients`, { ingredientId, quantity, operation });
 		return res.data;
+	},
+	async runJob(name: string) {
+		const res = await http().patch(`/admin/jobs/${name}`);
+		return res.data;
 	}
 };
