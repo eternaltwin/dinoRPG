@@ -909,7 +909,7 @@ LIMIT ${64};`;
 		const schedule = this.getSchedule();
 
 		let phase: TournamentPhase;
-		if (currentDate <= schedule.qualificationEnd) {
+		if (currentDate < schedule.qualificationEnd) {
 			phase = TournamentPhase.QUALIFICATION;
 		} else if (currentDate <= schedule.finalsStart) {
 			phase = TournamentPhase.POOLS;
@@ -971,6 +971,7 @@ LIMIT ${64};`;
 
 	async generateNextRound(prisma: PismaClientLocal): Promise<void> {
 		const currentState = await this.getCurrentState(prisma);
+		LOGGER.log(`Generated next round for ${currentState.phase}`);
 
 		const tournamentRules = await prisma.tournament.findUniqueOrThrow({
 			where: {
@@ -996,12 +997,8 @@ LIMIT ${64};`;
 				return; // Pas de matchs à générer pendant la qualification
 
 			case TournamentPhase.POOLS: {
+				LOGGER.log(`Round is ${currentState.round}`);
 				let teamsToMatch: RawTournamentMatch[] = [];
-
-				if (currentState.round === 0) {
-				} else {
-					// Rounds suivants : on ne prend que les gagnants du round précédent
-				}
 
 				if (currentState.round === 0) {
 					await this.rewardQualification(prisma);
@@ -1179,6 +1176,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 	}
 
 	async rewardQualification(prisma: PismaClientLocal): Promise<void> {
+		LOGGER.log(`invalidateTournamentCache`);
 		invalidateTournamentCache();
 		const allRewarded = await prisma.ranking.findMany({
 			where: {
@@ -1216,8 +1214,9 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId, true));
 				});
 		});
-		LOGGER.log(`Rewarded ${allRewarded.length} players.`);
+		LOGGER.log(`Rewarding ${allRewarded.length} players.`);
 		await Promise.all(promises);
+		LOGGER.log(`Rewarded ${allRewarded.length} players.`);
 		const nextPlannedMatch = this.getMatchTimes().find(m => m.round === 0);
 		if (!nextPlannedMatch) {
 			LOGGER.error('nextPlannedMatch is not found');
