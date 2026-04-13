@@ -20,6 +20,10 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		return currentDinozId.value;
 	});
 
+	/*const getDinozList: ComputedRef<DinozFiche[]> = computed((): DinozFiche[] => {
+		return dinozList.value.sort((a, b) => (a.order ?? a.id) - (b.order ?? b.id));
+	});*/
+
 	const setDinozList = (dinozs: Array<DinozFiche>): void => {
 		dinozList.value = dinozs;
 	};
@@ -63,6 +67,9 @@ export const dinozStore = defineStore('dinozStore', {
 		}
 	},
 	actions: {
+		setDinozList(dinozList: Array<DinozFiche>): void {
+			this.dinozList = dinozList;
+		},
 		setDinozSkillState(dinozId: number, skill: Skill, state: boolean): void {
 			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");

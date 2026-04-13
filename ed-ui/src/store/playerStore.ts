@@ -5,7 +5,7 @@ import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 import { defineStore } from 'pinia';
 import { PlayerService } from '../services';
 import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
-import { useDinozStore } from './dinozStore';
+import { dinozStore, useDinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
 import { NotificationSeverity } from '@drpg/prisma/enums';
 
@@ -107,6 +107,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
 			useDinozStore().setDinozList(commonData.dinoz);
+			dinozStore().setDinozList(commonData.dinoz);
 		}
 	},
 	persist: {
