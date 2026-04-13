@@ -899,7 +899,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Projets\\dinorpg\\prisma",
+      "value": "/home/sylvainh/ssd/Workspace/Eternal-Twin/dinorpg/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -908,7 +908,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-1.1.x",
         "native": true
       },
       {
@@ -924,7 +924,7 @@ const config = {
       "nativeDistinct",
       "relationJoins"
     ],
-    "sourceFilePath": "C:\\Projets\\dinorpg\\ed-be\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/sylvainh/ssd/Workspace/Eternal-Twin/dinorpg/ed-be/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -938,7 +938,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

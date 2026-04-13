@@ -1,7 +1,7 @@
 {
 	"name": "@drpg/renderer",
 	"version": "1.0.0",
-	"description": "Renders DinoRPG dinos to PNG using @eternaltwin/dinorpg_animations + Puppeteer",
+	"description": "Renders DinoRPG dinoz to PNG using @eternaltwin/dinorpg_animations + Puppeteer",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
