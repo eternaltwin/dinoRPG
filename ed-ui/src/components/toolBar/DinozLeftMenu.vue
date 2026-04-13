@@ -173,7 +173,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, localStore, playerStore, useMenuStore } from '../../store';
+import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
@@ -189,9 +189,8 @@ export default defineComponent({
 	data() {
 		return {
 			localStore: localStore(),
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			dinozList: useDinozStore().getDinozList as Array<DinozFiche>,
 			CINEMA_LINK
 		};
 	},
@@ -225,7 +224,7 @@ export default defineComponent({
 			return +this.$route.params.id;
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
+			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId());
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader
 			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
@@ -234,7 +233,7 @@ export default defineComponent({
 			// Le dinoz n'est pas suiveur
 			if (!dinoz.leaderId) return false;
 
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
+			const leader = useDinozStore().getDinoz(dinoz.leaderId);
 			if (!leader) return false;
 			// Si le dinoz est follower et que le dinoz courrant est son leader
 			if (dinoz.leaderId && leader.id === selectedDinoz.id) {

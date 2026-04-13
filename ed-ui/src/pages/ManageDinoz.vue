@@ -58,7 +58,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, playerStore, useDinozStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { DinozService } from '../services/DinozService.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { statusList } from '../constants/status.js';
@@ -80,7 +80,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			dinozList: [] as ManagePageData,
 			statusList,
@@ -113,7 +112,7 @@ export default defineComponent({
 				const returnList = await DinozService.updateOrders(newList.map(d => d.id));
 				this.dinozList = newList;
 
-				const dinozs: Array<DinozFiche> = this.dinozStore.getDinozList.map(d => {
+				const dinozs: Array<DinozFiche> = useDinozStore().getDinozList.map(d => {
 					const currentDinoz = returnList.find(e => e.id === d.id);
 					if (currentDinoz) {
 						d.order = currentDinoz.order;

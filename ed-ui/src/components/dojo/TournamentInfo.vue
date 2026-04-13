@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, dojoStore, localStore, playerStore } from '../../store/index.js';
+import { dojoStore, localStore, playerStore } from '../../store/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';

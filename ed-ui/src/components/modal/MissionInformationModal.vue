@@ -24,18 +24,13 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import { dinozStore, useDinozStore } from '../../store/index.js';
+import { useDinozStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'MissionInformationModal',
-	data() {
-		return {
-			dinozStore: dinozStore()
-		};
-	},
 	props: {
 		mission: Object as PropType<MissionList>,
 		enabled: Boolean,
@@ -43,7 +38,7 @@ export default defineComponent({
 	},
 	methods: {
 		async updateMission(status: string) {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId);
 			try {
 				if (!this.mission || !dinozToUpdate) {
@@ -75,7 +70,7 @@ export default defineComponent({
 			return missionsList[this.mission?.missionId ?? -1];
 		},
 		dinoz(): DinozFiche | undefined {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 			return dinozList.find(dinozs => dinozs.id === this.dinozId);
 		}
 	}

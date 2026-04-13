@@ -81,7 +81,7 @@ import DZButton from '../common/DZButton.vue';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import translateFightStep from '../../utils/translateFightStep.js';
-import { dinozStore, useDinozStore } from '../../store';
+import { useDinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'FightBounce',
@@ -97,7 +97,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			displayFightHistory: false,
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
@@ -112,7 +111,7 @@ export default defineComponent({
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
 			} else {
-				this.dinozStore.clearNpc(this.dinozId);
+				useDinozStore().clearNpc(this.dinozId);
 				this.$router.push({ name: 'DinozPage', params: { id: this.dinozId.toString() } });
 			}
 		},
@@ -138,7 +137,7 @@ export default defineComponent({
 			this.npcSpeech = npc?.npcSpeech;
 			this.npcName = npc?.npcName;
 		} else {
-			this.dinozStore.clearNpc(this.dinozId);
+			useDinozStore().clearNpc(this.dinozId);
 		}
 	}
 });

@@ -211,7 +211,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { dinozStore, localStore, playerStore, useMenuStore } from '../../store';
+import { localStore, playerStore, useMenuStore } from '../../store';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
 import { NotificationService } from '../../services';
 import { errorHandler } from '../../utils';
@@ -233,7 +233,7 @@ export default defineComponent({
 	data() {
 		return {
 			localStore: localStore(),
-			dinozStore: dinozStore(),
+
 			playerStore: playerStore(),
 			notifications: [] as translatedNotification[],
 			CINEMA_LINK,
@@ -250,7 +250,7 @@ export default defineComponent({
 			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 			deleteCookie(`x-drpg-${channel}-token`);
 			deleteCookie(`x-drpg-${channel}-user`);
-			this.dinozStore.$reset();
+			useDinozStore().$reset();
 			this.playerStore.$reset();
 			useMenuStore().setTwinoMenuOpened(false);
 		},

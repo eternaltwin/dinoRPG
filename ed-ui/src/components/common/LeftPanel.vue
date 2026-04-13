@@ -77,7 +77,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import { defineComponent } from 'vue';
 import DinozList from '../../components/dinoz/DinozList.vue';
-import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
+
 			money: undefined as number | undefined,
 			clanId: undefined as number | undefined
 		};
@@ -144,7 +144,7 @@ export default defineComponent({
 			const currentDinozId = this.currentDinozId();
 			if (!currentDinozId) return this.place;
 
-			const currentDinoz = this.dinozStore.getDinoz(currentDinozId) as DinozFiche | undefined;
+			const currentDinoz = useDinozStore().getDinoz(currentDinozId) as DinozFiche | undefined;
 			if (!currentDinoz) return this.place;
 
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);

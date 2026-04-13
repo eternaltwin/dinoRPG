@@ -95,7 +95,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, dojoStore, playerStore } from '../../store/index.js';
+import { dojoStore, playerStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
@@ -133,7 +133,7 @@ export default defineComponent({
 			})[],
 			composeTeam: false as boolean,
 			myDinoz: [] as DinozDojoFiche[],
-			dinozStore: dinozStore(),
+
 			opponent: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
@@ -235,8 +235,8 @@ export default defineComponent({
 				const dojo = await DojoService.getMyTeam();
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
-					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+					this.myDinoz = useDinozStore()
+						.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 						.filter(d => d.level >= 10)
 						.map(d => {
 							return {

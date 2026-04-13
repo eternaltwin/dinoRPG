@@ -106,7 +106,7 @@ import { defineComponent, PropType } from 'vue';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -126,8 +126,7 @@ export default defineComponent({
 			customTextEdit: this.accountData?.customText ?? '',
 			playerPosition: null as number | null,
 			option: false as boolean,
-			localStore: localStore(),
-			dinozStore: dinozStore()
+			localStore: localStore()
 		};
 	},
 	components: {
@@ -162,7 +161,7 @@ export default defineComponent({
 					const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 					await PlayerService.resetAccount();
 					deleteCookie(`x-drpg-${channel}-token`);
-					this.dinozStore.$reset();
+					useDinozStore().$reset();
 					this.playerStore.$reset();
 					this.$router.go(0);
 				} catch (err) {

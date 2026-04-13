@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -39,7 +39,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			selectionOver: false,
 			selectedDinoz: [] as number[]
@@ -90,7 +89,7 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		if (!this.dinozStore.dinozList) {
+		if (!useDinozStore().dinozList) {
 			this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 			return;
 		}

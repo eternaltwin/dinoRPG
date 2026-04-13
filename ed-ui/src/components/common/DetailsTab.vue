@@ -297,7 +297,7 @@ import { defineComponent } from 'vue';
 import { statusList } from '../../constants';
 import { DinozService } from '../../services';
 import { errorHandler } from '../../utils';
-import { dinozStore, playerStore, useDinozStore } from '../../store';
+import { playerStore, useDinozStore } from '../../store';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
 import DZSelect from './DZSelect.vue';
@@ -323,7 +323,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			dinozSkill: [] as Array<SkillDetails>,
 			skillList,
 			statusList,
@@ -509,7 +508,7 @@ export default defineComponent({
 
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
-				this.dinozStore.setDinozSkillState(parseInt(dinozId), skill.id, !skill.state);
+				useDinozStore().setDinozSkillState(parseInt(dinozId), skill.id, !skill.state);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

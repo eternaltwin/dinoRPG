@@ -41,7 +41,7 @@ import { DinozService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, useDinozStore } from '../../store/index.js';
+import { useDinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { formatText } from '../../utils/formatText.js';
 import DinozMini from './DinozMini.vue';
@@ -51,14 +51,13 @@ export default defineComponent({
 	components: { DinozMini },
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			dinozAvailableToFollow: [] as DinozFiche[],
 			display: false as boolean
 		};
 	},
 	methods: {
 		displayFollow(): void {
-			if (!this.dinozStore.getDinozList) {
+			if (!useDinozStore().getDinozList) {
 				this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 				return;
 			}
@@ -68,7 +67,7 @@ export default defineComponent({
 				return;
 			}
 
-			const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
+			const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
 
 			if (!currentDinoz) {
 				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
@@ -76,7 +75,7 @@ export default defineComponent({
 			}
 
 			// Display the list of dinoz available to follow
-			this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
+			this.dinozAvailableToFollow = getFollowableDinoz(useDinozStore().getDinozList, currentDinoz);
 			this.display = true;
 		},
 		async followDinoz(targetId: number) {
@@ -87,7 +86,7 @@ export default defineComponent({
 				this.dinozAvailableToFollow = [];
 
 				// Refresh followed and following status
-				const currentDinozList = this.dinozStore.getDinozList;
+				const currentDinozList = useDinozStore().getDinozList;
 				if (!currentDinozList) {
 					this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 					return;

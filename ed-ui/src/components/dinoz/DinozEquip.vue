@@ -29,16 +29,11 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils';
 import { InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
-import { dinozStore, useDinozStore } from '../../store';
+import { useDinozStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEquip',
-	data() {
-		return {
-			dinozStore: dinozStore()
-		};
-	},
 	computed: {
 		itemNameList() {
 			return itemNameList;
@@ -50,12 +45,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		useDinozStore,
 		async unequip(itemId: number) {
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
 				const items = await InventoryService.equipInventoryItem(dinozId, itemId, false);
-				this.dinozStore.setItems(
+				useDinozStore().setItems(
 					dinozId,
 					items.map(item => item.itemId)
 				);

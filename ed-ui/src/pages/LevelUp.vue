@@ -233,7 +233,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -258,7 +258,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			tryNumber: 1 as number,
@@ -382,7 +381,7 @@ export default defineComponent({
 	async created(): Promise<void> {
 		await this.getLearnableSkills(+this.id, 1);
 
-		this.dinoz = this.dinozStore.getDinoz(+this.id);
+		this.dinoz = useDinozStore().getDinoz(+this.id);
 	}
 });
 </script>

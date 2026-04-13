@@ -18,7 +18,7 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, localStore, playerStore, sessionStore, useDinozStore } from '../store';
+import { localStore, playerStore, sessionStore, useDinozStore } from '../store';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { formatText } from '../utils/formatText.js';
 import FightBounce from '../components/fight/FightBounce.vue';
@@ -39,7 +39,7 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
+
 			sessionStore: sessionStore(),
 			fight: null as FightResult | null,
 			dinozId: +this.$route.params.dinozId,
@@ -110,7 +110,7 @@ export default defineComponent({
 
 		// Comment this to replay fight with refresh
 		this.loaded = false;
-		const dinozList = this.dinozStore.getDinozList;
+		const dinozList = useDinozStore().getDinozList;
 
 		if (!dinozList) {
 			this.$toast.open({

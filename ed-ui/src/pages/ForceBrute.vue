@@ -59,7 +59,7 @@ import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import FightBounce from '../components/fight/FightBounce.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { FBService } from '../services/FBTournamentService.js';
-import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
+import { localStore, playerStore, sessionStore, useDinozStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 
@@ -74,7 +74,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			opponent: undefined as undefined | FBOpponent,
 			stage: null as number | null,
 			fightTransformed: undefined as undefined | preFightLoader,
@@ -93,7 +92,7 @@ export default defineComponent({
 	methods: {
 		async getDinozInfo(): Promise<void> {
 			try {
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+				const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 				this.dinoz = dinozList.find(d => d.id === +this.dinozId);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

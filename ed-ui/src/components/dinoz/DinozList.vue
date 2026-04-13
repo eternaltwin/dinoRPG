@@ -5,7 +5,9 @@
 			:key="index"
 			:class="{
 				dead: dinoz.life === 0,
-				selected: useDinozStore.getCurrentDinozId ? dinoz.id === useDinozStore.getCurrentDinozId : dinoz.id === pageId,
+				selected: useDinozStore().getCurrentDinozId
+					? dinoz.id === useDinozStore().getCurrentDinozId
+					: dinoz.id === pageId,
 				light: true,
 				group: getLeaderGroup(dinoz),
 				exhausted: dinoz.remaining === 0 && !dinoz.fight
@@ -70,7 +72,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
@@ -80,14 +82,13 @@ export default defineComponent({
 	name: 'DinozList',
 	data() {
 		return {
-			dinozStore: dinozStore(),
-			useDinozStore: useDinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			dinozList: useDinozStore().getDinozList as Array<DinozFiche>,
 			hasPDA: false as boolean
 		};
 	},
 	methods: {
+		useDinozStore,
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
 			const width: number = Math.round((actual / max) * 36);
@@ -99,7 +100,7 @@ export default defineComponent({
 		getLeaderGroup(dinoz: DinozFiche) {
 			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
 			if (!currentDinozId) return false;
-			const selectedDinoz = this.dinozStore.getDinoz(currentDinozId);
+			const selectedDinoz = useDinozStore().getDinoz(currentDinozId);
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader
 			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
@@ -108,7 +109,7 @@ export default defineComponent({
 			// Le dinoz n'est pas suiveur
 			if (!dinoz.leaderId) return false;
 
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
+			const leader = useDinozStore().getDinoz(dinoz.leaderId);
 			if (!leader) return false;
 			// Si le dinoz est follower et que le dinoz courrant est son leader
 			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
@@ -129,7 +130,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': {
+		'useDinozStore.getDinozList': {
 			handler(dinozList: Array<DinozFiche>) {
 				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
 			},

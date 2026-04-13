@@ -39,7 +39,7 @@ import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozService, NPCService, PlayerService } from '../services';
-import { dinozStore, playerStore, sessionStore, useDinozStore } from '../store';
+import { playerStore, sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
 
 export default defineComponent({
@@ -50,7 +50,7 @@ export default defineComponent({
 			dinozId: +this.$route.params.id as number,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-			dinozStore: dinozStore(),
+
 			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
@@ -128,7 +128,7 @@ export default defineComponent({
 		},
 		async stop(): Promise<void> {
 			await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
-			this.dinozStore.clearNpc(this.dinozId);
+			useDinozStore().clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}
 	},
@@ -148,7 +148,7 @@ export default defineComponent({
 			if (npc && npc.npcName === this.npcName) {
 				step = npc.npcSpeech;
 			} else {
-				this.dinozStore.clearNpc(this.dinozId);
+				useDinozStore().clearNpc(this.dinozId);
 			}
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
@@ -172,13 +172,13 @@ export default defineComponent({
 			// If ServiceEnum.FIGHT => keep dialog after fight
 			this.sessionStore.fromFight = false;
 		} else {
-			this.dinozStore.clearNpc(this.dinozId);
+			useDinozStore().clearNpc(this.dinozId);
 		}
 		next();
 	},
 	watch: {
 		npcSpeech(newVal) {
-			this.dinozStore.setNpc(this.dinozId, newVal.speech, newVal.name);
+			useDinozStore().setNpc(this.dinozId, newVal.speech, newVal.name);
 		}
 	}
 });

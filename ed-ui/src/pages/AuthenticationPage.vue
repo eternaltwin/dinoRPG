@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
-import { dinozStore, localStore, playerStore } from '../store/index.js';
+import { localStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { setCookie } from '../utils/cookies';
 
@@ -17,7 +17,7 @@ export default defineComponent({
 		return {
 			localStore: localStore(),
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
+
 			isLogged: false as boolean
 		};
 	},

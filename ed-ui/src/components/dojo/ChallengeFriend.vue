@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -67,7 +67,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			selectedDinoz: [] as number[],
 			clanMembers: [] as Array<ClanMember>,
@@ -161,8 +160,8 @@ export default defineComponent({
 			this.$router.push({ name: 'DojoHome' });
 			return;
 		}
-		this.myDinoz = this.dinozStore.getDinozList
-			.filter(d => d.unavailableReason !== UnavailableReason.frozen)
+		this.myDinoz = useDinozStore()
+			.getDinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 			.map(d => {
 				return {
 					id: d.id,

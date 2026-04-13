@@ -96,7 +96,7 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore, useDinozStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
@@ -110,7 +110,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			playerStore: playerStore(),
@@ -133,7 +132,7 @@ export default defineComponent({
 			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
 		async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
@@ -203,7 +202,7 @@ export default defineComponent({
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
-					this.dinozStore.setItems(
+					useDinozStore().setItems(
 						dinozId,
 						items.map(item => item.itemId)
 					);
