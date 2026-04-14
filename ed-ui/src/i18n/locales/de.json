@@ -396,7 +396,7 @@
 		"acidBloodDamage": "Schaden des säurehaltigen Blutes",
 		"baseValue": "Basiswert",
 		"criticalHitChance": "Chance auf kritischen Treffer",
-		"criticalHitDamage": "Schadensbonus kritischer Treffer"
+		"criticalHitBonus": "Schadensbonus kritischer Treffer"
 	},
 	"item": {
 		"name": {
