@@ -13,7 +13,6 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 	switch (type) {
 		case PantheonMotif.race:
 			const dinoz = await getDinozForAnnounce(+id);
-			const big: Buffer = await renderBigDino(dinoz.display);
 			const raceAtThisLevel = pantheon
 				.filter(p => p.dinoz?.raceId === dinoz.raceId)
 				.filter(p => p.indicator === dinoz.level);
@@ -21,6 +20,7 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 				break;
 			}
 			if (raceAtThisLevel.length <= 4) {
+				const big: Buffer = await renderBigDino(dinoz.display);
 				DISCORD.sendPantheonNotification(
 					translateAll('announce.dinoz', {
 						position: raceAtThisLevel.length + 1,
