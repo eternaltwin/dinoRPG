@@ -233,7 +233,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { playerStore } from '../store/index.js';
+import {playerStore, useDinozStore} from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';

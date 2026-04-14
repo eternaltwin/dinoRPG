@@ -95,7 +95,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dojoStore, playerStore } from '../../store/index.js';
+import {dojoStore, playerStore, useDinozStore} from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
