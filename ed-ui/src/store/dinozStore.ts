@@ -13,7 +13,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 			(dinoz: DinozFiche) => dinoz.id === currentDinozId.value
 		);
 		if (!dinoz) {
-			return dinozList.value[0]
+			return dinozList.value[0];
 		}
 		return dinoz;
 	});

@@ -252,7 +252,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': {
+		'useDinozStore.getDinozList': {
 			handler(dinozList: Array<DinozFiche>) {
 				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
 			},
