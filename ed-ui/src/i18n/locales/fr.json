@@ -90,6 +90,7 @@
 		}
 	},
 	"toast": {
+		"deletedPlayer": "Le joueur a supprimé son compte",
 		"noFBTournament": "Il n'y a pas encore de phase de qualification pour le tournoi de ForceBrut.",
 		"maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation.",
 		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",

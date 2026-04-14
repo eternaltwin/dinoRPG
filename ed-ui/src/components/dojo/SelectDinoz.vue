@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import {playerStore, useDinozStore} from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
