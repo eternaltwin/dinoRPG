@@ -18,8 +18,8 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		return dinoz;
 	});
 
-	const getCurrentDinozId: ComputedRef<number | undefined> = computed((): number | undefined => {
-		return currentDinozId.value;
+	const getCurrentDinozId: ComputedRef<number> = computed((): number => {
+		return currentDinozId.value ?? dinozList.value[0].id;
 	});
 
 	const getDinozList: ComputedRef<DinozFiche[]> = computed((): DinozFiche[] => {
@@ -28,7 +28,9 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 
 	const getDinoz = (dinozId: number): DinozFiche => {
 		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
-		if (!dinoz) throw Error("Dinoz doesn't exist in store.");
+		if (!dinoz) {
+			return dinozList.value.find((dinoz: DinozFiche) => dinoz.id === currentDinozId.value) ?? dinozList.value[0];
+		}
 		return dinoz;
 	};
 

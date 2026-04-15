@@ -182,6 +182,7 @@ import { utils } from '../../utils';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { placeList } from '../../constants';
 import { CINEMA_LINK } from '../../utils/goTo.js';
+import { mapState } from 'pinia';
 
 export default defineComponent({
 	name: 'DinozLeftMenu',
@@ -209,7 +210,8 @@ export default defineComponent({
 		},
 		isMenuOpened(): boolean {
 			return useMenuStore().isDinozMenuOpened;
-		}
+		},
+		...mapState(useDinozStore, ['getDinozList'])
 	},
 	methods: {
 		close() {
@@ -252,7 +254,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'useDinozStore.getDinozList': {
+		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
 				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
 			},

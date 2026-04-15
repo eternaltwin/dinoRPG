@@ -103,7 +103,6 @@ function canDeleteMessage(msg: CreateClanMessage): boolean {
 	return msg.author?.id == store.playerId || msg.clan?.leaderId == store.playerId;
 }
 function goToPlayer(id: string) {
-	console.log(id);
 	if (id === '1') {
 		$toast.error(t(`toast.deletedPlayer`));
 		return;
