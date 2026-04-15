@@ -75,8 +75,9 @@ import { defineComponent } from 'vue';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { mapState } from 'pinia';
+
 
 export default defineComponent({
 	name: 'DinozList',
@@ -125,14 +126,15 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		...mapState(useDinozStore, ['getDinozList']),
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
 		}
 	},
 	watch: {
-		'useDinozStore.getDinozList': {
+		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
+				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
 			},
 			deep: true
 		}

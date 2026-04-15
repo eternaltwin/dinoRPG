@@ -175,7 +175,6 @@
 import { defineComponent } from 'vue';
 import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { utils } from '../../utils';
@@ -256,7 +255,7 @@ export default defineComponent({
 	watch: {
 		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
+				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
 			},
 			deep: true
 		}
