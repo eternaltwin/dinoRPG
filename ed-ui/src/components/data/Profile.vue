@@ -117,7 +117,6 @@ export default defineComponent({
 			playerPosition: null as number | null,
 			option: false as boolean,
 			localStore: localStore(),
-			dinozStore: dinozStore(),
 			shareArchivedData: playerStore().getPlayerOptions.shareArchivedData,
 			archivedSiteId: playerStore().getPlayerOptions.archivedSiteId ?? undefined,
 			possibleSites: [
