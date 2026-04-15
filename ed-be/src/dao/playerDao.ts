@@ -37,6 +37,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 				ips: true,
 				skipFight: true,
 				skipLevel: true,
+				archivedSiteId: true,
+				shareArchivedData: true,
 				ClanMember: { select: { clanId: true } },
 				discoveredSkills: true,
 				notifications: {
@@ -656,6 +658,8 @@ export async function getCommonDataRequest(playerId: string) {
 					ips: true,
 					skipFight: true,
 					skipLevel: true,
+					archivedSiteId: true,
+					shareArchivedData: true,
 					discoveredSkills: true,
 					ClanMember: { select: { clanId: true } },
 					notifications: {
@@ -822,6 +826,8 @@ export async function getPlayerDataRequest(playerId: string) {
 				name: true,
 				customText: true,
 				rewards: { select: { rewardId: true } },
+				shareArchivedData: true,
+				archivedSiteId: true,
 				dinoz: {
 					select: {
 						id: true,
@@ -869,6 +875,22 @@ export async function getPlayerDataRequest(playerId: string) {
 						}
 					}
 				}
+			}
+		});
+
+		return player;
+	});
+}
+
+export async function getPlayerArchivedSiteId(playerId: string) {
+	return withSpan(getPlayerArchivedSiteId.name, async () => {
+		const player = await prisma.player.findUnique({
+			where: {
+				id: playerId
+			},
+			select: {
+				id: true,
+				archivedSiteId: true
 			}
 		});
 

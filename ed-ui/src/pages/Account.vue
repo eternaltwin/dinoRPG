@@ -10,7 +10,16 @@
 			<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
 		</div>
 		<div class="cards">
-			<TwinoidGoals :accountStats="accountData.stats"></TwinoidGoals>
+			<div>
+				<transition name="fade">
+					<TwinoidGoals :key="statsTitle" :title="statsTitle" :accountStats="statsToDisplay"></TwinoidGoals>
+				</transition>
+				<div id="stats-actions">
+					<DZButton v-if="hasArchivedData" @click="displayArchivedStats = !displayArchivedStats">
+						{{ statsButtonTitle }}
+					</DZButton>
+				</div>
+			</div>
 			<div class="profilCard">
 				<Profile :accountData="accountData"></Profile>
 				<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
@@ -34,17 +43,20 @@ import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
 import EpicRewards from '../components/data/EpicRewards.vue';
 import TwinoidGoals from '../components/data/TwinoidGoals.vue';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
-	name: 'MyAccount',
+	name: 'Account',
 	data() {
 		return {
 			playerStore: playerStore(),
 			accountData: {} as PlayerInfo,
-			dataLoaded: false as boolean
+			dataLoaded: false as boolean,
+			displayArchivedStats: false
 		};
 	},
 	components: {
+		DZButton,
 		TitleHeader,
 		MyDinoz,
 		Profile,
@@ -54,7 +66,7 @@ export default defineComponent({
 	methods: {
 		async checkAndLoadAccount(): Promise<void> {
 			const accountId = this.$route.params.id as string;
-			if (this.$route.name !== 'MyAccount' || typeof accountId !== 'string' || accountId.length < 10) return;
+			if (this.$route.name !== 'Account' || typeof accountId !== 'string' || accountId.length < 10) return;
 			this.dataLoaded = false;
 
 			try {
@@ -65,6 +77,24 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
+		}
+	},
+	computed: {
+		hasArchivedData() {
+			return this.accountData.archivedData.length > 0;
+		},
+		statsTitle() {
+			return this.displayArchivedStats
+				? this.$t(`myAccount.twinoidgoals.archivedTitle`)
+				: this.$t(`myAccount.twinoidgoals.name`);
+		},
+		statsToDisplay() {
+			return this.displayArchivedStats ? this.accountData.archivedData : this.accountData.stats;
+		},
+		statsButtonTitle() {
+			return this.displayArchivedStats
+				? this.$t(`myAccount.twinoidgoals.seeStats`)
+				: this.$t(`myAccount.twinoidgoals.seeArchivedStats`);
 		}
 	},
 	mounted() {
@@ -150,5 +180,21 @@ export default defineComponent({
 			display: none;
 		}
 	}
+}
+
+.fade-enter-active {
+	transition: all 1s 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	transform: rotateY(-180deg);
+	opacity: 0;
+}
+
+#stats-actions {
+	display: flex;
+	justify-content: center;
+	padding-top: 4px;
 }
 </style>

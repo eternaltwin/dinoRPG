@@ -71,8 +71,8 @@ const router = createRouter({
 				},
 				{
 					path: '/player/:id',
-					name: 'MyAccount',
-					component: () => import('../pages/MyAccount.vue')
+					name: 'Account',
+					component: () => import('../pages/./Account')
 				},
 				{
 					path: '/levelup/:id',
