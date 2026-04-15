@@ -72,7 +72,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToAccount(player: SelectOption<string>) {
-			this.$router.push({ name: 'MyAccount', params: { id: player.value } });
+			this.$router.push({ name: 'Account', params: { id: player.value } });
 		},
 		async getRanking(): Promise<void> {
 			try {

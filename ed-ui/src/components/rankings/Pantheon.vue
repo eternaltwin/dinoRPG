@@ -146,7 +146,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToAccount(paramId: number): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
+			this.$router.push({ name: 'Account', params: { id: paramId } });
 		},
 		formatDate(dateString: string) {
 			return formatDate(dateString);

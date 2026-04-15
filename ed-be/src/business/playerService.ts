@@ -4,16 +4,17 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche, toDinozFicheLite, toDinozPublicFiche } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { convertToPlayerStats } from '@drpg/core/utils/twinoidGoals';
-import { AdminRole, OfferStatus } from '@drpg/prisma';
+import { OfferStatus } from '@drpg/prisma';
 import { Request } from 'express';
 import sanitizeHtml from 'sanitize-html';
-import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
+import { getAllDinozFicheLite } from '../dao/dinozDao.js';
 import {
 	auth,
 	checkBeforeDeletion,
 	getCanCreateClanRequest,
 	getCanJoinClanRequest,
 	getCommonDataRequest,
+	getPlayerArchivedSiteId,
 	getPlayerDataRequest,
 	getPlayerRewardsRequest,
 	getToolTipInfos,
@@ -25,6 +26,12 @@ import {
 import translate from '../utils/translate.js';
 import { getAvailableActions } from './dinozService.js';
 import { getLatestTournament } from '../dao/tournamentDao.js';
+import fetch from 'node-fetch';
+import { ArchivedPlayerStats } from '@drpg/core/models/player/ArchivedPlayerStats';
+import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
+import { ETUser } from '@drpg/core/models/player/ETUser';
+import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
+import { GLOBAL } from '../context.js';
 
 /**
  * @summary Get data from player on login
@@ -57,7 +64,9 @@ export async function getCommonData(req: Request) {
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI),
 			hasPAC: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PAC),
 			skipFight: playerCommonData.skipFight,
-			skipLevel: playerCommonData.skipLevel
+			skipLevel: playerCommonData.skipLevel,
+			archivedSiteId: playerCommonData.archivedSiteId,
+			shareArchivedData: playerCommonData.shareArchivedData
 		},
 		role: playerCommonData.role,
 		priest: playerCommonData.priest,
@@ -79,6 +88,8 @@ export async function getCommonData(req: Request) {
  * @return PlayerInfo
  */
 export async function getAccountData(req: Request) {
+	const authed = await auth(req);
+
 	const playerId = req.params.id;
 	const playerInfo = await getPlayerDataRequest(playerId);
 	if (!playerInfo) {
@@ -97,6 +108,11 @@ export async function getAccountData(req: Request) {
 		throw new ExpectedError(`Player ${playerId} doesn't have a ranking.`);
 	}
 
+	let archivedData: PlayerStats[] = [];
+	if ((authed.id === playerId || playerInfo.shareArchivedData) && playerInfo.archivedSiteId) {
+		archivedData = await getArchivedData(req);
+	}
+
 	const infoToSend: PlayerInfo = {
 		dinozCount: playerInfo.ranking.dinozCount,
 		pointCount: playerInfo.ranking.points,
@@ -112,10 +128,40 @@ export async function getAccountData(req: Request) {
 		}),
 		customText: playerInfo.customText,
 		completion: playerInfo.ranking.completion,
-		stats: convertToPlayerStats(playerInfo.playerTracking)
+		stats: convertToPlayerStats(playerInfo.playerTracking),
+		archivedData
 	};
 
 	return infoToSend;
+}
+
+export async function getArchivedData(req: Request) {
+	const playerId = req.params.id;
+
+	const response = await fetch(`${GLOBAL.config.eternaltwin.url}api/v1/users/${playerId}`);
+	const etUser = (await response.json()) as ETUser;
+	const player = await getPlayerArchivedSiteId(playerId);
+	if (etUser.links?.twinoid.current?.user.id && player?.archivedSiteId) {
+		const archivedStats = await getArchivedStats(etUser.links.twinoid.current.user.id, player.archivedSiteId);
+		return archivedStats.map(toPlayerStats);
+	} else {
+		return [];
+	}
+}
+
+async function getArchivedStats(archivedTwinoidId: string, siteId: number) {
+	const response = await fetch(
+		`${GLOBAL.config.eternaltwin.url}api/v1/archive/twinoid/users/${archivedTwinoidId}/rewards/${siteId}`
+	);
+	const archivedPlayer = (await response.json()) as ArchivedPlayer;
+	return archivedPlayer.stats;
+}
+
+function toPlayerStats(archivedStats: ArchivedPlayerStats): PlayerStats {
+	return {
+		stat: archivedStats.stat_key,
+		quantity: archivedStats.score
+	};
 }
 
 /**
@@ -266,5 +312,11 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'skipFight') {
 		await setPlayer(authed.id, { skipFight: req.body.setting });
+	}
+	if (req.params.setting === 'archivedSiteId') {
+		await setPlayer(authed.id, { archivedSiteId: req.body.setting });
+	}
+	if (req.params.setting === 'shareArchivedData') {
+		await setPlayer(authed.id, { shareArchivedData: req.body.setting });
 	}
 }

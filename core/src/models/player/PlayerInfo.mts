@@ -18,4 +18,5 @@ export interface PlayerInfo {
 	customText: string | null;
 	completion: number;
 	stats: PlayerStats[];
+	archivedData: PlayerStats[];
 }

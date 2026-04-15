@@ -107,7 +107,7 @@ function goToPlayer(id: string) {
 		$toast.error(t(`toast.deletedPlayer`));
 		return;
 	}
-	router.push({ name: 'MyAccount', params: { id } });
+	router.push({ name: 'Account', params: { id } });
 }
 
 function getTopItem(arr) {

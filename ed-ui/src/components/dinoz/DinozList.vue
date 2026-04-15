@@ -78,7 +78,6 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import { mapState } from 'pinia';
 
-
 export default defineComponent({
 	name: 'DinozList',
 	data() {
