@@ -135,5 +135,13 @@ export const ClanService = {
 	async getClanTreasure(clanId: number): Promise<ShopDTO[]> {
 		const res = await http().get(`/clan/${clanId}/treasure`);
 		return res.data;
+	},
+	async buildCastle(): Promise<ShopDTO[]> {
+		const res = await http().put(`/clan/war/castle`);
+		return res.data;
+	},
+	async buildCastle(): Promise<ShopDTO[]> {
+		const res = await http().put(`/clan/war/castle`);
+		return res.data;
 	}
 };

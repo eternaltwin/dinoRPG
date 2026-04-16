@@ -27,7 +27,6 @@ import {
 	getClanMessagesRequest,
 	getClanPageRequest,
 	getClanPagesListRequest,
-	getClanRequest,
 	getEventRankingClansRequest,
 	getFullClanTreasure,
 	getPlayerJoinListRequest,
@@ -57,6 +56,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 import { prisma } from '../prisma.js';
+import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -73,4 +73,58 @@ export async function eventState() {
 		id: currentWar.id,
 		endDate: currentWar.endDate
 	};
+}
+
+async function currentWar() {
+	const currentWar = await prisma.clanEvent.findFirst({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	if (!currentWar) {
+		throw new ExpectedError('No event in progress');
+	}
+	if (currentWar.endDate < new Date()) {
+		throw new ExpectedError('War is over');
+	}
+	return {
+		id: currentWar.id,
+		config: JSON.parse(currentWar.config) as ClanEventConfig
+	};
+}
+
+export async function buildClanCastle(req: Request) {
+	const authed = await auth(req);
+	const war = await currentWar();
+
+	if (!authed.ClanMember) {
+		throw new ExpectedError(translate('noClan', authed));
+	}
+
+	const hasRight = await playerHasRightRequest(
+		authed.ClanMember.clanId,
+		authed.id,
+		ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
+	);
+
+	if (!hasRight) {
+		throw new ExpectedError(translate('noRight', authed));
+	}
+
+	const randomPlace = war.config.warPlaces[Math.round(Math.random() * war.config.warPlaces.length) - 1];
+
+	await prisma.clanCastle.upsert({
+		where: {
+			clanId: authed.ClanMember.clanId
+		},
+		create: {
+			placeId: randomPlace,
+			clanId: authed.ClanMember.clanId
+		},
+		update: {
+			// Do nothing
+		}
+	});
 }

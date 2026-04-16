@@ -29,16 +29,16 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
-			<div class="top-info-element">
-				<img
-					src="\src\assets\icons\crown.png"
-					alt="rank"
-					v-tippy="{
-						content: formatContent($t('clan.icons.rank')),
-						theme: 'small'
-					}"
-				/>
-				Bronze
+			<div
+				v-if="castle"
+				class="top-info-element"
+				v-tippy="{
+					content: formatContent($t('clan.war.castleTooltip')),
+					theme: 'small'
+				}"
+			>
+				<img src="\src\assets\icons\crown.png" alt="rank" />
+				{{ $t(`place.name.${castle}`) }}
 			</div>
 			<div class="top-info-element">
 				<Flags :langs="clanStore.getClan?.langs" />
@@ -65,6 +65,7 @@ import { API_BASE, utils } from '../../utils';
 import DZUser from '../common/DZUser.vue';
 import { clanStore } from '../../store/clanStore';
 import Flags from '../common/Flags.vue';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'ClanHeader',
@@ -73,7 +74,8 @@ export default defineComponent({
 			API_BASE,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
 			clanStore: clanStore(),
-			bannerDataUrl: null as string | null
+			bannerDataUrl: null as string | null,
+			castle: undefined as string | undefined
 		};
 	},
 	components: { Flags, DZUser },
@@ -106,6 +108,9 @@ export default defineComponent({
 	},
 	mounted() {
 		this.loadBanner();
+		this.castle = Object.values(placeList).find(
+			place => place.placeId === this.clanStore.getClan?.castle?.placeId
+		)?.name;
 	},
 	watch: {
 		'clanStore.getClanId'(newVal: number | null) {

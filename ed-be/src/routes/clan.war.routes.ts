@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
 import { body, param, validationResult } from 'express-validator';
-import { eventState } from '../business/clanWar.js';
+import { buildClanCastle, eventState } from '../business/clanWar.js';
 
 const routes: Router = Router();
 
@@ -35,6 +35,19 @@ routes.get(`${commonPath}/`, async (req: Request, res: Response) => {
 
 	try {
 		const response = await eventState();
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/castle`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await buildClanCastle(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

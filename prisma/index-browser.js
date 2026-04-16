@@ -149,6 +149,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   updatedDate: 'updatedDate',
   order: 'order',
   concentrationId: 'concentrationId',
+  castleId: 'castleId',
   fight: 'fight',
   gather: 'gather',
   remaining: 'remaining',
@@ -481,6 +482,14 @@ exports.Prisma.ClanScalarFieldEnum = {
   banner: 'banner',
   leaderId: 'leaderId',
   langs: 'langs'
+};
+
+exports.Prisma.ClanCastleScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  placeId: 'placeId',
+  maxLife: 'maxLife',
+  currentLife: 'currentLife'
 };
 
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {
@@ -916,6 +925,7 @@ exports.Prisma.ModelName = {
   PlayerTracking: 'PlayerTracking',
   Pantheon: 'Pantheon',
   Clan: 'Clan',
+  ClanCastle: 'ClanCastle',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',
   ClanEvent: 'ClanEvent',

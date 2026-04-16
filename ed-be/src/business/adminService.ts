@@ -37,7 +37,6 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { applySkillToDinoz, deApplySkillFromDinoz } from '../utils/skillParser.js';
 import { scheduledJobs } from 'node-schedule';
 import {
-	getClanRequest,
 	updateClanMemberRequest,
 	searchClansByName,
 	deleteClanRequest,
