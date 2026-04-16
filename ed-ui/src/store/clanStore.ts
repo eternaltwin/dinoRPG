@@ -19,6 +19,7 @@ export const clanStore = defineStore('clanStore', {
 	},
 	actions: {
 		async loadClan(clanId: number) {
+			this.clan = undefined;
 			this.clan = await ClanService.getClan(clanId);
 		},
 		async updateLang(clanId: number, languages: LocalesEnum[]) {

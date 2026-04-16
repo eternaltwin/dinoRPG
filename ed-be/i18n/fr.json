@@ -30,6 +30,7 @@
 	"alreadyOffer": "Vous avez déjà une vente en cours.",
 	"bidsOngoing": "Vous avez encore des enchères en cours.",
 	"inClan": "Vous appartenez toujours à un clan.",
+	"noClan": "Vous n'appartenez pas à un clan.",
 	"banPending": "Vous avez une demande de banissement en cours.",
 	"AlreadyAtMaxHealth": "Votre Dinoz a déjà sa vie au maximum.",
 	"DinozIsDead": "Votre Dinoz est mort.",

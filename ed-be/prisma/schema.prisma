@@ -40,6 +40,8 @@ model Dinoz {
   updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
   order              Int?
   concentrationId    Int?
+  castleId           Int?
+  castle             ClanCastle?            @relation(fields: [castleId], references: [id])
   fight              Boolean                @default(true)
   gather             Boolean                @default(true)
   remaining          Int                    @default(2)
@@ -284,8 +286,8 @@ model Player {
   dailyGridRewards     Int                @default(0)
   skipFight            Boolean            @default(false)
   skipLevel            Boolean            @default(false)
-	shareArchivedData    Boolean            @default(false)
-	archivedSiteId       Int?
+  shareArchivedData    Boolean            @default(false)
+  archivedSiteId       Int?
   banCaseId            Int?               @unique
   discoveredSkills     Int[]              @default([])
   lastVersionSeen      String             @default("0.16.3")
@@ -589,6 +591,7 @@ model Clan {
   leaderId      String            @unique @db.Uuid
   langs         Lang[]            @default([fr])
   war           ClanWar?          @relation(fields: [clanWarId], references: [id])
+  castle        ClanCastle?
   leader        Player            @relation("leader", fields: [leaderId], references: [id])
   history       ClanHistory[]
   joinRequests  ClanJoinRequest[]
@@ -597,6 +600,16 @@ model Clan {
   ingredients   ClanIngredient[]
   discussion    ClanMessage[]
   targetedCases Moderation[]      @relation("TargetClanRelation")
+}
+
+model ClanCastle {
+  id          Int     @id @default(autoincrement())
+  clanId      Int     @unique
+  placeId     Int
+  clan        Clan    @relation(fields: [clanId], references: [id])
+  maxLife     Int     @default(100)
+  currentLife Int     @default(100)
+  defender    Dinoz[]
 }
 
 model ClanJoinRequest {

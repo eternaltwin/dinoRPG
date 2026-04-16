@@ -4137,6 +4137,11 @@
 		"forum": {
 			"connectionFailed": "Une erreur s'est produite lors de la connexion au chat du clan !",
 			"connectionFailed2": "Actualise la page ou réessaye plus tard !"
+		},
+		"war": {
+			"buildCastle": "Constuire le chateau",
+			"castleTooltip": "Lieu où se situe votre chateau",
+			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !"
 		}
 	},
 	"clansList": {
@@ -4175,7 +4180,8 @@
 				"MEMBER_EXCLUDE": "Peut renvoyer des membres",
 				"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
 				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
-				"CLAN_EDIT_LANG": "Peut changer la langue du Clan"
+				"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
+				"CLAN_BUILD_CASTLLE": "Peut construire le chateau"
 			},
 			"nickname": "Surnom du joueur",
 			"save": "Enregistrer",

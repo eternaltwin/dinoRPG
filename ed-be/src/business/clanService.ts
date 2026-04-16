@@ -27,7 +27,8 @@ import {
 	getClanMessagesRequest,
 	getClanPageRequest,
 	getClanPagesListRequest,
-	getClanRequest,
+	getClanRequestPrivate,
+	getClanRequestPublic,
 	getEventRankingClansRequest,
 	getFullClanTreasure,
 	getPlayerJoinListRequest,
@@ -124,9 +125,15 @@ export async function searchClans(req: Request): Promise<ClanForSearch[]> {
  * @returns Clan
  */
 export async function getClan(req: Request) {
-	await auth(req);
-	const clan = await getClanRequest(Number(req.params.id));
-	return clan;
+	const authed = await auth(req);
+
+	if (authed.ClanMember && authed.ClanMember.clanId === +req.params.id) {
+		const clan = await getClanRequestPrivate(authed.ClanMember.clanId);
+		return clan;
+	} else {
+		const clanPublic = await getClanRequestPublic(Number(req.params.id));
+		return clanPublic;
+	}
 }
 
 /**

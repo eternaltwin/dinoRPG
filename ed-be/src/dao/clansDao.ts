@@ -89,8 +89,8 @@ export async function getEventRankingClansRequest(page: number, event: EventType
 	});
 }
 
-export async function getClanRequest(id: number) {
-	return withSpan(getClanRequest.name, async () => {
+export async function getClanRequestPublic(id: number) {
+	return withSpan(getClanRequestPublic.name, async () => {
 		const clans = await prisma.clan.findUnique({
 			where: {
 				id
@@ -106,6 +106,38 @@ export async function getClanRequest(id: number) {
 					}
 				},
 				creationDate: true,
+				war: true,
+				leader: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				treasureValue: true
+			}
+		});
+		return clans;
+	});
+}
+
+export async function getClanRequestPrivate(id: number) {
+	return withSpan(getClanRequestPrivate.name, async () => {
+		const clans = await prisma.clan.findUnique({
+			where: {
+				id
+			},
+			select: {
+				id: true,
+				name: true,
+				langs: true,
+				members: {
+					select: {
+						playerId: true,
+						id: true
+					}
+				},
+				creationDate: true,
+				castle: true,
 				war: true,
 				leader: {
 					select: {
