@@ -107,7 +107,10 @@ export const ModerationReason = {
   accountName: 'accountName',
   avatar: 'avatar',
   customText: 'customText',
-  other: 'other'
+  other: 'other',
+  clanBanner: 'clanBanner',
+  clanBehavior: 'clanBehavior',
+  clanPages: 'clanPages'
 };
 
 export const ModerationAction = {

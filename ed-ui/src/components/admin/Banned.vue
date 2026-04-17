@@ -16,14 +16,9 @@
 				<td>{{ $t(`report.reason.${player.banCase?.reason}`) }}</td>
 				<td>{{ $t(`report.sorted.${player.banCase?.sorted}`) }}</td>
 				<td>
-					<select>
+					<select @change="onSelectChange($event)">
 						<option value="null">Update Ban</option>
-						<option
-							v-for="(action, index) in ActionTypes"
-							:key="index"
-							:value="action"
-							@click="selectBanUpdate(action)"
-						>
+						<option v-for="(action, index) in ActionTypes" :key="index" :value="action">
 							{{ action }}
 						</option>
 					</select>
@@ -69,6 +64,14 @@ export default defineComponent({
 		changePage(i: number) {
 			this.page += i;
 			this.getBannedPlayers();
+		},
+		onSelectChange(event: Event) {
+			const action = (event.target as HTMLSelectElement).value;
+			if (action === 'null') {
+				this.selectedBanUpdateAction = null;
+			} else {
+				this.selectedBanUpdateAction = action;
+			}
 		},
 		selectBanUpdate(action: string) {
 			this.selectedBanUpdateAction = action;

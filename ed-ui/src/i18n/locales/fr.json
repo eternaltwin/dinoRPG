@@ -5123,6 +5123,7 @@
 		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Reporter du contenu inapproprié",
 		"player": "Êtes-vous sûr de vouloir reporter ce joueur à la modération ?",
 		"specify": "Merci de spécifier la raison de votre complainte",
@@ -5132,7 +5133,11 @@
 			"accountName": "Nom de joueur inapproprié",
 			"dinozName": "Nom de Dinoz inapproprié",
 			"multi": "Ce joueur utilise plusieurs comptes",
-			"other": "Autre"
+			"other": "Autre",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Description ou pages de clan inappropriées",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "À traiter",

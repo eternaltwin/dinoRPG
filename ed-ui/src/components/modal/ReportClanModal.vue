@@ -1,24 +1,18 @@
 <template>
 	<dialog ref="dialogRef">
-		<div class="modal-title">{{ $t(`report.header`) }}</div>
-		<form v-if="player" method="dialog">
+		<div class="modal-title">{{ $t(`report.clan`) }}</div>
+		<form v-if="clan" method="dialog">
 			<div class="modal-content">
-				<p class="small bold">{{ $t(`report.player`) }}</p>
 				<p class="small">
 					<span class="white">
 						{{ $t(`report.specify`) }}
 					</span>
-					<template v-for="moderation in playerReasons" :key="moderation">
+					<template v-for="moderation in clanReasons" :key="moderation">
 						<label class="block">
 							<input type="radio" name="report_reason" v-model="reportedReason" :value="moderation" />
 							{{ $t(`report.reason.${moderation}`) }}
 						</label>
 					</template>
-					<select name="dinoz" v-model="selectedDinoz" v-if="reportedReason === ModerationReason.dinozName">
-						<template v-for="(dinoz, index) in player.dinoz" :key="index">
-							<option :value="dinoz">{{ dinoz.name }}</option>
-						</template>
-					</select>
 				</p>
 				<p class="small">
 					<span class="white">
@@ -38,40 +32,31 @@
 <script lang="ts">
 import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
-import { Player, Dinoz } from '@drpg/prisma';
+import { Clan } from '@drpg/prisma';
+import { ModerationReason } from '@drpg/prisma/enums';
 import { ReportService } from '../../services/index.js';
 import DZButton from '../common/DZButton.vue';
-import { ModerationReason } from '@drpg/prisma/enums';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
-	name: 'Report',
+	name: 'ReportClan',
 	components: { DZButton },
 	data() {
 		return {
 			dialogRef: null as HTMLDialogElement | null,
-			ModerationReason: ModerationReason,
-			playerReasons: [
-				ModerationReason.multi,
-				ModerationReason.dinozName,
-				ModerationReason.accountName,
-				ModerationReason.avatar,
-				ModerationReason.customText,
+			clanReasons: [
+				ModerationReason.clanBanner,
+				ModerationReason.clanBehavior,
+				ModerationReason.clanPages,
 				ModerationReason.other
 			],
 			reportedArgument: undefined as undefined | string,
-			selectedDinoz: undefined as undefined | Pick<Dinoz, 'id' | 'name'>,
 			reportedReason: undefined as undefined | string,
-			player: undefined as
-				| undefined
-				| (Pick<Player, 'id' | 'name' | 'customText'> & { dinoz: Pick<Dinoz, 'id' | 'name'>[] })
+			clan: undefined as undefined | Pick<Clan, 'id' | 'name'>
 		};
 	},
 	methods: {
-		dismiss(): void {
-			EventBus.emit('report', undefined);
-		},
 		close(): void {
 			if (this.dialogRef) {
 				this.dialogRef.close();
@@ -85,28 +70,16 @@ export default defineComponent({
 				});
 				return;
 			}
-			if (this.reportedReason === ModerationReason.dinozName && !this.selectedDinoz) {
+			if (!this.clan) {
 				this.$toast.open({
-					message: formatText(this.$t('report.errorDinoz')),
-					type: 'info'
-				});
-				return;
-			}
-			if (!this.player) {
-				this.$toast.open({
-					message: formatText('No player found.'),
+					message: formatText('No clan found.'),
 					type: 'info'
 				});
 				return;
 			}
 
 			try {
-				await ReportService.reportPlayer(
-					this.player?.id,
-					this.reportedReason,
-					this.reportedArgument,
-					this.selectedDinoz?.id
-				);
+				await ReportService.reportClan(this.clan.id, this.reportedReason as string, this.reportedArgument as string);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -118,9 +91,9 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		EventBus.on('report', async e => {
+		EventBus.on('reportClan', async e => {
 			if (e) {
-				this.player = await ReportService.getPlayer(e);
+				this.clan = e; // Expects { id: number, name: string }
 				if (this.dialogRef) {
 					this.dialogRef.showModal();
 				}

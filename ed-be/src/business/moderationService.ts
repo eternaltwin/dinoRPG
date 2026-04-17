@@ -4,6 +4,7 @@ import { auth, getBannedPlayers, getPlayerBanInfo, getPlayerInfoToReport } from 
 import { ModerationReason, ModerationAction, $Enums } from '@drpg/prisma';
 import {
 	createModerationReport,
+	createClanModerationReport,
 	getModerationReport,
 	getModerationReports,
 	setModerationReport
@@ -12,6 +13,7 @@ import { LONG_BAN_DURATION_MS, MEDIUM_BAN_DURATION_MS, SHORT_BAN_DURATION_MS } f
 import { LOGGER } from '../context.js';
 import { createNotification } from '../dao/notificationDao.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
+import { prisma } from '../prisma.js';
 
 /**
  * Get info of a player for a report
@@ -50,6 +52,35 @@ export async function reportPlayer(req: Request) {
 	}
 
 	await createModerationReport(authed.id, playerToReport.id, req.body.reason, req.body.comment, req.body.dinozId);
+
+	return;
+}
+
+/**
+ * Report a clan
+ * @param req
+ * @param req.params.id {number} clan id
+ * @param req.body.reason {string} reason for the report
+ * @param req.body.comment {number} additional comment on the report
+ */
+export async function reportClan(req: Request) {
+	const authed = await auth(req);
+	const targetClanId = Number(req.params.id);
+
+	if (!Object.values(ModerationReason).includes(req.body.reason)) {
+		throw new ExpectedError('Invalid reason.');
+	}
+
+	const clan = await prisma.clan.findUnique({
+		where: { id: targetClanId },
+		select: { leaderId: true }
+	});
+
+	if (!clan) {
+		throw new ExpectedError('Inexistent clan to report.');
+	}
+
+	await createClanModerationReport(authed.id, clan.leaderId, targetClanId, req.body.reason, req.body.comment);
 
 	return;
 }

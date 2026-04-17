@@ -549,7 +549,8 @@ exports.Prisma.ModerationScalarFieldEnum = {
   banEndDate: 'banEndDate',
   sorted: 'sorted',
   reporterId: 'reporterId',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  targetClanId: 'targetClanId'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
@@ -813,7 +814,10 @@ exports.ModerationReason = exports.$Enums.ModerationReason = {
   accountName: 'accountName',
   avatar: 'avatar',
   customText: 'customText',
-  other: 'other'
+  other: 'other',
+  clanBanner: 'clanBanner',
+  clanBehavior: 'clanBehavior',
+  clanPages: 'clanPages'
 };
 
 exports.ModerationAction = exports.$Enums.ModerationAction = {

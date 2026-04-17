@@ -3,6 +3,7 @@
 	<TopBar />
 	<div id="dynamic">
 		<Report />
+		<ReportClan />
 		<Spinner />
 		<ErrorMessage />
 		<Messagerie />
@@ -25,6 +26,7 @@ import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
 import Toast from './components/utils/Toast.vue';
 import Report from './components/modal/ReportModal.vue';
+import ReportClan from './components/modal/ReportClanModal.vue';
 import Messagerie from './components/modal/MessagerieModal.vue';
 import TopBar from './components/toolBar/TopBar.vue';
 import TwinoRightMenu from './components/toolBar/TwinoRightMenu.vue';
@@ -42,6 +44,7 @@ export default defineComponent({
 		ErrorMessage,
 		Toast,
 		Report,
+		ReportClan,
 		DinozLeftMenu
 	}
 });

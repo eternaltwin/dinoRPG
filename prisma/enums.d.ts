@@ -220,7 +220,10 @@ export const ModerationReason: {
   readonly accountName: 'accountName';
   readonly avatar: 'avatar';
   readonly customText: 'customText';
-  readonly other: 'other'
+  readonly other: 'other';
+  readonly clanBanner: 'clanBanner';
+  readonly clanBehavior: 'clanBehavior';
+  readonly clanPages: 'clanPages'
 };
 
 export namespace ModerationReason {
@@ -229,7 +232,10 @@ export namespace ModerationReason {
   export type accountName = 'accountName';
   export type avatar = 'avatar';
   export type customText = 'customText';
-  export type other = 'other'
+  export type other = 'other';
+  export type clanBanner = 'clanBanner';
+  export type clanBehavior = 'clanBehavior';
+  export type clanPages = 'clanPages'
 }
 
 export type ModerationReason = typeof ModerationReason[keyof typeof ModerationReason];
