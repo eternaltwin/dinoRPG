@@ -14,6 +14,7 @@ import * as http from 'http';
 import puppeteer, { Browser, HTTPRequest } from 'puppeteer';
 import serveStatic from 'serve-static';
 import finalhandler from 'finalhandler';
+import { fileURLToPath } from 'url';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -41,9 +42,8 @@ function findPackageDir(start: string): string {
 	}
 }
 
-const PACKAGE_DIR: string = findPackageDir(path.dirname(new URL(import.meta.url).pathname));
-const ASSETS_DIR: string = path.join(PACKAGE_DIR, 'assets');
-const CACHE_DIR: string = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', 'cache');
+const PACKAGE_DIR: string = findPackageDir(path.dirname(fileURLToPath(import.meta.url)));
+const CACHE_DIR: string = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'cache');
 const PORT: number = 18433;
 
 fs.mkdirSync(CACHE_DIR, { recursive: true });
@@ -52,7 +52,6 @@ fs.mkdirSync(CACHE_DIR, { recursive: true });
 
 const MIN_VALID_SIZE: number = 500;
 const READY_TIMEOUT: number = 15_000;
-const SCREENSHOT_TIMEOUT: number = 10_000;
 
 // ─── State ───────────────────────────────────────────────────────────────────
 
