@@ -5232,6 +5232,13 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
+	if (deltaTime < 0) {
+		LOGGER.error('`Delta time cannot be negative: ${delta}`.', {
+			fightData: fightData,
+			delta: deltaTime
+		});
+	}
+
 	// 4th - Activate the active environment if it's its caster turn
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left

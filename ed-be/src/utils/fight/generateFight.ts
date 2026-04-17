@@ -35,6 +35,7 @@ import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import seedrandom from 'seedrandom';
+import { LOGGER } from '../../context.js';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -262,22 +263,38 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	// Start the fight: handle skills and items that trigger at the beginning of the fight
 	startFight(fightData);
 
-	let turn = 0;
-
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 
 	// Update time of all fighters relatively to the first fighter (with the lowest time) so the first fighter starts at time 0.
-	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
+	const minTime = fightData.fighters[0].time;
+	fightData.fighters.map(fighter => {
+		fighter.time -= minTime;
+		if (fighter.time < 0) {
+			LOGGER.error('`Fighter time cannot be negative at init: ${time}`.', {
+				fightData: fightData,
+				time: fighter.time
+			});
+		}
 
-	let overtimePoisonDamage = 10;
+		if (fighter.energy !== fighter.maxEnergy) {
+			LOGGER.error('`Fighter energy not properly initialized: ${energy} != ${maxEnergy}`.', {
+				fightData: fightData,
+				energy: fighter.energy,
+				maxEnergy: fighter.maxEnergy,
+			});
+		}
+	});
 
-	// Hack to not continue the fight if one side has no fighter
+	// Do not start the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.loser = 'defenders';
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
 		fightData.loser = 'attackers';
 	}
+
+	let turn = 0;
+	let overtimePoisonDamage = 10;
 
 	// Fight loop
 	while (!fightData.loser) {
@@ -334,7 +351,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		if (turn > 1200) {
 			// Too many turns
-			console.warn('Too many turns, this should never happen');
+			LOGGER.error('Too many turns, this should never happen', {
+				fightData: fightData,
+			});
 			break;
 		}
 
