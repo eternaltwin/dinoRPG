@@ -147,5 +147,9 @@ export const ClanService = {
 	async declareWar(clanId: number): Promise<void> {
 		const res = await http().post(`/clan/war/${clanId}`);
 		return res.data;
+	},
+	async forfeitWar(warId: number): Promise<void> {
+		const res = await http().delete(`/clan/war/${warId}`);
+		return res.data;
 	}
 };
