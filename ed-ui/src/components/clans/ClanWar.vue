@@ -8,7 +8,7 @@
 				<th class="items-header" v-if="isClanMember">Action</th>
 			</tr>
 			<tr v-for="attack in ongoingAttack" :key="attack.id">
-				<td>{{ attack.attacker.id === clanId ? 'Attaque' : 'Défense' }}</td>
+				<td>{{ attack.attacker.id === clanId ? $t('clan.war.attack') : $t('clan.war.defense') }}</td>
 				<td>
 					<RouterLink
 						:to="{
@@ -19,7 +19,9 @@
 					>
 				</td>
 				<td>{{ formatDate(attack.dateEnd) }}</td>
-				<td v-if="isClanMember"><DZButton>Forfeit</DZButton></td>
+				<td v-if="isClanMember">
+					<DZButton>{{ $t('clan.war.forfeit') }}</DZButton>
+				</td>
 			</tr>
 		</DZTable>
 		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
