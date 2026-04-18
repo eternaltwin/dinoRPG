@@ -4142,7 +4142,10 @@
 			"buildCastle": "Constuire le chateau",
 			"castleTooltip": "Lieu où se situe votre chateau",
 			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
-			"declareWar": "Attaquer ce clan"
+			"declareWar": "Attaquer ce clan",
+			"attack": "Attaque",
+			"defense": "Défense",
+			"forfeit": "Déclarer forfait"
 		}
 	},
 	"clansList": {
