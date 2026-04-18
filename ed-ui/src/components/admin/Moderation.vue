@@ -54,7 +54,7 @@
 						</select>
 						<DZButton @click="takeAction(mod.id)">Take Action</DZButton>
 						<RouterLink v-if="mod.targetClan" :to="`/admin/clan?id=${mod.targetClan.id}`">
-							<DZButton>EDIT CLAN</DZButton>
+							<DZButton>Edit Clan</DZButton>
 						</RouterLink>
 					</div>
 				</td>
@@ -117,12 +117,8 @@ export default defineComponent({
 				this.selectedAction = action as ModerationAction;
 			}
 		},
-		isClanReason(reason: ModerationReason) {
-			return (
-				reason === ModerationReason.clanBanner ||
-				reason === ModerationReason.clanBehavior ||
-				reason === ModerationReason.clanPages
-			);
+		isClanReason(reason: string) {
+			return reason.startsWith('clan');
 		},
 		selectAction(action: ModerationAction) {
 			this.selectedAction = action;
@@ -208,10 +204,11 @@ tr:hover {
 	padding: 4px;
 }
 
-/* Style pour la cellule d'action */
+/* Style pour les cellules d'action */
 .action-cell {
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+	align-items: center;
 }
 </style>

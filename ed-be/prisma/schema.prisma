@@ -693,7 +693,7 @@ model Moderation {
   target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
   bannedUser Player?           @relation("AcceptedBan")
   targetClanId Int?
-  targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id])
+  targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id], onDelete: SetNull)
 }
 
 model Conversation {

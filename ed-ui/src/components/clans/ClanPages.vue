@@ -41,7 +41,11 @@
 			</a>
 		</div>
 		<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
-		<div class="report-container" @click="reportClan" v-if="clanStore.getClan && playerStore.clanId !== clanStore.getClanId">
+		<div
+			class="report-container"
+			@click="reportClan"
+			v-if="clanStore.getClan && playerStore.clanId !== clanStore.getClanId"
+		>
 			<a class="button">{{ $t('report.clan') }}</a>
 		</div>
 	</div>

@@ -5192,7 +5192,10 @@
 			"multi": "une suspiscion de multicompte",
 			"dinozName": "un nom de Dinoz offensant",
 			"avatar": "un avatar offensant",
-			"other": "une autre raison"
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"other": "votre clan"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
