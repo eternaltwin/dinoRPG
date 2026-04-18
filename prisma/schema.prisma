@@ -1061,6 +1061,7 @@ enum NotificationSeverity {
   newClanApply
   clanApplyAccepted
   message
+  clanWar
 }
 
 enum NewsType {

@@ -288,7 +288,8 @@ export const NotificationSeverity: {
   readonly event: 'event';
   readonly newClanApply: 'newClanApply';
   readonly clanApplyAccepted: 'clanApplyAccepted';
-  readonly message: 'message'
+  readonly message: 'message';
+  readonly clanWar: 'clanWar'
 };
 
 export namespace NotificationSeverity {
@@ -305,7 +306,8 @@ export namespace NotificationSeverity {
   export type event = 'event';
   export type newClanApply = 'newClanApply';
   export type clanApplyAccepted = 'clanApplyAccepted';
-  export type message = 'message'
+  export type message = 'message';
+  export type clanWar = 'clanWar'
 }
 
 export type NotificationSeverity = typeof NotificationSeverity[keyof typeof NotificationSeverity];

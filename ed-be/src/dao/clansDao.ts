@@ -1071,6 +1071,7 @@ export async function getClanHistoryRequest(playerId: string, clanId: number, pa
 					id: true,
 					date: true,
 					type: true,
+					authorMessage: true,
 					author: {
 						select: {
 							id: true,
