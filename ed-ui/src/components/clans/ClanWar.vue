@@ -1,10 +1,17 @@
 <template>
 	<div class="wrapper">
-		<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="buildCastle()">{{
-			$t('clan.war.buildCastle')
-		}}</DZButton>
-		<DZDisclaimer v-else round :content="$t('clan.war.disclaimerCastle', { place })" />
-		<div id="pixiCanvas" />
+		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
+			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="buildCastle()">{{
+				$t('clan.war.buildCastle')
+			}}</DZButton>
+			<DZDisclaimer v-else round :content="$t('clan.war.disclaimerCastle', { place })" />
+			<div id="pixiCanvas" />
+		</div>
+		<div id="clanOpponent" v-else>
+			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar()">{{
+				$t('clan.war.declareWar')
+			}}</DZButton>
+		</div>
 	</div>
 </template>
 
@@ -19,6 +26,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Fight } from '@eternaltwin/dinorpg_animations';
 import { DinoAction } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
+import { playerStore } from '../../store';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -26,8 +34,10 @@ export default defineComponent({
 	data() {
 		return {
 			castlePlace: undefined as undefined | number,
+			playerStore: playerStore(),
 			clanStore: clanStore(),
-			loadedCastle: {} as Fight
+			loadedCastle: {} as Fight,
+			isClanMember: false as boolean
 		};
 	},
 	computed: {
@@ -46,8 +56,16 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
+		async declareWar() {
+			try {
+				await ClanService.declareWar(+this.$route.params.id);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
 		loadAnimation() {
 			const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
+			if (!canvas) return;
 			const placeId = this.clanStore.getClan?.castle?.placeId;
 			if (!placeId) {
 				return;
@@ -72,7 +90,10 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.loadAnimation();
+		this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
+		if (this.isClanMember) {
+			setTimeout(() => this.loadAnimation(), 250);
+		}
 	}
 });
 </script>
@@ -81,5 +102,10 @@ export default defineComponent({
 .wrapper {
 	margin: 5px;
 	width: auto;
+}
+
+#pixiCanvas :deep(canvas) {
+	border-top: 1px solid #874a16;
+	border-bottom: 1px solid #874a16;
 }
 </style>

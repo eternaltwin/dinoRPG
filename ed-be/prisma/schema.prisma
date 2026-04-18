@@ -582,24 +582,25 @@ model Pantheon {
 }
 
 model Clan {
-  id            Int               @id @default(autoincrement())
-  name          String            @unique
-  treasureValue Int               @default(0)
-  creationDate  DateTime          @default(now()) @db.Timestamp(6)
-  clanWarId     Int?
-  banner        Bytes?
-  leaderId      String            @unique @db.Uuid
-  langs         Lang[]            @default([fr])
-  war           ClanWar?          @relation(fields: [clanWarId], references: [id])
-  castle        ClanCastle?
-  leader        Player            @relation("leader", fields: [leaderId], references: [id])
-  history       ClanHistory[]
-  joinRequests  ClanJoinRequest[]
-  members       ClanMember[]      @relation("member")
-  pages         ClanPage[]
-  ingredients   ClanIngredient[]
-  discussion    ClanMessage[]
-  targetedCases Moderation[]      @relation("TargetClanRelation")
+  id             Int               @id @default(autoincrement())
+  name           String            @unique
+  treasureValue  Int               @default(0)
+  creationDate   DateTime          @default(now()) @db.Timestamp(6)
+  banner         Bytes?
+  leaderId       String            @unique @db.Uuid
+  langs          Lang[]            @default([fr])
+  castle         ClanCastle?
+  leader         Player            @relation("leader", fields: [leaderId], references: [id])
+  history        ClanHistory[]
+  joinRequests   ClanJoinRequest[]
+  members        ClanMember[]      @relation("member")
+  pages          ClanPage[]
+  ingredients    ClanIngredient[]
+  discussion     ClanMessage[]
+  attackingWar   ClanWar?          @relation("attacker")
+  defendingWars  ClanWar[]         @relation("defender")
+  clanWarRanking ClanWarRanking?
+	targetedCases Moderation[]      @relation("TargetClanRelation")
 }
 
 model ClanCastle {
@@ -625,15 +626,36 @@ model ClanWar {
   id        Int       @id @default(autoincrement())
   dateStart DateTime  @default(now()) @db.Timestamp(6)
   dateEnd   DateTime?
-  clans     Clan[]
+  points    Int
+
+  attackerId Int @unique
+  defenderId Int
+
+  attacker Clan @relation("attacker", fields: [attackerId], references: [id])
+  defender Clan @relation("defender", fields: [defenderId], references: [id])
+}
+
+model ClanWarRanking {
+  id      Int       @id @default(autoincrement())
+  clanId  Int       @unique
+  clan    Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  points  Int       @default(1000)
+  wins    Int       @default(0)
+  losses  Int       @default(0)
+  eventId String    @db.Uuid
+  event   ClanEvent @relation(fields: [eventId], references: [id])
+
+  @@index([eventId, points])
+  @@map("clan_war_ranking")
 }
 
 model ClanEvent {
-  id        String        @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  eventType ClanEventType
-  startDate DateTime      @db.Timestamp(6)
-  endDate   DateTime      @db.Timestamp(6)
-  config    String        @db.Text
+  id              String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventType       ClanEventType
+  startDate       DateTime         @db.Timestamp(6)
+  endDate         DateTime         @db.Timestamp(6)
+  config          String           @db.Text
+  clanWarRankings ClanWarRanking[]
 }
 
 model ClanIngredient {

@@ -57,6 +57,11 @@ import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 import { prisma } from '../prisma.js';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
+import dayjs from 'dayjs';
+import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
+import { scheduleJob } from 'node-schedule';
+
+const WAR_BASE_POINTS = 50;
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -103,11 +108,7 @@ export async function buildClanCastle(req: Request) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
 
-	const hasRight = await playerHasRightRequest(
-		authed.ClanMember.clanId,
-		authed.id,
-		ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
-	);
+	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.CLAN_BUILD_CASTLE);
 
 	if (!hasRight) {
 		throw new ExpectedError(translate('noRight', authed));
@@ -127,4 +128,197 @@ export async function buildClanCastle(req: Request) {
 			// Do nothing
 		}
 	});
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: authed.ClanMember.clanId } },
+			author: { connect: { id: authed.id } },
+			type: ClanHistoryType[ClanHistoryType.CASTLE_BUILD],
+			authorMessage: authed.name
+		},
+		select: { id: true }
+	});
+}
+
+export async function declareWar(req: Request) {
+	const authed = await auth(req);
+	const war = await currentWar();
+
+	if (!authed.ClanMember) {
+		throw new ExpectedError(translate('noClan', authed));
+	}
+
+	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+
+	if (!hasRight) {
+		throw new ExpectedError(translate('noRight', authed));
+	}
+
+	const defender = await prisma.clan.findUnique({
+		where: {
+			id: +req.params.clanId
+		},
+		select: {
+			id: true,
+			clanWarRanking: {
+				select: {
+					points: true
+				},
+				where: {
+					eventId: war.id
+				}
+			},
+			castle: {
+				select: {
+					id: true
+				}
+			}
+		}
+	});
+
+	const attacker = await prisma.clan.findUnique({
+		where: {
+			id: authed.ClanMember.clanId
+		},
+		select: {
+			id: true,
+			clanWarRanking: {
+				select: {
+					points: true
+				},
+				where: {
+					eventId: war.id
+				}
+			},
+			castle: {
+				select: {
+					id: true
+				}
+			}
+		}
+	});
+
+	if (!defender || !defender.castle || !attacker || !attacker.castle) {
+		throw new ExpectedError(translate('clan.noCastle', authed));
+	}
+
+	const points = computeWarPointsDelta(
+		attacker.clanWarRanking?.points ?? 1000,
+		defender.clanWarRanking?.points ?? 1000
+	);
+
+	const endWar = dayjs().add(2, 'day').toDate();
+	const attack = await prisma.clanWar.create({
+		data: {
+			dateEnd: endWar,
+			attackerId: authed.ClanMember.clanId,
+			defenderId: defender.id,
+			points
+		}
+	});
+
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: authed.ClanMember.clanId } },
+			author: { connect: { id: authed.id } },
+			type: ClanHistoryType[ClanHistoryType.WAR_START],
+			authorMessage: authed.name
+		},
+		select: { id: true }
+	});
+
+	scheduleJob(`attack_${attack.id}`, endWar, () => {
+		looseAttack(attack.id);
+	});
+}
+
+async function looseAttack(warId: number) {
+	const currentClanWar = await currentWar();
+	const war = await prisma.clanWar.findUnique({
+		where: {
+			id: warId
+		},
+		include: {
+			attacker: true,
+			defender: true
+		}
+	});
+	if (!war) {
+		LOGGER.error(`War ${warId} not found`);
+		return;
+	}
+
+	// Looser history
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: war.attackerId } },
+			author: { connect: { id: war.attacker.leaderId } },
+			type: ClanHistoryType[ClanHistoryType.WAR_LOSE],
+			authorMessage: war.attacker.name
+		},
+		select: { id: true }
+	});
+	// Looser ranking update
+	await prisma.clanWarRanking.upsert({
+		where: {
+			eventId: currentClanWar.id,
+			clanId: war.attacker.id
+		},
+		update: {
+			points: {
+				decrement: war.points
+			},
+			losses: {
+				increment: 1
+			}
+		},
+		create: {
+			clanId: war.attacker.id,
+			eventId: currentClanWar.id,
+			points: 1000 - war.points,
+			losses: 1
+		}
+	});
+
+	// Winner history
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: war.defenderId } },
+			author: { connect: { id: war.defender.leaderId } },
+			type: ClanHistoryType[ClanHistoryType.WAR_DEFENDED],
+			authorMessage: war.defender.name
+		},
+		select: { id: true }
+	});
+	// Looser ranking update
+	await prisma.clanWarRanking.upsert({
+		where: {
+			eventId: currentClanWar.id,
+			clanId: war.defender.id
+		},
+		update: {
+			points: {
+				increment: war.points
+			},
+			wins: {
+				increment: 1
+			}
+		},
+		create: {
+			clanId: war.defender.id,
+			eventId: currentClanWar.id,
+			points: 1000 + war.points,
+			wins: 1
+		}
+	});
+}
+
+function computeWarPointsDelta(attackerPoints: number, defenderPoints: number) {
+	const totalPoints = attackerPoints + defenderPoints || 1;
+	// Part relative du défenseur (entre 0 et 1)
+	const defenderWeight = defenderPoints / totalPoints;
+
+	// Plus le défenseur est fort, plus la victoire de l'attaquant rapporte
+	const attackerGain = Math.round(WAR_BASE_POINTS * defenderWeight * 2);
+
+	return Math.max(10, Math.min(150, attackerGain));
 }

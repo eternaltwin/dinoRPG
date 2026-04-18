@@ -61,6 +61,17 @@
 				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
 			</RouterLink>
 			<RouterLink
+				v-if="!isClanMember && war"
+				class="tab"
+				:to="{ name: 'ClanWar' }"
+				v-tippy="{
+					content: formatContent($t('clan.tabs.war')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember && playerStore.playerOptions.hasPAC"
 				class="tab"
 				:to="{ name: 'ClanBuilds' }"
@@ -133,42 +144,14 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			tabSelected: 1 as number,
 			playerStore: playerStore(),
 			clanStore: clanStore(),
 			isClanMember: false as boolean,
-			hasBannerEditRight: false as boolean
+			hasBannerEditRight: false as boolean,
+			war: false as boolean
 		};
 	},
 	methods: {
-		setTab(value: number) {
-			if (!this.clanStore.getClanId) return;
-			this.tabSelected = value;
-			//TODO: directement utiliser tabSelected = string, comme ça pas besoin du switch case, juste un router.push(selectedTab)
-			switch (value) {
-				case 1:
-					this.$router.push({ name: 'Clan', params: { id: this.clanStore.getClanId } });
-					break;
-				case 2:
-					this.$router.push({ name: 'ClanMembers' });
-					break;
-				case 3:
-					this.$router.push({ name: 'ClanTreasure' });
-					break;
-				case 4:
-					this.$router.push({ name: 'ClanWar' });
-					break;
-				case 5:
-					this.$router.push({ name: 'ClanDiscussion' });
-					break;
-				case 6:
-					this.$router.push({ name: 'ClanHistory' });
-					break;
-				case 7:
-					this.$router.push({ name: 'ClanParameters' });
-					break;
-			}
-		},
 		async getClan(): Promise<void> {
 			try {
 				await this.clanStore.loadClan(Number(this.$route.params.id));
@@ -191,6 +174,7 @@ export default defineComponent({
 	},
 	mounted(): void {
 		this.isClanMember = this.playerStore.clanId == Number(this.$route.params.id);
+		this.war = !!this.clanStore.clanEvent;
 	},
 	async created(): Promise<void> {
 		await this.getClan();

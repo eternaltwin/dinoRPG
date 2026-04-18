@@ -3,7 +3,7 @@
 		<div class="history-container" v-for="evt in history" :key="evt.id">
 			<div class="history-header">
 				<img :src="getImgURL('icons', 'small_edit')" alt="Fil de discussion" />
-				<div v-if="evt.author" class="author" @click="goToPlayer(evt.author.id)">{{ evt.author.name }}</div>
+				<DZUser v-if="evt.author" :user="evt.author" />
 				<div v-else class="author">{{ evt.authorName }}</div>
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
@@ -31,10 +31,11 @@ import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { playerStore } from '../../store';
 import { ClanService } from '../../services';
 import { errorHandler } from '../../utils/index.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanHistory',
-	components: {},
+	components: { DZUser },
 	data() {
 		return {
 			playerStore: playerStore(),
