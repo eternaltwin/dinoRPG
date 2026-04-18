@@ -16,3 +16,17 @@ export type PlayerClanJoinRequest = Pick<ClanJoinRequest, 'id' | 'date'> & {
 		members: Pick<ClanMember, 'playerId' | 'rights'>[];
 	};
 };
+
+export interface AttackStatus {
+	id: number;
+	dateEnd: string;
+	points: number;
+	defender: {
+		id: number;
+		name: string;
+	};
+	attacker: {
+		id: number;
+		name: string;
+	};
+}

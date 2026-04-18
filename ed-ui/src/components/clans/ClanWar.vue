@@ -1,5 +1,27 @@
 <template>
 	<div class="wrapper">
+		<DZTable>
+			<tr>
+				<th class="dinoz-header">Type</th>
+				<th class="items-header">Ennemi</th>
+				<th class="items-header">Date de fin</th>
+				<th class="items-header" v-if="isClanMember">Action</th>
+			</tr>
+			<tr v-for="attack in ongoingAttack" :key="attack.id">
+				<td>{{ attack.attacker.id === clanId ? 'Attaque' : 'Défense' }}</td>
+				<td>
+					<RouterLink
+						:to="{
+							name: 'Clan',
+							params: { id: attack.attacker.id === clanId ? attack.defender.id : attack.attacker.id }
+						}"
+						>{{ attack.attacker.id === clanId ? attack.defender.name : attack.attacker.name }}</RouterLink
+					>
+				</td>
+				<td>{{ formatDate(attack.dateEnd) }}</td>
+				<td v-if="isClanMember"><DZButton>Forfeit</DZButton></td>
+			</tr>
+		</DZTable>
 		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
 			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="buildCastle()">{{
 				$t('clan.war.buildCastle')
@@ -27,17 +49,21 @@ import { Fight } from '@eternaltwin/dinorpg_animations';
 import { DinoAction } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
 import { playerStore } from '../../store';
+import { AttackStatus } from '@drpg/core/models/clan/clan';
+import DZTable from '../common/DZTable.vue';
 
 export default defineComponent({
 	name: 'ClanWar',
-	components: { DZDisclaimer, DZButton },
+	components: { DZTable, DZDisclaimer, DZButton },
 	data() {
 		return {
 			castlePlace: undefined as undefined | number,
 			playerStore: playerStore(),
 			clanStore: clanStore(),
 			loadedCastle: {} as Fight,
-			isClanMember: false as boolean
+			isClanMember: false as boolean,
+			ongoingAttack: [] as AttackStatus[],
+			clanId: clanStore().getClanId as number
 		};
 	},
 	computed: {
@@ -97,11 +123,12 @@ export default defineComponent({
 			canvas.appendChild(display);
 		}
 	},
-	mounted() {
+	async mounted() {
 		this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
 		if (this.isClanMember) {
 			setTimeout(() => this.loadAnimation(), 250);
 		}
+		this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
 	}
 });
 </script>

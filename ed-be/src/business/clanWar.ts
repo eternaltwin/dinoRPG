@@ -418,3 +418,33 @@ export async function scheduleWarExpiration() {
 		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.dateEnd}`);
 	});
 }
+
+export async function warStatus(req: Request) {
+	const clanId = +req.params.clanId;
+
+	return await prisma.clanWar.findMany({
+		where: {
+			OR: [
+				{ attackerId: clanId, dateEnd: { gt: new Date() } },
+				{ defenderId: clanId, dateEnd: { gt: new Date() } }
+			]
+		},
+		select: {
+			id: true,
+			attacker: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			defender: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			dateEnd: true,
+			points: true
+		}
+	});
+}
