@@ -57,6 +57,14 @@ export default defineComponent({
 			}
 		},
 		async declareWar() {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (!res) return;
 			try {
 				await ClanService.declareWar(+this.$route.params.id);
 			} catch (e) {
