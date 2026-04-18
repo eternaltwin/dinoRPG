@@ -60,19 +60,21 @@ export default defineComponent({
 }
 #centerHeader {
 	min-height: 100vh;
-	background-position-x: calc(50% + 247px);
-	background-position-y: top;
 	padding-bottom: 50px;
 	padding-top: 15px;
 	&.bg {
 		background:
 			url('../assets/background/full_bg.webp') no-repeat,
 			url('../assets/background/full_core_bg.webp') repeat-y;
+		background-position-x: calc(50% + 247px);
+		background-position-y: top;
 	}
 	&.war {
 		background:
 			url('../assets/background/full_bg_war.webp') no-repeat,
 			url('../assets/background/full_core_bg.webp') repeat-y;
+		background-position-x: calc(50% + 247px);
+		background-position-y: top;
 	}
 	.linkHome {
 		grid-area: top;

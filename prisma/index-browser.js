@@ -478,7 +478,6 @@ exports.Prisma.ClanScalarFieldEnum = {
   name: 'name',
   treasureValue: 'treasureValue',
   creationDate: 'creationDate',
-  clanWarId: 'clanWarId',
   banner: 'banner',
   leaderId: 'leaderId',
   langs: 'langs'
@@ -502,7 +501,19 @@ exports.Prisma.ClanJoinRequestScalarFieldEnum = {
 exports.Prisma.ClanWarScalarFieldEnum = {
   id: 'id',
   dateStart: 'dateStart',
-  dateEnd: 'dateEnd'
+  dateEnd: 'dateEnd',
+  points: 'points',
+  attackerId: 'attackerId',
+  defenderId: 'defenderId'
+};
+
+exports.Prisma.ClanWarRankingScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  points: 'points',
+  wins: 'wins',
+  losses: 'losses',
+  eventId: 'eventId'
 };
 
 exports.Prisma.ClanEventScalarFieldEnum = {
@@ -928,6 +939,7 @@ exports.Prisma.ModelName = {
   ClanCastle: 'ClanCastle',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',
+  ClanWarRanking: 'ClanWarRanking',
   ClanEvent: 'ClanEvent',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',

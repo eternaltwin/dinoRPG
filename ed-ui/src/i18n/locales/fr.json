@@ -4249,6 +4249,7 @@
 			"PLAYER_JOIN": "Un joueur a rejoint le clan.",
 			"PLAYER_LEAVE": "Ce joueur a décidé de quitter le clan.",
 			"PLAYER_EXCLUSION": "Ce joueur a été exclu du clan.",
+			"CASTLE_BUILD": "J'ai construit le chateau.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},

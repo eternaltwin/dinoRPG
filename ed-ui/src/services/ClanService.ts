@@ -136,12 +136,12 @@ export const ClanService = {
 		const res = await http().get(`/clan/${clanId}/treasure`);
 		return res.data;
 	},
-	async buildCastle(): Promise<ShopDTO[]> {
+	async buildCastle(): Promise<void> {
 		const res = await http().put(`/clan/war/castle`);
 		return res.data;
 	},
-	async buildCastle(): Promise<ShopDTO[]> {
-		const res = await http().put(`/clan/war/castle`);
+	async declareWar(clanId: number): Promise<void> {
+		const res = await http().post(`/clan/war/${clanId}`);
 		return res.data;
 	}
 };

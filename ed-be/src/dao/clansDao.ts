@@ -106,7 +106,8 @@ export async function getClanRequestPublic(id: number) {
 					}
 				},
 				creationDate: true,
-				war: true,
+				attackingWar: true,
+				defendingWars: true,
 				leader: {
 					select: {
 						id: true,
@@ -138,7 +139,8 @@ export async function getClanRequestPrivate(id: number) {
 				},
 				creationDate: true,
 				castle: true,
-				war: true,
+				attackingWar: true,
+				defendingWars: true,
 				leader: {
 					select: {
 						id: true,
