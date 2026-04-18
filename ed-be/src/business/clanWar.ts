@@ -153,12 +153,26 @@ export async function declareWar(req: Request) {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
+	const attackOngoing = await prisma.clanWar.findUnique({
+		where: {
+			attackerId: authed.ClanMember.clanId,
+			dateEnd: {
+				gt: new Date()
+			}
+		}
+	});
+
+	if (attackOngoing) {
+		throw new ExpectedError('War already ongoing for your clan');
+	}
+
 	const defender = await prisma.clan.findUnique({
 		where: {
 			id: +req.params.clanId
 		},
 		select: {
 			id: true,
+			name: true,
 			clanWarRanking: {
 				select: {
 					points: true
@@ -170,6 +184,11 @@ export async function declareWar(req: Request) {
 			castle: {
 				select: {
 					id: true
+				}
+			},
+			members: {
+				select: {
+					playerId: true
 				}
 			}
 		}
@@ -181,6 +200,7 @@ export async function declareWar(req: Request) {
 		},
 		select: {
 			id: true,
+			name: true,
 			clanWarRanking: {
 				select: {
 					points: true
@@ -193,6 +213,11 @@ export async function declareWar(req: Request) {
 				select: {
 					id: true
 				}
+			},
+			members: {
+				select: {
+					playerId: true
+				}
 			}
 		}
 	});
@@ -201,6 +226,7 @@ export async function declareWar(req: Request) {
 		throw new ExpectedError(translate('clan.noCastle', authed));
 	}
 
+	// Compute bidded points
 	const points = computeWarPointsDelta(
 		attacker.clanWarRanking?.points ?? 1000,
 		defender.clanWarRanking?.points ?? 1000
@@ -216,15 +242,56 @@ export async function declareWar(req: Request) {
 		}
 	});
 
+	const notifications: Promise<void>[] = [];
+	// Notifications for attackers
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: authed.ClanMember.clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.WAR_START],
-			authorMessage: authed.name
+			authorMessage: defender.name
 		},
 		select: { id: true }
 	});
+
+	attacker.members.forEach(member => {
+		notifications.push(
+			createNotification(
+				member.playerId,
+				JSON.stringify({
+					clanEvent: ClanHistoryType.WAR_START,
+					targetClan: defender.name
+				}),
+				NotificationSeverity.clanWar
+			)
+		);
+	});
+
+	// Notifications for defenders
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: defender.id } },
+			author: { connect: { id: authed.id } },
+			type: ClanHistoryType[ClanHistoryType.WAR_ATTACKED],
+			authorMessage: attacker.name
+		},
+		select: { id: true }
+	});
+
+	defender.members.forEach(member => {
+		notifications.push(
+			createNotification(
+				member.playerId,
+				JSON.stringify({
+					clanEvent: ClanHistoryType.WAR_ATTACKED,
+					targetClan: attacker.name
+				}),
+				NotificationSeverity.clanWar
+			)
+		);
+	});
+
+	await Promise.all(notifications);
 
 	scheduleJob(`attack_${attack.id}`, endWar, () => {
 		looseAttack(attack.id);
@@ -321,4 +388,33 @@ function computeWarPointsDelta(attackerPoints: number, defenderPoints: number) {
 	const attackerGain = Math.round(WAR_BASE_POINTS * defenderWeight * 2);
 
 	return Math.max(10, Math.min(150, attackerGain));
+}
+
+export async function scheduleWarExpiration() {
+	const currentWar = await prisma.clanEvent.findFirst({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	if (!currentWar || currentWar.endDate < new Date()) {
+		LOGGER.log('No war event ongoing.');
+		return;
+	}
+
+	const oingoingWar = await prisma.clanWar.findMany({
+		where: {
+			dateEnd: {
+				gt: new Date()
+			}
+		}
+	});
+
+	oingoingWar.forEach(war => {
+		scheduleJob(`attack_${war.id}`, war.dateEnd!, () => {
+			looseAttack(war.id);
+		});
+		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.dateEnd}`);
+	});
 }

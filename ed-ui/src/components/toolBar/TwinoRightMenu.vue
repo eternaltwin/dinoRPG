@@ -417,6 +417,16 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
+				case NotificationSeverity.clanWar:
+					// eslint-disable-next-line no-case-declarations
+					const clanWar = JSON.parse(notification.message);
+					return {
+						id: notification.id,
+						message: this.$t('notification.clanWar.' + clanWar.clanEvent, { targetClan: clanWar.targetClan }),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				default:
 					return null;
 			}

@@ -8,7 +8,7 @@
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
 
-			<div class="message">{{ GetHistoryMessageFromType(evt.type) }}</div>
+			<div class="message">{{ GetHistoryMessageFromType(evt.type, evt.authorMessage) }}</div>
 		</div>
 		<div class="switch-page-container">
 			<div class="arrow-button">
@@ -49,8 +49,17 @@ export default defineComponent({
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
-		GetHistoryMessageFromType(type: ClanHistoryType) {
-			return this.$t('clanHistory.type.' + type);
+		GetHistoryMessageFromType(type: ClanHistoryType, message: string) {
+			switch (type) {
+				case ClanHistoryType.WAR_ATTACKED:
+				case ClanHistoryType.WAR_START:
+					return this.$t('clanHistory.type.' + type, { name: message });
+				case ClanHistoryType.WAR_LOSE:
+				case ClanHistoryType.WAR_DEFENDED:
+					return this.$t('clanHistory.type.' + type, { points: message });
+				default:
+					return this.$t('clanHistory.type.' + type);
+			}
 		},
 		goToPlayer(id: string) {
 			this.$router.push({ name: 'Account', params: { id } });

@@ -142,7 +142,8 @@ export const NotificationSeverity = {
   event: 'event',
   newClanApply: 'newClanApply',
   clanApplyAccepted: 'clanApplyAccepted',
-  message: 'message'
+  message: 'message',
+  clanWar: 'clanWar'
 };
 
 export const GameDinozUsage = {
