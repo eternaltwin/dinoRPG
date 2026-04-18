@@ -1,4 +1,4 @@
-import { ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { AttackStatus, ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
@@ -138,6 +138,10 @@ export const ClanService = {
 	},
 	async buildCastle(): Promise<void> {
 		const res = await http().put(`/clan/war/castle`);
+		return res.data;
+	},
+	async warStatus(clanId: number): Promise<AttackStatus[]> {
+		const res = await http().get(`/clan/war/${clanId}`);
 		return res.data;
 	},
 	async declareWar(clanId: number): Promise<void> {
