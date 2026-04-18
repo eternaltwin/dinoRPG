@@ -320,7 +320,7 @@ async function looseAttack(warId: number) {
 			clan: { connect: { id: war.attackerId } },
 			author: { connect: { id: war.attacker.leaderId } },
 			type: ClanHistoryType[ClanHistoryType.WAR_LOSE],
-			authorMessage: war.attacker.name
+			authorMessage: JSON.stringify(war.points)
 		},
 		select: { id: true }
 	});
@@ -352,7 +352,7 @@ async function looseAttack(warId: number) {
 			clan: { connect: { id: war.defenderId } },
 			author: { connect: { id: war.defender.leaderId } },
 			type: ClanHistoryType[ClanHistoryType.WAR_DEFENDED],
-			authorMessage: war.defender.name
+			authorMessage: JSON.stringify(war.points)
 		},
 		select: { id: true }
 	});
@@ -412,7 +412,7 @@ export async function scheduleWarExpiration() {
 	});
 
 	oingoingWar.forEach(war => {
-		scheduleJob(`attack_${war.id}`, war.dateEnd!, () => {
+		scheduleJob(`attack_${war.id}`, war.dateEnd, () => {
 			looseAttack(war.id);
 		});
 		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.dateEnd}`);
@@ -445,6 +445,119 @@ export async function warStatus(req: Request) {
 			},
 			dateEnd: true,
 			points: true
+		}
+	});
+}
+
+export async function forfeitWar(req: Request) {
+	const authed = await auth(req);
+	const currentClanWar = await currentWar();
+	if (!authed.ClanMember) {
+		throw new ExpectedError(translate('noClan', authed));
+	}
+	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+
+	if (!hasRight) {
+		throw new ExpectedError(translate('noRight', authed));
+	}
+
+	const attack = await prisma.clanWar.findUnique({
+		where: {
+			id: +req.params.warId
+		},
+		select: {
+			attackerId: true,
+			dateEnd: true,
+			points: true,
+			attacker: {
+				select: {
+					leaderId: true,
+					name: true,
+					id: true
+				}
+			},
+			defenderId: true,
+			defender: {
+				select: {
+					leaderId: true,
+					name: true,
+					id: true
+				}
+			}
+		}
+	});
+
+	if (!attack || attack.dateEnd < new Date()) {
+		throw new ExpectedError(translate('noAttack', authed));
+	}
+
+	// Winner history
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: attack.defenderId } },
+			author: { connect: { id: attack.defender.leaderId } },
+			type: ClanHistoryType[ClanHistoryType.WAR_DEFENDED],
+			authorMessage: JSON.stringify(attack.points)
+		},
+		select: { id: true }
+	});
+	// Looser ranking update
+	await prisma.clanWarRanking.upsert({
+		where: {
+			eventId: currentClanWar.id,
+			clanId: attack.defender.id
+		},
+		update: {
+			points: {
+				increment: attack.points
+			},
+			wins: {
+				increment: 1
+			}
+		},
+		create: {
+			clanId: attack.defender.id,
+			eventId: currentClanWar.id,
+			points: 1000 + attack.points,
+			wins: 1
+		}
+	});
+
+	// Looser history
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: attack.attackerId } },
+			author: { connect: { id: attack.attacker.leaderId } },
+			type: ClanHistoryType[ClanHistoryType.WAR_FORFEIT],
+			authorMessage: attack.defender.name
+		},
+		select: { id: true }
+	});
+	// Looser ranking update
+	await prisma.clanWarRanking.upsert({
+		where: {
+			eventId: currentClanWar.id,
+			clanId: attack.attacker.id
+		},
+		update: {
+			points: {
+				decrement: attack.points
+			},
+			losses: {
+				increment: 1
+			}
+		},
+		create: {
+			clanId: attack.attacker.id,
+			eventId: currentClanWar.id,
+			points: 1000 - attack.points,
+			losses: 1
+		}
+	});
+
+	await prisma.clanWar.delete({
+		where: {
+			id: +req.params.warId
 		}
 	});
 }

@@ -623,9 +623,9 @@ model ClanJoinRequest {
 }
 
 model ClanWar {
-  id        Int       @id @default(autoincrement())
-  dateStart DateTime  @default(now()) @db.Timestamp(6)
-  dateEnd   DateTime?
+  id        Int      @id @default(autoincrement())
+  dateStart DateTime @default(now()) @db.Timestamp(6)
+  dateEnd   DateTime
   points    Int
 
   attackerId Int @unique

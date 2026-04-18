@@ -4258,6 +4258,7 @@
 			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
 			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau adverse, nous avons perdu {points} points.",
 			"WAR_DEFENDED": "Nous avons résisté aux attaques adverses et avons remportés {points} points.",
+			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},

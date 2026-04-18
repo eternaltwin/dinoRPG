@@ -53,6 +53,7 @@ export default defineComponent({
 			switch (type) {
 				case ClanHistoryType.WAR_ATTACKED:
 				case ClanHistoryType.WAR_START:
+				case ClanHistoryType.WAR_FORFEIT:
 					return this.$t('clanHistory.type.' + type, { name: message });
 				case ClanHistoryType.WAR_LOSE:
 				case ClanHistoryType.WAR_DEFENDED:

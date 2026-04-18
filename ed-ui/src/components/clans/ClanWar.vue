@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper">
-		<DZTable>
+		<DZTable v-if="ongoingAttack.length > 0">
 			<tr>
 				<th class="dinoz-header">Type</th>
 				<th class="items-header">Ennemi</th>
@@ -20,7 +20,7 @@
 				</td>
 				<td>{{ formatDate(attack.dateEnd) }}</td>
 				<td v-if="isClanMember">
-					<DZButton>{{ $t('clan.war.forfeit') }}</DZButton>
+					<DZButton @click="forfeitWar(attack.id)">{{ $t('clan.war.forfeit') }}</DZButton>
 				</td>
 			</tr>
 		</DZTable>
@@ -95,6 +95,23 @@ export default defineComponent({
 			if (!res) return;
 			try {
 				await ClanService.declareWar(+this.$route.params.id);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async forfeitWar(warId: number) {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (!res) return;
+			try {
+				await ClanService.forfeitWar(warId);
+				this.ongoingAttack = [];
+				this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

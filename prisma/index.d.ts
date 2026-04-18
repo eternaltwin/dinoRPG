@@ -56822,7 +56822,7 @@ export namespace Prisma {
   export type ClanWarGroupByOutputType = {
     id: number
     dateStart: Date
-    dateEnd: Date | null
+    dateEnd: Date
     points: number
     attackerId: number
     defenderId: number
@@ -56912,7 +56912,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       dateStart: Date
-      dateEnd: Date | null
+      dateEnd: Date
       points: number
       attackerId: number
       defenderId: number
@@ -85419,7 +85419,7 @@ export namespace Prisma {
     NOT?: ClanWarWhereInput | ClanWarWhereInput[]
     id?: IntFilter<"ClanWar"> | number
     dateStart?: DateTimeFilter<"ClanWar"> | Date | string
-    dateEnd?: DateTimeNullableFilter<"ClanWar"> | Date | string | null
+    dateEnd?: DateTimeFilter<"ClanWar"> | Date | string
     points?: IntFilter<"ClanWar"> | number
     attackerId?: IntFilter<"ClanWar"> | number
     defenderId?: IntFilter<"ClanWar"> | number
@@ -85430,7 +85430,7 @@ export namespace Prisma {
   export type ClanWarOrderByWithRelationInput = {
     id?: SortOrder
     dateStart?: SortOrder
-    dateEnd?: SortOrderInput | SortOrder
+    dateEnd?: SortOrder
     points?: SortOrder
     attackerId?: SortOrder
     defenderId?: SortOrder
@@ -85445,7 +85445,7 @@ export namespace Prisma {
     OR?: ClanWarWhereInput[]
     NOT?: ClanWarWhereInput | ClanWarWhereInput[]
     dateStart?: DateTimeFilter<"ClanWar"> | Date | string
-    dateEnd?: DateTimeNullableFilter<"ClanWar"> | Date | string | null
+    dateEnd?: DateTimeFilter<"ClanWar"> | Date | string
     points?: IntFilter<"ClanWar"> | number
     defenderId?: IntFilter<"ClanWar"> | number
     attacker?: XOR<ClanScalarRelationFilter, ClanWhereInput>
@@ -85455,7 +85455,7 @@ export namespace Prisma {
   export type ClanWarOrderByWithAggregationInput = {
     id?: SortOrder
     dateStart?: SortOrder
-    dateEnd?: SortOrderInput | SortOrder
+    dateEnd?: SortOrder
     points?: SortOrder
     attackerId?: SortOrder
     defenderId?: SortOrder
@@ -85472,7 +85472,7 @@ export namespace Prisma {
     NOT?: ClanWarScalarWhereWithAggregatesInput | ClanWarScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ClanWar"> | number
     dateStart?: DateTimeWithAggregatesFilter<"ClanWar"> | Date | string
-    dateEnd?: DateTimeNullableWithAggregatesFilter<"ClanWar"> | Date | string | null
+    dateEnd?: DateTimeWithAggregatesFilter<"ClanWar"> | Date | string
     points?: IntWithAggregatesFilter<"ClanWar"> | number
     attackerId?: IntWithAggregatesFilter<"ClanWar"> | number
     defenderId?: IntWithAggregatesFilter<"ClanWar"> | number
@@ -89739,7 +89739,7 @@ export namespace Prisma {
 
   export type ClanWarCreateInput = {
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attacker: ClanCreateNestedOneWithoutAttackingWarInput
     defender: ClanCreateNestedOneWithoutDefendingWarsInput
@@ -89748,7 +89748,7 @@ export namespace Prisma {
   export type ClanWarUncheckedCreateInput = {
     id?: number
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attackerId: number
     defenderId: number
@@ -89756,7 +89756,7 @@ export namespace Prisma {
 
   export type ClanWarUpdateInput = {
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
     defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
@@ -89765,7 +89765,7 @@ export namespace Prisma {
   export type ClanWarUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attackerId?: IntFieldUpdateOperationsInput | number
     defenderId?: IntFieldUpdateOperationsInput | number
@@ -89774,7 +89774,7 @@ export namespace Prisma {
   export type ClanWarCreateManyInput = {
     id?: number
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attackerId: number
     defenderId: number
@@ -89782,14 +89782,14 @@ export namespace Prisma {
 
   export type ClanWarUpdateManyMutationInput = {
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
   }
 
   export type ClanWarUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attackerId?: IntFieldUpdateOperationsInput | number
     defenderId?: IntFieldUpdateOperationsInput | number
@@ -114913,7 +114913,7 @@ export namespace Prisma {
 
   export type ClanWarCreateWithoutAttackerInput = {
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     defender: ClanCreateNestedOneWithoutDefendingWarsInput
   }
@@ -114921,7 +114921,7 @@ export namespace Prisma {
   export type ClanWarUncheckedCreateWithoutAttackerInput = {
     id?: number
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     defenderId: number
   }
@@ -114933,7 +114933,7 @@ export namespace Prisma {
 
   export type ClanWarCreateWithoutDefenderInput = {
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attacker: ClanCreateNestedOneWithoutAttackingWarInput
   }
@@ -114941,7 +114941,7 @@ export namespace Prisma {
   export type ClanWarUncheckedCreateWithoutDefenderInput = {
     id?: number
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attackerId: number
   }
@@ -115303,7 +115303,7 @@ export namespace Prisma {
 
   export type ClanWarUpdateWithoutAttackerInput = {
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
   }
@@ -115311,7 +115311,7 @@ export namespace Prisma {
   export type ClanWarUncheckedUpdateWithoutAttackerInput = {
     id?: IntFieldUpdateOperationsInput | number
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     defenderId?: IntFieldUpdateOperationsInput | number
   }
@@ -115338,7 +115338,7 @@ export namespace Prisma {
     NOT?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
     id?: IntFilter<"ClanWar"> | number
     dateStart?: DateTimeFilter<"ClanWar"> | Date | string
-    dateEnd?: DateTimeNullableFilter<"ClanWar"> | Date | string | null
+    dateEnd?: DateTimeFilter<"ClanWar"> | Date | string
     points?: IntFilter<"ClanWar"> | number
     attackerId?: IntFilter<"ClanWar"> | number
     defenderId?: IntFilter<"ClanWar"> | number
@@ -126447,7 +126447,7 @@ export namespace Prisma {
   export type ClanWarCreateManyDefenderInput = {
     id?: number
     dateStart?: Date | string
-    dateEnd?: Date | string | null
+    dateEnd: Date | string
     points: number
     attackerId: number
   }
@@ -126583,7 +126583,7 @@ export namespace Prisma {
 
   export type ClanWarUpdateWithoutDefenderInput = {
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
   }
@@ -126591,7 +126591,7 @@ export namespace Prisma {
   export type ClanWarUncheckedUpdateWithoutDefenderInput = {
     id?: IntFieldUpdateOperationsInput | number
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attackerId?: IntFieldUpdateOperationsInput | number
   }
@@ -126599,7 +126599,7 @@ export namespace Prisma {
   export type ClanWarUncheckedUpdateManyWithoutDefenderInput = {
     id?: IntFieldUpdateOperationsInput | number
     dateStart?: DateTimeFieldUpdateOperationsInput | Date | string
-    dateEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     points?: IntFieldUpdateOperationsInput | number
     attackerId?: IntFieldUpdateOperationsInput | number
   }
