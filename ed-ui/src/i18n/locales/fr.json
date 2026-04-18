@@ -5137,6 +5137,7 @@
 			"clanBanner": "Bannière inappropriée",
 			"clanBehavior": "Comportement anti-jeu",
 			"clanPages": "Description ou pages de clan inappropriées",
+			"clanOther": "Autre",
 			"deleted": "Clan supprimé"
 		},
 		"sorted": {
@@ -5195,7 +5196,8 @@
 			"clanBanner": "la bannière de votre clan",
 			"clanBehavior": "le comportement anti-jeu de votre clan",
 			"clanPages": "les pages de votre clan",
-			"other": "votre clan"
+			"clanOther": "votre clan",
+			"other": "une autre raison"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",

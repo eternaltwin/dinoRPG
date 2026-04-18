@@ -817,7 +817,8 @@ exports.ModerationReason = exports.$Enums.ModerationReason = {
   other: 'other',
   clanBanner: 'clanBanner',
   clanBehavior: 'clanBehavior',
-  clanPages: 'clanPages'
+  clanPages: 'clanPages',
+  clanOther: 'clanOther'
 };
 
 exports.ModerationAction = exports.$Enums.ModerationAction = {

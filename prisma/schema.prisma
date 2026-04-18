@@ -934,6 +934,7 @@ enum ModerationReason {
   clanBanner
   clanBehavior
   clanPages
+  clanOther
 }
 
 enum ModerationAction {

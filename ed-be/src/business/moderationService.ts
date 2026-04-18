@@ -67,7 +67,12 @@ export async function reportClan(req: Request) {
 	const authed = await auth(req);
 	const targetClanId = Number(req.params.id);
 
-	if (!Object.values(ModerationReason).includes(req.body.reason)) {
+	let reason = req.body.reason;
+	if (reason === ModerationReason.other) {
+		reason = ModerationReason.clanOther;
+	}
+
+	if (!Object.values(ModerationReason).includes(reason)) {
 		throw new ExpectedError('Invalid reason.');
 	}
 
@@ -80,7 +85,7 @@ export async function reportClan(req: Request) {
 		throw new ExpectedError('Inexistent clan to report.');
 	}
 
-	await createClanModerationReport(authed.id, clan.leaderId, targetClanId, req.body.reason, req.body.comment);
+	await createClanModerationReport(authed.id, clan.leaderId, targetClanId, reason, req.body.comment);
 
 	return;
 }
