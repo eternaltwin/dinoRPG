@@ -163,5 +163,9 @@ export const ClanService = {
 	async removeDefender(dinozId: number): Promise<Castle> {
 		const res = await http().delete(`/clan/war/dinoz/${dinozId}`);
 		return res.data;
+	},
+	async reorderDefender(order: number[]): Promise<number[]> {
+		const res = await http().patch(`/clan/war/dinoz`, { dinozIds: order });
+		return res.data;
 	}
 };

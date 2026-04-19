@@ -736,3 +736,41 @@ export async function removeDefender(req: Request) {
 
 	return defendLine;
 }
+
+export async function updateDefenseOrder(req: Request) {
+	const authed = await auth(req);
+
+	if (!authed.clanId) {
+		throw new ExpectedError('invalidClan');
+	}
+
+	const hasRight = await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+
+	if (!hasRight) {
+		throw new ExpectedError('forbidden');
+	}
+
+	const { dinozIds } = req.body as { dinozIds: number[] };
+
+	const castle = await prisma.clanCastle.findUnique({
+		where: { clanId: authed.clanId },
+		select: { defender: { select: { id: true } } }
+	});
+
+	if (!castle) {
+		throw new ExpectedError('invalidCastle');
+	}
+
+	const validIds = new Set(castle.defender.map(d => d.id));
+	const isValid = dinozIds.length === validIds.size && dinozIds.every(id => validIds.has(id));
+
+	if (!isValid) {
+		throw new ExpectedError('invalidDefenseOrder');
+	}
+
+	return prisma.clanCastle.update({
+		where: { clanId: authed.clanId },
+		data: { defenseOrder: dinozIds },
+		select: { defenseOrder: true }
+	});
+}

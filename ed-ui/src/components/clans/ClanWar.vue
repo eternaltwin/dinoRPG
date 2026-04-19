@@ -96,11 +96,13 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		onUpdate() {
-			this.$emit(
-				'reorder',
-				this.defenders.map(d => d.id)
-			);
+		async onUpdate() {
+			try {
+				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
+				this.defenders = [...order.map(id => this.castle.defender.find(d => d.id === id)).filter(d => d !== undefined)];
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		},
 		async buildCastle() {
 			try {
