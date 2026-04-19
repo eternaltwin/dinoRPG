@@ -33,9 +33,11 @@ dayjs.extend(utc);
 const app = createApp(App);
 const pinia = createPinia().use(piniaPluginPersistedstate);
 app.use(pinia);
+
 const i18n = initI18n();
 await loadLanguage(defaultLocale);
 app.use(i18n);
+
 app.use(router);
 app.use(ConfirmPlugin);
 app.mixin(mixin);

@@ -61,13 +61,6 @@ export const initI18n = () => {
 		}
 	});
 
-	// load default language
-	// const messages = await import(`./locales/${defaultLocale}.json`);
-	// i18n.global.setLocaleMessage(defaultLocale, messages.default);
-	// loadedLanguages.push(defaultLocale);
-
-	// await loadLanguage(i18n.global.locale as string);
-
 	return i18n;
 };
 
