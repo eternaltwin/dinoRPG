@@ -105,6 +105,14 @@ export default defineComponent({
 			}
 		},
 		async buildCastle() {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.buildCastle'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (!res) return;
 			try {
 				await ClanService.buildCastle();
 			} catch (e) {
