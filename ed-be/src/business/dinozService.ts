@@ -101,6 +101,7 @@ import translate from '../utils/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
+import { currentWar } from './clanWar.js';
 
 /**
  * @summary Get available action from dinoz
@@ -149,6 +150,20 @@ export async function getAvailableActions(
 	// Stop rest
 	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
+	}
+
+	// War actions
+	const currentWar = await prisma.clanEvent.findFirst({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	if (currentWar !== null && player.clan && player.clan.castle) {
+		if (dinoz.placeId === player.clan.castle.placeId && !dinoz.leaderId && dinoz.followers.length === 0) {
+			availableActions.push(actionList[Action.WAR_DEFEND]);
+		}
 	}
 
 	// Leaders actions

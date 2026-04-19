@@ -1031,9 +1031,9 @@ export async function kickClanMemberAdmin(playerId: string, adminId: string) {
  * @return {Promise<{id: number}>} The ID of the deleted clan
  */
 export async function deleteClanAdmin(clanId: number, adminId: string) {
-	const result = await deleteClanRequest(clanId);
+	await deleteClanRequest(clanId);
 	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Deleted clan ${clanId}`);
-	return result;
+	return clanId;
 }
 
 /**

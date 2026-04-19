@@ -30,6 +30,21 @@
 			}}</DZButton>
 			<DZDisclaimer v-else round :content="$t('clan.war.disclaimerCastle', { place })" />
 			<div id="pixiCanvas" />
+			<div class="df jcc defense">
+				<VueDraggable v-model="defenders" class="df jcc" :animation="150" @update="onUpdate">
+					<DinozMini
+						v-for="dinoz in defenders"
+						v-tippy="{
+							content: formatContent($t('clan.war.defender', { name: dinoz.name, level: dinoz.level })),
+							theme: 'small'
+						}"
+						:key="dinoz.id"
+						class="cell"
+						:display="dinoz.display"
+						flip
+					/>
+				</VueDraggable>
+			</div>
 		</div>
 		<div id="clanOpponent" v-else>
 			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar()">{{
@@ -48,15 +63,17 @@ import { clanStore } from '../../store/clanStore';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Fight } from '@eternaltwin/dinorpg_animations';
-import { DinoAction } from '@drpg/core/models/fight/transpiler';
+import { DinoAction, EntranceEffect, transpiled } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
 import { playerStore } from '../../store';
-import { AttackStatus } from '@drpg/core/models/clan/clan';
+import { AttackStatus, Castle, Defender } from '@drpg/core/models/clan/clan';
 import DZTable from '../common/DZTable.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
+import { VueDraggable } from 'vue-draggable-plus';
 
 export default defineComponent({
 	name: 'ClanWar',
-	components: { DZTable, DZDisclaimer, DZButton },
+	components: { DinozMini, DZTable, DZDisclaimer, DZButton, VueDraggable },
 	data() {
 		return {
 			castlePlace: undefined as undefined | number,
@@ -65,7 +82,9 @@ export default defineComponent({
 			loadedCastle: {} as Fight,
 			isClanMember: false as boolean,
 			ongoingAttack: [] as AttackStatus[],
-			clanId: clanStore().getClanId as number
+			clanId: clanStore().getClanId as number,
+			castle: {} as Castle,
+			defenders: [] as Defender[]
 		};
 	},
 	computed: {
@@ -77,6 +96,12 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		onUpdate() {
+			this.$emit(
+				'reorder',
+				this.defenders.map(d => d.id)
+			);
+		},
 		async buildCastle() {
 			try {
 				await ClanService.buildCastle();
@@ -123,18 +148,38 @@ export default defineComponent({
 			if (!placeId) {
 				return;
 			}
+			const defense = [] as transpiled[];
+			this.defenders.forEach((defender, index) => {
+				if (index >= 10) return;
+				defense.push({
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: defender.life,
+						maxLife: defender.maxLife,
+						name: defender.name,
+						side: false,
+						scale: defender.maxLife / 100,
+						fid: defender.id,
+						gfx: defender.display,
+						entrance: EntranceEffect.GROUND
+					}
+				});
+			});
 			this.loadedCastle = new Fight({
 				...resolveFightingPlace(placeId),
 				history: [
 					{
 						action: DinoAction.ADDCASTLE,
 						castle: {
-							life: 50,
-							maxLife: 100,
+							life: this.castle.currentLife,
+							maxLife: this.castle.maxLife,
 							enclos: false,
 							invisible: false
 						}
-					}
+					},
+					...defense
 				]
 			});
 			const display = this.loadedCastle.getDisplay();
@@ -145,6 +190,12 @@ export default defineComponent({
 	async mounted() {
 		this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
 		if (this.isClanMember) {
+			this.castle = await ClanService.castleStatus();
+
+			const order = this.castle.defenseOrder;
+			const defenders = this.castle.defender;
+
+			this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
 			setTimeout(() => this.loadAnimation(), 250);
 		}
 		this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
@@ -156,6 +207,18 @@ export default defineComponent({
 .wrapper {
 	margin: 5px;
 	width: auto;
+}
+
+.defense {
+	flex-direction: row;
+	.cell {
+		background-color: #f3ca92;
+		cursor: move;
+		border: 1px solid #c88f44;
+		background-image: url('../../assets/background/table_cell.webp');
+		background-position: -10px 0px;
+		padding: 2px 4px;
+	}
 }
 
 #pixiCanvas :deep(canvas) {

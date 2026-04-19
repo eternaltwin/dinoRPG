@@ -1,4 +1,4 @@
-import { AttackStatus, ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { AttackStatus, Castle, ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
@@ -150,6 +150,14 @@ export const ClanService = {
 	},
 	async forfeitWar(warId: number): Promise<void> {
 		const res = await http().delete(`/clan/war/${warId}`);
+		return res.data;
+	},
+	async addDefenser(dinozId: number): Promise<void> {
+		const res = await http().put(`/clan/war/dinoz/${dinozId}`);
+		return res.data;
+	},
+	async castleStatus(): Promise<Castle> {
+		const res = await http().get(`/clan/war/castle`);
 		return res.data;
 	}
 };

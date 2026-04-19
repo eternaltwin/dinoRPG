@@ -127,8 +127,8 @@ export async function searchClans(req: Request): Promise<ClanForSearch[]> {
 export async function getClan(req: Request) {
 	const authed = await auth(req);
 
-	if (authed.ClanMember && authed.ClanMember.clanId === +req.params.id) {
-		const clan = await getClanRequestPrivate(authed.ClanMember.clanId);
+	if (authed.clanId && authed.clanId === +req.params.id) {
+		const clan = await getClanRequestPrivate(authed.clanId);
 		return clan;
 	} else {
 		const clanPublic = await getClanRequestPublic(Number(req.params.id));
@@ -297,8 +297,8 @@ export async function deleteClan(req: Request) {
 		throw new ExpectedError(`Player ${authed.name} is not leader of clan ${req.params.id}`);
 	}
 
-	const clan = await deleteClanRequest(Number(req.params.id));
-	return clan;
+	await deleteClanRequest(Number(req.params.id));
+	return +req.params.id;
 }
 
 /**

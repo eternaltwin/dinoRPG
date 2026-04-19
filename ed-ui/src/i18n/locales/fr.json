@@ -247,7 +247,8 @@
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
 			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
-			"fb_tournament": "Accéder au Tournoi de Forcebrut."
+			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
+			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -280,7 +281,8 @@
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
-			"fb_tournament": "Tournoi"
+			"fb_tournament": "Tournoi",
+			"war_defend": "Défendre le chateau"
 		}
 	},
 	"button": {
@@ -4145,7 +4147,8 @@
 			"declareWar": "Attaquer ce clan",
 			"attack": "Attaque",
 			"defense": "Défense",
-			"forfeit": "Déclarer forfait"
+			"forfeit": "Déclarer forfait",
+			"defender": "{name} niveau {level}"
 		}
 	},
 	"clansList": {
