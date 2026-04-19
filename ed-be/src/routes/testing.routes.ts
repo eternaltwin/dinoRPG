@@ -93,7 +93,7 @@ routes.post(`${commonPath}/test-users`, async (req: Request, res: Response) => {
 	try {
 		const url = 'http://localhost:50320/api/v1/users';
 
-		for (let i = 255; i <= 257; i++) {
+		for (let i = 1; i <= 256; i++) {
 			const name = `test${i}`;
 			const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536' });
 			const response = await fetch(url, {
