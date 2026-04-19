@@ -32,7 +32,8 @@ export enum Action {
 	STOP_REST = 'stop_rest',
 	REINCARNATION = 'reincarnation',
 	FB_TOURNAMENT = 'fb_tournament',
-	WAR_DEFEND = 'war_defend'
+	WAR_DEFEND = 'war_defend',
+	WAR_REMOVE = 'war_remove'
 }
 
 export interface ActionFiche {
@@ -176,6 +177,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.WAR_DEFEND]: {
 		name: Action.WAR_DEFEND,
+		imgName: 'act_castle'
+	},
+	[Action.WAR_REMOVE]: {
+		name: Action.WAR_REMOVE,
 		imgName: 'act_castle'
 	}
 };
