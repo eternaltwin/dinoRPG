@@ -247,13 +247,19 @@ export async function createClanRequest(
 			select: { id: true }
 		});
 
-		await prisma.clanMember.create({
-			data: {
-				clan: { connect: { id: clan.id } },
-				player: { connect: { id: playerId } }
-			},
-			select: { id: true }
-		});
+		await prisma.$transaction([
+			prisma.clanMember.create({
+				data: {
+					clan: { connect: { id: clan.id } },
+					player: { connect: { id: playerId } }
+				},
+				select: { id: true }
+			}),
+			prisma.player.update({
+				where: { id: playerId },
+				data: { clanId: clan.id } // ← ajout
+			})
+		]);
 
 		await prisma.clanHistory.create({
 			data: {
@@ -431,42 +437,35 @@ export async function acceptPlayerJoinRequest(requestId: number, acceptorId: str
 			}
 		});
 
-		const clanMember = await prisma.clanMember.create({
-			data: {
-				clan: { connect: { id: joinRequest.clanId } },
-				player: { connect: { id: joinRequest.playerId } }
-			},
-			select: {
-				id: true,
-				nickname: true,
-				dateJoin: true,
-				rights: true,
-				donation: true,
-				player: {
-					select: {
-						id: true,
-						name: true,
-						lastLogin: true,
-						leaderOf: {
-							select: {
-								id: true
-							}
-						},
-						Events: {
-							select: {
-								totalProgression: true
-							}
-						}
-					}
+		const [clanMember] = await prisma.$transaction([
+			prisma.clanMember.create({
+				data: {
+					clan: { connect: { id: joinRequest.clanId } },
+					player: { connect: { id: joinRequest.playerId } }
 				},
-				clan: {
-					select: {
-						id: true,
-						name: true
-					}
+				select: {
+					id: true,
+					nickname: true,
+					dateJoin: true,
+					rights: true,
+					donation: true,
+					player: {
+						select: {
+							id: true,
+							name: true,
+							lastLogin: true,
+							leaderOf: { select: { id: true } },
+							Events: { select: { totalProgression: true } }
+						}
+					},
+					clan: { select: { id: true, name: true } }
 				}
-			}
-		});
+			}),
+			prisma.player.update({
+				where: { id: joinRequest.playerId },
+				data: { clanId: joinRequest.clanId } // ← ajout
+			})
+		]);
 
 		await prisma.clanHistory.create({
 			data: {
@@ -561,46 +560,19 @@ export async function getPlayerJoinRequest(playerId: string) {
 
 export async function deleteClanRequest(clanId: number) {
 	return withSpan(deleteClanRequest.name, async () => {
-		await prisma.clanMember.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-
-		await prisma.clanHistory.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-
-		await prisma.clanMessage.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-		await prisma.clanPage.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-		await prisma.clanJoinRequest.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-		await prisma.clanIngredient.deleteMany({
-			where: {
-				clanId: clanId
-			}
-		});
-		const clan = await prisma.clan.delete({
-			where: {
-				id: clanId
-			},
-			select: { id: true }
-		});
-
-		return clan;
+		await prisma.$transaction([
+			prisma.player.updateMany({
+				where: { clanId: clanId },
+				data: { clanId: null } // ← ajout
+			}),
+			prisma.clanMember.deleteMany({ where: { clanId } }),
+			prisma.clanHistory.deleteMany({ where: { clanId } }),
+			prisma.clanMessage.deleteMany({ where: { clanId } }),
+			prisma.clanPage.deleteMany({ where: { clanId } }),
+			prisma.clanJoinRequest.deleteMany({ where: { clanId } }),
+			prisma.clanIngredient.deleteMany({ where: { clanId } }),
+			prisma.clan.delete({ where: { id: clanId } })
+		]);
 	});
 }
 
@@ -738,15 +710,21 @@ export async function excludeClanMemberRequest(clanMemberId: number, acceptorId:
 				}
 			});
 
-			await prisma.clanHistory.create({
-				data: {
-					clan: { connect: { id: member.clanId } },
-					author: { connect: { id: member.playerId } },
-					type: ClanHistoryType[ClanHistoryType.PLAYER_EXCLUSION],
-					authorMessage: creator.name
-				},
-				select: { id: true }
-			});
+			await prisma.$transaction([
+				prisma.player.update({
+					where: { id: member.playerId },
+					data: { clanId: null }
+				}),
+				prisma.clanHistory.create({
+					data: {
+						clan: { connect: { id: member.clanId } },
+						author: { connect: { id: member.playerId } },
+						type: ClanHistoryType[ClanHistoryType.PLAYER_EXCLUSION],
+						authorMessage: creator.name
+					},
+					select: { id: true }
+				})
+			]);
 		}
 
 		return member;
@@ -786,20 +764,21 @@ export async function leaveClanSelfRequest(playerId: string) {
 		});
 
 		if (clan?.leaderId != member.playerId) {
-			await prisma.clanMember.delete({
-				where: {
-					playerId
-				}
-			});
-
-			await prisma.clanHistory.create({
-				data: {
-					clan: { connect: { id: member.clanId } },
-					author: { connect: { id: playerId } },
-					type: ClanHistoryType[ClanHistoryType.PLAYER_LEAVE],
-					authorMessage: member.player.name
-				}
-			});
+			await prisma.$transaction([
+				prisma.clanMember.delete({ where: { playerId } }),
+				prisma.player.update({
+					where: { id: playerId },
+					data: { clanId: null }
+				}),
+				prisma.clanHistory.create({
+					data: {
+						clan: { connect: { id: member.clanId } },
+						author: { connect: { id: playerId } },
+						type: ClanHistoryType[ClanHistoryType.PLAYER_LEAVE],
+						authorMessage: member.player.name
+					}
+				})
+			]);
 		}
 
 		return member;
@@ -1181,8 +1160,13 @@ export async function updateClanLeader(clanId: number, newLeaderId: string) {
 
 export async function deleteClanMember(playerId: string) {
 	return withSpan(deleteClanMember.name, async () => {
-		return await prisma.clanMember.delete({
-			where: { playerId: playerId }
-		});
+		const [member] = await prisma.$transaction([
+			prisma.clanMember.delete({ where: { playerId } }),
+			prisma.player.update({
+				where: { id: playerId },
+				data: { clanId: null } // ← ajout
+			})
+		]);
+		return member;
 	});
 }

@@ -62,9 +62,6 @@ export default defineComponent({
 					return this.$t('clanHistory.type.' + type);
 			}
 		},
-		goToPlayer(id: string) {
-			this.$router.push({ name: 'Account', params: { id } });
-		},
 		async getClanHistory(): Promise<void> {
 			try {
 				this.history = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);

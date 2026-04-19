@@ -332,6 +332,16 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					where: {
 						OR: [{ id: dinozId }, { leaderId: dinozId }]
 					}
+				},
+				clan: {
+					select: {
+						id: true,
+						castle: {
+							select: {
+								placeId: true
+							}
+						}
+					}
 				}
 			}
 		});

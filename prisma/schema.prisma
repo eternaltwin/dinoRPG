@@ -277,7 +277,8 @@ model Player {
   createdDate          DateTime           @default(now()) @db.Timestamp(6)
   updatedDate          DateTime           @default(now()) @updatedAt @db.Timestamp(6)
   lastLogin            DateTime           @default(now()) @db.Timestamp(6)
-  clanMemberId         Int?               @unique
+  clanId               Int?
+  clan                 Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
   matelasseur          Boolean            @default(false)
   messie               Boolean            @default(false)
   labruteDone          Boolean            @default(false)
@@ -600,16 +601,18 @@ model Clan {
   attackingWar   ClanWar?          @relation("attacker")
   defendingWars  ClanWar[]         @relation("defender")
   clanWarRanking ClanWarRanking?
+  players        Player[]
 }
 
 model ClanCastle {
-  id          Int     @id @default(autoincrement())
-  clanId      Int     @unique
-  placeId     Int
-  clan        Clan    @relation(fields: [clanId], references: [id])
-  maxLife     Int     @default(100)
-  currentLife Int     @default(100)
-  defender    Dinoz[]
+  id           Int     @id @default(autoincrement())
+  clanId       Int     @unique
+  placeId      Int
+  clan         Clan    @relation(fields: [clanId], references: [id])
+  maxLife      Int     @default(100)
+  currentLife  Int     @default(100)
+  defender     Dinoz[]
+  defenseOrder Int[]   @default([])
 }
 
 model ClanJoinRequest {

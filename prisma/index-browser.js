@@ -288,7 +288,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin',
-  clanMemberId: 'clanMemberId',
+  clanId: 'clanId',
   matelasseur: 'matelasseur',
   messie: 'messie',
   labruteDone: 'labruteDone',
@@ -488,7 +488,8 @@ exports.Prisma.ClanCastleScalarFieldEnum = {
   clanId: 'clanId',
   placeId: 'placeId',
   maxLife: 'maxLife',
-  currentLife: 'currentLife'
+  currentLife: 'currentLife',
+  defenseOrder: 'defenseOrder'
 };
 
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {

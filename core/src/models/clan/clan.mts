@@ -1,4 +1,4 @@
-import { Clan, ClanCastle, ClanJoinRequest, ClanMember, Player } from '@drpg/prisma';
+import { Clan, ClanCastle, ClanJoinRequest, ClanMember, Dinoz, Player } from '@drpg/prisma';
 
 export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDate' | 'leaderId' | 'langs'> & {
 	members: Pick<ClanMember, 'id'>[];
@@ -30,3 +30,12 @@ export interface AttackStatus {
 		name: string;
 	};
 }
+
+export interface Castle {
+	maxLife: number;
+	currentLife: number;
+	defenseOrder: number[];
+	defender: Defender[];
+}
+
+export type Defender = Pick<Dinoz, 'id' | 'name' | 'life' | 'maxLife' | 'display' | 'level'>;

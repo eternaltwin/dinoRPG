@@ -80,7 +80,7 @@ export async function eventState() {
 	};
 }
 
-async function currentWar() {
+export async function currentWar() {
 	const currentWar = await prisma.clanEvent.findFirst({
 		where: {
 			endDate: {
@@ -104,11 +104,11 @@ export async function buildClanCastle(req: Request) {
 	const authed = await auth(req);
 	const war = await currentWar();
 
-	if (!authed.ClanMember) {
+	if (!authed.clanId) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
 
-	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.CLAN_BUILD_CASTLE);
+	const hasRight = await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.CLAN_BUILD_CASTLE);
 
 	if (!hasRight) {
 		throw new ExpectedError(translate('noRight', authed));
@@ -118,11 +118,11 @@ export async function buildClanCastle(req: Request) {
 
 	await prisma.clanCastle.upsert({
 		where: {
-			clanId: authed.ClanMember.clanId
+			clanId: authed.clanId
 		},
 		create: {
 			placeId: randomPlace,
-			clanId: authed.ClanMember.clanId
+			clanId: authed.clanId
 		},
 		update: {
 			// Do nothing
@@ -130,7 +130,7 @@ export async function buildClanCastle(req: Request) {
 	});
 	await prisma.clanHistory.create({
 		data: {
-			clan: { connect: { id: authed.ClanMember.clanId } },
+			clan: { connect: { id: authed.clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.CASTLE_BUILD],
 			authorMessage: authed.name
@@ -143,11 +143,11 @@ export async function declareWar(req: Request) {
 	const authed = await auth(req);
 	const war = await currentWar();
 
-	if (!authed.ClanMember) {
+	if (!authed.clanId) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
 
-	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+	const hasRight = await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
 
 	if (!hasRight) {
 		throw new ExpectedError(translate('noRight', authed));
@@ -155,7 +155,7 @@ export async function declareWar(req: Request) {
 
 	const attackOngoing = await prisma.clanWar.findUnique({
 		where: {
-			attackerId: authed.ClanMember.clanId,
+			attackerId: authed.clanId,
 			dateEnd: {
 				gt: new Date()
 			}
@@ -196,7 +196,7 @@ export async function declareWar(req: Request) {
 
 	const attacker = await prisma.clan.findUnique({
 		where: {
-			id: authed.ClanMember.clanId
+			id: authed.clanId
 		},
 		select: {
 			id: true,
@@ -236,7 +236,7 @@ export async function declareWar(req: Request) {
 	const attack = await prisma.clanWar.create({
 		data: {
 			dateEnd: endWar,
-			attackerId: authed.ClanMember.clanId,
+			attackerId: authed.clanId,
 			defenderId: defender.id,
 			points
 		}
@@ -246,7 +246,7 @@ export async function declareWar(req: Request) {
 	// Notifications for attackers
 	await prisma.clanHistory.create({
 		data: {
-			clan: { connect: { id: authed.ClanMember.clanId } },
+			clan: { connect: { id: authed.clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.WAR_START],
 			authorMessage: defender.name
@@ -452,10 +452,10 @@ export async function warStatus(req: Request) {
 export async function forfeitWar(req: Request) {
 	const authed = await auth(req);
 	const currentClanWar = await currentWar();
-	if (!authed.ClanMember) {
+	if (!authed.clanId) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
-	const hasRight = await playerHasRightRequest(authed.ClanMember.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+	const hasRight = await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
 
 	if (!hasRight) {
 		throw new ExpectedError(translate('noRight', authed));
@@ -560,4 +560,116 @@ export async function forfeitWar(req: Request) {
 			id: +req.params.warId
 		}
 	});
+}
+
+export async function addDefender(req: Request) {
+	const authed = await auth(req);
+	const currentWarEvent = await currentWar();
+	if (!authed.clanId) {
+		throw new ExpectedError('invalidDinoz');
+	}
+	const dinoz = await prisma.dinoz.findUnique({
+		where: {
+			id: +req.params.dinozId
+		},
+		select: {
+			id: true,
+			name: true,
+			display: true,
+			maxLife: true,
+			life: true,
+			placeId: true,
+			playerId: true,
+			unavailableReason: true
+		}
+	});
+
+	if (!dinoz) {
+		throw new ExpectedError('invalidDinoz');
+	}
+	if (dinoz.playerId !== authed.id) {
+		throw new ExpectedError('invalidDinoz');
+	}
+	if (dinoz.unavailableReason || dinoz.life <= 0) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	const castle = await prisma.clanCastle.findUnique({
+		where: {
+			clanId: authed.clanId
+		},
+		select: {
+			placeId: true,
+			_count: {
+				select: { defender: true }
+			}
+		}
+	});
+	if (!castle) {
+		throw new ExpectedError('invalidDinoz');
+	}
+	if (castle.placeId !== dinoz.placeId) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	if (castle._count.defender >= currentWarEvent.config.fight.defenderActiveMax) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	const defendLine = await prisma.clanCastle.update({
+		where: {
+			clanId: authed.clanId
+		},
+		data: {
+			defender: {
+				connect: {
+					id: dinoz.id
+				}
+			},
+			defenseOrder: {
+				push: dinoz.id
+			}
+		},
+		select: {
+			defender: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					maxLife: true,
+					life: true
+				}
+			}
+		}
+	});
+	return defendLine;
+}
+
+export async function castleStatus(req: Request) {
+	const authed = await auth(req);
+	if (!authed.clanId) {
+		throw new ExpectedError('invalidDinoz');
+	}
+	const castle = await prisma.clanCastle.findUnique({
+		where: {
+			clanId: authed.clanId
+		},
+		select: {
+			maxLife: true,
+			currentLife: true,
+			defenseOrder: true,
+			defender: {
+				select: {
+					id: true,
+					name: true,
+					life: true,
+					maxLife: true,
+					display: true,
+					level: true
+				}
+			}
+		}
+	});
+
+	return castle;
 }

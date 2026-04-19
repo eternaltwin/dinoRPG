@@ -113,7 +113,7 @@ import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
-import { DinozService, FightService, MissionService } from '../../services/index.js';
+import { ClanService, DinozService, FightService, MissionService } from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
@@ -563,6 +563,13 @@ export default defineComponent({
 						name: 'Forcebrute',
 						query: { dinozId: +this.$route.params.id }
 					});
+					break;
+				case Action.WAR_DEFEND:
+					try {
+						await ClanService.addDefenser(+this.$route.params.id);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
 					break;
 				default:
 					console.log(action.name);

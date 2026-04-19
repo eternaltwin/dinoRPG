@@ -162,7 +162,7 @@ export async function auth(request: Request, banByPass = false) {
 				lastLogin: true,
 				matelasseur: true,
 				lastVersionSeen: true,
-				ClanMember: true
+				clanId: true
 			}
 		});
 
