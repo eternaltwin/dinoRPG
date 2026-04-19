@@ -63,7 +63,7 @@ import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBet
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightStats } from '@drpg/core/models/fight/FightResult';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
@@ -5082,11 +5082,13 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		}
 	}
 
-	// Set loser if only one team is alive
-	if (attackersAlive === 0) {
-		fightData.loser = 'attackers';
+	// Try to determine if the fight ended
+	if (attackersAlive === 0 && defendersAlive === 0) {
+		fightData.outcome = FightOutcome.Tie;
+	} else if (attackersAlive === 0) {
+		fightData.outcome = FightOutcome.DefenderWin;
 	} else if (defendersAlive === 0) {
-		fightData.loser = 'defenders';
+		fightData.outcome = FightOutcome.AttackerWin;
 	}
 };
 
@@ -5151,7 +5153,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// Time bar movement is handled on the front side
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
-				fightData.endedByTimeout = true;
+				fightData.outcome = FightOutcome.Timeout;
 				fightData.steps.push({
 					action: 'timeOut',
 					delta: deltaTime
@@ -5222,7 +5224,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 
 		// Return if a winner has been determined
-		if (fightData.loser) {
+		if (fightData.outcome) {
 			return;
 		}
 
@@ -5286,7 +5288,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 		checkDeaths(fightData);
-		if (fightData.loser) {
+		if (fightData.outcome) {
 			return;
 		}
 	}

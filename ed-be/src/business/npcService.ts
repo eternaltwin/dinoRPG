@@ -13,7 +13,7 @@ import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import translate from '../utils/translate.js';
-import { calculateFightVsMonsters, rewardFight } from './fightService.js';
+import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -146,7 +146,13 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			}
 			const fightResult = calculateFightVsMonsters(team, playerData, dinozData.placeId, nextStepWantedData.fight);
 
-			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinozData.placeId, playerData);
+			const result = await rewardFightVsMonsters(
+				team,
+				nextStepWantedData.fight,
+				fightResult,
+				dinozData.placeId,
+				playerData
+			);
 			// Reward statement
 			if (result.result) {
 				await updateDinozStep(dinozId, pnj.id, nextStepWanted);

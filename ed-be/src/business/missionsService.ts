@@ -31,7 +31,7 @@ import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { auth } from '../dao/playerDao.js';
-import { calculateFightVsMonsters, rewardFight } from './fightService.js';
+import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { decreaseItemQuantity, getPlayerItems } from '../dao/playerItemDao.js';
 import translate from '../utils/translate.js';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
@@ -168,7 +168,13 @@ export async function startFightMission(req: Request) {
 	const ennemi_team = mission.actualStep.requirement.mobList;
 
 	const fightResult = calculateFightVsMonsters(team, player, mission.actualStep.place, ennemi_team);
-	const fight: FightResult = await rewardFight(team, ennemi_team, fightResult, mission.actualStep.place, player);
+	const fight: FightResult = await rewardFightVsMonsters(
+		team,
+		ennemi_team,
+		fightResult,
+		mission.actualStep.place,
+		player
+	);
 	if (mission.actualStep.requirement.startText) {
 		fight.startText = mission.actualStep.requirement.startText;
 	}
