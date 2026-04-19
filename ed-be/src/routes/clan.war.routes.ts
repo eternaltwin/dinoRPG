@@ -10,6 +10,7 @@ import {
 	eventState,
 	forfeitWar,
 	removeDefender,
+	updateDefenseOrder,
 	warStatus
 } from '../business/clanWar.js';
 
@@ -139,6 +140,19 @@ routes.delete(`${commonPath}/dinoz/:dinozId`, async (req: Request, res: Response
 
 	try {
 		const response = await removeDefender(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.patch(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await updateDefenseOrder(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
