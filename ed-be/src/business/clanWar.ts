@@ -673,3 +673,66 @@ export async function castleStatus(req: Request) {
 
 	return castle;
 }
+
+export async function removeDefender(req: Request) {
+	const authed = await auth(req);
+
+	if (!authed.clanId) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: +req.params.dinozId },
+		select: {
+			id: true,
+			playerId: true
+		}
+	});
+
+	if (!dinoz) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	if (dinoz.playerId !== authed.id) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	const castle = await prisma.clanCastle.findUnique({
+		where: { clanId: authed.clanId },
+		select: { id: true, defenseOrder: true }
+	});
+
+	if (!castle) {
+		throw new ExpectedError('invalidDinoz');
+	}
+
+	const [defendLine] = await prisma.$transaction([
+		prisma.clanCastle.update({
+			where: { clanId: authed.clanId },
+			data: {
+				defender: { disconnect: { id: dinoz.id } },
+				defenseOrder: {
+					set: castle.defenseOrder.filter(id => id !== dinoz.id)
+				}
+			},
+			select: {
+				defenseOrder: true,
+				defender: {
+					select: {
+						id: true,
+						name: true,
+						display: true,
+						maxLife: true,
+						life: true
+					}
+				}
+			}
+		}),
+		prisma.dinoz.update({
+			where: { id: dinoz.id },
+			data: { unavailableReason: null }
+		})
+	]);
+
+	return defendLine;
+}

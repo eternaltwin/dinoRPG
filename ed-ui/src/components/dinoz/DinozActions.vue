@@ -570,6 +570,15 @@ export default defineComponent({
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
+					await this.refreshDinoz();
+					break;
+				case Action.WAR_REMOVE:
+					try {
+						await ClanService.removeDefender(+this.$route.params.id);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
 					break;
 				default:
 					console.log(action.name);

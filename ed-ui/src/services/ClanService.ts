@@ -159,5 +159,9 @@ export const ClanService = {
 	async castleStatus(): Promise<Castle> {
 		const res = await http().get(`/clan/war/castle`);
 		return res.data;
+	},
+	async removeDefender(dinozId: number): Promise<Castle> {
+		const res = await http().delete(`/clan/war/dinoz/${dinozId}`);
+		return res.data;
 	}
 };
