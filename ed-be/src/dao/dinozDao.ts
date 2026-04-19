@@ -338,7 +338,12 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 						id: true,
 						castle: {
 							select: {
-								placeId: true
+								placeId: true,
+								defender: {
+									select: {
+										id: true
+									}
+								}
 							}
 						}
 					}
