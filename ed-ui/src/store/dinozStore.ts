@@ -8,27 +8,36 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
 	const currentDinozId: Ref<number | undefined> = ref();
 
-	const getCurrentDinoz: ComputedRef<DinozFiche> = computed((): DinozFiche => {
+	// The returned value may be undefined if the player has no Dinoz (which happens when you start the game)
+	const getCurrentDinoz: ComputedRef<DinozFiche | undefined> = computed((): DinozFiche | undefined => {
 		const dinoz: DinozFiche | undefined = dinozList.value.find(
 			(dinoz: DinozFiche) => dinoz.id === currentDinozId.value
 		);
-		if (!dinoz) {
+		if (!dinoz && dinozList.value.length > 0) {
+			// Fallback to the first Dinoz of the list if possible
 			return dinozList.value[0];
 		}
 		return dinoz;
 	});
 
-	const getCurrentDinozId: ComputedRef<number> = computed((): number => {
-		return currentDinozId.value ?? dinozList.value[0].id;
+	// The returned value may be undefined if the player has no Dinoz (which happens when you start the game)
+	const getCurrentDinozId: ComputedRef<number | undefined> = computed((): number | undefined => {
+		if (currentDinozId.value === undefined && dinozList.value.length > 0) {
+			// Fallback to the first Dinoz of the list if possible
+			return dinozList.value[0].id;
+		} else {
+			return currentDinozId.value;
+		}
 	});
 
 	const getDinozList: ComputedRef<DinozFiche[]> = computed((): DinozFiche[] => {
 		return orderDinozList(dinozList.value);
 	});
 
-	const getDinoz = (dinozId: number): DinozFiche => {
+	// The returned value may be undefined if the player has no Dinoz (which happens when you start the game)
+	const getDinoz = (dinozId: number): DinozFiche | undefined => {
 		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
-		if (!dinoz) {
+		if (!dinoz && dinozList.value.length > 0) {
 			return dinozList.value.find((dinoz: DinozFiche) => dinoz.id === currentDinozId.value) ?? dinozList.value[0];
 		}
 		return dinoz;
