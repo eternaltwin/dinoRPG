@@ -2621,7 +2621,8 @@
 		"confirmBanAction": "Confirmer ce ban ?",
 		"attention": "Attention",
 		"accept": "Oui",
-		"reject": "Non"
+		"reject": "Non",
+		"buildCastle": "Attention, constuire votre chateau vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",

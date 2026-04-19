@@ -128,6 +128,22 @@ export async function buildClanCastle(req: Request) {
 			// Do nothing
 		}
 	});
+
+	await prisma.$transaction([
+		prisma.clanIngredient.deleteMany({
+			where: {
+				clanId: authed.clanId
+			}
+		}),
+		prisma.clan.update({
+			where: {
+				id: authed.clanId
+			},
+			data: {
+				treasureValue: 0
+			}
+		})
+	]);
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: authed.clanId } },
