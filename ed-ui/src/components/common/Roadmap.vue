@@ -157,7 +157,8 @@ export default defineComponent({
 			float: left;
 			position: relative;
 			width: 103px;
-			height: 56px;
+			min-height: 56px;
+			height: auto;
 			padding-right: 3px;
 			text-align: center;
 			overflow: hidden;
@@ -174,7 +175,7 @@ export default defineComponent({
 				padding-bottom: 2px;
 				padding-left: 1px;
 				width: 100px;
-				height: 14px;
+				height: auto;
 				color: black;
 				font-size: 7.5pt;
 				font-weight: bold;

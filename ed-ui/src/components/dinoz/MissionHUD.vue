@@ -72,7 +72,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
@@ -81,6 +80,7 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
+import { useDinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'MissionHUD',
@@ -90,7 +90,6 @@ export default defineComponent({
 	emits: ['abort'],
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			information: false as boolean,
 			MissionEnum: ConditionEnum
 		};
@@ -103,7 +102,7 @@ export default defineComponent({
 		},
 		async reload(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
 
 			if (dinozToUpdate) {
@@ -124,7 +123,7 @@ export default defineComponent({
 			return missionsList[this.missionId];
 		},
 		missionDetail(): MissionHUD | null {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 			const myDinoz = dinozList.find(dinoz => dinoz.id === this.dinozId);
 
 			if (!myDinoz) {

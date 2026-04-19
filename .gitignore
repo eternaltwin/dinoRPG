@@ -1,5 +1,5 @@
 .DS_Store
-/dist/
+**/dist/
 /ed-be/dist/
 /ed-be/coverage/
 /ed-be/junit.xml
@@ -53,3 +53,5 @@ ed-be/localhost-key.pem
 prisma/*.js
 prisma/runtime/*
 !prisma/generate-enums-wrapper.js
+
+dino-renderer/cache/*

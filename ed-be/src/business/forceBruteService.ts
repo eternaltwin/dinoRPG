@@ -36,6 +36,10 @@ import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -278,7 +282,6 @@ export async function createTournamentDinoz(req: Request) {
 				break;
 		}
 	}
-	//TODO add a chance to get rare display (1%)
 
 	const newDinoz: Prisma.GameDinozCreateInput = {
 		name: req.body.name,
@@ -782,27 +785,30 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	gold += Math.round(gold * goldMultiplier);
 
+	let levelup = false;
+	let xp = 0;
 	if (fightResult.winner) {
 		await addMoney(authed.id, gold);
+		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
+		xp = calculateXPBonus(dinoz, xp, dinoz.player);
+		const max = getMaxXp(dinoz);
+
+		if (dinoz.experience >= max) {
+			// No xp if the dinoz was already at max
+			levelup = true;
+			xp = 0;
+		} else if (dinoz.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
+			levelup = true;
+		}
 	}
-	let xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
-	xp = calculateXPBonus(dinoz, xp, dinoz.player);
-	const max = getMaxXp(dinoz);
-	let levelup = false;
-	if (dinoz.experience >= max) {
-		// No xp if the dinoz was already at max
-		levelup = true;
-		xp = 0;
-	} else if (dinoz.experience + xp >= max) {
-		// Else, allow xp overflow (should happen only once) and raise levelup flag
-		levelup = true;
-	}
+
 	await updateDinoz(dinoz.id, {
 		life: {
 			decrement: attacker.hpLost
 		},
 		experience: {
-			increment: fightResult.winner ? xp : 0
+			increment: xp
 		},
 		FBTournamentStep: {
 			increment: fightResult.winner ? 1 : 0
@@ -812,11 +818,17 @@ export async function fightFBTournamentOpponent(req: Request) {
 	await archiveFight(fightResult, authed.id, null);
 
 	// Consume item used
+	let merguezUsed = 0;
 	for (const fighter of [...fightResult.attackers]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+
+			if (itemUsed === Item.GOBLIN_MERGUEZ) {
+				merguezUsed++;
+			}
 		}
 	}
+	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
 
 	let statusReward: DinozStatusId | undefined = undefined;
 	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {

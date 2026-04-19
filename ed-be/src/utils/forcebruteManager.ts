@@ -201,8 +201,9 @@ class ForceBruteManager {
 							energy: f.energy,
 							maxEnergy: f.maxEnergy,
 							energyRecovery: f.energyRecovery,
-							dark: undefined,
-							size: undefined
+							dark: f.dark,
+							size: f.size,
+							entrance: f.entrance
 						};
 					})
 				),

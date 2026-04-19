@@ -10,7 +10,7 @@ export const InventoryService = {
 		const res = await http().get('/inventory/all');
 		return res.data;
 	},
-	async useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack> {
+	async useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack[]> {
 		const res = await http().get(`/inventory/${dinozId}/${itemId}`);
 		return res.data;
 	},

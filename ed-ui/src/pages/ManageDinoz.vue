@@ -58,7 +58,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { DinozService } from '../services/DinozService.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { statusList } from '../constants/status.js';
@@ -68,6 +68,7 @@ import Elements from '../components/data/Elements.vue';
 import DinozMini from '../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { formatText } from '../utils/formatText.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'ManageDinoz',
@@ -79,7 +80,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			dinozList: [] as ManagePageData,
 			statusList,
@@ -112,15 +112,15 @@ export default defineComponent({
 				const returnList = await DinozService.updateOrders(newList.map(d => d.id));
 				this.dinozList = newList;
 
-				this.dinozStore.setDinozList(
-					this.dinozStore.getDinozList.map(d => {
-						const currentDinoz = returnList.find(e => e.id === d.id);
-						if (currentDinoz) {
-							d.order = currentDinoz.order;
-						}
-						return d;
-					})
-				);
+				const dinozs: Array<DinozFiche> = useDinozStore().getDinozList.map(d => {
+					const currentDinoz = returnList.find(e => e.id === d.id);
+					if (currentDinoz) {
+						d.order = currentDinoz.order;
+					}
+					return d;
+				});
+
+				useDinozStore().setDinozList(dinozs);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 			}
@@ -136,7 +136,7 @@ export default defineComponent({
 		}
 
 		// Fetch data
-		const list = await DinozService.getDinozToManage().catch(error => errorHandler.handle(error, this.$toast));
+		const list = await DinozService.getDinozToManage();
 
 		if (!list) return;
 		// Add order if null

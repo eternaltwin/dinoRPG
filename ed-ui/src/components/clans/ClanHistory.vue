@@ -52,7 +52,7 @@ export default defineComponent({
 			return this.$t('clanHistory.type.' + type);
 		},
 		goToPlayer(id: string) {
-			this.$router.push({ name: 'MyAccount', params: { id } });
+			this.$router.push({ name: 'Account', params: { id } });
 		},
 		async getClanHistory(): Promise<void> {
 			try {

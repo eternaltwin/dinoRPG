@@ -1,10 +1,10 @@
 <template>
 	<DZDisclaimer content="ranking.disclaimer.pantheon" />
 	<div class="wrapper">
-		<DZButton @click="pantheon = PantheonMotif.RACE">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
-		<DZButton @click="pantheon = PantheonMotif.EPIC">{{ $t(`ranking.pantheon.playerPantheon`) }}</DZButton>
+		<DZButton @click="pantheon = PantheonMotif.race">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
+		<DZButton @click="pantheon = PantheonMotif.epic">{{ $t(`ranking.pantheon.playerPantheon`) }}</DZButton>
 	</div>
-	<div class="wrapper" v-if="pantheon === PantheonMotif.RACE">
+	<div class="wrapper" v-if="pantheon === PantheonMotif.race">
 		<select v-model="race" @change="refreshPantheon()">
 			<option :value="null">{{ $t(`ranking.pantheon.allRaces`) }}</option>
 			<option v-for="(race, index) in races" :key="index" :value="race">{{ $t(`race.name.${race}`) }}</option>
@@ -14,7 +14,7 @@
 			<option v-for="(level, index) in [10, 20, 30, 40, 50]" :key="index" :value="level">{{ level }}</option>
 		</select>
 	</div>
-	<div class="wrapper" v-if="pantheon === PantheonMotif.EPIC">
+	<div class="wrapper" v-if="pantheon === PantheonMotif.epic">
 		<select v-model="rewardId" @change="refreshPantheon()">
 			<option :value="null">{{ $t(`ranking.pantheon.pickEpic`) }}</option>
 			<option v-for="(epic, index) in epicRewards" :key="index" :value="epic.id">
@@ -22,7 +22,7 @@
 			</option>
 		</select>
 	</div>
-	<div class="table" v-if="pantheon === PantheonMotif.RACE && display.length > 0">
+	<div class="table" v-if="pantheon === PantheonMotif.race && display.length > 0">
 		<table>
 			<tbody>
 				<tr>
@@ -30,7 +30,7 @@
 					<th class="status">{{ $t('ranking.pantheon.detail') }}</th>
 				</tr>
 				<tr v-for="item in display" :key="item.id">
-					<template v-if="item.motif === PantheonMotif.RACE && item.dinoz">
+					<template v-if="item.motif === PantheonMotif.race && item.dinoz">
 						<td class="dinoz">
 							<DinozWithoutFlash class="dinoImg" :display="item.dinoz.display" :life="1" flip></DinozWithoutFlash>
 						</td>
@@ -71,11 +71,11 @@
 	<div
 		class="pantheon"
 		v-if="
-			pantheon === PantheonMotif.EPIC &&
+			pantheon === PantheonMotif.epic &&
 			rewardId &&
 			display &&
 			display.length > 0 &&
-			display.every(p => p.motif === PantheonMotif.EPIC && p.indicator === rewardId)
+			display.every(p => p.motif === PantheonMotif.epic && p.indicator === rewardId)
 		"
 	>
 		<Tippy
@@ -96,7 +96,7 @@
 					<th class="name">{{ $t('ranking.pantheon.date') }}</th>
 				</tr>
 				<tr v-for="player in display" :key="player.id">
-					<template v-if="player.motif === PantheonMotif.EPIC">
+					<template v-if="player.motif === PantheonMotif.epic">
 						<td class="dinoz"><DZUser :user="player.player" /></td>
 						<td class="missions">
 							<ul>
@@ -135,7 +135,7 @@ export default defineComponent({
 	data() {
 		return {
 			page: 1 as number,
-			pantheon: PantheonMotif.RACE as PantheonMotif,
+			pantheon: PantheonMotif.race as PantheonMotif,
 			display: [] as PantheonDisplay[],
 			race: null,
 			level: null,
@@ -146,7 +146,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToAccount(paramId: number): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
+			this.$router.push({ name: 'Account', params: { id: paramId } });
 		},
 		formatDate(dateString: string) {
 			return formatDate(dateString);
@@ -173,8 +173,8 @@ export default defineComponent({
 	},
 	watch: {
 		pantheon() {
-			if (this.pantheon === PantheonMotif.RACE) this.rewardId = null;
-			if (this.pantheon === PantheonMotif.EPIC) {
+			if (this.pantheon === PantheonMotif.race) this.rewardId = null;
+			if (this.pantheon === PantheonMotif.epic) {
 				this.level = null;
 				this.race = null;
 			}

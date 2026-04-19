@@ -17,7 +17,7 @@
 			</section>
 
 			<footer class="simple-confirm-dialog-footer">
-				<DZButton class="btn btn-reject" @click="rejectDialog">
+				<DZButton v-if="rejectLabel" class="btn btn-reject" @click="rejectDialog">
 					<div class="btn-content">
 						<img :src="getImgURL('icons', 'small_delete')" alt="delete" />
 						<span>{{ rejectLabel }}</span>

@@ -296,6 +296,8 @@ exports.Prisma.PlayerScalarFieldEnum = {
   dailyGridRewards: 'dailyGridRewards',
   skipFight: 'skipFight',
   skipLevel: 'skipLevel',
+  shareArchivedData: 'shareArchivedData',
+  archivedSiteId: 'archivedSiteId',
   banCaseId: 'banCaseId',
   discoveredSkills: 'discoveredSkills',
   lastVersionSeen: 'lastVersionSeen',
@@ -784,6 +786,7 @@ exports.LogType = exports.$Enums.LogType = {
   AdminUpdateQuest: 'AdminUpdateQuest',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
   AdminUpdateSecret: 'AdminUpdateSecret',
+  AdminUpdateClan: 'AdminUpdateClan',
   IngredientSold: 'IngredientSold',
   XPEarned: 'XPEarned',
   HPLost: 'HPLost',
@@ -933,7 +936,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-
+        
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 

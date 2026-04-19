@@ -87,7 +87,7 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/index.js';
 import { IngredientsService } from '../services/IngredientsService';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 import DZInput from '../components/common/DZInput.vue';
@@ -100,7 +100,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
@@ -119,7 +118,7 @@ export default defineComponent({
 				rejectLabel: this.$t('popup.reject'),
 				icon: 'pi pi-trash'
 			});
-			const currentDinozId = this.dinozStore.currentDinozId;
+			const currentDinozId = useDinozStore().currentDinozId;
 
 			if (typeof currentDinozId !== 'number') {
 				this.$toast.open({
@@ -172,7 +171,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
-			const currentDinozId = this.dinozStore.currentDinozId;
+			const currentDinozId = useDinozStore().currentDinozId;
 
 			if (typeof currentDinozId !== 'number') {
 				this.$toast.open({

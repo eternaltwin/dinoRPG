@@ -675,7 +675,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 1000,
 		display: 'costgb'
 	},
-	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
+	// Pampleboum Pit: give a bonus to an assault
 	[Item.PAMPLEBOUM_PIT]: {
 		itemId: 21,
 		name: 'pampleboum_pit',
@@ -2163,7 +2163,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		name: 'golden_napodino',
 		canBeEquipped: true,
 		canBeUsedNow: false,
-		itemType: ItemType.CLASSIC,
+		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 100,
 		sellable: false,

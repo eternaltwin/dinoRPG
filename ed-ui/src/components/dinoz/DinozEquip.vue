@@ -1,6 +1,6 @@
 <template>
 	<div class="equip">
-		<template v-for="(item, index) in items" :key="index">
+		<template v-for="(item, index) in getInventory" :key="index">
 			<Tippy
 				@click="unequip(item)"
 				theme="normal"
@@ -24,89 +24,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { errorHandler } from '../../utils/errorHandler.js';
-import { InventoryService } from '../../services/InventoryService.js';
+import { errorHandler } from '../../utils';
+import { InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
-import { dinozStore } from '../../store/index.js';
+import { useDinozStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DinozEquip',
-	props: {
-		dinozData: { type: Object as PropType<DinozFiche>, required: true }
-	},
-	data() {
-		return {
-			items: [] as (number | undefined)[],
-			dinozStore: dinozStore()
-		};
-	},
 	computed: {
 		itemNameList() {
 			return itemNameList;
-		}
-	},
-	watch: {
-		'dinozData.items': {
-			handler(newItems: number[] | undefined) {
-				if (!this.dinozData || newItems === undefined) {
-					console.error(formatText(this.$t(`toast.dinozDataMissing`)));
-					return;
-				}
-				this.items = new Array(this.dinozData.maxItems);
-				newItems.forEach((item, index) => (this.items[index] = item));
-			},
-			immediate: true
 		},
-		'dinozData.maxItems': {
-			handler(newMaxItems: number | undefined) {
-				if (!this.dinozData || newMaxItems === undefined) {
-					console.error(formatText(this.$t(`toast.dinozDataMissing`)));
-					return;
-				}
-				this.items = new Array(newMaxItems);
-				this.dinozData.items?.forEach((item, index) => (this.items[index] = item));
-			},
-			immediate: true
+		getInventory(): number[] {
+			const dinoz: DinozFiche = useDinozStore().getCurrentDinoz;
+			const placesToFill: number = dinoz.maxItems - dinoz.items.length;
+			return dinoz.items.concat(new Array(placesToFill).fill(undefined));
 		}
 	},
 	methods: {
-		async unequip(item: number) {
-			if (!this.dinozData) {
-				this.$toast.open({
-					message: formatText(this.$t(`toast.dinozDataMissing`)),
-					type: 'error'
-				});
-				return;
-			}
-
+		async unequip(itemId: number) {
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
-				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
-				this.items = new Array(this.dinozData.maxItems);
-				backPack.forEach((item, index) => (this.items[index] = item.itemId));
-				EventBus.emit('refreshDinozStats', true);
+				const items = await InventoryService.equipInventoryItem(dinozId, itemId, false);
+				useDinozStore().setItems(
+					dinozId,
+					items.map(item => item.itemId)
+				);
 				EventBus.emit('refreshInventory', true);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		}
-	},
-	mounted() {
-		if (!this.dinozData) {
-			this.$toast.open({
-				message: formatText(this.$t(`toast.dinozDataMissing`)),
-				type: 'error'
-			});
-			return;
-		}
-
-		this.items = new Array(this.dinozData.maxItems);
-		this.dinozData.items.forEach((item, index) => (this.items[index] = item));
 	}
 });
 </script>

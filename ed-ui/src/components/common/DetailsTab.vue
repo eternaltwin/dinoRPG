@@ -12,7 +12,7 @@
 		<p
 			v-if="playerStore.playerOptions.hasPAC"
 			class="wrapperMenu"
-			@click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })"
+			@click="goTo($router, 'DinozSkills', { params: { id: useDinozStore().currentDinozId } })"
 		>
 			{{ $t('skillTrees.title') }}
 		</p>
@@ -21,11 +21,11 @@
 		</p>
 		<div ref="butt" class="wrapper" :class="hidden ? 'hidden' : 'shown'">
 			<div class="label">
-				<DZSelect class="sort-select" id="sort" v-model="selectedSort" :options="sortOptions" @change="sort()" />
+				<DZSelect class="sort-select" id="sort" v-model="selectedSort" :options="sortOptions" />
 			</div>
 			<div class="label">
-				<DZRadio id="asc" :label="$t('details.asc')" value="asc" v-model="picked" @change="reverse()" />
-				<DZRadio id="desc" :label="$t('details.desc')" value="desc" v-model="picked" @change="reverse()" />
+				<DZRadio id="asc" :label="$t('details.asc')" value="asc" v-model="picked" />
+				<DZRadio id="desc" :label="$t('details.desc')" value="desc" v-model="picked" />
 			</div>
 		</div>
 		<table>
@@ -38,7 +38,7 @@
 					</th>
 				</tr>
 				<tr
-					v-for="skill in dinozSkill as SkillDetails[]"
+					v-for="skill in dinozSkills as SkillDetails[]"
 					:key="skill.id"
 					:class="skill.state === false ? 'disabled' : ''"
 				>
@@ -292,33 +292,30 @@
 	</div>
 </template>
 
-<script lang="ts" scoped>
-import { defineComponent, PropType } from 'vue';
-import { statusList } from '../../constants/index.js';
-import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { DinozService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
-import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
-import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
-import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { dinozStore, playerStore } from '../../store/index.js';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { statusList } from '../../constants';
+import { DinozService } from '../../services';
+import { errorHandler } from '../../utils';
+import { playerStore, useDinozStore } from '../../store';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
-import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import DZSelect from './DZSelect.vue';
 import DZRadio from './DZRadio.vue';
-import { TIME_BASE } from '@drpg/core/utils/fightConstants';
-import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
 import { DinozBuildService } from '../../services/DinozBuildService.js';
 import { DinozBuild } from '@drpg/prisma';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
+import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
+import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
+import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
+import { TIME_BASE } from '@drpg/core/utils/fightConstants';
 
 export default defineComponent({
 	name: 'DetailsTab',
-	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		SkillTooltip,
 		DZSelect,
@@ -326,7 +323,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			dinozSkill: [] as Array<SkillDetails>,
 			skillList,
 			statusList,
@@ -334,15 +330,7 @@ export default defineComponent({
 			picked: 'Ascendant' as string,
 			hidden: true as boolean,
 			ElementType,
-			AssaultElement,
-			getAssaultStat,
-			assaultStats: [] as ReturnType<typeof getAssaultStat>[],
-			DefenseElement: DefenseElement,
-			getDefenseStat,
-			defenseStats: [] as ReturnType<typeof getDefenseStat>[],
 			SpecialStat: SpecialStat,
-			getSpecialStat,
-			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
 			playerStore: playerStore(),
 			goTo,
 			sortOptions: [
@@ -355,46 +343,202 @@ export default defineComponent({
 			dinozBuild: undefined as DinozBuild['id'] | undefined
 		};
 	},
+	computed: {
+		dinozSkills() {
+			try {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				let skills = toSkillDetails(currentDinoz.skills);
+				this.sortSkills(skills); // Mutate the array
+				if (this.picked === 'desc') {
+					skills = [...skills].reverse();
+				}
+				// Else, nothing to do as the computed property is refreshed
+				return skills;
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return [];
+			}
+		},
+		assaultStats() {
+			try {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				return Object.values(AssaultElement).map(stat =>
+					getAssaultStat(
+						currentDinoz,
+						currentDinoz.status.map(s => s.statusId),
+						toSkillDetails(currentDinoz.skills),
+						stat as AssaultElement
+					)
+				);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return [];
+			}
+		},
+		defenseStats() {
+			try {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				return Object.values(DefenseElement).map(stat =>
+					getDefenseStat(
+						currentDinoz,
+						currentDinoz.status.map(s => s.statusId),
+						toSkillDetails(currentDinoz.skills),
+						stat as DefenseElement
+					)
+				);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return [];
+			}
+		},
+		specialStats() {
+			try {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				const priest = this.playerStore.isPriest;
+				// Find global speed value to compute it with elemental speed
+				const global_speed_special = getSpecialStat(
+					currentDinoz,
+					currentDinoz.status.map(s => s.statusId),
+					toSkillDetails(currentDinoz.skills),
+					SpecialStat.SPEED,
+					priest
+				);
+
+				// Find global critical value
+				const global_critical_hit = getSpecialStat(
+					currentDinoz,
+					currentDinoz.status.map(s => s.statusId),
+					toSkillDetails(currentDinoz.skills),
+					SpecialStat.CRITICAL_HIT_CHANCE,
+					priest
+				);
+
+				let global_speed = 1;
+				if (global_speed_special) {
+					global_speed = global_speed_special.value;
+				}
+
+				return Object.values(SpecialStat)
+					.map(stat => {
+						let special = getSpecialStat(
+							currentDinoz,
+							currentDinoz.status.map(s => s.statusId),
+							toSkillDetails(currentDinoz.skills),
+							stat as SpecialStat,
+							priest
+						);
+
+						// Add +1 to bubble for proper display
+						if (special && special.name.includes('bubble')) {
+							special.value += 1;
+						}
+
+						// Transform speed into the duration of a turn
+						if (special && special.name.toLowerCase().includes('speed')) {
+							special.percent = false;
+							// Specific handling for elemental speed
+							if (!special.name.startsWith('speed')) {
+								if (special.value === 1) {
+									// Hide element speeds if they are only at the base value
+									special = null;
+								} else {
+									// Multiply by global speed
+									special.value = Math.round(100 * TIME_BASE * special.value * global_speed) / 100;
+									// Set base as global speed
+									if (special.details) {
+										special.details.map(detail => {
+											detail.percent = false;
+											if (detail.type === 'base') {
+												detail.value = Math.round(global_speed * TIME_BASE * 100) / 100;
+											}
+											return detail;
+										});
+									}
+								}
+							} else {
+								special.value = Math.round(TIME_BASE * special.value * 100) / 100;
+								if (special.details) {
+									special.details.map(detail => {
+										detail.percent = false;
+										if (detail.type === 'base') {
+											detail.value = TIME_BASE;
+										}
+										return detail;
+									});
+								}
+							}
+						}
+
+						// Filter out other special stats that are at default value
+						if (special && !special.name.startsWith('speed') && special.value === 100) {
+							special = null;
+						}
+
+						// Filter out critical hit damage if critical hit chance is default (0%)
+						if (
+							special &&
+							special.name.startsWith('criticalHitDamage') &&
+							global_critical_hit &&
+							global_critical_hit.value === 1
+						) {
+							special = null;
+						}
+
+						// Filter out stats with no details, with some exceptions
+						if (
+							special &&
+							((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)
+						) {
+							return special;
+						} else {
+							return null;
+						}
+					})
+					.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return [];
+			}
+		}
+	},
 	methods: {
+		useDinozStore,
 		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
+				useDinozStore().setDinozSkillState(parseInt(dinozId), skill.id, !skill.state);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-
-			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
+			try {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				return currentDinoz.status.some(s => s.statusId === statusList.id.amulst) ?? false;
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return false;
+			}
 		},
-		sort(): void {
+		sortSkills(skills: SkillDetails[]) {
 			switch (this.selectedSort) {
 				case 'Default':
-					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
-						a.id > b.id ? 1 : b.id > a.id ? -1 : 0
-					);
-					break;
+					return skills.sort((a: SkillDetails, b: SkillDetails) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
 				case 'Type':
-					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
-						a.type > b.type ? 1 : b.type > a.type ? -1 : 0
-					);
-					break;
+					return skills.sort((a: SkillDetails, b: SkillDetails) => (a.type > b.type ? 1 : b.type > a.type ? -1 : 0));
 				case 'Energy':
-					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
+					return skills.sort((a: SkillDetails, b: SkillDetails) =>
 						a.energy > b.energy ? 1 : b.energy > a.energy ? -1 : 0
 					);
-					break;
 				case 'State':
-					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
+					return skills.sort((a: SkillDetails, b: SkillDetails) =>
 						!!a.state > !!b.state ? 1 : !!b.state > !!a.state ? -1 : 0
 					);
-					break;
 				default:
-					break;
+					return skills;
 			}
 		},
 		reverse(): void {
@@ -403,174 +547,28 @@ export default defineComponent({
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
 		},
-		refreshStats() {
-			// Get stats
-			this.assaultStats = Object.values(AssaultElement).map(stat =>
-				getAssaultStat(
-					this.dinozData,
-					this.dinozData.status.map(s => s.statusId),
-					this.dinozSkill,
-					stat as AssaultElement
-				)
-			);
-
-			this.defenseStats = Object.values(DefenseElement).map(stat =>
-				getDefenseStat(
-					this.dinozData,
-					this.dinozData.status.map(s => s.statusId),
-					this.dinozSkill,
-					stat as DefenseElement
-				)
-			);
-
-			const priest = this.playerStore.isPriest;
-
-			// Find global speed value to compute it with elemental speed
-			const global_speed_special = getSpecialStat(
-				this.dinozData,
-				this.dinozData.status.map(s => s.statusId),
-				this.dinozSkill,
-				SpecialStat.SPEED,
-				priest
-			);
-
-			// Find global critical value
-			const global_critical_hit = getSpecialStat(
-				this.dinozData,
-				this.dinozData.status.map(s => s.statusId),
-				this.dinozSkill,
-				SpecialStat.CRITICAL_HIT_CHANCE,
-				priest
-			);
-
-			let global_speed = 1;
-			if (global_speed_special) {
-				global_speed = global_speed_special.value;
-			}
-
-			this.specialStats = Object.values(SpecialStat)
-				.map(stat => {
-					let special = getSpecialStat(
-						this.dinozData,
-						this.dinozData.status.map(s => s.statusId),
-						this.dinozSkill,
-						stat as SpecialStat,
-						priest
-					);
-
-					// Add +1 to bubble for proper display
-					if (special && special.name.includes('bubble')) {
-						special.value += 1;
-					}
-
-					// Transform speed into the duration of a turn
-					if (special && special.name.toLowerCase().includes('speed')) {
-						special.percent = false;
-						// Specific handling for elemental speed
-						if (!special.name.startsWith('speed')) {
-							if (special.value === 1) {
-								// Hide element speeds if they are only at the base value
-								special = null;
-							} else {
-								// Multiply by global speed
-								special.value = Math.round(100 * TIME_BASE * special.value * global_speed) / 100;
-								// Set base as global speed
-								if (special.details) {
-									special.details.map(detail => {
-										detail.percent = false;
-										if (detail.type === 'base') {
-											detail.value = Math.round(global_speed * TIME_BASE * 100) / 100;
-										}
-										return detail;
-									});
-								}
-							}
-						} else {
-							special.value = Math.round(TIME_BASE * special.value * 100) / 100;
-							if (special.details) {
-								special.details.map(detail => {
-									detail.percent = false;
-									if (detail.type === 'base') {
-										detail.value = TIME_BASE;
-									}
-									return detail;
-								});
-							}
-						}
-					}
-
-					// Filter out other special stats that are at default value
-					if (special && !special.name.startsWith('speed') && special.value === 100) {
-						special = null;
-					}
-
-					// Filter out critical hit damage if critical hit chance is default (0%)
-					if (
-						special &&
-						special.name.startsWith('criticalHitDamage') &&
-						global_critical_hit &&
-						global_critical_hit.value === 1
-					) {
-						special = null;
-					}
-
-					// Filter out stats with no details, with some exceptions
-					if (
-						special &&
-						((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)
-					) {
-						return special;
-					} else {
-						return null;
-					}
-				})
-				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
-		},
 		async loadComponent(): Promise<void> {
-			try {
-				this.dinozSkill = toSkillDetails(this.dinozData.skills);
-				this.sort();
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-
 			if (this.playerStore.playerOptions.hasPAC) {
 				try {
+					const currentDinoz = useDinozStore().getCurrentDinoz;
 					this.ownBuilds = await DinozBuildService.getOwn();
-
-					this.dinozBuild = this.dinozData.build?.id;
+					this.dinozBuild = currentDinoz.build?.id;
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 				}
 			}
-
-			this.refreshStats();
-
-			// Refresh special stats on EventBus `refreshDinozStats`
-			EventBus.on('refreshDinozStats', () => {
-				this.refreshStats();
-			});
 		},
 		async changeDinozBuild() {
-			if (!this.dinozBuild || !this.dinozStore.currentDinozId) {
+			if (!this.dinozBuild || !useDinozStore().getCurrentDinoz.id) {
 				return;
 			}
 
 			try {
-				await DinozService.assignBuild(this.dinozStore.currentDinozId, this.dinozBuild);
-				const currentDinoz = this.dinozStore.getDinoz(this.dinozStore.currentDinozId);
-
-				if (!currentDinoz) {
-					throw new Error('Dinoz not found in store after assigning build');
-				}
-
+				await DinozService.assignBuild(useDinozStore().getCurrentDinoz.id, this.dinozBuild);
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
 
-				this.dinozStore.setDinoz({
-					...currentDinoz,
-					build
-				});
+				useDinozStore().setDinoz({ ...currentDinoz, build });
 
 				this.$toast.success(this.$t('toast.buildAssigned', { name: build?.name ?? '' }).toString());
 			} catch (err) {
@@ -587,9 +585,6 @@ export default defineComponent({
 		dinozData() {
 			this.loadComponent();
 		}
-	},
-	unmounted() {
-		EventBus.off('refreshDinozStats');
 	}
 });
 </script>

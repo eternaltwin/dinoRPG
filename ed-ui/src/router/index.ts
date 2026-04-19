@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import EventBus from '../events/index.js';
 import { getCookie } from '../utils/cookies.js';
+import { useMenuStore } from '../store';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,8 +71,8 @@ const router = createRouter({
 				},
 				{
 					path: '/player/:id',
-					name: 'MyAccount',
-					component: () => import('../pages/MyAccount.vue')
+					name: 'Account',
+					component: () => import('../pages/./Account')
 				},
 				{
 					path: '/levelup/:id',
@@ -137,6 +137,14 @@ const router = createRouter({
 							path: 'player',
 							name: 'Player',
 							component: () => import('../components/admin/PlayerEdit.vue'),
+							props: route => ({
+								id: route.query.id
+							})
+						},
+						{
+							path: 'clan',
+							name: 'AdminClan',
+							component: () => import('../components/admin/ClanEdit.vue'),
 							props: route => ({
 								id: route.query.id
 							})
@@ -433,8 +441,8 @@ router.beforeEach(to => {
 			return { name: 'MainPage' };
 		}
 	}
-	EventBus.emit('twinoMenu', false);
-	EventBus.emit('dinozMenu', false);
+	useMenuStore().setTwinoMenuOpened(false);
+	useMenuStore().setDinozMenuOpened(false);
 });
 
 export default router;

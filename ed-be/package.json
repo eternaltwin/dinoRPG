@@ -1,6 +1,6 @@
 {
 	"name": "ed-be",
-	"version": "0.17.21",
+	"version": "0.17.29",
 	"description": "EternalDino API",
 	"scripts": {
 		"serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
@@ -24,12 +24,13 @@
 	"license": "ISC",
 	"dependencies": {
 		"@drpg/core": "workspace:^",
+		"@drpg/renderer": "workspace:^",
 		"@eternaltwin/client-node": "0.16.4",
 		"@eternaltwin/core": "^0.16.0",
 		"@eternaltwin/oauth-client-http": "^0.16.1",
 		"@opentelemetry/api": "^1.9.0",
 		"@opentelemetry/exporter-trace-otlp-proto": "^0.56.0",
-		"@opentelemetry/instrumentation": "^0.56.0",
+		"@opentelemetry/instrumentation": "^0.212.0",
 		"@opentelemetry/instrumentation-express": "^0.46.0",
 		"@opentelemetry/instrumentation-http": "^0.56.0",
 		"@opentelemetry/resources": "^1.29.0",

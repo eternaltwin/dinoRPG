@@ -513,20 +513,19 @@ export async function sendSseMessageToUserInChannel(
 	const channel = sseChannels.get(channelName);
 
 	if (channel === undefined) {
-		LOGGER.info(`No user in channel ${channelName}`);
 		return;
 	}
 
 	// Get user in channel
-	const player = channel.filter(c => c.playerId === playerId);
-	if (player.length === 0) {
-		LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
+	const player = channel.find(c => c.playerId === playerId);
+	if (!player) {
+		// LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
 		return;
 	}
 
 	// Send message
 	const data = `data: ${JSON.stringify(message)}\n\n`;
-	player.forEach(p => p.res.write(data));
+	player.res.write(data);
 }
 
 /**

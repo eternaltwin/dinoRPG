@@ -180,9 +180,9 @@
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
 	"import": {
-		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en EternalDinoRPG.&&&Todos tus Dinos, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus Dinos.&&&Las misiones llevadas a cabo por tus Dinos no se guardarán. Algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus Dinos. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de DinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación Twinoid cuando se te solicite.&&&Cuantos más Dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus Dinos de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
+		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en DinoRPG.&&&Todos tus Dinos, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus Dinos.&&&Las misiones llevadas a cabo por tus Dinos no se guardarán. Algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus Dinos. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de DinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación Twinoid cuando se te solicite.&&&Cuantos más Dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus Dinos de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
 		"imported": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido importada! && ¡{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, se han guardado del servidor {server}!&& &&Una nueva importación eliminará lo que está actualmente guardado.",
-		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de EternalDinoRPG! &&{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, han sido eliminados. Ahora puedes volver a importar.",
+		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de DinoRPG! &&{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, han sido eliminados. Ahora puedes volver a importar.",
 		"disclaimer2": "Puedes guardar tus trofeos y estadísticas de Twinoid haciendo clic en el botón de abajo."
 	},
 	"element": {
@@ -519,7 +519,6 @@
 			"candle_card": "Vela de Aniversario",
 			"christmas_ticket": "Ticket de Navidad",
 			"tictac_ticket": "Ticket Taque",
-			"anniversary_ticket": "Vela de Aniversario",
 			"easter_egg": "Huevo de la Bruja Lula",
 			"fire_cracker": "Petardo mágico",
 			"special_potion_irma": "Poción especial de la Bruja Lola",
@@ -651,7 +650,6 @@
 			"candle_card": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
 			"christmas_ticket": "Este Ticket de Navidad te permite acceder al juego de caza de nieves en Dinovilla.",
 			"tictac_ticket": "Los Tickets Taque te permitirán excavar en el jardín de Papy Jose. Podrás encontrar tesoros escondidos por su tatarabuelo.",
-			"anniversary_ticket": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
 			"easter_egg": "Un huevo de Lula permite ganar un objeto entre todos los que existen en Dinoland. Objeto raro o común, ¡Hoy puede ser tu día de suerte!",
 			"fire_cracker": "¡Con este petardo lanzarás los fuegos artificiales en Dinovilla que te harán ganar tesoros!",
 			"special_potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente. Solo puedes llevar 3.",
@@ -1391,8 +1389,8 @@
 				"sry": "Site popre ven pa, sino mot'dan lobatou, k?",
 				"go": "Jovebozé te lleva al mar, a una parte que parece ser evitada por los otros barcos... Al acercarte, ves lo que parece ser un enorme Rascafandro a algunas decenas de metros del barco. Si continúas en esta dirección y si el Guardia Atlanteido llevaba razón, vas a ser atacado de un momento a otro... ¡¡cuanto más rápido pase esto mejor!!",
 				"attack_win": "Era de esperar: Jovebozé no ha entendido nada de tus instrucciones... Tras un fiero combate, Jovebozé te lleva al Puerto de Santa Moría. No ha dicho una sola palabra desde el ataque del Rascafandro pero te observa por el rabillo del ojo con satisfacción. En el momento en el que os separáis te estrecha la mano con fuerza. Te confía un Reclamo de Rascafandro que él mismo ha esculpido...",
-				"weirdSwamp": "¿Ha' vi'to algo rarou en el pantano vi'coso? ¡Esho se mouve solo, te digo sho!",
-				"swampTreasure": "Dicennnn qu'encontrarás pepitahs si rasga' cuando el fango se empieza a de'controlar… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
+				"weirdSwamp": "¡Hol'a, d' nuev' chavalico! ¿Tú ha' vi'to algo reto'cido n'el pantano vi'coso? ¡Esho se mouve solo, t' digo sho!",
+				"swampTreasure": "Dicennnn qu'encontrarásh pepitahs si rasga' cuando el fango se empieza a mouver… ¡pero pue' tragart'el alma si no tienesssh cuidado!",
 				"swampLeave": "Jovebozé te hace un gesto con la mano sonriendo y se aleja tarareando una canción de marineros."
 			},
 			"playerChoice": {
@@ -1401,7 +1399,7 @@
 				"go": "Seguir a Jovebozé",
 				"attack": "Continuar",
 				"back": "¡¡¡REGRESAR!!!",
-				"swampTreasure": "… ¿¡raro!?",
+				"swampTreasure": "… ¿¡retorcido!?",
 				"swampLeave": "No entiendo nada de lo que dices..."
 			}
 		},
@@ -1590,8 +1588,8 @@
 				"leave": "Parece que no vuelve... ¿Qué clase de raza era esa?"
 			},
 			"playerChoice": {
-				"fight": "Esperar.",
-				"leave": "Perseguirlo."
+				"fight": "Perseguirlo.",
+				"leave": "Esperar."
 			}
 		},
 		"rocky": {
@@ -2250,7 +2248,7 @@
 			"ChasseurDeGeant": "Permite al Dino cazar animales medianos en ciertos lugares",
 			"CouleeDeLave": "Ataca a un enemigo con un poder de Fuego 12",
 			"BouleDeFeu": "Ataca a un enemigo con un poder de Fuego 7",
-			"Combustion": "Todos los enemigos pierden puntos de vida iguales a su elemento Madera",
+			"Combustion": "Todos los enemigos pierden puntos de vida iguales a su elemento Madera (sujeto a balanceo)",
 			"ChasseurDeDragon": "Permite al Dino cazar animales muy raros y peligrosos en algunos lugares",
 			"Torche": "El Dino está en llamas, pierde 1 punto de vida por turno. Los enemigos que atacan al Dino en combate cuerpo a cuerpo sufren daños relacionados con el elemento Fuego del Dino en llamas, sujeto a balanceo.",
 			"AuraIncandescente": "Aumenta el elemento Fuego en 2",
@@ -2280,7 +2278,7 @@
 			"DoucheEcossaise": "Ataca a todos los enemigos con un poder de Agua 2",
 			"ZeroAbsolu": "Aumenta la defensa contra Fuego en 25",
 			"Petrification": "Petrifica a un enemigo durante un tiempo medio. El enemigo no puede moverse, pero su armadura aumenta un 50%",
-			"Acupuncture": "Da el estatus Curación. Si uno de los ataques toca al Dino, el enemigo pierde 1 punto de vida",
+			"Acupuncture": "Da el estatus Curación (recupera 1 punto de vida por ciclo). Si uno de los ataques toca al Dino, el enemigo pierde 1 punto de vida.",
 			"Sapeur": "Aumenta las posibilidades de usar objetos en combate en 50%",
 			"RayonKaarSher": "Ataca a todos los enemigos con un poder de Agua 7",
 			"Magasinier": "Aumenta la capacidad máxima del inventario del jugador en un 50% (no acumulable)",
@@ -2296,11 +2294,11 @@
 			"MaitreNageur": "Aumenta el elemento Agua en 5",
 			"KarateSousMarin": "Aumenta el poder de todos los **asaltos** de Agua en 10",
 			"Sumo": "Aumenta el máximo de puntos de vida en 100",
-			"SansPitie": "Elige el objetivo con menos puntos de vida en cada *asalto*",
-			"CloneAqueux": "Crea un clon del Dino con 1 punto de vida",
+			"SansPitie": "Elige el objetivo con menos puntos de vida en cada **asalto**",
+			"CloneAqueux": "Crea un clon del Dino con 1 punto de vida. El clon solo hereda las estadísticas base de quien lo invoca (ataque, defensa, esquiva, multi-golpes, contraataque y golpe crítico).",
 			"GriffesEmpoisonnees": "Si uno de los **asaltos** de Agua del Dino toca a un enemigo, este queda envenenado por una duración media y el veneno inflige 14 de daño",
 			"Cuisinier": "Aumenta el beneficio de vida de los objetos en 10% para todos los Dinos",
-			"SangAcide": "Los enemigos que atacan al Dino en combate cuerpo a cuerpo tienen una probabilidad de sufrir daño relacionado con el elemento Agua del Dino (sujeto a balanceo)",
+			"SangAcide": "Los enemigos que atacan al Dino en combate cuerpo a cuerpo tienen 50% de probabilidad de sufrir daño relacionado con el elemento Agua del Dino (sujeto a balanceo)",
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
 			"PremiersSoins": "Permite al Dino recuperar un punto de vida al final de un combate si pierde vida",
 			"PureeSalvatrice": "Anula todos los estatus negativos del Grupo",
@@ -2318,7 +2316,7 @@
 			"Brancardier": "Permite a otro Dino del Grupo recuperar hasta 5 puntos de vida al final del combate",
 			"Marchand": "Disminuye todos los precios de la tienda de Dinoland en un 10% (no acumulable)",
 			"Reincarnation": "Permite reencarnar al Dino a partir del nivel 40. El Dino regresará al nivel 1 y recibirá 5 puntos adicionales en sus elementos al azar",
-			"Saut": "Permite al Dino atacar a los enemigos en vuelo",
+			"Saut": "Permite al Dino que sus **asaltos** toquen a los enemigos en vuelo",
 			"DisqueVacuum": "Ataca a un enemigo con un poder de Aire 12",
 			"AttaquePlongeante": "Ataca a un enemigo en un asalto con un bonus de Aire 2",
 			"Furtivite": "Aumenta la defensa contra los elementos Aire, Agua y Rayo en 2",
@@ -2327,7 +2325,7 @@
 			"Strategie": "Adopta la mejor estrategia de ataque en función de las defensas de los enemigos",
 			"Analyse": "Elige al mejor objetivo para cada ataque",
 			"Cueillette": "Permite al Dino recolectar plantas en algunos lugares",
-			"Specialiste": "Elimina el elemento más débil del ciclo de ataques",
+			"Specialiste": "Elimina el elemento más débil del ciclo de asaltos del Dino",
 			"TalonDAchille": "Aumenta la potencia de todos los **asaltos** en 2",
 			"OeilDeLynx": "Permite al Dino recolectar plantas exóticas en ciertos lugares",
 			"NuageToxique": "Envenena a todos los enemigos. El daño por turno es estrictamente igual al elemento Aire del Dino que lanza la habilidad",
@@ -2337,7 +2335,7 @@
 			"Tornade": "Ataca a todos los enemigos con un poder de Aire 5",
 			"Eveil": "Disminuye la velocidad de los ataques Aire en 20%",
 			"PaumeEjectable": "Ataca a un enemigo con un asalto de potencia doblada y disminuye la iniciativa en 15",
-			"VentVif": "Da el estatus Acelerado",
+			"VentVif": "Da el estatus Acelerado por corta duración (aumenta la velocidad en un 50%)",
 			"FormeVaporeuse": "Permite ganar el estatus Intangible al defenderse",
 			"Professeur": "Aumenta la experiencia ganada a todos los Dinos en 5%",
 			"MeditationSolitaire": "Aumenta la defensa contra Aire en 3. Disminuye la velocidad de los ataques Aire en 50%",
@@ -2358,7 +2356,7 @@
 			"Survie": "El Dino puede escapar de la muerte una vez por combate",
 			"Aiguillon": "Ataca a un enemigo con un poder de Aire 3",
 			"AuraPuante": "Si uno de los ataques toca al Dino, envenena al enemigo",
-			"Hypnose": "Un enemigo se pasa a tu campo de batalla durante 3 ciclos",
+			"Hypnose": "Un enemigo se pasa a tu campo de batalla durante 4 ciclos",
 			"Vendetta": "Aumenta las posibilidades de contraataque en 20%",
 			"Secousse": "Ataca a todos los enemigos situados sobre el suelo con un poder de Madera 4 + Aire 4",
 			"Bulle": "Anula los daños de los hechizos elementales que no sean Madera según los elementos Aire y Agua del Dino",
@@ -2440,7 +2438,7 @@
 			"MainsCollantes": "Anula la capacidad de esquivar de un Dino enemigo",
 			"GrosCostaud": "Aumenta la potencia de todos los **asaltos** en 5",
 			"OrigineCaushemeshenne": "Aumenta el poder de todos los **asaltos** en 30 cuando el Dino se encuentra en Caushemesh",
-			"Ecrasement": "Propulsa una onda de choque sobre todos los enemigos que estén alrededor",
+			"Ecrasement": "Propulsa una onda de choque con un poder 5 sobre todos los adversarios que estén alrededor, basado en el elemento más fuerte del Dino",
 			"ForceDeLumiere": "Si el Dino se encuentra en el Mundo Sombra, aumenta todos los **asaltos** en 30",
 			"ChargePigmou": "Ataca a un enemigo con un poder de Fuego 5 + Madera 3",
 			"ForceDesTenebres": "Aumenta la resistencia y la recuperación del Dino en 25%",
@@ -3095,7 +3093,7 @@
 			"fosslv": "a Fosalava",
 			"camp": "al Campamento Korgón",
 			"auree": "a la Entrada a Grumhel",
-			"papy": "Casa de Papy Jose",
+			"papy": "a Casa de Papy Jose",
 			"skull": "al Cementerio del Crepúsculo",
 			"chemin": "al Camino Tenebroso",
 			"collin": "a las Colinas Encantadas",
@@ -3529,7 +3527,7 @@
 		"title": "Jugador:",
 		"labrute": "Recompensas El Bruto",
 		"labruteTooltip": "Puedes recuperar 1 :irma: por cada 3 Dinos activos cada día al finalizar todos tus combates en El Bruto.",
-		"profil": "Perfil de EternalDinoRPG",
+		"profil": "Perfil de DinoRPG",
 		"options": {
 			"title": "Opciones de Mi Cuenta",
 			"fight": "Mostrar combates",
@@ -3538,7 +3536,7 @@
 			"retour": "Volver"
 		},
 		"twinoidgoals": {
-			"name": "Estadísticas de EternalDinoRPG",
+			"name": "Estadísticas de DinoRPG",
 			"points": "Puntos",
 			"linkStats": "Estadísticas",
 			"linkGains": "Ganancias",
@@ -4301,7 +4299,6 @@
 			"goblin": "Goblin",
 			"bat": "Ratón Fiera",
 			"ronciv": "Roncívor",
-			"gardien": "Guardián Arbólico",
 			"grdien": "Guardián Arbólico",
 			"rkrgns": "Refuerzos Korgon",
 			"egrllz": "Espíritu Gorilos",
@@ -4626,7 +4623,7 @@
 		"finals": "Y aquí está la tan esperada fase final.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
-			"disclaimer": "Aquí puedes seleccionar **5 de tus Dinos** para enfrentarte a un miembro de tu clan. Luego elige a un amigo y hasta **5 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50:gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
+			"disclaimer": "Aquí puedes seleccionar hasta **6 de tus Dinos** para enfrentarte a un miembro de tu clan (o a ti mismo). Luego elige a tu oponente y hasta **6 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50 :gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
 			"friend": "Selecciona aquí el Dino de tu amigo a enfrentar.",
 			"startFight": "{gold} :gold:",
 			"doubleDinoz": "No puedes hacer combatir al mismo Dino en ambos equipos"
@@ -4690,7 +4687,7 @@
 		"challenge": {
 			"selectChampions": "Elige a tus campeones",
 			"selectTeam": "Selecciona tu equipo de Dinos para los desafíos de hoy",
-			"disclaimer": "Puedes seleccionar hasta **10** Dinos para tu equipo. Elige con cuidado, no podrás modificar tu selección hasta mañana.",
+			"disclaimer": "Debes seleccionar **entre 5 y 10** Dinos de nivel mayor o igual a 10 para tu equipo. Elige bien. No podrás modificar tu selección hasta mañana.",
 			"validate": "Validar mi selección",
 			"edit": "Modificar mi selección",
 			"launch": "Comenzar el combate",
@@ -5193,7 +5190,8 @@
 		"rewardScenario": "Has progresado en el escenario **{scenario}**.",
 		"FBStarted": "¡Un nuevo evento ha comenzado!",
 		"clanApply": "¡{name} quiere unirse a tu clan!",
-		"message": "Has recibido un nuevo mensaje."
+		"message": "Has recibido un nuevo mensaje.",
+		"clanApplyAccepted": "El clan {name} ha aceptado tu solicitud."
 	},
 	"events": {
 		"disclaimer": "Aquí encontrará todos los eventos comunitarios en curso.",

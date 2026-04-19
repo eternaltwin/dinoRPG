@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -67,7 +67,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			selectedDinoz: [] as number[],
 			clanMembers: [] as Array<ClanMember>,
@@ -98,7 +97,8 @@ export default defineComponent({
 							display: d.display,
 							level: d.level
 						};
-					});
+					})
+					.sort((a, b) => b.level - a.level);
 				this.opponentId = playerId;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -118,14 +118,22 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t, fightResult.result);
-				if (!nexFight) {
+				const nextFight = transpileFight(
+					structuredClone(toRaw(fighters)),
+					fightSteps,
+					this.$t,
+					fightResult.result,
+					undefined,
+					undefined,
+					true
+				);
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
+					history: nextFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
 				this.leftPlayer = fightResult.leftPlayer;
@@ -152,8 +160,8 @@ export default defineComponent({
 			this.$router.push({ name: 'DojoHome' });
 			return;
 		}
-		this.myDinoz = this.dinozStore.getDinozList
-			.filter(d => d.unavailableReason !== UnavailableReason.frozen)
+		this.myDinoz = useDinozStore()
+			.getDinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 			.map(d => {
 				return {
 					id: d.id,
@@ -161,7 +169,8 @@ export default defineComponent({
 					display: d.display,
 					level: d.level
 				};
-			});
+			})
+			.sort((a, b) => b.level - a.level);
 
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);

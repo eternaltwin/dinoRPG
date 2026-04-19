@@ -96,7 +96,7 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
@@ -110,7 +110,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			playerStore: playerStore(),
@@ -133,13 +132,13 @@ export default defineComponent({
 			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
 		async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
 			const newDinozList = commonData.dinoz.map(d => d.id);
 			const oldDinozList = dinozList.map(d => d.id);
-			this.dinozStore.setDinozList(commonData.dinoz);
+			useDinozStore().setDinozList(commonData.dinoz);
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
 		},
@@ -147,48 +146,50 @@ export default defineComponent({
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = this.$route.params.id as string;
 				try {
-					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-					await this.resfreshInventory();
-					if (toast.category === ItemEffect.EGG) {
-						await this.refreshDinozList();
-					} else if (toast.category === ItemEffect.GOLD) {
-						await this.$refreshGold();
-					} else {
-						EventBus.emit('refreshDinoz', true);
-					}
+					const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
+					for (const toast of toasts) {
+						await this.resfreshInventory();
+						if (toast.category === ItemEffect.EGG) {
+							await this.refreshDinozList();
+						} else if (toast.category === ItemEffect.GOLD) {
+							await this.$refreshGold();
+						} else {
+							EventBus.emit('refreshDinoz', true);
+						}
 
-					let message: string;
-					switch (toast.category) {
-						case ItemEffect.SPECIAL:
-							message = this.$t(`toast.special.${toast.value}`, {
-								value: this.$t(`item.name.${toast.effect}`),
-								qty: toast.quantity
-							});
-							break;
-						case ItemEffect.SPHERE:
-							message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
-							break;
-						case ItemEffect.QUEST:
-							message = this.$t(`quest.${toast.value}`);
-							break;
-						case ItemEffect.RESURRECT:
-							message = this.$t(`toast.${toast.category}`);
-							break;
-						case ItemEffect.EGG:
-							message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
-							break;
-						default:
-							message =
-								typeof toast.value === 'number'
-									? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
-									: this.$t(`toast.${toast.category}`, { value: toast.value });
-							break;
-					}
+						let message: string;
+						switch (toast.category) {
+							case ItemEffect.SPECIAL:
+								message = this.$t(`toast.special.${toast.value}`, {
+									value: this.$t(`item.name.${toast.effect}`),
+									qty: toast.quantity
+								});
+								break;
+							case ItemEffect.SPHERE:
+								message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
+								break;
+							case ItemEffect.QUEST:
+								message = this.$t(`quest.${toast.value}`);
+								break;
+							case ItemEffect.RESURRECT:
+								message = this.$t(`toast.${toast.category}`);
+								break;
+							case ItemEffect.EGG:
+								message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
+								break;
+							default:
+								message =
+									typeof toast.value === 'number'
+										? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
+										: this.$t(`toast.${toast.category}`, { value: toast.value });
+								break;
+						}
 
-					this.$toast.open({
-						message: formatText(message),
-						type: 'info'
-					});
+						this.$toast.open({
+							message: formatText(message),
+							type: 'info'
+						});
+					}
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
@@ -201,7 +202,10 @@ export default defineComponent({
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
-					EventBus.emit('equipItem', items);
+					useDinozStore().setItems(
+						dinozId,
+						items.map(item => item.itemId)
+					);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
@@ -295,7 +299,9 @@ export default defineComponent({
 			}
 		}
 		td {
-			vertical-align: top;
+			vertical-align: middle;
+			padding-top: 3px;
+			padding-bottom: 3px;
 			height: 34.5px;
 		}
 	}
@@ -349,15 +355,15 @@ export default defineComponent({
 	font-variant: small-caps;
 	cursor: help;
 	img {
-		float: left;
 		position: relative;
 		margin-right: 5px;
 		border: 1px solid #ae6733;
-		vertical-align: bottom;
+		vertical-align: middle;
 	}
 	p {
-		padding-top: 10px;
-		padding-bottom: 10px;
+		display: inline-block;
+		vertical-align: middle;
+		max-width: calc(100% - 45px);
 	}
 }
 .type {
@@ -372,7 +378,6 @@ export default defineComponent({
 .act {
 	padding-left: 5px;
 	display: flex;
-	justify-content: center;
 	align-content: space-evenly;
 	align-items: center;
 	a {
@@ -390,7 +395,6 @@ export default defineComponent({
 	padding-left: 4px;
 	padding-right: 4px;
 	vertical-align: center;
-
 	& > div {
 		height: 100%;
 		display: flex;

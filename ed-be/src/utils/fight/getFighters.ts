@@ -39,10 +39,7 @@ export const initializeDinoz = (
 	bossFight: boolean,
 	random: seedrandom.PRNG
 ) => {
-	// Costume
-	let costume: MonsterFiche | undefined = undefined;
-
-	// Find items for non clone figther
+	// Build list of items with details
 	const items = dinoz.items.map(item => {
 		const itemFiche = Object.values(itemList).find(i => i.itemId === item.itemId);
 
@@ -50,24 +47,10 @@ export const initializeDinoz = (
 			throw new Error(`Item ${item.itemId} not found`);
 		}
 
-		// Add bamboo monster
-		if (team && itemFiche.itemId === Item.BAMBOO_FRIEND) {
-			// TODO: fix and use the right methods or do it somewhere else as it may be missed
-			team.monsterList.push({ ...monsterList.BAMBOOZ_SPROUTING });
-		}
-
-		// Set costume
-		if (team && itemFiche.itemId === Item.VEGETOX_COSTUME) {
-			costume = monsterList.VEGETOX_GUARD;
-		}
-		if (team && itemFiche.itemId === Item.GOBLIN_COSTUME) {
-			costume = monsterList.GOBLIN;
-		}
-
 		return { ...itemFiche };
 	});
 
-	// Find skills for non clone fighter
+	// Build list of skills with details
 	const skills = dinoz.skills.map(skill => {
 		const skillDetails = skillList[skill.skillId as Skill];
 
@@ -192,7 +175,7 @@ export const initializeDinoz = (
 		allAssaultMultiplier: 1,
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
-		costume,
+		costume: undefined,
 		invocations: 1,
 		initiallyCursed: dinoz.status.some(status => status.statusId === DinozStatusId.CURSED),
 		permanentStatusGained: [],
@@ -255,12 +238,6 @@ export const initializeDinoz = (
 		}
 		return random() > 0.5 ? 1 : -1;
 	});
-
-	// SPECIALISTE
-	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
-		// Remove the lowest element
-		elements.pop();
-	}
 
 	fighter.elements = elements.map(element => element.element);
 	fighter.element = fighter.elements[0];
@@ -433,6 +410,9 @@ export const initializeMonster = (
 		id: -memory.existingMonsters,
 		playerId: null,
 		display: monster.display ?? '',
+		dark: monster.dark,
+		size: monster.size,
+		entrance: monster.entrance,
 		name: monster.name,
 		level: monster.level,
 		type: is_reinforcement ? FighterType.REINFORCEMENT : monster.boss ? FighterType.BOSS : FighterType.MONSTER,
@@ -632,7 +612,10 @@ const handleDinozStatuses = (fighter: DetailedFighter, statuses: DinozStatusId[]
 	);
 
 	if (fighterHas[DinozStatusId.CUSCOUZ_MALEDICTION]) {
-		fighter.costume = monsterList.FRUTOX_DEFENDER;
+		fighter.costume = {
+			skin: monsterList.FRUTOX_DEFENDER,
+			breakable: false
+		};
 	}
 
 	if (fighterHas[DinozStatusId.CATCHING_GLOVE]) {
@@ -715,11 +698,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	// Race
 	if (fighterHas[Skill.ROCK]) {
 		fighter.hasRock = true;
-	}
-
-	// 50% chance to get positive / negative time
-	if (fighterHas[Skill.DOUBLE_FACE]) {
-		fighter.time += (random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
 	if (fighterHas[Skill.ROUGE]) {

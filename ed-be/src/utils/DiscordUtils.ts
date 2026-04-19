@@ -3,6 +3,8 @@ import { AttachmentBuilder, EmbedBuilder, WebhookClient } from 'discord.js';
 import type { Response } from 'express';
 import { Logger } from '../logger/index.js';
 import fs from 'fs';
+import { GLOBAL } from '../context.js';
+import { Player } from '@drpg/prisma';
 
 const DEFAULT_TIMEOUT = 5000;
 // Maximum accepted length for the embed title
@@ -62,7 +64,11 @@ function formatMarkdownForEmbed(text: string): string {
 export interface DiscordClient {
 	sendError(error: Error, res?: Response): void;
 	sendMessage(message: string, data: object[]): Promise<void>;
-	sendPantheonNotification(message: string): Promise<void>;
+	sendPantheonNotification(
+		message: string,
+		player: Pick<Player, 'name' | 'id'>,
+		image?: Uint8Array | undefined
+	): Promise<void>;
 	sendNewsNotification(title: string, test: string, image: Uint8Array | undefined): Promise<void>;
 }
 
@@ -238,14 +244,37 @@ ${error.stack}
 			});
 	}
 
-	public async sendPantheonNotification(message: string) {
-		let content = SEND_MESSAGE_PREFIX + message + SEND_MESSAGE_SUFFIX;
-		if (content.length > MAX_CONTENT_LENGTH) {
-			const shortLen = MAX_CONTENT_LENGTH - SEND_MESSAGE_PREFIX.length - SEND_MESSAGE_SUFFIX_TRUNCATED.length;
-			const short = message.substring(0, shortLen);
-			content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
+	public async sendPantheonNotification(
+		message: string,
+		player: Pick<Player, 'name' | 'id'>,
+		image?: Uint8Array | undefined
+	) {
+		if (image) {
+			const attachment = new AttachmentBuilder(Buffer.from(image), { name: 'dino.png' });
+
+			const embed = new EmbedBuilder()
+				.setTitle(player.name)
+				.setURL(`${GLOBAL.config.selfUrl}/player/${player.id}`)
+				.setDescription(message)
+				.setColor(10829079)
+				.setAuthor({
+					name: 'DinoRPG',
+					iconURL: `https://dinorpg.eternaltwin.org/favicon.ico` // Does not work, need a permalink to add the favicon
+				})
+				.setThumbnail('attachment://dino.png')
+				.setImage('attachment://dino.png')
+				.setTimestamp();
+
+			await this.#pantheonClient.send({ embeds: [embed], files: [attachment] });
+		} else {
+			let content = SEND_MESSAGE_PREFIX + message + SEND_MESSAGE_SUFFIX;
+			if (content.length > MAX_CONTENT_LENGTH) {
+				const shortLen = MAX_CONTENT_LENGTH - SEND_MESSAGE_PREFIX.length - SEND_MESSAGE_SUFFIX_TRUNCATED.length;
+				const short = message.substring(0, shortLen);
+				content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
+				await this.#pantheonClient.send({ content });
+			}
 		}
-		await this.#pantheonClient.send({ content });
 	}
 
 	public async sendNewsNotification(title: string, text: string, image: Uint8Array | undefined) {

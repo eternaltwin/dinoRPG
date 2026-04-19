@@ -3,7 +3,7 @@
 		<img class="headProfil" :src="getImgURL('design', 'ugoals_crown')" alt="info_button" />
 		<h3>
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-			{{ $t(`myAccount.twinoidgoals.name`) }}
+			{{ title }}
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="userGoals">
@@ -127,7 +127,7 @@
 
 <script lang="ts">
 import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
-import { PropType, defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { localStore } from '../../store/index.js';
 import { Unlock } from '@drpg/core/models/goals/GoalsType';
 import { getGoal, getUnlockedGoals } from '@drpg/core/utils/twinoidGoals';
@@ -146,6 +146,10 @@ export default defineComponent({
 	props: {
 		accountStats: {
 			type: Object as PropType<PlayerStats[]>,
+			required: true
+		},
+		title: {
+			type: String as PropType<string>,
 			required: true
 		}
 	},

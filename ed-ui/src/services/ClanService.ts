@@ -41,9 +41,7 @@ export const ClanService = {
 		return res.data;
 	},
 	async updateClanBanner(id: number, data: FormData) {
-		const res = await http().put(`/clan/` + id + `/edit/banner`, data, {
-			headers: { 'Content-Type': 'multipart/form-data' }
-		});
+		const res = await http().put(`/clan/` + id + `/edit/banner`, data);
 		return res.data;
 	},
 	async updateClanLangs(id: number, languages: LocalesEnum[]): Promise<LocalesEnum[]> {

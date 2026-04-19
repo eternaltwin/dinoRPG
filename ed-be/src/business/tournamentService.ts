@@ -223,7 +223,7 @@ export async function getTournamentTeam(req: Request) {
 	});
 
 	if (!myTeam || !myTeam.TournamentTeam) {
-		throw new ExpectedError('No team found');
+		return [];
 	}
 
 	return myTeam.TournamentTeam.dinoz;
@@ -232,7 +232,10 @@ export async function getTournamentTeam(req: Request) {
 export async function tournamentInfo(req: Request) {
 	await auth(req);
 	const latestTournament = await getLatestTournament();
-	return latestTournament;
+	if (!latestTournament) {
+		throw new ExpectedError('No tournament found');
+	}
+	return { ...latestTournament, teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)) };
 }
 
 export async function getTournamentFightsToShow(

@@ -1,17 +1,20 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.welcome`)" />
-	<div class="wrapper" v-if="myDojo">
+	<div class="wrapper">
 		<div class="header df">
 			<div class="buttons">
-				<img
+				<RouterLink
+					to="/dojo/challenge"
 					v-if="tournamentState && tournamentState.phase === TournamentPhase.QUALIFICATION"
-					@click="goToPage('DojoChallenge')"
-					:src="getImgURL('icons', 'act_defi')"
-					v-tippy="{
-						content: formatContent($t('dojo.accessChallenges')),
-						theme: 'small'
-					}"
-				/>
+				>
+					<img
+						:src="getImgURL('icons', 'act_defi')"
+						v-tippy="{
+							content: formatContent($t('dojo.accessChallenges')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
 				<RouterLink
 					v-else-if="tournamentState"
 					:to="{
@@ -27,38 +30,42 @@
 						}"
 					/>
 				</RouterLink>
-				<img
-					@click="goToPage('ChallengeFriend')"
-					:src="getImgURL('design', 'dojo_test')"
-					v-tippy="{
-						content: formatContent($t('dojo.testDinoz')),
-						theme: 'small'
-					}"
-				/>
-				<img
-					@click="goToPage('DojoHistory')"
-					:src="getImgURL('design', 'dojo_history')"
-					v-tippy="{
-						content: formatContent($t('dojo.fightHistory')),
-						theme: 'small'
-					}"
-				/>
-				<img
-					@click="goToPage('DojoRanking')"
-					:src="getImgURL('design', 'dojo_ranking')"
-					v-tippy="{
-						content: formatContent($t('dojo.ranking')),
-						theme: 'small'
-					}"
-				/>
-				<img
-					@click="goToPage('TournamentHistory')"
-					:src="getImgURL('design', 'dojo_history')"
-					v-tippy="{
-						content: formatContent($t('dojo.tournamentHistory')),
-						theme: 'small'
-					}"
-				/>
+				<RouterLink to="/dojo/friends/">
+					<img
+						:src="getImgURL('design', 'dojo_test')"
+						v-tippy="{
+							content: formatContent($t('dojo.testDinoz')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
+				<RouterLink to="/dojo/history">
+					<img
+						:src="getImgURL('design', 'dojo_history')"
+						v-tippy="{
+							content: formatContent($t('dojo.fightHistory')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
+				<RouterLink to="/dojo/ranking">
+					<img
+						:src="getImgURL('design', 'dojo_ranking')"
+						v-tippy="{
+							content: formatContent($t('dojo.ranking')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
+				<RouterLink to="/dojo/tournaments">
+					<img
+						:src="getImgURL('design', 'dojo_history')"
+						v-tippy="{
+							content: formatContent($t('dojo.tournamentHistory')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
 				<RouterLink
 					v-if="tournamentState && tournamentState.phase === TournamentPhase.QUALIFICATION"
 					:to="{
@@ -73,35 +80,10 @@
 						}"
 					/>
 				</RouterLink>
-				<!--			<img
-					@click="goToPage('DojoTeam')"
-					:src="getImgURL('icons', 'act_dojo')"
-					v-tippy="{
-						content: formatContent($t('dojo.team')),
-						theme: 'small'
-					}"
-				/>
-				<img
-					@click="goToPage('DojoTournament')"
-					:src="getImgURL('icons', 'act_dojo')"
-					v-tippy="{
-						content: formatContent($t('dojo.tournaments')),
-						theme: 'small'
-					}"
-				/>
-				<img
-					:src="getImgURL('icons', 'act_dojo')"
-					class="disabled"
-					v-tippy="{
-						content: formatContent($t('dojo.build')),
-						theme: 'small'
-					}"
-				/>-->
 			</div>
 			<div class="header-text df jcsb">
 				<p class="ttu">
-					{{ $t('dojo.reputation') }} : {{ myDojo.reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} :
-					{{ worth }}%
+					{{ $t('dojo.reputation') }} : {{ reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} : {{ worth }}%
 				</p>
 				<p>{{ $t('dojo.position') }} : {{ rank }}</p>
 			</div>
@@ -114,42 +96,28 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { localStore } from '../store/index.js';
-import EventBus from '../events/index.js';
-import { DojoBasic } from '@drpg/core/models/dojo/dojoBasic';
+import { dojoStore, localStore } from '../store/index.js';
 import { DojoService } from '../services/DojoService.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import DojoTimer from '../components/dojo/DojoTimer.vue';
 import { formatDateTime } from '../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'DojoHome',
-	computed: {
-		TournamentPhase() {
-			return TournamentPhase;
-		}
-	},
 	components: {
 		DojoTimer,
 		TitleHeader
 	},
 	data() {
 		return {
-			myDojo: undefined as undefined | DojoBasic,
-			worth: 0,
-			rank: 0,
-			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number },
-			tournamentState: undefined as undefined | TournamentState,
 			localStore: localStore(),
-			myTeam: [] as DinozDojoFiche[]
+			myTeam: [] as DinozDojoFiche[],
+			dojoStore: dojoStore()
 		};
 	},
 	methods: {
-		goToPage(pageName: string, params?: string) {
-			this.$router.push({ name: pageName, params: { id: params } });
-		},
 		async displayTeam() {
 			try {
 				this.myTeam = await DojoService.getTournamentTeam();
@@ -177,43 +145,34 @@ export default defineComponent({
 		},
 		async refresh() {
 			try {
-				const response = await DojoService.getMyDojo();
-				this.myDojo = response.dojo;
-				this.rank = response.rank;
-				if (response.tournament) {
-					this.tournamentState = response.tournament;
-				}
+				await this.dojoStore.update();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
-			}
-			if (this.myDojo) {
-				const totalVictory = this.myDojo.DojoChallengeHistory.filter(f => f.victory).length;
-				const totalFight = this.myDojo.DojoChallengeHistory.length;
-				const worth = Math.round((totalVictory / totalFight) * 100);
-				this.worth = isNaN(worth) ? 0 : worth;
-				if (!this.myDojo.TournamentTeam && this.tournamentState) {
-					const tournamentInfo = await DojoService.getTournamentInfo();
-					const races = tournamentInfo.teamRace.split(',').map(d => parseInt(d));
-					this.tournamentInfo.id = tournamentInfo.id;
-					this.tournamentInfo.levelLimit = tournamentInfo.levelLimit;
-					this.tournamentInfo.teamRace = races;
-					this.tournamentInfo.teamSize = tournamentInfo.teamSize;
-					this.tournamentInfo.cashPrice = tournamentInfo.cashPrice;
-				}
 			}
 		},
 		formatDate(oldDate: Date) {
 			return formatDateTime(oldDate.toString());
 		}
 	},
-	async mounted() {
-		EventBus.on('refreshDojo', async e => {
-			if (e) await this.refresh();
-		});
-		await this.refresh();
+	computed: {
+		TournamentPhase() {
+			return TournamentPhase;
+		},
+		worth() {
+			return this.dojoStore.getWorth;
+		},
+		reputation() {
+			return this.dojoStore.getReputation;
+		},
+		rank() {
+			return this.dojoStore.getRank;
+		},
+		tournamentState() {
+			return this.dojoStore.getState;
+		}
 	},
-	unmounted() {
-		EventBus.off('refreshDojo');
+	async created() {
+		await this.refresh();
 	}
 });
 </script>

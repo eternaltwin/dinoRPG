@@ -405,7 +405,7 @@ export const expireOffer = async (offerId: number) => {
 	const winnerBid = offer.bids[offer.bids.length - 1];
 	if (winnerBid && winnerBid.userId) {
 		// Send Discord notification
-		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
+		// LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
 		// Send buyer notification for won offer
 		await createNotification(
@@ -525,7 +525,7 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		promises.push(...ingredients.map(item => increaseIngredientQuantity(sellerId, item.itemId, item.quantity)));
 
 		// Send Discord notification
-		LOGGER.log(`Offer ${offerId} expired`);
+		// LOGGER.log(`Offer ${offerId} expired`);
 		await createLog(LogType.OfferExpired, sellerId, undefined, offer.id);
 	}
 

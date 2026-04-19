@@ -45,10 +45,15 @@
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 	"playerNotFound": "Le joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
 	"dinozNotFound": "Le Dinoz {{id}} n'a pas été trouvé.",
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
+	"error": {
+		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
+		"notYourDinoz": "Ce Dinoz n'est pas le votre"
+	},
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Votre compte est encore trop jeune.",
@@ -252,11 +257,11 @@
 		"28": "Triceragnon"
 	},
 	"position": {
-		"1": "premier",
-		"2": "deuxième",
-		"3": "troisième",
-		"4": "quatrième",
-		"5": "cinquième"
+		"1": "Premier",
+		"2": "Deuxième",
+		"3": "Troisième",
+		"4": "Quatrième",
+		"5": "Cinquième"
 	},
 	"reward": {
 		"perle": "Perle de la Fontaine",
@@ -300,7 +305,7 @@
 		"demons": "uniquement les démons"
 	},
 	"announce": {
-		"dinoz": "Félicitation à {{player}} pour son Dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
+		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
 	},
 	"UnavailableReason": {

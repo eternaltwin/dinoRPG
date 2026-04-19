@@ -1,18 +1,24 @@
-import { initOpentelemetry } from './openTelemetry.js';
-import { loadConfig } from './config/config.js';
-import { GLOBAL } from './context.js';
+import { createRequire } from 'node:module';
+import { register } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import ServerState from './utils/ServerState.js';
 
-async function main() {
-	const config = loadConfig();
-	const otelSdk = initOpentelemetry(config);
-	otelSdk.start();
-	await GLOBAL.init();
+register('@opentelemetry/instrumentation/hook.mjs', pathToFileURL('./'));
 
-	ServerState.setReady(true);
-	// eslint-disable-next-line node/no-unsupported-features/es-syntax
-	const server = await import('./server.js');
-	server.mainWrapper();
-}
+const { loadConfig } = await import('./config/config.js');
+const config = loadConfig();
 
-await main();
+const { initOpentelemetry } = await import('./openTelemetry.js');
+const otelSdk = initOpentelemetry(config);
+otelSdk.start();
+
+const require = createRequire(import.meta.url);
+require('express');
+
+const { GLOBAL } = await import('./context.js');
+await GLOBAL.init();
+
+ServerState.setReady(true);
+
+const { mainWrapper } = await import('./server.js');
+mainWrapper();

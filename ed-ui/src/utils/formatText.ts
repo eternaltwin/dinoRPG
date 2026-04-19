@@ -76,7 +76,7 @@ export const helpers = {
  * Formats text with custom markup into HTML.
  * Note: This function only uses one regex pass per textual format to improve performance.
  */
-export function formatText(text: string) {
+export function formatText(text: string): string {
 	// Combined pattern for all text formatting tokens:
 	//                      **bold**         //italic//       _underline_   &&   :icon:
 	const pattern = /(?:\*\*([^*]+)\*\*)|(?:\/\/([^/]+)\/\/)|(?:_([^_]+)_)|(&&)|:(\w+):/g;

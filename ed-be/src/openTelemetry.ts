@@ -33,7 +33,12 @@ export function initOpentelemetry(config: Config): NodeSDK {
 		sampler: new AlwaysOnSampler(),
 		instrumentations: [
 			// Express instrumentation expects HTTP layer to be instrumented
-			new HttpInstrumentation(),
+			new HttpInstrumentation({
+				ignoreIncomingRequestHook: req => {
+					const ignoredRoutes = ['/api/v1/server-events/events'];
+					return ignoredRoutes.some(route => req.url?.startsWith(route));
+				}
+			}),
 			new ExpressInstrumentation({
 				ignoreLayersType: [ExpressLayerType.MIDDLEWARE, ExpressLayerType.REQUEST_HANDLER, ExpressLayerType.ROUTER]
 			}),

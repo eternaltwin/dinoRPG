@@ -1,9 +1,9 @@
 <template>
 	<Transition name="opacity">
-		<div v-show="menuCalled" class="backDrop" @click="close()"></div>
+		<div v-show="isMenuOpened" class="backDrop" @click="close()"></div>
 	</Transition>
 	<Transition name="slide">
-		<div v-show="menuCalled" class="root">
+		<div v-show="isMenuOpened" class="root">
 			<div class="player">
 				<div class="money">{{ beautifulMoney }} <img :src="getImgURL('icons', 'small_gold')" alt="or" /></div>
 				<div class="close">
@@ -173,27 +173,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
-import { utils } from '../../utils/index.js';
+import { utils } from '../../utils';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
-import { placeList } from '../../constants/index.js';
+import { placeList } from '../../constants';
 import { CINEMA_LINK } from '../../utils/goTo.js';
+import { mapState } from 'pinia';
 
 export default defineComponent({
 	name: 'DinozLeftMenu',
 	components: { DinozMini },
 	data() {
 		return {
-			menuCalled: false,
 			localStore: localStore(),
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			dinozList: useDinozStore().getDinozList as Array<DinozFiche>,
 			CINEMA_LINK
 		};
 	},
@@ -209,11 +206,15 @@ export default defineComponent({
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
-		}
+		},
+		isMenuOpened(): boolean {
+			return useMenuStore().isDinozMenuOpened;
+		},
+		...mapState(useDinozStore, ['getDinozList'])
 	},
 	methods: {
 		close() {
-			this.menuCalled = false;
+			useMenuStore().setDinozMenuOpened(false);
 		},
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
@@ -224,7 +225,7 @@ export default defineComponent({
 			return +this.$route.params.id;
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
+			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId());
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader
 			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
@@ -233,7 +234,7 @@ export default defineComponent({
 			// Le dinoz n'est pas suiveur
 			if (!dinoz.leaderId) return false;
 
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
+			const leader = useDinozStore().getDinoz(dinoz.leaderId);
 			if (!leader) return false;
 			// Si le dinoz est follower et que le dinoz courrant est son leader
 			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
@@ -252,18 +253,13 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': {
+		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
+				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
 			},
 			deep: true
 		}
 		// Removed watcher for currentDinozId as it's a computed property and should not be assigned directly
-	},
-	mounted() {
-		EventBus.on('dinozMenu', async e => {
-			this.menuCalled = e;
-		});
 	}
 });
 </script>

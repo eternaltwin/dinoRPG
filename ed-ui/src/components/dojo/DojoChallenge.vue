@@ -69,6 +69,8 @@
 			></CarousselDinoz>
 		</template>
 
+		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
+
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
 				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
@@ -83,20 +85,17 @@
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
 			</Transition>
 		</template>
-
-		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
@@ -134,7 +133,7 @@ export default defineComponent({
 			})[],
 			composeTeam: false as boolean,
 			myDinoz: [] as DinozDojoFiche[],
-			dinozStore: dinozStore(),
+
 			opponent: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
@@ -147,7 +146,8 @@ export default defineComponent({
 			playerStore: playerStore(),
 			dojoMaxSeries: DOJO_MAX_SERIES,
 			leftPlayer: null as null | { id: string; name: string },
-			rightPlayer: null as null | { id: string; name: string }
+			rightPlayer: null as null | { id: string; name: string },
+			dojoStore: dojoStore()
 		};
 	},
 	methods: {
@@ -201,7 +201,7 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(
+				const nextFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,
 					this.$t,
@@ -210,14 +210,13 @@ export default defineComponent({
 					undefined,
 					true
 				);
-				if (!nexFight) {
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
-					// lang: this.lang
+					history: nextFight.filter(n => n != undefined)
 				};
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
@@ -236,9 +235,9 @@ export default defineComponent({
 				const dojo = await DojoService.getMyTeam();
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
-					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
-						//.filter(d => d.level >= 10)
+					this.myDinoz = useDinozStore()
+						.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+						// .filter(d => d.level >= 10)
 						.map(d => {
 							return {
 								id: d.id,
@@ -253,8 +252,6 @@ export default defineComponent({
 					this.dailyReset = dojo.dailyReset;
 				}
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
-
-				EventBus.emit('refreshDojo', true);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -282,7 +279,7 @@ export default defineComponent({
 	},
 	watch: {
 		fightAnimationEnded() {
-			EventBus.emit('refreshDojo', true);
+			this.dojoStore.update();
 		}
 	}
 });

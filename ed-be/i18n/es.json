@@ -300,7 +300,7 @@
 		"demons": "únicamente demonios"
 	},
 	"announce": {
-		"dinoz": "¡Felicidades a {{player}} por su Dino {{dinoz}}, que es el $t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
+		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"UnavailableReason": {

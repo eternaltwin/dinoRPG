@@ -49,14 +49,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { localStore, playerStore, sessionStore } from '../../store';
-import EventBus from '../../events/index.js';
+import { localStore, playerStore, sessionStore, useMenuStore } from '../../store';
 import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
+import { errorHandler } from '../../utils';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -68,7 +68,9 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			time: '' as string,
 			notification: 0 as number,
-			eventSource: null as EventSource | null
+			eventSource: null as EventSource | null,
+			sseWatchdog: null as ReturnType<typeof setTimeout> | null,
+			SSE_TIMEOUT_MS: 45_000
 		};
 	},
 	computed: {
@@ -87,40 +89,66 @@ export default defineComponent({
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
 		},
 		openMenu() {
-			EventBus.emit('twinoMenu', true);
+			useMenuStore().setTwinoMenuOpened(true);
 		},
 		openDinoz() {
-			EventBus.emit('dinozMenu', true);
+			useMenuStore().setDinozMenuOpened(true);
 		},
-		async startSseForNotification(): Promise<void> {
+		async startSseForNotification(retryCount = 0): Promise<void> {
 			if (!this.playerStore.getPlayerId) {
 				this.eventSource?.close();
+				if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
 				return;
 			}
 
-			const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
-			this.eventSource = await ServerEventsService.connectToSse(ticket);
-			this.eventSource.onmessage = (message: MessageEvent<string>) => {
-				const data = JSON.parse(message.data) as SseData;
-				switch (data.type) {
-					case SseDataEnum.LIVE_STATS:
-						this.sessionStore.setLiveStats(data.live_stats);
-						break;
-					case SseDataEnum.NOTIFICATIONS:
-						this.playerStore.addNotification(data.notifications);
-						break;
-					default:
-						console.log(data);
-						console.error('Not handled SSE data type');
-						break;
-				}
+			const MAX_RETRIES = 5;
+			const BASE_DELAY_MS = 1000;
 
-				//
-			};
-			this.eventSource.onerror = () => {
+			try {
+				const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
+				this.eventSource = await ServerEventsService.connectToSse(ticket);
+				this.resetWatchdog();
+				this.eventSource.onmessage = (message: MessageEvent<string>) => {
+					this.resetWatchdog();
+					retryCount = 0;
+					const data = JSON.parse(message.data) as SseData;
+					switch (data.type) {
+						case SseDataEnum.LIVE_STATS:
+							this.sessionStore.setLiveStats(data.live_stats);
+							break;
+						case SseDataEnum.NOTIFICATIONS:
+							this.playerStore.addNotification(data.notifications);
+							break;
+						default:
+							console.log(data);
+							console.error('Not handled SSE data type');
+							break;
+					}
+				};
+				this.eventSource.onerror = () => {
+					this.eventSource?.close();
+					if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
+					if (retryCount >= MAX_RETRIES) {
+						console.error('SSE : nombre maximum de tentatives atteint');
+						return;
+					}
+					const delay = BASE_DELAY_MS * Math.pow(2, retryCount);
+					setTimeout(() => {
+						this.startSseForNotification(retryCount + 1);
+					}, delay);
+				};
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		resetWatchdog(): void {
+			if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
+
+			this.sseWatchdog = setTimeout(() => {
+				console.warn('SSE : timeout, reconnexion...');
 				this.eventSource?.close();
 				this.startSseForNotification();
-			};
+			}, this.SSE_TIMEOUT_MS);
 		}
 	},
 	watch: {
@@ -137,6 +165,10 @@ export default defineComponent({
 			this.getTime();
 		}, 1000);
 		this.startSseForNotification();
+	},
+	unmounted() {
+		if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
+		this.eventSource?.close();
 	}
 });
 </script>

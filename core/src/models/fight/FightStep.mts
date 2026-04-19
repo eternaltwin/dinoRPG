@@ -1,7 +1,9 @@
 import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
+import { Boss } from './BossList.mjs';
 import { FightStatus, FighterType } from './DetailedFighter.mjs';
+import { Monster } from './MonsterList.mjs';
 import { EntranceEffect, LifeEffect, NotificationList } from './transpiler.mjs';
 
 export interface StepFighter {
@@ -35,11 +37,29 @@ export interface TimeLimitStep {
 	time: number;
 }
 
+// Mark the timeout of the fight. Attach the last time increment to deplete the timeout bar.
+export interface TimeoutStep {
+	action: 'timeOut';
+	delta: number;
+}
+
+export interface PrepareStep {
+	action: 'prepare';
+	dinozList: {
+		fid: number;
+		statusList: FightStatus[];
+		costume?: Monster | Boss;
+	}[];
+	monsterList: {
+		fid: number;
+		statusList: FightStatus[];
+		costume?: Monster | Boss;
+	}[];
+}
+
 export interface ArriveStep {
 	action: 'arrive';
 	fid: number;
-	entrance?: EntranceEffect;
-	scale?: number;
 }
 
 export interface LeaveStep {
@@ -273,9 +293,17 @@ export interface AttachStep {
 	fx: string;
 }
 
+export interface LoseCostumeStep {
+	action: 'loseCostume';
+	fid: number;
+	currentHp: number;
+}
+
 export type FightStep =
 	| TimeLimitStep
+	| TimeoutStep
 	| ArriveStep
+	| PrepareStep
 	| LeaveStep
 	| ResistStep
 	| HitStep
@@ -312,4 +340,5 @@ export type FightStep =
 	| TiredStep
 	| FlipStep
 	| AnimationStep
-	| AttachStep;
+	| AttachStep
+	| LoseCostumeStep;

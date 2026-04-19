@@ -166,7 +166,7 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 	const rightTeam = await getDinozForDojoFight(right);
 	const leftTeam = await getDinozForDojoFight(left);
 
-	// Remove items from dinoz for the fight and set life to maxLife
+	// Keep only magic items from dinoz for the fight and set life to maxLife
 	rightTeam.map(d => {
 		d.items = d.items.filter(i =>
 			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)

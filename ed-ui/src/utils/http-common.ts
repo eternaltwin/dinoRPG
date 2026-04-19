@@ -33,7 +33,9 @@ apiClient.interceptors.request.use(
 			config.headers.Authorization = `Basic ${btoa(`${user}:${token}`)}`;
 		}
 
-		config.headers['Content-Type'] = 'application/json';
+		if (!(config.data instanceof FormData)) {
+			config.headers['Content-Type'] = 'application/json';
+		}
 
 		return config;
 	},

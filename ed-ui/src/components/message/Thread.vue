@@ -137,9 +137,6 @@ export default defineComponent({
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
-	},
-	unmounted() {
-		console.log('unmount');
 	}
 });
 </script>

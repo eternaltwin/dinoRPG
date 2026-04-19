@@ -71,6 +71,7 @@ model Dinoz {
 
   @@index([playerId], map: "idx_playerId")
   @@index([buildId])
+  @@index([leaderId])
   @@map("dinoz")
 }
 
@@ -283,6 +284,8 @@ model Player {
   dailyGridRewards     Int                @default(0)
   skipFight            Boolean            @default(false)
   skipLevel            Boolean            @default(false)
+  shareArchivedData    Boolean            @default(false)
+  archivedSiteId       Int?
   banCaseId            Int?               @unique
   discoveredSkills     Int[]              @default([])
   lastVersionSeen      String             @default("0.16.3")
@@ -459,6 +462,7 @@ model PlayerQuest {
   player      Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_1b5b041fab3362c845c142ca3b0")
 
   @@unique([questId, playerId])
+  @@index([playerId])
   @@map("player_quest")
 }
 
@@ -469,6 +473,7 @@ model PlayerReward {
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_9cf142b3a6fa3e0faec7f8debfb")
 
   @@unique([rewardId, playerId])
+  @@index([playerId])
   @@map("player_reward")
 }
 
@@ -771,6 +776,8 @@ model FightArchive {
   FBTournamentLeftId    Int?
   FBTournamentRight     GameDinoz?      @relation("RightTeamRelationFB", fields: [FBTournamentRightId], references: [id])
   FBTournamentRightId   Int?
+
+  @@index([tournamentId, tournamentStep])
 }
 
 model FightWatched {
@@ -980,6 +987,7 @@ enum LogType {
   AdminUpdateQuest
   AdminUpdatePlayer
   AdminUpdateSecret
+  AdminUpdateClan
   IngredientSold
   XPEarned
   HPLost

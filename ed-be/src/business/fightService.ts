@@ -13,7 +13,7 @@ import {
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { placeList, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
@@ -43,6 +43,7 @@ import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 
 /**
  * @summary Process a fight
@@ -527,17 +528,14 @@ export async function rewardFight(
 			attacker: f.attacker,
 			maxHp: f.maxHp,
 			startingHp: f.startingHp,
+			currentHp: f.startingHp,
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
-			dark:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined)
-					: undefined,
-			size:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined)
-					: undefined
+			costume: f.costume,
+			dark: f.dark,
+			size: f.size,
+			entrance: f.entrance
 		};
 	});
 	return {

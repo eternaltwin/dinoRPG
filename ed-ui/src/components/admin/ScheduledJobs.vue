@@ -8,7 +8,7 @@
 		<tr v-for="job in jobs" :key="job.name">
 			<td>{{ job.name }}</td>
 			<td>{{ new Date(job.nextRun).toLocaleString('fr-FR') }}</td>
-			<td>%</td>
+			<td><DZButton @click="run(job.name)">Run</DZButton></td>
 		</tr>
 	</DZTable>
 </template>
@@ -19,14 +19,28 @@ import { AdminService } from '../../services';
 import { errorHandler } from '../../utils';
 import DZTable from '../common/DZTable.vue';
 import { Jobs } from '@drpg/core/models/admin/jobs';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ScheduledJobs',
-	components: { DZTable },
+	components: { DZButton, DZTable },
 	data() {
 		return {
 			jobs: [] as Jobs[]
 		};
+	},
+	methods: {
+		async run(job: string) {
+			try {
+				await AdminService.runJob(job);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+			setTimeout(async () => {
+				this.jobs = [];
+				this.jobs = await AdminService.getScheduledJobs();
+			}, 1000);
+		}
 	},
 	async mounted() {
 		try {

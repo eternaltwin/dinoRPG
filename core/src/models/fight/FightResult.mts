@@ -5,6 +5,8 @@ import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { FightText } from '../missions/specialActions.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
+import { EntranceEffect } from './transpiler.mjs';
+import { MonsterFiche } from './MonsterFiche.mjs';
 
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -40,8 +42,10 @@ export interface FighterRecap {
 	energy: number;
 	maxEnergy: number;
 	energyRecovery: number;
+	costume?: MonsterFiche;
 	dark?: boolean;
 	size?: number;
+	entrance?: EntranceEffect;
 }
 
 export interface CatchResult {

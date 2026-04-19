@@ -1,6 +1,6 @@
 <template>
 	<div class="page">
-		<p style="white-space: pre-line">{{ page.content }}</p>
+		<p style="white-space: pre-line; word-break: break-word">{{ page.content }}</p>
 	</div>
 </template>
 

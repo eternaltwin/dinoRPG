@@ -19,7 +19,7 @@
 			<ClanMessageItem
 				v-for="msg in messages"
 				:key="msg.id"
-				:author="msg.author"
+				:author="msg.author ?? { id: '', name: 'Deleted' }"
 				:itsLeader="isLeader(msg)"
 				:contentHtml="msg.content"
 				:date="msg.date"
@@ -54,6 +54,7 @@
 import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { useToast } from 'vue-toast-notification';
 
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
@@ -77,6 +78,7 @@ import DZButton from '../common/DZButton.vue';
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const $toast = useToast();
 const instance = getCurrentInstance();
 
 const webSocket = ref<WebSocket | null>(null);
@@ -101,10 +103,15 @@ function canDeleteMessage(msg: CreateClanMessage): boolean {
 	return msg.author?.id == store.playerId || msg.clan?.leaderId == store.playerId;
 }
 function goToPlayer(id: string) {
-	router.push({ name: 'MyAccount', params: { id } });
+	if (id === '1') {
+		$toast.error(t(`toast.deletedPlayer`));
+		return;
+	}
+	router.push({ name: 'Account', params: { id } });
 }
 
 function getTopItem(arr) {
+	if (arr.length === 0) return;
 	const topItem = arr.reduce((a, b) => (b.quantity > a.quantity ? b : a));
 	const goal = getGoal(topItem.stat);
 	return goal.name[locale.value] + ' (' + topItem.quantity + ')';
