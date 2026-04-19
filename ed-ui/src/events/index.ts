@@ -5,7 +5,6 @@ type Events = {
 	responseError: AxiosError;
 	toast: toast;
 	refreshDinoz: boolean;
-	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;
 	reportClan: { id: number; name: string } | undefined;

@@ -6,7 +6,7 @@ import { plugin as VueTippy } from 'vue-tippy';
 import { mixin } from './mixin/mixin.js';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-import { initI18n } from './i18n/index.js';
+import { defaultLocale, initI18n, loadLanguage } from './i18n/index.js';
 import Loading from './components/utils/Loading.vue';
 import clickOutside from './directives/clickOutside.js';
 import ConfirmPlugin from './mixin/confirmPlugin';
@@ -31,9 +31,11 @@ const vueTippyProps = {
 dayjs.extend(utc);
 
 const app = createApp(App);
-const pnia = createPinia().use(piniaPluginPersistedstate);
-app.use(pnia);
-app.use(await initI18n());
+const pinia = createPinia().use(piniaPluginPersistedstate);
+app.use(pinia);
+const i18n = initI18n();
+await loadLanguage(defaultLocale);
+app.use(i18n);
 app.use(router);
 app.use(ConfirmPlugin);
 app.mixin(mixin);

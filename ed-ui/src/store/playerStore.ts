@@ -27,7 +27,6 @@ export const playerStore = defineStore('playerStore', {
 		role: AdminRoleFront.PLAYER,
 		priest: false,
 		shopkeeper: false,
-		sortOption: 'default',
 		notificationCounter: 0,
 		notifications: [],
 		discoveredSkills: []
@@ -40,7 +39,6 @@ export const playerStore = defineStore('playerStore', {
 		getClanId: (state: StorePlayer) => state.clanId,
 		isPriest: (state: StorePlayer) => state.priest,
 		isShopkeeper: (state: StorePlayer) => state.shopkeeper,
-		getSortOption: (state: StorePlayer) => state.sortOption,
 		getRole: (state: StorePlayer) => state.role,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
 		getNotifications: (state: StorePlayer) => state.notifications,
@@ -70,9 +68,6 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setShopkeeper(shopkeeper: boolean): void {
 			this.shopkeeper = shopkeeper;
-		},
-		setSortOption(sortOption: string): void {
-			this.sortOption = sortOption;
 		},
 		setClanId(clanId: number | undefined): void {
 			this.clanId = clanId;
