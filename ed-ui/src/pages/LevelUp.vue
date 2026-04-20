@@ -304,7 +304,7 @@ export default defineComponent({
 					await this.learnSkillAndSetStore(skillIdList);
 				}
 			} catch (error) {
-				//Do nothing
+				// Do nothing
 				console.error(error);
 			}
 		},

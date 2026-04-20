@@ -20,7 +20,9 @@ export const playerStore = defineStore('playerStore', {
 			hasPMI: false,
 			hasPAC: false,
 			skipFight: false,
-			skipLevel: false
+			skipLevel: false,
+			archivedSiteId: null,
+			shareArchivedData: false,
 		},
 		role: AdminRoleFront.PLAYER,
 		priest: false,
