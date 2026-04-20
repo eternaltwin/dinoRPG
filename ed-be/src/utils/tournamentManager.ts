@@ -40,6 +40,7 @@ import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
 import { UnavailableReason } from '@drpg/prisma';
+import { nextMonday } from './date.js';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -610,7 +611,7 @@ class TournamentManager {
 	static async createTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
-		
+
 		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
 
 		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
@@ -636,7 +637,6 @@ class TournamentManager {
 			}
 		});
 		const total = await prisma.tournament.count();
-		
 
 		const frTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
@@ -747,7 +747,7 @@ class TournamentManager {
 
 		const tournament = await TournamentManager.createTournament(prisma);
 		this.tournamentId = tournament.tournamentId;
-		this.startDate =  tournament.startDate;
+		this.startDate = tournament.startDate;
 
 		return tournament;
 	}
@@ -764,20 +764,15 @@ class TournamentManager {
 				]
 			}
 		});
-	
+
 		if (dinozCount > 5000) {
 			TournamentManager.createTournament(prisma);
 		} else {
-			const nextMonday = dayjs()
-				.day(1)
-				.add(dayjs().day() === 1 ? 1 : 0, 'week')
-				.startOf('day')
-				.add(1, 'second');
-			LOGGER.error(`Not enough dinoz (currently ${dinozCount}), next check ${nextMonday}.`);
-			scheduleJob('createFirstTournament', nextMonday.toDate(), () => TournamentManager.createFirstTournament(prisma));
+			const tournamentDate = nextMonday();
+			LOGGER.error(`Not enough dinoz (currently ${dinozCount}), next check ${tournamentDate}.`);
+			scheduleJob('createFirstTournament', tournamentDate, () => TournamentManager.createFirstTournament(prisma));
 		}
 	}
-	
 
 	static async getCurrentTournament(prisma: PismaClientLocal): Promise<TournamentState | null> {
 		const currentDate = new Date();
@@ -887,11 +882,9 @@ LIMIT ${64};`;
 		});
 
 		if (!activeTournament) {
-			const today = dayjs();
-			const daysUntilNextMonday = (1 + 7 - today.day()) % 7;
-			const nextMonday = today.add(daysUntilNextMonday, 'day').startOf('day');
-			LOGGER.error(`No tournament found, schedule a creation for ${nextMonday}.`);
-			scheduleJob('createFirstTournament', nextMonday.toDate(), () => TournamentManager.createFirstTournament(prisma));
+			const tournamentDate = nextMonday();
+			LOGGER.error(`No tournament found, schedule a creation for ${tournamentDate}.`);
+			scheduleJob('createFirstTournament', tournamentDate, () => TournamentManager.createFirstTournament(prisma));
 			return null;
 		}
 
