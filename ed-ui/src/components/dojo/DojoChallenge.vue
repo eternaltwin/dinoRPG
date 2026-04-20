@@ -69,8 +69,6 @@
 			></CarousselDinoz>
 		</template>
 
-		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
-
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
 				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
@@ -81,6 +79,7 @@
 					</Suspense>
 				</div>
 			</div>
+			<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 			<Transition name="bounce">
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
 			</Transition>
