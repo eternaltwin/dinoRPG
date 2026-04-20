@@ -1,9 +1,14 @@
 import { prisma } from '../prisma.js';
-import { FighterRecap, FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { withSpan } from '../utils/tracing.js';
 
-export async function archiveFight(fight: FightProcessResult, leftPlayerId: string, rightPlayerId: string | null) {
+export async function archiveFight(
+	fight: FightProcessResult,
+	winner: boolean,
+	leftPlayerId: string,
+	rightPlayerId: string | null
+) {
 	return withSpan(archiveFight.name, async () => {
 		const playerSelect = { select: { id: true, name: true } };
 		const archive = await prisma.fightArchive.create({
@@ -29,7 +34,7 @@ export async function archiveFight(fight: FightProcessResult, leftPlayerId: stri
 				),
 				steps: JSON.stringify(fight.steps),
 				seed: fight.seed,
-				result: fight.winner,
+				result: winner,
 				player: { connect: { id: leftPlayerId } },
 				leftPlayer: { connect: { id: leftPlayerId } },
 				rightPlayer: rightPlayerId ? { connect: { id: rightPlayerId } } : undefined

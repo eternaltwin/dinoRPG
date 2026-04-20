@@ -98,7 +98,7 @@ import { getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
-import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFight } from './fightService.js';
+import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
 
@@ -870,7 +870,7 @@ export async function digWithDinoz(req: Request) {
 				// Fight before reward
 				const fightResult = calculateFightVsMonsters([dinoz], fightPlayer, dinozData.placeId, treasure.fight);
 
-				fight = await rewardFight([dinoz], treasure.fight, fightResult, dinozData.placeId, fightPlayer);
+				fight = await rewardFightVsMonsters([dinoz], treasure.fight, fightResult, dinozData.placeId, fightPlayer);
 
 				if (fight.result) {
 					rewards = rewards.concat(treasure.reward);

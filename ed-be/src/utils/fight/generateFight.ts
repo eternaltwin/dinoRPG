@@ -27,7 +27,7 @@ import {
 	FightStatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration, FightRules } from '@drpg/core/models/fight/FightConfiguration';
-import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep, PrepareStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -41,10 +41,9 @@ export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
 	rng: seedrandom.PRNG;
 	place: PlaceEnum;
-	loser: 'attackers' | 'defenders' | null;
+	outcome: FightOutcome | null;
 	steps: FightStep[];
 	timeout?: number;
-	endedByTimeout: boolean;
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
@@ -109,10 +108,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	// Initialize fight data using the provided configuration.
 	const fightData: DetailedFight = {
 		rng,
-		loser: null,
+		outcome: null,
 		steps: [] as FightStep[],
 		timeout: timeout,
-		endedByTimeout: false,
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
@@ -288,26 +286,16 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	// Do not start the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
-		fightData.loser = 'defenders';
+		fightData.outcome = FightOutcome.AttackerWin;
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
-		fightData.loser = 'attackers';
+		fightData.outcome = FightOutcome.DefenderWin;
 	}
 
 	let turn = 0;
 	let overtimePoisonDamage = 10;
 
 	// Fight loop
-	while (!fightData.loser) {
-		// No fighters left, stop the fight.
-		if (!fightData.fighters.length) {
-			break;
-		}
-
-		// Timeout hit, stop the fight.
-		if (fightData.endedByTimeout) {
-			break;
-		}
-
+	while (fightData.outcome === null) {
 		// Order fighters by initiative (random if equal)
 		orderFighters(fightData);
 
@@ -351,9 +339,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		if (turn > 1200) {
 			// Too many turns
-			LOGGER.error('Too many turns, this should never happen', {
-				fightData: fightData,
-			});
+			LOGGER.error('Too many turns, this should never happen timing out.', { fightData: fightData });
+			fightData.outcome = FightOutcome.Timeout;
 			break;
 		}
 
@@ -378,21 +365,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 		updateStat(fightData, fighter, 'endingHp', fighter.hp);
 	});
-
-	if (!fightData.loser) {
-		// The winner and loser will be calculated based on the remaining hp (%)
-		// That is, the loser will be the one with lowest endingHp / startingHp
-		// To avoid comparing non-integer numbers, instead of comparing
-		// attack.endingHp / attack.startingHp < defense.endingHp / defense.startingHp
-		// We can compare: attack.endingHp * defense.startingHp < defense.endingHp * attack.startingHp
-		// Note that, for this formula to work, we need to do it after processing `endingHp` stat
-		const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
-		const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
-
-		fightData.loser = left <= right ? 'attackers' : 'defenders';
-	}
-
-	const winner = fightData.loser === 'defenders';
 
 	// After fight regeneration
 	fightData.fighters.forEach(fighter => {
@@ -430,7 +402,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 	});
 
-	if (winner) {
+	if (fightData.outcome === FightOutcome.AttackerWin) {
 		// Curse if any M_CURSED_WAND
 		if (fightData.fighters.some(fighter => fighter.skills.some(skill => skill.id === Skill.M_CURSED_WAND))) {
 			fightData.fighters.forEach(f => {
@@ -492,7 +464,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	return {
 		seed: config.seed,
-		winner,
+		outcome: fightData.outcome,
 		attackers: attackersResults,
 		defenders: defendersResults,
 		catches,
