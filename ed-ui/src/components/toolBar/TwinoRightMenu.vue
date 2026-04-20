@@ -211,7 +211,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { localStore, playerStore, useMenuStore } from '../../store';
+import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
 import { NotificationService } from '../../services';
 import { errorHandler } from '../../utils';
