@@ -1,7 +1,7 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { createFirstTournament, getNewLevelLimits } from '../business/tournamentService.js';
+import { getNewLevelLimits } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import {
@@ -39,6 +39,7 @@ import NewsType = $Enums.NewsType;
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
+import { UnavailableReason } from '@drpg/prisma';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -606,28 +607,10 @@ class TournamentManager {
 		scheduleJob('Next tournament', nextTournament.time, () => this.initializeTournament(prisma));
 	}
 
-	async initializeTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
-		LOGGER.log(`initializeTournament in progress, cleaning dojoOpponents, dojoTeam and dojoChallengeHistory.`);
-		invalidateTournamentCache();
+	static async createTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
-		// Reset all dojo
-		await prisma.dojoOpponents.deleteMany();
-		await prisma.dojoTeam.deleteMany();
-		await prisma.dojoChallengeHistory.deleteMany();
-		await prisma.dojo.updateMany({
-			data: {
-				reputation: 0,
-				tournamentTeamId: null,
-				dailyReset: 0
-			}
-		});
-		await prisma.ranking.updateMany({
-			data: {
-				dojo: 0
-			}
-		});
-
+		
 		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
 
 		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
@@ -653,7 +636,7 @@ class TournamentManager {
 			}
 		});
 		const total = await prisma.tournament.count();
-		this.tournamentId = newTournament.id;
+		
 
 		const frTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
@@ -717,7 +700,7 @@ class TournamentManager {
 		};
 
 		const news = await createNews({
-			title: this.tournamentId,
+			title: newTournament.id,
 			// image: req.file?.buffer,
 			type: NewsType.tid_start,
 			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
@@ -735,11 +718,66 @@ class TournamentManager {
 			LOGGER.error(`Tournament News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
 		}
 
-		scheduleJob(`tournament_${this.tournamentId}`, endQualif, () => this.generateNextRound(prisma));
+		const tournamentManager = new TournamentManager(newTournament.id, newTournamentStartDate);
+		scheduleJob(`tournament_${newTournament.id}`, endQualif, () => tournamentManager.generateNextRound(prisma));
 		LOGGER.log(`initializeTournament is over. GenerateNextRound for 1st round is planned for ${endQualif}.`);
 
-		return new TournamentManager(this.tournamentId, newTournamentStartDate);
+		return tournamentManager;
 	}
+
+	async initializeTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
+		LOGGER.log(`initializeTournament in progress, cleaning dojoOpponents, dojoTeam and dojoChallengeHistory.`);
+		invalidateTournamentCache();
+		// Reset all dojo
+		await prisma.dojoOpponents.deleteMany();
+		await prisma.dojoTeam.deleteMany();
+		await prisma.dojoChallengeHistory.deleteMany();
+		await prisma.dojo.updateMany({
+			data: {
+				reputation: 0,
+				tournamentTeamId: null,
+				dailyReset: 0
+			}
+		});
+		await prisma.ranking.updateMany({
+			data: {
+				dojo: 0
+			}
+		});
+
+		const tournament = await TournamentManager.createTournament(prisma);
+		this.tournamentId = tournament.tournamentId;
+		this.startDate =  tournament.startDate;
+
+		return tournament;
+	}
+
+	static async createFirstTournament(prisma: PismaClientLocal) {
+		// Check if there is at least:
+		// - 5000 dinoz active
+		//
+		const dinozCount = await prisma.dinoz.count({
+			where: {
+				OR: [
+					{ unavailableReason: null },
+					{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+				]
+			}
+		});
+	
+		if (dinozCount > 5000) {
+			TournamentManager.createTournament(prisma);
+		} else {
+			const nextMonday = dayjs()
+				.day(1)
+				.add(dayjs().day() === 1 ? 1 : 0, 'week')
+				.startOf('day')
+				.add(1, 'second');
+			LOGGER.error(`Not enough dinoz (currently ${dinozCount}), next check ${nextMonday}.`);
+			scheduleJob('createFirstTournament', nextMonday.toDate(), () => TournamentManager.createFirstTournament(prisma));
+		}
+	}
+	
 
 	static async getCurrentTournament(prisma: PismaClientLocal): Promise<TournamentState | null> {
 		const currentDate = new Date();
@@ -853,7 +891,7 @@ LIMIT ${64};`;
 			const daysUntilNextMonday = (1 + 7 - today.day()) % 7;
 			const nextMonday = today.add(daysUntilNextMonday, 'day').startOf('day');
 			LOGGER.error(`No tournament found, schedule a creation for ${nextMonday}.`);
-			scheduleJob('createFirstTournament', nextMonday.toDate(), () => createFirstTournament(prisma));
+			scheduleJob('createFirstTournament', nextMonday.toDate(), () => TournamentManager.createFirstTournament(prisma));
 			return null;
 		}
 
