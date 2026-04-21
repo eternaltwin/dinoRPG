@@ -10,7 +10,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
-import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { BaseSpecialStats, SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
@@ -85,8 +85,9 @@ export const initializeDinoz = (
 		maxHp: dinoz.maxLife,
 		startingHp: dinoz.life,
 		hp: dinoz.life,
-		energy: 100,
-		maxEnergy: 100,
+		// Set energy, it's going to be overridden after anyway
+		energy: BaseSpecialStats[SpecialStat.ENERGY],
+		maxEnergy: BaseSpecialStats[SpecialStat.ENERGY],
 		resilience: 40,
 		stats: {
 			base: {
@@ -115,35 +116,64 @@ export const initializeDinoz = (
 			},
 			special: {
 				[SpecialStat.INITIATIVE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ??
+					BaseSpecialStats[SpecialStat.INITIATIVE],
+				[SpecialStat.ENERGY]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ??
+					BaseSpecialStats[SpecialStat.ENERGY],
 				[SpecialStat.ENERGY_RECOVERY]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ??
+					BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
+				[SpecialStat.ARMOR]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ??
+					BaseSpecialStats[SpecialStat.ARMOR],
 				[SpecialStat.ARMOR_BREAK]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR_BREAK)?.value ??
+					BaseSpecialStats[SpecialStat.ARMOR_BREAK],
+				[SpecialStat.MULTIHIT]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ??
+					BaseSpecialStats[SpecialStat.MULTIHIT],
+				[SpecialStat.EVASION]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ??
+					BaseSpecialStats[SpecialStat.EVASION],
 				[SpecialStat.SUPER_EVASION]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.SPEED)?.value ?? 0,
-				[SpecialStat.FIRE_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.FIRE_SPEED)?.value ?? 0,
-				[SpecialStat.WOOD_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WOOD_SPEED)?.value ?? 0,
-				[SpecialStat.WATER_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WATER_SPEED)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ??
+					BaseSpecialStats[SpecialStat.SUPER_EVASION],
+				[SpecialStat.COUNTER]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ??
+					BaseSpecialStats[SpecialStat.COUNTER],
+				[SpecialStat.SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.SPEED)?.value ?? BaseSpecialStats[SpecialStat.SPEED],
+				[SpecialStat.FIRE_SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.FIRE_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.FIRE_SPEED],
+				[SpecialStat.WOOD_SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.WOOD_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.WOOD_SPEED],
+				[SpecialStat.WATER_SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.WATER_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.WATER_SPEED],
 				[SpecialStat.LIGHTNING_SPEED]:
-					getSpecialStat(dinozWithItems, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
-				[SpecialStat.AIR_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.AIR_SPEED)?.value ?? 0,
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.LIGHTNING_SPEED],
+				[SpecialStat.AIR_SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.AIR_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.AIR_SPEED],
 				[SpecialStat.BUBBLE_RATE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ??
+					BaseSpecialStats[SpecialStat.BUBBLE_RATE],
 				[SpecialStat.TORCH_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.TORCH_DAMAGE],
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
 				[SpecialStat.CRITICAL_HIT_CHANCE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
-				[SpecialStat.CRITICAL_HIT_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ??
+					BaseSpecialStats[SpecialStat.CRITICAL_HIT_CHANCE],
+				[SpecialStat.CRITICAL_HIT_BONUS]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ??
+					BaseSpecialStats[SpecialStat.CRITICAL_HIT_BONUS]
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -218,8 +248,8 @@ export const initializeDinoz = (
 	// Add a random amount of time between 0 and 9 to randomize the first fighter
 	fighter.time += Math.floor(random() * TIME_BASE) * TIME_FACTOR;
 
-	// Energy
-	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
+	// Initialize fighter energy
+	setMaxEnergy(fighter, fighter.stats.special.energy);
 	fighter.energy = fighter.maxEnergy;
 
 	// Handle elements (from highest to lowest)
@@ -260,17 +290,18 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		maxHp: dinoz.maxHp,
 		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
 		hp: has_tear ? dinoz.maxHp * 0.1 : 1,
-		energy: 100, // Default for clone
-		maxEnergy: 100, // Default for clone
+		// Clone alway use default max energy
+		energy: BaseSpecialStats[SpecialStat.ENERGY],
+		maxEnergy: BaseSpecialStats[SpecialStat.ENERGY],
 		resilience: dinoz.resilience,
 		stats: {
 			base: dinoz.stats.base,
 			assaultBonus: dinoz.stats.assaultBonus,
 			defense: dinoz.stats.defense,
 			special: {
-				[SpecialStat.INITIATIVE]: 0, // No initative for clones
-				[SpecialStat.ENERGY]: 0, // No energy recovery bonus for clones
-				[SpecialStat.ENERGY_RECOVERY]: 0, // No energy recovery bonus for clones
+				[SpecialStat.INITIATIVE]: BaseSpecialStats[SpecialStat.INITIATIVE], // Default
+				[SpecialStat.ENERGY]: BaseSpecialStats[SpecialStat.ENERGY], // Default
+				[SpecialStat.ENERGY_RECOVERY]: BaseSpecialStats[SpecialStat.ENERGY_RECOVERY], // Default
 				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
 				[SpecialStat.ARMOR_BREAK]: dinoz.stats.special[SpecialStat.ARMOR_BREAK],
 				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
@@ -283,11 +314,11 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.WATER_SPEED]: dinoz.stats.special[SpecialStat.WATER_SPEED],
 				[SpecialStat.LIGHTNING_SPEED]: dinoz.stats.special[SpecialStat.LIGHTNING_SPEED],
 				[SpecialStat.AIR_SPEED]: dinoz.stats.special[SpecialStat.AIR_SPEED],
-				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
-				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
-				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
+				[SpecialStat.BUBBLE_RATE]: BaseSpecialStats[SpecialStat.BUBBLE_RATE], // Default
+				[SpecialStat.TORCH_DAMAGE]: BaseSpecialStats[SpecialStat.TORCH_DAMAGE], // Default
+				[SpecialStat.ACID_BLOOD_DAMAGE]: BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE], // Default
 				[SpecialStat.CRITICAL_HIT_CHANCE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_CHANCE],
-				[SpecialStat.CRITICAL_HIT_DAMAGE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_DAMAGE]
+				[SpecialStat.CRITICAL_HIT_BONUS]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_BONUS]
 			},
 			speed: dinoz.stats.speed
 		},
@@ -420,8 +451,8 @@ export const initializeMonster = (
 		maxHp: monster.hp,
 		startingHp: monster.hp,
 		hp: monster.hp,
-		energy: 100,
-		maxEnergy: 100,
+		energy: BaseSpecialStats[SpecialStat.ENERGY],
+		maxEnergy: BaseSpecialStats[SpecialStat.ENERGY],
 		resilience: monster.resilience,
 		stats: {
 			base: {
@@ -455,29 +486,61 @@ export const initializeMonster = (
 					getDefenseStat(similiDinoz, [], skills, DefenseElement.NEUTRAL).value + (monster.bonus_defense ?? 0)
 			},
 			special: {
-				[SpecialStat.INITIATIVE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? 0,
-				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.ARMOR_BREAK]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.SUPER_EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SPEED)?.value ?? 0,
-				[SpecialStat.FIRE_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_SPEED)?.value ?? 0,
-				[SpecialStat.WOOD_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_SPEED)?.value ?? 0,
-				[SpecialStat.WATER_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_SPEED)?.value ?? 0,
-				[SpecialStat.LIGHTNING_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
-				[SpecialStat.AIR_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_SPEED)?.value ?? 0,
-				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
-				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+				[SpecialStat.INITIATIVE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.INITIATIVE)?.value ??
+					BaseSpecialStats[SpecialStat.INITIATIVE],
+				[SpecialStat.ENERGY]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? BaseSpecialStats[SpecialStat.ENERGY],
+				[SpecialStat.ENERGY_RECOVERY]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ??
+					BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
+				[SpecialStat.ARMOR]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ARMOR],
+				[SpecialStat.ARMOR_BREAK]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR_BREAK)?.value ??
+					BaseSpecialStats[SpecialStat.ARMOR_BREAK],
+				[SpecialStat.MULTIHIT]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ??
+					BaseSpecialStats[SpecialStat.MULTIHIT],
+				[SpecialStat.EVASION]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? BaseSpecialStats[SpecialStat.EVASION],
+				[SpecialStat.SUPER_EVASION]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ??
+					BaseSpecialStats[SpecialStat.SUPER_EVASION],
+				[SpecialStat.COUNTER]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? BaseSpecialStats[SpecialStat.COUNTER],
+				[SpecialStat.SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.SPEED)?.value ?? BaseSpecialStats[SpecialStat.SPEED],
+				[SpecialStat.FIRE_SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.FIRE_SPEED],
+				[SpecialStat.WOOD_SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.WOOD_SPEED],
+				[SpecialStat.WATER_SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.WATER_SPEED],
+				[SpecialStat.LIGHTNING_SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.LIGHTNING_SPEED],
+				[SpecialStat.AIR_SPEED]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_SPEED)?.value ??
+					BaseSpecialStats[SpecialStat.AIR_SPEED],
+				[SpecialStat.BUBBLE_RATE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ??
+					BaseSpecialStats[SpecialStat.BUBBLE_RATE],
+				[SpecialStat.TORCH_DAMAGE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.TORCH_DAMAGE],
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
 				[SpecialStat.CRITICAL_HIT_CHANCE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
-				[SpecialStat.CRITICAL_HIT_DAMAGE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ??
+					BaseSpecialStats[SpecialStat.CRITICAL_HIT_CHANCE],
+				[SpecialStat.CRITICAL_HIT_BONUS]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ??
+					BaseSpecialStats[SpecialStat.CRITICAL_HIT_BONUS]
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -550,8 +613,8 @@ export const initializeMonster = (
 	// Add a random amount of time between 0 and 10 to randomize the first fighter
 	fighter.time += Math.round(random() * TIME_BASE) * TIME_FACTOR;
 
-	// Energy
-	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
+	// Initialize fighter energy
+	setMaxEnergy(fighter, fighter.stats.special.energy);
 	fighter.energy = fighter.maxEnergy;
 
 	// Handle elements (from highest to lowest)
@@ -1050,13 +1113,13 @@ export const getFighterCriticalHitChance = (fighter: DetailedFighter) => {
 };
 
 /**
- * Determine the critical hit damage of the fighter.
- * The critical hit damage minimum is 0%. There is no maximum.
- * @param fighter The fighter to get the critical hit damage stat stat from.
- * @returns {number} Returns the critical hit damage of the fighter between 0 an 0.9.
+ * Determine the critical hit bonus of the fighter.
+ * The critical hit bonus minimum is 0%. There is no maximum.
+ * @param fighter The fighter to get the critical hit bonus stat stat from.
+ * @returns {number} Returns the critical hit bonus of the fighter
  */
-export const getFighterCriticalHitDamage = (fighter: DetailedFighter) => {
-	return Math.max(0, fighter.stats.special.criticalHitDamage);
+export const getFighterCriticalHitBonus = (fighter: DetailedFighter) => {
+	return Math.max(0, fighter.stats.special.criticalHitBonus);
 };
 
 export default getFighters;

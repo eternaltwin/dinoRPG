@@ -28,6 +28,7 @@ import { AdminService } from '../../services/index.js';
 import DZButton from '../common/DZButton.vue';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 
 export default defineComponent({
 	name: 'debugFight',
@@ -52,7 +53,7 @@ export default defineComponent({
 					structuredClone(toRaw(fight.fighters)),
 					fight.steps,
 					this.$t,
-					fight.winner,
+					fight.outcome === FightOutcome.AttackerWin,
 					undefined,
 					undefined,
 					true

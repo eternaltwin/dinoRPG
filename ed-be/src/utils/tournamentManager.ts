@@ -39,6 +39,7 @@ import NewsType = $Enums.NewsType;
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReason } from '@drpg/prisma';
 import { nextMonday } from './date.js';
 
@@ -255,7 +256,38 @@ class TournamentManager {
 			canUsePermanentEquipmentOnly: true
 		};
 
-		const fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+		let fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+
+		// Determine winning side (true for left, false for right)
+		let winner = false;
+
+		// The winner and loser will be calculated based on the remaining hp (%) in case of timeout.
+		// See `fightChallenge` for explanation of the comparison.
+		const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
+		const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
+		if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+			winner = true;
+		}
+
+		// Replay the fight if a tie happened (up to 5 times)
+		let retry_counter = 0;
+		while (fight.outcome === FightOutcome.Tie && retry_counter < 5) {
+			fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+
+			const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
+			const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
+			if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+				winner = true;
+			}
+
+			retry_counter++;
+		}
+
+		if (retry_counter >= 5) {
+			LOGGER.error('Maximum number of retries after ties reached in Tournament Manager', {
+				fightData: fight
+			});
+		}
 
 		const metadata: MetaData = {
 			phase: phase,
@@ -290,7 +322,7 @@ class TournamentManager {
 				),
 				steps: JSON.stringify(fight.steps),
 				seed: fight.seed,
-				result: fight.winner,
+				result: fight.outcome === FightOutcome.AttackerWin,
 				tournamentStep: round,
 				tournamentId: this.tournamentId,
 				metadata: JSON.stringify(metadata),
