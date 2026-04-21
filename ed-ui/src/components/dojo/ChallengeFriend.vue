@@ -29,6 +29,9 @@
 				</Suspense>
 			</div>
 		</div>
+
+		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
+
 		<FightRecap :stats="fightStat" />
 		{{ shareLink }}
 	</template>
@@ -145,6 +148,19 @@ export default defineComponent({
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
+		},
+		returnToFighterSelection() {
+			this.selectedDinoz = [];
+			this.opponentDinoz = [];
+			this.myTeam = [];
+			this.opponentTeam = [];
+			this.fightCost = 0;
+			this.leftPlayer = null;
+			this.rightPlayer = null;
+			this.opponentId = undefined;
+			this.fightTransformed = undefined;
+			this.loaded = false;
+			this.shareLink ='';
 		},
 		composeMyTeam(data: number[]) {
 			this.myTeam = data;
