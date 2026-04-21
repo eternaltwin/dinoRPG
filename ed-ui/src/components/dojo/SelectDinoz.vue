@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="df jcc mt-1" v-if="selectedDinoz.length && selectedDinoz.length >= minLimit">
-		<DZButton @click="validate" :off="selectionOver">{{
+		<DZButton @click="validate">{{
 			selectionOver ? $t('dojo.challenge.edit') : $t('dojo.challenge.validate')
 		}}</DZButton>
 	</div>
