@@ -75,17 +75,23 @@ export default defineComponent({
 			}
 		},
 		async validate() {
-			// Do nothing if no dinoz selected
-			if (this.selectedDinoz.length === 0) {
-				this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
-				return;
+			if (!this.selectionOver) {
+				// In this scenario, it means the player is confirming its choice.
+				if (this.selectedDinoz.length === 0) {
+					// Do nothing if no dinoz selected
+					this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
+					return;
+				}
+				if (this.selectedDinoz.length < this.minLimit) {
+					// Do nothing if not enough dinoz selected
+					this.$toast.open({ message: formatText(this.$t(`toast.notEnoughDinozSelected`)), type: 'error' });
+					return;
+				}
 			}
-			if (this.selectedDinoz.length < this.minLimit) {
-				this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
-				return;
-			}
-			this.$emit('validate', this.selectedDinoz);
+			// Else (nothing to do)
+			// Then emit and update flag
 			this.selectionOver = !this.selectionOver;
+			this.$emit('validate', this.selectionOver, this.selectedDinoz);
 		}
 	},
 	async mounted() {
