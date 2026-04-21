@@ -651,7 +651,7 @@ class TournamentManager {
 			}),
 			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
 			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit }),
-			number: romanize(total + 1)
+			number: romanize(total)
 		};
 		const esTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
@@ -666,7 +666,7 @@ class TournamentManager {
 			}),
 			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
 			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit }),
-			number: romanize(total + 1)
+			number: romanize(total)
 		};
 		const enTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
@@ -681,7 +681,7 @@ class TournamentManager {
 			}),
 			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
 			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit }),
-			number: romanize(total + 1)
+			number: romanize(total)
 		};
 		const deTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
@@ -696,7 +696,7 @@ class TournamentManager {
 			}),
 			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
 			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit }),
-			number: romanize(total + 1)
+			number: romanize(total)
 		};
 
 		const news = await createNews({
