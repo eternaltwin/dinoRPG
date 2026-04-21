@@ -4618,7 +4618,7 @@
 			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
-		"qualification": "Tienes hasta el **{qualificationEnd}** para estar entre los 64 primeros en el ranking de Dojos, y así clasificarte para la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡prepárate!&&El premio en oro es actualmente de **{cashPrice}** :gold:.",
+		"qualification": "Tienes hasta el **{qualificationEnd}** para estar entre los 64 primeros en el ranking de Dojos, y así clasificarte para la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡prepárate!",
 		"pools": "La fase de grupos está en curso y terminará el {finalsStart}.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"finals": "Y aquí está la tan esperada fase final.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
