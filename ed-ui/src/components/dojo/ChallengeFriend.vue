@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { playerStore, useDinozStore } from '../../store/index.js';
+import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -141,6 +141,7 @@ export default defineComponent({
 				this.loaded = true;
 				this.shareLink = `${window.location.origin}/dojo/share/${fightResult.id}`;
 				await this.$refreshGold();
+				dojoStore().incrementCashPrice(this.fightCost);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

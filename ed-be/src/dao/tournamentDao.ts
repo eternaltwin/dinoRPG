@@ -15,3 +15,14 @@ export async function getLatestTournament() {
 		}
 	});
 }
+
+export async function incrementCashPrice(tournamentId: string, quantity: number) {
+	await prisma.tournament.update({
+		where: {
+			id: tournamentId
+		},
+		data: {
+			cashPrice: { increment: quantity }
+		}
+	});
+}
