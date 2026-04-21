@@ -4618,12 +4618,12 @@
 			"cashPrice": ":gold: The cash prize for this tournament is {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
-		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
-		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash prize is now **{cashPrice}** :gold:.",
-		"finals": "And here are the long-awaited final stages && The cash prize has been set at **{cashPrice}** :gold:.",
+		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
-			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the crash price of the next tournament.",
+			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the cash price of the next tournament.",
 			"friend": "Select here the Dinoz of your clan mates to challenge.",
 			"startFight": "{gold} :gold:",
 			"doubleDinoz": "You cannot have the same Dinoz fight"
