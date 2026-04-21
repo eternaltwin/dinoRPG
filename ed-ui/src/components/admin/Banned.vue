@@ -73,9 +73,6 @@ export default defineComponent({
 				this.selectedBanUpdateAction = action;
 			}
 		},
-		selectBanUpdate(action: string) {
-			this.selectedBanUpdateAction = action;
-		},
 		async updateBan(playerId: string) {
 			if (!this.selectedBanUpdateAction) {
 				this.$toast.error(this.$t(`toast.missingData`));

@@ -46,7 +46,7 @@ import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
-	name: 'Report',
+	name: 'ReportPlayer',
 	components: { DZButton },
 	data() {
 		return {

@@ -223,7 +223,8 @@ export const ModerationReason: {
   readonly other: 'other';
   readonly clanBanner: 'clanBanner';
   readonly clanBehavior: 'clanBehavior';
-  readonly clanPages: 'clanPages'
+  readonly clanPages: 'clanPages';
+  readonly clanOther: 'clanOther'
 };
 
 export namespace ModerationReason {
@@ -235,7 +236,8 @@ export namespace ModerationReason {
   export type other = 'other';
   export type clanBanner = 'clanBanner';
   export type clanBehavior = 'clanBehavior';
-  export type clanPages = 'clanPages'
+  export type clanPages = 'clanPages';
+  export type clanOther = 'clanOther'
 }
 
 export type ModerationReason = typeof ModerationReason[keyof typeof ModerationReason];

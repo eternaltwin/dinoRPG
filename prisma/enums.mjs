@@ -110,7 +110,8 @@ export const ModerationReason = {
   other: 'other',
   clanBanner: 'clanBanner',
   clanBehavior: 'clanBehavior',
-  clanPages: 'clanPages'
+  clanPages: 'clanPages',
+  clanOther: 'clanOther'
 };
 
 export const ModerationAction = {
