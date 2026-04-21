@@ -41,6 +41,7 @@ import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import seedrandom from 'seedrandom';
 import { LOGGER } from '../../context.js';
+import Fraction from 'fraction.js';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -108,15 +109,12 @@ function handleTimeoutOutcome(fightData: DetailedFight): void {
 			// outcome remains as timeout
 			return;
 		case TimeoutOutcomePolicy.PercentageHealth:
-			// The outcome will be calculated based on the remaining hp (%) in case of timeout
-			// We will compare remaining percentage health: endingHp / startingHp
-			// To avoid comparing non-integer numbers, instead of comparing
-			// "attack.endingHp / attack.startingHp" with "defense.endingHp / defense.startingHp"
-			// Compare: "attack.endingHp * defense.startingHp" with "defense.endingHp * attack.startingHp"
-			const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
-			const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
-			if (left === right) fightData.outcome = FightOutcome.Tie;
-			else if (left > right) fightData.outcome = FightOutcome.AttackerWin;
+			// The outcome will be calculated based on the remaining percentage health
+			// (endingHp / startingHp) in case of timeout
+			const left = new Fraction(fightData.stats.attack.endingHp, fightData.stats.attack.startingHp);
+			const right = new Fraction(fightData.stats.defense.endingHp, fightData.stats.defense.startingHp);
+			if (left.equals(right)) fightData.outcome = FightOutcome.Tie;
+			else if (left.gt(right)) fightData.outcome = FightOutcome.AttackerWin;
 			else fightData.outcome = FightOutcome.DefenderWin;
 			return;
 		default:
