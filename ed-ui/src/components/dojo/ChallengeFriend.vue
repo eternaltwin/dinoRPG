@@ -2,9 +2,9 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<div class="preparation" v-if="!fightTransformed">
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.disclaimer')" />
-		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectYourDinoz')" />
+		<DZDisclaimer :content="$t('dojo.challengeFriend.selectYourDinoz')" />
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="6" @validate="composeMyTeam"></SelectDinoz>
-		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectOpponentDinoz')" />
+		<DZDisclaimer :content="$t('dojo.challengeFriend.selectOpponentDinoz')" />
 		<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
 			{{ friend.player.name }}</DZButton
 		>
@@ -92,6 +92,8 @@ export default defineComponent({
 	},
 	methods: {
 		async selectPlayer(playerId: string) {
+			this.opponentDinoz = [];
+			this.opponentTeam = [];
 			try {
 				const player = await PlayerService.getPlayerData(playerId);
 				this.opponentDinoz = player.dinoz
