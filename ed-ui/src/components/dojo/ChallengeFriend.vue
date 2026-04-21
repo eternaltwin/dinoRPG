@@ -2,14 +2,13 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<div class="preparation" v-if="!fightTransformed">
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.disclaimer')" />
+		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectYourDinoz')" />
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="6" @validate="composeMyTeam"></SelectDinoz>
-		<template v-if="opponentDinoz.length <= 0">
-			<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
-				{{ friend.player.name }}</DZButton
-			>
-		</template>
-		<template v-else>
-			<DZDisclaimer round help :content="$t('dojo.challengeFriend.friend')" />
+		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectOpponentDinoz')" />
+		<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
+			{{ friend.player.name }}</DZButton
+		>
+		<template v-if="opponentDinoz.length > 0">
 			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="6" @validate="composeEnnemyTeam"></SelectDinoz>
 		</template>
 		<div
@@ -32,8 +31,10 @@
 
 		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
 
-		<FightRecap :stats="fightStat" />
-		{{ shareLink }}
+		<Transition name="bounce">
+			<FightRecap :stats="fightStat" />
+		</Transition>
+		<DZInput disabled type="text" v-model="shareLink" />
 	</template>
 </template>
 
@@ -44,6 +45,7 @@ import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZInput from '../common/DZInput.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { ClanService, PlayerService } from '../../services/index.js';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
@@ -61,8 +63,9 @@ export default defineComponent({
 	name: 'ChallengeFriend',
 	components: {
 		DZButton,
-		TitleHeader,
 		DZDisclaimer,
+		DZInput,
+		TitleHeader,
 		SelectDinoz,
 		FightersHeader,
 		FightRecap,
