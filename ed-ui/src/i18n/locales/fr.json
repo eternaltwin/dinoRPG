@@ -145,6 +145,7 @@
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées.",
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
+		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisemment de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
 		"basicError": "Une erreur est survenue",
 		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
