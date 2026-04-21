@@ -210,9 +210,10 @@
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
 		"dinozNotPlayer": "Un Dinoz n'appartient pas au joueur.",
-		"alreadyFighted": "Ce Dinoz a déjà combattu",
+		"alreadyFighted": "Ce Dinoz a déjà combattu.",
 		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
 		"wrongDinozQuantity": "Votre équipe doit être formée de {{qty}} Dinoz.",
+		"notEnoughDiversity": "Votre équipe doit être formée de {{qty}} races.",
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",
