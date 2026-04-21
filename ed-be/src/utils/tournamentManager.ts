@@ -36,10 +36,10 @@ import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
 import NewsType = $Enums.NewsType;
-import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
+import { FightRules, TimeoutOutcomePolicy } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
-import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -251,34 +251,23 @@ class TournamentManager {
 			enableStats: false,
 			poisonEnabled: tournamentRules.poison,
 			canUseEquipment: true,
-			canUsePermanentEquipmentOnly: true
+			canUsePermanentEquipmentOnly: true,
+			timeoutPolicy: TimeoutOutcomePolicy.PercentageHealth
 		};
 
+		// Replay the fight if a tie happened (up to 5 times)
+		let retry_counter = 0;
 		let fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+		while (fight.outcome === FightOutcome.Tie && retry_counter < 5) {
+			fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+			retry_counter++;
+		}
 
 		// Determine winning side (true for left, false for right)
 		let winner = false;
 
-		// The winner and loser will be calculated based on the remaining hp (%) in case of timeout.
-		// See `fightChallenge` for explanation of the comparison.
-		const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
-		const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
-		if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+		if (fight.outcome === FightOutcome.AttackerWin) {
 			winner = true;
-		}
-
-		// Replay the fight if a tie happened (up to 5 times)
-		let retry_counter = 0;
-		while (fight.outcome === FightOutcome.Tie && retry_counter < 5) {
-			fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
-
-			const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
-			const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
-			if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
-				winner = true;
-			}
-
-			retry_counter++;
 		}
 
 		if (retry_counter >= 5) {

@@ -180,11 +180,7 @@ class ForceBruteManager {
 		// Determine winning side (true for left, false for right)
 		let winner = false;
 
-		// The winner and loser will be calculated based on the remaining hp (%) in case of timeout.
-		// See `fightChallenge` for explanation of the comparison.
-		const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
-		const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
-		if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+		if (fight.outcome === FightOutcome.AttackerWin) {
 			winner = true;
 		}
 

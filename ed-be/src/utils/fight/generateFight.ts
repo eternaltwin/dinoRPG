@@ -26,7 +26,12 @@ import {
 	FightStatus,
 	FightStatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
-import { DinozToGetFighter, FightConfiguration, FightRules } from '@drpg/core/models/fight/FightConfiguration';
+import {
+	DinozToGetFighter,
+	FightConfiguration,
+	FightRules,
+	TimeoutOutcomePolicy
+} from '@drpg/core/models/fight/FightConfiguration';
 import { FightOutcome, FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep, PrepareStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -90,6 +95,36 @@ const orderFighters = (fightData: DetailedFight) => {
 		return a.time - b.time;
 	});
 };
+
+/**
+ * Implements the timeout outcome policy to update the outcome in case of timeout.
+ *
+ * @returns FightOutcome
+ **/
+function handleTimeoutOutcome(fightData: DetailedFight): void {
+	if (fightData.outcome !== FightOutcome.Timeout) return;
+	switch (fightData.rules.timeoutPolicy) {
+		case TimeoutOutcomePolicy.Timeout:
+			// outcome remains as timeout
+			return;
+		case TimeoutOutcomePolicy.PercentageHealth:
+			// The outcome will be calculated based on the remaining hp (%) in case of timeout
+			// We will compare remaining percentage health: endingHp / startingHp
+			// To avoid comparing non-integer numbers, instead of comparing
+			// "attack.endingHp / attack.startingHp" with "defense.endingHp / defense.startingHp"
+			// Compare: "attack.endingHp * defense.startingHp" with "defense.endingHp * attack.startingHp"
+			const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
+			const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
+			if (left === right) fightData.outcome = FightOutcome.Tie;
+			else if (left > right) fightData.outcome = FightOutcome.AttackerWin;
+			else fightData.outcome = FightOutcome.DefenderWin;
+			return;
+		default:
+			throw new Error(
+				`Timeout policy rule ${TimeoutOutcomePolicy[fightData.rules.timeoutPolicy]} has not been implemented`
+			);
+	}
+}
 
 /**
  * @summary Generate a fight.
@@ -279,7 +314,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			LOGGER.error('`Fighter energy not properly initialized: ${energy} != ${maxEnergy}`.', {
 				fightData: fightData,
 				energy: fighter.energy,
-				maxEnergy: fighter.maxEnergy,
+				maxEnergy: fighter.maxEnergy
 			});
 		}
 	});
@@ -462,6 +497,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			id: fighter.catchId
 		}));
 
+	handleTimeoutOutcome(fightData);
 	return {
 		seed: config.seed,
 		outcome: fightData.outcome,
