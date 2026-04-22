@@ -13,11 +13,7 @@
 		round
 		:content="$t(`dojo.timer.cashPrice`, { cashPrice: utils.beautifulNumber(state.cashPrice.toString()) })"
 	/>
-	<DZDisclaimer
-		v-if="!tournamentTeam && tournamentState"
-		help
-		:content="$t(`dojo.timer.noTeam`)"
-	/>
+	<DZDisclaimer v-if="!tournamentTeam && tournamentState" round help :content="$t(`dojo.timer.noTeam`)" />
 </template>
 
 <script lang="ts">
@@ -46,7 +42,7 @@ export default defineComponent({
 				return;
 			}
 			return dojoStore().getState;
-		},
+		}
 	},
 	props: {
 		state: {
