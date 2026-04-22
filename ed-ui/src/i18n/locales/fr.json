@@ -4627,7 +4627,7 @@
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
 			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
-			"noTeam": "Vous n'avez pas encore inscrit d'équipe pour ce tournoi."
+			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
