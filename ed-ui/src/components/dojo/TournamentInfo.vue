@@ -16,7 +16,13 @@
 		v-if="tournamentState && tournamentInfo && (!tournamentTeam || tournamentTeam.teamCount === 0)"
 	>
 		<DZDisclaimer
-			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit, races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', ') })"
+			:content="
+				$t(`dojo.createTournamentTeam`, {
+					team: tournamentInfo.teamSize,
+					level: tournamentInfo.levelLimit,
+					races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', ')
+				})
+			"
 		></DZDisclaimer>
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
 	</div>
@@ -106,7 +112,7 @@ export default defineComponent({
 		DinozWithoutFlash,
 		DZButton,
 		SelectDinoz,
-		DZDisclaimer,
+		DZDisclaimer
 	},
 	data() {
 		return {

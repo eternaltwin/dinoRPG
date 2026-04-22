@@ -167,11 +167,11 @@ export default defineComponent({
 			this.loaded = false;
 			this.shareLink = '';
 		},
-		composeMyTeam(data: number[]) {
+		composeMyTeam(validate: boolean, data: number[]) {
 			this.myTeam = data;
 			this.fightCost = (this.myTeam.length + this.opponentTeam.length) * 50;
 		},
-		composeEnnemyTeam(data: number[]) {
+		composeEnnemyTeam(validate: boolean, data: number[]) {
 			this.opponentTeam = data;
 			this.fightCost = (this.myTeam.length + this.opponentTeam.length) * 50;
 		}
