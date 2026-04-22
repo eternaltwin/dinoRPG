@@ -396,7 +396,7 @@
 		"acidBloodDamage": "Acid blood damage",
 		"baseValue": "Base value",
 		"criticalHitChance": "Critical Hit Chance",
-		"criticalHitDamage": "Critical Hit Bonus"
+		"criticalHitBonus": "Critical Hit Bonus"
 	},
 	"item": {
 		"name": {

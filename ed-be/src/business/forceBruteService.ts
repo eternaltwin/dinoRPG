@@ -40,6 +40,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -771,6 +772,10 @@ export async function fightFBTournamentOpponent(req: Request) {
 		PlaceEnum.FORCEBRUT
 	);
 
+	// Only defeating all opponents grants victory. Tie counts as defeat.
+
+	const victory = fightResult.outcome === FightOutcome.AttackerWin;
+
 	const attacker = fightResult.attackers.find(a => a.dinozId === dinoz.id);
 	if (!attacker) {
 		throw new ExpectedError(`Attacker ${dinoz.id} doesn't exist.`);
@@ -787,7 +792,8 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	let levelup = false;
 	let xp = 0;
-	if (fightResult.winner) {
+
+	if (victory) {
 		await addMoney(authed.id, gold);
 		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
 		xp = calculateXPBonus(dinoz, xp, dinoz.player);
@@ -811,11 +817,11 @@ export async function fightFBTournamentOpponent(req: Request) {
 			increment: xp
 		},
 		FBTournamentStep: {
-			increment: fightResult.winner ? 1 : 0
+			increment: victory ? 1 : 0
 		}
 	});
 
-	await archiveFight(fightResult, authed.id, null);
+	await archiveFight(fightResult, victory, authed.id, null);
 
 	// Consume item used
 	let merguezUsed = 0;
@@ -831,7 +837,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
 
 	let statusReward: DinozStatusId | undefined = undefined;
-	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
+	if (victory && dinoz.FBTournamentStep % 10 === 0) {
 		switch (dinoz.FBTournamentStep / 10) {
 			case 1:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.BRONZE_MEDAL_FORCEBRUT);
@@ -856,11 +862,11 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	return {
 		fighters: fightResult.fighters,
-		goldEarned: fightResult.winner ? gold : 0,
-		xpEarned: fightResult.winner ? xp : 0,
+		goldEarned: victory ? gold : 0,
+		xpEarned: victory ? xp : 0,
 		levelUp: levelup,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
+		result: victory,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinozId,

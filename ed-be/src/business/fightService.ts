@@ -10,7 +10,7 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -160,7 +160,7 @@ export async function fightMonstersAtPlace(
 		}
 	}
 	const fightResult = calculateFightVsMonsters(team, player, placeId, monsters);
-	const result = await rewardFight(team, monsters, fightResult, placeId, player);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, player);
 
 	// If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
@@ -291,8 +291,8 @@ export function calculateFightBetweenPlayers(
 	return generateFight(fightConfiguration, place, rng);
 }
 
-export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
-export async function rewardFight(
+export type DinozToRewardFight = Parameters<typeof rewardFightVsMonsters>[0][number];
+export async function rewardFightVsMonsters(
 	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -306,6 +306,10 @@ export async function rewardFight(
 	if (!team.length) {
 		throw new ExpectedError('No player found');
 	}
+
+	// Victory and rewards against monsters are granted only by defeating them. Tie counts as defeat.
+
+	const victory = fightResult.outcome === FightOutcome.AttackerWin;
 
 	const playerId = player.id;
 
@@ -375,10 +379,10 @@ export async function rewardFight(
 				decrement: attacker.hpLost
 			},
 			experience: {
-				increment: fightResult.winner ? xp : 0
+				increment: victory ? xp : 0
 			}
 		});
-		await createLog(LogType.XPEarned, playerId, d.id, fightResult.winner ? xp : 0);
+		await createLog(LogType.XPEarned, playerId, d.id, victory ? xp : 0);
 		await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
 
 		// Log death if dinoz is dead
@@ -435,7 +439,7 @@ export async function rewardFight(
 	let itemWon = undefined;
 
 	for (const m of eventMonsters) {
-		if (m.events && m.events.length > 0 && fightResult.winner) {
+		if (m.events && m.events.length > 0 && victory) {
 			await increasePlayerEventProgression(playerId, m.events[0]);
 			switch (m.events[0]) {
 				case GameEvent.CHRISTMAS:
@@ -458,7 +462,7 @@ export async function rewardFight(
 	}
 
 	// If attackers won
-	if (fightResult.winner) {
+	if (victory) {
 		await addMoney(playerId, gold);
 	} else if (goldLost) {
 		await removeMoney(playerId, goldLost);
@@ -514,8 +518,8 @@ export async function rewardFight(
 		LogType.Fight,
 		playerId,
 		undefined,
-		fightResult.winner ? gold : -goldLost,
-		fightResult.winner ? totalWinXP : 0,
+		victory ? gold : -goldLost,
+		victory ? totalWinXP : 0,
 		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
 	);
 
@@ -540,11 +544,11 @@ export async function rewardFight(
 	});
 	return {
 		fighters: fighters,
-		goldEarned: fightResult.winner ? gold : -goldLost,
-		xpEarned: fightResult.winner ? totalWinXP : 0,
-		levelUp: fightResult.winner ? levelup : false,
+		goldEarned: victory ? gold : -goldLost,
+		xpEarned: victory ? totalWinXP : 0,
+		levelUp: victory ? levelup : false,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
+		result: victory,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinozId,

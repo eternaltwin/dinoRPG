@@ -5,7 +5,7 @@ import { itemList, Item } from '@drpg/core/models/item/ItemList';
 import { apiRoutes } from '../constants/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkRole } from '../utils/jwt.js';
-import { calculateFightVsMonsters, generateMonsterList, rewardFight } from '../business/fightService.js';
+import { calculateFightVsMonsters, generateMonsterList, rewardFightVsMonsters } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
 import sendError from '../utils/sendErrors.js';
 import { LOGGER } from '../context.js';
@@ -58,7 +58,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkRole([AdminRole.ADMIN]), as
 		for (let i = 0; i < 600; i++) {
 			const monstersGenerated = await generateMonsterList(team, player.dinoz[0].placeId);
 			const fightResult = calculateFightVsMonsters(team, player, player.dinoz[0].placeId, monstersGenerated);
-			const result = await rewardFight(team, monstersGenerated, fightResult, player.dinoz[0].placeId, player);
+			const result = await rewardFightVsMonsters(team, monstersGenerated, fightResult, player.dinoz[0].placeId, player);
 
 			const flattedMonsters = monstersGenerated.map(a => a.name);
 			const counter: { [key: string]: number } = {};

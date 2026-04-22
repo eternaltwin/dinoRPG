@@ -33,7 +33,6 @@ import {
 	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
 	CYCLE,
-	DEFAULT_MAX_ENERGY,
 	ENERGY_RECOVERY_BASE_FACTOR,
 	ENVIRONMENT_TIMEOUT,
 	FIGHT_INFINITE,
@@ -64,12 +63,13 @@ import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBet
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightStats } from '@drpg/core/models/fight/FightResult';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
 import { checkSkillCondition } from './skillFightConditionParser.js';
 import { LOGGER } from '../../context.js';
+import { BaseSpecialStats, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 
 export const OVERTIME_ID = -9999;
 
@@ -388,19 +388,24 @@ export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
 	if (newMax > MAXIMUM_MAX_ENERGY) {
 		fighter.maxEnergy = MAXIMUM_MAX_ENERGY;
 	} else if (newMax < 0) {
+		// Max energy cannot go below 1
 		fighter.maxEnergy = 1;
 	} else {
 		fighter.maxEnergy = newMax;
 	}
 
 	// Don't go below DEFAULT_MAX_ENERGY if fighter has Item.ENCHANTED_STEROID
-	if (fighter.maxEnergy < DEFAULT_MAX_ENERGY && fighter.items.some(item => item.itemId === Item.ENCHANTED_STEROID)) {
-		fighter.maxEnergy = DEFAULT_MAX_ENERGY;
+	if (
+		fighter.maxEnergy < BaseSpecialStats[SpecialStat.ENERGY] &&
+		fighter.items.some(item => item.itemId === Item.ENCHANTED_STEROID)
+	) {
+		fighter.maxEnergy = BaseSpecialStats[SpecialStat.ENERGY];
 	}
 
-	// Set fighter's current energy to minimum between energy and max energy
-	// Note: This is not done in the original fight algo
-	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
+	// Set the fighter's energy if it is lower than the new max energy
+	if (fighter.energy > fighter.maxEnergy) {
+		fighter.energy = fighter.maxEnergy;
+	}
 };
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
@@ -5077,11 +5082,13 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		}
 	}
 
-	// Set loser if only one team is alive
-	if (attackersAlive === 0) {
-		fightData.loser = 'attackers';
+	// Try to determine if the fight ended
+	if (attackersAlive === 0 && defendersAlive === 0) {
+		fightData.outcome = FightOutcome.Tie;
+	} else if (attackersAlive === 0) {
+		fightData.outcome = FightOutcome.DefenderWin;
 	} else if (defendersAlive === 0) {
-		fightData.loser = 'defenders';
+		fightData.outcome = FightOutcome.AttackerWin;
 	}
 };
 
@@ -5146,7 +5153,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// Time bar movement is handled on the front side
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
-				fightData.endedByTimeout = true;
+				fightData.outcome = FightOutcome.Timeout;
 				fightData.steps.push({
 					action: 'timeOut',
 					delta: deltaTime
@@ -5217,7 +5224,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 
 		// Return if a winner has been determined
-		if (fightData.loser) {
+		if (fightData.outcome) {
 			return;
 		}
 
@@ -5225,6 +5232,13 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		if (isStatusTurn) {
 			return;
 		}
+	}
+
+	if (deltaTime < 0) {
+		LOGGER.error('`Delta time cannot be negative: ${delta}`.', {
+			fightData: fightData,
+			delta: deltaTime
+		});
 	}
 
 	// 4th - Activate the active environment if it's its caster turn
@@ -5274,7 +5288,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 		checkDeaths(fightData);
-		if (fightData.loser) {
+		if (fightData.outcome) {
 			return;
 		}
 	}
