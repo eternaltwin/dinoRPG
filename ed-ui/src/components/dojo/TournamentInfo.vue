@@ -16,7 +16,7 @@
 		v-if="tournamentState && tournamentInfo && (!tournamentTeam || tournamentTeam.teamCount === 0)"
 	>
 		<DZDisclaimer
-			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit })"
+			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit, races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', ') })"
 		></DZDisclaimer>
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
 	</div>
@@ -49,6 +49,7 @@ import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import DZButton from '../common/DZButton.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
+import { raceList } from '../../constants/race.js';
 
 export default defineComponent({
 	name: 'TournamentInfo',
@@ -105,10 +106,11 @@ export default defineComponent({
 		DinozWithoutFlash,
 		DZButton,
 		SelectDinoz,
-		DZDisclaimer
+		DZDisclaimer,
 	},
 	data() {
 		return {
+			raceList: raceList,
 			playerStore: playerStore(),
 			localStore: localStore()
 		};
