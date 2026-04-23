@@ -602,6 +602,7 @@ model Clan {
   defendingWars  ClanWar[]         @relation("defender")
   clanWarRanking ClanWarRanking?
   players        Player[]
+  targetedCases  Moderation[]      @relation("TargetClanRelation")
 }
 
 model ClanCastle {
@@ -727,19 +728,21 @@ model ClanPage {
 }
 
 model Moderation {
-  id         Int               @id @default(autoincrement())
-  dinozId    Int?
-  reason     ModerationReason
-  comment    String
-  banDate    DateTime?
-  banEndDate DateTime?
-  sorted     ModerationAction?
-  reporterId String?           @db.Uuid
-  targetId   String            @db.Uuid
-  dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
-  reporter   Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
-  target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
-  bannedUser Player?           @relation("AcceptedBan")
+  id           Int               @id @default(autoincrement())
+  dinozId      Int?
+  reason       ModerationReason
+  comment      String
+  banDate      DateTime?
+  banEndDate   DateTime?
+  sorted       ModerationAction?
+  reporterId   String?           @db.Uuid
+  targetId     String            @db.Uuid
+  dinoz        Dinoz?            @relation(fields: [dinozId], references: [id])
+  reporter     Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
+  target       Player            @relation("TargetRelation", fields: [targetId], references: [id])
+  bannedUser   Player?           @relation("AcceptedBan")
+  targetClanId Int?
+  targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id], onDelete: SetNull)
 }
 
 model Conversation {
@@ -976,6 +979,11 @@ enum ModerationReason {
   accountName
   avatar
   customText
+  other
+  clanBanner
+  clanBehavior
+  clanPages
+  clanOther
 }
 
 enum ModerationAction {
