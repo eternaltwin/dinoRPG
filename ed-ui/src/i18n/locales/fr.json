@@ -3561,9 +3561,10 @@
 		"completion": "Complétion",
 		"rewards": "Récompenses Épiques",
 		"level": "Niveau",
-		"edit": "Modifier",
+		"editDescription": "Modifier la description",
+		"save": "Sauvegarder la description",
 		"quest": "Mes quêtes",
-		"editAccount": "Modifier mes Informations",
+		"editAccount": "Modifier mes informations",
 		"import": "Importer compte",
 		"stat": {
 			"name": "Statistiques",
@@ -4617,7 +4618,7 @@
 		"seeFinal": "Voir la finale",
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jour au maximum.//",
 		"soon": "Bientôt",
-		"seeFight": "Voir le combat de {player}",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",

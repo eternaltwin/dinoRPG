@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dojoStore, localStore, playerStore } from '../../store/index.js';
+import { dojoStore, localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -78,7 +78,7 @@ export default defineComponent({
 			return dojoStore().getState;
 		},
 		myDinoz() {
-			return dinozStore()
+			return useDinozStore()
 				.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 				.filter(d => this.tournamentInfo?.teamRace.includes(d.race.raceId))
 				.filter(d => d.level <= (this.tournamentInfo?.levelLimit ?? 0))
