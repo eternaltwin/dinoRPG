@@ -114,7 +114,13 @@ export async function getClanRequestPublic(id: number) {
 						name: true
 					}
 				},
-				treasureValue: true
+				treasureValue: true,
+				clanWarRanking: {
+					select: {
+						reputation: true,
+						points: true
+					}
+				}
 			}
 		});
 		return clans;
@@ -147,7 +153,13 @@ export async function getClanRequestPrivate(id: number) {
 						name: true
 					}
 				},
-				treasureValue: true
+				treasureValue: true,
+				clanWarRanking: {
+					select: {
+						reputation: true,
+						points: true
+					}
+				}
 			}
 		});
 		return clans;

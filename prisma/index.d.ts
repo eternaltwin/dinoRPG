@@ -57863,6 +57863,7 @@ export namespace Prisma {
     id: number | null
     clanId: number | null
     points: number | null
+    reputation: number | null
     wins: number | null
     losses: number | null
   }
@@ -57871,6 +57872,7 @@ export namespace Prisma {
     id: number | null
     clanId: number | null
     points: number | null
+    reputation: number | null
     wins: number | null
     losses: number | null
   }
@@ -57879,6 +57881,7 @@ export namespace Prisma {
     id: number | null
     clanId: number | null
     points: number | null
+    reputation: number | null
     wins: number | null
     losses: number | null
     eventId: string | null
@@ -57888,6 +57891,7 @@ export namespace Prisma {
     id: number | null
     clanId: number | null
     points: number | null
+    reputation: number | null
     wins: number | null
     losses: number | null
     eventId: string | null
@@ -57897,6 +57901,7 @@ export namespace Prisma {
     id: number
     clanId: number
     points: number
+    reputation: number
     wins: number
     losses: number
     eventId: number
@@ -57908,6 +57913,7 @@ export namespace Prisma {
     id?: true
     clanId?: true
     points?: true
+    reputation?: true
     wins?: true
     losses?: true
   }
@@ -57916,6 +57922,7 @@ export namespace Prisma {
     id?: true
     clanId?: true
     points?: true
+    reputation?: true
     wins?: true
     losses?: true
   }
@@ -57924,6 +57931,7 @@ export namespace Prisma {
     id?: true
     clanId?: true
     points?: true
+    reputation?: true
     wins?: true
     losses?: true
     eventId?: true
@@ -57933,6 +57941,7 @@ export namespace Prisma {
     id?: true
     clanId?: true
     points?: true
+    reputation?: true
     wins?: true
     losses?: true
     eventId?: true
@@ -57942,6 +57951,7 @@ export namespace Prisma {
     id?: true
     clanId?: true
     points?: true
+    reputation?: true
     wins?: true
     losses?: true
     eventId?: true
@@ -58038,6 +58048,7 @@ export namespace Prisma {
     id: number
     clanId: number
     points: number
+    reputation: number
     wins: number
     losses: number
     eventId: string
@@ -58066,6 +58077,7 @@ export namespace Prisma {
     id?: boolean
     clanId?: boolean
     points?: boolean
+    reputation?: boolean
     wins?: boolean
     losses?: boolean
     eventId?: boolean
@@ -58077,6 +58089,7 @@ export namespace Prisma {
     id?: boolean
     clanId?: boolean
     points?: boolean
+    reputation?: boolean
     wins?: boolean
     losses?: boolean
     eventId?: boolean
@@ -58088,6 +58101,7 @@ export namespace Prisma {
     id?: boolean
     clanId?: boolean
     points?: boolean
+    reputation?: boolean
     wins?: boolean
     losses?: boolean
     eventId?: boolean
@@ -58099,12 +58113,13 @@ export namespace Prisma {
     id?: boolean
     clanId?: boolean
     points?: boolean
+    reputation?: boolean
     wins?: boolean
     losses?: boolean
     eventId?: boolean
   }
 
-  export type ClanWarRankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "points" | "wins" | "losses" | "eventId", ExtArgs["result"]["clanWarRanking"]>
+  export type ClanWarRankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "points" | "reputation" | "wins" | "losses" | "eventId", ExtArgs["result"]["clanWarRanking"]>
   export type ClanWarRankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | ClanDefaultArgs<ExtArgs>
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
@@ -58128,6 +58143,7 @@ export namespace Prisma {
       id: number
       clanId: number
       points: number
+      reputation: number
       wins: number
       losses: number
       eventId: string
@@ -58559,6 +58575,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ClanWarRanking", 'Int'>
     readonly clanId: FieldRef<"ClanWarRanking", 'Int'>
     readonly points: FieldRef<"ClanWarRanking", 'Int'>
+    readonly reputation: FieldRef<"ClanWarRanking", 'Int'>
     readonly wins: FieldRef<"ClanWarRanking", 'Int'>
     readonly losses: FieldRef<"ClanWarRanking", 'Int'>
     readonly eventId: FieldRef<"ClanWarRanking", 'String'>
@@ -82015,6 +82032,7 @@ export namespace Prisma {
     id: 'id',
     clanId: 'clanId',
     points: 'points',
+    reputation: 'reputation',
     wins: 'wins',
     losses: 'losses',
     eventId: 'eventId'
@@ -85574,6 +85592,7 @@ export namespace Prisma {
     id?: IntFilter<"ClanWarRanking"> | number
     clanId?: IntFilter<"ClanWarRanking"> | number
     points?: IntFilter<"ClanWarRanking"> | number
+    reputation?: IntFilter<"ClanWarRanking"> | number
     wins?: IntFilter<"ClanWarRanking"> | number
     losses?: IntFilter<"ClanWarRanking"> | number
     eventId?: UuidFilter<"ClanWarRanking"> | string
@@ -85585,6 +85604,7 @@ export namespace Prisma {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
     eventId?: SortOrder
@@ -85595,21 +85615,24 @@ export namespace Prisma {
   export type ClanWarRankingWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     clanId?: number
+    clanId_eventId?: ClanWarRankingClanIdEventIdCompoundUniqueInput
     AND?: ClanWarRankingWhereInput | ClanWarRankingWhereInput[]
     OR?: ClanWarRankingWhereInput[]
     NOT?: ClanWarRankingWhereInput | ClanWarRankingWhereInput[]
     points?: IntFilter<"ClanWarRanking"> | number
+    reputation?: IntFilter<"ClanWarRanking"> | number
     wins?: IntFilter<"ClanWarRanking"> | number
     losses?: IntFilter<"ClanWarRanking"> | number
     eventId?: UuidFilter<"ClanWarRanking"> | string
     clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
     event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
-  }, "id" | "clanId">
+  }, "id" | "clanId" | "clanId_eventId">
 
   export type ClanWarRankingOrderByWithAggregationInput = {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
     eventId?: SortOrder
@@ -85627,6 +85650,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     clanId?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     points?: IntWithAggregatesFilter<"ClanWarRanking"> | number
+    reputation?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     wins?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     losses?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     eventId?: UuidWithAggregatesFilter<"ClanWarRanking"> | string
@@ -89896,6 +89920,7 @@ export namespace Prisma {
 
   export type ClanWarRankingCreateInput = {
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     clan: ClanCreateNestedOneWithoutClanWarRankingInput
@@ -89906,6 +89931,7 @@ export namespace Prisma {
     id?: number
     clanId: number
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     eventId: string
@@ -89913,6 +89939,7 @@ export namespace Prisma {
 
   export type ClanWarRankingUpdateInput = {
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     clan?: ClanUpdateOneRequiredWithoutClanWarRankingNestedInput
@@ -89923,6 +89950,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clanId?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     eventId?: StringFieldUpdateOperationsInput | string
@@ -89932,6 +89960,7 @@ export namespace Prisma {
     id?: number
     clanId: number
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     eventId: string
@@ -89939,6 +89968,7 @@ export namespace Prisma {
 
   export type ClanWarRankingUpdateManyMutationInput = {
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
   }
@@ -89947,6 +89977,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clanId?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     eventId?: StringFieldUpdateOperationsInput | string
@@ -94181,10 +94212,16 @@ export namespace Prisma {
     isNot?: ClanEventWhereInput
   }
 
+  export type ClanWarRankingClanIdEventIdCompoundUniqueInput = {
+    clanId: number
+    eventId: string
+  }
+
   export type ClanWarRankingCountOrderByAggregateInput = {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
     eventId?: SortOrder
@@ -94194,6 +94231,7 @@ export namespace Prisma {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
   }
@@ -94202,6 +94240,7 @@ export namespace Prisma {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
     eventId?: SortOrder
@@ -94211,6 +94250,7 @@ export namespace Prisma {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
     eventId?: SortOrder
@@ -94220,6 +94260,7 @@ export namespace Prisma {
     id?: SortOrder
     clanId?: SortOrder
     points?: SortOrder
+    reputation?: SortOrder
     wins?: SortOrder
     losses?: SortOrder
   }
@@ -115241,6 +115282,7 @@ export namespace Prisma {
 
   export type ClanWarRankingCreateWithoutClanInput = {
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     event: ClanEventCreateNestedOneWithoutClanWarRankingsInput
@@ -115249,6 +115291,7 @@ export namespace Prisma {
   export type ClanWarRankingUncheckedCreateWithoutClanInput = {
     id?: number
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     eventId: string
@@ -115788,6 +115831,7 @@ export namespace Prisma {
 
   export type ClanWarRankingUpdateWithoutClanInput = {
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     event?: ClanEventUpdateOneRequiredWithoutClanWarRankingsNestedInput
@@ -115796,6 +115840,7 @@ export namespace Prisma {
   export type ClanWarRankingUncheckedUpdateWithoutClanInput = {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     eventId?: StringFieldUpdateOperationsInput | string
@@ -116784,6 +116829,7 @@ export namespace Prisma {
 
   export type ClanWarRankingCreateWithoutEventInput = {
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
     clan: ClanCreateNestedOneWithoutClanWarRankingInput
@@ -116793,6 +116839,7 @@ export namespace Prisma {
     id?: number
     clanId: number
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
   }
@@ -116830,6 +116877,7 @@ export namespace Prisma {
     id?: IntFilter<"ClanWarRanking"> | number
     clanId?: IntFilter<"ClanWarRanking"> | number
     points?: IntFilter<"ClanWarRanking"> | number
+    reputation?: IntFilter<"ClanWarRanking"> | number
     wins?: IntFilter<"ClanWarRanking"> | number
     losses?: IntFilter<"ClanWarRanking"> | number
     eventId?: UuidFilter<"ClanWarRanking"> | string
@@ -127494,12 +127542,14 @@ export namespace Prisma {
     id?: number
     clanId: number
     points?: number
+    reputation?: number
     wins?: number
     losses?: number
   }
 
   export type ClanWarRankingUpdateWithoutEventInput = {
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     clan?: ClanUpdateOneRequiredWithoutClanWarRankingNestedInput
@@ -127509,6 +127559,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clanId?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
   }
@@ -127517,6 +127568,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clanId?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
     wins?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
   }

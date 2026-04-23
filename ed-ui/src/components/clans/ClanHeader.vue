@@ -29,6 +29,28 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
+			<div class="top-info-element" v-if="clanStore.getClan?.clanWarRanking?.points">
+				<img
+					:src="getImgURL('icons', 'small_rank')"
+					alt="gold"
+					v-tippy="{
+						content: formatContent($t('clan.icons.gold')),
+						theme: 'small'
+					}"
+				/>
+				{{ clanStore.getClan?.clanWarRanking?.points }}
+			</div>
+			<div class="top-info-element" v-if="clanStore.getClan?.clanWarRanking?.reputation">
+				<img
+					:src="getImgURL('icons', 'small_reput')"
+					alt="gold"
+					v-tippy="{
+						content: formatContent($t('clan.icons.gold')),
+						theme: 'small'
+					}"
+				/>
+				{{ clanStore.getClan?.clanWarRanking?.reputation }}
+			</div>
 			<div
 				v-if="castle"
 				class="top-info-element"
@@ -37,7 +59,7 @@
 					theme: 'small'
 				}"
 			>
-				<img src="\src\assets\icons\crown.png" alt="rank" />
+				<img :src="getImgURL('icons', 'small_home')" alt="castle" />
 				{{ $t(`place.name.${castle}`) }}
 			</div>
 			<div class="top-info-element">
@@ -156,6 +178,10 @@ export default defineComponent({
 		color: white;
 		padding: 0 2px;
 		margin-right: 15px;
+		img {
+			max-width: 12px;
+			max-height: 12px;
+		}
 	}
 }
 
