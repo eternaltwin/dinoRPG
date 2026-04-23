@@ -38,9 +38,18 @@ const REPUTATION_BASE_LOSS = 8;
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
 		where: {
-			endDate: {
-				gt: new Date()
-			}
+			AND: [
+				{
+					endDate: {
+						gt: new Date()
+					}
+				},
+				{
+					startDate: {
+						lt: new Date()
+					}
+				}
+			]
 		}
 	});
 	if (!currentWar) {
@@ -55,9 +64,18 @@ export async function eventState() {
 export async function currentWar() {
 	const currentWar = await prisma.clanEvent.findFirst({
 		where: {
-			endDate: {
-				gt: new Date()
-			}
+			AND: [
+				{
+					endDate: {
+						gt: new Date()
+					}
+				},
+				{
+					startDate: {
+						lt: new Date()
+					}
+				}
+			]
 		}
 	});
 	if (!currentWar) {
@@ -410,9 +428,18 @@ async function notifyWarResults(
 export async function scheduleWarExpiration() {
 	const currentWar = await prisma.clanEvent.findFirst({
 		where: {
-			endDate: {
-				gt: new Date()
-			}
+			AND: [
+				{
+					endDate: {
+						gt: new Date()
+					}
+				},
+				{
+					startDate: {
+						lt: new Date()
+					}
+				}
+			]
 		}
 	});
 	if (!currentWar || currentWar.endDate < new Date()) {
