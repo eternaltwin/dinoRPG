@@ -46,11 +46,7 @@ routes.post(
 
 routes.post(
 	`${commonPath}/clan/:id`,
-	[
-		param('id').exists().isNumeric(),
-		body('reason').exists().isString(),
-		body('comment').exists().isString()
-	],
+	[param('id').exists().isNumeric(), body('reason').exists().isString(), body('comment').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
