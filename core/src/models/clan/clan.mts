@@ -1,4 +1,4 @@
-import { Clan, ClanCastle, ClanJoinRequest, ClanMember, Dinoz, Player } from '@drpg/prisma';
+import { Clan, ClanCastle, ClanJoinRequest, ClanMember, ClanWarRanking, Dinoz, Player } from '@drpg/prisma';
 
 export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDate' | 'leaderId' | 'langs'> & {
 	members: Pick<ClanMember, 'id'>[];
@@ -6,6 +6,7 @@ export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDat
 	totalScore?: number;
 	bannerUrl?: string;
 	castle?: ClanCastle;
+	clanWarRanking?: Pick<ClanWarRanking, 'reputation' | 'points'>;
 };
 
 export type ClanForSearch = Pick<Clan, 'id' | 'name'>;

@@ -639,16 +639,19 @@ model ClanWar {
 }
 
 model ClanWarRanking {
-  id      Int       @id @default(autoincrement())
-  clanId  Int       @unique
-  clan    Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
-  points  Int       @default(1000)
-  wins    Int       @default(0)
-  losses  Int       @default(0)
-  eventId String    @db.Uuid
-  event   ClanEvent @relation(fields: [eventId], references: [id])
+  id         Int       @id @default(autoincrement())
+  clanId     Int       @unique
+  clan       Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  points     Int       @default(1000)
+  reputation Int       @default(100)
+  wins       Int       @default(0)
+  losses     Int       @default(0)
+  eventId    String    @db.Uuid
+  event      ClanEvent @relation(fields: [eventId], references: [id])
 
+  @@unique([clanId, eventId])
   @@index([eventId, points])
+  @@index([eventId, reputation])
   @@map("clan_war_ranking")
 }
 

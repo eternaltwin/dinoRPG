@@ -512,6 +512,7 @@ exports.Prisma.ClanWarRankingScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
   points: 'points',
+  reputation: 'reputation',
   wins: 'wins',
   losses: 'losses',
   eventId: 'eventId'
