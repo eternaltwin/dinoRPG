@@ -12,7 +12,19 @@
 			<tr>
 				<td><DZUser :user="mod.reporter" /></td>
 				<td>{{ $t(`report.reason.${mod.reason}`) }}</td>
-				<td><DZUser :user="mod.target" /></td>
+				<td>
+					<template v-if="mod.targetClan">
+						<div class="clan-display">
+							<span class="clan-tag">{{ mod.targetClan.name }}</span>
+							<DZUser :user="mod.target" :leader="true" />
+						</div>
+					</template>
+					<div v-else-if="isClanReason(mod.reason)" class="clan-display">
+						<span class="clan-tag">{{ $t('report.reason.deleted') }}</span>
+						<DZUser :user="mod.target" />
+					</div>
+					<DZUser v-else :user="mod.target" />
+				</td>
 				<td>
 					<DZButton
 						v-tippy="{
@@ -32,14 +44,19 @@
 					>
 				</td>
 				<td>
-					{{ mod.sorted ? $t(`report.sorted.${mod.sorted}`) : $t(`report.sorted.open`) }}
-					<select>
-						<option value="null">Pick an action</option>
-						<option v-for="action in ModerationAction" :key="action" :value="action" @click="selectAction(action)">
-							{{ action }}
-						</option>
-					</select>
-					<DZButton @click="takeAction(mod.id)">Take Action</DZButton>
+					<div class="action-cell">
+						{{ mod.sorted ? $t(`report.sorted.${mod.sorted}`) : $t(`report.sorted.open`) }}
+						<select @change="onActionChange($event)">
+							<option value="null">{{ $t('Select action') }}</option>
+							<option v-for="action in ModerationAction" :key="action" :value="action">
+								{{ action }}
+							</option>
+						</select>
+						<DZButton @click="takeAction(mod.id)">Take Action</DZButton>
+						<RouterLink v-if="mod.targetClan" :to="`/admin/clan?id=${mod.targetClan.id}`">
+							<DZButton>Edit Clan</DZButton>
+						</RouterLink>
+					</div>
 				</td>
 			</tr>
 		</template>
@@ -82,9 +99,26 @@ export default defineComponent({
 					return m.target.customText;
 				case ModerationReason.multi:
 					return 'multi';
+				case ModerationReason.other:
+					return 'other';
+				case ModerationReason.clanBanner:
+				case ModerationReason.clanBehavior:
+				case ModerationReason.clanPages:
+					return m.targetClan?.name ?? 'Clan';
 				default:
 					return 'error';
 			}
+		},
+		onActionChange(event: Event) {
+			const action = (event.target as HTMLSelectElement).value;
+			if (action === 'null') {
+				this.selectedAction = null;
+			} else {
+				this.selectedAction = action as ModerationAction;
+			}
+		},
+		isClanReason(reason: string) {
+			return reason.startsWith('clan');
 		},
 		selectAction(action: ModerationAction) {
 			this.selectedAction = action;
@@ -158,5 +192,23 @@ tr:nth-child(even) {
 /* Style pour une ligne au survol */
 tr:hover {
 	background-color: #ddd; /* Fond plus foncé au survol */
+}
+
+/* Style pour le tag de clan */
+.clan-tag {
+	display: flex;
+	justify-content: center;
+	font-size: 12px;
+	background-color: #72433a;
+	color: white;
+	padding: 4px;
+}
+
+/* Style pour les cellules d'action */
+.action-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	align-items: center;
 }
 </style>

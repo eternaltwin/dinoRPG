@@ -106,7 +106,12 @@ export const ModerationReason = {
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other',
+  clanBanner: 'clanBanner',
+  clanBehavior: 'clanBehavior',
+  clanPages: 'clanPages',
+  clanOther: 'clanOther'
 };
 
 export const ModerationAction = {
