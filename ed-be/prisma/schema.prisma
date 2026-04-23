@@ -600,9 +600,10 @@ model Clan {
   discussion     ClanMessage[]
   attackingWar   ClanWar?          @relation("attacker")
   defendingWars  ClanWar[]         @relation("defender")
-  clanWarRanking ClanWarRanking?
+  clanWarRanking ClanWarRanking[]
   players        Player[]
-	targetedCases Moderation[]      @relation("TargetClanRelation")
+  targetedCases  Moderation[]      @relation("TargetClanRelation")
+  warWon         ClanWar[]         @relation("warWon")
 }
 
 model ClanCastle {
@@ -626,31 +627,43 @@ model ClanJoinRequest {
 }
 
 model ClanWar {
-  id        Int      @id @default(autoincrement())
-  dateStart DateTime @default(now()) @db.Timestamp(6)
-  dateEnd   DateTime
-  points    Int
+  id String @id @default(uuid()) @db.Uuid
 
-  attackerId Int @unique
-  defenderId Int
+  eventId        String    @db.Uuid
+  event          ClanEvent @relation(fields: [eventId], references: [id])
+  attackerClanId Int       @unique
+  defenderClanId Int       @unique
+  attacker       Clan      @relation("attacker", fields: [attackerClanId], references: [id])
+  defender       Clan      @relation("defender", fields: [defenderClanId], references: [id])
 
-  attacker Clan @relation("attacker", fields: [attackerId], references: [id])
-  defender Clan @relation("defender", fields: [defenderId], references: [id])
+  startedAt DateTime @default(now())
+  endsAt    DateTime
+
+  isCastleDestroyed Boolean @default(false)
+  winnerClanId      Int?
+  winner            Clan?   @relation("warWon", fields: [winnerClanId], references: [id])
 }
 
 model ClanWarRanking {
-  id         Int       @id @default(autoincrement())
-  clanId     Int       @unique
-  clan       Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
-  points     Int       @default(1000)
-  reputation Int       @default(100)
-  wins       Int       @default(0)
-  losses     Int       @default(0)
-  eventId    String    @db.Uuid
-  event      ClanEvent @relation(fields: [eventId], references: [id])
+  id Int @id @default(autoincrement())
+
+  clanId Int
+  clan   Clan @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  eventId String    @db.Uuid
+  event   ClanEvent @relation(fields: [eventId], references: [id])
+
+  reputation Float @default(100)
+
+  downtimeCount Int @default(0)
+
+  totalPWin  Int @default(0)
+  totalPLost Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([clanId, eventId])
-  @@index([eventId, points])
   @@index([eventId, reputation])
   @@map("clan_war_ranking")
 }
@@ -662,6 +675,7 @@ model ClanEvent {
   endDate         DateTime         @db.Timestamp(6)
   config          String           @db.Text
   clanWarRankings ClanWarRanking[]
+  clanWars        ClanWar[]
 }
 
 model ClanIngredient {
@@ -728,19 +742,19 @@ model ClanPage {
 }
 
 model Moderation {
-  id         Int               @id @default(autoincrement())
-  dinozId    Int?
-  reason     ModerationReason
-  comment    String
-  banDate    DateTime?
-  banEndDate DateTime?
-  sorted     ModerationAction?
-  reporterId String?           @db.Uuid
-  targetId   String            @db.Uuid
-  dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
-  reporter   Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
-  target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
-  bannedUser Player?           @relation("AcceptedBan")
+  id           Int               @id @default(autoincrement())
+  dinozId      Int?
+  reason       ModerationReason
+  comment      String
+  banDate      DateTime?
+  banEndDate   DateTime?
+  sorted       ModerationAction?
+  reporterId   String?           @db.Uuid
+  targetId     String            @db.Uuid
+  dinoz        Dinoz?            @relation(fields: [dinozId], references: [id])
+  reporter     Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
+  target       Player            @relation("TargetRelation", fields: [targetId], references: [id])
+  bannedUser   Player?           @relation("AcceptedBan")
   targetClanId Int?
   targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id], onDelete: SetNull)
 }

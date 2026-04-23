@@ -156,7 +156,7 @@ export const ClanService = {
 		const res = await http().put(`/clan/war/dinoz/${dinozId}`);
 		return res.data;
 	},
-	async castleStatus(): Promise<Castle> {
+	async castleStatus(): Promise<Castle | null> {
 		const res = await http().get(`/clan/war/castle`);
 		return res.data;
 	},

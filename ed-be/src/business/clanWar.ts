@@ -1,6 +1,6 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Clan, ClanWarRanking, NotificationSeverity } from '@drpg/prisma';
+import { Clan, ClanWar, ClanWarRanking, NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import { playerHasRightRequest } from '../dao/clansDao.js';
@@ -12,6 +12,7 @@ import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { scheduleJob } from 'node-schedule';
+import { computeReputation, computeWarPowers } from '../utils/warCalculation.js';
 
 const WAR_BASE_POINTS = 50;
 const CLAN_BASE_POINT = 1000;
@@ -98,6 +99,16 @@ export async function buildClanCastle(req: Request) {
 			data: {
 				treasureValue: 0
 			}
+		}),
+		prisma.clanWarRanking.upsert({
+			where: {
+				id: authed.clanId
+			},
+			create: {
+				clanId: authed.clanId,
+				eventId: war.id
+			},
+			update: {}
 		})
 	]);
 	await prisma.clanHistory.create({
@@ -127,8 +138,8 @@ export async function declareWar(req: Request) {
 
 	const attackOngoing = await prisma.clanWar.findUnique({
 		where: {
-			attackerId: authed.clanId,
-			dateEnd: {
+			attackerClanId: authed.clanId,
+			endsAt: {
 				gt: new Date()
 			}
 		}
@@ -145,14 +156,6 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			clanWarRanking: {
-				select: {
-					points: true
-				},
-				where: {
-					eventId: war.id
-				}
-			},
 			castle: {
 				select: {
 					id: true
@@ -173,14 +176,6 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			clanWarRanking: {
-				select: {
-					points: true
-				},
-				where: {
-					eventId: war.id
-				}
-			},
 			castle: {
 				select: {
 					id: true
@@ -198,19 +193,13 @@ export async function declareWar(req: Request) {
 		throw new ExpectedError(translate('clan.noCastle', authed));
 	}
 
-	// Compute bidded points
-	const points = computeWarPointsDelta(
-		attacker.clanWarRanking?.points ?? 1000,
-		defender.clanWarRanking?.points ?? 1000
-	);
-
 	const endWar = dayjs().add(2, 'day').toDate();
 	const attack = await prisma.clanWar.create({
 		data: {
-			dateEnd: endWar,
-			attackerId: authed.clanId,
-			defenderId: defender.id,
-			points
+			endsAt: endWar,
+			attackerClanId: authed.clanId,
+			defenderClanId: defender.id,
+			eventId: war.id
 		}
 	});
 
@@ -266,16 +255,18 @@ export async function declareWar(req: Request) {
 	await Promise.all(notifications);
 
 	scheduleJob(`attack_${attack.id}`, endWar, () => {
-		looseAttack(attack.id);
+		resolveClanWar(attack.id);
 	});
 }
 
-async function looseAttack(warId: number) {
+async function resolveClanWar(warId: string, forfeit?: boolean) {
 	const war = await prisma.clanWar.findUnique({
 		where: {
 			id: warId
 		},
 		select: {
+			id: true,
+			eventId: true,
 			attacker: {
 				select: {
 					id: true,
@@ -289,147 +280,90 @@ async function looseAttack(warId: number) {
 					leaderId: true,
 					clanWarRanking: true
 				}
-			}
+			},
+			isCastleDestroyed: true
 		}
 	});
 	if (!war) {
 		LOGGER.error(`War ${warId} not found`);
 		return;
 	}
+	let winnerClanId = war.isCastleDestroyed ? war.attacker.id : war.defender.id;
 
-	await computeWarResults(war.attacker, war.defender, false);
+	if (forfeit) {
+		winnerClanId = war.defender.id;
+	}
+
+	const pwin = computeWarPowers(war);
+
+	await prisma.clanWar.update({
+		where: { id: war.id },
+		data: {
+			winnerClanId: winnerClanId,
+			isCastleDestroyed: war.isCastleDestroyed
+		}
+	});
+
+	await prisma.$executeRaw`
+WITH updated AS (
+  UPDATE clan_war_ranking
+  SET
+    total_p_win = total_p_win +
+      CASE
+        WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+        WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+      END,
+    total_p_lost = total_p_lost +
+      CASE
+        WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+        WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+      END
+  WHERE event_id = ${war.eventId}
+    AND clan_id IN (${war.attacker.id}, ${war.defender.id})
+  RETURNING id, total_p_win, total_p_lost
+)
+
+UPDATE clan_war_ranking cwr
+SET reputation = 100 * POWER(
+  (500.0 + u.total_p_win) / (500.0 + u.total_p_lost),
+  0.8
+)
+FROM updated u
+WHERE cwr.id = u.id;
+`;
+
+	await notifyWarResults(war, forfeit);
 }
 
-function computeReputationGain(winner: ClanWarRanking | null, loser: ClanWarRanking | null): number {
-	const repDiff = (loser?.reputation ?? CLAN_BASE_REPUTATION) - (winner?.reputation ?? CLAN_BASE_REPUTATION);
-	const pointsDiff = (loser?.points ?? CLAN_BASE_POINT) - (winner?.points ?? CLAN_BASE_POINT);
-
-	const repBonus = Math.round(repDiff / 15);
-	const pointsBonus = Math.round(pointsDiff / 150);
-
-	return Math.max(3, Math.min(25, REPUTATION_BASE_GAIN + repBonus + pointsBonus));
-}
-
-function computeReputationLoss(winner: ClanWarRanking | null, loser: ClanWarRanking | null): number {
-	const repDiff = (winner?.reputation ?? CLAN_BASE_REPUTATION) - (loser?.reputation ?? CLAN_BASE_REPUTATION);
-	const pointsDiff = (winner?.points ?? CLAN_BASE_POINT) - (loser?.points ?? CLAN_BASE_POINT);
-
-	const repMalus = Math.round(repDiff / 15);
-	const pointsMalus = Math.round(pointsDiff / 150);
-
-	return Math.max(2, Math.min(20, REPUTATION_BASE_LOSS + repMalus + pointsMalus));
-}
-
-function computeWarPointsDelta(attackerPoints: number, defenderPoints: number): number {
-	const totalPoints = attackerPoints + defenderPoints || 1;
-	const defenderWeight = defenderPoints / totalPoints;
-	const attackerGain = Math.round(WAR_BASE_POINTS * defenderWeight * 2);
-	// Plafond retiré ici, plancher à 10 conservé
-	return Math.max(10, attackerGain);
-}
-
-async function computeWarResults(
-	attacker: Pick<Clan, 'id' | 'leaderId'> & {
-		clanWarRanking: ClanWarRanking | null;
+async function notifyWarResults(
+	war: Pick<ClanWar, 'isCastleDestroyed'> & {
+		attacker: Pick<Clan, 'id' | 'leaderId'>;
+		defender: Pick<Clan, 'id' | 'leaderId'>;
 	},
-	defender: Pick<Clan, 'id' | 'leaderId'> & {
-		clanWarRanking: ClanWarRanking | null;
-	},
-	attackerWon: boolean,
 	forfeit?: boolean
 ) {
-	/*if (!attacker.clanWarRanking || !defender.clanWarRanking) {
-		LOGGER.error(`clanWarRanking not found`);
-		return;
-	}*/
-	const currentClanWar = await currentWar();
-	const pointsDelta = computeWarPointsDelta(
-		attacker.clanWarRanking?.points ?? CLAN_BASE_POINT,
-		defender.clanWarRanking?.points ?? CLAN_BASE_POINT
-	);
-
-	const reputationRatio = Math.max(
-		0.5,
-		Math.min(
-			2,
-			defender.clanWarRanking?.reputation ??
-				CLAN_BASE_REPUTATION / Math.max(1, attacker.clanWarRanking?.reputation ?? CLAN_BASE_REPUTATION)
-		)
-	);
-
-	const adjustedPoints = Math.min(150, Math.round(pointsDelta * reputationRatio));
-
+	const attackerWon = war.isCastleDestroyed;
 	if (attackerWon) {
 		await prisma.$transaction([
 			// Attacker history
 			prisma.clanHistory.create({
 				data: {
-					clan: { connect: { id: attacker.id } },
-					author: { connect: { id: attacker.leaderId } },
+					clan: { connect: { id: war.attacker.id } },
+					author: { connect: { id: war.attacker.leaderId } },
 					type: ClanHistoryType[ClanHistoryType.WAR_WON],
-					authorMessage: JSON.stringify(adjustedPoints)
+					authorMessage: ''
 				},
 				select: { id: true }
-			}),
-			// Attacker ranking update
-			prisma.clanWarRanking.upsert({
-				where: {
-					eventId: currentClanWar.id,
-					clanId: attacker.id
-				},
-				update: {
-					points: {
-						increment: adjustedPoints
-					},
-					reputation: {
-						increment: computeReputationGain(attacker.clanWarRanking, defender.clanWarRanking)
-					},
-					wins: {
-						increment: 1
-					}
-				},
-				create: {
-					clanId: attacker.id,
-					eventId: currentClanWar.id,
-					points: CLAN_BASE_POINT + adjustedPoints,
-					reputation: CLAN_BASE_REPUTATION + computeReputationGain(attacker.clanWarRanking, defender.clanWarRanking),
-					wins: 1
-				}
 			}),
 			// Defender history
 			prisma.clanHistory.create({
 				data: {
-					clan: { connect: { id: defender.id } },
-					author: { connect: { id: defender.leaderId } },
+					clan: { connect: { id: war.defender.id } },
+					author: { connect: { id: war.defender.leaderId } },
 					type: ClanHistoryType[ClanHistoryType.WAR_LOSE],
-					authorMessage: JSON.stringify(adjustedPoints)
+					authorMessage: ''
 				},
 				select: { id: true }
-			}),
-			// Defender ranking update
-			prisma.clanWarRanking.upsert({
-				where: {
-					eventId: currentClanWar.id,
-					clanId: defender.id
-				},
-				update: {
-					points: {
-						decrement: adjustedPoints
-					},
-					reputation: {
-						decrement: computeReputationGain(attacker.clanWarRanking, defender.clanWarRanking)
-					},
-					losses: {
-						increment: 1
-					}
-				},
-				create: {
-					clanId: defender.id,
-					eventId: currentClanWar.id,
-					points: CLAN_BASE_POINT - adjustedPoints,
-					reputation: CLAN_BASE_REPUTATION - computeReputationGain(attacker.clanWarRanking, defender.clanWarRanking),
-					losses: 1
-				}
 			})
 		]);
 	} else {
@@ -437,72 +371,22 @@ async function computeWarResults(
 			// Attacker history
 			prisma.clanHistory.create({
 				data: {
-					clan: { connect: { id: attacker.id } },
-					author: { connect: { id: attacker.leaderId } },
+					clan: { connect: { id: war.attacker.id } },
+					author: { connect: { id: war.attacker.leaderId } },
 					type: ClanHistoryType[forfeit ? ClanHistoryType.WAR_LOSE : ClanHistoryType.WAR_FORFEIT],
-					authorMessage: JSON.stringify(adjustedPoints)
+					authorMessage: ''
 				},
 				select: { id: true }
-			}),
-			// Attacker ranking update
-			prisma.clanWarRanking.upsert({
-				where: {
-					eventId: currentClanWar.id,
-					clanId: attacker.id
-				},
-				update: {
-					points: {
-						decrement: adjustedPoints
-					},
-					reputation: {
-						decrement: computeReputationLoss(defender.clanWarRanking, attacker.clanWarRanking)
-					},
-					losses: {
-						increment: 1
-					}
-				},
-				create: {
-					clanId: attacker.id,
-					eventId: currentClanWar.id,
-					points: CLAN_BASE_POINT - adjustedPoints,
-					reputation: CLAN_BASE_REPUTATION - computeReputationLoss(defender.clanWarRanking, attacker.clanWarRanking),
-					losses: 1
-				}
 			}),
 			// Defender history
 			prisma.clanHistory.create({
 				data: {
-					clan: { connect: { id: defender.id } },
-					author: { connect: { id: defender.leaderId } },
+					clan: { connect: { id: war.defender.id } },
+					author: { connect: { id: war.defender.leaderId } },
 					type: ClanHistoryType[ClanHistoryType.WAR_DEFENDED],
-					authorMessage: JSON.stringify(adjustedPoints)
+					authorMessage: ''
 				},
 				select: { id: true }
-			}),
-			// Defender ranking update
-			prisma.clanWarRanking.upsert({
-				where: {
-					eventId: currentClanWar.id,
-					clanId: defender.id
-				},
-				update: {
-					points: {
-						increment: adjustedPoints
-					},
-					reputation: {
-						increment: computeReputationGain(defender.clanWarRanking, attacker.clanWarRanking)
-					},
-					wins: {
-						increment: 1
-					}
-				},
-				create: {
-					clanId: defender.id,
-					eventId: currentClanWar.id,
-					points: CLAN_BASE_POINT + adjustedPoints,
-					reputation: CLAN_BASE_REPUTATION + computeReputationGain(defender.clanWarRanking, attacker.clanWarRanking),
-					wins: 1
-				}
 			})
 		]);
 	}
@@ -523,17 +407,17 @@ export async function scheduleWarExpiration() {
 
 	const oingoingWar = await prisma.clanWar.findMany({
 		where: {
-			dateEnd: {
+			endsAt: {
 				gt: new Date()
 			}
 		}
 	});
 
 	oingoingWar.forEach(war => {
-		scheduleJob(`attack_${war.id}`, war.dateEnd, () => {
-			looseAttack(war.id);
+		scheduleJob(`attack_${war.id}`, war.endsAt, () => {
+			resolveClanWar(war.id);
 		});
-		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.dateEnd}`);
+		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.endsAt}`);
 	});
 }
 
@@ -543,8 +427,8 @@ export async function warStatus(req: Request) {
 	return await prisma.clanWar.findMany({
 		where: {
 			OR: [
-				{ attackerId: clanId, dateEnd: { gt: new Date() } },
-				{ defenderId: clanId, dateEnd: { gt: new Date() } }
+				{ attackerClanId: clanId, endsAt: { gt: new Date() } },
+				{ defenderClanId: clanId, endsAt: { gt: new Date() } }
 			]
 		},
 		select: {
@@ -561,15 +445,14 @@ export async function warStatus(req: Request) {
 					name: true
 				}
 			},
-			dateEnd: true,
-			points: true
+			endsAt: true
 		}
 	});
 }
 
 export async function forfeitWar(req: Request) {
 	const authed = await auth(req);
-	const currentClanWar = await currentWar();
+	await currentWar();
 	if (!authed.clanId) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
@@ -579,43 +462,7 @@ export async function forfeitWar(req: Request) {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
-	const attack = await prisma.clanWar.findUnique({
-		where: {
-			id: +req.params.warId
-		},
-		select: {
-			attackerId: true,
-			dateEnd: true,
-			points: true,
-			attacker: {
-				select: {
-					id: true,
-					leaderId: true,
-					clanWarRanking: true
-				}
-			},
-			defenderId: true,
-			defender: {
-				select: {
-					id: true,
-					leaderId: true,
-					clanWarRanking: true
-				}
-			}
-		}
-	});
-
-	if (!attack || attack.dateEnd < new Date()) {
-		throw new ExpectedError(translate('noAttack', authed));
-	}
-
-	await computeWarResults(attack.attacker, attack.defender, false, true);
-
-	await prisma.clanWar.delete({
-		where: {
-			id: +req.params.warId
-		}
-	});
+	await resolveClanWar(req.params.id, true);
 }
 
 export async function addDefender(req: Request) {

@@ -117,8 +117,7 @@ export async function getClanRequestPublic(id: number) {
 				treasureValue: true,
 				clanWarRanking: {
 					select: {
-						reputation: true,
-						points: true
+						reputation: true
 					}
 				}
 			}
@@ -156,8 +155,7 @@ export async function getClanRequestPrivate(id: number) {
 				treasureValue: true,
 				clanWarRanking: {
 					select: {
-						reputation: true,
-						points: true
+						reputation: true
 					}
 				}
 			}

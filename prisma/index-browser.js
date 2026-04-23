@@ -501,21 +501,25 @@ exports.Prisma.ClanJoinRequestScalarFieldEnum = {
 
 exports.Prisma.ClanWarScalarFieldEnum = {
   id: 'id',
-  dateStart: 'dateStart',
-  dateEnd: 'dateEnd',
-  points: 'points',
-  attackerId: 'attackerId',
-  defenderId: 'defenderId'
+  eventId: 'eventId',
+  attackerClanId: 'attackerClanId',
+  defenderClanId: 'defenderClanId',
+  startedAt: 'startedAt',
+  endsAt: 'endsAt',
+  isCastleDestroyed: 'isCastleDestroyed',
+  winnerClanId: 'winnerClanId'
 };
 
 exports.Prisma.ClanWarRankingScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
-  points: 'points',
+  eventId: 'eventId',
   reputation: 'reputation',
-  wins: 'wins',
-  losses: 'losses',
-  eventId: 'eventId'
+  downtimeCount: 'downtimeCount',
+  totalPWin: 'totalPWin',
+  totalPLost: 'totalPLost',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ClanEventScalarFieldEnum = {
