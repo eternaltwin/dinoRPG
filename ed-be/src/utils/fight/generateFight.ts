@@ -264,31 +264,31 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 
-	// Update time of all fighters relatively to the first fighter (with the lowest time) so the first fighter starts at time 0.
-	const minTime = fightData.fighters[0].time;
-	fightData.fighters.map(fighter => {
-		fighter.time -= minTime;
-		if (fighter.time < 0) {
-			LOGGER.error('`Fighter time cannot be negative at init: ${time}`.', {
-				fightData: fightData,
-				time: fighter.time
-			});
-		}
-
-		if (fighter.energy !== fighter.maxEnergy) {
-			LOGGER.error('`Fighter energy not properly initialized: ${energy} != ${maxEnergy}`.', {
-				fightData: fightData,
-				energy: fighter.energy,
-				maxEnergy: fighter.maxEnergy,
-			});
-		}
-	});
-
 	// Do not start the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.outcome = FightOutcome.AttackerWin;
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
 		fightData.outcome = FightOutcome.DefenderWin;
+	} else {
+		// Update time of all fighters relatively to the first fighter (with the lowest time) so the first fighter starts at time 0.
+		const minTime = fightData.fighters[0].time;
+		fightData.fighters.map(fighter => {
+			fighter.time -= minTime;
+			if (fighter.time < 0) {
+				LOGGER.error('`Fighter time cannot be negative at init: ${time}`.', {
+					fightData: fightData,
+					time: fighter.time
+				});
+			}
+
+			if (fighter.energy !== fighter.maxEnergy) {
+				LOGGER.error('`Fighter energy not properly initialized: ${energy} != ${maxEnergy}`.', {
+					fightData: fightData,
+					energy: fighter.energy,
+					maxEnergy: fighter.maxEnergy
+				});
+			}
+		});
 	}
 
 	let turn = 0;
