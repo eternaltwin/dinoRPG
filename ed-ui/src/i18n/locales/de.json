@@ -5124,7 +5124,8 @@
 			"avatar": "Unangemessener Avatar",
 			"accountName": "Unangemessener Spielername",
 			"dinozName": "Unangebrachter Name eines Dinoz",
-			"multi": "Dieser Spieler hat mehrere Konten"
+			"multi": "Dieser Spieler hat mehrere Konten",
+			"other": "Andere"
 		},
 		"sorted": {
 			"open": "Offen",
@@ -5178,7 +5179,8 @@
 			"customText": "persönliche Beschreibung",
 			"multi": "Verdacht auf Mehrfachkonten",
 			"dinozName": "unangemessener Name eines Dinoz",
-			"avatar": "unangemessener Avatar"
+			"avatar": "unangemessener Avatar",
+			"other": "ein anderer Grund"
 		},
 		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
 		"offerEnded": "Du hast dein Angebot für {value} :ticket: verkauft",

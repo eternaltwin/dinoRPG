@@ -5126,6 +5126,7 @@
 		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Reporter du contenu inapproprié",
 		"player": "Êtes-vous sûr de vouloir reporter ce joueur à la modération ?",
 		"specify": "Merci de spécifier la raison de votre complainte",
@@ -5134,7 +5135,13 @@
 			"avatar": "Avatar inapproprié",
 			"accountName": "Nom de joueur inapproprié",
 			"dinozName": "Nom de Dinoz inapproprié",
-			"multi": "Ce joueur utilise plusieurs comptes"
+			"multi": "Ce joueur utilise plusieurs comptes",
+			"other": "Autre",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Autre",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "À traiter",
@@ -5188,7 +5195,12 @@
 			"customText": "votre description personnalisée",
 			"multi": "une suspiscion de multicompte",
 			"dinozName": "un nom de Dinoz offensant",
-			"avatar": "un avatar offensant"
+			"avatar": "un avatar offensant",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan",
+			"other": "une autre raison"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",

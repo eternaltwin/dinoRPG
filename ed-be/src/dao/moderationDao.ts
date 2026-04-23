@@ -21,6 +21,26 @@ export async function createModerationReport(
 	return reportData;
 }
 
+export async function createClanModerationReport(
+	author: string,
+	targetId: string,
+	targetClanId: number,
+	reason: ModerationReason,
+	comment: string
+) {
+	const reportData = await prisma.moderation.create({
+		data: {
+			reporter: { connect: { id: author } },
+			target: { connect: { id: targetId } },
+			targetClan: { connect: { id: targetClanId } },
+			reason: reason,
+			comment: comment
+		}
+	});
+
+	return reportData;
+}
+
 export async function getModerationReports(page: number) {
 	const skip = (page - 1) * 20;
 	const take = 20;
@@ -51,6 +71,12 @@ export async function getModerationReports(page: number) {
 				}
 			},
 			dinoz: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			targetClan: {
 				select: {
 					id: true,
 					name: true

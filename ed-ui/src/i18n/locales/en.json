@@ -5124,7 +5124,8 @@
 			"avatar": "Inappropriate avatar",
 			"accountName": "Inappropriate player name",
 			"dinozName": "Inappropriate dinoz name",
-			"multi": "This player has multiple accounts"
+			"multi": "This player has multiple accounts",
+			"other": "Other"
 		},
 		"sorted": {
 			"open": "Treat",
@@ -5178,7 +5179,8 @@
 			"customText": "your personalized description",
 			"multi": "a suspicion of multiple accounts",
 			"dinozName": "an offending Dinoz name",
-			"avatar": "an offensive avatar"
+			"avatar": "an offensive avatar",
+			"other": "another reason"
 		},
 		"offerExpired": "Your offer did not have a buyer.",
 		"offerEnded": "You sold your offer for {value} :ticket:",

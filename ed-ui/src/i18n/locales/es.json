@@ -5124,7 +5124,8 @@
 			"avatar": "Avatar inapropiado",
 			"accountName": "Nombre de jugador inapropiado",
 			"dinozName": "Nombre de dino inapropiado",
-			"multi": "Este jugador utiliza varias cuentas"
+			"multi": "Este jugador utiliza varias cuentas",
+			"other": "Otro"
 		},
 		"sorted": {
 			"open": "Por procesar",
@@ -5178,7 +5179,8 @@
 			"customText": "tu descripción personalizada",
 			"multi": "una sospecha de multi-cuentas",
 			"dinozName": "un nombre de Dino ofensivo",
-			"avatar": "un avatar ofensivo"
+			"avatar": "un avatar ofensivo",
+			"other": "otro motivo"
 		},
 		"offerExpired": "Su oferta no encontró comprador.",
 		"offerEnded": "Tu oferta fue comprada por {value} :ticket:",
