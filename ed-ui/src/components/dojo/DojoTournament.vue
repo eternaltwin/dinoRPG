@@ -37,16 +37,16 @@
 						<span class="name" v-if="team.dinoz">{{ team.player?.name ?? '???' }}</span>
 
 						<template #content>
-							<h1>{{ team?.dinoz?.name }}</h1>
-							<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
 					<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
 						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>
-							<h1>{{ team?.dinoz?.name }}</h1>
-							<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
 				</template>
@@ -73,16 +73,16 @@
 						<span class="name" v-if="team.dinoz">{{ team.player?.name ?? '???' }}</span>
 
 						<template #content>
-							<h1>{{ team?.dinoz?.name }}</h1>
-							<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
 					<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
 						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>
-							<h1>{{ team?.dinoz?.name }}</h1>
-							<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
 				</template>
@@ -146,6 +146,7 @@ export default defineComponent({
 					const d1 = {
 						dinoz: fight.tournamentTeamLeft?.dinoz ?? null,
 						player: fight.tournamentTeamLeft?.player ?? null,
+						opponent: fight.tournamentTeamRight?.player ?? null,
 						fight: fight.id,
 						won: fight.result,
 						round: fight.metadata.round,
@@ -158,6 +159,7 @@ export default defineComponent({
 					const d2 = {
 						dinoz: fight.tournamentTeamRight?.dinoz ?? null,
 						player: fight.tournamentTeamRight?.player ?? null,
+						opponent: fight.tournamentTeamLeft?.player ?? null,
 						fight: fight.id,
 						won: !fight.result,
 						round: fight.metadata.round,
@@ -183,54 +185,55 @@ export default defineComponent({
 				this.final = this.dinozInFights;
 				if (this.dinozInFights[this.dinozInFights.length - 1].round === 4) {
 					const winner1 = this.tournament[0].result
-						? this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamLeft, this.tournament[0].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamRight, this.tournament[0].tournamentTeamLeft);
 					const loser1 = this.tournament[0].result
-						? this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamRight)
-						: this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamLeft);
+						? this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamRight, this.tournament[0].tournamentTeamLeft)
+						: this.formatDinoz(this.tournament[0], this.tournament[0].tournamentTeamLeft, this.tournament[0].tournamentTeamRight);
 					const winner2 = this.tournament[1].result
-						? this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamLeft, this.tournament[1].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamRight, this.tournament[1].tournamentTeamLeft);
 					const loser2 = this.tournament[1].result
-						? this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamRight)
-						: this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamLeft);
+						? this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamRight, this.tournament[1].tournamentTeamLeft)
+						: this.formatDinoz(this.tournament[1], this.tournament[1].tournamentTeamLeft, this.tournament[1].tournamentTeamRight);
 					this.final.push(winner1);
 					this.final.push(winner2);
 					this.final.push(loser1);
 					this.final.push(loser2);
 				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 5) {
 					const winnerWinnerBracket = this.tournament[2].result
-						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft, this.tournament[2].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight, this.tournament[2].tournamentTeamLeft);
 					const loserWinnerBracket = this.tournament[2].result
-						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight)
-						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft);
+						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight, this.tournament[2].tournamentTeamLeft)
+						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft, this.tournament[2].tournamentTeamRight);
 					const winnerLoserBracket = this.tournament[3].result
-						? this.formatDinoz(this.tournament[3], this.tournament[3].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[3], this.tournament[3].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[3], this.tournament[3].tournamentTeamLeft, this.tournament[3].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[3], this.tournament[3].tournamentTeamRight, this.tournament[3].tournamentTeamLeft);
 					this.final.push(loserWinnerBracket, winnerLoserBracket, undefined, winnerWinnerBracket);
 				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 6) {
 					const winnerWinnerBracket = this.tournament[2].result
-						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamLeft, this.tournament[2].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[2], this.tournament[2].tournamentTeamRight, this.tournament[2].tournamentTeamLeft);
 					const winnerLoserBracket = this.tournament[4].result
-						? this.formatDinoz(this.tournament[4], this.tournament[4].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[4], this.tournament[4].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[4], this.tournament[4].tournamentTeamLeft, this.tournament[4].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[4], this.tournament[4].tournamentTeamRight, this.tournament[4].tournamentTeamLeft);
 					this.final.push(winnerLoserBracket, winnerWinnerBracket);
 				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 7) {
 					const winnerWinnerBracket = this.tournament[5].result
-						? this.formatDinoz(this.tournament[5], this.tournament[5].tournamentTeamLeft)
-						: this.formatDinoz(this.tournament[5], this.tournament[5].tournamentTeamRight);
+						? this.formatDinoz(this.tournament[5], this.tournament[5].tournamentTeamLeft, this.tournament[5].tournamentTeamRight)
+						: this.formatDinoz(this.tournament[5], this.tournament[5].tournamentTeamRight, this.tournament[5].tournamentTeamLeft);
 					this.final.push(winnerWinnerBracket);
 				}
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		formatDinoz(match: PublicTournament, team: TournamentTeam | null): DisplayedLeader {
+		formatDinoz(match: PublicTournament, team: TournamentTeam | null, opponent: TournamentTeam | null): DisplayedLeader {
 			return {
 				dinoz: team?.dinoz ?? null,
 				player: team?.player ?? null,
+				opponent: opponent?.player ?? null,
 				fight: match.id,
 				won: true,
 				round: match.metadata.round,
@@ -265,6 +268,7 @@ export default defineComponent({
 					const d1 = {
 						dinoz: fight.tournamentTeamLeft?.dinoz ?? null,
 						player: fight.tournamentTeamLeft?.player ?? null,
+						opponent: fight.tournamentTeamRight?.player ?? null,
 						fight: fight.id,
 						won: fight.result,
 						round: fight.metadata.round,
@@ -277,6 +281,7 @@ export default defineComponent({
 					const d2 = {
 						dinoz: fight.tournamentTeamRight?.dinoz ?? null,
 						player: fight.tournamentTeamRight?.player ?? null,
+						opponent: fight.tournamentTeamLeft?.player ?? null,
 						fight: fight.id,
 						won: !fight.result,
 						round: fight.metadata.round,
