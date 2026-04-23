@@ -29,27 +29,27 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
-			<div class="top-info-element" v-if="clanStore.getClan?.clanWarRanking?.points">
-				<img
-					:src="getImgURL('icons', 'small_rank')"
-					alt="gold"
-					v-tippy="{
-						content: formatContent($t('clan.icons.gold')),
-						theme: 'small'
-					}"
-				/>
-				{{ clanStore.getClan?.clanWarRanking?.points }}
+			<div
+				class="top-info-element"
+				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking.length > 0"
+				v-tippy="{
+					content: formatContent($t('clan.icons.reputation')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'small_reput')" alt="gold" />
+				{{ clanStore.getClan?.clanWarRanking[0].reputation }}
 			</div>
-			<div class="top-info-element" v-if="clanStore.getClan?.clanWarRanking?.reputation">
-				<img
-					:src="getImgURL('icons', 'small_reput')"
-					alt="gold"
-					v-tippy="{
-						content: formatContent($t('clan.icons.gold')),
-						theme: 'small'
-					}"
-				/>
-				{{ clanStore.getClan?.clanWarRanking?.reputation }}
+			<div
+				class="top-info-element"
+				v-if="clanStore.getClan?.castle"
+				v-tippy="{
+					content: formatContent($t('clan.icons.castle_life')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'small_castle_heart')" alt="gold" />
+				{{ clanStore.getClan.castle.currentLife }}
 			</div>
 			<div
 				v-if="castle"

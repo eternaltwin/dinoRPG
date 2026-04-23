@@ -19,8 +19,15 @@
 					>
 				</td>
 				<td>{{ formatDate(attack.dateEnd) }}</td>
-				<td v-if="isClanMember">
+				<td v-if="isClanMember && attack.attacker.id === clanId">
 					<DZButton @click="forfeitWar(attack.id)">{{ $t('clan.war.forfeit') }}</DZButton>
+				</td>
+				<td v-else-if="isClanMember">
+					<DZButton
+						v-if="!ongoingAttack.some(a => a.attacker.id === attack.defender.id)"
+						@click="declareWar(attack.attacker.id)"
+						>{{ $t('clan.war.counter') }}</DZButton
+					>
 				</td>
 			</tr>
 		</DZTable>
@@ -47,7 +54,7 @@
 			</div>
 		</div>
 		<div id="clanOpponent" v-else>
-			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar()">{{
+			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar(+$route.params.id)">{{
 				$t('clan.war.declareWar')
 			}}</DZButton>
 		</div>
@@ -115,11 +122,13 @@ export default defineComponent({
 			if (!res) return;
 			try {
 				await ClanService.buildCastle();
+				await this.clanStore.loadClan(+this.$route.params.id);
+				await this.loadComponent();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async declareWar() {
+		async declareWar(clanId: number) {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: this.$t('popup.attention'),
@@ -129,7 +138,9 @@ export default defineComponent({
 			});
 			if (!res) return;
 			try {
-				await ClanService.declareWar(+this.$route.params.id);
+				await ClanService.declareWar(clanId);
+				this.ongoingAttack = [];
+				this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -195,20 +206,25 @@ export default defineComponent({
 			const display = this.loadedCastle.getDisplay();
 			display.style.maxWidth = '100%';
 			canvas.appendChild(display);
+		},
+		async loadComponent() {
+			this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
+			if (this.isClanMember) {
+				const castle = await ClanService.castleStatus();
+				if (!castle) return;
+				this.castle = castle;
+
+				const order = this.castle.defenseOrder;
+				const defenders = this.castle.defender;
+
+				this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
+				setTimeout(() => this.loadAnimation(), 250);
+			}
+			this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
 		}
 	},
 	async mounted() {
-		this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
-		if (this.isClanMember) {
-			this.castle = await ClanService.castleStatus();
-
-			const order = this.castle.defenseOrder;
-			const defenders = this.castle.defender;
-
-			this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
-			setTimeout(() => this.loadAnimation(), 250);
-		}
-		this.ongoingAttack = await ClanService.warStatus(+this.$route.params.id);
+		await this.loadComponent();
 	}
 });
 </script>
