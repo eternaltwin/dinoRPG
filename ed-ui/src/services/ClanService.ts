@@ -6,6 +6,7 @@ import { http } from '../utils/index.js';
 import { LocalesEnum } from '../i18n';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 export const ClanService = {
 	async getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
@@ -166,6 +167,10 @@ export const ClanService = {
 	},
 	async reorderDefender(order: number[]): Promise<number[]> {
 		const res = await http().patch(`/clan/war/dinoz`, { dinozIds: order });
+		return res.data;
+	},
+	async attackCastle(dinozId: number): Promise<FightResult> {
+		const res = await http().put(`/clan/war/attack/${dinozId}`);
 		return res.data;
 	}
 };

@@ -4,6 +4,7 @@ import sendError from '../utils/sendErrors.js';
 import { body, param, validationResult } from 'express-validator';
 import {
 	addDefender,
+	attackCastle,
 	buildClanCastle,
 	castleStatus,
 	declareWar,
@@ -38,7 +39,7 @@ DELETE 			/dinoz/:id
 	Remove a dinoz from defense
 PATCH 			/dinoz
 	Order the defense line
-PUT					/attack/:id
+PUT					/attack/:dinozId
 	Attack in a war
  */
 
@@ -153,6 +154,19 @@ routes.patch(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
 
 	try {
 		const response = await updateDefenseOrder(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/attack/:dinozId`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await attackCastle(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

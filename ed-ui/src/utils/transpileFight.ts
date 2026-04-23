@@ -871,6 +871,12 @@ export function transpileFight(
 				break;
 			case 'survive':
 				break;
+			case 'addCastle':
+				history.push({
+					action: DinoAction.ADDCASTLE,
+					castle: step.castle
+				});
+				break;
 		}
 	}
 	if (endText && victory) {

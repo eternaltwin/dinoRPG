@@ -580,6 +580,20 @@ export default defineComponent({
 					}
 					await this.refreshDinoz();
 					break;
+				case Action.WAR_ATTACK:
+					try {
+						const fight = await ClanService.attackCastle(+this.$route.params.id);
+						this.sessionStore.setFightResult(fight);
+
+						this.$router.push({
+							name: 'Fight',
+							params: { dinozId: this.$route.params.id.toString() }
+						});
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
+					break;
 				default:
 					console.log(action.name);
 					break;

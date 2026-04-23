@@ -11,7 +11,8 @@ import {
 	Ranking,
 	PlayerIngredient,
 	Clan,
-	ClanCastle
+	ClanCastle,
+	ClanWar
 } from '@drpg/prisma';
 
 export const MARKET_MIN_VALUE = 5000;
@@ -40,6 +41,13 @@ export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 				castle?:
 					| (Pick<ClanCastle, 'placeId'> & {
 							defender: Pick<Dinoz, 'id'>[];
+					  })
+					| null;
+				attackingWar?:
+					| (Pick<ClanWar, 'id'> & {
+							defender: Pick<Clan, 'id'> & {
+								castle: Pick<ClanCastle, 'placeId'>;
+							};
 					  })
 					| null;
 		  })

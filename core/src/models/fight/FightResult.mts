@@ -35,6 +35,7 @@ export interface FighterRecap {
 	id: number;
 	type: FighterType;
 	name: string;
+	level: number;
 	display: string | undefined;
 	attacker: boolean;
 	maxHp: number;
