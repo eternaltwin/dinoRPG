@@ -33,6 +33,8 @@ export const useInventoryStore = defineStore('useInventoryStore', () => {
 	const addItem = async (itemId: number, quantity: number): Promise<void> => {
 		const item: ItemFiche | undefined = inventory.value.find(item => item.itemId === itemId);
 		if (item?.quantity === undefined) {
+			// FIXME: Call to remove
+			// We're supposed to get this data from the player store
 			const player: PlayerInfo = await PlayerService.getPlayerData(playerStore().getPlayerId.toString());
 			const hasMerguezCard: boolean = player.epicRewards.some(rewardId => rewardId === Reward.MERGUEZ_CARD);
 			const maxQuantity: number = getMaxQuantity(itemList[itemId], playerStore().isShopkeeper, hasMerguezCard);
