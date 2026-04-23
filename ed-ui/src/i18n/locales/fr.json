@@ -3559,9 +3559,10 @@
 		"completion": "Complétion",
 		"rewards": "Récompenses Épiques",
 		"level": "Niveau",
-		"edit": "Modifier",
+		"editDescription": "Modifier la description",
+		"save": "Sauvegarder la description",
 		"quest": "Mes quêtes",
-		"editAccount": "Modifier mes Informations",
+		"editAccount": "Modifier mes informations",
 		"import": "Importer compte",
 		"stat": {
 			"name": "Statistiques",

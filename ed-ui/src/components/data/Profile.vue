@@ -56,8 +56,8 @@
 			</div>
 			<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
 			<div class="buttonLand" v-if="isMyAccount()">
-				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
-				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
+				<DZButton v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)">{{ $t(`myAccount.saveDescription`) }}</DZButton>
+				<DZButton v-if="hasPlume() && !isEditOn" @click="isEditOn = true">{{ $t(`myAccount.editDescription`) }}</DZButton>
 				<DZButton @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
 				<DZButton v-if="hasPMI()" @click="goPMI">{{ $t(`myAccount.quest`) }}</DZButton>
 				<Tippy class="lb-button" theme="small" placement="top" :content="formatContent($t('myAccount.labruteTooltip'))">
