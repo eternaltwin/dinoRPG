@@ -160,13 +160,18 @@ export async function getAvailableActions(
 			}
 		}
 	});
-	if (currentWar !== null && player.clan && player.clan.castle) {
+	if (currentWar !== null && player.clan && player.clan.castle && isAlive(dinoz)) {
+		// Defend
 		if (dinoz.placeId === player.clan.castle.placeId && !dinoz.leaderId && dinoz.followers.length === 0) {
 			if (!player.clan.castle.defender.some(d => d.id === dinoz.id)) {
 				availableActions.push(actionList[Action.WAR_DEFEND]);
 			} else {
 				availableActions.push(actionList[Action.WAR_REMOVE]);
 			}
+		}
+
+		if (player.clan.attackingWar && player.clan.attackingWar.defender.castle.placeId === dinoz.placeId) {
+			availableActions.push(actionList[Action.WAR_ATTACK]);
 		}
 	}
 

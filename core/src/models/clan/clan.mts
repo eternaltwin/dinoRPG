@@ -20,7 +20,7 @@ export type PlayerClanJoinRequest = Pick<ClanJoinRequest, 'id' | 'date'> & {
 
 export interface AttackStatus {
 	id: number;
-	dateEnd: string;
+	endsAt: string;
 	points: number;
 	defender: {
 		id: number;

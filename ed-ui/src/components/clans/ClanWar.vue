@@ -18,7 +18,7 @@
 						>{{ attack.attacker.id === clanId ? attack.defender.name : attack.attacker.name }}</RouterLink
 					>
 				</td>
-				<td>{{ formatDate(attack.dateEnd) }}</td>
+				<td>{{ formatDate(attack.endsAt) }}</td>
 				<td v-if="isClanMember && attack.attacker.id === clanId">
 					<DZButton @click="forfeitWar(attack.id)">{{ $t('clan.war.forfeit') }}</DZButton>
 				</td>

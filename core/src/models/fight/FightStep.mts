@@ -299,6 +299,20 @@ export interface LoseCostumeStep {
 	currentHp: number;
 }
 
+export interface AddCastle {
+	action: 'addCastle';
+	castle: {
+		life: number;
+		maxLife: number;
+	};
+}
+
+export interface AttackCastle {
+	action: 'attackCastle';
+	fid: number;
+	damages: number;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| TimeoutStep
@@ -341,4 +355,6 @@ export type FightStep =
 	| FlipStep
 	| AnimationStep
 	| AttachStep
-	| LoseCostumeStep;
+	| LoseCostumeStep
+	| AddCastle
+	| AttackCastle;

@@ -249,7 +249,8 @@
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan.",
-			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan."
+			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan.",
+			"war_attack": "Attaquer le château adverse."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -284,7 +285,8 @@
 			"change_leader": "Devenir Leader",
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre le chateau",
-			"war_remove": "Retirer de la défense"
+			"war_remove": "Retirer de la défense",
+			"war_attack": "Attaquer le chateau"
 		}
 	},
 	"button": {

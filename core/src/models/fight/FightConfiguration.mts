@@ -63,6 +63,15 @@ export const STANDARD_PVP_RULES: FightRules = {
 	canUsePermanentEquipmentOnly: false
 };
 
+export const CLAN_WAR_PVP_RULES: FightRules = {
+	castleFight: true,
+	canUseCapture: true,
+	enableStats: false,
+	poisonEnabled: true,
+	canUseEquipment: true,
+	canUsePermanentEquipmentOnly: false
+};
+
 export interface FightConfiguration {
 	// Seed
 	seed: string;
