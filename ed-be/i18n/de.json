@@ -45,10 +45,15 @@
 	"maxFollowers": "Du hast die Höchstanzahl einer Gruppe erreicht.",
 	"knownSphereSkill": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
 	"playerNotFound": "Spieler {{id}} nicht gefunden.",
+	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
 	"dinozNotFound": "Dinoz {{id}} nicht gefunden.",
 	"dinozCannotLvlUp": "Der Dinoz kann keine Stufe aufsteigen, da er beim IDT angemeldet ist.",
 	"reincarnationNotPossible": "Die Reinkarnation von Dinoz ist nur auf Stufe 40 möglich.",
 	"reincarnationWithEquippedItems": "Du kannst deinen Dinoz nicht mit ausgerüsteten Gegenständen reinkarnieren.",
+	"error": {
+		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+	},
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Dein Konto ist dafür zu frisch.",
@@ -252,11 +257,11 @@
 		"28": "Triceragon"
 	},
 	"position": {
-		"1": "erster",
-		"2": "zweiter",
-		"3": "dritter",
-		"4": "vierter",
-		"5": "fünfter"
+		"1": "Erster",
+		"2": "Zweiter",
+		"3": "Dritter",
+		"4": "Vierter",
+		"5": "Fünfter"
 	},
 	"reward": {
 		"perle": "Perle aus dem Brunnen",
