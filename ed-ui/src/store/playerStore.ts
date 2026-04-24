@@ -22,7 +22,7 @@ export const playerStore = defineStore('playerStore', {
 			skipFight: false,
 			skipLevel: false,
 			archivedSiteId: null,
-			shareArchivedData: false,
+			shareArchivedData: false
 		},
 		role: AdminRoleFront.PLAYER,
 		priest: false,

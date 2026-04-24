@@ -56,6 +56,8 @@ export async function getPlayersCompletionRanking(page: number) {
 }
 
 export async function getPlayersDojoRanking(page: number) {
+	const pageSize = 20;
+
 	return prisma.ranking.findMany({
 		select: {
 			dojo: true,
@@ -72,8 +74,8 @@ export async function getPlayersDojoRanking(page: number) {
 			}
 		},
 		orderBy: [{ dojo: 'desc' }, { player: { name: 'asc' } }],
-		take: 20,
-		skip: (page - 1) * 20
+		take: pageSize,
+		skip: (page - 1) * pageSize
 	});
 }
 
