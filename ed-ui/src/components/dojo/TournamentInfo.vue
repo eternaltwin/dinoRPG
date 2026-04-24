@@ -133,14 +133,12 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async composeMyTeam(validate: boolean, data: number[]) {
-			if (validate) {
-				try {
-					await DojoService.createTournamentTeam(data);
-					await dojoStore().update();
-				} catch (e) {
-					errorHandler.handle(e, this.$toast);
-				}
+		async composeMyTeam(data: number[]) {
+			try {
+				await DojoService.createTournamentTeam(data);
+				await dojoStore().update();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
 			}
 		},
 		formatDate(oldDate: Date) {

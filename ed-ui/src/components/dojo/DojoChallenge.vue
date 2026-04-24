@@ -150,20 +150,18 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async composeMyTeam(validate: boolean, data: number[]) {
-			if (validate) {
-				const myTeam = data;
+		async composeMyTeam(data: number[]) {
+			const myTeam = data;
 
-				try {
-					const dojo = await DojoService.createMyTeam(myTeam);
-					this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
-					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
-					this.composeTeam = false;
-				} catch (e) {
-					errorHandler.handle(e, this.$toast);
-				}
+			try {
+				const dojo = await DojoService.createMyTeam(myTeam);
+				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
+				this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
+				this.composeTeam = false;
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
 			}
-		},
+	},
 		async nextChallenge() {
 			this.fightAnimationEnded = false;
 			this.victory = false;
