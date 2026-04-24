@@ -819,7 +819,7 @@ export async function attackCastle(req: Request) {
 
 		for (const defender of defenders) {
 			const factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
-			xp = calculatePvPxp(defender.level, d.level) * factor * cur;
+			xp = Math.round(calculatePvPxp(defender.level, d.level) * factor * cur);
 			const max = getMaxXp(d);
 			if (d.experience >= max) {
 				// No xp if the dinoz was already at max
