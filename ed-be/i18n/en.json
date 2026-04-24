@@ -45,14 +45,14 @@
 	"maxFollowers": "You reached the maximum number of Dinoz in the group",
 	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"playerNotFound": "The player {{id}} was not found.",
-	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "The archive for player {{id}} was not found.",
 	"dinozNotFound": "The Dinoz {{id}} was not found.",
 	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
 	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
 	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
 	"error": {
-		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le votre"
+		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
+		"notYourDinoz": "This is not your Dinoz."
 	},
 	"fb": {
 		"error": {
@@ -257,11 +257,11 @@
 		"28": "Tricerithumps"
 	},
 	"position": {
-		"1": "Premier",
-		"2": "Deuxième",
-		"3": "Troisième",
-		"4": "Quatrième",
-		"5": "Cinquième"
+		"1": "First",
+		"2": "Second",
+		"3": "Third",
+		"4": "Fourth",
+		"5": "Fifth"
 	},
 	"reward": {
 		"perle": "Fountain Pearl",
