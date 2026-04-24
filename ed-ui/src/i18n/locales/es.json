@@ -145,6 +145,7 @@
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
 		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
 		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
+		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisemment de Dinoz",
 		"noDinozSelected": "Ningún Dino seleccionado",
 		"basicError": "Se ha producido un error",
 		"buildSaved": "El plan de competencias \"{name}\" ha sido guardado",
@@ -4625,18 +4626,20 @@
 			"pools": ":chrono: El siguiente combate de la fase de grupos tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"finals": ":chrono: El siguiente combate de las fases finales tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"nextQualif": ":chrono: Las próximas fases clasificatorias comenzarán en {day} días, {hours} horas y {minutes} minutos.",
-			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!"
+			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!",
+			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
-		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
 		"qualification": "Tienes hasta el **{qualificationEnd}** para estar entre los 64 primeros en el ranking de Dojos, y así clasificarte para la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡prepárate!&&El premio en oro es actualmente de **{cashPrice}** :gold:.",
 		"pools": "La fase de grupos está en curso y terminará el {finalsStart}.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"finals": "Y aquí está la tan esperada fase final.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
-			"disclaimer": "Aquí puedes seleccionar hasta **6 de tus Dinos** para enfrentarte a un miembro de tu clan (o a ti mismo). Luego elige a tu oponente y hasta **6 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50 :gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
-			"friend": "Selecciona aquí el Dino de tu amigo a enfrentar.",
+			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
+			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
+			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
 			"startFight": "{gold} :gold:",
-			"doubleDinoz": "No puedes hacer combatir al mismo Dino en ambos equipos"
+			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinos raros",
