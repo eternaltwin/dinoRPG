@@ -85,7 +85,7 @@
 			"skipFight": "Mostrar directamente el resultado del combate",
 			"skipLevel": "Saltar la animación de subida de nivel",
 			"archivedSiteId": "Site historique",
-			"shareArchivedData": "Partager ses stats twinoid",
+			"shareArchivedData": "Partager ses stats Twinoid",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
@@ -3546,8 +3546,8 @@
 			"points": "Puntos",
 			"linkStats": "Estadísticas",
 			"linkGains": "Ganancias",
-			"seeArchivedStats": "Voir les stats archivé",
-			"seeStats": "Voir les stats",
+			"seeArchivedStats": "Voir les stats archivées",
+			"seeStats": "Ver estadísticas",
 			"help": {
 				"question": "¿Qué significan estos contadores?",
 				"response": "Estos contadores aumentan al realizar determinadas acciones en DinoRPG. && **Ganas íconos, títulos y puntos al alcanzar ciertos niveles de contador.** && **¡Los contadores dorados** representan ganancias raras o difíciles de obtener!"
@@ -3561,10 +3561,10 @@
 		"completion": "Completado",
 		"rewards": "Recompensas Épicas",
 		"level": "Nivel",
-		"editDescription": "Modifier la description",
-		"save": "Sauvegarder la description",
+		"editDescription": "Editar mi descripción",
+		"save": "Sauvegarder ma description",
 		"quest": "Mis misiones",
-		"editAccount": "Modifier mes informations",
+		"editAccount": "Modifica tus detalles",
 		"import": "Importar cuenta",
 		"stat": {
 			"name": "Estadísticas",
@@ -4035,11 +4035,11 @@
 			"chpx2b": "Este hot dog de la más pura tradición de la comida callejera china te lo ofrecemos por haber participado en las fases finales de la Liga Pro del 16º Campeonato de Clanes.",
 			"chpx3a": "Este increíble trofeo se te entrega por ganar la final de la Liga Principiante del 16º Campeonato de Clanes. ¡Masticarlo te da tranquilidad!",
 			"chpx3b": "Este increíble trofeo te fue entregado por participar en las etapas finales de la Liga Principiante del 16º Campeonato de Clanes. ¡Una zanahoria que se convierte en patata!",
-			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
+			"cinec1": "Este magnífico trofeo fue entregado al primer ganador del Gran Premio en el primer Festival de Cine del Cinema Paradino.",
 			"cinec2": "Este magnífico trofeo fue otorgado al ganador del Premio a la Contribución Destacada del Festival de Cine del Cinema Paradino.",
 			"cinec3": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Parodia del Festival de Cine del Cinema Paradino.",
 			"cinec4": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Adaptación del Festival de Cine del Cinema Paradino.",
-			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
+			"hallow": "¡Este magnífico trofeo fue entregado al ganador del desfile de Halloween!",
 			"tid1": "¡Felicitaciones por haber ganado el Torneo Inter-Dojos! La Medalla Zen recompensa al mejor Dojo de Dinoland, ¡Sí, eres el mejor de los Maestros! ¡Bravo! tu estrategia fue brillante.",
 			"tid2": "¡Felicitaciones por haber ganado el Torneo! La figura del Maestro Zenit moldeada en oro macizo es el trofeo para los mejores maestros de DinoRPG.¡¡La gloria y la admiración todo Dinoland son tuyas!!",
 			"gazeli": "Tu artículo en el boletín de Dinoland te hace ganar este trofeo \\\"periodinístico\\\".",
@@ -4625,12 +4625,12 @@
 			"pools": ":chrono: El siguiente combate de la fase de grupos tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"finals": ":chrono: El siguiente combate de las fases finales tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"nextQualif": ":chrono: Las próximas fases clasificatorias comenzarán en {day} días, {hours} horas y {minutes} minutos.",
-			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
+			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
+		"qualification": "Tienes hasta el **{qualificationEnd}** para estar entre los 64 primeros en el ranking de Dojos, y así clasificarte para la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡prepárate!&&El premio en oro es actualmente de **{cashPrice}** :gold:.",
+		"pools": "La fase de grupos está en curso y terminará el {finalsStart}.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
+		"finals": "Y aquí está la tan esperada fase final.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
 			"disclaimer": "Aquí puedes seleccionar hasta **6 de tus Dinos** para enfrentarte a un miembro de tu clan (o a ti mismo). Luego elige a tu oponente y hasta **6 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50 :gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
@@ -5140,7 +5140,7 @@
 			"clanBanner": "Bannière inappropriée",
 			"clanBehavior": "Comportement anti-jeu",
 			"clanPages": "Descriptions ou pages de clan inappropriées",
-			"clanOther": "Autre",
+			"clanOther": "Otro",
 			"deleted": "Clan supprimé"
 		},
 		"sorted": {
