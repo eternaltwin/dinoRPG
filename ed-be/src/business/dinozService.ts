@@ -170,7 +170,11 @@ export async function getAvailableActions(
 			}
 		}
 
-		if (player.clan.attackingWar && player.clan.attackingWar.defender.castle.placeId === dinoz.placeId) {
+		if (
+			player.clan.attackingWar &&
+			player.clan.attackingWar.defender.castle.placeId === dinoz.placeId &&
+			!dinoz.leaderId
+		) {
 			availableActions.push(actionList[Action.WAR_ATTACK]);
 		}
 	}
