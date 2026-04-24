@@ -160,7 +160,15 @@ export async function getAvailableActions(
 			}
 		}
 	});
-	if (currentWar !== null && player.clan && player.clan.castle && isAlive(dinoz)) {
+	if (
+		currentWar !== null &&
+		player.clan &&
+		player.clan.castle &&
+		isAlive(dinoz) &&
+		dinoz.fight &&
+		dinoz.followers.filter(f => !f.fight).length <= 0 &&
+		!dinoz.leaderId
+	) {
 		// Defend
 		if (dinoz.placeId === player.clan.castle.placeId && !dinoz.leaderId && dinoz.followers.length === 0) {
 			if (!player.clan.castle.defender.some(d => d.id === dinoz.id)) {
@@ -170,11 +178,7 @@ export async function getAvailableActions(
 			}
 		}
 
-		if (
-			player.clan.attackingWar &&
-			player.clan.attackingWar.defender.castle.placeId === dinoz.placeId &&
-			!dinoz.leaderId
-		) {
+		if (player.clan.attackingWar && player.clan.attackingWar.defender.castle.placeId === dinoz.placeId) {
 			availableActions.push(actionList[Action.WAR_ATTACK]);
 		}
 	}

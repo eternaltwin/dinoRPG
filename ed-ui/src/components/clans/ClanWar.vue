@@ -200,7 +200,10 @@ export default defineComponent({
 							invisible: false
 						}
 					},
-					...defense
+					...defense,
+					{
+						action: DinoAction.DISPLAY
+					}
 				]
 			});
 			const display = this.loadedCastle.getDisplay();
