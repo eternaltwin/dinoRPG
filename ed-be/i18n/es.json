@@ -52,7 +52,7 @@
 	"reincarnationWithEquippedItems": "No puedes reencarnar a tu Dino con objetos equipados.",
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le votre"
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
 	},
 	"fb": {
 		"error": {
@@ -257,11 +257,11 @@
 		"28": "Tricerithumps"
 	},
 	"position": {
-		"1": "Premier",
-		"2": "Deuxième",
-		"3": "Troisième",
-		"4": "Quatrième",
-		"5": "Cinquième"
+		"1": "Primer",
+		"2": "Segundo",
+		"3": "Tercer",
+		"4": "Cuarto",
+		"5": "Quinto"
 	},
 	"reward": {
 		"perle": "Perla de la Fuente",
