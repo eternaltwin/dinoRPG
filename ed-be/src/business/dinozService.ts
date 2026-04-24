@@ -165,8 +165,8 @@ export async function getAvailableActions(
 		if (dinoz.placeId === player.clan.castle.placeId && !dinoz.leaderId && dinoz.followers.length === 0) {
 			if (!player.clan.castle.defender.some(d => d.id === dinoz.id)) {
 				availableActions.push(actionList[Action.WAR_DEFEND]);
-			} else {
-				availableActions.push(actionList[Action.WAR_REMOVE]);
+			} else if (dinoz.unavailableReason === UnavailableReason.defending) {
+				return [actionList[Action.WAR_REMOVE]];
 			}
 		}
 
