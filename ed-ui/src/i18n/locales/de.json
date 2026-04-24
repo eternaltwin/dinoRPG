@@ -85,14 +85,14 @@
 			"skipFight": "Kampfergebnis sofort anzeigen",
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
 			"archivedSiteId": "Historisierte Seite",
-			"shareArchivedData": "Partager ses stats Twinoid",
+			"shareArchivedData": "Twinoid-Statistiken teilen",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
 		}
 	},
 	"toast": {
-		"deletedPlayer": "Le joueur a supprimé son compte",
+		"deletedPlayer": "Der Spieler hat sein Konto gelöscht",
 		"noFBTournament": "Es ist noch keine Qualifikationsphase des Rohkraft-Turniers im Gange.",
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
@@ -214,7 +214,7 @@
 		}
 	},
 	"action": {
-		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
+		"popupConfirm": "Soll wirklich {action} von deinem Dinoz ausgeführt werden?",
 		"description": {
 			"fight": "Suche an diesem Ort nach einem Monster, um dagegen zu kämpfen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
@@ -310,7 +310,7 @@
 		"actions": "Aktionen",
 		"full": "Vorrat gefüllt",
 		"sortBy": "Sortieren nach",
-		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
+		"confirmUse": "Möchtest du wirklich {name} auf deinen Dinoz anwenden?",
 		"sort": {
 			"default": "Standard",
 			"nameAsc": "Name (A → Z)",
@@ -3542,12 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistiken",
-			"archivedTitle": "Statistiques Archivées Twinoid",
+			"archivedTitle": "Archivierte Twinoid-Statistiken",
 			"points": "Punkte",
 			"linkStats": "Statistik",
 			"linkGains": "Auszeichnungen",
-			"seeArchivedStats": "Voir les stats archivées",
-			"seeStats": "Voir les stats",
+			"seeArchivedStats": "Archivierte Statistiken anzeigen",
+			"seeStats": "Statistiken anzeigen",
 			"help": {
 				"question": "Was bedeuten diese Werte?",
 				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in DinoRPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
@@ -3561,8 +3561,8 @@
 		"completion": "Vollständigkeit",
 		"rewards": "Epische Belohnungen",
 		"level": "Stufe",
-		"editDescription": "Modifier ma description",
-		"save": "Sauvegarder ma description",
+		"editDescription": "Meine Beschreibung bearbeiten",
+		"save": "Meine Beschreibung speichern",
 		"quest": "Meine Quests",
 		"editAccount": "Meine Daten ändern",
 		"import": "Konto importieren",
@@ -4344,7 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
-			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
+			"timeOut": "Der Kampf wurde beendet, weil seine Höchstdauer erreicht wurde.",
 			"arrive": "**{name}** ist angekommen!",
 			"resist": "**{dinoz}** hat widerstanden und den Schaden reduziert.",
 			"hit": "**{fighter}** hat einen {elements}-Angriff ausgeführt und **{target}** **{damage}** Schaden zugefügt.",
@@ -4618,7 +4618,7 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Voir le combat entre {playerA} et {playerB}",
+		"seeFight": "Kampf zwischen {playerA} und {playerB} ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
@@ -5126,7 +5126,7 @@
 		"korgon_end": "Du hast einen besonders fetten Korgonen gefangengenommen... hoffentlich war er nicht als Abendessen für jemand anderen vorgesehen!"
 	},
 	"report": {
-		"clan": "Signaler le clan",
+		"clan": "Klan melden",
 		"header": "Unangemessene Inhalte melden",
 		"player": "Bist du sicher, dass du diesen Spieler den Moderatoren melden möchtest?",
 		"specify": "Bitte beschreibe den Grund für deine Beschwerde",
@@ -5136,12 +5136,12 @@
 			"accountName": "Unangemessener Spielername",
 			"dinozName": "Unangebrachter Name eines Dinoz",
 			"multi": "Dieser Spieler hat mehrere Konten",
-			"other": "Andere",
-			"clanBanner": "Bannière inappropriée",
-			"clanBehavior": "Comportement anti-jeu",
-			"clanPages": "Descriptions ou pages de clan inappropriées",
-			"clanOther": "Autre",
-			"deleted": "Clan supprimé"
+			"other": "Sonstiges",
+			"clanBanner": "Unangemessenes Banner",
+			"clanBehavior": "Unsportliches Verhalten",
+			"clanPages": "Unangemessene Beschreibungen oder Seiten",
+			"clanOther": "Sonstiges",
+			"deleted": "Klan gelöscht"
 		},
 		"sorted": {
 			"open": "Offen",
@@ -5196,10 +5196,10 @@
 			"multi": "Verdacht auf Mehrfachkonten",
 			"dinozName": "unangemessener Name eines Dinoz",
 			"avatar": "unangemessener Avatar",
-			"clanBanner": "la bannière de votre clan",
-			"clanBehavior": "le comportement anti-jeu de votre clan",
-			"clanPages": "les pages de votre clan",
-			"clanOther": "votre clan",
+			"clanBanner": "das Banner deines Klans",
+			"clanBehavior": "das unsportliche Verhalten deines Klans",
+			"clanPages": "die Seiten deines Klans",
+			"clanOther": "dein Klan",
 			"other": "ein anderer Grund"
 		},
 		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
