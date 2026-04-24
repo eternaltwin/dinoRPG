@@ -5196,11 +5196,11 @@
 			"multi": "una sospecha de multi-cuentas",
 			"dinozName": "un nombre de Dino ofensivo",
 			"avatar": "un avatar ofensivo",
-			"other": "otro motivo",
 			"clanBanner": "la bannière de votre clan",
 			"clanBehavior": "le comportement anti-jeu de votre clan",
 			"clanPages": "les pages de votre clan",
-			"clanOther": "votre clan"
+			"clanOther": "votre clan",
+			"other": "otro motivo"
 		},
 		"offerExpired": "Su oferta no encontró comprador.",
 		"offerEnded": "Tu oferta fue comprada por {value} :ticket:",
