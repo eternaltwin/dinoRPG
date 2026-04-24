@@ -84,12 +84,15 @@
 			"stats": "Aktuelle Statistiken",
 			"skipFight": "Kampfergebnis sofort anzeigen",
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
+			"archivedSiteId": "Site historique",
+			"shareArchivedData": "Partager ses stats twinoid",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
 		}
 	},
 	"toast": {
+		"deletedPlayer": "Le joueur a supprimé son compte",
 		"noFBTournament": "Es ist noch keine Qualifikationsphase des Rohkraft-Turniers im Gange.",
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
@@ -211,6 +214,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Suche an diesem Ort nach einem Monster, um dagegen zu kämpfen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
@@ -306,6 +310,7 @@
 		"actions": "Aktionen",
 		"full": "Vorrat gefüllt",
 		"sortBy": "Sortieren nach",
+		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 		"sort": {
 			"default": "Standard",
 			"nameAsc": "Name (A → Z)",
@@ -3537,9 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistiken",
+			"archivedTitle": "Statistiques Archivées Twinoid",
 			"points": "Punkte",
 			"linkStats": "Statistik",
 			"linkGains": "Auszeichnungen",
+			"seeArchivedStats": "Voir les stats archivé",
+			"seeStats": "Voir les stats",
 			"help": {
 				"question": "Was bedeuten diese Werte?",
 				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in DinoRPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
@@ -3553,9 +3561,10 @@
 		"completion": "Vollständigkeit",
 		"rewards": "Epische Belohnungen",
 		"level": "Stufe",
-		"edit": "Bearbeiten",
+		"editDescription": "Modifier la description",
+		"save": "Sauvegarder la description",
 		"quest": "Meine Quests",
-		"editAccount": "Meine Daten ändern",
+		"editAccount": "Modifier mes informations",
 		"import": "Konto importieren",
 		"stat": {
 			"name": "Statistik",
@@ -4026,11 +4035,11 @@
 			"chpx2b": "Ce hot-dog issus de la plus pure tradition de street-food chinoise vous est offert pour avoir participé aux phases finales de la ligue Pro du 16ème Championnat des clans.",
 			"chpx3a": "Cet incroyable trophée vous est offert pour avoir remporté la finale de la ligue Starter du 16ème Championnat des clans. Le croquer vous donne du baume au cœur !",
 			"chpx3b": "Cette incroyable trophée vous a été offert pour avoir participé aux phases finales de la ligue Starter du 16ème Championnat des clans. Une carotte qui donne la patate !",
-			"cinec1": "Ce magnifique trophée a été offert au gagnant du Grand Prix du premier Festival de Films du Cinéma Paradino.",
+			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
 			"cinec2": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Outstanding Contribution Award.",
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
-			"hallow": "Ce magnifique trophée a été offert au gagnant de la parade d'Halloween !",
+			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
 			"tid1": "Herzlichen Glückwunsch zum Sieg im Inter-Dojo Turnier! Die Zen-Medaille kürt das beste Dojo, das es im Dinoland gibt und kein Dinoz-Meister kann dir das Wasser reichen! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"tid2": "Herzlichen Glückwunsch zum Sieg im Dinoz-Turnier! Die Figur von Meister Zenit aus massivem Gold gleicht dem Oscar für die furchtlosesten unter den Dinoz-Meistern von ganz Dinoland. Jene, die niemand zu überholen vermag! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"gazeli": "Für deinen leidenschaftlich geschriebenen Beitrag für die Dinoland Gazette hast du diese wunderbare Trophäe bekommen. Egon Arwin Kitsch wäre stolz auf dich!",
@@ -4335,6 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** ist angekommen!",
 			"resist": "**{dinoz}** hat widerstanden und den Schaden reduziert.",
 			"hit": "**{fighter}** hat einen {elements}-Angriff ausgeführt und **{target}** **{damage}** Schaden zugefügt.",
@@ -4608,19 +4618,19 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Kampf von {player} ansehen",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
 			"pools": ":chrono: Die nächste Runde der Gruppenphase wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"finals": ":chrono: Die nächste Finalrunde wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"nextQualif": ":chrono: Die nächste Qualifikation wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
-			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!"
+			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
 		},
 		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
-		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!",
-		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",
-		"finals": "Die heiß begehrten Endrunden haben begonnen!&&Das Preisgeld beträgt nun **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
 		"challengeFriend": {
 			"disclaimer": "Hier kannst du bis zu **5 deiner Dinoz** auswählen, um gegen ein Mitglied deines Klans zu kämpfen. Wähle dann einen Mitstreiter und bis zu **5 seiner Dinoz** aus, bevor du den Kampf startest. Es werden keine :pv: verloren, keine :xp: erhalten und keine Gegenstände verbraucht.&&Der Preis für einen Kampf beträgt **50 :gold: pro Dinoz-Kämpfer**. Die verwendeten Goldmünzen :gold: werden zur Finanzierung der nächsten Wettkämpfe verwendet.",
@@ -5116,6 +5126,7 @@
 		"korgon_end": "Du hast einen besonders fetten Korgonen gefangengenommen... hoffentlich war er nicht als Abendessen für jemand anderen vorgesehen!"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Unangemessene Inhalte melden",
 		"player": "Bist du sicher, dass du diesen Spieler den Moderatoren melden möchtest?",
 		"specify": "Bitte beschreibe den Grund für deine Beschwerde",
@@ -5125,7 +5136,12 @@
 			"accountName": "Unangemessener Spielername",
 			"dinozName": "Unangebrachter Name eines Dinoz",
 			"multi": "Dieser Spieler hat mehrere Konten",
-			"other": "Andere"
+			"other": "Andere",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Autre",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "Offen",
@@ -5180,6 +5196,10 @@
 			"multi": "Verdacht auf Mehrfachkonten",
 			"dinozName": "unangemessener Name eines Dinoz",
 			"avatar": "unangemessener Avatar",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan",
 			"other": "ein anderer Grund"
 		},
 		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
