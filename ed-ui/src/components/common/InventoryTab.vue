@@ -152,56 +152,55 @@ export default defineComponent({
 					rejectLabel: this.$t('popup.reject'),
 					icon: 'pi pi-trash'
 				});
-				if (res) {
-					try {
-						const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-						for (const toast of toasts) {
-							await this.resfreshInventory();
-							if (toast.category === ItemEffect.EGG) {
-								await this.refreshDinozList();
-							} else if (toast.category === ItemEffect.GOLD) {
-								await this.$refreshGold();
-							} else {
-								EventBus.emit('refreshDinoz', true);
-							}
-
-							let message: string;
-							switch (toast.category) {
-								case ItemEffect.SPECIAL:
-									message = this.$t(`toast.special.${toast.value}`, {
-										value: this.$t(`item.name.${toast.effect}`),
-										qty: toast.quantity
-									});
-									break;
-								case ItemEffect.SPHERE:
-									message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
-									break;
-								case ItemEffect.QUEST:
-									message = this.$t(`quest.${toast.value}`);
-									break;
-								case ItemEffect.RESURRECT:
-									message = this.$t(`toast.${toast.category}`);
-									break;
-								case ItemEffect.EGG:
-									message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
-									break;
-								default:
-									message =
-										typeof toast.value === 'number'
-											? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
-											: this.$t(`toast.${toast.category}`, { value: toast.value });
-									break;
-							}
-
-							this.$toast.open({
-								message: formatText(message),
-								type: 'info'
-							});
+				if (!res) return;
+				try {
+					const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
+					for (const toast of toasts) {
+						await this.resfreshInventory();
+						if (toast.category === ItemEffect.EGG) {
+							await this.refreshDinozList();
+						} else if (toast.category === ItemEffect.GOLD) {
+							await this.$refreshGold();
+						} else {
+							EventBus.emit('refreshDinoz', true);
 						}
-					} catch (error) {
-						errorHandler.handle(error, this.$toast);
-						return;
+
+						let message: string;
+						switch (toast.category) {
+							case ItemEffect.SPECIAL:
+								message = this.$t(`toast.special.${toast.value}`, {
+									value: this.$t(`item.name.${toast.effect}`),
+									qty: toast.quantity
+								});
+								break;
+							case ItemEffect.SPHERE:
+								message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
+								break;
+							case ItemEffect.QUEST:
+								message = this.$t(`quest.${toast.value}`);
+								break;
+							case ItemEffect.RESURRECT:
+								message = this.$t(`toast.${toast.category}`);
+								break;
+							case ItemEffect.EGG:
+								message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
+								break;
+							default:
+								message =
+									typeof toast.value === 'number'
+										? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
+										: this.$t(`toast.${toast.category}`, { value: toast.value });
+								break;
+						}
+
+						this.$toast.open({
+							message: formatText(message),
+							type: 'info'
+						});
 					}
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
 				}
 			}
 		},
