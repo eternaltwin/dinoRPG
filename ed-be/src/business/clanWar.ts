@@ -447,6 +447,8 @@ export async function scheduleWarExpiration() {
 		LOGGER.log('No war event ongoing.');
 		return;
 	}
+	//TODO schedule war expiration
+	// scheduleJob()
 
 	const oingoingWar = await prisma.clanWar.findMany({
 		where: {
