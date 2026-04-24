@@ -145,6 +145,7 @@
 		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht.",
 		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten.",
 		"maxDinozSelected": "Du hast bereits die Höchstanzahl an Dinoz ausgewählt.",
+		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisemment de Dinoz",
 		"noDinozSelected": "Keine Dinoz ausgewählt.",
 		"basicError": "Ein Fehler ist aufgetreten",
 		"buildSaved": "Plan der Fähigkeiten „{name}“ wurde gespeichert",
@@ -4625,18 +4626,20 @@
 			"pools": ":chrono: Die nächste Runde der Gruppenphase wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"finals": ":chrono: Die nächste Finalrunde wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"nextQualif": ":chrono: Die nächste Qualifikation wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
-			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!"
+			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!",
+			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
-		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
 		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
 		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",
 		"finals": "Die heiß begehrten Endrunden haben begonnen!&&Das Preisgeld beträgt nun **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
 		"challengeFriend": {
-			"disclaimer": "Hier kannst du bis zu **5 deiner Dinoz** auswählen, um gegen ein Mitglied deines Klans zu kämpfen. Wähle dann einen Mitstreiter und bis zu **5 seiner Dinoz** aus, bevor du den Kampf startest. Es werden keine :pv: verloren, keine :xp: erhalten und keine Gegenstände verbraucht.&&Der Preis für einen Kampf beträgt **50 :gold: pro Dinoz-Kämpfer**. Die verwendeten Goldmünzen :gold: werden zur Finanzierung der nächsten Wettkämpfe verwendet.",
-			"friend": "Wähle hier die Dinoz deines Mitstreiters zum Gegenübertreten aus.",
+			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
+			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
+			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
 			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Ein Dinoz darf nicht mehr als ein Mal kämpfen"
+			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
 		},
 		"tournamentFormats": {
 			"uncommon": "Ungewöhnliche Dinoz",
