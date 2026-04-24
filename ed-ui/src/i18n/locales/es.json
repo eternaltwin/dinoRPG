@@ -84,12 +84,15 @@
 			"stats": "Estadísticas en vivo",
 			"skipFight": "Mostrar directamente el resultado del combate",
 			"skipLevel": "Saltar la animación de subida de nivel",
+			"archivedSiteId": "Site historique",
+			"shareArchivedData": "Partager ses stats twinoid",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
 		}
 	},
 	"toast": {
+		"deletedPlayer": "Le joueur a supprimé son compte",
 		"noFBTournament": "Todavía no hay fase de clasificación para el torneo de Fuerzabruta.",
 		"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
 		"dinozAlreadySelling": "Tu Dino ya está a la venta.",
@@ -211,6 +214,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Busca un monstruo para combatir en este lugar.",
 			"follow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates.",
@@ -306,6 +310,7 @@
 		"actions": "Acciones",
 		"full": "Almacén lleno",
 		"sortBy": "Ordenar por",
+		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 		"sort": {
 			"default": "Por defecto",
 			"nameAsc": "Nombre (A → Z)",
@@ -2785,8 +2790,8 @@
 			"fflow": "El rosal favorito de Doña Seyche está en mal estado debido a la ola de calor. ¿Podrías traer agua pura de la fuente y llevársela?",
 			"kbook": "Nuevamente recibí una solicitud de la encantadora Doña Seyche. Le gustaría consultar un recetario que está en la Universidad, ¿puedes ir a buscarlo por ella?",
 			"msg": "Tengo muchas ganas de escribir una carta a una persona muy importante para mí. Desafortunadamente mis Sellos han sido robados por unos Gupiones ladronzuelos. Tienen por costumbre frecuentar la Fuente de la Juventud. Si los matas, te dejaré usar algunos de mis Sellos. ¿Qué te parece?",
-			"lettre": "Uhm... Esta vez trabajarás para mi, Papy José... Necesito que entregues URGENTEMENTE esta carta a cierta persona en Dinoville. ¡Rápido!",
-			"kilglu": "Un extraño monstruo ha aparecido en el Reino de Dinoville. Es bastante duro y puede hacer mucho daño durante una pelea. ¿Podrías matar a uno y traérmelo para que pueda estudiarlo?",
+			"lettre": "Uhm... Esta vez la misión te la encomiendo yo mismo... Necesito tu ayuda para que me lleves URGENTEMENTE esta carta a una persona en Dinovilla. ¡Tienes que ser rápido!",
+			"kilglu": "Un extraño monstruo ha aparecido últimamente en el Reino de Dinovilla. Es muy tenaz y puede infligir mucho daño en un combate. ¿Podrías matar uno y traérmelo para que pueda estudiarlo?",
 			"kilgnt": "No sé si te diste cuenta, ¡pero el Reino de Dinovilla está siendo invadido por enormes gigantes verdes que no parecen comer nada más que vegetales! ¿Puedes exterminar a una docena lo antes posible? Esta es una orden del Rey, ¡así que debes actuar rápido!",
 			"kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Cocdurs rápidamente? ¡Serás bien recompensado!",
 			"kilpir": "Pronto es el cumpleaños de la pequeña Sophie de la isla de Waikiki. Su plato favorito son las Pirañas del Pantano Pegajoso. ¿Puedes traerle algunas por mí?",
@@ -3537,9 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "Estadísticas de DinoRPG",
+			"archivedTitle": "Statistiques Archivées Twinoid",
 			"points": "Puntos",
 			"linkStats": "Estadísticas",
 			"linkGains": "Ganancias",
+			"seeArchivedStats": "Voir les stats archivé",
+			"seeStats": "Voir les stats",
 			"help": {
 				"question": "¿Qué significan estos contadores?",
 				"response": "Estos contadores aumentan al realizar determinadas acciones en DinoRPG. && **Ganas íconos, títulos y puntos al alcanzar ciertos niveles de contador.** && **¡Los contadores dorados** representan ganancias raras o difíciles de obtener!"
@@ -3553,9 +3561,10 @@
 		"completion": "Completado",
 		"rewards": "Recompensas Épicas",
 		"level": "Nivel",
-		"edit": "Modificar",
+		"editDescription": "Modifier la description",
+		"save": "Sauvegarder la description",
 		"quest": "Mis misiones",
-		"editAccount": "Editar mi cuenta",
+		"editAccount": "Modifier mes informations",
 		"import": "Importar cuenta",
 		"stat": {
 			"name": "Estadísticas",
@@ -4026,11 +4035,11 @@
 			"chpx2b": "Este hot dog de la más pura tradición de la comida callejera china te lo ofrecemos por haber participado en las fases finales de la Liga Pro del 16º Campeonato de Clanes.",
 			"chpx3a": "Este increíble trofeo se te entrega por ganar la final de la Liga Principiante del 16º Campeonato de Clanes. ¡Masticarlo te da tranquilidad!",
 			"chpx3b": "Este increíble trofeo te fue entregado por participar en las etapas finales de la Liga Principiante del 16º Campeonato de Clanes. ¡Una zanahoria que se convierte en patata!",
-			"cinec1": "Este magnífico trofeo fue entregado al primer ganador del Gran Premio en el primer Festival de Cine del Cinema Paradino.",
+			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
 			"cinec2": "Este magnífico trofeo fue otorgado al ganador del Premio a la Contribución Destacada del Festival de Cine del Cinema Paradino.",
 			"cinec3": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Parodia del Festival de Cine del Cinema Paradino.",
 			"cinec4": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Adaptación del Festival de Cine del Cinema Paradino.",
-			"hallow": "¡Este magnífico trofeo fue entregado al ganador del desfile de Halloween!",
+			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
 			"tid1": "¡Felicitaciones por haber ganado el Torneo Inter-Dojos! La Medalla Zen recompensa al mejor Dojo de Dinoland, ¡Sí, eres el mejor de los Maestros! ¡Bravo! tu estrategia fue brillante.",
 			"tid2": "¡Felicitaciones por haber ganado el Torneo! La figura del Maestro Zenit moldeada en oro macizo es el trofeo para los mejores maestros de DinoRPG.¡¡La gloria y la admiración todo Dinoland son tuyas!!",
 			"gazeli": "Tu artículo en el boletín de Dinoland te hace ganar este trofeo \\\"periodinístico\\\".",
@@ -4335,6 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "El combate durará como máximo {time} unidades de tiempo.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** ¡ha llegado!",
 			"resist": "**{dinoz}** resistió y redujo el daño.",
 			"hit": "**{fighter}** realizó un asalto {elements} e infligió **{damage}** de daño a **{target}**.",
@@ -4608,19 +4618,19 @@
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"soon": "Pronto",
-		"seeFight": "Ver el combate de {player}",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
 			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",
 			"pools": ":chrono: El siguiente combate de la fase de grupos tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"finals": ":chrono: El siguiente combate de las fases finales tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"nextQualif": ":chrono: Las próximas fases clasificatorias comenzarán en {day} días, {hours} horas y {minutes} minutos.",
-			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!"
+			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
 		},
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
-		"qualification": "Tienes hasta el **{qualificationEnd}** para estar entre los 64 primeros en el ranking de Dojos, y así clasificarte para la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡prepárate!",
-		"pools": "La fase de grupos está en curso y terminará el {finalsStart}.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
-		"finals": "Y aquí está la tan esperada fase final.&&El premio en oro es ahora de **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
 			"disclaimer": "Aquí puedes seleccionar hasta **6 de tus Dinos** para enfrentarte a un miembro de tu clan (o a ti mismo). Luego elige a tu oponente y hasta **6 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50 :gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
@@ -5116,6 +5126,7 @@
 		"korgon_end": "Has capturado un korgón bien grasiento... ¡esperemos que no fuera la cena de ningún otro!"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Reportar contenido inapropiado",
 		"player": "¿Estás seguro de que quieres reportar este jugador a la moderación?",
 		"specify": "Por favor especifique el motivo de su queja",
@@ -5125,7 +5136,12 @@
 			"accountName": "Nombre de jugador inapropiado",
 			"dinozName": "Nombre de dino inapropiado",
 			"multi": "Este jugador utiliza varias cuentas",
-			"other": "Otro"
+			"other": "Otro",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Autre",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "Por procesar",
@@ -5180,7 +5196,11 @@
 			"multi": "una sospecha de multi-cuentas",
 			"dinozName": "un nombre de Dino ofensivo",
 			"avatar": "un avatar ofensivo",
-			"other": "otro motivo"
+			"other": "otro motivo",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan"
 		},
 		"offerExpired": "Su oferta no encontró comprador.",
 		"offerEnded": "Tu oferta fue comprada por {value} :ticket:",
