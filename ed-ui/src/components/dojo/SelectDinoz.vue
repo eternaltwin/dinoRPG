@@ -76,7 +76,7 @@ export default defineComponent({
 		},
 		async validate() {
 			if (!this.selectionOver) {
-				// In this scenario, it means the player is confirming its choice.
+				// In this scenario, it means the player is validating (confirming) its choice.
 				if (this.selectedDinoz.length === 0) {
 					// Do nothing if no dinoz selected
 					this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
@@ -87,11 +87,12 @@ export default defineComponent({
 					this.$toast.open({ message: formatText(this.$t(`toast.notEnoughDinozSelected`)), type: 'error' });
 					return;
 				}
+				// Only emit "validate" upon actual validation (not cancel)
+				this.$emit('validate', this.selectedDinoz);
 			}
-			// Else (nothing to do)
-			// Then emit and update flag
+			// Else (nothing to do on cancel)
+			// Just update the flag
 			this.selectionOver = !this.selectionOver;
-			this.$emit('validate', this.selectionOver, this.selectedDinoz);
 		}
 	},
 	async mounted() {
