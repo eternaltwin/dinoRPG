@@ -84,15 +84,15 @@
 			"stats": "Live Statistics",
 			"skipFight": "Immediately display fight outcome",
 			"skipLevel": "Skip level up animation",
-			"archivedSiteId": "Site historique",
-			"shareArchivedData": "Partager ses stats twinoid",
+			"archivedSiteId": "Historical Site",
+			"shareArchivedData": "Share Twinoid Stats",
 			"connectedPlayers": "Online Players",
 			"totalDinoz": "Total Number of Dinoz",
 			"totalPlayers": "Total Number of Players"
 		}
 	},
 	"toast": {
-		"deletedPlayer": "Le joueur a supprimé son compte",
+		"deletedPlayer": "The player deleted its account",
 		"noFBTournament": "There are no qualifications yet for the BrutForce tournament.",
 		"maxParticipantInThread": "You cannot add more than 9 participants to a conversation.",
 		"dinozAlreadySelling": "Your Dinoz is already on sale.",
@@ -214,7 +214,7 @@
 		}
 	},
 	"action": {
-		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
+		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
@@ -310,7 +310,7 @@
 		"actions": "Actions",
 		"full": "Stock full",
 		"sortBy": "Sort By",
-		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
+		"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
 		"sort": {
 			"default": "By Default",
 			"nameAsc": "Name (A → Z)",
@@ -3542,12 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistics",
-			"archivedTitle": "Statistiques Archivées Twinoid",
+			"archivedTitle": "Twinoid Archived Statistics",
 			"points": "points",
 			"linkStats": "Statistics",
 			"linkGains": "Gains",
-			"seeArchivedStats": "Voir les stats archivé",
-			"seeStats": "Voir les stats",
+			"seeArchivedStats": "See the Archived Stats",
+			"seeStats": "See the Stats",
 			"help": {
 				"question": "What do those counters mean?",
 				"response": "Those counters increase when certain actions are done on DinoRPG. && **You can earn icons, titles and points by reaching certain thresholds of those.** && The golden counters represent rare rewards or some that are difficult to obtain. "
@@ -3561,10 +3561,10 @@
 		"completion": "Gathering",
 		"rewards": "Epic rewards",
 		"level": "Level",
-		"editDescription": "Modifier la description",
-		"save": "Sauvegarder la description",
+		"editDescription": "Modify the Description",
+		"save": "Save the Description",
 		"quest": "My quests",
-		"editAccount": "Modifier mes informations",
+		"editAccount": "Modify my Information",
 		"import": "Import an account",
 		"stat": {
 			"name": "Statistics",
@@ -4344,7 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "The fight will last at maximum {time} units of time.",
-			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
+			"timeOut": "The fight ended because it reached its maximum duration.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
 			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
@@ -4618,19 +4618,19 @@
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"soon": "Soon",
-		"seeFight": "Voir le combat entre {playerA} et {playerB}",
+		"seeFight": "Watch the fight between {playerA} and {playerB}",
 		"deleteTeam": "Delete my team",
 		"timer": {
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
 			"pools": ":chrono:: Next group stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
 			"finals": ":chrono:: Next final stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
 			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes.",
-			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
+			"cashPrice": ":gold: The cash prize for this tournament is {cashPrice} :gold:!!"
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
+		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
 			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the cash price of the next tournament.",
@@ -5126,7 +5126,7 @@
 		"korgon_end": "You've captured a fatty Korgon. Let's hope it wasn't someone else's dinner!"
 	},
 	"report": {
-		"clan": "Signaler le clan",
+		"clan": "Report this clan",
 		"header": "Report inappropriate content",
 		"player": "Are you certain that you want to report this player to moderators?",
 		"specify": "Please specify the reason for your complaint",
@@ -5137,11 +5137,11 @@
 			"dinozName": "Inappropriate dinoz name",
 			"multi": "This player has multiple accounts",
 			"other": "Other",
-			"clanBanner": "Bannière inappropriée",
-			"clanBehavior": "Comportement anti-jeu",
-			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanBanner": "Inappropriate banner",
+			"clanBehavior": "Unsportsmanlike behavior",
+			"clanPages": "Inappropriate descriptions or pages",
 			"clanOther": "Other",
-			"deleted": "Clan supprimé"
+			"deleted": "Clan deleted"
 		},
 		"sorted": {
 			"open": "Treat",
@@ -5196,10 +5196,10 @@
 			"multi": "a suspicion of multiple accounts",
 			"dinozName": "an offending Dinoz name",
 			"avatar": "an offensive avatar",
-			"clanBanner": "la bannière de votre clan",
-			"clanBehavior": "le comportement anti-jeu de votre clan",
-			"clanPages": "les pages de votre clan",
-			"clanOther": "votre clan",
+			"clanBanner": "the banner of your clan",
+			"clanBehavior": "the unsportsmanlike attitude of your clan",
+			"clanPages": "the pages of your clan",
+			"clanOther": "your clan",
 			"other": "another reason"
 		},
 		"offerExpired": "Your offer did not have a buyer.",
