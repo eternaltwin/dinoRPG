@@ -351,7 +351,8 @@ export const UnavailableReason: {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting',
-  unfreezing: 'unfreezing'
+  unfreezing: 'unfreezing',
+  defending: 'defending'
 };
 
 export type UnavailableReason = (typeof UnavailableReason)[keyof typeof UnavailableReason]

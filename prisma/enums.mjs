@@ -8,7 +8,8 @@ export const UnavailableReason = {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting',
-  unfreezing: 'unfreezing'
+  unfreezing: 'unfreezing',
+  defending: 'defending'
 };
 
 export const NewsType = {

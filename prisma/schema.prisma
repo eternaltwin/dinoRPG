@@ -973,6 +973,7 @@ enum UnavailableReason {
   superdom
   resting
   unfreezing
+  defending
 }
 
 enum Lang {

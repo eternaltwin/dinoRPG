@@ -8,7 +8,8 @@ export const UnavailableReason: {
   readonly selling: 'selling';
   readonly superdom: 'superdom';
   readonly resting: 'resting';
-  readonly unfreezing: 'unfreezing'
+  readonly unfreezing: 'unfreezing';
+  readonly defending: 'defending'
 };
 
 export namespace UnavailableReason {
@@ -17,7 +18,8 @@ export namespace UnavailableReason {
   export type selling = 'selling';
   export type superdom = 'superdom';
   export type resting = 'resting';
-  export type unfreezing = 'unfreezing'
+  export type unfreezing = 'unfreezing';
+  export type defending = 'defending'
 }
 
 export type UnavailableReason = typeof UnavailableReason[keyof typeof UnavailableReason];

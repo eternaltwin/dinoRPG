@@ -28,6 +28,7 @@ import gameConfig from '../config/game.config.js';
 import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
+import { UnavailableReason } from '@drpg/prisma/enums';
 
 const WAR_BASE_POINTS = 50;
 const CLAN_BASE_POINT = 1000;
@@ -587,6 +588,8 @@ export async function addDefender(req: Request) {
 			}
 		}
 	});
+
+	await updateDinoz(dinoz.id, { unavailableReason: UnavailableReason.defending });
 	return defendLine;
 }
 
