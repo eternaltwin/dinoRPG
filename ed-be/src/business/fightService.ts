@@ -528,6 +528,7 @@ export async function rewardFightVsMonsters(
 			type: f.type,
 			name: f.name,
 			level: f.level,
+			survived: f.survived,
 			display: f.display,
 			attacker: f.attacker,
 			maxHp: f.maxHp,

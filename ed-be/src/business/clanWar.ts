@@ -740,6 +740,7 @@ export async function attackCastle(req: Request) {
 		select: {
 			attackingWar: {
 				select: {
+					id: true,
 					defender: {
 						select: {
 							castle: {
@@ -747,7 +748,8 @@ export async function attackCastle(req: Request) {
 									id: true,
 									placeId: true,
 									currentLife: true,
-									maxLife: true
+									maxLife: true,
+									defenseOrder: true
 								}
 							}
 						}
@@ -776,7 +778,7 @@ export async function attackCastle(req: Request) {
 		throw new ExpectedError('forbidden');
 	}
 
-	if (team.some(d => d.unavailableReason !== null)) {
+	if (team.some(d => d.unavailableReason !== null || !d.fight)) {
 		throw new ExpectedError(`Dinoz is not able to attack.`);
 	}
 
@@ -803,7 +805,7 @@ export async function attackCastle(req: Request) {
 	);
 
 	const victory = fight.outcome === FightOutcome.AttackerWin;
-	const fightArchive = await archiveFight(fight, victory, authed.id, null);
+	await archiveFight(fight, victory, authed.id, null);
 
 	let totalWinXP = 0;
 	let levelup = false;
@@ -844,7 +846,8 @@ export async function attackCastle(req: Request) {
 			},
 			experience: {
 				increment: victory ? xp : 0
-			}
+			},
+			fight: false
 		});
 		await createLog(LogType.XPEarned, authed.id, d.id, victory ? xp : 0);
 		await createLog(LogType.HPLost, authed.id, d.id, attacker.hpLost);
@@ -866,9 +869,9 @@ export async function attackCastle(req: Request) {
 			gfact = 0.0;
 		}
 
-		for (const defender of team) {
-			const factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
-			xp = calculatePvPxp(defender.level, d.level) * factor * cur;
+		for (const attacker of team) {
+			const factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
+			xp = calculatePvPxp(attacker.level, d.level) * factor * cur;
 			const max = getMaxXp(d);
 			if (d.experience >= max) {
 				xp = 0;
@@ -891,6 +894,21 @@ export async function attackCastle(req: Request) {
 		await createLog(LogType.HPLost, d.playerId, d.id, attacker.hpLost);
 
 		if (attacker.hpLost >= d.life) {
+			await prisma.clanCastle.update({
+				where: {
+					id: warAttack.attackingWar.defender.castle.id
+				},
+				data: {
+					defender: {
+						disconnect: {
+							id: d.id
+						}
+					},
+					defenseOrder: {
+						set: warAttack.attackingWar.defender.castle.defenseOrder.filter(id => id !== dinoz.id)
+					}
+				}
+			});
 			await createLog(LogType.Death, d.playerId, d.id);
 		}
 	}
@@ -927,13 +945,32 @@ export async function attackCastle(req: Request) {
 	});
 
 	if (victory) {
-		for (const survivor of fight.attackers) {
-			//TODO survivor attack cast
+		let totalCastleDamage = 0;
+		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+			const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
 			fight.steps.push({
 				action: 'attackCastle',
-				fid: survivor.dinozId,
-				damages: fight.fighters.find(d => d.id === survivor.dinozId)?.level ?? 0
+				fid: survivor.id,
+				damages: castleDamage
 			});
+			totalCastleDamage += castleDamage;
+		}
+		const castle = await prisma.clanCastle.update({
+			where: {
+				id: warAttack.attackingWar.defender.castle.id
+			},
+			data: {
+				currentLife: {
+					decrement: totalCastleDamage
+				}
+			},
+			select: {
+				currentLife: true
+			}
+		});
+
+		if (castle.currentLife <= 0) {
+			await resolveClanWar(warAttack.attackingWar.id);
 		}
 	}
 
@@ -1002,7 +1039,6 @@ export async function computeDefenderTeam(attackerPower: number, castleId: numbe
 	let index = 0;
 	const defenderTeam = [];
 	while (defenderPower < attackerPower) {
-		console.log(index, defenderPower, sortedDefenders[index]?.level ?? 0);
 		defenderTeam.push(sortedDefenders[index]);
 		index++;
 		if (index >= sortedDefenders.length) {
