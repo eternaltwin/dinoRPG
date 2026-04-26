@@ -974,6 +974,7 @@ enum UnavailableReason {
   resting
   unfreezing
   defending
+  restingAttack
 }
 
 enum Lang {

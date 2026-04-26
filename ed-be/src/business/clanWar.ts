@@ -464,6 +464,17 @@ export async function scheduleWarExpiration() {
 		});
 		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.endsAt}`);
 	});
+
+	const dinozResting = await prisma.dinoz.updateMany({
+		where: {
+			unavailableReason: UnavailableReason.restingAttack
+		},
+		data: {
+			unavailableReason: null
+		}
+	});
+
+	LOGGER.log(`Reset attack timers for ${dinozResting.count} dinoz.`);
 }
 
 export async function warStatus(req: Request) {
@@ -728,6 +739,7 @@ export async function updateDefenseOrder(req: Request) {
 export async function attackCastle(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const authed = await auth(req);
+	const now = new Date();
 
 	if (!authed.clanId) {
 		throw new ExpectedError('invalidClan');
@@ -847,8 +859,12 @@ export async function attackCastle(req: Request) {
 			experience: {
 				increment: victory ? xp : 0
 			},
-			fight: false
+			fight: false,
+			unavailableReason: UnavailableReason.restingAttack
 		});
+		scheduleJob(`${UnavailableReason.restingAttack}_${d.id}`, now.getTime() + 60000, () =>
+			unrestingAttackingDinoz(d.id)
+		);
 		await createLog(LogType.XPEarned, authed.id, d.id, victory ? xp : 0);
 		await createLog(LogType.HPLost, authed.id, d.id, attacker.hpLost);
 
@@ -1048,4 +1064,9 @@ export async function computeDefenderTeam(attackerPower: number, castleId: numbe
 	}
 
 	return defenderTeam.filter(d => d !== undefined);
+}
+
+async function unrestingAttackingDinoz(dinozId: number) {
+	console.log('unregister');
+	await updateDinoz(dinozId, { unavailableReason: null });
 }
