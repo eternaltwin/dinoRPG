@@ -611,8 +611,8 @@ model ClanCastle {
   clanId       Int     @unique
   placeId      Int
   clan         Clan    @relation(fields: [clanId], references: [id])
-  maxLife      Int     @default(100)
-  currentLife  Int     @default(100)
+  maxLife      Int     @default(300)
+  currentLife  Int     @default(300)
   defender     Dinoz[]
   defenseOrder Int[]   @default([])
 }

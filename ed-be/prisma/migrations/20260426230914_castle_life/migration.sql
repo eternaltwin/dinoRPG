@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ClanCastle" ALTER COLUMN "maxLife" SET DEFAULT 300,
+ALTER COLUMN "currentLife" SET DEFAULT 300;
