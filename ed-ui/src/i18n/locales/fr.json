@@ -4573,7 +4573,8 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
+		"restingAttackCountdown": "Votre dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au Dinoz {dinoz} ({dinozId})",

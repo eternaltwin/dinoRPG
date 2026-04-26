@@ -1,5 +1,5 @@
 <template>
-	<div class="actions">
+	<div class="actions" v-if="dinoz">
 		<Resurect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
@@ -28,6 +28,11 @@
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
+				help
+			/>
+			<DZDisclaimer
+				v-if="dinoz.unavailableReason === UnavailableReason.restingAttack"
+				:content="$t('hud.restingAttackCountdown', { time: attackCountdown })"
 				help
 			/>
 			<DZDisclaimer
@@ -88,7 +93,7 @@
 					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
-			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+			<DZDisclaimer timer v-if="isSelling" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
 </template>
@@ -145,7 +150,8 @@ export default defineComponent({
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
 			mission: useDinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-				?.missionHUD
+				?.missionHUD,
+			attackCountdown: 0 as number
 		};
 	},
 	components: {
@@ -157,10 +163,6 @@ export default defineComponent({
 		DZFollow
 	},
 	props: {
-		dinoz: {
-			type: Object as PropType<DinozFiche>,
-			required: true
-		},
 		refreshDinoz: {
 			type: Function as PropType<() => Promise<void>>,
 			required: true
@@ -192,7 +194,22 @@ export default defineComponent({
 				this.refreshDinoz();
 			}
 		},
+		updateAttackCountdown() {
+			const time = useDinozStore().getDinozAttackTimer(+this.$route.params.id);
+			if (!time) {
+				return;
+			}
+			this.attackCountdown = time;
+			return;
+		},
 		async launch(action: ActionFiche) {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
 			if (action.confirm) {
 				const res = await this.$confirm({
 					message: this.$t(`action.popupConfirm`, { action: this.$t(`action.name.${action.name}`) }),
@@ -583,6 +600,18 @@ export default defineComponent({
 				case Action.WAR_ATTACK:
 					try {
 						const fight = await ClanService.attackCastle(+this.$route.params.id);
+						//
+						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
+						if (!currentDinoz) {
+							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+							return;
+						}
+
+						const team = [currentDinoz.id, ...currentDinoz.followers.map(f => f.id)];
+						for (const teamKey of team) {
+							console.log(teamKey);
+							useDinozStore().setDinozAttackTimer(teamKey);
+						}
 						this.sessionStore.setFightResult(fight);
 
 						this.$router.push({
@@ -619,16 +648,18 @@ export default defineComponent({
 		npcDisplayName(npcId: number) {
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		},
-		isSelling() {
-			const dinoz = useDinozStore().getDinoz(+this.$route.params.id);
-			if (!dinoz) return false;
-			return dinoz.unavailableReason === UnavailableReason.selling;
-		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
 		async regenRate() {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
 			const data = this.dinoz;
 			const skills = toSkillDetails(data.skills);
 			const priest = this.playerStore.isPriest;
@@ -647,6 +678,13 @@ export default defineComponent({
 			regen ? (this.hpRegen = regen.value) : 1;
 		},
 		async loadComponent() {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
 			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
 			}
@@ -660,7 +698,13 @@ export default defineComponent({
 		UnavailableReason() {
 			return UnavailableReason;
 		},
+		isSelling() {
+			return this.dinoz?.unavailableReason === UnavailableReason.selling;
+		},
 		missionName() {
+			if (!this.dinoz) {
+				return;
+			}
 			if (this.dinoz.missionId) {
 				return missionsList[this.dinoz.missionId];
 			}
@@ -672,23 +716,28 @@ export default defineComponent({
 			);
 		},
 		leaderDinoz() {
+			if (!this.dinoz) {
+				return;
+			}
 			if (!this.dinoz.leaderId) return;
 			return useDinozStore().getDinoz(this.dinoz.leaderId);
+		},
+		dinoz() {
+			return useDinozStore().getDinoz(+this.$route.params.id);
 		}
 	},
 	watch: {
 		storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
-		},
-		dinoz() {
-			this.loadComponent();
 		}
 	},
 	async mounted() {
+		console.log('Component mounted.');
 		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
-		this.intervals.push(intervalId, intervalId2);
+		const intervalId3 = window.setInterval(() => this.updateAttackCountdown(), 1000);
+		this.intervals.push(intervalId, intervalId2, intervalId3);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);

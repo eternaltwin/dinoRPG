@@ -137,6 +137,10 @@ export async function getAvailableActions(
 		return [];
 	}
 
+	if (dinoz.unavailableReason === UnavailableReason.restingAttack) {
+		return [];
+	}
+
 	// Nothing else if dinoz is being sold
 	if (dinoz.unavailableReason === UnavailableReason.selling) {
 		return [actionList[Action.MARKET]];

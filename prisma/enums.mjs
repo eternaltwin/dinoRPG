@@ -9,7 +9,8 @@ export const UnavailableReason = {
   superdom: 'superdom',
   resting: 'resting',
   unfreezing: 'unfreezing',
-  defending: 'defending'
+  defending: 'defending',
+  restingAttack: 'restingAttack'
 };
 
 export const NewsType = {
