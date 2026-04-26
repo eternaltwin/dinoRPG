@@ -518,7 +518,7 @@ export async function forfeitWar(req: Request) {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
-	await resolveClanWar(req.params.id, true);
+	await resolveClanWar(req.params.warId, true);
 }
 
 export async function addDefender(req: Request) {
