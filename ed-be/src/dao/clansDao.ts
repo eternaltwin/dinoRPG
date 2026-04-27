@@ -6,10 +6,11 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Lang, NotificationSeverity, EventType } from '@drpg/prisma';
+import { Lang, NotificationSeverity, EventType, $Enums } from '@drpg/prisma';
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
+import ClanEventType = $Enums.ClanEventType;
 
 export async function getAllClansRequest(page: number) {
 	return withSpan(getAllClansRequest.name, async () => {
@@ -55,6 +56,58 @@ export async function getRankingClansRequest(page: number) {
 			skip: (page - 1) * 20
 		});
 		return clans;
+	});
+}
+
+export async function getRankingWarClansRequest(page: number) {
+	return withSpan(getRankingWarClansRequest.name, async () => {
+		const now = new Date();
+
+		const currentEvent = await prisma.clanEvent.findFirst({
+			where: {
+				startDate: { lte: now },
+				endDate: { gte: now },
+				eventType: ClanEventType.war
+			},
+			select: { id: true }
+		});
+
+		if (!currentEvent) return [];
+
+		const rankings = await prisma.clanWarRanking.findMany({
+			where: {
+				eventId: currentEvent.id
+			},
+			select: {
+				reputation: true,
+				clan: {
+					select: {
+						id: true,
+						name: true,
+						treasureValue: true,
+						creationDate: true,
+						leaderId: true,
+						langs: true,
+						members: {
+							select: { id: true }
+						},
+						leader: {
+							select: { id: true, name: true }
+						},
+						castle: true
+					}
+				}
+			},
+			orderBy: { reputation: 'desc' },
+			take: 20,
+			skip: (page - 1) * 20
+		});
+
+		// Reformater pour correspondre à ClanLite
+		return rankings.map(ranking => ({
+			...ranking.clan,
+			clanWarRanking: { reputation: ranking.reputation }
+		}));
 	});
 }
 

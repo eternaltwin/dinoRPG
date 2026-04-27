@@ -31,13 +31,13 @@
 			</div>
 			<div
 				class="top-info-element"
-				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking.length > 0"
+				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking"
 				v-tippy="{
 					content: formatContent($t('clan.icons.reputation')),
 					theme: 'small'
 				}"
 			>
-				<img :src="getImgURL('icons', 'small_reput')" alt="gold" />
+				<img :src="getImgURL('icons', 'small_reput')" alt="reputation" />
 				{{ clanStore.getClan?.clanWarRanking[0].reputation }}
 			</div>
 			<div

@@ -34,6 +34,7 @@ import {
 	getPlayerJoinListRequest,
 	getPlayerJoinRequest,
 	getRankingClansRequest,
+	getRankingWarClansRequest,
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
@@ -85,6 +86,8 @@ export async function getRankingClans(req: Request) {
 	} else if (req.params.type === ClanRankingType.EVENT) {
 		const event = currentEvents();
 		return await getEventRankingClansRequest(page, event[0].name);
+	} else if (req.params.type === ClanRankingType.WAR) {
+		return await getRankingWarClansRequest(page);
 	}
 	return await getRankingClansRequest(page);
 }
