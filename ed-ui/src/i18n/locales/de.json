@@ -4635,7 +4635,7 @@
 		"finals": "Die heiß begehrten Endrunden haben begonnen!&&Das Preisgeld beträgt nun **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
 		"challengeFriend": {
-			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
+			"disclaimer": "Es werden keine :pv: verloren, keine :xp: gesammelt und keine Gegenstände verbraucht.&&Die Gebühr für die Nutzung des Trainings-Dojos beträgt **50 :gold: pro Dinoz-Kämpfer**. Dieses Geld fließt ins Preisgeld des laufenden Turniers.",
 			"selectYourDinoz": "Wähle bis zu **6 deiner Dinoz** aus.",
 			"selectOpponentDinoz": "Wähle hier deinen Gegner und bis zu **6 Dinoz**, um gegen sie anzutreten.",
 			"startFight": "{gold} :gold:",
