@@ -12,7 +12,7 @@ import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { scheduleJob } from 'node-schedule';
-import { computeReputation, computeWarPowers } from '../utils/warCalculation.js';
+import { computeWarPowers } from '../utils/warCalculation.js';
 import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
@@ -339,32 +339,38 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 	});
 
 	await prisma.$executeRaw`
-WITH updated AS (
-  UPDATE clan_war_ranking
-  SET
-    total_p_win = total_p_win +
-      CASE
-        WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-        WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-      END,
-    total_p_lost = total_p_lost +
-      CASE
-        WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-        WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-      END
-  WHERE event_id = ${war.eventId}
-    AND clan_id IN (${war.attacker.id}, ${war.defender.id})
-  RETURNING id, total_p_win, total_p_lost
+		WITH updated AS (
+		UPDATE clan_war_ranking
+		SET
+			total_p_win = total_p_win +
+			              CASE
+											WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+				              WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+											END,
+			total_p_lost = total_p_lost +
+			               CASE
+											 WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+				               WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+											 END,
+			downtime_count =
+				CASE
+					WHEN clan_id = ${war.defender.id} AND ${war.isCastleDestroyed} THEN downtime_count + 1
+					WHEN clan_id = ${war.defender.id} AND NOT ${war.isCastleDestroyed} THEN 0
+					ELSE downtime_count
+					END
+		WHERE event_id = ${war.eventId}
+			AND clan_id IN (${war.attacker.id}, ${war.defender.id})
+			RETURNING id, total_p_win, total_p_lost, downtime_count
 )
 
-UPDATE clan_war_ranking cwr
-SET reputation = 100 * POWER(
-  (500.0 + u.total_p_win) / (500.0 + u.total_p_lost),
-  0.8
-)
-FROM updated u
-WHERE cwr.id = u.id;
-`;
+		UPDATE clan_war_ranking cwr
+		SET reputation = 100 * POWER(
+			(500.0 + u.total_p_win) / (500.0 + u.total_p_lost),
+			0.8
+		                       ) - (u.downtime_count * (u.downtime_count - 1)) / 2.0
+			FROM updated u
+		WHERE cwr.id = u.id;
+	`;
 
 	await notifyWarResults(war, forfeit);
 }
