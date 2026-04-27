@@ -342,32 +342,32 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 		WITH updated AS (
 		UPDATE clan_war_ranking
 		SET
-			total_p_win = total_p_win +
+			"totalPWin" = "totalPWin" +
 			              CASE
-											WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-				              WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+											WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+				              WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
 											END,
-			total_p_lost = total_p_lost +
+			"totalPLost" = "totalPLost" +
 			               CASE
-											 WHEN clan_id = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-				               WHEN clan_id = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+											 WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+				               WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
 											 END,
-			downtime_count =
+			"downtimeCount" =
 				CASE
-					WHEN clan_id = ${war.defender.id} AND ${war.isCastleDestroyed} THEN downtime_count + 1
-					WHEN clan_id = ${war.defender.id} AND NOT ${war.isCastleDestroyed} THEN 0
-					ELSE downtime_count
+					WHEN "clanId" = ${war.defender.id} AND ${war.isCastleDestroyed} THEN "downtimeCount" + 1
+					WHEN "clanId" = ${war.defender.id} AND NOT ${war.isCastleDestroyed} THEN 0
+					ELSE "downtimeCount"
 					END
-		WHERE event_id = ${war.eventId}
-			AND clan_id IN (${war.attacker.id}, ${war.defender.id})
-			RETURNING id, total_p_win, total_p_lost, downtime_count
+		WHERE "eventId" = ${war.eventId}
+			AND "clanId" IN (${war.attacker.id}, ${war.defender.id})
+			RETURNING id, "totalPWin", "totalPLost", "downtimeCount"
 )
 
 		UPDATE clan_war_ranking cwr
 		SET reputation = 100 * POWER(
-			(500.0 + u.total_p_win) / (500.0 + u.total_p_lost),
+			(500.0 + u."totalPWin") / (500.0 + u."totalPLost"),
 			0.8
-		                       ) - (u.downtime_count * (u.downtime_count - 1)) / 2.0
+		                       ) - (u."downtimeCount" * (u."downtimeCount" - 1)) / 2.0
 			FROM updated u
 		WHERE cwr.id = u.id;
 	`;
