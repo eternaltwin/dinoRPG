@@ -235,12 +235,21 @@ export async function getAllArchivedFight(req: Request) {
 	if (!archive) {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
-	const fights = archive.map(f => {
-		return {
-			fighters: JSON.parse(f.fighters) as FighterRecap[],
-			id: f.id
-		};
-	});
+	const fights = archive
+		.filter(f => {
+			if (f.metadata) {
+				const metadata = JSON.parse(f.metadata);
+				return metadata.placeId === PlaceEnum.DOJO;
+			} else {
+				return true;
+			}
+		})
+		.map(f => {
+			return {
+				fighters: JSON.parse(f.fighters) as FighterRecap[],
+				id: f.id
+			};
+		});
 
 	return { archive: fights, quantity: totalArchive };
 }
@@ -353,7 +362,8 @@ export async function fightChallenge(
 		fightResult,
 		victory,
 		authed.id,
-		rightTeam.length > 0 ? rightTeam[0].playerId : null
+		rightTeam.length > 0 ? rightTeam[0].playerId : null,
+		JSON.stringify({ placeId: PlaceEnum.DOJO })
 	);
 
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;

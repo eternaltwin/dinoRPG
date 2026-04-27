@@ -154,7 +154,8 @@ export async function getAllArchivedFightRequest(playerId: string, page: number)
 			},
 			select: {
 				id: true,
-				fighters: true
+				fighters: true,
+				metadata: true
 			},
 			orderBy: {
 				createdDate: 'desc'
