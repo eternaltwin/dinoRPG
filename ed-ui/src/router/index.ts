@@ -16,6 +16,11 @@ const router = createRouter({
 					component: () => import('../components/common/News.vue')
 				},
 				{
+					path: '/replay/:archive',
+					name: 'ReplayFight',
+					component: () => import('../pages/ReplayFight.vue')
+				},
+				{
 					path: '/forum',
 					name: 'Forum',
 					component: () => import('../pages/ForumPage.vue')

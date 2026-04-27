@@ -755,6 +755,7 @@ export async function attackCastle(req: Request) {
 					id: true,
 					defender: {
 						select: {
+							name: true,
 							castle: {
 								select: {
 									id: true,
@@ -765,7 +766,9 @@ export async function attackCastle(req: Request) {
 								}
 							}
 						}
-					}
+					},
+					defenderClanId: true,
+					attackerClanId: true
 				}
 			}
 		}
@@ -817,7 +820,50 @@ export async function attackCastle(req: Request) {
 	);
 
 	const victory = fight.outcome === FightOutcome.AttackerWin;
-	await archiveFight(fight, victory, authed.id, null);
+	// Add castle information
+	fight.steps.unshift({
+		action: 'addCastle',
+		castle: {
+			life: warAttack.attackingWar.defender.castle.currentLife,
+			maxLife: warAttack.attackingWar.defender.castle.maxLife
+		}
+	});
+	let totalCastleDamage = 0;
+	if (victory) {
+		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+			const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
+			fight.steps.push({
+				action: 'attackCastle',
+				fid: survivor.id,
+				damages: castleDamage
+			});
+			totalCastleDamage += castleDamage;
+		}
+		const castle = await prisma.clanCastle.update({
+			where: {
+				id: warAttack.attackingWar.defender.castle.id
+			},
+			data: {
+				currentLife: {
+					decrement: totalCastleDamage
+				}
+			},
+			select: {
+				currentLife: true
+			}
+		});
+
+		if (castle.currentLife <= 0) {
+			await resolveClanWar(warAttack.attackingWar.id);
+		}
+	}
+	const archive = await archiveFight(
+		fight,
+		victory,
+		authed.id,
+		null,
+		JSON.stringify({ placeId: warAttack.attackingWar.defender.castle.placeId })
+	);
 
 	let totalWinXP = 0;
 	let levelup = false;
@@ -929,6 +975,7 @@ export async function attackCastle(req: Request) {
 		}
 	}
 
+	// Consume items for attackers
 	let merguezUsed = 0;
 	for (const fighter of [...fight.attackers]) {
 		for (const itemUsed of fighter.itemsUsed) {
@@ -941,6 +988,7 @@ export async function attackCastle(req: Request) {
 	}
 	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
 
+	// Consume items for defenders
 	for (const fighter of [...fight.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
@@ -951,45 +999,33 @@ export async function attackCastle(req: Request) {
 		}
 	}
 
-	// Add castle informations
-	fight.steps.unshift({
-		action: 'addCastle',
-		castle: {
-			life: warAttack.attackingWar.defender.castle.currentLife,
-			maxLife: warAttack.attackingWar.defender.castle.maxLife
-		}
-	});
-
-	if (victory) {
-		let totalCastleDamage = 0;
-		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-			const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
-			fight.steps.push({
-				action: 'attackCastle',
-				fid: survivor.id,
-				damages: castleDamage
-			});
-			totalCastleDamage += castleDamage;
-		}
-		const castle = await prisma.clanCastle.update({
-			where: {
-				id: warAttack.attackingWar.defender.castle.id
-			},
+	// Add attack history
+	await prisma.$transaction([
+		// Attacker history
+		prisma.clanHistory.create({
 			data: {
-				currentLife: {
-					decrement: totalCastleDamage
-				}
+				clan: { connect: { id: warAttack.attackingWar.attackerClanId } },
+				author: { connect: { id: authed.id } },
+				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACKED],
+				authorMessage: JSON.stringify({
+					damage: totalCastleDamage,
+					archiveId: archive.id,
+					clan: warAttack.attackingWar.defender.name
+				})
 			},
-			select: {
-				currentLife: true
-			}
-		});
-
-		if (castle.currentLife <= 0) {
-			await resolveClanWar(warAttack.attackingWar.id);
-		}
-	}
-
+			select: { id: true }
+		}),
+		// Defender history
+		prisma.clanHistory.create({
+			data: {
+				clan: { connect: { id: warAttack.attackingWar.defenderClanId } },
+				author: { connect: { id: authed.id } },
+				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACK],
+				authorMessage: JSON.stringify({ damage: totalCastleDamage, archiveId: archive.id })
+			},
+			select: { id: true }
+		})
+	]);
 	return {
 		fighters: fight.fighters,
 		goldEarned: victory ? 1 : 0,
@@ -1067,6 +1103,5 @@ export async function computeDefenderTeam(attackerPower: number, castleId: numbe
 }
 
 async function unrestingAttackingDinoz(dinozId: number) {
-	console.log('unregister');
 	await updateDinoz(dinozId, { unavailableReason: null });
 }

@@ -7,7 +7,8 @@ export async function archiveFight(
 	fight: FightProcessResult,
 	winner: boolean,
 	leftPlayerId: string,
-	rightPlayerId: string | null
+	rightPlayerId: string | null,
+	metaData?: string
 ) {
 	return withSpan(archiveFight.name, async () => {
 		const playerSelect = { select: { id: true, name: true } };
@@ -37,7 +38,8 @@ export async function archiveFight(
 				result: winner,
 				player: { connect: { id: leftPlayerId } },
 				leftPlayer: { connect: { id: leftPlayerId } },
-				rightPlayer: rightPlayerId ? { connect: { id: rightPlayerId } } : undefined
+				rightPlayer: rightPlayerId ? { connect: { id: rightPlayerId } } : undefined,
+				metadata: metaData
 			},
 			select: {
 				id: true,
@@ -132,7 +134,8 @@ export async function getArchivedFightRequest(archiveId: string) {
 				seed: true,
 				result: true,
 				leftPlayer: playerSelect,
-				rightPlayer: playerSelect
+				rightPlayer: playerSelect,
+				metadata: true
 			}
 		});
 
