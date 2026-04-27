@@ -8,7 +8,15 @@
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
 
-			<div class="message">{{ GetHistoryMessageFromType(evt.type, evt.authorMessage) }}</div>
+			<div class="message">
+				<RouterLink
+					v-if="evt.type === ClanHistoryType.WAR_PLAYER_ATTACKED || evt.type === ClanHistoryType.WAR_PLAYER_ATTACK"
+					:to="`/replay/${JSON.parse(evt.authorMessage).archiveId}`"
+				>
+					<img :src="getImgURL('icons', 'small_right')" alt="right" />
+				</RouterLink>
+				{{ GetHistoryMessageFromType(evt.type, evt.authorMessage) }}
+			</div>
 		</div>
 		<div class="switch-page-container">
 			<div class="arrow-button">
@@ -35,6 +43,11 @@ import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanHistory',
+	computed: {
+		ClanHistoryType() {
+			return ClanHistoryType;
+		}
+	},
 	components: { DZUser },
 	data() {
 		return {
@@ -58,6 +71,9 @@ export default defineComponent({
 				case ClanHistoryType.WAR_LOSE:
 				case ClanHistoryType.WAR_DEFENDED:
 					return this.$t('clanHistory.type.' + type, { points: message });
+				case ClanHistoryType.WAR_PLAYER_ATTACKED:
+				case ClanHistoryType.WAR_PLAYER_ATTACK:
+					return this.$t('clanHistory.type.' + type, { ...JSON.parse(message) });
 				default:
 					return this.$t('clanHistory.type.' + type);
 			}
