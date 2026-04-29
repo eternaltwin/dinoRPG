@@ -276,16 +276,3 @@ export async function giveReputation(quantity: number, dojoId: string) {
 		}
 	});
 }
-
-/*
-export async function setFightedOpponent(dinozId: number, dojoId: string) {
-	return await prisma.dojoOpponents.update({
-		where: {
-			dinozId: dinozId,
-			id: dojoId
-		},
-		data: {
-			fighted: true
-		}
-	});
-}*/

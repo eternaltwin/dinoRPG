@@ -1,5 +1,5 @@
 import { DinozFiche } from '../dinoz/DinozFiche.mjs';
-import { Player, ModerationReason, ModerationAction } from '@drpg/prisma';
+import { Player, ModerationReason, ModerationAction, Clan } from '@drpg/prisma';
 
 export type ModerationType = {
 	id: number;
@@ -9,6 +9,7 @@ export type ModerationType = {
 	reporter: Pick<Player, 'id' | 'name'>;
 	target: Pick<Player, 'id' | 'name' | 'customText'>;
 	dinoz?: Pick<DinozFiche, 'id' | 'name'>;
+	targetClan?: Pick<Clan, 'id' | 'name'>;
 };
 
 export type ModerationAdminType = {

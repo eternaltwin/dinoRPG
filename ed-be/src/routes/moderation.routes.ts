@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
-import { getPlayerToReport, reportPlayer } from '../business/moderationService.js';
+import { getPlayerToReport, reportPlayer, reportClan } from '../business/moderationService.js';
 import { param, validationResult, body } from 'express-validator';
 import { ModerationReason } from '@drpg/prisma';
 
@@ -37,6 +37,23 @@ routes.post(
 
 		try {
 			const response = await reportPlayer(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/clan/:id`,
+	[param('id').exists().isNumeric(), body('reason').exists().isString(), body('comment').exists().isString()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await reportClan(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

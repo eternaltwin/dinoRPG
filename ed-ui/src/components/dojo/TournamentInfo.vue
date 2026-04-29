@@ -16,7 +16,13 @@
 		v-if="tournamentState && tournamentInfo && (!tournamentTeam || tournamentTeam.teamCount === 0)"
 	>
 		<DZDisclaimer
-			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit })"
+			:content="
+				$t(`dojo.createTournamentTeam`, {
+					team: tournamentInfo.teamSize,
+					level: tournamentInfo.levelLimit,
+					races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', ')
+				})
+			"
 		></DZDisclaimer>
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
 	</div>
@@ -39,7 +45,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dojoStore, localStore, playerStore } from '../../store/index.js';
+import { dojoStore, localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -49,6 +55,7 @@ import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import DZButton from '../common/DZButton.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
+import { raceList } from '../../constants/race.js';
 
 export default defineComponent({
 	name: 'TournamentInfo',
@@ -78,7 +85,7 @@ export default defineComponent({
 			return dojoStore().getState;
 		},
 		myDinoz() {
-			return dinozStore()
+			return useDinozStore()
 				.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 				.filter(d => this.tournamentInfo?.teamRace.includes(d.race.raceId))
 				.filter(d => d.level <= (this.tournamentInfo?.levelLimit ?? 0))
@@ -109,6 +116,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			raceList: raceList,
 			playerStore: playerStore(),
 			localStore: localStore()
 		};
@@ -125,7 +133,7 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async composeMyTeam(data) {
+		async composeMyTeam(data: number[]) {
 			try {
 				await DojoService.createTournamentTeam(data);
 				await dojoStore().update();

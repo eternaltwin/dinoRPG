@@ -13,10 +13,12 @@
 		round
 		:content="$t(`dojo.timer.cashPrice`, { cashPrice: utils.beautifulNumber(state.cashPrice.toString()) })"
 	/>
+	<DZDisclaimer v-if="!tournamentTeam && tournamentState" round help :content="$t(`dojo.timer.noTeam`)" />
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { dojoStore } from '../../store/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { TournamentState } from '@drpg/core/models/dojo/tournament';
 import { utils } from '../../utils';
@@ -27,6 +29,20 @@ export default defineComponent({
 		return {
 			utils: utils
 		};
+	},
+	computed: {
+		tournamentTeam() {
+			if (!dojoStore().TournamentTeam) {
+				return;
+			}
+			return dojoStore().TournamentTeam;
+		},
+		tournamentState() {
+			if (!dojoStore().getState) {
+				return;
+			}
+			return dojoStore().getState;
+		}
 	},
 	props: {
 		state: {

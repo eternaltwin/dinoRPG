@@ -12,5 +12,12 @@ export const ReportService = {
 			dinozId: dinozId
 		});
 		return res.data;
+	},
+	async reportClan(clanId: number, reason: string, comment: string) {
+		const res = await http().post(`/moderation/clan/${clanId}`, {
+			reason: reason,
+			comment: comment
+		});
+		return res.data;
 	}
 };

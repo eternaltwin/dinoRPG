@@ -219,7 +219,12 @@ export const ModerationReason: {
   readonly dinozName: 'dinozName';
   readonly accountName: 'accountName';
   readonly avatar: 'avatar';
-  readonly customText: 'customText'
+  readonly customText: 'customText';
+  readonly other: 'other';
+  readonly clanBanner: 'clanBanner';
+  readonly clanBehavior: 'clanBehavior';
+  readonly clanPages: 'clanPages';
+  readonly clanOther: 'clanOther'
 };
 
 export namespace ModerationReason {
@@ -227,7 +232,12 @@ export namespace ModerationReason {
   export type dinozName = 'dinozName';
   export type accountName = 'accountName';
   export type avatar = 'avatar';
-  export type customText = 'customText'
+  export type customText = 'customText';
+  export type other = 'other';
+  export type clanBanner = 'clanBanner';
+  export type clanBehavior = 'clanBehavior';
+  export type clanPages = 'clanPages';
+  export type clanOther = 'clanOther'
 }
 
 export type ModerationReason = typeof ModerationReason[keyof typeof ModerationReason];

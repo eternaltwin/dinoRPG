@@ -41,6 +41,13 @@
 			</a>
 		</div>
 		<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
+		<div
+			class="report-container"
+			@click="reportClan"
+			v-if="clanStore.getClan && playerStore.clanId !== clanStore.getClanId"
+		>
+			<a class="button">{{ $t('report.clan') }}</a>
+		</div>
 	</div>
 </template>
 
@@ -57,6 +64,8 @@ import { formatText } from '../../utils/formatText.js';
 import { JoinClanResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import axios from 'axios';
 import ClanJoinRequest from '../../pages/Clan/ClanJoinRequest.vue';
+import { clanStore } from '../../store/clanStore';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'ClanPages',
@@ -71,6 +80,7 @@ export default defineComponent({
 			joinRequest: undefined as JoinClanResponse | undefined,
 			hasPageManageRight: false as boolean,
 			homePageId: undefined as number | undefined,
+			clanStore: clanStore(),
 			joinClanTip: formatText(this.$t('clanPages.tip.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') }))
 		};
 	},
@@ -81,6 +91,12 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
+			}
+		},
+		reportClan(): void {
+			const clan = this.clanStore.getClan;
+			if (clan) {
+				EventBus.emit('reportClan', { id: clan.id, name: clan.name });
 			}
 		},
 		async getClanPages() {
@@ -224,6 +240,10 @@ export default defineComponent({
 }
 .bottom-buttons {
 	padding: 8px;
+}
+
+.report-container {
+	margin-top: 10px;
 }
 
 /*.disclaimer {

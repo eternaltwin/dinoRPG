@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="df jcc mt-1" v-if="selectedDinoz.length && selectedDinoz.length >= minLimit">
-		<DZButton @click="validate" :off="selectionOver">{{
+		<DZButton @click="validate">{{
 			selectionOver ? $t('dojo.challenge.edit') : $t('dojo.challenge.validate')
 		}}</DZButton>
 	</div>
@@ -75,16 +75,23 @@ export default defineComponent({
 			}
 		},
 		async validate() {
-			// Do nothing if no dinoz selected
-			if (this.selectedDinoz.length === 0) {
-				this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
-				return;
+			if (!this.selectionOver) {
+				// In this scenario, it means the player is validating (confirming) its choice.
+				if (this.selectedDinoz.length === 0) {
+					// Do nothing if no dinoz selected
+					this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
+					return;
+				}
+				if (this.selectedDinoz.length < this.minLimit) {
+					// Do nothing if not enough dinoz selected
+					this.$toast.open({ message: formatText(this.$t(`toast.notEnoughDinozSelected`)), type: 'error' });
+					return;
+				}
+				// Only emit "validate" upon actual validation (not cancel)
+				this.$emit('validate', this.selectedDinoz);
 			}
-			if (this.selectedDinoz.length < this.minLimit) {
-				this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
-				return;
-			}
-			this.$emit('validate', this.selectedDinoz);
+			// Else (nothing to do on cancel)
+			// Just update the flag
 			this.selectionOver = !this.selectionOver;
 		}
 	},

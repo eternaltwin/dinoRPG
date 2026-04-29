@@ -145,6 +145,14 @@ export default defineComponent({
 		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = this.$route.params.id as string;
+				const res = await this.$confirm({
+					message: this.$t(`inventory.confirmUse`, { name: this.$t(`item.name.${itemNameList[item.itemId]}`) }),
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popup.reject'),
+					icon: 'pi pi-trash'
+				});
+				if (!res) return;
 				try {
 					const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					for (const toast of toasts) {

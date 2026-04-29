@@ -85,7 +85,7 @@
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau",
 			"archivedSiteId": "Site historique",
-			"shareArchivedData": "Partager ses stats twinoid",
+			"shareArchivedData": "Partager ses stats Twinoid",
 			"connectedPlayers": "Joueurs connectés",
 			"totalDinoz": "Nombre total de Dinoz",
 			"totalPlayers": "Nombre total de joueurs"
@@ -145,6 +145,7 @@
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées.",
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
+		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisemment de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
 		"basicError": "Une erreur est survenue",
 		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
@@ -214,6 +215,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit.",
 			"follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
@@ -309,6 +311,7 @@
 		"actions": "Actions",
 		"full": "Stock plein",
 		"sortBy": "Trier par",
+		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 		"sort": {
 			"default": "Par défaut",
 			"nameAsc": "Nom (A → Z)",
@@ -3544,7 +3547,7 @@
 			"points": "points",
 			"linkStats": "Statistiques",
 			"linkGains": "Gains",
-			"seeArchivedStats": "Voir les stats archivé",
+			"seeArchivedStats": "Voir les stats archivées",
 			"seeStats": "Voir les stats",
 			"help": {
 				"question": "Que signifient ces compteurs ?",
@@ -3559,9 +3562,10 @@
 		"completion": "Complétion",
 		"rewards": "Récompenses Épiques",
 		"level": "Niveau",
-		"edit": "Modifier",
+		"editDescription": "Modifier ma description",
+		"save": "Sauvegarder ma description",
 		"quest": "Mes quêtes",
-		"editAccount": "Modifier mes Informations",
+		"editAccount": "Modifier mes informations",
 		"import": "Importer compte",
 		"stat": {
 			"name": "Statistiques",
@@ -4032,11 +4036,11 @@
 			"chpx2b": "Ce hot-dog issus de la plus pure tradition de street-food chinoise vous est offert pour avoir participé aux phases finales de la ligue Pro du 16ème Championnat des clans.",
 			"chpx3a": "Cet incroyable trophée vous est offert pour avoir remporté la finale de la ligue Starter du 16ème Championnat des clans. Le croquer vous donne du baume au cœur !",
 			"chpx3b": "Cette incroyable trophée vous a été offert pour avoir participé aux phases finales de la ligue Starter du 16ème Championnat des clans. Une carotte qui donne la patate !",
-			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
+			"cinec1": "Ce magnifique trophée a été offert au gagnant du Grand Prix du premier Festival de Films du Cinéma Paradino.",
 			"cinec2": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Outstanding Contribution Award.",
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
-			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
+			"hallow": "Ce magnifique trophée a été offert au gagnant de la parade d'Halloween !",
 			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La Médaille Zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
 			"tid2": "Félicitation pour avoir gagné le Tournoi des Dinoz ! La figurine de maître Zenit en or massif est l'équivalent de l'Oscar du plus vaillant maîtres Dinoz de tous Dinoland, aucun maître ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
 			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres Dinoz vanteront les mérites de votre prose à travers le monde !",
@@ -4615,25 +4619,27 @@
 		"seeFinal": "Voir la finale",
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jour au maximum.//",
 		"soon": "Bientôt",
-		"seeFight": "Voir le combat de {player}",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
-			"cashPrice": ":gold: Le cash prize pour ce tournoi est de {cashPrice} :gold: !!"
+			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
+			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
-		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash prize est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&Le cash prize est à présent de **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
 		"challengeFriend": {
-			"disclaimer": "Ici vous pouvez sélectionner jusqu'à **6 de vos Dinoz** pour affronter un membre de votre clan (ou vous-même). Choisissez ensuite votre opposant et jusqu'à **6 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50 :gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
-			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
+			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
+			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
+			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
 			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Vous ne pouvez faire combattre le même Dinoz"
+			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",
@@ -5123,6 +5129,7 @@
 		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Reporter du contenu inapproprié",
 		"player": "Êtes-vous sûr de vouloir reporter ce joueur à la modération ?",
 		"specify": "Merci de spécifier la raison de votre complainte",
@@ -5131,7 +5138,13 @@
 			"avatar": "Avatar inapproprié",
 			"accountName": "Nom de joueur inapproprié",
 			"dinozName": "Nom de Dinoz inapproprié",
-			"multi": "Ce joueur utilise plusieurs comptes"
+			"multi": "Ce joueur utilise plusieurs comptes",
+			"other": "Autre",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Autre",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "À traiter",
@@ -5185,7 +5198,12 @@
 			"customText": "votre description personnalisée",
 			"multi": "une suspiscion de multicompte",
 			"dinozName": "un nom de Dinoz offensant",
-			"avatar": "un avatar offensant"
+			"avatar": "un avatar offensant",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan",
+			"other": "une autre raison"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",

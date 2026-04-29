@@ -45,6 +45,11 @@ export const dojoStore = defineStore('dojoStore', {
 		async updateTeam() {
 			this.myTeam = await DojoService.getTournamentTeam();
 		},
+		incrementCashPrice(quantity: number) {
+			if (this.currentTournament) {
+				this.currentTournament.cashPrice += quantity;
+			}
+		},
 		deleteTeam() {
 			this.myTeam = [];
 		}
