@@ -38,7 +38,7 @@
 			<DZDisclaimer v-else round :content="$t('clan.war.disclaimerCastle', { place })" />
 			<div id="pixiCanvas" />
 			<div class="df jcc defense">
-				<VueDraggable v-model="defenders" class="df jcc" :animation="150" @update="onUpdate">
+				<VueDraggable v-model="defenders" class="df jcc fww" :animation="150" @update="onUpdate">
 					<DinozMini
 						v-for="dinoz in defenders"
 						v-tippy="{
@@ -171,7 +171,7 @@ export default defineComponent({
 			}
 			const defense = [] as transpiled[];
 			this.defenders.forEach((defender, index) => {
-				if (index >= 10) return;
+				if (index >= 5) return;
 				defense.push({
 					action: DinoAction.ADD,
 					fighter: {

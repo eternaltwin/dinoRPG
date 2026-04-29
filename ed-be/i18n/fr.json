@@ -51,6 +51,13 @@
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
+	"clanWar": {
+		"noCastle": "Votre clan n'a pas de château de construit.",
+		"noCastleOpponent": "Le château adverse n'est pas constuit.",
+		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisament d'adversaires.",
+		"defenderActiveMax": "Vous avez la limite maximale de dinoz en défense.",
+		"notWar": "L'attaque n'est plus réalisable."
+	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
 		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
