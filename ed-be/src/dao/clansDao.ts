@@ -106,7 +106,7 @@ export async function getRankingWarClansRequest(page: number) {
 		// Reformater pour correspondre à ClanLite
 		return rankings.map(ranking => ({
 			...ranking.clan,
-			clanWarRanking: { reputation: ranking.reputation }
+			clanWarRanking: { reputation: Math.round(ranking.reputation) }
 		}));
 	});
 }
@@ -159,7 +159,7 @@ export async function getClanRequestPublic(id: number) {
 					}
 				},
 				creationDate: true,
-				attackingWar: true,
+				attackingWars: true,
 				defendingWars: true,
 				leader: {
 					select: {
@@ -197,7 +197,7 @@ export async function getClanRequestPrivate(id: number) {
 				},
 				creationDate: true,
 				castle: true,
-				attackingWar: true,
+				attackingWars: true,
 				defendingWars: true,
 				leader: {
 					select: {
@@ -1231,5 +1231,49 @@ export async function deleteClanMember(playerId: string) {
 			})
 		]);
 		return member;
+	});
+}
+
+export type ResolvedWar = NonNullable<Awaited<ReturnType<typeof getWarForResolve>>>;
+export async function getWarForResolve(warId: string) {
+	return withSpan(getWarForResolve.name, async () => {
+		return prisma.clanWar.findUnique({
+			where: { id: warId, winnerClanId: null },
+			select: {
+				id: true,
+				eventId: true,
+				attacker: {
+					select: {
+						id: true,
+						leaderId: true,
+						clanWarRanking: true,
+						name: true
+					}
+				},
+				defender: {
+					select: {
+						id: true,
+						leaderId: true,
+						clanWarRanking: true,
+						name: true
+					}
+				},
+				isCastleDestroyed: true
+			}
+		});
+	});
+}
+
+export async function checkCanDeclareWar(attackerClanId: number): Promise<void> {
+	return withSpan(checkCanDeclareWar.name, async () => {
+		const activeWar = await prisma.clanWar.findFirst({
+			where: {
+				attackerClanId,
+				winnerClanId: null
+			}
+		});
+		if (activeWar) {
+			throw new ExpectedError('alreadyAtWar');
+		}
 	});
 }

@@ -346,7 +346,11 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 								}
 							}
 						},
-						attackingWar: {
+						attackingWars: {
+							where: {
+								winnerClanId: null // uniquement la guerre active
+							},
+							take: 1,
 							select: {
 								id: true,
 								defender: {

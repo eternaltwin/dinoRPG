@@ -598,7 +598,7 @@ model Clan {
   pages          ClanPage[]
   ingredients    ClanIngredient[]
   discussion     ClanMessage[]
-  attackingWar   ClanWar?          @relation("attacker")
+  attackingWars  ClanWar[]         @relation("attacker")
   defendingWars  ClanWar[]         @relation("defender")
   clanWarRanking ClanWarRanking[]
   players        Player[]
@@ -631,8 +631,8 @@ model ClanWar {
 
   eventId        String    @db.Uuid
   event          ClanEvent @relation(fields: [eventId], references: [id])
-  attackerClanId Int       @unique
-  defenderClanId Int       @unique
+  attackerClanId Int
+  defenderClanId Int
   attacker       Clan      @relation("attacker", fields: [attackerClanId], references: [id])
   defender       Clan      @relation("defender", fields: [defenderClanId], references: [id])
 
