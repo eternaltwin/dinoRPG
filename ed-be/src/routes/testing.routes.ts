@@ -192,7 +192,7 @@ routes.post(`${commonPath}/dojo/register-test-players`, async (req: Request, res
 			await updateDojoPoints(player.id, 2);
 			const authorizedRaces = tournament.teamRace.split(',').map(r => parseInt(r)) as number[];
 			let dinoz = (await getAllDinozFromAccount(player.id)).filter(d => {
-				d.raceId in authorizedRaces;
+				return authorizedRaces.includes(d.raceId);
 			});
 			console.log(`player ${player.name} has ${dinoz.length} Dinos for the tournament`);
 			dinoz = shuffle(dinoz);
