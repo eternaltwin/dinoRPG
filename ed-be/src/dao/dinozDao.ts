@@ -143,6 +143,7 @@ export async function getAllDinozFromAccount(playerId: string) {
 			select: {
 				id: true,
 				leaderId: true,
+				raceId: true,
 				name: true,
 				unavailableReason: true,
 				level: true,

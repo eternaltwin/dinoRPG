@@ -640,9 +640,9 @@ class TournamentManager {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.toDate();
 
-		const tournamentFormat = formatTID[1];
+		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
+		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(1, tournamentFormat.teamRace.length);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = 1;
 		const levelLimit = 50;
@@ -793,7 +793,7 @@ class TournamentManager {
 			}
 		});
 
-		if (dinozCount > 5000) {
+		if (dinozCount > 100) {
 			TournamentManager.createTournament(prisma);
 		} else {
 			const tournamentDate = nextMonday();

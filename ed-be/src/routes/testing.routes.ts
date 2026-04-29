@@ -142,13 +142,24 @@ routes.post(`${commonPath}/test-dinoz`, async (req: Request, res: Response) => {
 			Item.MOUEFFE_EGG,
 			Item.NUAGOZ_EGG,
 			Item.SIRAIN_EGG,
-			Item.SIRAIN_EGG_RARE
+			Item.KABUKI_EGG,
+			Item.ROCKY_EGG_RARE,
+			Item.HIPPOCLAMP_EGG_RARE,
+			Item.PTEROZ_EGG_RARE,
+			Item.RARE_MAHAMUTI_EGG,
+			Item.SMOG_EGG,
+			Item.SANTAZ_EGG_RARE,
+			Item.GORILLOZ_EGG,
+			Item.CASTIVORE_EGG_RARE,
+			Item.FEROSS_EGG,
+			Item.WANWAN_EGG_RARE
 		].map(itemId => itemList[itemId]);
 		for (const player of players) {
 			const numDinoz = (await getAllDinozFromAccount(player.id)).length;
 			const toCreate = 18 - numDinoz;
+			shuffle(eggs);
 			for (let k = 0; k < toCreate; k++) {
-				const egg = eggs[Math.floor(Math.random() * eggs.length)];
+				const egg = eggs[k % eggs.length];
 				if (egg === undefined) {
 					throw new ExpectedError('Could not found egg');
 				}
@@ -179,8 +190,11 @@ routes.post(`${commonPath}/dojo/register-test-players`, async (req: Request, res
 		players.length = Math.min(players.length, req.body.numPlayers);
 		for (const player of players) {
 			await updateDojoPoints(player.id, 2);
-			let dinoz = await getAllDinozFromAccount(player.id);
-			console.log(`player ${player.name} has ${dinoz.length} dinos`);
+			const authorizedRaces = tournament.teamRace.split(',').map(r => parseInt(r)) as number[];
+			let dinoz = (await getAllDinozFromAccount(player.id)).filter(d => {
+				d.raceId in authorizedRaces;
+			});
+			console.log(`player ${player.name} has ${dinoz.length} Dinos for the tournament`);
 			dinoz = shuffle(dinoz);
 			dinoz.length = Math.min(dinoz.length, tournament.teamSize);
 			await simplifyCreateTournamentTeam(
