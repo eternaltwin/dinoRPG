@@ -1,9 +1,9 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Clan, ClanWar, ClanWarRanking, LogType, NotificationSeverity } from '@drpg/prisma';
+import { Clan, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
-import { playerHasRightRequest } from '../dao/clansDao.js';
+import { checkCanDeclareWar, getWarForResolve, playerHasRightRequest } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
@@ -29,12 +29,6 @@ import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
-
-const WAR_BASE_POINTS = 50;
-const CLAN_BASE_POINT = 1000;
-const CLAN_BASE_REPUTATION = 100;
-const REPUTATION_BASE_GAIN = 10;
-const REPUTATION_BASE_LOSS = 8;
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -150,7 +144,7 @@ export async function buildClanCastle(req: Request) {
 			clan: { connect: { id: authed.clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.CASTLE_BUILD],
-			authorMessage: authed.name
+			authorMessage: JSON.stringify({ name: authed.name })
 		},
 		select: { id: true }
 	});
@@ -170,18 +164,7 @@ export async function declareWar(req: Request) {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
-	const attackOngoing = await prisma.clanWar.findUnique({
-		where: {
-			attackerClanId: authed.clanId,
-			endsAt: {
-				gt: new Date()
-			}
-		}
-	});
-
-	if (attackOngoing) {
-		throw new ExpectedError('War already ongoing for your clan');
-	}
+	await checkCanDeclareWar(authed.clanId);
 
 	const defender = await prisma.clan.findUnique({
 		where: {
@@ -198,6 +181,15 @@ export async function declareWar(req: Request) {
 			members: {
 				select: {
 					playerId: true
+				}
+			},
+			_count: {
+				select: {
+					defendingWars: {
+						where: {
+							winnerClanId: null // uniquement les guerres actives
+						}
+					}
 				}
 			}
 		}
@@ -227,6 +219,10 @@ export async function declareWar(req: Request) {
 		throw new ExpectedError(translate('clan.noCastle', authed));
 	}
 
+	if (defender._count.defendingWars >= 3) {
+		throw new ExpectedError('defenderAlreadyUnderAttack');
+	}
+
 	const endWar = dayjs().add(2, 'day').toDate();
 	const attack = await prisma.clanWar.create({
 		data: {
@@ -244,7 +240,7 @@ export async function declareWar(req: Request) {
 			clan: { connect: { id: authed.clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.WAR_START],
-			authorMessage: defender.name
+			authorMessage: JSON.stringify({ name: defender.name })
 		},
 		select: { id: true }
 	});
@@ -268,7 +264,7 @@ export async function declareWar(req: Request) {
 			clan: { connect: { id: defender.id } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.WAR_ATTACKED],
-			authorMessage: attacker.name
+			authorMessage: JSON.stringify({ name: attacker.name })
 		},
 		select: { id: true }
 	});
@@ -294,91 +290,70 @@ export async function declareWar(req: Request) {
 }
 
 async function resolveClanWar(warId: string, forfeit?: boolean) {
-	const war = await prisma.clanWar.findUnique({
-		where: {
-			id: warId
-		},
-		select: {
-			id: true,
-			eventId: true,
-			attacker: {
-				select: {
-					id: true,
-					leaderId: true,
-					clanWarRanking: true
-				}
-			},
-			defender: {
-				select: {
-					id: true,
-					leaderId: true,
-					clanWarRanking: true
-				}
-			},
-			isCastleDestroyed: true
-		}
-	});
-	if (!war) {
-		LOGGER.error(`War ${warId} not found`);
-		return;
-	}
-	let winnerClanId = war.isCastleDestroyed ? war.attacker.id : war.defender.id;
+	const war = await getWarForResolve(warId);
 
+	if (!war) {
+		throw new ExpectedError(`War ${warId} not found`);
+	}
+
+	let winnerClanId = war.isCastleDestroyed ? war.attacker.id : war.defender.id;
 	if (forfeit) {
 		winnerClanId = war.defender.id;
 	}
 
-	const pwin = computeWarPowers(war);
+	const attackerWon = winnerClanId === war.attacker.id;
+	const isCastleDestroyed = forfeit ? false : war.isCastleDestroyed;
+
+	const pwin = computeWarPowers(war, attackerWon);
 
 	await prisma.clanWar.update({
 		where: { id: war.id },
 		data: {
-			winnerClanId: winnerClanId,
-			isCastleDestroyed: war.isCastleDestroyed
+			winnerClanId,
+			isCastleDestroyed
 		}
 	});
 
 	await prisma.$executeRaw`
-		WITH updated AS (
-		UPDATE clan_war_ranking
-		SET
-			"totalPWin" = "totalPWin" +
-			              CASE
-											WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-				              WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-											END,
-			"totalPLost" = "totalPLost" +
-			               CASE
-											 WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-				               WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-											 END,
-			"downtimeCount" =
-				CASE
-					WHEN "clanId" = ${war.defender.id} AND ${war.isCastleDestroyed} THEN "downtimeCount" + 1
-					WHEN "clanId" = ${war.defender.id} AND NOT ${war.isCastleDestroyed} THEN 0
-					ELSE "downtimeCount"
-					END
-		WHERE "eventId" = ${war.eventId}
-			AND "clanId" IN (${war.attacker.id}, ${war.defender.id})
-			RETURNING id, "totalPWin", "totalPLost", "downtimeCount"
-)
-
-		UPDATE clan_war_ranking cwr
-		SET reputation = 100 * POWER(
-			(500.0 + u."totalPWin") / (500.0 + u."totalPLost"),
-			0.8
-		                       ) - (u."downtimeCount" * (u."downtimeCount" - 1)) / 2.0
-			FROM updated u
-		WHERE cwr.id = u.id;
-	`;
+  UPDATE clan_war_ranking
+  SET
+    "totalPWin" = "totalPWin" +
+      CASE
+        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+      END,
+    "totalPLost" = "totalPLost" +
+      CASE
+        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+      END,
+    "downtimeCount" =
+      CASE
+        WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+        WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+        ELSE "downtimeCount"
+      END,
+    reputation = 100.0 * POWER(
+      (500.0 + ("totalPWin" + CASE
+        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+      END)::float) / (500.0 + ("totalPLost" + CASE
+        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+      END)::float),
+      0.8
+    ) - ("downtimeCount" * ("downtimeCount" - 1))::float / 2.0
+  WHERE "eventId" = ${Prisma.raw(`'${war.eventId}'::uuid`)}
+    AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
+`;
 
 	await notifyWarResults(war, forfeit);
 }
 
 async function notifyWarResults(
 	war: Pick<ClanWar, 'isCastleDestroyed'> & {
-		attacker: Pick<Clan, 'id' | 'leaderId'>;
-		defender: Pick<Clan, 'id' | 'leaderId'>;
+		attacker: Pick<Clan, 'id' | 'leaderId' | 'name'>;
+		defender: Pick<Clan, 'id' | 'leaderId' | 'name'>;
 	},
 	forfeit?: boolean
 ) {
@@ -413,8 +388,8 @@ async function notifyWarResults(
 				data: {
 					clan: { connect: { id: war.attacker.id } },
 					author: { connect: { id: war.attacker.leaderId } },
-					type: ClanHistoryType[forfeit ? ClanHistoryType.WAR_LOSE : ClanHistoryType.WAR_FORFEIT],
-					authorMessage: ''
+					type: ClanHistoryType[forfeit ? ClanHistoryType.WAR_FORFEIT : ClanHistoryType.WAR_LOSE],
+					authorMessage: JSON.stringify({ name: war.defender.name })
 				},
 				select: { id: true }
 			}),
@@ -491,7 +466,8 @@ export async function warStatus(req: Request) {
 			OR: [
 				{ attackerClanId: clanId, endsAt: { gt: new Date() } },
 				{ defenderClanId: clanId, endsAt: { gt: new Date() } }
-			]
+			],
+			winnerClanId: null
 		},
 		select: {
 			id: true,
@@ -756,7 +732,11 @@ export async function attackCastle(req: Request) {
 			id: authed.clanId
 		},
 		select: {
-			attackingWar: {
+			attackingWars: {
+				where: {
+					winnerClanId: null
+				},
+				take: 1,
 				select: {
 					id: true,
 					defender: {
@@ -780,7 +760,9 @@ export async function attackCastle(req: Request) {
 		}
 	});
 
-	if (!warAttack || !warAttack.attackingWar || !warAttack.attackingWar.defender.castle) {
+	const activeWar = warAttack?.attackingWars[0];
+
+	if (!warAttack || !activeWar || !activeWar.defender.castle) {
 		throw new ExpectedError('forbidden');
 	}
 
@@ -795,7 +777,7 @@ export async function attackCastle(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 	let team = player.dinoz;
-	if (team.some(d => d.placeId !== warAttack.attackingWar?.defender.castle?.placeId)) {
+	if (team.some(d => d.placeId !== activeWar.defender.castle?.placeId)) {
 		throw new ExpectedError('forbidden');
 	}
 
@@ -814,7 +796,7 @@ export async function attackCastle(req: Request) {
 	await setSpecificStat(StatTracking.GDC_ATK, player.id, team.length);
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const defenders = await computeDefenderTeam(teamLevel, warAttack.attackingWar.defender.castle.id);
+	const defenders = await computeDefenderTeam(teamLevel, activeWar.defender.castle.id);
 
 	const fight = calculateFightBetweenPlayers(
 		CLAN_WAR_PVP_RULES,
@@ -822,7 +804,7 @@ export async function attackCastle(req: Request) {
 		false,
 		defenders,
 		false,
-		warAttack.attackingWar?.defender.castle?.placeId
+		activeWar.defender.castle?.placeId
 	);
 
 	const victory = fight.outcome === FightOutcome.AttackerWin;
@@ -830,8 +812,8 @@ export async function attackCastle(req: Request) {
 	fight.steps.unshift({
 		action: 'addCastle',
 		castle: {
-			life: warAttack.attackingWar.defender.castle.currentLife,
-			maxLife: warAttack.attackingWar.defender.castle.maxLife
+			life: activeWar.defender.castle.currentLife,
+			maxLife: activeWar.defender.castle.maxLife
 		}
 	});
 	let totalCastleDamage = 0;
@@ -847,7 +829,7 @@ export async function attackCastle(req: Request) {
 		}
 		const castle = await prisma.clanCastle.update({
 			where: {
-				id: warAttack.attackingWar.defender.castle.id
+				id: activeWar.defender.castle.id
 			},
 			data: {
 				currentLife: {
@@ -860,7 +842,7 @@ export async function attackCastle(req: Request) {
 		});
 
 		if (castle.currentLife <= 0) {
-			await resolveClanWar(warAttack.attackingWar.id);
+			await resolveClanWar(activeWar.id);
 		}
 	}
 	const archive = await archiveFight(
@@ -868,7 +850,7 @@ export async function attackCastle(req: Request) {
 		victory,
 		authed.id,
 		null,
-		JSON.stringify({ placeId: warAttack.attackingWar.defender.castle.placeId })
+		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
 	);
 
 	let totalWinXP = 0;
@@ -945,26 +927,26 @@ export async function attackCastle(req: Request) {
 				xp = 0;
 			}
 		}
-		const attacker = fight.defenders.find(a => a.dinozId === d.id);
-		if (!attacker) {
-			throw new ExpectedError(`Attacker ${d.id} doesn't exist.`);
+		const defenderFighter = fight.defenders.find(a => a.dinozId === d.id);
+		if (!defenderFighter) {
+			throw new ExpectedError(`Defender ${d.id} doesn't exist.`);
 		}
 
 		await updateDinoz(d.id, {
 			life: {
-				decrement: attacker.hpLost
+				decrement: defenderFighter.hpLost
 			},
 			experience: {
 				increment: !victory ? xp : 0
 			}
 		});
 		await createLog(LogType.XPEarned, d.playerId, d.id, victory ? xp : 0);
-		await createLog(LogType.HPLost, d.playerId, d.id, attacker.hpLost);
+		await createLog(LogType.HPLost, d.playerId, d.id, defenderFighter.hpLost);
 
-		if (attacker.hpLost >= d.life) {
+		if (defenderFighter.hpLost >= d.life) {
 			await prisma.clanCastle.update({
 				where: {
-					id: warAttack.attackingWar.defender.castle.id
+					id: activeWar.defender.castle.id
 				},
 				data: {
 					defender: {
@@ -973,10 +955,11 @@ export async function attackCastle(req: Request) {
 						}
 					},
 					defenseOrder: {
-						set: warAttack.attackingWar.defender.castle.defenseOrder.filter(id => id !== dinoz.id)
+						set: activeWar.defender.castle.defenseOrder.filter(id => id !== d.id)
 					}
 				}
 			});
+			await updateDinoz(d.id, { unavailableReason: null });
 			await createLog(LogType.Death, d.playerId, d.id);
 		}
 	}
@@ -1010,13 +993,13 @@ export async function attackCastle(req: Request) {
 		// Attacker history
 		prisma.clanHistory.create({
 			data: {
-				clan: { connect: { id: warAttack.attackingWar.attackerClanId } },
+				clan: { connect: { id: activeWar.attackerClanId } },
 				author: { connect: { id: authed.id } },
 				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACKED],
 				authorMessage: JSON.stringify({
 					damage: totalCastleDamage,
 					archiveId: archive.id,
-					clan: warAttack.attackingWar.defender.name
+					clan: activeWar.defender.name
 				})
 			},
 			select: { id: true }
@@ -1024,7 +1007,7 @@ export async function attackCastle(req: Request) {
 		// Defender history
 		prisma.clanHistory.create({
 			data: {
-				clan: { connect: { id: warAttack.attackingWar.defenderClanId } },
+				clan: { connect: { id: activeWar.defenderClanId } },
 				author: { connect: { id: authed.id } },
 				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACK],
 				authorMessage: JSON.stringify({ damage: totalCastleDamage, archiveId: archive.id })
@@ -1048,7 +1031,7 @@ export async function attackCastle(req: Request) {
 			id: a.dinozId,
 			itemsUsed: a.itemsUsed
 		})),
-		place: warAttack.attackingWar.defender.castle.placeId
+		place: activeWar.defender.castle.placeId
 	};
 }
 

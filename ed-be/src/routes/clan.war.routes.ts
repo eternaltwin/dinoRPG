@@ -7,12 +7,12 @@ import {
 	attackCastle,
 	buildClanCastle,
 	castleStatus,
-	declareWar,
 	eventState,
 	forfeitWar,
 	removeDefender,
 	updateDefenseOrder,
-	warStatus
+	warStatus,
+	declareWar
 } from '../business/clanWar.js';
 
 const routes: Router = Router();
@@ -116,22 +116,18 @@ routes.post(
 	}
 );
 
-routes.delete(
-	`${commonPath}/:warId`,
-	[param('warId').exists().toInt().isNumeric()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			const response = await forfeitWar(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
+routes.delete(`${commonPath}/:warId`, [param('warId').exists().isUUID()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
 	}
-);
+
+	try {
+		const response = await forfeitWar(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 routes.put(
 	`${commonPath}/dinoz/:dinozId`,

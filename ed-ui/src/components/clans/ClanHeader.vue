@@ -38,7 +38,7 @@
 				}"
 			>
 				<img :src="getImgURL('icons', 'small_reput')" alt="reputation" />
-				{{ clanStore.getClan?.clanWarRanking[0].reputation }}
+				{{ Math.round(clanStore.getClan?.clanWarRanking[0].reputation) }}
 			</div>
 			<div
 				class="top-info-element"

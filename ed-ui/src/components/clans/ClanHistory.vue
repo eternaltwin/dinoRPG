@@ -63,17 +63,21 @@ export default defineComponent({
 			return new Date(date).toLocaleString('fr-FR');
 		},
 		GetHistoryMessageFromType(type: ClanHistoryType, message: string) {
+			let formated;
 			switch (type) {
 				case ClanHistoryType.WAR_ATTACKED:
 				case ClanHistoryType.WAR_START:
 				case ClanHistoryType.WAR_FORFEIT:
-					return this.$t('clanHistory.type.' + type, { name: message });
-				case ClanHistoryType.WAR_LOSE:
-				case ClanHistoryType.WAR_DEFENDED:
-					return this.$t('clanHistory.type.' + type, { points: message });
 				case ClanHistoryType.WAR_PLAYER_ATTACKED:
 				case ClanHistoryType.WAR_PLAYER_ATTACK:
-					return this.$t('clanHistory.type.' + type, { ...JSON.parse(message) });
+				case ClanHistoryType.WAR_LOSE:
+				case ClanHistoryType.WAR_DEFENDED:
+					if (message.length < 1) {
+						formated = {};
+					} else {
+						formated = JSON.parse(message);
+					}
+					return this.$t('clanHistory.type.' + type, { ...formated });
 				default:
 					return this.$t('clanHistory.type.' + type);
 			}

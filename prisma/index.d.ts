@@ -7442,6 +7442,7 @@ export namespace Prisma {
     pages: number
     ingredients: number
     discussion: number
+    attackingWars: number
     defendingWars: number
     clanWarRanking: number
     players: number
@@ -7456,6 +7457,7 @@ export namespace Prisma {
     pages?: boolean | ClanCountOutputTypeCountPagesArgs
     ingredients?: boolean | ClanCountOutputTypeCountIngredientsArgs
     discussion?: boolean | ClanCountOutputTypeCountDiscussionArgs
+    attackingWars?: boolean | ClanCountOutputTypeCountAttackingWarsArgs
     defendingWars?: boolean | ClanCountOutputTypeCountDefendingWarsArgs
     clanWarRanking?: boolean | ClanCountOutputTypeCountClanWarRankingArgs
     players?: boolean | ClanCountOutputTypeCountPlayersArgs
@@ -7514,6 +7516,13 @@ export namespace Prisma {
    */
   export type ClanCountOutputTypeCountDiscussionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ClanMessageWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountAttackingWarsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanWarWhereInput
   }
 
   /**
@@ -53296,7 +53305,7 @@ export namespace Prisma {
     pages?: boolean | Clan$pagesArgs<ExtArgs>
     ingredients?: boolean | Clan$ingredientsArgs<ExtArgs>
     discussion?: boolean | Clan$discussionArgs<ExtArgs>
-    attackingWar?: boolean | Clan$attackingWarArgs<ExtArgs>
+    attackingWars?: boolean | Clan$attackingWarsArgs<ExtArgs>
     defendingWars?: boolean | Clan$defendingWarsArgs<ExtArgs>
     clanWarRanking?: boolean | Clan$clanWarRankingArgs<ExtArgs>
     players?: boolean | Clan$playersArgs<ExtArgs>
@@ -53347,7 +53356,7 @@ export namespace Prisma {
     pages?: boolean | Clan$pagesArgs<ExtArgs>
     ingredients?: boolean | Clan$ingredientsArgs<ExtArgs>
     discussion?: boolean | Clan$discussionArgs<ExtArgs>
-    attackingWar?: boolean | Clan$attackingWarArgs<ExtArgs>
+    attackingWars?: boolean | Clan$attackingWarsArgs<ExtArgs>
     defendingWars?: boolean | Clan$defendingWarsArgs<ExtArgs>
     clanWarRanking?: boolean | Clan$clanWarRankingArgs<ExtArgs>
     players?: boolean | Clan$playersArgs<ExtArgs>
@@ -53373,7 +53382,7 @@ export namespace Prisma {
       pages: Prisma.$ClanPagePayload<ExtArgs>[]
       ingredients: Prisma.$ClanIngredientPayload<ExtArgs>[]
       discussion: Prisma.$ClanMessagePayload<ExtArgs>[]
-      attackingWar: Prisma.$ClanWarPayload<ExtArgs> | null
+      attackingWars: Prisma.$ClanWarPayload<ExtArgs>[]
       defendingWars: Prisma.$ClanWarPayload<ExtArgs>[]
       clanWarRanking: Prisma.$ClanWarRankingPayload<ExtArgs>[]
       players: Prisma.$PlayerPayload<ExtArgs>[]
@@ -53790,7 +53799,7 @@ export namespace Prisma {
     pages<T extends Clan$pagesArgs<ExtArgs> = {}>(args?: Subset<T, Clan$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ingredients<T extends Clan$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     discussion<T extends Clan$discussionArgs<ExtArgs> = {}>(args?: Subset<T, Clan$discussionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    attackingWar<T extends Clan$attackingWarArgs<ExtArgs> = {}>(args?: Subset<T, Clan$attackingWarArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    attackingWars<T extends Clan$attackingWarsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$attackingWarsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     defendingWars<T extends Clan$defendingWarsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$defendingWarsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     clanWarRanking<T extends Clan$clanWarRankingArgs<ExtArgs> = {}>(args?: Subset<T, Clan$clanWarRankingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarRankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     players<T extends Clan$playersArgs<ExtArgs> = {}>(args?: Subset<T, Clan$playersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -54400,9 +54409,9 @@ export namespace Prisma {
   }
 
   /**
-   * Clan.attackingWar
+   * Clan.attackingWars
    */
-  export type Clan$attackingWarArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Clan$attackingWarsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ClanWar
      */
@@ -54416,6 +54425,11 @@ export namespace Prisma {
      */
     include?: ClanWarInclude<ExtArgs> | null
     where?: ClanWarWhereInput
+    orderBy?: ClanWarOrderByWithRelationInput | ClanWarOrderByWithRelationInput[]
+    cursor?: ClanWarWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanWarScalarFieldEnum | ClanWarScalarFieldEnum[]
   }
 
   /**
@@ -85583,7 +85597,7 @@ export namespace Prisma {
     pages?: ClanPageListRelationFilter
     ingredients?: ClanIngredientListRelationFilter
     discussion?: ClanMessageListRelationFilter
-    attackingWar?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
+    attackingWars?: ClanWarListRelationFilter
     defendingWars?: ClanWarListRelationFilter
     clanWarRanking?: ClanWarRankingListRelationFilter
     players?: PlayerListRelationFilter
@@ -85607,7 +85621,7 @@ export namespace Prisma {
     pages?: ClanPageOrderByRelationAggregateInput
     ingredients?: ClanIngredientOrderByRelationAggregateInput
     discussion?: ClanMessageOrderByRelationAggregateInput
-    attackingWar?: ClanWarOrderByWithRelationInput
+    attackingWars?: ClanWarOrderByRelationAggregateInput
     defendingWars?: ClanWarOrderByRelationAggregateInput
     clanWarRanking?: ClanWarRankingOrderByRelationAggregateInput
     players?: PlayerOrderByRelationAggregateInput
@@ -85634,7 +85648,7 @@ export namespace Prisma {
     pages?: ClanPageListRelationFilter
     ingredients?: ClanIngredientListRelationFilter
     discussion?: ClanMessageListRelationFilter
-    attackingWar?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
+    attackingWars?: ClanWarListRelationFilter
     defendingWars?: ClanWarListRelationFilter
     clanWarRanking?: ClanWarRankingListRelationFilter
     players?: PlayerListRelationFilter
@@ -85825,12 +85839,12 @@ export namespace Prisma {
 
   export type ClanWarWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    attackerClanId?: number
-    defenderClanId?: number
     AND?: ClanWarWhereInput | ClanWarWhereInput[]
     OR?: ClanWarWhereInput[]
     NOT?: ClanWarWhereInput | ClanWarWhereInput[]
     eventId?: UuidFilter<"ClanWar"> | string
+    attackerClanId?: IntFilter<"ClanWar"> | number
+    defenderClanId?: IntFilter<"ClanWar"> | number
     startedAt?: DateTimeFilter<"ClanWar"> | Date | string
     endsAt?: DateTimeFilter<"ClanWar"> | Date | string
     isCastleDestroyed?: BoolFilter<"ClanWar"> | boolean
@@ -85839,7 +85853,7 @@ export namespace Prisma {
     attacker?: XOR<ClanScalarRelationFilter, ClanWhereInput>
     defender?: XOR<ClanScalarRelationFilter, ClanWhereInput>
     winner?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
-  }, "id" | "attackerClanId" | "defenderClanId">
+  }, "id">
 
   export type ClanWarOrderByWithAggregationInput = {
     id?: SortOrder
@@ -89964,7 +89978,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -89987,7 +90001,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -90009,7 +90023,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -90032,7 +90046,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -90181,7 +90195,7 @@ export namespace Prisma {
     endsAt: Date | string
     isCastleDestroyed?: boolean
     event: ClanEventCreateNestedOneWithoutClanWarsInput
-    attacker: ClanCreateNestedOneWithoutAttackingWarInput
+    attacker: ClanCreateNestedOneWithoutAttackingWarsInput
     defender: ClanCreateNestedOneWithoutDefendingWarsInput
     winner?: ClanCreateNestedOneWithoutWarWonInput
   }
@@ -90203,7 +90217,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
     event?: ClanEventUpdateOneRequiredWithoutClanWarsNestedInput
-    attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
+    attacker?: ClanUpdateOneRequiredWithoutAttackingWarsNestedInput
     defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
     winner?: ClanUpdateOneWithoutWarWonNestedInput
   }
@@ -94355,11 +94369,6 @@ export namespace Prisma {
     every?: ClanIngredientWhereInput
     some?: ClanIngredientWhereInput
     none?: ClanIngredientWhereInput
-  }
-
-  export type ClanWarNullableScalarRelationFilter = {
-    is?: ClanWarWhereInput | null
-    isNot?: ClanWarWhereInput | null
   }
 
   export type ClanWarListRelationFilter = {
@@ -99273,10 +99282,11 @@ export namespace Prisma {
     connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
   }
 
-  export type ClanWarCreateNestedOneWithoutAttackerInput = {
-    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
-    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput
-    connect?: ClanWarWhereUniqueInput
+  export type ClanWarCreateNestedManyWithoutAttackerInput = {
+    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput> | ClanWarCreateWithoutAttackerInput[] | ClanWarUncheckedCreateWithoutAttackerInput[]
+    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput | ClanWarCreateOrConnectWithoutAttackerInput[]
+    createMany?: ClanWarCreateManyAttackerInputEnvelope
+    connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
   }
 
   export type ClanWarCreateNestedManyWithoutDefenderInput = {
@@ -99362,10 +99372,11 @@ export namespace Prisma {
     connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
   }
 
-  export type ClanWarUncheckedCreateNestedOneWithoutAttackerInput = {
-    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
-    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput
-    connect?: ClanWarWhereUniqueInput
+  export type ClanWarUncheckedCreateNestedManyWithoutAttackerInput = {
+    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput> | ClanWarCreateWithoutAttackerInput[] | ClanWarUncheckedCreateWithoutAttackerInput[]
+    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput | ClanWarCreateOrConnectWithoutAttackerInput[]
+    createMany?: ClanWarCreateManyAttackerInputEnvelope
+    connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
   }
 
   export type ClanWarUncheckedCreateNestedManyWithoutDefenderInput = {
@@ -99510,14 +99521,18 @@ export namespace Prisma {
     deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
   }
 
-  export type ClanWarUpdateOneWithoutAttackerNestedInput = {
-    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
-    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput
-    upsert?: ClanWarUpsertWithoutAttackerInput
-    disconnect?: ClanWarWhereInput | boolean
-    delete?: ClanWarWhereInput | boolean
-    connect?: ClanWarWhereUniqueInput
-    update?: XOR<XOR<ClanWarUpdateToOneWithWhereWithoutAttackerInput, ClanWarUpdateWithoutAttackerInput>, ClanWarUncheckedUpdateWithoutAttackerInput>
+  export type ClanWarUpdateManyWithoutAttackerNestedInput = {
+    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput> | ClanWarCreateWithoutAttackerInput[] | ClanWarUncheckedCreateWithoutAttackerInput[]
+    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput | ClanWarCreateOrConnectWithoutAttackerInput[]
+    upsert?: ClanWarUpsertWithWhereUniqueWithoutAttackerInput | ClanWarUpsertWithWhereUniqueWithoutAttackerInput[]
+    createMany?: ClanWarCreateManyAttackerInputEnvelope
+    set?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    disconnect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    delete?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    update?: ClanWarUpdateWithWhereUniqueWithoutAttackerInput | ClanWarUpdateWithWhereUniqueWithoutAttackerInput[]
+    updateMany?: ClanWarUpdateManyWithWhereWithoutAttackerInput | ClanWarUpdateManyWithWhereWithoutAttackerInput[]
+    deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
   }
 
   export type ClanWarUpdateManyWithoutDefenderNestedInput = {
@@ -99684,14 +99699,18 @@ export namespace Prisma {
     deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
   }
 
-  export type ClanWarUncheckedUpdateOneWithoutAttackerNestedInput = {
-    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
-    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput
-    upsert?: ClanWarUpsertWithoutAttackerInput
-    disconnect?: ClanWarWhereInput | boolean
-    delete?: ClanWarWhereInput | boolean
-    connect?: ClanWarWhereUniqueInput
-    update?: XOR<XOR<ClanWarUpdateToOneWithWhereWithoutAttackerInput, ClanWarUpdateWithoutAttackerInput>, ClanWarUncheckedUpdateWithoutAttackerInput>
+  export type ClanWarUncheckedUpdateManyWithoutAttackerNestedInput = {
+    create?: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput> | ClanWarCreateWithoutAttackerInput[] | ClanWarUncheckedCreateWithoutAttackerInput[]
+    connectOrCreate?: ClanWarCreateOrConnectWithoutAttackerInput | ClanWarCreateOrConnectWithoutAttackerInput[]
+    upsert?: ClanWarUpsertWithWhereUniqueWithoutAttackerInput | ClanWarUpsertWithWhereUniqueWithoutAttackerInput[]
+    createMany?: ClanWarCreateManyAttackerInputEnvelope
+    set?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    disconnect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    delete?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+    update?: ClanWarUpdateWithWhereUniqueWithoutAttackerInput | ClanWarUpdateWithWhereUniqueWithoutAttackerInput[]
+    updateMany?: ClanWarUpdateManyWithWhereWithoutAttackerInput | ClanWarUpdateManyWithWhereWithoutAttackerInput[]
+    deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
   }
 
   export type ClanWarUncheckedUpdateManyWithoutDefenderNestedInput = {
@@ -99863,9 +99882,9 @@ export namespace Prisma {
     connect?: ClanEventWhereUniqueInput
   }
 
-  export type ClanCreateNestedOneWithoutAttackingWarInput = {
-    create?: XOR<ClanCreateWithoutAttackingWarInput, ClanUncheckedCreateWithoutAttackingWarInput>
-    connectOrCreate?: ClanCreateOrConnectWithoutAttackingWarInput
+  export type ClanCreateNestedOneWithoutAttackingWarsInput = {
+    create?: XOR<ClanCreateWithoutAttackingWarsInput, ClanUncheckedCreateWithoutAttackingWarsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutAttackingWarsInput
     connect?: ClanWhereUniqueInput
   }
 
@@ -99889,12 +99908,12 @@ export namespace Prisma {
     update?: XOR<XOR<ClanEventUpdateToOneWithWhereWithoutClanWarsInput, ClanEventUpdateWithoutClanWarsInput>, ClanEventUncheckedUpdateWithoutClanWarsInput>
   }
 
-  export type ClanUpdateOneRequiredWithoutAttackingWarNestedInput = {
-    create?: XOR<ClanCreateWithoutAttackingWarInput, ClanUncheckedCreateWithoutAttackingWarInput>
-    connectOrCreate?: ClanCreateOrConnectWithoutAttackingWarInput
-    upsert?: ClanUpsertWithoutAttackingWarInput
+  export type ClanUpdateOneRequiredWithoutAttackingWarsNestedInput = {
+    create?: XOR<ClanCreateWithoutAttackingWarsInput, ClanUncheckedCreateWithoutAttackingWarsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutAttackingWarsInput
+    upsert?: ClanUpsertWithoutAttackingWarsInput
     connect?: ClanWhereUniqueInput
-    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutAttackingWarInput, ClanUpdateWithoutAttackingWarInput>, ClanUncheckedUpdateWithoutAttackingWarInput>
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutAttackingWarsInput, ClanUpdateWithoutAttackingWarsInput>, ClanUncheckedUpdateWithoutAttackingWarsInput>
   }
 
   export type ClanUpdateOneRequiredWithoutDefendingWarsNestedInput = {
@@ -107173,7 +107192,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
@@ -107195,7 +107214,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
@@ -107220,7 +107239,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -107242,7 +107261,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -108389,7 +108408,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
@@ -108411,7 +108430,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
@@ -108442,7 +108461,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -108464,7 +108483,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -115884,13 +115903,18 @@ export namespace Prisma {
     create: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
   }
 
+  export type ClanWarCreateManyAttackerInputEnvelope = {
+    data: ClanWarCreateManyAttackerInput | ClanWarCreateManyAttackerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanWarCreateWithoutDefenderInput = {
     id?: string
     startedAt?: Date | string
     endsAt: Date | string
     isCastleDestroyed?: boolean
     event: ClanEventCreateNestedOneWithoutClanWarsInput
-    attacker: ClanCreateNestedOneWithoutAttackingWarInput
+    attacker: ClanCreateNestedOneWithoutAttackingWarsInput
     winner?: ClanCreateNestedOneWithoutWarWonInput
   }
 
@@ -116132,7 +116156,7 @@ export namespace Prisma {
     endsAt: Date | string
     isCastleDestroyed?: boolean
     event: ClanEventCreateNestedOneWithoutClanWarsInput
-    attacker: ClanCreateNestedOneWithoutAttackingWarInput
+    attacker: ClanCreateNestedOneWithoutAttackingWarsInput
     defender: ClanCreateNestedOneWithoutDefendingWarsInput
   }
 
@@ -116472,35 +116496,34 @@ export namespace Prisma {
     data: XOR<ClanMessageUpdateManyMutationInput, ClanMessageUncheckedUpdateManyWithoutClanInput>
   }
 
-  export type ClanWarUpsertWithoutAttackerInput = {
+  export type ClanWarUpsertWithWhereUniqueWithoutAttackerInput = {
+    where: ClanWarWhereUniqueInput
     update: XOR<ClanWarUpdateWithoutAttackerInput, ClanWarUncheckedUpdateWithoutAttackerInput>
     create: XOR<ClanWarCreateWithoutAttackerInput, ClanWarUncheckedCreateWithoutAttackerInput>
-    where?: ClanWarWhereInput
   }
 
-  export type ClanWarUpdateToOneWithWhereWithoutAttackerInput = {
-    where?: ClanWarWhereInput
+  export type ClanWarUpdateWithWhereUniqueWithoutAttackerInput = {
+    where: ClanWarWhereUniqueInput
     data: XOR<ClanWarUpdateWithoutAttackerInput, ClanWarUncheckedUpdateWithoutAttackerInput>
   }
 
-  export type ClanWarUpdateWithoutAttackerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
-    event?: ClanEventUpdateOneRequiredWithoutClanWarsNestedInput
-    defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
-    winner?: ClanUpdateOneWithoutWarWonNestedInput
+  export type ClanWarUpdateManyWithWhereWithoutAttackerInput = {
+    where: ClanWarScalarWhereInput
+    data: XOR<ClanWarUpdateManyMutationInput, ClanWarUncheckedUpdateManyWithoutAttackerInput>
   }
 
-  export type ClanWarUncheckedUpdateWithoutAttackerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    eventId?: StringFieldUpdateOperationsInput | string
-    defenderClanId?: IntFieldUpdateOperationsInput | number
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
-    winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
+  export type ClanWarScalarWhereInput = {
+    AND?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
+    OR?: ClanWarScalarWhereInput[]
+    NOT?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
+    id?: UuidFilter<"ClanWar"> | string
+    eventId?: UuidFilter<"ClanWar"> | string
+    attackerClanId?: IntFilter<"ClanWar"> | number
+    defenderClanId?: IntFilter<"ClanWar"> | number
+    startedAt?: DateTimeFilter<"ClanWar"> | Date | string
+    endsAt?: DateTimeFilter<"ClanWar"> | Date | string
+    isCastleDestroyed?: BoolFilter<"ClanWar"> | boolean
+    winnerClanId?: IntNullableFilter<"ClanWar"> | number | null
   }
 
   export type ClanWarUpsertWithWhereUniqueWithoutDefenderInput = {
@@ -116517,20 +116540,6 @@ export namespace Prisma {
   export type ClanWarUpdateManyWithWhereWithoutDefenderInput = {
     where: ClanWarScalarWhereInput
     data: XOR<ClanWarUpdateManyMutationInput, ClanWarUncheckedUpdateManyWithoutDefenderInput>
-  }
-
-  export type ClanWarScalarWhereInput = {
-    AND?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
-    OR?: ClanWarScalarWhereInput[]
-    NOT?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
-    id?: UuidFilter<"ClanWar"> | string
-    eventId?: UuidFilter<"ClanWar"> | string
-    attackerClanId?: IntFilter<"ClanWar"> | number
-    defenderClanId?: IntFilter<"ClanWar"> | number
-    startedAt?: DateTimeFilter<"ClanWar"> | Date | string
-    endsAt?: DateTimeFilter<"ClanWar"> | Date | string
-    isCastleDestroyed?: BoolFilter<"ClanWar"> | boolean
-    winnerClanId?: IntNullableFilter<"ClanWar"> | number | null
   }
 
   export type ClanWarRankingUpsertWithWhereUniqueWithoutClanInput = {
@@ -116661,7 +116670,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -116683,7 +116692,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -116827,7 +116836,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -116849,7 +116858,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -116886,7 +116895,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -116908,7 +116917,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -117086,7 +117095,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -117108,7 +117117,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -117286,7 +117295,7 @@ export namespace Prisma {
     create: XOR<ClanEventCreateWithoutClanWarsInput, ClanEventUncheckedCreateWithoutClanWarsInput>
   }
 
-  export type ClanCreateWithoutAttackingWarInput = {
+  export type ClanCreateWithoutAttackingWarsInput = {
     name: string
     treasureValue?: number
     creationDate?: Date | string
@@ -117307,7 +117316,7 @@ export namespace Prisma {
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
   }
 
-  export type ClanUncheckedCreateWithoutAttackingWarInput = {
+  export type ClanUncheckedCreateWithoutAttackingWarsInput = {
     id?: number
     name: string
     treasureValue?: number
@@ -117329,9 +117338,9 @@ export namespace Prisma {
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
   }
 
-  export type ClanCreateOrConnectWithoutAttackingWarInput = {
+  export type ClanCreateOrConnectWithoutAttackingWarsInput = {
     where: ClanWhereUniqueInput
-    create: XOR<ClanCreateWithoutAttackingWarInput, ClanUncheckedCreateWithoutAttackingWarInput>
+    create: XOR<ClanCreateWithoutAttackingWarsInput, ClanUncheckedCreateWithoutAttackingWarsInput>
   }
 
   export type ClanCreateWithoutDefendingWarsInput = {
@@ -117348,7 +117357,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
@@ -117370,7 +117379,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
@@ -117396,7 +117405,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -117418,7 +117427,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -117459,18 +117468,18 @@ export namespace Prisma {
     clanWarRankings?: ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput
   }
 
-  export type ClanUpsertWithoutAttackingWarInput = {
-    update: XOR<ClanUpdateWithoutAttackingWarInput, ClanUncheckedUpdateWithoutAttackingWarInput>
-    create: XOR<ClanCreateWithoutAttackingWarInput, ClanUncheckedCreateWithoutAttackingWarInput>
+  export type ClanUpsertWithoutAttackingWarsInput = {
+    update: XOR<ClanUpdateWithoutAttackingWarsInput, ClanUncheckedUpdateWithoutAttackingWarsInput>
+    create: XOR<ClanCreateWithoutAttackingWarsInput, ClanUncheckedCreateWithoutAttackingWarsInput>
     where?: ClanWhereInput
   }
 
-  export type ClanUpdateToOneWithWhereWithoutAttackingWarInput = {
+  export type ClanUpdateToOneWithWhereWithoutAttackingWarsInput = {
     where?: ClanWhereInput
-    data: XOR<ClanUpdateWithoutAttackingWarInput, ClanUncheckedUpdateWithoutAttackingWarInput>
+    data: XOR<ClanUpdateWithoutAttackingWarsInput, ClanUncheckedUpdateWithoutAttackingWarsInput>
   }
 
-  export type ClanUpdateWithoutAttackingWarInput = {
+  export type ClanUpdateWithoutAttackingWarsInput = {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -117491,7 +117500,7 @@ export namespace Prisma {
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
   }
 
-  export type ClanUncheckedUpdateWithoutAttackingWarInput = {
+  export type ClanUncheckedUpdateWithoutAttackingWarsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
@@ -117538,7 +117547,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
@@ -117560,7 +117569,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
@@ -117592,7 +117601,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -117614,7 +117623,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -117635,7 +117644,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
@@ -117657,7 +117666,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
@@ -117717,7 +117726,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
@@ -117739,7 +117748,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
@@ -117811,7 +117820,7 @@ export namespace Prisma {
     startedAt?: Date | string
     endsAt: Date | string
     isCastleDestroyed?: boolean
-    attacker: ClanCreateNestedOneWithoutAttackingWarInput
+    attacker: ClanCreateNestedOneWithoutAttackingWarsInput
     defender: ClanCreateNestedOneWithoutDefendingWarsInput
     winner?: ClanCreateNestedOneWithoutWarWonInput
   }
@@ -117881,7 +117890,7 @@ export namespace Prisma {
     members?: ClanMemberCreateNestedManyWithoutClanInput
     pages?: ClanPageCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -117903,7 +117912,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -117940,7 +117949,7 @@ export namespace Prisma {
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -117962,7 +117971,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -118124,7 +118133,7 @@ export namespace Prisma {
     members?: ClanMemberCreateNestedManyWithoutClanInput
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -118146,7 +118155,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -118330,7 +118339,7 @@ export namespace Prisma {
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -118352,7 +118361,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -118514,7 +118523,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -118536,7 +118545,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -118720,7 +118729,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -118742,7 +118751,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -118763,7 +118772,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -118785,7 +118794,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -118963,7 +118972,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -118985,7 +118994,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -119153,7 +119162,7 @@ export namespace Prisma {
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -119175,7 +119184,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -119212,7 +119221,7 @@ export namespace Prisma {
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -119234,7 +119243,7 @@ export namespace Prisma {
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -119781,7 +119790,7 @@ export namespace Prisma {
     pages?: ClanPageCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
@@ -119803,7 +119812,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
-    attackingWar?: ClanWarUncheckedCreateNestedOneWithoutAttackerInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
     defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
@@ -120389,7 +120398,7 @@ export namespace Prisma {
     pages?: ClanPageUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
@@ -120411,7 +120420,7 @@ export namespace Prisma {
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
-    attackingWar?: ClanWarUncheckedUpdateOneWithoutAttackerNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
     defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
@@ -128154,6 +128163,16 @@ export namespace Prisma {
     authorName: string
   }
 
+  export type ClanWarCreateManyAttackerInput = {
+    id?: string
+    eventId: string
+    defenderClanId: number
+    startedAt?: Date | string
+    endsAt: Date | string
+    isCastleDestroyed?: boolean
+    winnerClanId?: number | null
+  }
+
   export type ClanWarCreateManyDefenderInput = {
     id?: string
     eventId: string
@@ -128358,13 +128377,43 @@ export namespace Prisma {
     authorName?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ClanWarUpdateWithoutAttackerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
+    event?: ClanEventUpdateOneRequiredWithoutClanWarsNestedInput
+    defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
+    winner?: ClanUpdateOneWithoutWarWonNestedInput
+  }
+
+  export type ClanWarUncheckedUpdateWithoutAttackerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    defenderClanId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
+    winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ClanWarUncheckedUpdateManyWithoutAttackerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    defenderClanId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
+    winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type ClanWarUpdateWithoutDefenderInput = {
     id?: StringFieldUpdateOperationsInput | string
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
     event?: ClanEventUpdateOneRequiredWithoutClanWarsNestedInput
-    attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
+    attacker?: ClanUpdateOneRequiredWithoutAttackingWarsNestedInput
     winner?: ClanUpdateOneWithoutWarWonNestedInput
   }
 
@@ -128631,7 +128680,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
     event?: ClanEventUpdateOneRequiredWithoutClanWarsNestedInput
-    attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
+    attacker?: ClanUpdateOneRequiredWithoutAttackingWarsNestedInput
     defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
   }
 
@@ -128876,7 +128925,7 @@ export namespace Prisma {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
-    attacker?: ClanUpdateOneRequiredWithoutAttackingWarNestedInput
+    attacker?: ClanUpdateOneRequiredWithoutAttackingWarsNestedInput
     defender?: ClanUpdateOneRequiredWithoutDefendingWarsNestedInput
     winner?: ClanUpdateOneWithoutWarWonNestedInput
   }
