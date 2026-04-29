@@ -642,7 +642,7 @@ class TournamentManager {
 
 		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(1, tournamentFormat.teamRace.length);
+		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(1, Math.min(tournamentFormat.teamRace.length, 3));
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = 1;
 		const levelLimit = 50;
