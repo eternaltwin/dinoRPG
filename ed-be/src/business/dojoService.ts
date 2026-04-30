@@ -56,6 +56,7 @@ import translate from '../utils/translate.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
+import { getLatestTournament, incrementCashPrice } from '../dao/tournamentDao.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -160,8 +161,14 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 	if (leftPlayer.money < fightCost) {
 		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
 	}
-	//Pay the fees
+
+	// Pay the fees
 	await removeMoney(authed.id, fightCost);
+	// Add the fees to the tournament cash price if one is ongoing
+	const tournament = await getLatestTournament();
+	if (tournament) {
+		await incrementCashPrice(tournament.id, fightCost);
+	}
 
 	const rightTeam = await getDinozForDojoFight(right);
 	const leftTeam = await getDinozForDojoFight(left);

@@ -901,13 +901,14 @@ const attackSingleOpponent = (
 	target?: DetailedFighter,
 	goto?: boolean
 ) => {
+	// Unless specified, pick random opponent by default
+	// Do this first before the steps manipulations are done in case of error
+	const opponent = target ?? getRandomOpponent(fightData, fighter);
+	let realOpponent = opponent;
+
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
 	fightData.steps = [];
-
-	// Unless specified, pick random opponent by default
-	const opponent = target ?? getRandomOpponent(fightData, fighter);
-	let realOpponent = opponent;
 
 	if (goto) {
 		// Add moveTo step for attacker
@@ -968,13 +969,14 @@ const attackAllOpponents = (
 	opponents?: DetailedFighter[],
 	count?: number
 ) => {
+	// Attack each opponent
+	// Do this first before the steps manipulations are done in case of error
+	const targets = opponents ?? getOpponents(fightData, fighter);
+
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
 	let hit_steps: FightStep[][] = [];
 	fightData.steps = [];
-
-	// Attack each opponent
-	const targets = opponents ?? getOpponents(fightData, fighter);
 
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
 	if (count) {
@@ -5224,7 +5226,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 
 		// Return if a winner has been determined
-		if (fightData.outcome) {
+		if (fightData.outcome !== null) {
 			return;
 		}
 
@@ -5288,7 +5290,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 		checkDeaths(fightData);
-		if (fightData.outcome) {
+		if (fightData.outcome !== null) {
 			return;
 		}
 	}

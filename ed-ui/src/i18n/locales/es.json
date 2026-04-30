@@ -84,12 +84,15 @@
 			"stats": "Estadísticas en vivo",
 			"skipFight": "Mostrar directamente el resultado del combate",
 			"skipLevel": "Saltar la animación de subida de nivel",
+			"archivedSiteId": "Site historique",
+			"shareArchivedData": "Partager ses stats Twinoid",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
 		}
 	},
 	"toast": {
+		"deletedPlayer": "Le joueur a supprimé son compte",
 		"noFBTournament": "Todavía no hay fase de clasificación para el torneo de Fuerzabruta.",
 		"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
 		"dinozAlreadySelling": "Tu Dino ya está a la venta.",
@@ -211,6 +214,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Busca un monstruo para combatir en este lugar.",
 			"follow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates.",
@@ -306,6 +310,7 @@
 		"actions": "Acciones",
 		"full": "Almacén lleno",
 		"sortBy": "Ordenar por",
+		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 		"sort": {
 			"default": "Por defecto",
 			"nameAsc": "Nombre (A → Z)",
@@ -2785,8 +2790,8 @@
 			"fflow": "El rosal favorito de Doña Seyche está en mal estado debido a la ola de calor. ¿Podrías traer agua pura de la fuente y llevársela?",
 			"kbook": "Nuevamente recibí una solicitud de la encantadora Doña Seyche. Le gustaría consultar un recetario que está en la Universidad, ¿puedes ir a buscarlo por ella?",
 			"msg": "Tengo muchas ganas de escribir una carta a una persona muy importante para mí. Desafortunadamente mis Sellos han sido robados por unos Gupiones ladronzuelos. Tienen por costumbre frecuentar la Fuente de la Juventud. Si los matas, te dejaré usar algunos de mis Sellos. ¿Qué te parece?",
-			"lettre": "Uhm... Esta vez trabajarás para mi, Papy José... Necesito que entregues URGENTEMENTE esta carta a cierta persona en Dinoville. ¡Rápido!",
-			"kilglu": "Un extraño monstruo ha aparecido en el Reino de Dinoville. Es bastante duro y puede hacer mucho daño durante una pelea. ¿Podrías matar a uno y traérmelo para que pueda estudiarlo?",
+			"lettre": "Uhm... Esta vez la misión te la encomiendo yo mismo... Necesito tu ayuda para que me lleves URGENTEMENTE esta carta a una persona en Dinovilla. ¡Tienes que ser rápido!",
+			"kilglu": "Un extraño monstruo ha aparecido últimamente en el Reino de Dinovilla. Es muy tenaz y puede infligir mucho daño en un combate. ¿Podrías matar uno y traérmelo para que pueda estudiarlo?",
 			"kilgnt": "No sé si te diste cuenta, ¡pero el Reino de Dinovilla está siendo invadido por enormes gigantes verdes que no parecen comer nada más que vegetales! ¿Puedes exterminar a una docena lo antes posible? Esta es una orden del Rey, ¡así que debes actuar rápido!",
 			"kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Cocdurs rápidamente? ¡Serás bien recompensado!",
 			"kilpir": "Pronto es el cumpleaños de la pequeña Sophie de la isla de Waikiki. Su plato favorito son las Pirañas del Pantano Pegajoso. ¿Puedes traerle algunas por mí?",
@@ -3537,9 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "Estadísticas de DinoRPG",
+			"archivedTitle": "Statistiques Archivées Twinoid",
 			"points": "Puntos",
 			"linkStats": "Estadísticas",
 			"linkGains": "Ganancias",
+			"seeArchivedStats": "Voir les stats archivées",
+			"seeStats": "Ver estadísticas",
 			"help": {
 				"question": "¿Qué significan estos contadores?",
 				"response": "Estos contadores aumentan al realizar determinadas acciones en DinoRPG. && **Ganas íconos, títulos y puntos al alcanzar ciertos niveles de contador.** && **¡Los contadores dorados** representan ganancias raras o difíciles de obtener!"
@@ -3553,9 +3561,10 @@
 		"completion": "Completado",
 		"rewards": "Recompensas Épicas",
 		"level": "Nivel",
-		"edit": "Modificar",
+		"editDescription": "Editar mi descripción",
+		"save": "Sauvegarder ma description",
 		"quest": "Mis misiones",
-		"editAccount": "Editar mi cuenta",
+		"editAccount": "Modifica tus detalles",
 		"import": "Importar cuenta",
 		"stat": {
 			"name": "Estadísticas",
@@ -4335,6 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "El combate durará como máximo {time} unidades de tiempo.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** ¡ha llegado!",
 			"resist": "**{dinoz}** resistió y redujo el daño.",
 			"hit": "**{fighter}** realizó un asalto {elements} e infligió **{damage}** de daño a **{target}**.",
@@ -4608,7 +4618,7 @@
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"soon": "Pronto",
-		"seeFight": "Ver el combate de {player}",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
 			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",
@@ -5116,6 +5126,7 @@
 		"korgon_end": "Has capturado un korgón bien grasiento... ¡esperemos que no fuera la cena de ningún otro!"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Reportar contenido inapropiado",
 		"player": "¿Estás seguro de que quieres reportar este jugador a la moderación?",
 		"specify": "Por favor especifique el motivo de su queja",
@@ -5124,7 +5135,13 @@
 			"avatar": "Avatar inapropiado",
 			"accountName": "Nombre de jugador inapropiado",
 			"dinozName": "Nombre de dino inapropiado",
-			"multi": "Este jugador utiliza varias cuentas"
+			"multi": "Este jugador utiliza varias cuentas",
+			"other": "Otro",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Otro",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "Por procesar",
@@ -5178,7 +5195,12 @@
 			"customText": "tu descripción personalizada",
 			"multi": "una sospecha de multi-cuentas",
 			"dinozName": "un nombre de Dino ofensivo",
-			"avatar": "un avatar ofensivo"
+			"avatar": "un avatar ofensivo",
+			"other": "otro motivo",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan"
 		},
 		"offerExpired": "Su oferta no encontró comprador.",
 		"offerEnded": "Tu oferta fue comprada por {value} :ticket:",

@@ -8,6 +8,7 @@ type Events = {
 	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;
+	reportClan: { id: number; name: string } | undefined;
 	messageToPlayer: { name: string; id: string };
 	connected: boolean;
 };

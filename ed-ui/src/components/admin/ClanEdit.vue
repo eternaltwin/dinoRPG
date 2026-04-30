@@ -154,6 +154,14 @@ export default defineComponent({
 			required: false
 		}
 	},
+	async mounted() {
+		const clanId = this.id || this.$route.query.id;
+
+		if (clanId) {
+			this.searchedClanId = Number(clanId);
+			await this.loadClan();
+		}
+	},
 	methods: {
 		async searchClan(query: string) {
 			try {
@@ -164,15 +172,6 @@ export default defineComponent({
 				}));
 			} catch (err) {
 				return [];
-			}
-		},
-
-		async mounted() {
-			const clanId = this.id || this.$route.query.id;
-
-			if (clanId) {
-				this.searchedClanId = Number(clanId);
-				await this.loadClan();
 			}
 		},
 

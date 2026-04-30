@@ -84,12 +84,15 @@
 			"stats": "Live Statistics",
 			"skipFight": "Immediately display fight outcome",
 			"skipLevel": "Skip level up animation",
+			"archivedSiteId": "Historical Site",
+			"shareArchivedData": "Share Twinoid Stats",
 			"connectedPlayers": "Online Players",
 			"totalDinoz": "Total Number of Dinoz",
 			"totalPlayers": "Total Number of Players"
 		}
 	},
 	"toast": {
+		"deletedPlayer": "The player deleted its account",
 		"noFBTournament": "There are no qualifications yet for the BrutForce tournament.",
 		"maxParticipantInThread": "You cannot add more than 9 participants to a conversation.",
 		"dinozAlreadySelling": "Your Dinoz is already on sale.",
@@ -211,6 +214,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
@@ -306,6 +310,7 @@
 		"actions": "Actions",
 		"full": "Stock full",
 		"sortBy": "Sort By",
+		"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
 		"sort": {
 			"default": "By Default",
 			"nameAsc": "Name (A → Z)",
@@ -3537,9 +3542,12 @@
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistics",
+			"archivedTitle": "Twinoid Archived Statistics",
 			"points": "points",
 			"linkStats": "Statistics",
 			"linkGains": "Gains",
+			"seeArchivedStats": "See the Archived Stats",
+			"seeStats": "See the Stats",
 			"help": {
 				"question": "What do those counters mean?",
 				"response": "Those counters increase when certain actions are done on DinoRPG. && **You can earn icons, titles and points by reaching certain thresholds of those.** && The golden counters represent rare rewards or some that are difficult to obtain. "
@@ -3553,9 +3561,10 @@
 		"completion": "Gathering",
 		"rewards": "Epic rewards",
 		"level": "Level",
-		"edit": "Edit",
+		"editDescription": "Modify my Description",
+		"save": "Save my Description",
 		"quest": "My quests",
-		"editAccount": "Edit my account",
+		"editAccount": "Modify my Information",
 		"import": "Import an account",
 		"stat": {
 			"name": "Statistics",
@@ -4335,6 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "The fight will last at maximum {time} units of time.",
+			"timeOut": "The fight ended because it reached its maximum duration.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
 			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
@@ -4608,7 +4618,7 @@
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"soon": "Soon",
-		"seeFight": "See {player}'s fight",
+		"seeFight": "Watch the fight between {playerA} and {playerB}",
 		"deleteTeam": "Delete my team",
 		"timer": {
 			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
@@ -4619,11 +4629,11 @@
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
 		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
-		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash prize is now **{cashPrice}** :gold:.",
-		"finals": "And here are the long-awaited final stages && The cash prize has been set at **{cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
-			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the crash price of the next tournament.",
+			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the cash price of the next tournament.",
 			"friend": "Select here the Dinoz of your clan mates to challenge.",
 			"startFight": "{gold} :gold:",
 			"doubleDinoz": "You cannot have the same Dinoz fight"
@@ -5116,6 +5126,7 @@
 		"korgon_end": "You've captured a fatty Korgon. Let's hope it wasn't someone else's dinner!"
 	},
 	"report": {
+		"clan": "Report this clan",
 		"header": "Report inappropriate content",
 		"player": "Are you certain that you want to report this player to moderators?",
 		"specify": "Please specify the reason for your complaint",
@@ -5124,7 +5135,13 @@
 			"avatar": "Inappropriate avatar",
 			"accountName": "Inappropriate player name",
 			"dinozName": "Inappropriate dinoz name",
-			"multi": "This player has multiple accounts"
+			"multi": "This player has multiple accounts",
+			"other": "Other",
+			"clanBanner": "Inappropriate banner",
+			"clanBehavior": "Unsportsmanlike behavior",
+			"clanPages": "Inappropriate descriptions or pages",
+			"clanOther": "Other",
+			"deleted": "Clan deleted"
 		},
 		"sorted": {
 			"open": "Treat",
@@ -5178,7 +5195,12 @@
 			"customText": "your personalized description",
 			"multi": "a suspicion of multiple accounts",
 			"dinozName": "an offending Dinoz name",
-			"avatar": "an offensive avatar"
+			"avatar": "an offensive avatar",
+			"clanBanner": "the banner of your clan",
+			"clanBehavior": "the unsportsmanlike attitude of your clan",
+			"clanPages": "the pages of your clan",
+			"clanOther": "your clan",
+			"other": "another reason"
 		},
 		"offerExpired": "Your offer did not have a buyer.",
 		"offerEnded": "You sold your offer for {value} :ticket:",

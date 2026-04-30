@@ -43,16 +43,16 @@
 					<span class="name">{{ team.player?.name ?? '???' }}</span>
 
 					<template #content>
-						<h1>{{ team?.dinoz?.name }}</h1>
-						<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+						<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+						<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 					</template>
 				</Tippy>
 				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
 					<span class="name">{{ $t('dojo.soon') }}</span>
 
 					<template #content>
-						<h1>{{ team?.dinoz?.name }}</h1>
-						<p>{{ $t('dojo.seeFight', { player: team?.player?.name }) }}</p>
+						<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
+						<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 					</template>
 				</Tippy>
 			</template>
@@ -145,6 +145,7 @@ export default defineComponent({
 						const d1 = {
 							dinoz: fight.tournamentTeamLeft.dinoz,
 							player: fight.tournamentTeamLeft?.player ?? null,
+							opponent: fight.tournamentTeamRight?.player ?? null,
 							fight: fight.id,
 							won: fight.result,
 							round: fight.metadata.round - (isFinal ? 4 : 0),
@@ -161,6 +162,7 @@ export default defineComponent({
 						const d2 = {
 							dinoz: fight.tournamentTeamRight.dinoz,
 							player: fight.tournamentTeamRight?.player ?? null,
+							opponent: fight.tournamentTeamLeft?.player ?? null,
 							fight: fight.id,
 							won: !fight.result,
 							round: fight.metadata.round - (isFinal ? 4 : 0),
