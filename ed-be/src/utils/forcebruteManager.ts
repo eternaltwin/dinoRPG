@@ -168,6 +168,7 @@ class ForceBruteManager {
 		);
 		team2Dinoz.life = team2Dinoz.maxLife;
 
+		let retry_counter = 0;
 		let fight = calculateFightBetweenPlayers(
 			STANDARD_PVP_RULES,
 			[team1Dinoz],
@@ -177,15 +178,6 @@ class ForceBruteManager {
 			PlaceEnum.DOJO
 		);
 
-		// Determine winning side (true for left, false for right)
-		let winner = false;
-
-		if (fight.outcome === FightOutcome.AttackerWin) {
-			winner = true;
-		}
-
-		// Replay the fight if a tie is determined (up to 5 times)
-		let retry_counter = 0;
 		while (fight.outcome === FightOutcome.Tie && retry_counter < 5) {
 			fight = calculateFightBetweenPlayers(
 				STANDARD_PVP_RULES,
@@ -195,15 +187,11 @@ class ForceBruteManager {
 				false,
 				PlaceEnum.DOJO
 			);
-
-			const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
-			const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
-			if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
-				winner = true;
-			}
-
 			retry_counter++;
 		}
+
+		// Determine winning side (true for left, false for right)
+		let winner = fight.outcome === FightOutcome.AttackerWin;
 
 		if (retry_counter >= 5) {
 			LOGGER.error('Maximum number of retries after ties reached in ForceBruteManager', {

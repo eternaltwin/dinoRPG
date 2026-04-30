@@ -265,13 +265,6 @@ class TournamentManager {
 			retry_counter++;
 		}
 
-		// Determine winning side (true for left, false for right)
-		let winner = false;
-
-		if (fight.outcome === FightOutcome.AttackerWin) {
-			winner = true;
-		}
-
 		if (retry_counter >= 5) {
 			LOGGER.error('Maximum number of retries after ties reached in Tournament Manager', {
 				fightData: fight
