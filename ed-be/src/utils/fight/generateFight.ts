@@ -98,33 +98,6 @@ const orderFighters = (fightData: DetailedFight) => {
 };
 
 /**
- * Implements the timeout outcome policy to update the outcome in case of timeout.
- *
- * @returns FightOutcome
- **/
-function handleTimeoutOutcome(fightData: DetailedFight): void {
-	if (fightData.outcome !== FightOutcome.Timeout) return;
-	switch (fightData.rules.timeoutPolicy) {
-		case TimeoutOutcomePolicy.Timeout:
-			// outcome remains as timeout
-			return;
-		case TimeoutOutcomePolicy.PercentageHealth:
-			// The outcome will be calculated based on the remaining percentage health
-			// (endingHp / startingHp) in case of timeout
-			const left = new Fraction(fightData.stats.attack.endingHp, fightData.stats.attack.startingHp);
-			const right = new Fraction(fightData.stats.defense.endingHp, fightData.stats.defense.startingHp);
-			if (left.equals(right)) fightData.outcome = FightOutcome.Tie;
-			else if (left.gt(right)) fightData.outcome = FightOutcome.AttackerWin;
-			else fightData.outcome = FightOutcome.DefenderWin;
-			return;
-		default:
-			throw new Error(
-				`Timeout policy rule ${TimeoutOutcomePolicy[fightData.rules.timeoutPolicy]} has not been implemented`
-			);
-	}
-}
-
-/**
  * @summary Generate a fight.
  *
  * It is up to the caller to set up properly the teams that will face each other and the rules of the fight.
@@ -515,7 +488,28 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			id: fighter.catchId
 		}));
 
-	handleTimeoutOutcome(fightData);
+	if (fightData.outcome === FightOutcome.Timeout) {
+		// Handle timeouts according to the timeout outcome policy
+		switch (fightData.rules.timeoutPolicy) {
+			case TimeoutOutcomePolicy.Timeout:
+				// outcome remains as timeout
+				break;
+			case TimeoutOutcomePolicy.PercentageHealth:
+				// The outcome will be calculated based on the remaining percentage health
+				// (endingHp / startingHp) in case of timeout
+				const left = new Fraction(fightData.stats.attack.endingHp, fightData.stats.attack.startingHp);
+				const right = new Fraction(fightData.stats.defense.endingHp, fightData.stats.defense.startingHp);
+				if (left.equals(right)) fightData.outcome = FightOutcome.Tie;
+				else if (left.gt(right)) fightData.outcome = FightOutcome.AttackerWin;
+				else fightData.outcome = FightOutcome.DefenderWin;
+				break;
+			default:
+				throw new Error(
+					`Timeout policy rule ${TimeoutOutcomePolicy[fightData.rules.timeoutPolicy]} has not been implemented`
+				);
+		}
+	}
+
 	return {
 		seed: config.seed,
 		outcome: fightData.outcome,
