@@ -23,6 +23,13 @@ export type DinozToGetFighter = Pick<
 	catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
 };
 
+export enum TimeoutOutcomePolicy {
+	// Standard timeout
+	Timeout,
+	// Determine winner by comparing remaining percentage health
+	PercentageHealth
+}
+
 export interface FightRules {
 	castleFight: boolean;
 	canUseCapture: boolean;
@@ -31,6 +38,7 @@ export interface FightRules {
 	canUseEquipment: boolean;
 	// Permanent means non-consumable.
 	canUsePermanentEquipmentOnly: boolean;
+	timeoutPolicy: TimeoutOutcomePolicy;
 }
 
 // Regular fight rules: no castle, no stats, capture enabled, poison enabled, all equipment.
@@ -40,7 +48,8 @@ export const MONSTER_FIGHT_RULES: FightRules = {
 	enableStats: false,
 	poisonEnabled: true,
 	canUseEquipment: true,
-	canUsePermanentEquipmentOnly: false
+	canUsePermanentEquipmentOnly: false,
+	timeoutPolicy: TimeoutOutcomePolicy.Timeout
 };
 
 // Dojo challenge rules: no castle, no capture, stats enabled, poison enabled, only permanent equipment.
@@ -50,7 +59,8 @@ export const DOJO_CHALLENGE_RULES: FightRules = {
 	enableStats: true,
 	poisonEnabled: true,
 	canUseEquipment: true,
-	canUsePermanentEquipmentOnly: true
+	canUsePermanentEquipmentOnly: true,
+	timeoutPolicy: TimeoutOutcomePolicy.PercentageHealth
 };
 
 // Regular PVP fight rules: no castle, no stats, no capture, poison enabled, all equipment.
@@ -60,7 +70,8 @@ export const STANDARD_PVP_RULES: FightRules = {
 	enableStats: false,
 	poisonEnabled: true,
 	canUseEquipment: true,
-	canUsePermanentEquipmentOnly: false
+	canUsePermanentEquipmentOnly: false,
+	timeoutPolicy: TimeoutOutcomePolicy.Timeout
 };
 
 export interface FightConfiguration {

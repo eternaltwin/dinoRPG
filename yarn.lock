@@ -7449,6 +7449,7 @@ __metadata:
     dotenv: "npm:^16.4.5"
     express: "npm:^4.21.2"
     express-validator: "npm:^7.2.0"
+    fraction.js: "npm:^5.3.4"
     i18next: "npm:^23.12.2"
     i18next-fs-backend: "npm:^2.3.1"
     jsonwebtoken: "npm:^9.0.2"
@@ -8923,6 +8924,13 @@ __metadata:
   version: 0.2.0
   resolution: "forwarded@npm:0.2.0"
   checksum: 10/29ba9fd347117144e97cbb8852baae5e8b2acb7d1b591ef85695ed96f5b933b1804a7fac4a15dd09ca7ac7d0cdc104410e8102aae2dd3faa570a797ba07adb81
+  languageName: node
+  linkType: hard
+
+"fraction.js@npm:^5.3.4":
+  version: 5.3.4
+  resolution: "fraction.js@npm:5.3.4"
+  checksum: 10/ef2c4bc81b2484065f8f7e4c2498f3fdfe6d233b8e7c7f75e3683ed10698536129b2c2dbd6c3f788ca4a020ec07116dd909a91036a364c98dc802b5003bfc613
   languageName: node
   linkType: hard
 

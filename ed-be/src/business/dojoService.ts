@@ -335,17 +335,7 @@ export async function fightChallenge(
 
 	// Only defeating the opponent or having more % hp left on timeout give a victory. Defeat, having less % hp on timeout and tie give a defeat.
 
-	// The winner and loser will be calculated based on the remaining hp (%) in case of timeout
-	// That is, the loser will be the one with lowest endingHp / startingHp
-	// To avoid comparing non-integer numbers, instead of comparing
-	// "attack.endingHp / attack.startingHp" with "defense.endingHp / defense.startingHp"
-	// Compare: "attack.endingHp * defense.startingHp' with "defense.endingHp * attack.startingHp"
-	const left = fightResult.stats.attack.endingHp * fightResult.stats.defense.startingHp;
-	const right = fightResult.stats.defense.endingHp * fightResult.stats.attack.startingHp;
-	if (
-		fightResult.outcome === FightOutcome.AttackerWin ||
-		(fightResult.outcome === FightOutcome.Timeout && left > right)
-	) {
+	if (fightResult.outcome === FightOutcome.AttackerWin) {
 		victory = true;
 	}
 
