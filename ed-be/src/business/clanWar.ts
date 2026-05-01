@@ -99,6 +99,13 @@ export async function buildClanCastle(req: Request) {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
+	const existingCastle = await prisma.clanCastle.findUnique({
+		where: { clanId: authed.clanId },
+		select: { currentLife: true }
+	});
+
+	const isRebuild = existingCastle !== null && existingCastle.currentLife <= 0;
+
 	const randomPlace = war.config.warPlaces[Math.round(Math.random() * war.config.warPlaces.length) - 1];
 
 	await prisma.clanCastle.upsert({
@@ -110,40 +117,42 @@ export async function buildClanCastle(req: Request) {
 			clanId: authed.clanId
 		},
 		update: {
-			// Do nothing
+			currentLife: 300
 		}
 	});
 
-	await prisma.$transaction([
-		prisma.clanIngredient.deleteMany({
-			where: {
-				clanId: authed.clanId
-			}
-		}),
-		prisma.clan.update({
-			where: {
-				id: authed.clanId
-			},
-			data: {
-				treasureValue: 0
-			}
-		}),
-		prisma.clanWarRanking.upsert({
-			where: {
-				id: authed.clanId
-			},
-			create: {
-				clanId: authed.clanId,
-				eventId: war.id
-			},
-			update: {}
-		})
-	]);
+	if (!isRebuild) {
+		await prisma.$transaction([
+			prisma.clanIngredient.deleteMany({
+				where: {
+					clanId: authed.clanId
+				}
+			}),
+			prisma.clan.update({
+				where: {
+					id: authed.clanId
+				},
+				data: {
+					treasureValue: 0
+				}
+			}),
+			prisma.clanWarRanking.upsert({
+				where: {
+					id: authed.clanId
+				},
+				create: {
+					clanId: authed.clanId,
+					eventId: war.id
+				},
+				update: {}
+			})
+		]);
+	}
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: authed.clanId } },
 			author: { connect: { id: authed.id } },
-			type: ClanHistoryType[ClanHistoryType.CASTLE_BUILD],
+			type: isRebuild ? ClanHistoryType[ClanHistoryType.CASTLE_REBUILD] : ClanHistoryType[ClanHistoryType.CASTLE_BUILD],
 			authorMessage: JSON.stringify({ name: authed.name })
 		},
 		select: { id: true }
