@@ -3846,8 +3846,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
  * @returns {bool} True if the fighter has succeeded its counter roll.
  */
 const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	const random = fightData.rng();
-	return random < getFighterCounter(fighter);
+	const counter = getFighterCounter(fighter);
+	if (counter > 0) {
+		const random = fightData.rng();
+		return random < counter;
+	} else {
+		return false;
+	}
 };
 
 /**
@@ -3858,8 +3863,13 @@ const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
 const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiHitCounter: number) => {
-	const random = fightData.rng();
-	return random < getFighterMultihit(fighter, multiHitCounter);
+	const multihit = getFighterMultihit(fighter);
+	if (multihit > 0) {
+		const random = fightData.rng();
+		return random < multihit;
+	} else {
+		return false;
+	}
 };
 
 /**
@@ -3869,8 +3879,13 @@ const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiH
  * @returns {bool} True if the fighter has succeeded its evasion roll.
  */
 const evasionTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	const random = fightData.rng();
-	return random < getFighterEvasion(fighter);
+	const evasion = getFighterEvasion(fighter);
+	if (evasion > 0) {
+		const random = fightData.rng();
+		return random < evasion;
+	} else {
+		return false;
+	}
 };
 
 /**
@@ -3880,8 +3895,13 @@ const evasionTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
  * @returns {bool} True if the fighter has succeeded its super evasion roll.
  */
 const superEvasionTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	const random = fightData.rng();
-	return random < getFighterSuperEvasion(fighter);
+	const superEvasion = getFighterSuperEvasion(fighter);
+	if (superEvasion > 0) {
+		const random = fightData.rng();
+		return random < superEvasion;
+	} else {
+		return false;
+	}
 };
 
 /**
@@ -3891,8 +3911,13 @@ const superEvasionTest = (fightData: DetailedFight, fighter: DetailedFighter) =>
  * @returns {bool} True if the fighter has succeeded its critical hit roll.
  */
 const criticalHitTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	const random = fightData.rng();
-	return random < getFighterCriticalHitChance(fighter);
+	const criticalhit = getFighterCriticalHitChance(fighter);
+	if (criticalhit > 0) {
+		const random = fightData.rng();
+		return random < criticalhit;
+	} else {
+		return false;
+	}
 };
 
 // Have the fighter lose the given number of damage based on its resilience
