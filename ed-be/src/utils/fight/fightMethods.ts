@@ -59,17 +59,17 @@ import {
 	getFighterSuperEvasion,
 	initializeMonster
 } from './getFighters.js';
-import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded, testStat } from './randomBetween.js';
+import testStat from './utils.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightOutcome, FightStats } from '@drpg/core/models/fight/FightResult';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
 import { checkSkillCondition } from './skillFightConditionParser.js';
 import { LOGGER } from '../../context.js';
 import { BaseSpecialStats, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { getRandomInteger, getRandomNumber } from '../tools.js';
 
 export const OVERTIME_ID = -9999;
 
@@ -157,7 +157,7 @@ const chooseRandomOpponentForAssault = (
 	if (opponents_have_rock) {
 		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
 		// then one chance out of 2 to target only the rock fighters
-		if (randomBetweenMaxExcludedSeeded(rng, 0, 2) === 0) {
+		if (getRandomInteger(0, 2, rng) === 0) {
 			filtered_opponents = filtered_opponents.filter(opponent => opponent.hasRock);
 		}
 	}
@@ -219,7 +219,7 @@ const chooseRandomOpponentForAssault = (
 	}
 
 	// If there are multiple opponents available, pick a random one
-	const random = randomBetweenSeeded(rng, 0, filtered_opponents.length - 1);
+	const random = getRandomInteger(0, filtered_opponents.length - 1, rng);
 
 	return filtered_opponents[random];
 };
@@ -227,7 +227,7 @@ const chooseRandomOpponentForAssault = (
 /// Choose a random opponent from a list
 /// No filtering is applied
 export const chooseRandomOpponent = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
-	const random = randomBetweenSeeded(rng, 0, opponents.length - 1);
+	const random = getRandomInteger(0, opponents.length - 1, rng);
 
 	return opponents[random];
 };
@@ -496,7 +496,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			if (fighter.energy < event.energy) continue;
 		}
 
-		if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 100) < (event.probability ?? 0)) {
+		if (getRandomNumber(0, 100, fightData.rng) < (event.probability ?? 0)) {
 			return event;
 		}
 	}
@@ -545,7 +545,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			probability *= 2;
 		}
 
-		if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 100) < probability) {
+		if (getRandomNumber(0, 100, fightData.rng) < probability) {
 			// Check if NO_INVOCATION
 			if (skill.type === SkillType.I && hasStatus(fighter, FightStatus.NO_INVOCATION)) {
 				return null;
@@ -1043,7 +1043,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	monster.master = fighter.id;
 
 	// Adjust time to current time + random start time
-	monster.time = fighter.time + randomBetweenMaxExcludedSeeded(fightData.rng, 0, TIME_BASE) * TIME_FACTOR;
+	monster.time = fighter.time + getRandomInteger(0, TIME_BASE - 1, fightData.rng) * TIME_FACTOR;
 
 	// Add monster to fighters
 	fightData.fighters.push(monster);
@@ -1358,8 +1358,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.DIETE_CHROMATIQUE: {
 				// Pick a random opponent (no filtering is applied intentionally)
-				const opponents = getOpponents(fightData, fighter);
-				const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
+				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Lock that opponent to a random element
 				// Note: the MT code does not actually lock on a random element but just locks on the current one
@@ -1436,12 +1435,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					if (f.id === fighter.id) return;
 
 					// Heal 1-wood HP
-					heal(
-						fightData,
-						f,
-						randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
-						activate_step
-					);
+					heal(fightData, f, getRandomInteger(1, fighter.stats.base[ElementType.WOOD], fightData.rng), activate_step);
 				});
 
 				// Add step
@@ -1660,10 +1654,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.M_ELEMENTAL: {
 				// Lock into a random element
-				let randomElement = randomBetweenSeeded(fightData.rng, 1, 5) as ElementType;
+				let randomElement = getRandomInteger(1, 5, fightData.rng) as ElementType;
 
 				while (fighter.element === randomElement) {
-					randomElement = randomBetweenSeeded(fightData.rng, 1, 5) as ElementType;
+					randomElement = getRandomInteger(1, 5, fightData.rng) as ElementType;
 				}
 
 				fighter.element = randomElement;
@@ -1737,7 +1731,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (tangibleAllies.length > 0) {
 					// Get random ally
-					const ally = tangibleAllies[randomBetweenSeeded(fightData.rng, 0, tangibleAllies.length - 1)];
+					const ally = tangibleAllies[getRandomInteger(0, tangibleAllies.length - 1, fightData.rng)];
 
 					// Add status
 					addStatus(fightData, ally, FightStatus.INTANGIBLE, FightStatusLength.MEDIUM);
@@ -1761,7 +1755,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (nonFlyingAllies.length > 0) {
 					// Get random ally
-					const ally = nonFlyingAllies[randomBetweenSeeded(fightData.rng, 0, nonFlyingAllies.length - 1)];
+					const ally = nonFlyingAllies[getRandomInteger(0, nonFlyingAllies.length - 1, fightData.rng)];
 
 					// Add status
 					addStatus(fightData, ally, FightStatus.FLYING);
@@ -1966,7 +1960,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Get random opponent defender
 				const opponentDefender =
-					opponentsWithoutAttacker[randomBetweenSeeded(fightData.rng, 0, opponentsWithoutAttacker.length - 1)];
+					opponentsWithoutAttacker[getRandomInteger(0, opponentsWithoutAttacker.length - 1, fightData.rng)];
 
 				// Add moveTo step
 				fightData.steps.push({
@@ -2317,7 +2311,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case FightStatus.ASLEEP: {
-				fighter.time = fightData.time + randomBetweenSeeded(fightData.rng, 0, TIME_BASE * TIME_FACTOR);
+				fighter.time = fightData.time + getRandomInteger(0, TIME_BASE * TIME_FACTOR, fightData.rng);
 				break;
 			}
 			case FightStatus.TORCHED: {
@@ -2594,7 +2588,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), undefined, LifeEffect.Heal);
+			heal(fightData, fighter, getRandomInteger(1, 20, fightData.rng), undefined, LifeEffect.Heal);
 
 			// Fall asleep
 			addStatus(fightData, fighter, FightStatus.ASLEEP, FightStatusLength.SHORT);
@@ -2609,7 +2603,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Heal each fighter of the caster's group
 			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
 			getAllies(fightData, fighter).forEach(ally => {
-				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, hpHealed), activate_step);
+				heal(fightData, ally, getRandomInteger(1, hpHealed, fightData.rng), activate_step);
 			});
 			// Add step for fx
 			fightData.steps.push(activate_step);
@@ -2903,7 +2897,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 
 			// Get random opponent
-			const monster = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
+			const monster = opponents[getRandomInteger(0, opponents.length - 1, fightData.rng)];
 
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, undefined, [[0 as ElementType, 0]], monster);
@@ -3359,7 +3353,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 				// Random if same level
 				if (SkillLevel[skill.id] === SkillLevel[acc.id]) {
-					return randomBetweenSeeded(fightData.rng, 0, 1) ? skill : acc;
+					return getRandomInteger(0, 1, fightData.rng) ? skill : acc;
 				}
 
 				return acc;
@@ -3561,7 +3555,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (opponents.length > 0) {
 				// Get random opponent
-				const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
+				const opponent = opponents[getRandomInteger(0, opponents.length - 1, fightData.rng)];
 
 				// Add leave step
 				fightData.steps.push({
@@ -3702,7 +3696,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Check if fighter is not dead
 			if (hit && hit.target && hit.hpLost > 0) {
 				const opponent = hit.target;
-				const goldStolen = (randomBetweenSeeded(fightData.rng, 0, 4) + 8) * 10;
+				const goldStolen = (getRandomInteger(0, 4, fightData.rng) + 8) * 10;
 				fighter.goldStolen = {
 					...fighter.goldStolen,
 					[opponent.id]: (fighter.goldStolen?.[opponent.id] ?? 0) + goldStolen
@@ -4272,7 +4266,7 @@ const attackTarget = (
 
 		// DAZZLED: 1/3 chance to miss
 		if (hasStatus(attacker, FightStatus.DAZZLED)) {
-			if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 3) === 0) {
+			if (getRandomInteger(0, 2, fightData.rng) === 0) {
 				noDamage = true;
 				evasion = true;
 			}
@@ -4443,7 +4437,7 @@ const checkDefensiveEffects = (
 		// Opponent has FORME_VAPOREUSE
 		hasSkill(target, Skill.FORME_VAPOREUSE) &&
 		// 6% chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 6
+		getRandomNumber(0, 100, fightData.rng) < 6
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4459,7 +4453,7 @@ const checkDefensiveEffects = (
 		isCloseCombat &&
 		hasSkill(target, Skill.CUIRASSE) &&
 		// 5 % chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 5
+		getRandomNumber(0, 100, fightData.rng) < 5
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4523,7 +4517,7 @@ const checkDefensiveEffects = (
 	if (hasSkill(target, Skill.M_ELEMENTAL)) {
 		if (elements.find(e => e === target.element)) {
 			// Take 29 + 0-2 damage if the attack contains the element of the opposing fighter
-			const random = randomBetweenSeeded(fightData.rng, 0, 2);
+			const random = getRandomInteger(0, 2, fightData.rng);
 
 			damage = 29 + random;
 		} else {
@@ -4674,7 +4668,7 @@ const checkAfterDefenseEffects = (
 		damage > 0 &&
 		hasSkill(target, Skill.SANG_ACIDE) &&
 		// 1/2 chance
-		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+		getRandomInteger(0, 1, fightData.rng) === 0
 	) {
 		loseHpwithResilience(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
@@ -4716,7 +4710,7 @@ const checkAfterDefenseEffects = (
 	}
 	// Electrocution (Anguilloz)
 	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.M_ELECTROCUTION)) {
-		loseHp(fightData, attacker, randomBetweenSeeded(fightData.rng, 1, 3), LifeEffect.Lightning);
+		loseHp(fightData, attacker, getRandomInteger(1, 3, fightData.rng), LifeEffect.Lightning);
 	}
 
 	// Worm (or any absorb?): heal the damage absorbed
@@ -4739,7 +4733,7 @@ const checkAfterDefenseEffects = (
 		damage > 0 &&
 		hasSkill(target, Skill.M_CONTAMINATION) &&
 		// 1/5 chance
-		randomBetweenSeeded(fightData.rng, 0, 4) === 0
+		getRandomInteger(0, 4, fightData.rng) === 0
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',

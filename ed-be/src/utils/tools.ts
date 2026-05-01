@@ -1,15 +1,40 @@
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import seedrandom from 'seedrandom';
 
 /**
- * @summary Return a random number between min and max - 1
+ * @summary Return a random *float* between min and max (included)
  * @param min {number}
  * @param max {number}
+ * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
+ * @example getRandomInteger(0, 10) generates a random *float* between 0 and 10 (excluded).
+ * @description Generates a random float between [min, max). Max is excluded.
  * @return number
  */
-function getRandomNumber(min: number, max: number) {
+function getRandomNumber(min: number, max: number, random?: seedrandom.PRNG) {
+	if (min > max) throw new RangeError('min must be <= max');
+	if (min === max) return min;
+
+	const randomValue = random ? random() : Math.random();
+	return randomValue * (max - min) + min;
+}
+
+/**
+ * @summary Return a random *integer* between min and max (included)
+ * @param min {number} Must be an integer, otherwise, closes biggest integer is picked.
+ * @param max {number} Must be an integer, otherwise, closes lowest integer is picked.
+ * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
+ * @example getRandomInteger(0, 10) generates a random *integer* between 0 and 10.
+ * @description Generates a random integer between [min, max]. Max is included.
+ * @return number
+ */
+function getRandomInteger(min: number, max: number, random?: seedrandom.PRNG) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min;
+
+	if (min > max) throw new RangeError('min must be <= max');
+	if (min === max) return min;
+
+	const randomValue = random ? random() : Math.random();
+	return Math.floor(randomValue * (max - min + 1)) + min;
 }
 
 /**
@@ -22,7 +47,7 @@ function getRandomLetter(maxLetter: string): string {
 	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
 
-	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
+	return lettersAvailable[getRandomInteger(0, lettersAvailable.length - 1)];
 }
 
 /**
@@ -34,10 +59,9 @@ function getRandomLetter(maxLetter: string): string {
 function generateString(length: number): string {
 	let result = '';
 	const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	const charactersLength = characters.length;
 	let counter = 0;
 	while (counter < length) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		result += characters.charAt(getRandomInteger(0, characters.length - 1));
 		counter += 1;
 	}
 	return result;
@@ -69,7 +93,7 @@ export function fromBase62(s: string) {
 export function shuffle<T>(array: T[]): T[] {
 	const shuffledArray = [...array];
 	for (let i = array.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
+		const j = getRandomInteger(0, i);
 		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
 	}
 
@@ -78,4 +102,4 @@ export function shuffle<T>(array: T[]): T[] {
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export { getRandomNumber, getRandomLetter, generateString, getLetter, sleep };
+export { getRandomNumber, getRandomInteger, getRandomLetter, generateString, getLetter, sleep };
