@@ -4267,6 +4267,7 @@
 			"PLAYER_LEAVE": "Ce joueur a décidé de quitter le clan.",
 			"PLAYER_EXCLUSION": "Ce joueur a été exclu du clan.",
 			"CASTLE_BUILD": "J'ai construit le chateau.",
+			"CASTLE_REBUILD": "J'ai reconstruit le chateau.",
 			"WAR_ATTACKED": "En temps qu'officier de guerre de {name}, je lance une attaque contre votre clan !",
 			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
 			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau adverse, nous avons perdu {points} points.",
