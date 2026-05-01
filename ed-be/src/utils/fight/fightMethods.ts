@@ -157,7 +157,7 @@ const chooseRandomOpponentForAssault = (
 	if (opponents_have_rock) {
 		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
 		// then one chance out of 2 to target only the rock fighters
-		if (getRandomInteger(0, 2, rng) === 0) {
+		if (getRandomInteger(0, 1, rng) === 0) {
 			filtered_opponents = filtered_opponents.filter(opponent => opponent.hasRock);
 		}
 	}
