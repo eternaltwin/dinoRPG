@@ -44,4 +44,18 @@ export const randomBetweenMaxExcludedSeeded = (random: seedrandom.PRNG, min: num
 	return Math.floor(random() * (max - min) + min);
 };
 
+/**
+ * INTEGERS ONLY
+ *
+ * Test a given stat (must be 0 and 1) using a seeded random generator.
+ * Returns automatically false if stat is 0 or less.
+ */
+export const testStat = (random: seedrandom.PRNG, stat: number) => {
+	if (stat > 0) {
+		return random() < stat;
+	} else {
+		return false;
+	}
+};
+
 export default randomBetween;
