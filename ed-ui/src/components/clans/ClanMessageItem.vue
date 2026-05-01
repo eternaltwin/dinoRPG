@@ -25,7 +25,7 @@
 		</header>
 
 		<div class="msg-card__content">
-			<p v-html="contentHtml"></p>
+			<div v-html="contentHtml"></div>
 			<div class="actions divide-x">
 				<button class="btn" @click="emit('reply')">{{ t('messagerie.responseConv') }}</button>
 				<button v-if="canDelete" class="btn btn--danger" @click="emit('delete')">
@@ -188,6 +188,15 @@ function formatShortDate(iso: string | Date): string {
 	a {
 		color: #0645ad;
 		text-decoration: underline;
+	}
+	:deep(ul), :deep(ol) {
+		padding-left: 1.5em;
+		margin: 0.5em 0;
+		list-style: revert;
+	}
+
+	:deep(li) {
+		display: list-item;
 	}
 }
 </style>
