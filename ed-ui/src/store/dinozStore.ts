@@ -71,6 +71,22 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		return orderDinozList(dinozList.value);
 	});
 
+	const getDinozParty = (dinozId: number): DinozFiche[] => {
+		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
+		const value: DinozFiche[] = [];
+		if (!dinoz && dinozList.value.length > 0) {
+			value.push(dinozList.value.find((dinoz: DinozFiche) => dinoz.id === currentDinozId.value) ?? dinozList.value[0]);
+		} else if (dinoz && dinoz.followers.length > 1) {
+			value.push(dinoz);
+			value.push(...dinozList.value.filter(d => dinoz.followers.some(f => f.id === d.id)));
+		} else if (dinoz && dinoz.leaderId) {
+			value.push(...dinozList.value.filter(d => d.leaderId === dinoz.leaderId || d.id === dinoz.leaderId));
+		} else if (dinoz) {
+			value.push(dinoz);
+		}
+		return value;
+	};
+
 	// The returned value may be undefined if the player has no Dinoz (which happens when you start the game)
 	const getDinoz = (dinozId: number): DinozFiche | undefined => {
 		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
@@ -158,6 +174,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		getCurrentDinoz,
 		getCurrentDinozId,
 		getDinozList,
+		getDinozParty,
 		getDinoz,
 		setDinozList,
 		setDinoz,

@@ -133,8 +133,6 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			// mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-			// 	.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
@@ -144,7 +142,6 @@ export default defineComponent({
 			Action,
 			hpRegen: 1,
 			itinerantName: '' as string,
-			dinozFullParty: [] as DinozFiche[],
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
@@ -600,7 +597,6 @@ export default defineComponent({
 				case Action.WAR_ATTACK:
 					try {
 						const fight = await ClanService.attackCastle(+this.$route.params.id);
-						//
 						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
 						if (!currentDinoz) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
@@ -688,10 +684,6 @@ export default defineComponent({
 			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
 			}
-			this.dinozFullParty = useDinozStore().getDinozList.filter(dinoz =>
-				this.dinoz?.followers.some(a => a.id === dinoz.id)
-			);
-			this.dinozFullParty.push(this.dinoz);
 		}
 	},
 	computed: {
@@ -724,6 +716,9 @@ export default defineComponent({
 		},
 		dinoz() {
 			return useDinozStore().getDinoz(+this.$route.params.id);
+		},
+		dinozFullParty() {
+			return useDinozStore().getDinozParty(+this.$route.params.id);
 		}
 	},
 	watch: {

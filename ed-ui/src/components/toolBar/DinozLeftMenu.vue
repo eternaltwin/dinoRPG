@@ -240,6 +240,9 @@ export default defineComponent({
 			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
 				return true;
 			}
+			if (dinoz.leaderId && leader.id === dinoz.leaderId) {
+				return true;
+			}
 			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
 				return true;
 			}
