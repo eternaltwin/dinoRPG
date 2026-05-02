@@ -97,33 +97,18 @@ export default defineComponent({
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
-		getLeaderGroup(dinoz: DinozFiche) {
+		getLeaderGroup(dinoz: DinozFiche): boolean {
 			if (!this.currentDinozId) return false;
 			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId);
 			if (!selectedDinoz) return false;
-			// Le dinoz est leader
-			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
-				return true;
-			}
-			// Le dinoz n'est pas suiveur
-			if (!dinoz.leaderId) return false;
 
-			const leader = useDinozStore().getDinoz(dinoz.leaderId);
-			if (!leader) return false;
-			// Si le dinoz est follower et que le dinoz courrant est son leader
-			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
-				return true;
-			}
-			if (dinoz.leaderId && leader.id === dinoz.leaderId) {
-				return true;
-			}
-			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
-				return true;
-			}
-			if (dinoz.id === this.currentDinozId) {
-				return true;
-			}
-			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
+			if (dinoz.id === selectedDinoz.id) return true;
+
+			if (selectedDinoz.leaderId === dinoz.id) return true;
+
+			if (dinoz.leaderId === selectedDinoz.id) return true;
+
+			return dinoz.leaderId !== null && dinoz.leaderId === selectedDinoz.leaderId;
 		}
 	},
 	computed: {
