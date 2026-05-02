@@ -3,7 +3,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Clan, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
-import { checkCanDeclareWar, getWarForResolve, playerHasRightRequest } from '../dao/clansDao.js';
+import { checkCanDeclareWar, consumeWarCost, getWarForResolve, playerHasRightRequest } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
@@ -12,7 +12,7 @@ import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { scheduleJob } from 'node-schedule';
-import { computeWarPowers } from '../utils/warCalculation.js';
+import { computeWarCost, computeWarPowers } from '../utils/warCalculation.js';
 import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
@@ -29,6 +29,7 @@ import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -176,28 +177,16 @@ export async function declareWar(req: Request) {
 	await checkCanDeclareWar(authed.clanId);
 
 	const defender = await prisma.clan.findUnique({
-		where: {
-			id: +req.params.clanId
-		},
+		where: { id: +req.params.clanId },
 		select: {
 			id: true,
 			name: true,
-			castle: {
-				select: {
-					id: true
-				}
-			},
-			members: {
-				select: {
-					playerId: true
-				}
-			},
+			castle: { select: { id: true } },
+			members: { select: { playerId: true } },
 			_count: {
 				select: {
 					defendingWars: {
-						where: {
-							winnerClanId: null // uniquement les guerres actives
-						}
+						where: { winnerClanId: null }
 					}
 				}
 			}
@@ -205,21 +194,17 @@ export async function declareWar(req: Request) {
 	});
 
 	const attacker = await prisma.clan.findUnique({
-		where: {
-			id: authed.clanId
-		},
+		where: { id: authed.clanId },
 		select: {
 			id: true,
 			name: true,
-			castle: {
-				select: {
-					id: true
-				}
-			},
-			members: {
-				select: {
-					playerId: true
-				}
+			castle: { select: { id: true } },
+			members: { select: { playerId: true } },
+			ingredients: { select: { ingredientId: true, quantity: true } },
+			clanWarRanking: {
+				where: { eventId: war.id },
+				select: { reputation: true },
+				take: 1
 			}
 		}
 	});
@@ -230,10 +215,18 @@ export async function declareWar(req: Request) {
 	if (!attacker || !attacker.castle) {
 		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
 	}
-
 	if (defender._count.defendingWars >= 3) {
 		throw new ExpectedError(translate('clanWar.defenderAlreadyUnderAttack', authed));
 	}
+
+	const reputation = attacker.clanWarRanking[0]?.reputation ?? 100;
+	const cost = computeWarCost(reputation, attacker.ingredients);
+
+	if (!cost.canAfford) {
+		throw new ExpectedError(translate('clanWar.notEnoughIngredients', authed, { cost: cost.totalValue }));
+	}
+
+	await consumeWarCost(authed.clanId, cost);
 
 	const endWar = dayjs().add(2, 'day').toDate();
 	const attack = await prisma.clanWar.create({
@@ -246,7 +239,7 @@ export async function declareWar(req: Request) {
 	});
 
 	const notifications: Promise<void>[] = [];
-	// Notifications for attackers
+
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: authed.clanId } },
@@ -270,7 +263,6 @@ export async function declareWar(req: Request) {
 		);
 	});
 
-	// Notifications for defenders
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: defender.id } },
@@ -421,7 +413,7 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 					})
 				])
 			)
-		)
+		);
 	}
 
 	await notifyWarResults(war, forfeit);

@@ -11,6 +11,7 @@ import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
 import ClanEventType = $Enums.ClanEventType;
+import { WarCost } from '@drpg/core/models/clan/clanWar';
 
 export async function getAllClansRequest(page: number) {
 	return withSpan(getAllClansRequest.name, async () => {
@@ -1275,5 +1276,30 @@ export async function checkCanDeclareWar(attackerClanId: number): Promise<void> 
 		if (activeWar) {
 			throw new ExpectedError('alreadyAtWar');
 		}
+	});
+}
+
+export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>) {
+	return withSpan(consumeWarCost.name, async () => {
+		const totalValue = cost.totalValue;
+
+		await prisma.$transaction([
+			...cost.ingredients.map(({ ingredientId, quantity }) =>
+				prisma.clanIngredient.update({
+					where: {
+						ingredientId_clanId: { ingredientId, clanId }
+					},
+					data: {
+						quantity: { decrement: quantity }
+					}
+				})
+			),
+			prisma.clan.update({
+				where: { id: clanId },
+				data: {
+					treasureValue: { decrement: totalValue }
+				}
+			})
+		]);
 	});
 }
