@@ -327,37 +327,102 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 	});
 
 	await prisma.$executeRaw`
-  UPDATE clan_war_ranking
-  SET
-    "totalPWin" = "totalPWin" +
-      CASE
-        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-      END,
-    "totalPLost" = "totalPLost" +
-      CASE
-        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-      END,
-    "downtimeCount" =
-      CASE
-        WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
-        WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
-        ELSE "downtimeCount"
-      END,
-    reputation = 100.0 * POWER(
-      (500.0 + ("totalPWin" + CASE
-        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-      END)::float) / (500.0 + ("totalPLost" + CASE
-        WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-      END)::float),
-      0.8
-    ) - ("downtimeCount" * ("downtimeCount" - 1))::float / 2.0
-  WHERE "eventId" = ${Prisma.raw(`'${war.eventId}'::uuid`)}
-    AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
-`;
+		UPDATE clan_war_ranking
+		SET
+			"totalPWin" = "totalPWin" +
+			              CASE
+											WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+				              WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+											END,
+			"totalPLost" = "totalPLost" +
+			               CASE
+											 WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+				               WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+											 END,
+			"downtimeCount" =
+				CASE
+					WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+					WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+					ELSE "downtimeCount"
+					END,
+			reputation = ROUND((100.0 * POWER(
+				(500.0 + ("totalPWin" + CASE
+																	WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
+					                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
+					END)::float) / (500.0 + ("totalPLost" + CASE
+																										WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
+						                                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
+					END)::float),
+				0.8
+			                            ) - ("downtimeCount" * ("downtimeCount" - 1))::float / 2.0)::numeric)
+		WHERE "eventId" = ${Prisma.raw(`'${war.eventId}'::uuid`)}
+			AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
+	`;
+
+	if (isCastleDestroyed) {
+		const annexWars = await prisma.clanWar.findMany({
+			where: {
+				defenderClanId: war.defender.id,
+				winnerClanId: null,
+				id: { not: war.id }
+			},
+			select: {
+				id: true,
+				attackerClanId: true,
+				attacker: {
+					select: {
+						leaderId: true,
+						name: true
+					}
+				}
+			}
+		});
+
+		await prisma.$transaction(
+			annexWars.map(annexWar =>
+				prisma.clanWar.update({
+					where: { id: annexWar.id },
+					data: {
+						winnerClanId: war.defender.id, // défenseur gagne par défaut
+						endsAt: new Date(),
+						isCastleDestroyed: false
+					}
+				})
+			)
+		);
+
+		await Promise.all(
+			annexWars.map(annexWar =>
+				prisma.$transaction([
+					// Historique clan attaquant
+					prisma.clanHistory.create({
+						data: {
+							clan: { connect: { id: annexWar.attackerClanId } },
+							type: ClanHistoryType[ClanHistoryType.WAR_CANCELLED],
+							authorMessage: JSON.stringify({
+								defenderName: war.defender.name,
+								destroyedBy: war.attacker.name
+							}),
+							author: { connect: { id: annexWar.attacker.leaderId } }
+						},
+						select: { id: true }
+					}),
+					// Notification chef clan attaquant
+					prisma.notification.create({
+						data: {
+							message: JSON.stringify({
+								defenderName: war.defender.name,
+								destroyedBy: war.attacker.name
+							}),
+							severity: NotificationSeverity.warning,
+							link: `/clan-war`,
+							playerId: annexWar.attacker.leaderId
+						}
+					})
+				])
+			)
+		)
+	}
 
 	await notifyWarResults(war, forfeit);
 }
