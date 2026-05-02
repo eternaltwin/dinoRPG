@@ -98,9 +98,8 @@ export default defineComponent({
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
-			if (!currentDinozId) return false;
-			const selectedDinoz = useDinozStore().getDinoz(currentDinozId);
+			if (!this.currentDinozId) return false;
+			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId);
 			if (!selectedDinoz) return false;
 			// Le dinoz est leader
 			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
@@ -115,10 +114,13 @@ export default defineComponent({
 			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
 				return true;
 			}
+			if (dinoz.leaderId && leader.id === dinoz.leaderId) {
+				return true;
+			}
 			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
 				return true;
 			}
-			if (dinoz.id === currentDinozId) {
+			if (dinoz.id === this.currentDinozId) {
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
@@ -128,6 +130,9 @@ export default defineComponent({
 		...mapState(useDinozStore, ['getDinozList']),
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
+		},
+		currentDinozId() {
+			return useDinozStore().getCurrentDinozId;
 		}
 	},
 	watch: {
