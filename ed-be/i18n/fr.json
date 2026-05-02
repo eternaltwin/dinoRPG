@@ -56,7 +56,8 @@
 		"noCastleOpponent": "Le château adverse n'est pas constuit.",
 		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisament d'adversaires.",
 		"defenderActiveMax": "Vous avez la limite maximale de dinoz en défense.",
-		"notWar": "L'attaque n'est plus réalisable."
+		"notWar": "L'attaque n'est plus réalisable.",
+		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer."
 	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
