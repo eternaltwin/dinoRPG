@@ -605,7 +605,6 @@ export default defineComponent({
 
 						const team = [currentDinoz.id, ...currentDinoz.followers.map(f => f.id)];
 						for (const teamKey of team) {
-							console.log(teamKey);
 							useDinozStore().setDinozAttackTimer(teamKey);
 						}
 						this.sessionStore.setFightResult(fight);
@@ -727,7 +726,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		console.log('Component mounted.');
 		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
