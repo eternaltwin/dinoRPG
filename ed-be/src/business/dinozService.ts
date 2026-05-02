@@ -182,7 +182,7 @@ export async function getAvailableActions(
 			}
 		}
 
-		if (player.clan.attackingWar && player.clan.attackingWar.defender.castle.placeId === dinoz.placeId) {
+		if (player.clan.attackingWars.length > 0 && player.clan.attackingWars[0].defender.castle.placeId === dinoz.placeId) {
 			availableActions.push(actionList[Action.WAR_ATTACK]);
 		}
 	}

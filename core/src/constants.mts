@@ -43,13 +43,11 @@ export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 							defender: Pick<Dinoz, 'id'>[];
 					  })
 					| null;
-				attackingWar?:
-					| (Pick<ClanWar, 'id'> & {
+				attackingWars: (Pick<ClanWar, 'id'> & {
 							defender: Pick<Clan, 'id'> & {
 								castle: Pick<ClanCastle, 'placeId'>;
 							};
-					  })
-					| null;
+					  })[]
 		  })
 		| null;
 	dinoz: (Pick<Dinoz, 'level' | 'placeId' | 'life' | 'id'> & {
