@@ -1,5 +1,10 @@
 export const WAR_BASE_VALUE = 22_500;
 export const WAR_SCALE_PER_100_POINTS = 5_625;
+export const REPAIR_MAX_TICKS = 15;
+export const REPAIR_MAX_STACK = 2;
+export const REPAIR_BASE_VALUE = 500;
+export const REPAIR_SCALE_FACTOR = 1.2;
+export const REPAIR_MAX_HP = 75;
 
 export type WarCostIngredient = {
 	ingredientId: number;
@@ -8,6 +13,25 @@ export type WarCostIngredient = {
 
 export type WarCost = {
 	ingredients: WarCostIngredient[];
+	totalValue: number;
+	canAfford: boolean;
+	totalHp?: number;
+};
+
+export enum RepairFrequency {
+	ONE_MIN = 1,
+	FIVE_MIN = 5,
+	FIFTEEN_MIN = 15,
+	THIRTY_MIN = 30
+}
+
+export type RepairCostIngredient = {
+	ingredientId: number;
+	quantity: number;
+};
+
+export type RepairCost = {
+	ingredients: RepairCostIngredient[];
 	totalValue: number;
 	canAfford: boolean;
 };

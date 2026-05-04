@@ -1,6 +1,15 @@
 import { ResolvedWar } from '../dao/clansDao.js';
 import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
-import { WAR_BASE_VALUE, WAR_SCALE_PER_100_POINTS, WarCost, WarCostIngredient } from '@drpg/core/models/clan/clanWar';
+import {
+	REPAIR_BASE_VALUE,
+	REPAIR_SCALE_FACTOR,
+	RepairFrequency,
+	WAR_BASE_VALUE,
+	WAR_SCALE_PER_100_POINTS,
+	WarCost,
+	WarCostIngredient
+} from '@drpg/core/models/clan/clanWar';
+import { treasureIngredient } from '@drpg/core/models/clan/clan';
 
 export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 	const attackerRanking = war.attacker.clanWarRanking[0];
@@ -35,10 +44,7 @@ function clamp(value: number, min: number, max: number): number {
 	return Math.max(min, Math.min(max, value));
 }
 
-export function computeWarCost(
-	clanReputation: number,
-	clanIngredients: { ingredientId: number; quantity: number }[]
-): WarCost {
+export function computeWarCost(clanReputation: number, clanIngredients: treasureIngredient[]): WarCost {
 	const totalValue = WAR_BASE_VALUE + Math.floor(clanReputation / 100) * WAR_SCALE_PER_100_POINTS;
 
 	const sortedIngredients = clanIngredients

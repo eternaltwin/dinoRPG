@@ -1303,3 +1303,26 @@ export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>)
 		]);
 	});
 }
+
+export async function consumeRepairCost(clanId: number, cost: NonNullable<WarCost>) {
+	return withSpan(consumeRepairCost.name, async () => {
+		await prisma.$transaction([
+			...cost.ingredients.map(({ ingredientId, quantity }) =>
+				prisma.clanIngredient.update({
+					where: {
+						ingredientId_clanId: { ingredientId, clanId }
+					},
+					data: {
+						quantity: { decrement: quantity }
+					}
+				})
+			),
+			prisma.clan.update({
+				where: { id: clanId },
+				data: {
+					treasureValue: { decrement: cost.totalValue }
+				}
+			})
+		]);
+	});
+}

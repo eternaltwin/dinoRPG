@@ -214,6 +214,11 @@ export type Clan = $Result.DefaultSelection<Prisma.$ClanPayload>
  */
 export type ClanCastle = $Result.DefaultSelection<Prisma.$ClanCastlePayload>
 /**
+ * Model ClanCastleRepair
+ * 
+ */
+export type ClanCastleRepair = $Result.DefaultSelection<Prisma.$ClanCastleRepairPayload>
+/**
  * Model ClanJoinRequest
  * 
  */
@@ -1115,6 +1120,16 @@ export class PrismaClient<
   get clanCastle(): Prisma.ClanCastleDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.clanCastleRepair`: Exposes CRUD operations for the **ClanCastleRepair** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanCastleRepairs
+    * const clanCastleRepairs = await prisma.clanCastleRepair.findMany()
+    * ```
+    */
+  get clanCastleRepair(): Prisma.ClanCastleRepairDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.clanJoinRequest`: Exposes CRUD operations for the **ClanJoinRequest** model.
     * Example usage:
     * ```ts
@@ -1813,6 +1828,7 @@ export namespace Prisma {
     Pantheon: 'Pantheon',
     Clan: 'Clan',
     ClanCastle: 'ClanCastle',
+    ClanCastleRepair: 'ClanCastleRepair',
     ClanJoinRequest: 'ClanJoinRequest',
     ClanWar: 'ClanWar',
     ClanWarRanking: 'ClanWarRanking',
@@ -1853,7 +1869,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4817,6 +4833,80 @@ export namespace Prisma {
           }
         }
       }
+      ClanCastleRepair: {
+        payload: Prisma.$ClanCastleRepairPayload<ExtArgs>
+        fields: Prisma.ClanCastleRepairFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanCastleRepairFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanCastleRepairFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanCastleRepairFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanCastleRepairFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          findMany: {
+            args: Prisma.ClanCastleRepairFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>[]
+          }
+          create: {
+            args: Prisma.ClanCastleRepairCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          createMany: {
+            args: Prisma.ClanCastleRepairCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanCastleRepairCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanCastleRepairDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          update: {
+            args: Prisma.ClanCastleRepairUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanCastleRepairDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanCastleRepairUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanCastleRepairUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanCastleRepairUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanCastleRepairPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanCastleRepairAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanCastleRepair>
+          }
+          groupBy: {
+            args: Prisma.ClanCastleRepairGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanCastleRepairGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanCastleRepairCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanCastleRepairCountAggregateOutputType> | number
+          }
+        }
+      }
       ClanJoinRequest: {
         payload: Prisma.$ClanJoinRequestPayload<ExtArgs>
         fields: Prisma.ClanJoinRequestFieldRefs
@@ -6569,6 +6659,7 @@ export namespace Prisma {
     pantheon?: PantheonOmit
     clan?: ClanOmit
     clanCastle?: ClanCastleOmit
+    clanCastleRepair?: ClanCastleRepairOmit
     clanJoinRequest?: ClanJoinRequestOmit
     clanWar?: ClanWarOmit
     clanWarRanking?: ClanWarRankingOmit
@@ -7567,10 +7658,12 @@ export namespace Prisma {
 
   export type ClanCastleCountOutputType = {
     defender: number
+    repairs: number
   }
 
   export type ClanCastleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     defender?: boolean | ClanCastleCountOutputTypeCountDefenderArgs
+    repairs?: boolean | ClanCastleCountOutputTypeCountRepairsArgs
   }
 
   // Custom InputTypes
@@ -7589,6 +7682,13 @@ export namespace Prisma {
    */
   export type ClanCastleCountOutputTypeCountDefenderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozWhereInput
+  }
+
+  /**
+   * ClanCastleCountOutputType without action
+   */
+  export type ClanCastleCountOutputTypeCountRepairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanCastleRepairWhereInput
   }
 
 
@@ -54795,6 +54895,7 @@ export namespace Prisma {
     defenseOrder?: boolean
     clan?: boolean | ClanDefaultArgs<ExtArgs>
     defender?: boolean | ClanCastle$defenderArgs<ExtArgs>
+    repairs?: boolean | ClanCastle$repairsArgs<ExtArgs>
     _count?: boolean | ClanCastleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clanCastle"]>
 
@@ -54831,6 +54932,7 @@ export namespace Prisma {
   export type ClanCastleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | ClanDefaultArgs<ExtArgs>
     defender?: boolean | ClanCastle$defenderArgs<ExtArgs>
+    repairs?: boolean | ClanCastle$repairsArgs<ExtArgs>
     _count?: boolean | ClanCastleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClanCastleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -54845,6 +54947,7 @@ export namespace Prisma {
     objects: {
       clan: Prisma.$ClanPayload<ExtArgs>
       defender: Prisma.$DinozPayload<ExtArgs>[]
+      repairs: Prisma.$ClanCastleRepairPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -55249,6 +55352,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     defender<T extends ClanCastle$defenderArgs<ExtArgs> = {}>(args?: Subset<T, ClanCastle$defenderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    repairs<T extends ClanCastle$repairsArgs<ExtArgs> = {}>(args?: Subset<T, ClanCastle$repairsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -55713,6 +55817,30 @@ export namespace Prisma {
   }
 
   /**
+   * ClanCastle.repairs
+   */
+  export type ClanCastle$repairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    where?: ClanCastleRepairWhereInput
+    orderBy?: ClanCastleRepairOrderByWithRelationInput | ClanCastleRepairOrderByWithRelationInput[]
+    cursor?: ClanCastleRepairWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanCastleRepairScalarFieldEnum | ClanCastleRepairScalarFieldEnum[]
+  }
+
+  /**
    * ClanCastle without action
    */
   export type ClanCastleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -55728,6 +55856,1166 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ClanCastleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanCastleRepair
+   */
+
+  export type AggregateClanCastleRepair = {
+    _count: ClanCastleRepairCountAggregateOutputType | null
+    _avg: ClanCastleRepairAvgAggregateOutputType | null
+    _sum: ClanCastleRepairSumAggregateOutputType | null
+    _min: ClanCastleRepairMinAggregateOutputType | null
+    _max: ClanCastleRepairMaxAggregateOutputType | null
+  }
+
+  export type ClanCastleRepairAvgAggregateOutputType = {
+    id: number | null
+    castleId: number | null
+    hpPerTick: number | null
+    frequency: number | null
+    totalTicks: number | null
+    appliedTicks: number | null
+  }
+
+  export type ClanCastleRepairSumAggregateOutputType = {
+    id: number | null
+    castleId: number | null
+    hpPerTick: number | null
+    frequency: number | null
+    totalTicks: number | null
+    appliedTicks: number | null
+  }
+
+  export type ClanCastleRepairMinAggregateOutputType = {
+    id: number | null
+    castleId: number | null
+    startedAt: Date | null
+    endsAt: Date | null
+    hpPerTick: number | null
+    frequency: number | null
+    totalTicks: number | null
+    appliedTicks: number | null
+  }
+
+  export type ClanCastleRepairMaxAggregateOutputType = {
+    id: number | null
+    castleId: number | null
+    startedAt: Date | null
+    endsAt: Date | null
+    hpPerTick: number | null
+    frequency: number | null
+    totalTicks: number | null
+    appliedTicks: number | null
+  }
+
+  export type ClanCastleRepairCountAggregateOutputType = {
+    id: number
+    castleId: number
+    startedAt: number
+    endsAt: number
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks: number
+    _all: number
+  }
+
+
+  export type ClanCastleRepairAvgAggregateInputType = {
+    id?: true
+    castleId?: true
+    hpPerTick?: true
+    frequency?: true
+    totalTicks?: true
+    appliedTicks?: true
+  }
+
+  export type ClanCastleRepairSumAggregateInputType = {
+    id?: true
+    castleId?: true
+    hpPerTick?: true
+    frequency?: true
+    totalTicks?: true
+    appliedTicks?: true
+  }
+
+  export type ClanCastleRepairMinAggregateInputType = {
+    id?: true
+    castleId?: true
+    startedAt?: true
+    endsAt?: true
+    hpPerTick?: true
+    frequency?: true
+    totalTicks?: true
+    appliedTicks?: true
+  }
+
+  export type ClanCastleRepairMaxAggregateInputType = {
+    id?: true
+    castleId?: true
+    startedAt?: true
+    endsAt?: true
+    hpPerTick?: true
+    frequency?: true
+    totalTicks?: true
+    appliedTicks?: true
+  }
+
+  export type ClanCastleRepairCountAggregateInputType = {
+    id?: true
+    castleId?: true
+    startedAt?: true
+    endsAt?: true
+    hpPerTick?: true
+    frequency?: true
+    totalTicks?: true
+    appliedTicks?: true
+    _all?: true
+  }
+
+  export type ClanCastleRepairAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanCastleRepair to aggregate.
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanCastleRepairs to fetch.
+     */
+    orderBy?: ClanCastleRepairOrderByWithRelationInput | ClanCastleRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanCastleRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanCastleRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanCastleRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanCastleRepairs
+    **/
+    _count?: true | ClanCastleRepairCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanCastleRepairAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanCastleRepairSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanCastleRepairMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanCastleRepairMaxAggregateInputType
+  }
+
+  export type GetClanCastleRepairAggregateType<T extends ClanCastleRepairAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanCastleRepair]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanCastleRepair[P]>
+      : GetScalarType<T[P], AggregateClanCastleRepair[P]>
+  }
+
+
+
+
+  export type ClanCastleRepairGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanCastleRepairWhereInput
+    orderBy?: ClanCastleRepairOrderByWithAggregationInput | ClanCastleRepairOrderByWithAggregationInput[]
+    by: ClanCastleRepairScalarFieldEnum[] | ClanCastleRepairScalarFieldEnum
+    having?: ClanCastleRepairScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanCastleRepairCountAggregateInputType | true
+    _avg?: ClanCastleRepairAvgAggregateInputType
+    _sum?: ClanCastleRepairSumAggregateInputType
+    _min?: ClanCastleRepairMinAggregateInputType
+    _max?: ClanCastleRepairMaxAggregateInputType
+  }
+
+  export type ClanCastleRepairGroupByOutputType = {
+    id: number
+    castleId: number
+    startedAt: Date
+    endsAt: Date
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks: number
+    _count: ClanCastleRepairCountAggregateOutputType | null
+    _avg: ClanCastleRepairAvgAggregateOutputType | null
+    _sum: ClanCastleRepairSumAggregateOutputType | null
+    _min: ClanCastleRepairMinAggregateOutputType | null
+    _max: ClanCastleRepairMaxAggregateOutputType | null
+  }
+
+  type GetClanCastleRepairGroupByPayload<T extends ClanCastleRepairGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanCastleRepairGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanCastleRepairGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanCastleRepairGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanCastleRepairGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanCastleRepairSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    castleId?: boolean
+    startedAt?: boolean
+    endsAt?: boolean
+    hpPerTick?: boolean
+    frequency?: boolean
+    totalTicks?: boolean
+    appliedTicks?: boolean
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanCastleRepair"]>
+
+  export type ClanCastleRepairSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    castleId?: boolean
+    startedAt?: boolean
+    endsAt?: boolean
+    hpPerTick?: boolean
+    frequency?: boolean
+    totalTicks?: boolean
+    appliedTicks?: boolean
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanCastleRepair"]>
+
+  export type ClanCastleRepairSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    castleId?: boolean
+    startedAt?: boolean
+    endsAt?: boolean
+    hpPerTick?: boolean
+    frequency?: boolean
+    totalTicks?: boolean
+    appliedTicks?: boolean
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanCastleRepair"]>
+
+  export type ClanCastleRepairSelectScalar = {
+    id?: boolean
+    castleId?: boolean
+    startedAt?: boolean
+    endsAt?: boolean
+    hpPerTick?: boolean
+    frequency?: boolean
+    totalTicks?: boolean
+    appliedTicks?: boolean
+  }
+
+  export type ClanCastleRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "castleId" | "startedAt" | "endsAt" | "hpPerTick" | "frequency" | "totalTicks" | "appliedTicks", ExtArgs["result"]["clanCastleRepair"]>
+  export type ClanCastleRepairInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }
+  export type ClanCastleRepairIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }
+  export type ClanCastleRepairIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    castle?: boolean | ClanCastleDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanCastleRepairPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanCastleRepair"
+    objects: {
+      castle: Prisma.$ClanCastlePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      castleId: number
+      startedAt: Date
+      endsAt: Date
+      hpPerTick: number
+      frequency: number
+      totalTicks: number
+      appliedTicks: number
+    }, ExtArgs["result"]["clanCastleRepair"]>
+    composites: {}
+  }
+
+  type ClanCastleRepairGetPayload<S extends boolean | null | undefined | ClanCastleRepairDefaultArgs> = $Result.GetResult<Prisma.$ClanCastleRepairPayload, S>
+
+  type ClanCastleRepairCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanCastleRepairFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanCastleRepairCountAggregateInputType | true
+    }
+
+  export interface ClanCastleRepairDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanCastleRepair'], meta: { name: 'ClanCastleRepair' } }
+    /**
+     * Find zero or one ClanCastleRepair that matches the filter.
+     * @param {ClanCastleRepairFindUniqueArgs} args - Arguments to find a ClanCastleRepair
+     * @example
+     * // Get one ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanCastleRepairFindUniqueArgs>(args: SelectSubset<T, ClanCastleRepairFindUniqueArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanCastleRepair that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanCastleRepairFindUniqueOrThrowArgs} args - Arguments to find a ClanCastleRepair
+     * @example
+     * // Get one ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanCastleRepairFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanCastleRepairFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanCastleRepair that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairFindFirstArgs} args - Arguments to find a ClanCastleRepair
+     * @example
+     * // Get one ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanCastleRepairFindFirstArgs>(args?: SelectSubset<T, ClanCastleRepairFindFirstArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanCastleRepair that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairFindFirstOrThrowArgs} args - Arguments to find a ClanCastleRepair
+     * @example
+     * // Get one ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanCastleRepairFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanCastleRepairFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanCastleRepairs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanCastleRepairs
+     * const clanCastleRepairs = await prisma.clanCastleRepair.findMany()
+     * 
+     * // Get first 10 ClanCastleRepairs
+     * const clanCastleRepairs = await prisma.clanCastleRepair.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanCastleRepairWithIdOnly = await prisma.clanCastleRepair.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanCastleRepairFindManyArgs>(args?: SelectSubset<T, ClanCastleRepairFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanCastleRepair.
+     * @param {ClanCastleRepairCreateArgs} args - Arguments to create a ClanCastleRepair.
+     * @example
+     * // Create one ClanCastleRepair
+     * const ClanCastleRepair = await prisma.clanCastleRepair.create({
+     *   data: {
+     *     // ... data to create a ClanCastleRepair
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanCastleRepairCreateArgs>(args: SelectSubset<T, ClanCastleRepairCreateArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanCastleRepairs.
+     * @param {ClanCastleRepairCreateManyArgs} args - Arguments to create many ClanCastleRepairs.
+     * @example
+     * // Create many ClanCastleRepairs
+     * const clanCastleRepair = await prisma.clanCastleRepair.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanCastleRepairCreateManyArgs>(args?: SelectSubset<T, ClanCastleRepairCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanCastleRepairs and returns the data saved in the database.
+     * @param {ClanCastleRepairCreateManyAndReturnArgs} args - Arguments to create many ClanCastleRepairs.
+     * @example
+     * // Create many ClanCastleRepairs
+     * const clanCastleRepair = await prisma.clanCastleRepair.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanCastleRepairs and only return the `id`
+     * const clanCastleRepairWithIdOnly = await prisma.clanCastleRepair.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanCastleRepairCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanCastleRepairCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanCastleRepair.
+     * @param {ClanCastleRepairDeleteArgs} args - Arguments to delete one ClanCastleRepair.
+     * @example
+     * // Delete one ClanCastleRepair
+     * const ClanCastleRepair = await prisma.clanCastleRepair.delete({
+     *   where: {
+     *     // ... filter to delete one ClanCastleRepair
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanCastleRepairDeleteArgs>(args: SelectSubset<T, ClanCastleRepairDeleteArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanCastleRepair.
+     * @param {ClanCastleRepairUpdateArgs} args - Arguments to update one ClanCastleRepair.
+     * @example
+     * // Update one ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanCastleRepairUpdateArgs>(args: SelectSubset<T, ClanCastleRepairUpdateArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanCastleRepairs.
+     * @param {ClanCastleRepairDeleteManyArgs} args - Arguments to filter ClanCastleRepairs to delete.
+     * @example
+     * // Delete a few ClanCastleRepairs
+     * const { count } = await prisma.clanCastleRepair.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanCastleRepairDeleteManyArgs>(args?: SelectSubset<T, ClanCastleRepairDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanCastleRepairs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanCastleRepairs
+     * const clanCastleRepair = await prisma.clanCastleRepair.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanCastleRepairUpdateManyArgs>(args: SelectSubset<T, ClanCastleRepairUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanCastleRepairs and returns the data updated in the database.
+     * @param {ClanCastleRepairUpdateManyAndReturnArgs} args - Arguments to update many ClanCastleRepairs.
+     * @example
+     * // Update many ClanCastleRepairs
+     * const clanCastleRepair = await prisma.clanCastleRepair.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanCastleRepairs and only return the `id`
+     * const clanCastleRepairWithIdOnly = await prisma.clanCastleRepair.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanCastleRepairUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanCastleRepairUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanCastleRepair.
+     * @param {ClanCastleRepairUpsertArgs} args - Arguments to update or create a ClanCastleRepair.
+     * @example
+     * // Update or create a ClanCastleRepair
+     * const clanCastleRepair = await prisma.clanCastleRepair.upsert({
+     *   create: {
+     *     // ... data to create a ClanCastleRepair
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanCastleRepair we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanCastleRepairUpsertArgs>(args: SelectSubset<T, ClanCastleRepairUpsertArgs<ExtArgs>>): Prisma__ClanCastleRepairClient<$Result.GetResult<Prisma.$ClanCastleRepairPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanCastleRepairs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairCountArgs} args - Arguments to filter ClanCastleRepairs to count.
+     * @example
+     * // Count the number of ClanCastleRepairs
+     * const count = await prisma.clanCastleRepair.count({
+     *   where: {
+     *     // ... the filter for the ClanCastleRepairs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanCastleRepairCountArgs>(
+      args?: Subset<T, ClanCastleRepairCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanCastleRepairCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanCastleRepair.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanCastleRepairAggregateArgs>(args: Subset<T, ClanCastleRepairAggregateArgs>): Prisma.PrismaPromise<GetClanCastleRepairAggregateType<T>>
+
+    /**
+     * Group by ClanCastleRepair.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCastleRepairGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanCastleRepairGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanCastleRepairGroupByArgs['orderBy'] }
+        : { orderBy?: ClanCastleRepairGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanCastleRepairGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanCastleRepairGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanCastleRepair model
+   */
+  readonly fields: ClanCastleRepairFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanCastleRepair.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanCastleRepairClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    castle<T extends ClanCastleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanCastleDefaultArgs<ExtArgs>>): Prisma__ClanCastleClient<$Result.GetResult<Prisma.$ClanCastlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanCastleRepair model
+   */ 
+  interface ClanCastleRepairFieldRefs {
+    readonly id: FieldRef<"ClanCastleRepair", 'Int'>
+    readonly castleId: FieldRef<"ClanCastleRepair", 'Int'>
+    readonly startedAt: FieldRef<"ClanCastleRepair", 'DateTime'>
+    readonly endsAt: FieldRef<"ClanCastleRepair", 'DateTime'>
+    readonly hpPerTick: FieldRef<"ClanCastleRepair", 'Int'>
+    readonly frequency: FieldRef<"ClanCastleRepair", 'Int'>
+    readonly totalTicks: FieldRef<"ClanCastleRepair", 'Int'>
+    readonly appliedTicks: FieldRef<"ClanCastleRepair", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanCastleRepair findUnique
+   */
+  export type ClanCastleRepairFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanCastleRepair to fetch.
+     */
+    where: ClanCastleRepairWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair findUniqueOrThrow
+   */
+  export type ClanCastleRepairFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanCastleRepair to fetch.
+     */
+    where: ClanCastleRepairWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair findFirst
+   */
+  export type ClanCastleRepairFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanCastleRepair to fetch.
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanCastleRepairs to fetch.
+     */
+    orderBy?: ClanCastleRepairOrderByWithRelationInput | ClanCastleRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanCastleRepairs.
+     */
+    cursor?: ClanCastleRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanCastleRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanCastleRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanCastleRepairs.
+     */
+    distinct?: ClanCastleRepairScalarFieldEnum | ClanCastleRepairScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair findFirstOrThrow
+   */
+  export type ClanCastleRepairFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanCastleRepair to fetch.
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanCastleRepairs to fetch.
+     */
+    orderBy?: ClanCastleRepairOrderByWithRelationInput | ClanCastleRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanCastleRepairs.
+     */
+    cursor?: ClanCastleRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanCastleRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanCastleRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanCastleRepairs.
+     */
+    distinct?: ClanCastleRepairScalarFieldEnum | ClanCastleRepairScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair findMany
+   */
+  export type ClanCastleRepairFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanCastleRepairs to fetch.
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanCastleRepairs to fetch.
+     */
+    orderBy?: ClanCastleRepairOrderByWithRelationInput | ClanCastleRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanCastleRepairs.
+     */
+    cursor?: ClanCastleRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanCastleRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanCastleRepairs.
+     */
+    skip?: number
+    distinct?: ClanCastleRepairScalarFieldEnum | ClanCastleRepairScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair create
+   */
+  export type ClanCastleRepairCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanCastleRepair.
+     */
+    data: XOR<ClanCastleRepairCreateInput, ClanCastleRepairUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair createMany
+   */
+  export type ClanCastleRepairCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanCastleRepairs.
+     */
+    data: ClanCastleRepairCreateManyInput | ClanCastleRepairCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanCastleRepair createManyAndReturn
+   */
+  export type ClanCastleRepairCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanCastleRepairs.
+     */
+    data: ClanCastleRepairCreateManyInput | ClanCastleRepairCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanCastleRepair update
+   */
+  export type ClanCastleRepairUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanCastleRepair.
+     */
+    data: XOR<ClanCastleRepairUpdateInput, ClanCastleRepairUncheckedUpdateInput>
+    /**
+     * Choose, which ClanCastleRepair to update.
+     */
+    where: ClanCastleRepairWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair updateMany
+   */
+  export type ClanCastleRepairUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanCastleRepairs.
+     */
+    data: XOR<ClanCastleRepairUpdateManyMutationInput, ClanCastleRepairUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanCastleRepairs to update
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * Limit how many ClanCastleRepairs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanCastleRepair updateManyAndReturn
+   */
+  export type ClanCastleRepairUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanCastleRepairs.
+     */
+    data: XOR<ClanCastleRepairUpdateManyMutationInput, ClanCastleRepairUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanCastleRepairs to update
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * Limit how many ClanCastleRepairs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanCastleRepair upsert
+   */
+  export type ClanCastleRepairUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanCastleRepair to update in case it exists.
+     */
+    where: ClanCastleRepairWhereUniqueInput
+    /**
+     * In case the ClanCastleRepair found by the `where` argument doesn't exist, create a new ClanCastleRepair with this data.
+     */
+    create: XOR<ClanCastleRepairCreateInput, ClanCastleRepairUncheckedCreateInput>
+    /**
+     * In case the ClanCastleRepair was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanCastleRepairUpdateInput, ClanCastleRepairUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair delete
+   */
+  export type ClanCastleRepairDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
+    /**
+     * Filter which ClanCastleRepair to delete.
+     */
+    where: ClanCastleRepairWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanCastleRepair deleteMany
+   */
+  export type ClanCastleRepairDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanCastleRepairs to delete
+     */
+    where?: ClanCastleRepairWhereInput
+    /**
+     * Limit how many ClanCastleRepairs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanCastleRepair without action
+   */
+  export type ClanCastleRepairDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCastleRepair
+     */
+    select?: ClanCastleRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanCastleRepair
+     */
+    omit?: ClanCastleRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanCastleRepairInclude<ExtArgs> | null
   }
 
 
@@ -82279,6 +83567,20 @@ export namespace Prisma {
   export type ClanCastleScalarFieldEnum = (typeof ClanCastleScalarFieldEnum)[keyof typeof ClanCastleScalarFieldEnum]
 
 
+  export const ClanCastleRepairScalarFieldEnum: {
+    id: 'id',
+    castleId: 'castleId',
+    startedAt: 'startedAt',
+    endsAt: 'endsAt',
+    hpPerTick: 'hpPerTick',
+    frequency: 'frequency',
+    totalTicks: 'totalTicks',
+    appliedTicks: 'appliedTicks'
+  };
+
+  export type ClanCastleRepairScalarFieldEnum = (typeof ClanCastleRepairScalarFieldEnum)[keyof typeof ClanCastleRepairScalarFieldEnum]
+
+
   export const ClanJoinRequestScalarFieldEnum: {
     id: 'id',
     clanId: 'clanId',
@@ -85696,6 +86998,7 @@ export namespace Prisma {
     defenseOrder?: IntNullableListFilter<"ClanCastle">
     clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
     defender?: DinozListRelationFilter
+    repairs?: ClanCastleRepairListRelationFilter
   }
 
   export type ClanCastleOrderByWithRelationInput = {
@@ -85707,6 +87010,7 @@ export namespace Prisma {
     defenseOrder?: SortOrder
     clan?: ClanOrderByWithRelationInput
     defender?: DinozOrderByRelationAggregateInput
+    repairs?: ClanCastleRepairOrderByRelationAggregateInput
   }
 
   export type ClanCastleWhereUniqueInput = Prisma.AtLeast<{
@@ -85721,6 +87025,7 @@ export namespace Prisma {
     defenseOrder?: IntNullableListFilter<"ClanCastle">
     clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
     defender?: DinozListRelationFilter
+    repairs?: ClanCastleRepairListRelationFilter
   }, "id" | "clanId">
 
   export type ClanCastleOrderByWithAggregationInput = {
@@ -85747,6 +87052,78 @@ export namespace Prisma {
     maxLife?: IntWithAggregatesFilter<"ClanCastle"> | number
     currentLife?: IntWithAggregatesFilter<"ClanCastle"> | number
     defenseOrder?: IntNullableListFilter<"ClanCastle">
+  }
+
+  export type ClanCastleRepairWhereInput = {
+    AND?: ClanCastleRepairWhereInput | ClanCastleRepairWhereInput[]
+    OR?: ClanCastleRepairWhereInput[]
+    NOT?: ClanCastleRepairWhereInput | ClanCastleRepairWhereInput[]
+    id?: IntFilter<"ClanCastleRepair"> | number
+    castleId?: IntFilter<"ClanCastleRepair"> | number
+    startedAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    endsAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    hpPerTick?: IntFilter<"ClanCastleRepair"> | number
+    frequency?: IntFilter<"ClanCastleRepair"> | number
+    totalTicks?: IntFilter<"ClanCastleRepair"> | number
+    appliedTicks?: IntFilter<"ClanCastleRepair"> | number
+    castle?: XOR<ClanCastleScalarRelationFilter, ClanCastleWhereInput>
+  }
+
+  export type ClanCastleRepairOrderByWithRelationInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    startedAt?: SortOrder
+    endsAt?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+    castle?: ClanCastleOrderByWithRelationInput
+  }
+
+  export type ClanCastleRepairWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ClanCastleRepairWhereInput | ClanCastleRepairWhereInput[]
+    OR?: ClanCastleRepairWhereInput[]
+    NOT?: ClanCastleRepairWhereInput | ClanCastleRepairWhereInput[]
+    castleId?: IntFilter<"ClanCastleRepair"> | number
+    startedAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    endsAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    hpPerTick?: IntFilter<"ClanCastleRepair"> | number
+    frequency?: IntFilter<"ClanCastleRepair"> | number
+    totalTicks?: IntFilter<"ClanCastleRepair"> | number
+    appliedTicks?: IntFilter<"ClanCastleRepair"> | number
+    castle?: XOR<ClanCastleScalarRelationFilter, ClanCastleWhereInput>
+  }, "id">
+
+  export type ClanCastleRepairOrderByWithAggregationInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    startedAt?: SortOrder
+    endsAt?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+    _count?: ClanCastleRepairCountOrderByAggregateInput
+    _avg?: ClanCastleRepairAvgOrderByAggregateInput
+    _max?: ClanCastleRepairMaxOrderByAggregateInput
+    _min?: ClanCastleRepairMinOrderByAggregateInput
+    _sum?: ClanCastleRepairSumOrderByAggregateInput
+  }
+
+  export type ClanCastleRepairScalarWhereWithAggregatesInput = {
+    AND?: ClanCastleRepairScalarWhereWithAggregatesInput | ClanCastleRepairScalarWhereWithAggregatesInput[]
+    OR?: ClanCastleRepairScalarWhereWithAggregatesInput[]
+    NOT?: ClanCastleRepairScalarWhereWithAggregatesInput | ClanCastleRepairScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
+    castleId?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
+    startedAt?: DateTimeWithAggregatesFilter<"ClanCastleRepair"> | Date | string
+    endsAt?: DateTimeWithAggregatesFilter<"ClanCastleRepair"> | Date | string
+    hpPerTick?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
+    frequency?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
+    totalTicks?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
+    appliedTicks?: IntWithAggregatesFilter<"ClanCastleRepair"> | number
   }
 
   export type ClanJoinRequestWhereInput = {
@@ -90089,6 +91466,7 @@ export namespace Prisma {
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
     clan: ClanCreateNestedOneWithoutCastleInput
     defender?: DinozCreateNestedManyWithoutCastleInput
+    repairs?: ClanCastleRepairCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleUncheckedCreateInput = {
@@ -90099,6 +91477,7 @@ export namespace Prisma {
     currentLife?: number
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
     defender?: DinozUncheckedCreateNestedManyWithoutCastleInput
+    repairs?: ClanCastleRepairUncheckedCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleUpdateInput = {
@@ -90108,6 +91487,7 @@ export namespace Prisma {
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
     clan?: ClanUpdateOneRequiredWithoutCastleNestedInput
     defender?: DinozUpdateManyWithoutCastleNestedInput
+    repairs?: ClanCastleRepairUpdateManyWithoutCastleNestedInput
   }
 
   export type ClanCastleUncheckedUpdateInput = {
@@ -90118,6 +91498,7 @@ export namespace Prisma {
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
     defender?: DinozUncheckedUpdateManyWithoutCastleNestedInput
+    repairs?: ClanCastleRepairUncheckedUpdateManyWithoutCastleNestedInput
   }
 
   export type ClanCastleCreateManyInput = {
@@ -90143,6 +91524,79 @@ export namespace Prisma {
     maxLife?: IntFieldUpdateOperationsInput | number
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
+  }
+
+  export type ClanCastleRepairCreateInput = {
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+    castle: ClanCastleCreateNestedOneWithoutRepairsInput
+  }
+
+  export type ClanCastleRepairUncheckedCreateInput = {
+    id?: number
+    castleId: number
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+  }
+
+  export type ClanCastleRepairUpdateInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
+    castle?: ClanCastleUpdateOneRequiredWithoutRepairsNestedInput
+  }
+
+  export type ClanCastleRepairUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    castleId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanCastleRepairCreateManyInput = {
+    id?: number
+    castleId: number
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+  }
+
+  export type ClanCastleRepairUpdateManyMutationInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanCastleRepairUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    castleId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
   }
 
   export type ClanJoinRequestCreateInput = {
@@ -94460,6 +95914,16 @@ export namespace Prisma {
     isNot?: ClanWhereInput
   }
 
+  export type ClanCastleRepairListRelationFilter = {
+    every?: ClanCastleRepairWhereInput
+    some?: ClanCastleRepairWhereInput
+    none?: ClanCastleRepairWhereInput
+  }
+
+  export type ClanCastleRepairOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ClanCastleCountOrderByAggregateInput = {
     id?: SortOrder
     clanId?: SortOrder
@@ -94501,6 +95965,62 @@ export namespace Prisma {
     maxLife?: SortOrder
     currentLife?: SortOrder
     defenseOrder?: SortOrder
+  }
+
+  export type ClanCastleScalarRelationFilter = {
+    is?: ClanCastleWhereInput
+    isNot?: ClanCastleWhereInput
+  }
+
+  export type ClanCastleRepairCountOrderByAggregateInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    startedAt?: SortOrder
+    endsAt?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+  }
+
+  export type ClanCastleRepairAvgOrderByAggregateInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+  }
+
+  export type ClanCastleRepairMaxOrderByAggregateInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    startedAt?: SortOrder
+    endsAt?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+  }
+
+  export type ClanCastleRepairMinOrderByAggregateInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    startedAt?: SortOrder
+    endsAt?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
+  }
+
+  export type ClanCastleRepairSumOrderByAggregateInput = {
+    id?: SortOrder
+    castleId?: SortOrder
+    hpPerTick?: SortOrder
+    frequency?: SortOrder
+    totalTicks?: SortOrder
+    appliedTicks?: SortOrder
   }
 
   export type ClanJoinRequestCountOrderByAggregateInput = {
@@ -99800,11 +101320,25 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
+  export type ClanCastleRepairCreateNestedManyWithoutCastleInput = {
+    create?: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput> | ClanCastleRepairCreateWithoutCastleInput[] | ClanCastleRepairUncheckedCreateWithoutCastleInput[]
+    connectOrCreate?: ClanCastleRepairCreateOrConnectWithoutCastleInput | ClanCastleRepairCreateOrConnectWithoutCastleInput[]
+    createMany?: ClanCastleRepairCreateManyCastleInputEnvelope
+    connect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutCastleInput = {
     create?: XOR<DinozCreateWithoutCastleInput, DinozUncheckedCreateWithoutCastleInput> | DinozCreateWithoutCastleInput[] | DinozUncheckedCreateWithoutCastleInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutCastleInput | DinozCreateOrConnectWithoutCastleInput[]
     createMany?: DinozCreateManyCastleInputEnvelope
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
+  export type ClanCastleRepairUncheckedCreateNestedManyWithoutCastleInput = {
+    create?: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput> | ClanCastleRepairCreateWithoutCastleInput[] | ClanCastleRepairUncheckedCreateWithoutCastleInput[]
+    connectOrCreate?: ClanCastleRepairCreateOrConnectWithoutCastleInput | ClanCastleRepairCreateOrConnectWithoutCastleInput[]
+    createMany?: ClanCastleRepairCreateManyCastleInputEnvelope
+    connect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
   }
 
   export type ClanCastleUpdatedefenseOrderInput = {
@@ -99834,6 +101368,20 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type ClanCastleRepairUpdateManyWithoutCastleNestedInput = {
+    create?: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput> | ClanCastleRepairCreateWithoutCastleInput[] | ClanCastleRepairUncheckedCreateWithoutCastleInput[]
+    connectOrCreate?: ClanCastleRepairCreateOrConnectWithoutCastleInput | ClanCastleRepairCreateOrConnectWithoutCastleInput[]
+    upsert?: ClanCastleRepairUpsertWithWhereUniqueWithoutCastleInput | ClanCastleRepairUpsertWithWhereUniqueWithoutCastleInput[]
+    createMany?: ClanCastleRepairCreateManyCastleInputEnvelope
+    set?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    disconnect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    delete?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    connect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    update?: ClanCastleRepairUpdateWithWhereUniqueWithoutCastleInput | ClanCastleRepairUpdateWithWhereUniqueWithoutCastleInput[]
+    updateMany?: ClanCastleRepairUpdateManyWithWhereWithoutCastleInput | ClanCastleRepairUpdateManyWithWhereWithoutCastleInput[]
+    deleteMany?: ClanCastleRepairScalarWhereInput | ClanCastleRepairScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutCastleNestedInput = {
     create?: XOR<DinozCreateWithoutCastleInput, DinozUncheckedCreateWithoutCastleInput> | DinozCreateWithoutCastleInput[] | DinozUncheckedCreateWithoutCastleInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutCastleInput | DinozCreateOrConnectWithoutCastleInput[]
@@ -99846,6 +101394,34 @@ export namespace Prisma {
     update?: DinozUpdateWithWhereUniqueWithoutCastleInput | DinozUpdateWithWhereUniqueWithoutCastleInput[]
     updateMany?: DinozUpdateManyWithWhereWithoutCastleInput | DinozUpdateManyWithWhereWithoutCastleInput[]
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
+  export type ClanCastleRepairUncheckedUpdateManyWithoutCastleNestedInput = {
+    create?: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput> | ClanCastleRepairCreateWithoutCastleInput[] | ClanCastleRepairUncheckedCreateWithoutCastleInput[]
+    connectOrCreate?: ClanCastleRepairCreateOrConnectWithoutCastleInput | ClanCastleRepairCreateOrConnectWithoutCastleInput[]
+    upsert?: ClanCastleRepairUpsertWithWhereUniqueWithoutCastleInput | ClanCastleRepairUpsertWithWhereUniqueWithoutCastleInput[]
+    createMany?: ClanCastleRepairCreateManyCastleInputEnvelope
+    set?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    disconnect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    delete?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    connect?: ClanCastleRepairWhereUniqueInput | ClanCastleRepairWhereUniqueInput[]
+    update?: ClanCastleRepairUpdateWithWhereUniqueWithoutCastleInput | ClanCastleRepairUpdateWithWhereUniqueWithoutCastleInput[]
+    updateMany?: ClanCastleRepairUpdateManyWithWhereWithoutCastleInput | ClanCastleRepairUpdateManyWithWhereWithoutCastleInput[]
+    deleteMany?: ClanCastleRepairScalarWhereInput | ClanCastleRepairScalarWhereInput[]
+  }
+
+  export type ClanCastleCreateNestedOneWithoutRepairsInput = {
+    create?: XOR<ClanCastleCreateWithoutRepairsInput, ClanCastleUncheckedCreateWithoutRepairsInput>
+    connectOrCreate?: ClanCastleCreateOrConnectWithoutRepairsInput
+    connect?: ClanCastleWhereUniqueInput
+  }
+
+  export type ClanCastleUpdateOneRequiredWithoutRepairsNestedInput = {
+    create?: XOR<ClanCastleCreateWithoutRepairsInput, ClanCastleUncheckedCreateWithoutRepairsInput>
+    connectOrCreate?: ClanCastleCreateOrConnectWithoutRepairsInput
+    upsert?: ClanCastleUpsertWithoutRepairsInput
+    connect?: ClanCastleWhereUniqueInput
+    update?: XOR<XOR<ClanCastleUpdateToOneWithWhereWithoutRepairsInput, ClanCastleUpdateWithoutRepairsInput>, ClanCastleUncheckedUpdateWithoutRepairsInput>
   }
 
   export type ClanCreateNestedOneWithoutJoinRequestsInput = {
@@ -102182,6 +103758,7 @@ export namespace Prisma {
     currentLife?: number
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
     clan: ClanCreateNestedOneWithoutCastleInput
+    repairs?: ClanCastleRepairCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleUncheckedCreateWithoutDefenderInput = {
@@ -102191,6 +103768,7 @@ export namespace Prisma {
     maxLife?: number
     currentLife?: number
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
+    repairs?: ClanCastleRepairUncheckedCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleCreateOrConnectWithoutDefenderInput = {
@@ -102969,6 +104547,7 @@ export namespace Prisma {
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
     clan?: ClanUpdateOneRequiredWithoutCastleNestedInput
+    repairs?: ClanCastleRepairUpdateManyWithoutCastleNestedInput
   }
 
   export type ClanCastleUncheckedUpdateWithoutDefenderInput = {
@@ -102978,6 +104557,7 @@ export namespace Prisma {
     maxLife?: IntFieldUpdateOperationsInput | number
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
+    repairs?: ClanCastleRepairUncheckedUpdateManyWithoutCastleNestedInput
   }
 
   export type DinozBuildUpsertWithoutDinozsInput = {
@@ -115577,6 +117157,7 @@ export namespace Prisma {
     currentLife?: number
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
     defender?: DinozCreateNestedManyWithoutCastleInput
+    repairs?: ClanCastleRepairCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleUncheckedCreateWithoutClanInput = {
@@ -115586,6 +117167,7 @@ export namespace Prisma {
     currentLife?: number
     defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
     defender?: DinozUncheckedCreateNestedManyWithoutCastleInput
+    repairs?: ClanCastleRepairUncheckedCreateNestedManyWithoutCastleInput
   }
 
   export type ClanCastleCreateOrConnectWithoutClanInput = {
@@ -116197,6 +117779,7 @@ export namespace Prisma {
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
     defender?: DinozUpdateManyWithoutCastleNestedInput
+    repairs?: ClanCastleRepairUpdateManyWithoutCastleNestedInput
   }
 
   export type ClanCastleUncheckedUpdateWithoutClanInput = {
@@ -116206,6 +117789,7 @@ export namespace Prisma {
     currentLife?: IntFieldUpdateOperationsInput | number
     defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
     defender?: DinozUncheckedUpdateManyWithoutCastleNestedInput
+    repairs?: ClanCastleRepairUncheckedUpdateManyWithoutCastleNestedInput
   }
 
   export type PlayerUpsertWithoutLeaderOfInput = {
@@ -116812,6 +118396,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ClanCastleRepairCreateWithoutCastleInput = {
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+  }
+
+  export type ClanCastleRepairUncheckedCreateWithoutCastleInput = {
+    id?: number
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+  }
+
+  export type ClanCastleRepairCreateOrConnectWithoutCastleInput = {
+    where: ClanCastleRepairWhereUniqueInput
+    create: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput>
+  }
+
+  export type ClanCastleRepairCreateManyCastleInputEnvelope = {
+    data: ClanCastleRepairCreateManyCastleInput | ClanCastleRepairCreateManyCastleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanUpsertWithoutCastleInput = {
     update: XOR<ClanUpdateWithoutCastleInput, ClanUncheckedUpdateWithoutCastleInput>
     create: XOR<ClanCreateWithoutCastleInput, ClanUncheckedCreateWithoutCastleInput>
@@ -116880,6 +118493,90 @@ export namespace Prisma {
   export type DinozUpdateManyWithWhereWithoutCastleInput = {
     where: DinozScalarWhereInput
     data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyWithoutCastleInput>
+  }
+
+  export type ClanCastleRepairUpsertWithWhereUniqueWithoutCastleInput = {
+    where: ClanCastleRepairWhereUniqueInput
+    update: XOR<ClanCastleRepairUpdateWithoutCastleInput, ClanCastleRepairUncheckedUpdateWithoutCastleInput>
+    create: XOR<ClanCastleRepairCreateWithoutCastleInput, ClanCastleRepairUncheckedCreateWithoutCastleInput>
+  }
+
+  export type ClanCastleRepairUpdateWithWhereUniqueWithoutCastleInput = {
+    where: ClanCastleRepairWhereUniqueInput
+    data: XOR<ClanCastleRepairUpdateWithoutCastleInput, ClanCastleRepairUncheckedUpdateWithoutCastleInput>
+  }
+
+  export type ClanCastleRepairUpdateManyWithWhereWithoutCastleInput = {
+    where: ClanCastleRepairScalarWhereInput
+    data: XOR<ClanCastleRepairUpdateManyMutationInput, ClanCastleRepairUncheckedUpdateManyWithoutCastleInput>
+  }
+
+  export type ClanCastleRepairScalarWhereInput = {
+    AND?: ClanCastleRepairScalarWhereInput | ClanCastleRepairScalarWhereInput[]
+    OR?: ClanCastleRepairScalarWhereInput[]
+    NOT?: ClanCastleRepairScalarWhereInput | ClanCastleRepairScalarWhereInput[]
+    id?: IntFilter<"ClanCastleRepair"> | number
+    castleId?: IntFilter<"ClanCastleRepair"> | number
+    startedAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    endsAt?: DateTimeFilter<"ClanCastleRepair"> | Date | string
+    hpPerTick?: IntFilter<"ClanCastleRepair"> | number
+    frequency?: IntFilter<"ClanCastleRepair"> | number
+    totalTicks?: IntFilter<"ClanCastleRepair"> | number
+    appliedTicks?: IntFilter<"ClanCastleRepair"> | number
+  }
+
+  export type ClanCastleCreateWithoutRepairsInput = {
+    placeId: number
+    maxLife?: number
+    currentLife?: number
+    defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
+    clan: ClanCreateNestedOneWithoutCastleInput
+    defender?: DinozCreateNestedManyWithoutCastleInput
+  }
+
+  export type ClanCastleUncheckedCreateWithoutRepairsInput = {
+    id?: number
+    clanId: number
+    placeId: number
+    maxLife?: number
+    currentLife?: number
+    defenseOrder?: ClanCastleCreatedefenseOrderInput | number[]
+    defender?: DinozUncheckedCreateNestedManyWithoutCastleInput
+  }
+
+  export type ClanCastleCreateOrConnectWithoutRepairsInput = {
+    where: ClanCastleWhereUniqueInput
+    create: XOR<ClanCastleCreateWithoutRepairsInput, ClanCastleUncheckedCreateWithoutRepairsInput>
+  }
+
+  export type ClanCastleUpsertWithoutRepairsInput = {
+    update: XOR<ClanCastleUpdateWithoutRepairsInput, ClanCastleUncheckedUpdateWithoutRepairsInput>
+    create: XOR<ClanCastleCreateWithoutRepairsInput, ClanCastleUncheckedCreateWithoutRepairsInput>
+    where?: ClanCastleWhereInput
+  }
+
+  export type ClanCastleUpdateToOneWithWhereWithoutRepairsInput = {
+    where?: ClanCastleWhereInput
+    data: XOR<ClanCastleUpdateWithoutRepairsInput, ClanCastleUncheckedUpdateWithoutRepairsInput>
+  }
+
+  export type ClanCastleUpdateWithoutRepairsInput = {
+    placeId?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    currentLife?: IntFieldUpdateOperationsInput | number
+    defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
+    clan?: ClanUpdateOneRequiredWithoutCastleNestedInput
+    defender?: DinozUpdateManyWithoutCastleNestedInput
+  }
+
+  export type ClanCastleUncheckedUpdateWithoutRepairsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    currentLife?: IntFieldUpdateOperationsInput | number
+    defenseOrder?: ClanCastleUpdatedefenseOrderInput | number[]
+    defender?: DinozUncheckedUpdateManyWithoutCastleNestedInput
   }
 
   export type ClanCreateWithoutJoinRequestsInput = {
@@ -128737,6 +130434,16 @@ export namespace Prisma {
     buildId?: string | null
   }
 
+  export type ClanCastleRepairCreateManyCastleInput = {
+    id?: number
+    startedAt?: Date | string
+    endsAt: Date | string
+    hpPerTick: number
+    frequency: number
+    totalTicks: number
+    appliedTicks?: number
+  }
+
   export type DinozUpdateWithoutCastleInput = {
     name?: StringFieldUpdateOperationsInput | string
     raceId?: IntFieldUpdateOperationsInput | number
@@ -128865,6 +130572,35 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ClanCastleRepairUpdateWithoutCastleInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanCastleRepairUncheckedUpdateWithoutCastleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanCastleRepairUncheckedUpdateManyWithoutCastleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hpPerTick?: IntFieldUpdateOperationsInput | number
+    frequency?: IntFieldUpdateOperationsInput | number
+    totalTicks?: IntFieldUpdateOperationsInput | number
+    appliedTicks?: IntFieldUpdateOperationsInput | number
   }
 
   export type ClanWarRankingCreateManyEventInput = {

@@ -48,7 +48,7 @@ export default defineComponent({
 			try {
 				const treasure = await ClanService.getClanTreasure(clanId);
 				treasure.forEach(t => {
-					const ingredient = Object.values(ingredientList).find(i => i.ingredientId === t.itemId);
+					const ingredient = Object.values(ingredientList).find(i => i.ingredientId === t.ingredientId);
 					if (!ingredient) {
 						this.$toast.open({ message: this.$t('toast.error'), type: 'error' });
 						return;

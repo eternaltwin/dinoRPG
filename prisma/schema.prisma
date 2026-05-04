@@ -607,14 +607,30 @@ model Clan {
 }
 
 model ClanCastle {
-  id           Int     @id @default(autoincrement())
-  clanId       Int     @unique
+  id           Int                @id @default(autoincrement())
+  clanId       Int                @unique
   placeId      Int
-  clan         Clan    @relation(fields: [clanId], references: [id])
-  maxLife      Int     @default(300)
-  currentLife  Int     @default(300)
+  clan         Clan               @relation(fields: [clanId], references: [id])
+  maxLife      Int                @default(300)
+  currentLife  Int                @default(300)
   defender     Dinoz[]
-  defenseOrder Int[]   @default([])
+  defenseOrder Int[]              @default([])
+  repairs      ClanCastleRepair[]
+}
+
+model ClanCastleRepair {
+  id           Int        @id @default(autoincrement())
+  castleId     Int
+  castle       ClanCastle @relation(fields: [castleId], references: [id], onDelete: Cascade)
+  startedAt    DateTime   @default(now()) @db.Timestamp(6)
+  endsAt       DateTime   @db.Timestamp(6)
+  hpPerTick    Int
+  frequency    Int // en minutes
+  totalTicks   Int // = REPAIR_MAX_TICKS
+  appliedTicks Int        @default(0)
+
+  @@index([castleId])
+  @@map("clan_castle_repair")
 }
 
 model ClanJoinRequest {

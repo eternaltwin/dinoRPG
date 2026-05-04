@@ -3,7 +3,13 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Clan, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
-import { checkCanDeclareWar, consumeWarCost, getWarForResolve, playerHasRightRequest } from '../dao/clansDao.js';
+import {
+	checkCanDeclareWar,
+	consumeRepairCost,
+	consumeWarCost,
+	getWarForResolve,
+	playerHasRightRequest
+} from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
@@ -30,6 +36,8 @@ import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
+import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -497,8 +505,6 @@ export async function scheduleWarExpiration() {
 		LOGGER.log('No war event ongoing.');
 		return;
 	}
-	//TODO schedule war expiration
-	// scheduleJob()
 
 	const oingoingWar = await prisma.clanWar.findMany({
 		where: {
@@ -525,6 +531,15 @@ export async function scheduleWarExpiration() {
 	});
 
 	LOGGER.log(`Reset attack timers for ${dinozResting.count} dinoz.`);
+
+	const remainingRepairs = await prisma.clanCastleRepair.findMany({
+		where: { appliedTicks: { lt: prisma.clanCastleRepair.fields.totalTicks } }
+	});
+
+	remainingRepairs.forEach(repair => {
+		scheduleRepairTicks(repair.id, repair.castleId, repair.hpPerTick, repair.frequency, repair.totalTicks);
+		LOGGER.log(`Scheduling repair ${repair.id}.`);
+	});
 }
 
 export async function warStatus(req: Request) {
@@ -679,6 +694,11 @@ export async function castleStatus(req: Request) {
 					display: true,
 					level: true
 				}
+			},
+			repairs: {
+				where: {
+					appliedTicks: { lt: prisma.clanCastleRepair.fields.totalTicks }
+				}
 			}
 		}
 	});
@@ -817,7 +837,16 @@ export async function attackCastle(req: Request) {
 									placeId: true,
 									currentLife: true,
 									maxLife: true,
-									defenseOrder: true
+									defenseOrder: true,
+									_count: {
+										select: {
+											repairs: {
+												where: {
+													appliedTicks: { lt: prisma.clanCastleRepair.fields.totalTicks }
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -882,7 +911,8 @@ export async function attackCastle(req: Request) {
 		action: 'addCastle',
 		castle: {
 			life: activeWar.defender.castle.currentLife,
-			maxLife: activeWar.defender.castle.maxLife
+			maxLife: activeWar.defender.castle.maxLife,
+			repair: activeWar.defender.castle._count.repairs
 		}
 	});
 	let totalCastleDamage = 0;
@@ -1162,4 +1192,150 @@ export async function computeDefenderTeam(attackerPower: number, teamSize: numbe
 
 async function unrestingAttackingDinoz(dinozId: number) {
 	await updateDinoz(dinozId, { unavailableReason: null });
+}
+
+export async function repairCastle(req: Request) {
+	const authed = await auth(req);
+
+	if (!authed.clanId) {
+		throw new ExpectedError(translate('noClan', authed));
+	}
+
+	const hasRight = await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.WAR_OFFICER);
+
+	if (!hasRight) {
+		throw new ExpectedError(translate('noRight', authed));
+	}
+
+	const { hpPerTick, frequency, tick } = req.body as {
+		hpPerTick: number;
+		frequency: RepairFrequency;
+		tick: number;
+	};
+
+	if (hpPerTick < 1 || hpPerTick > 10) {
+		throw new ExpectedError('invalidRepairHp');
+	}
+	if (!Object.values(RepairFrequency).includes(frequency)) {
+		throw new ExpectedError('invalidRepairFrequency');
+	}
+
+	const castle = await prisma.clanCastle.findUnique({
+		where: { clanId: authed.clanId },
+		select: {
+			id: true,
+			currentLife: true,
+			maxLife: true,
+			repairs: {
+				where: { appliedTicks: { lt: prisma.clanCastleRepair.fields.totalTicks } },
+				select: { id: true }
+			}
+		}
+	});
+
+	if (!castle) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
+	}
+
+	if (castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.castleDestroyed', authed));
+	}
+
+	if (castle.currentLife >= castle.maxLife) {
+		throw new ExpectedError(translate('clanWar.castleFullLife', authed));
+	}
+
+	console.log(castle.repairs);
+	if (castle.repairs.length >= REPAIR_MAX_STACK) {
+		throw new ExpectedError(translate('clanWar.repairStackFull', authed));
+	}
+
+	// Get clan ingredients
+	const clan = await prisma.clan.findUnique({
+		where: { id: authed.clanId },
+		select: {
+			ingredients: { select: { ingredientId: true, quantity: true } }
+		}
+	});
+
+	if (!clan) {
+		throw new ExpectedError(translate('noClan', authed));
+	}
+
+	const cost = computeRepairCost(hpPerTick, frequency, tick, clan.ingredients);
+
+	if (!cost.canAfford) {
+		throw new ExpectedError(translate('clanWar.notEnoughIngredientsForRepair', authed));
+	}
+
+	// Consume ingredients
+	await consumeRepairCost(authed.clanId, cost);
+
+	// Total duration = totalTicks * frequency
+	const durationMs = tick * frequency * 60 * 1000;
+	const endsAt = new Date(Date.now() + durationMs);
+
+	const repair = await prisma.clanCastleRepair.create({
+		data: {
+			castleId: castle.id,
+			hpPerTick,
+			frequency,
+			totalTicks: tick,
+			endsAt
+		}
+	});
+
+	// schedule ticks
+	scheduleRepairTicks(repair.id, castle.id, hpPerTick, frequency, REPAIR_MAX_TICKS);
+
+	return;
+}
+
+function scheduleRepairTicks(
+	repairId: number,
+	castleId: number,
+	hpPerTick: number,
+	frequency: RepairFrequency,
+	totalTicks: number
+) {
+	let tickCount = 0;
+
+	const job = scheduleJob(
+		`repair_${repairId}`,
+		{ rule: `*/${frequency} * * * *` }, // cron selon la fréquence
+		async () => {
+			tickCount++;
+
+			const castle = await prisma.clanCastle.findUnique({
+				where: { id: castleId },
+				select: { currentLife: true, maxLife: true }
+			});
+
+			if (!castle) {
+				job.cancel();
+				return;
+			}
+
+			const hpToApply = Math.min(
+				hpPerTick,
+				REPAIR_MAX_HP - (tickCount - 1) * hpPerTick // HP restants avant le cap
+			);
+			const newLife = Math.min(castle.currentLife + hpToApply, castle.maxLife);
+
+			await prisma.$transaction([
+				prisma.clanCastle.update({
+					where: { id: castleId },
+					data: { currentLife: newLife }
+				}),
+				prisma.clanCastleRepair.update({
+					where: { id: repairId },
+					data: { appliedTicks: { increment: 1 } }
+				})
+			]);
+
+			if (tickCount * hpPerTick >= REPAIR_MAX_HP || tickCount >= totalTicks) {
+				job.cancel();
+			}
+		}
+	);
 }

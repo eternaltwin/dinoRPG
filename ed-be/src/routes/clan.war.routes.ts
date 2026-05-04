@@ -12,7 +12,8 @@ import {
 	removeDefender,
 	updateDefenseOrder,
 	warStatus,
-	declareWar
+	declareWar,
+	repairCastle
 } from '../business/clanWar.js';
 
 const routes: Router = Router();
@@ -41,6 +42,8 @@ PATCH 			/dinoz
 	Order the defense line
 PUT					/attack/:dinozId
 	Attack in a war
+PUT					/repair
+	Add reparator to the castle
  */
 
 routes.get(`${commonPath}/`, async (req: Request, res: Response) => {
@@ -190,6 +193,27 @@ routes.put(
 
 		try {
 			const response = await attackCastle(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/repair`,
+	[
+		body('hpPerTick').exists().toInt().isNumeric(),
+		body('frequency').exists().toInt().isNumeric(),
+		body('tick').exists().toInt().isNumeric()
+	],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await repairCastle(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
