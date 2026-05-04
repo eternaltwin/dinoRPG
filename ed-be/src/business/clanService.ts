@@ -696,9 +696,7 @@ export async function getClanTreasureDetails(req: Request) {
 
 	const treasure = await getFullClanTreasure(clanId);
 
-	return treasure.map(i => {
-		return { itemId: i.ingredientId, quantity: i.quantity } as ShopDTO;
-	});
+	return treasure;
 }
 
 export async function checkMessageCanBeDeleted(msgId: number, playerId: string): Promise<void> {

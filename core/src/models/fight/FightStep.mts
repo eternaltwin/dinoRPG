@@ -304,6 +304,12 @@ export interface AddCastle {
 	castle: {
 		life: number;
 		maxLife: number;
+		enclos?: boolean;
+		ground?: number;
+		repair?: number;
+		armor?: number;
+		color?: number;
+		invisible?: boolean;
 	};
 }
 

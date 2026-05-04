@@ -4158,7 +4158,30 @@
 			"defense": "Défense",
 			"forfeit": "Déclarer forfait",
 			"counter": "Attaquer",
-			"defender": "{name} niveau {level}"
+			"defender": "{name} niveau {level}",
+			"repair": {
+				"title": "Réparation du château",
+				"active": "{count}/{max} réparation(s) en cours",
+				"info": "+{hp} HP toutes les {freq} minute(s)",
+				"tick": "{applied}/{total} ticks effectués",
+				"hpPerTick": "HP par tick",
+				"frequency": "Fréquence",
+				"ticks": "Répétitions",
+				"freq": {
+					"1": "Toutes les minutes",
+					"5": "Toutes les 5 minutes",
+					"15": "Toutes les 15 minutes",
+					"30": "Toutes les 30 minutes"
+				},
+				"duration": "durée : {duration} min",
+				"totalHp": "HP total récupéré : {hp} (max {max})",
+				"cost": "Coût :",
+				"cantAfford": "Pas assez d'ingrédients dans le trésor du clan",
+				"start": "Lancer la réparation",
+				"stackFull": "Nombre maximum de réparations simultanées atteint ({max}/{max})",
+				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
+				"castleFullLife": "Le château est déjà à pleine vie"
+			}
 		}
 	},
 	"clansList": {

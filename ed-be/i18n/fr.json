@@ -57,7 +57,11 @@
 		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisament d'adversaires.",
 		"defenderActiveMax": "Vous avez la limite maximale de dinoz en défense.",
 		"notWar": "L'attaque n'est plus réalisable.",
-		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer."
+		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
+		"castleDestroyed": "Le chateau est déjà détruit.",
+		"castleFullLife": "Votre chateau a déjà le nombre maximum de :hpcastle:.",
+		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateur.",
+		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation."
 	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",

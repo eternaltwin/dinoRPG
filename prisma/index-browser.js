@@ -492,6 +492,17 @@ exports.Prisma.ClanCastleScalarFieldEnum = {
   defenseOrder: 'defenseOrder'
 };
 
+exports.Prisma.ClanCastleRepairScalarFieldEnum = {
+  id: 'id',
+  castleId: 'castleId',
+  startedAt: 'startedAt',
+  endsAt: 'endsAt',
+  hpPerTick: 'hpPerTick',
+  frequency: 'frequency',
+  totalTicks: 'totalTicks',
+  appliedTicks: 'appliedTicks'
+};
+
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
@@ -946,6 +957,7 @@ exports.Prisma.ModelName = {
   Pantheon: 'Pantheon',
   Clan: 'Clan',
   ClanCastle: 'ClanCastle',
+  ClanCastleRepair: 'ClanCastleRepair',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',
   ClanWarRanking: 'ClanWarRanking',
