@@ -450,7 +450,7 @@ async function notifyWarResults(
 					clan: { connect: { id: war.attacker.id } },
 					author: { connect: { id: war.attacker.leaderId } },
 					type: ClanHistoryType[ClanHistoryType.WAR_WON],
-					authorMessage: ''
+					authorMessage: JSON.stringify({ name: war.defender.name })
 				},
 				select: { id: true }
 			}),
@@ -459,8 +459,8 @@ async function notifyWarResults(
 				data: {
 					clan: { connect: { id: war.defender.id } },
 					author: { connect: { id: war.defender.leaderId } },
-					type: ClanHistoryType[ClanHistoryType.WAR_LOSE],
-					authorMessage: ''
+					type: ClanHistoryType[ClanHistoryType.WAR_LOSED],
+					authorMessage: JSON.stringify({ name: war.attacker.name })
 				},
 				select: { id: true }
 			})
@@ -483,7 +483,7 @@ async function notifyWarResults(
 					clan: { connect: { id: war.defender.id } },
 					author: { connect: { id: war.defender.leaderId } },
 					type: ClanHistoryType[ClanHistoryType.WAR_DEFENDED],
-					authorMessage: ''
+					authorMessage: JSON.stringify({ name: war.attacker.name })
 				},
 				select: { id: true }
 			})
@@ -921,34 +921,7 @@ export async function attackCastle(req: Request) {
 		}
 	});
 	let totalCastleDamage = 0;
-	if (victory) {
-		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-			const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
-			fight.steps.push({
-				action: 'attackCastle',
-				fid: survivor.id,
-				damages: castleDamage
-			});
-			totalCastleDamage += castleDamage;
-		}
-		const castle = await prisma.clanCastle.update({
-			where: {
-				id: activeWar.defender.castle.id
-			},
-			data: {
-				currentLife: {
-					decrement: totalCastleDamage
-				}
-			},
-			select: {
-				currentLife: true
-			}
-		});
 
-		if (castle.currentLife <= 0) {
-			await resolveClanWar(activeWar.id);
-		}
-	}
 	const archive = await archiveFight(
 		fight,
 		victory,
@@ -956,6 +929,69 @@ export async function attackCastle(req: Request) {
 		null,
 		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
 	);
+
+	for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+		const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
+		fight.steps.push({
+			action: 'attackCastle',
+			fid: survivor.id,
+			damages: castleDamage
+		});
+		totalCastleDamage += castleDamage;
+	}
+	const castle = await prisma.clanCastle.update({
+		where: {
+			id: activeWar.defender.castle.id
+		},
+		data: {
+			currentLife: {
+				decrement: totalCastleDamage
+			}
+		},
+		select: {
+			currentLife: true
+		}
+	});
+
+	// Add attack history
+	await prisma.$transaction([
+		// Attacker history
+		prisma.clanHistory.create({
+			data: {
+				clan: { connect: { id: activeWar.attackerClanId } },
+				author: { connect: { id: authed.id } },
+				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACKED],
+				authorMessage: JSON.stringify({
+					damage: totalCastleDamage,
+					archiveId: archive.id,
+					clan: activeWar.defender.name
+				})
+			},
+			select: { id: true }
+		}),
+		// Defender history
+		prisma.clanHistory.create({
+			data: {
+				clan: { connect: { id: activeWar.defenderClanId } },
+				author: { connect: { id: authed.id } },
+				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACK],
+				authorMessage: JSON.stringify({ damage: totalCastleDamage, archiveId: archive.id })
+			},
+			select: { id: true }
+		})
+	]);
+
+	if (castle.currentLife <= 0) {
+		await prisma.clanWar.update({
+			where: {
+				id: activeWar.id
+			},
+			data: {
+				isCastleDestroyed: true
+			}
+		});
+		await resolveClanWar(activeWar.id);
+	}
 
 	let totalWinXP = 0;
 	let levelup = false;
@@ -1092,33 +1128,6 @@ export async function attackCastle(req: Request) {
 		}
 	}
 
-	// Add attack history
-	await prisma.$transaction([
-		// Attacker history
-		prisma.clanHistory.create({
-			data: {
-				clan: { connect: { id: activeWar.attackerClanId } },
-				author: { connect: { id: authed.id } },
-				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACKED],
-				authorMessage: JSON.stringify({
-					damage: totalCastleDamage,
-					archiveId: archive.id,
-					clan: activeWar.defender.name
-				})
-			},
-			select: { id: true }
-		}),
-		// Defender history
-		prisma.clanHistory.create({
-			data: {
-				clan: { connect: { id: activeWar.defenderClanId } },
-				author: { connect: { id: authed.id } },
-				type: ClanHistoryType[ClanHistoryType.WAR_PLAYER_ATTACK],
-				authorMessage: JSON.stringify({ damage: totalCastleDamage, archiveId: archive.id })
-			},
-			select: { id: true }
-		})
-	]);
 	return {
 		fighters: fight.fighters,
 		goldEarned: victory ? 1 : 0,
@@ -1250,7 +1259,6 @@ export async function repairCastle(req: Request) {
 		throw new ExpectedError(translate('clanWar.castleFullLife', authed));
 	}
 
-	console.log(castle.repairs);
 	if (castle.repairs.length >= REPAIR_MAX_STACK) {
 		throw new ExpectedError(translate('clanWar.repairStackFull', authed));
 	}
