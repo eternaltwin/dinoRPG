@@ -629,9 +629,9 @@ export async function giveClanIngredients(req: Request) {
 	}
 
 	const ingredients = req.body.ingredients as ShopDTO[];
-	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
+	const player = await getAllIngredientsDataRequest(authed.id);
 	// Throw an exception if the player doesn't exist
-	if (!playerIngredients) {
+	if (!player) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
@@ -640,7 +640,7 @@ export async function giveClanIngredients(req: Request) {
 		throw new ExpectedError(translate(`wrongQuantity`));
 	}
 
-	const ingredientToGive = playerIngredients
+	const ingredientToGive = player.ingredients
 		.filter(i => ingredients.some(a => a.itemId === i.ingredientId))
 		.filter(i => {
 			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);

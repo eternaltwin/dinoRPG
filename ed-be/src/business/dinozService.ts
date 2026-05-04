@@ -1137,35 +1137,27 @@ export async function gatherWithDinoz(req: Request) {
 
 	for (const i of returnGrid.rewards.ingredients) {
 		const ingredientToReward = player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
-		let isMaxQuantity = false;
-		let currentQuantity = ingredientToReward ? ingredientToReward.quantity : 0;
+		const effectiveMaxQuantity = player.shopKeeper ? Math.floor(i.maxQuantity * 1.5) : i.maxQuantity;
+		let currentQuantity = ingredientToReward?.quantity ?? 0;
 
-		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
-			if (!ingredientToReward.playerId) {
+		if (currentQuantity < effectiveMaxQuantity) {
+			if (ingredientToReward && !ingredientToReward.playerId) {
 				throw new ExpectedError(`Ingredient ${ingredientToReward.ingredientId} doesn't belong to any player.`);
 			}
-			await increaseIngredientQuantity(ingredientToReward.playerId, ingredientToReward.ingredientId, 1);
-			// Update quantity in case multiple were obtained and the max was reached
-			currentQuantity += 1;
-			ingredientToReward.quantity = currentQuantity;
 
-			isMaxQuantity = ingredientToReward.quantity >= i.maxQuantity;
-		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
-			// Do nothing
-			currentQuantity = ingredientToReward.quantity;
-			isMaxQuantity = true;
-		} else {
-			currentQuantity = 1;
-			player.ingredients.push(
-				await setIngredient({
-					player: { connect: { id: player.id } },
-					ingredientId: i.ingredientId,
-					quantity: currentQuantity
-				})
-			);
+			const updated = await increaseIngredientQuantity(player.id, i.ingredientId, 1);
+			currentQuantity = updated.quantity;
+
+			if (ingredientToReward) {
+				ingredientToReward.quantity = currentQuantity;
+			} else {
+				player.ingredients.push(updated);
+			}
 		}
-		// Add or update the ingredient in ingredientsAtMaxQuantity
+
+		const isMaxQuantity = currentQuantity >= effectiveMaxQuantity;
 		const existingEntry = returnGrid.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === i.ingredientId);
+
 		if (existingEntry) {
 			existingEntry.quantity = currentQuantity;
 			existingEntry.isMaxQuantity = isMaxQuantity;
@@ -1173,7 +1165,7 @@ export async function gatherWithDinoz(req: Request) {
 			returnGrid.ingredientsAtMaxQuantity.push({
 				ingredientId: i.ingredientId,
 				quantity: currentQuantity,
-				isMaxQuantity: isMaxQuantity
+				isMaxQuantity
 			});
 		}
 	}
