@@ -245,8 +245,6 @@ export default defineComponent({
 	.clan-page {
 		background-color: #fce3bb;
 		margin: 3px;
-		display: flex;
-		justify-content: center;
 	}
 }
 </style>

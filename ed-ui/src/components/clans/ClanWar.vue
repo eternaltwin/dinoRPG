@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper">
+	<div class="clan_wrapper">
 		<DZTable v-if="ongoingAttack.length > 0">
 			<tr>
 				<th class="dinoz-header">Type</th>
@@ -391,9 +391,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-	margin: 5px;
-	width: auto;
+.clan_wrapper {
+	width: 95%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	flex-wrap: wrap;
+	padding-bottom: 5px;
 }
 
 .defense {
