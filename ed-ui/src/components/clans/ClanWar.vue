@@ -32,10 +32,16 @@
 			</tr>
 		</DZTable>
 		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
-			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="buildCastle()">{{
-				$t('clan.war.buildCastle')
-			}}</DZButton>
-			<DZDisclaimer v-else round :content="$t('clan.war.disclaimerCastle', { place })" />
+			<DZButton
+				v-if="clanStore.getClan && (!clanStore.getClan.castle || clanStore.getClan.castle.currentLife <= 0)"
+				@click="buildCastle()"
+				>{{ $t('clan.war.buildCastle') }}</DZButton
+			>
+			<DZDisclaimer
+				v-if="clanStore.getClan && clanStore.getClan.castle"
+				round
+				:content="$t('clan.war.disclaimerCastle', { place })"
+			/>
 			<div class="df jcc defense">
 				<div id="pixiCanvas" />
 				<VueDraggable v-model="defenders" class="df jcc fww line" :animation="150" @update="onUpdate">

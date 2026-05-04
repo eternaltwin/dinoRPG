@@ -1248,7 +1248,12 @@ export async function getWarForResolve(warId: string) {
 						id: true,
 						leaderId: true,
 						clanWarRanking: true,
-						name: true
+						name: true,
+						members: {
+							select: {
+								playerId: true
+							}
+						}
 					}
 				},
 				defender: {
@@ -1256,7 +1261,12 @@ export async function getWarForResolve(warId: string) {
 						id: true,
 						leaderId: true,
 						clanWarRanking: true,
-						name: true
+						name: true,
+						members: {
+							select: {
+								playerId: true
+							}
+						}
 					}
 				},
 				isCastleDestroyed: true

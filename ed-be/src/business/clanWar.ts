@@ -1,6 +1,6 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Clan, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
+import { Clan, ClanMember, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import {
@@ -436,12 +436,17 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 
 async function notifyWarResults(
 	war: Pick<ClanWar, 'isCastleDestroyed'> & {
-		attacker: Pick<Clan, 'id' | 'leaderId' | 'name'>;
-		defender: Pick<Clan, 'id' | 'leaderId' | 'name'>;
+		attacker: Pick<Clan, 'id' | 'leaderId' | 'name'> & {
+			members: Pick<ClanMember, 'playerId'>[];
+		};
+		defender: Pick<Clan, 'id' | 'leaderId' | 'name'> & {
+			members: Pick<ClanMember, 'playerId'>[];
+		};
 	},
 	forfeit?: boolean
 ) {
 	const attackerWon = war.isCastleDestroyed;
+	const notifications: Promise<void>[] = [];
 	if (attackerWon) {
 		await prisma.$transaction([
 			// Attacker history
@@ -465,6 +470,30 @@ async function notifyWarResults(
 				select: { id: true }
 			})
 		]);
+		war.attacker.members.forEach(member => {
+			notifications.push(
+				createNotification(
+					member.playerId,
+					JSON.stringify({
+						clanEvent: ClanHistoryType.WAR_WON,
+						targetClan: war.defender.name
+					}),
+					NotificationSeverity.clanWar
+				)
+			);
+		});
+		war.defender.members.forEach(member => {
+			notifications.push(
+				createNotification(
+					member.playerId,
+					JSON.stringify({
+						clanEvent: ClanHistoryType.WAR_LOSED,
+						targetClan: war.attacker.name
+					}),
+					NotificationSeverity.clanWar
+				)
+			);
+		});
 	} else {
 		await prisma.$transaction([
 			// Attacker history
@@ -488,7 +517,32 @@ async function notifyWarResults(
 				select: { id: true }
 			})
 		]);
+		war.attacker.members.forEach(member => {
+			notifications.push(
+				createNotification(
+					member.playerId,
+					JSON.stringify({
+						clanEvent: ClanHistoryType[forfeit ? ClanHistoryType.WAR_FORFEIT : ClanHistoryType.WAR_LOSE],
+						targetClan: war.defender.name
+					}),
+					NotificationSeverity.clanWar
+				)
+			);
+		});
+		war.defender.members.forEach(member => {
+			notifications.push(
+				createNotification(
+					member.playerId,
+					JSON.stringify({
+						clanEvent: ClanHistoryType.WAR_DEFENDED,
+						targetClan: war.attacker.name
+					}),
+					NotificationSeverity.clanWar
+				)
+			);
+		});
 	}
+	await Promise.all(notifications);
 }
 
 export async function scheduleWarExpiration() {
