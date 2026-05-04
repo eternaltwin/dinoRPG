@@ -38,6 +38,7 @@ import { UnavailableReason } from '@drpg/prisma/enums';
 import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
 import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -1247,12 +1248,22 @@ export async function computeDefenderTeam(attackerPower: number, teamSize: numbe
 	let index = 0;
 	const defenderTeam = [];
 	while (defenderPower < attackerPower) {
-		defenderTeam.push(sortedDefenders[index]);
+		const def = sortedDefenders[index];
+		if (!def) {
+			LOGGER.error(`Invalid dinoz at index ${index}`);
+			throw new ExpectedError(`Invalid dinoz at index ${index}`);
+		}
+		defenderTeam.push(def);
 		index++;
 		if (index >= sortedDefenders.length || index >= 6) {
 			defenderPower = attackerPower;
 		}
-		defenderPower += sortedDefenders[index]?.level ?? 0;
+		defenderPower += def.level;
+
+		// Add a second time the level if the dinoz defender is Brave
+		if (def.skills.some(skill => skill.skillId === Skill.BRAVE)) {
+			defenderPower += def.level;
+		}
 	}
 
 	return defenderTeam.filter(d => d !== undefined);
