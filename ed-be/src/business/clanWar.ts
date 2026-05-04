@@ -17,7 +17,7 @@ import { prisma } from '../prisma.js';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
-import {scheduledJobs, scheduleJob} from 'node-schedule';
+import { scheduledJobs, scheduleJob } from 'node-schedule';
 import { computeWarCost, computeWarPowers } from '../utils/warCalculation.js';
 import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -426,13 +426,12 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 
 	await notifyWarResults(war, forfeit);
 
-	LOGGER.log(`War ${warId} is over.`)
+	LOGGER.log(`War ${warId} is over.`);
 	const job = scheduledJobs[`war_${warId}`];
 	if (job) {
-		LOGGER.log(`Job war_${warId} is canceled.`)
+		LOGGER.log(`Job war_${warId} is canceled.`);
 		job.cancel();
 	}
-
 }
 
 async function notifyWarResults(

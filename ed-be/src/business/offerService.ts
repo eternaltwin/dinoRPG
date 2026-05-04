@@ -190,11 +190,14 @@ export async function createOffer(req: Request) {
 
 	// Get available items and ingredients
 	const availableItems = await getPlayerItems(authed.id);
-	const availableIngredients = await getAllIngredientsDataRequest(authed.id);
+	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
+	if (!playerIngredients) {
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+	}
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {
 		if (item.isIngredient) {
-			const availableIngredient = availableIngredients.find(
+			const availableIngredient = playerIngredients.ingredients.find(
 				availableIngredient => availableIngredient.ingredientId === item.itemId
 			);
 
