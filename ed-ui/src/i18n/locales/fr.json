@@ -5277,7 +5277,12 @@
 		"clanApplyAccepted": "Le clan {name} a accepté votre demande.",
 		"clanWar": {
 			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
-			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !"
+			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
+			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
+			"WAR_LOSED": "Le clan {targetClan} a détruit notre chateau.",
+			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
+			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau de {targetClan}.",
+			"WAR_DEFENDED": "Nous avons résisté aux assault du clan {targetClan} !"
 		}
 	},
 	"events": {
