@@ -72,6 +72,7 @@ export default defineComponent({
 				case ClanHistoryType.WAR_PLAYER_ATTACK:
 				case ClanHistoryType.WAR_LOSE:
 				case ClanHistoryType.WAR_DEFENDED:
+				case ClanHistoryType.WAR_WON:
 					if (message.length < 1) {
 						formated = {};
 					} else {

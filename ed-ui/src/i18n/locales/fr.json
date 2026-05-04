@@ -4293,11 +4293,13 @@
 			"CASTLE_REBUILD": "J'ai reconstruit le chateau.",
 			"WAR_ATTACKED": "En temps qu'officier de guerre de {name}, je lance une attaque contre votre clan !",
 			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau adverse, nous avons perdu {points} points.",
-			"WAR_DEFENDED": "Nous avons résisté aux attaques adverses et avons remportés {points} points.",
+			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau du clan {name}.",
+			"WAR_LOSED": "Au nom de {name} j'ai détruit votre chateau et avons gagné notre guerre contre vous.",
+			"WAR_DEFENDED": "Nous avons résisté aux attaques du clan {name} et avons gagné cette guerre défensive.",
 			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégats à votre château.",
+			"WAR_WON": "Nous avons gagner la guerre contre {name} !",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
