@@ -264,7 +264,8 @@ export async function declareWar(req: Request) {
 					clanEvent: ClanHistoryType.WAR_START,
 					targetClan: defender.name
 				}),
-				NotificationSeverity.clanWar
+				NotificationSeverity.clanWar,
+				`/clan/${attacker.id}/history`
 			)
 		);
 	});
@@ -287,7 +288,8 @@ export async function declareWar(req: Request) {
 					clanEvent: ClanHistoryType.WAR_ATTACKED,
 					targetClan: attacker.name
 				}),
-				NotificationSeverity.clanWar
+				NotificationSeverity.clanWar,
+				`/clan/${defender.id}/history`
 			)
 		);
 	});
@@ -412,8 +414,7 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 								defenderName: war.defender.name,
 								destroyedBy: war.attacker.name
 							}),
-							severity: NotificationSeverity.warning,
-							link: `/clan-war`,
+							severity: NotificationSeverity.clanWar,
 							playerId: annexWar.attacker.leaderId
 						}
 					})
@@ -477,7 +478,8 @@ async function notifyWarResults(
 						clanEvent: ClanHistoryType.WAR_WON,
 						targetClan: war.defender.name
 					}),
-					NotificationSeverity.clanWar
+					NotificationSeverity.clanWar,
+					`/clan/${war.attacker.id}/history`
 				)
 			);
 		});
@@ -489,7 +491,8 @@ async function notifyWarResults(
 						clanEvent: ClanHistoryType.WAR_LOSED,
 						targetClan: war.attacker.name
 					}),
-					NotificationSeverity.clanWar
+					NotificationSeverity.clanWar,
+					`/clan/${war.defender.id}/history`
 				)
 			);
 		});
@@ -524,7 +527,8 @@ async function notifyWarResults(
 						clanEvent: ClanHistoryType[forfeit ? ClanHistoryType.WAR_FORFEIT : ClanHistoryType.WAR_LOSE],
 						targetClan: war.defender.name
 					}),
-					NotificationSeverity.clanWar
+					NotificationSeverity.clanWar,
+					`/clan/${war.attacker.id}/history`
 				)
 			);
 		});
@@ -536,7 +540,8 @@ async function notifyWarResults(
 						clanEvent: ClanHistoryType.WAR_DEFENDED,
 						targetClan: war.attacker.name
 					}),
-					NotificationSeverity.clanWar
+					NotificationSeverity.clanWar,
+					`/clan/${war.defender.id}/history`
 				)
 			);
 		});
