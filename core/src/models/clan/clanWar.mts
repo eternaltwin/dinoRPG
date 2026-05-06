@@ -35,3 +35,8 @@ export type RepairCost = {
 	totalValue: number;
 	canAfford: boolean;
 };
+
+export type WAR_NOTIFICATION = {
+	attacker: string;
+	hpLost: number;
+};

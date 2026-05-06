@@ -36,6 +36,9 @@ import { UnavailableReason } from '@drpg/prisma/enums';
 import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
 import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { sendSseMessageToUserInChannel } from './serverEventService.js';
+import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -911,6 +914,11 @@ export async function attackCastle(req: Request) {
 										}
 									}
 								}
+							},
+							members: {
+								select: {
+									playerId: true
+								}
 							}
 						}
 					},
@@ -997,7 +1005,6 @@ export async function attackCastle(req: Request) {
 		null,
 		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
 	);
-
 
 	const castle = await prisma.clanCastle.update({
 		where: {
@@ -1188,6 +1195,15 @@ export async function attackCastle(req: Request) {
 		}
 	}
 
+	for (const player of activeWar.defender.members)
+		sendSseMessageToUserInChannel(player.playerId, SseChannel.NOTIFICATION, {
+			type: SseDataEnum.CLAN_WAR,
+			war: {
+				attacker: authed.name,
+				hpLost: totalCastleDamage
+			}
+		});
+
 	return {
 		fighters: fight.fighters,
 		goldEarned: victory ? 1 : 0,
@@ -1255,8 +1271,7 @@ export async function computeDefenderTeam(attackerPower: number, teamSize: numbe
 	while (defenderPower < attackerPower) {
 		const def = sortedDefenders[index];
 		if (!def) {
-			LOGGER.error(`Invalid dinoz at index ${index}`);
-			throw new ExpectedError(`Invalid dinoz at index ${index}`);
+			break;
 		}
 		defenderTeam.push(def);
 		index++;

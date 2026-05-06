@@ -58,8 +58,8 @@ export const createToastPlugin = (options: ToastProps) => {
 				info: (message, options) => {
 					return wrappedToast.open({ message, type: 'info', ...options });
 				},
-				warning: (message, options) => {
-					return wrappedToast.open({ message, type: 'warning', ...options });
+				warning: (message) => {
+					return wrappedToast.open({ message, type: 'warning', position: 'bottom-right', duration: 10000 });
 				},
 				default: (message, options) => {
 					return wrappedToast.open({ message, type: 'default', ...options });
