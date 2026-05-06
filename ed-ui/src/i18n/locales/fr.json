@@ -120,6 +120,7 @@
 			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
+		"clan_war": "Alerte ! {attacker} vient d'attaquer votre chateau et a infligé {hpLost} :hp_castle: à votre chateau.",
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",

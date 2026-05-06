@@ -119,6 +119,10 @@ export default defineComponent({
 						case SseDataEnum.NOTIFICATIONS:
 							this.playerStore.addNotification(data.notifications);
 							break;
+						case SseDataEnum.CLAN_WAR:
+							this.$toast.warning(this.$t(`toast.clan_war`, data.war));
+							console.log(data.war);
+							break;
 						default:
 							console.log(data);
 							console.error('Not handled SSE data type');
