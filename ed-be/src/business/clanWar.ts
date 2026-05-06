@@ -1,6 +1,6 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Clan, ClanMember, ClanWar, ClanWarRanking, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
+import { Clan, ClanMember, ClanWar, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import {
@@ -23,19 +23,16 @@ import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { calculateFightBetweenPlayers } from './fightService.js';
-import { CLAN_WAR_PVP_RULES, STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { CLAN_WAR_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { archiveFight } from '../dao/archiveDao.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
-import { getRandomNumber } from '../utils/index.js';
-import { calculatePvPxp, calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { calculatePvPxp, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import gameConfig from '../config/game.config.js';
 import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
 import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -297,7 +294,7 @@ export async function declareWar(req: Request) {
 
 	await Promise.all(notifications);
 
-	scheduleJob(`attack_${attack.id}`, endWar, () => {
+	scheduleJob(`war_${attack.id}`, endWar, () => {
 		resolveClanWar(attack.id);
 	});
 }
@@ -427,7 +424,8 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 
 	await notifyWarResults(war, forfeit);
 
-	LOGGER.log(`War ${warId} is over.`);
+	const reason = isCastleDestroyed ? 'castle detroyed' : forfeit ? 'forfeit' : 'expiration';
+	LOGGER.log(`War ${warId} is over by ${reason}.`);
 	const job = scheduledJobs[`war_${warId}`];
 	if (job) {
 		LOGGER.log(`Job war_${warId} is canceled.`);
@@ -575,7 +573,7 @@ export async function scheduleWarExpiration() {
 	});
 
 	oingoingWar.forEach(war => {
-		scheduleJob(`attack_${war.id}`, war.endsAt, () => {
+		scheduleJob(`war_${war.id}`, war.endsAt, () => {
 			resolveClanWar(war.id);
 		});
 		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.endsAt}`);
