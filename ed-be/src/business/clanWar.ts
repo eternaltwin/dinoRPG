@@ -975,14 +975,6 @@ export async function attackCastle(req: Request) {
 	});
 	let totalCastleDamage = 0;
 
-	const archive = await archiveFight(
-		fight,
-		victory,
-		authed.id,
-		null,
-		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
-	);
-
 	for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
 		const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
 		fight.steps.push({
@@ -992,6 +984,16 @@ export async function attackCastle(req: Request) {
 		});
 		totalCastleDamage += castleDamage;
 	}
+
+	const archive = await archiveFight(
+		fight,
+		victory,
+		authed.id,
+		null,
+		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
+	);
+
+
 	const castle = await prisma.clanCastle.update({
 		where: {
 			id: activeWar.defender.castle.id
