@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom';
 
 /**
- * @summary Return a random *float* between min and max (included)
+ * @summary Return a random *float* between min and max (excluded, range is [min, max))
  * @param min {number}
  * @param max {number}
  * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
@@ -19,7 +19,7 @@ export function getRandomNumber(min: number, max: number, random?: seedrandom.PR
 }
 
 /**
- * @summary Return a random *integer* between min and max (included)
+ * @summary Return a random *integer* between min and max (included, range is [min, max])
  * @param min {number} Must be an integer, otherwise, closes biggest integer is picked.
  * @param max {number} Must be an integer, otherwise, closes lowest integer is picked.
  * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
