@@ -29,7 +29,6 @@ import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import randomBetween from '../utils/fight/utils.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -407,7 +406,7 @@ export async function rewardFightVsMonsters(
 			}
 		}
 
-		gold += (getRandomInteger(0, 36) + 43) * 10; // Gold base average: 610
+		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
 	const fprob = getRandomNumber(0, 100);

@@ -646,11 +646,11 @@ class TournamentManager {
 
 		const tournamentFormat = formatTID[getRandomInteger(0, Object.keys(formatTID).length - 1) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomInteger(2, 6);
+		const teamSize = tournamentFormat.teamSize ?? getRandomInteger(2, 5);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomInteger(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
-		const poison = tournamentFormat.poison ?? getRandomInteger(1, 2) === 1;
+		const poison = tournamentFormat.poison ?? getRandomInteger(0, 1) === 0;
 
 		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({
