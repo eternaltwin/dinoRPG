@@ -256,7 +256,7 @@ export async function createTournamentDinoz(req: Request) {
 				display = generateDinozDisplay(currentRace, '1', '1', '0');
 				break;
 			case RaceEnum.CASTIVORE:
-				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 2)), '0');
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0');
 				break;
 			case RaceEnum.ROCKY:
 			case RaceEnum.NUAGOZ:
