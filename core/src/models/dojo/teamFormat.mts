@@ -249,19 +249,19 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		raceMinimum: 1,
 		teamRace: [RaceEnum.HIPPOCLAMP]
 	},
-	[formatName.DEMONS]: {
-		name: 'demons',
-		teamSize: 4,
-		raceMinimum: 3,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON
-		]
-	}
+	// [formatName.DEMONS]: {
+	// 	name: 'demons',
+	// 	teamSize: 4,
+	// 	raceMinimum: 3,
+	// 	poison: true,
+	// 	//levelLimit: 50,
+	// 	teamRace: [
+	// 		RaceEnum.GORILLOZ_DEMON,
+	// 		RaceEnum.WANWAN_DEMON,
+	// 		RaceEnum.PIGMOU_DEMON,
+	// 		RaceEnum.PLANAILLE_DEMON,
+	// 		RaceEnum.MOUEFFE_DEMON,
+	// 		RaceEnum.WINKS_DEMON
+	// 	]
+	// }
 };
