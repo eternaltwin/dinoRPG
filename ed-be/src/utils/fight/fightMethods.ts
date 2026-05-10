@@ -69,7 +69,7 @@ import seedrandom from 'seedrandom';
 import { checkSkillCondition } from './skillFightConditionParser.js';
 import { LOGGER } from '../../context.js';
 import { BaseSpecialStats, SpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { getRandomInteger, getRandomNumber } from '../tools.js';
+import { getRandomArrayElement, getRandomInteger, getRandomNumber } from '../tools.js';
 
 export const OVERTIME_ID = -9999;
 
@@ -218,18 +218,14 @@ const chooseRandomOpponentForAssault = (
 		throw new Error('No opponent left after applying filtering');
 	}
 
-	// If there are multiple opponents available, pick a random one
-	const random = getRandomInteger(0, filtered_opponents.length - 1, rng);
-
-	return filtered_opponents[random];
+	// If there are still multiple opponents available, pick a random one
+	return getRandomArrayElement(filtered_opponents, rng);
 };
 
 /// Choose a random opponent from a list
 /// No filtering is applied
 export const chooseRandomOpponent = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
-	const random = getRandomInteger(0, opponents.length - 1, rng);
-
-	return opponents[random];
+	return getRandomArrayElement(opponents, rng);
 };
 
 export const getLimitedRandomOpponent = (
@@ -1731,7 +1727,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (tangibleAllies.length > 0) {
 					// Get random ally
-					const ally = tangibleAllies[getRandomInteger(0, tangibleAllies.length - 1, fightData.rng)];
+					const ally = getRandomArrayElement(tangibleAllies, fightData.rng);
 
 					// Add status
 					addStatus(fightData, ally, FightStatus.INTANGIBLE, FightStatusLength.MEDIUM);
@@ -1755,7 +1751,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (nonFlyingAllies.length > 0) {
 					// Get random ally
-					const ally = nonFlyingAllies[getRandomInteger(0, nonFlyingAllies.length - 1, fightData.rng)];
+					const ally = getRandomArrayElement(nonFlyingAllies, fightData.rng);
 
 					// Add status
 					addStatus(fightData, ally, FightStatus.FLYING);
@@ -1959,8 +1955,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
 
 				// Get random opponent defender
-				const opponentDefender =
-					opponentsWithoutAttacker[getRandomInteger(0, opponentsWithoutAttacker.length - 1, fightData.rng)];
+				const opponentDefender = getRandomArrayElement(opponentsWithoutAttacker, fightData.rng);
 
 				// Add moveTo step
 				fightData.steps.push({
@@ -2887,17 +2882,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// TODO check the monster can be caught
 			// TODO can only save up to 3 monsters
 			// Get monster opponents
-			const opponents = getOpponents(fightData, fighter, [FighterType.MONSTER]);
+			const monsters = getOpponents(fightData, fighter, [FighterType.MONSTER]);
 
 			// Use condition checked prior and defined in skill details so there is at least one monster guaranteed.
 			// Check and throw an error.
-			if (!opponents.length) {
+			if (!monsters.length) {
 				LOGGER.error('`Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
 				throw new Error(`No monster found`);
 			}
 
 			// Get random opponent
-			const monster = opponents[getRandomInteger(0, opponents.length - 1, fightData.rng)];
+			const monster = getRandomArrayElement(monsters, fightData.rng);
 
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, undefined, [[0 as ElementType, 0]], monster);
@@ -3555,7 +3550,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (opponents.length > 0) {
 				// Get random opponent
-				const opponent = opponents[getRandomInteger(0, opponents.length - 1, fightData.rng)];
+				const opponent = getRandomArrayElement(opponents, fightData.rng);
 
 				// Add leave step
 				fightData.steps.push({
