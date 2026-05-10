@@ -161,7 +161,7 @@ export default defineComponent({
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
-	},
+		},
 		async nextChallenge() {
 			this.fightAnimationEnded = false;
 			this.victory = false;

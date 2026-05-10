@@ -17,8 +17,8 @@ import { createStatus, setMaxEnergy } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DetailedFight } from './generateFight.js';
-import { randomBetweenSeeded } from './randomBetween.js';
 import seedrandom from 'seedrandom';
+import { getRandomInteger } from '../tools.js';
 
 interface Team {
 	dinozList: DinozToGetFighter[];
@@ -869,7 +869,7 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.stats.base[ElementType.VOID] = 10;
 		fighter.canHitFlying = true;
 		fighter.canHitIntangible = true;
-		const randomElement = randomBetweenSeeded(random, 1, 6) as ElementType;
+		const randomElement = getRandomInteger(1, 6, random) as ElementType;
 		// Lock to a single element
 		fighter.elements = [randomElement];
 		fighter.element = randomElement;

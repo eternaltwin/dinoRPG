@@ -3,7 +3,7 @@ import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { getNewLevelLimits } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
-import { getRandomNumber, shuffle } from './tools.js';
+import { getRandomInteger, shuffle } from './tools.js';
 import {
 	MetaData,
 	RawTournamentMatch,
@@ -644,13 +644,13 @@ class TournamentManager {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
 
-		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
+		const tournamentFormat = formatTID[getRandomInteger(0, Object.keys(formatTID).length - 1) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
+		const teamSize = tournamentFormat.teamSize ?? getRandomInteger(2, 5);
 		const teamRace = tournamentFormat.teamRace;
-		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
+		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomInteger(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
-		const poison = tournamentFormat.poison ?? getRandomNumber(1, 2) === 1;
+		const poison = tournamentFormat.poison ?? getRandomInteger(0, 1) === 0;
 
 		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({

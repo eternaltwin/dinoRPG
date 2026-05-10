@@ -94,7 +94,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
 import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
-import { getRandomNumber } from '../utils/index.js';
+import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
@@ -886,20 +886,20 @@ export async function digWithDinoz(req: Request) {
 		}
 	}
 	if (rewards.length === 0 && !fight) {
-		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(0, 125) }];
+		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomInteger(0, 125) }];
 	}
 	await rewarder(rewards, [dinozData], authed.id, false);
 
-	//Broke shovel
+	// Always break normal shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_SHOVEL);
 		await setSpecificStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 	}
 
-	//Try to broke enhanced shovel (75% of keeping it)
+	// Try to break enhanced shovel (75% of keeping it)
 	if (
-		getRandomNumber(0, 100) > 75 &&
+		getRandomNumber(0, 100) >= 75 &&
 		dinozData.status.some(status => status.statusId === DinozStatusId.ENHANCED_SHOVEL)
 	) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);

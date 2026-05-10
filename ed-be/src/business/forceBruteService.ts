@@ -10,7 +10,7 @@ import { getRandomUpElement } from '../utils/dinoz.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { randomUUID } from 'crypto';
-import { getLetter, getRandomNumber } from '../utils/index.js';
+import { getLetter, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
@@ -256,7 +256,7 @@ export async function createTournamentDinoz(req: Request) {
 				display = generateDinozDisplay(currentRace, '1', '1', '0');
 				break;
 			case RaceEnum.CASTIVORE:
-				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0');
 				break;
 			case RaceEnum.ROCKY:
 			case RaceEnum.NUAGOZ:
@@ -269,7 +269,7 @@ export async function createTournamentDinoz(req: Request) {
 				break;
 			case RaceEnum.FEROSS:
 				display =
-					getRandomNumber(0, 1) === 0
+					getRandomInteger(0, 1) === 0
 						? generateDinozDisplay(currentRace, '1', '1', '0')
 						: generateDinozDisplay(currentRace, '2', '2', '0');
 				break;
