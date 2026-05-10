@@ -248,7 +248,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'hippo',
 		raceMinimum: 1,
 		teamRace: [RaceEnum.HIPPOCLAMP]
-	},
+	}
 	// [formatName.DEMONS]: {
 	// 	name: 'demons',
 	// 	teamSize: 4,

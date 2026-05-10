@@ -102,7 +102,6 @@ export function shuffle<T>(array: T[]): T[] {
 	return shuffledArray;
 }
 
-
 /**
  * @summary Return a element of an array at random
  * @param array {T[]} Array containing elements

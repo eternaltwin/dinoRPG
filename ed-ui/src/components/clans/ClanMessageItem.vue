@@ -189,7 +189,8 @@ function formatShortDate(iso: string | Date): string {
 		color: #0645ad;
 		text-decoration: underline;
 	}
-	:deep(ul), :deep(ol) {
+	:deep(ul),
+	:deep(ol) {
 		padding-left: 1.5em;
 		margin: 0.5em 0;
 		list-style: revert;
