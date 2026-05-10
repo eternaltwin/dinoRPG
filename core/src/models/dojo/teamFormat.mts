@@ -13,8 +13,8 @@ export enum formatName {
 	QUADRUPEDE,
 	FLYING,
 	ANTI_POISON,
-	HIPPO,
-	DEMONS
+	HIPPO
+	// DEMONS
 }
 
 export type formatTeam = {
