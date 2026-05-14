@@ -2833,7 +2833,7 @@
 			"hucure": "Sas is wirklich fehr nett von dir... Ih glaube, sass sie Bönche ser Butierenden Furzfluden bir helfen könnten... Nimm die Flansen bit, sie du bir gebracht hass und suh die Bönche für bich auf... Schnief...",
 			"bckpck": "Bevor ich meine unglaubliche Reise in ein unbekanntes Land antrete, fehlt mir noch etwas Unverzichtbares! Ein guter Rucksack. Meinen hab' ich verloren, als ich die Mutierenden Sturzfluten umschifft habe... Könntest du ihn für mich wiederfinden?",
 			"rodriz": "Ich brauche Reis, um meinen magischen Umhang aufzuladen. Es gibt scheinbar welchen im Klebrigen Sumpf der Atlantinischen Inseln. Kannst du mir eine ausreichende Menge bringen, damit ich mich wieder unsichtbar machen kann? Beeil dich, es ist dringend!",
-			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir zurück, um dir deine Belohnung abzuholen... Ich rate dir, sie nicht mit nur einem Dinoz allein anzugreifen, denn er könnte dabei sterben!",
+			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir, um dir deine Belohnung abzuholen... Aber ich rate dir, sie nicht mit nur einem einzigen Dinoz anzugreifen, sonst geht er noch drauf!",
 			"skully1": "Moulder wurde von meinem Unfluch erwischt, gerade als wir dabei waren, zusammen alt zu werden. Er hat mich auf einen Schlag vergessen und ist in die Welt hinaus gezogen, dieser Unhold! Sein Neffe, der kleine Joe, hat bestimmt Neuigkeiten von ihm... Besuch ihn doch mal und bring mich auf den neuesten Stand!",
 			"skully2": "„Ich werde an dem Ort auf dich warten, wo wir uns das erste Mal begegnet sind.“ Oh oh oh oh! Wie romantisch er doch ist, mein geliebter Moulder! Ich hoffe, dass er dort noch immer auf mich wartet! Schnell, begib dich an diesen wunderbaren Ort, der süßlich nach Seerosen duftet und wo wir uns das erste Mal getroffen haben. Bring mir meinen Liebsten wieder zurück!",
 			"skully3": "Oh oh oh! Mir ist gerade noch etwas eingefallen... etwas Problematisches. Selbst wenn ich Moulder wiederfinden sollte, wird er unser Wiedersehen wieder vergessen und erneut fortgehen, um irgendwo auf mich zu warten. Du musst unbedingt eine Lösung für dieses Problem finden, bevor du Moulder aufsuchst. Besuche mal dieses liebe Fräulein Bao. Sie hat bestimmt eine Lösung!",
@@ -3563,7 +3563,6 @@
 		"rewards": "Epische Belohnungen",
 		"level": "Stufe",
 		"editDescription": "Meine Beschreibung bearbeiten",
-		"save": "Meine Beschreibung speichern",
 		"quest": "Meine Quests",
 		"editAccount": "Meine Daten ändern",
 		"import": "Konto importieren",
@@ -3601,7 +3600,8 @@
 			"84": "MTPass",
 			"92": "Rockfaller Journey",
 			"94": "Monster Hotel"
-		}
+		},
+		"saveDescription": "Meine Beschreibung speichern"
 	},
 	"levelup": {
 		"disclaimer": "{name} hat die Stufe {level} erreicht! Mit welchem Element er sich wohl weiterentwickelt?",
