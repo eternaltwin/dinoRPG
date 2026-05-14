@@ -1,7 +1,7 @@
 {
 	"tooManyActiveDinoz": "Du hast bereits zu viele aktive Dinoz.",
 	"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
-	"notEnoughMoney": "Du hast nicht genug Gold.",
+	"notEnoughMoney": "Du hast nicht genügend Gold.",
 	"notEnoughNapo": "Du hast nicht genug Napodinos.",
 	"OnlyLettersAndNumbers": "Name ungültig! Er muss aus Buchstaben oder Zahlen bestehen und 3-16 Zeichen lang sein.",
 	"notLeader": "Dieser Dinoz ist nicht der Gruppenführer.",
@@ -210,10 +210,10 @@
 	"dojo": {
 		"inexistantDojo": "Das ausgewählte Dojo existiert nicht",
 		"dinozNotPlayer": "Ein Dinoz gehört nicht zum Spieler.",
-		"alreadyFighted": "Ce Dinoz a déjà combattu.",
+		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft.",
 		"wrongDinozInTeam": "Deine Mannschaft muss aus 5-10 Dinoz bestehen",
-		"wrongDinozQuantity": "Votre équipe doit être formée d'exactement {{qty}} Dinoz.",
-		"notEnoughDiversity": "Votre équipe doit être formée de {{qty}} races différentes.",
+		"wrongDinozQuantity": "Deine Mannschaft muss aus genau {{qty}} Dinoz bestehen.",
+		"notEnoughDiversity": "Deine Mannschaft muss aus {{qty}} unterschiedlichen Rassen bestehen.",
 		"notEnoughGold": "Du hast nicht genügend Gold, um diesen Kampf zu starten",
 		"archiveNotFound": "Archiv nicht gefunden",
 		"inexistantOpponent": "Gegner nicht gefunden",
