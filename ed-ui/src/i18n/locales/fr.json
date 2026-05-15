@@ -120,7 +120,6 @@
 			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
-		"clan_war": "Alerte ! {attacker} vient d'attaquer votre chateau et a infligé {hpLost} :hp_castle: à votre chateau.",
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
@@ -248,10 +247,7 @@
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
 			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
-			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
-			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan.",
-			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"fb_tournament": "Accéder au Tournoi de Forcebrut."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -284,10 +280,7 @@
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
-			"fb_tournament": "Tournoi",
-			"war_defend": "Défendre le chateau",
-			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le chateau"
+			"fb_tournament": "Tournoi"
 		}
 	},
 	"button": {
@@ -2624,8 +2617,7 @@
 		"confirmBanAction": "Confirmer ce ban ?",
 		"attention": "Attention",
 		"accept": "Oui",
-		"reject": "Non",
-		"buildCastle": "Attention, constuire votre chateau vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"reject": "Non"
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
@@ -4077,8 +4069,7 @@
 			"completion": "Comp.",
 			"clans": "Clans",
 			"treasure": "Trésor du Clan",
-			"event": "Score d'événement",
-			"war": "Réputation de guerre"
+			"event": "Score d'événement"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
@@ -4113,8 +4104,7 @@
 		},
 		"button": {
 			"clanEvent": "Classement d'événement",
-			"clanTreasure": "Classement de trésor",
-			"clanWar": "Classement de guerre"
+			"clanTreasure": "Classement de trésor"
 		}
 	},
 	"clan": {
@@ -4142,47 +4132,11 @@
 			"members": "Nombre de membres",
 			"gold": "Valeur du trésor",
 			"rank": "Rang",
-			"crown": "Chef du Clan",
-			"reputation": "Réputation pour la guerre en cours",
-			"castle_life": "Points de vie restant à votre château"
+			"crown": "Chef du Clan"
 		},
 		"forum": {
 			"connectionFailed": "Une erreur s'est produite lors de la connexion au chat du clan !",
 			"connectionFailed2": "Actualise la page ou réessaye plus tard !"
-		},
-		"war": {
-			"buildCastle": "Constuire le chateau",
-			"castleTooltip": "Lieu où se situe votre chateau",
-			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
-			"declareWar": "Attaquer ce clan",
-			"attack": "Attaque",
-			"defense": "Défense",
-			"forfeit": "Déclarer forfait",
-			"counter": "Attaquer",
-			"defender": "{name} niveau {level}",
-			"repair": {
-				"title": "Réparation du château",
-				"active": "{count}/{max} réparation(s) en cours",
-				"info": "+{hp} HP toutes les {freq} minute(s)",
-				"tick": "{applied}/{total} ticks effectués",
-				"hpPerTick": "HP par tick",
-				"frequency": "Fréquence",
-				"ticks": "Répétitions",
-				"freq": {
-					"1": "Toutes les minutes",
-					"5": "Toutes les 5 minutes",
-					"15": "Toutes les 15 minutes",
-					"30": "Toutes les 30 minutes"
-				},
-				"duration": "durée : {duration} min",
-				"totalHp": "HP total récupéré : {hp} (max {max})",
-				"cost": "Coût :",
-				"cantAfford": "Pas assez d'ingrédients dans le trésor du clan",
-				"start": "Lancer la réparation",
-				"stackFull": "Nombre maximum de réparations simultanées atteint ({max}/{max})",
-				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
-				"castleFullLife": "Le château est déjà à pleine vie"
-			}
 		}
 	},
 	"clansList": {
@@ -4291,17 +4245,6 @@
 			"PLAYER_JOIN": "Un joueur a rejoint le clan.",
 			"PLAYER_LEAVE": "Ce joueur a décidé de quitter le clan.",
 			"PLAYER_EXCLUSION": "Ce joueur a été exclu du clan.",
-			"CASTLE_BUILD": "J'ai construit le chateau.",
-			"CASTLE_REBUILD": "J'ai reconstruit le chateau.",
-			"WAR_ATTACKED": "En temps qu'officier de guerre de {name}, je lance une attaque contre votre clan !",
-			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau du clan {name}.",
-			"WAR_LOSED": "Au nom de {name} j'ai détruit votre chateau et avons gagné notre guerre contre vous.",
-			"WAR_DEFENDED": "Nous avons résisté aux attaques du clan {name} et avons gagné cette guerre défensive.",
-			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
-			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
-			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégats à votre château.",
-			"WAR_WON": "Nous avons gagner la guerre contre {name} !",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
@@ -4605,8 +4548,7 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
-		"restingAttackCountdown": "Votre dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au Dinoz {dinoz} ({dinozId})",
@@ -5276,16 +5218,7 @@
 		"FBStarted": "Un nouvel événement est ouvert !",
 		"clanApply": "{name} souhaite rejoindre votre clan !",
 		"message": "Vous avez reçu un nouveau message.",
-		"clanApplyAccepted": "Le clan {name} a accepté votre demande.",
-		"clanWar": {
-			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
-			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
-			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
-			"WAR_LOSED": "Le clan {targetClan} a détruit notre chateau.",
-			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assault du clan {targetClan} !"
-		}
+		"clanApplyAccepted": "Le clan {name} a accepté votre demande."
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tous les événements communautaires en cours.",
