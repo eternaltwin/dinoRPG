@@ -45,14 +45,14 @@
 	"maxFollowers": "Has alcanzado el máximo número de Dinos en el grupo",
 	"knownSphereSkill": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
 	"playerNotFound": "El jugador {{id}} no ha sido encontrado.",
-	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "El archivo del jugador {{id}} no ha sido encontrado.",
 	"dinozNotFound": "El Dino {{id}} no ha sido encontrado.",
 	"dinozCannotLvlUp": "El Dino no puede subir de nivel porque está inscrito en el TID.",
 	"reincarnationNotPossible": "La reencarnación del Dino solo es posible a partir del nivel 40.",
 	"reincarnationWithEquippedItems": "No puedes reencarnar a tu Dino con objetos equipados.",
 	"error": {
-		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
+		"notYourDinoz": "Este Dino no es tuyo"
 	},
 	"fb": {
 		"error": {
@@ -213,6 +213,7 @@
 		"alreadyFighted": "Este Dino ya ha combatido",
 		"wrongDinozInTeam": "Tu equipo solo puede estar formado por una cantidad de Dinos entre 5 y 10.",
 		"wrongDinozQuantity": "Tu equipo debe estar formado por {{qty}} Dinos.",
+		"notEnoughDiversity": "Votre équipe doit être formée de {{qty}} races différentes.",
 		"notEnoughGold": "No tienes suficiente oro para esta pelea",
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",
