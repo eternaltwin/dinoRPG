@@ -47,6 +47,7 @@ import {
 } from '../dao/clansDao.js';
 import dayjs from 'dayjs';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
+import TournamentManager from '../utils/tournamentManager.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1159,6 +1160,8 @@ export async function startClanWarEvent(req: Request) {
 			config: JSON.stringify(config)
 		}
 	});
+
+	await TournamentManager.postponeNextTournamentCreation(prisma, endTime);
 	// scheduleJob(event.id)
 }
 
