@@ -29,7 +29,6 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
-			test
 			<div
 				class="top-info-element"
 				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking.length > 0"
