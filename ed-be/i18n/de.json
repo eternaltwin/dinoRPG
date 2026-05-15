@@ -55,13 +55,13 @@
 		"noCastle": "Dein Klan hat keine Burg erbaut.",
 		"noCastleOpponent": "Es ist keine gegnerische Burg erbaut.",
 		"defenderAlreadyUnderAttack": "Dieser Klan wird bereits von ausreichend Gegnern angegriffen.",
-		"defenderActiveMax": "Vous avez la limite maximale de Dinoz en défense.",
-		"notWar": "L'attaque n'est plus réalisable.",
-		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
-		"castleDestroyed": "Le château est déjà détruit.",
-		"castleFullLife": "Votre château a déjà le nombre maximum de :hpcastle:.",
-		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
-		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation."
+		"defenderActiveMax": "Dein Klan hat die Höchstanzahl an Verteidiger-Dinoz erreicht.",
+		"notWar": "Dieser Angriff ist nicht mehr möglich.",
+		"notEnoughIngredients": "Diese Kriegserklärung würde {{cost}} :gold: kosten, was von der Schatzkammer deines Klans nicht gedeckt ist.",
+		"castleDestroyed": "Die Burg ist bereits zerstört.",
+		"castleFullLife": "Eure Burg hat bereits die Höchstanzahl an :hpcastle:.",
+		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
+		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur."
 	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
