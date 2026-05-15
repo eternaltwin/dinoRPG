@@ -146,7 +146,7 @@
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées.",
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
-		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisemment de Dinoz",
+		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisamment de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
 		"basicError": "Une erreur est survenue",
 		"buildSaved": "Le plan de compétences \"{name}\" a été enregistré",
@@ -717,7 +717,7 @@
 			"corail": "Mines de Corail",
 			"ilewkk": "L'Île Waïkiki",
 			"goport": "Nager jusqu'au Port de Prêche",
-			"chbroc": "Aller à l'Atelier de Broc",
+			"chbroc": "Atelier de Broc",
 			"godnv": "Retourner à Dinoville",
 			"dplaza": "Dinoplaza",
 			"villa": "Villa",
@@ -2400,7 +2400,7 @@
 			"PlumesDePhoenix": "Le Dinoz est ramené une fois à la vie avec 12 PV et gagne +10 en vitesse et en initiative, mais ne peut plus se régénérer",
 			"AcclamationFraternelle": "Augmente la récupération d'énergie de tous les Dinoz de 30%",
 			"PoingDeFeu": "Augmente de 20 la puissance des **assauts** Feu",
-			"VideEnergetique": "A 5% de chance de diminuer de 15% la capacité de récupération d’un adversaire lors d'un assaut",
+			"VideEnergetique": "Lorsqu'il subit un assaut, le Dinoz 5% de chance de diminuer de 15% la capacité de récupération de l'attaquant",
 			"BouclierDinoz": "Protège le Dinoz avec le moins de PV en prenant les dégâts à sa place pendant la durée du combat",
 			"Courbatures": "Diminue l'énergie maximale d'un adversaire de 30%",
 			"ForceControl": "Le Dinoz inflige au minimum 10 points de dégâts lors d'un assaut",
@@ -2478,7 +2478,7 @@
 			"BigMama": " Vide l’énergie des Dinoz adverses et leur inflige 20 points de dégâts",
 			"Yggdrasil": "Augmente la défense des alliés contre le Bois de 20",
 			"BaleineBlanche": "Augmente la défense des alliés contre l'Eau de 20",
-			"Invocateur": "Permet au Dinoz d'apprendre les compétences d'invocation",
+			"Invocateur": "Permet au Dinoz d'apprendre sa compétence d'invocation",
 			"Envol": "Le Dinoz effectue un assaut puis s'envole. Réservé aux Dinoz volants.",
 			"PoingDeBraise": "Augmente la puissance des **assauts** Feu de 20",
 			"Leader": "Augmente le nombre maximum de Dinoz actifs de 3 (non cumulable)",
@@ -3571,7 +3571,6 @@
 		"rewards": "Récompenses Épiques",
 		"level": "Niveau",
 		"editDescription": "Modifier ma description",
-		"save": "Sauvegarder ma description",
 		"quest": "Mes quêtes",
 		"editAccount": "Modifier mes informations",
 		"import": "Importer compte",
@@ -3609,7 +3608,8 @@
 			"84": "MTPass",
 			"92": "Rockfaller Journey",
 			"94": "Monster Hotel"
-		}
+		},
+		"saveDescription": "Sauvegarder ma description"
 	},
 	"levelup": {
 		"disclaimer": "{name} a atteint le niveau {level} ! Quel élément va-t-il améliorer ?",
