@@ -1,5 +1,5 @@
 <template>
-	<div class="clan_wrapper">
+	<div class="clan_wrapper" v-if="war">
 		<DZTable v-if="ongoingAttack.length > 0">
 			<tr>
 				<th class="dinoz-header">Type</th>
@@ -188,6 +188,7 @@ export default defineComponent({
 	components: { DinozMini, DZTable, DZDisclaimer, DZButton, VueDraggable },
 	data() {
 		return {
+			war: false as boolean,
 			castlePlace: undefined as undefined | number,
 			playerStore: playerStore(),
 			clanStore: clanStore(),
@@ -370,6 +371,7 @@ export default defineComponent({
 			canvas.appendChild(display);
 		},
 		async loadComponent() {
+			this.war = !!this.clanStore.clanEvent;
 			this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
 			if (this.isClanMember) {
 				const castle = await ClanService.castleStatus();
@@ -391,7 +393,9 @@ export default defineComponent({
 		await this.loadComponent();
 	},
 	unmounted() {
-		this.loadedCastle.destroy();
+		if (Object.keys(this.loadedCastle).length > 0) {
+			this.loadedCastle.destroy();
+		}
 	}
 });
 </script>

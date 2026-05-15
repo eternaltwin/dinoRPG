@@ -15,7 +15,7 @@ export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDat
 	totalScore?: number;
 	bannerUrl?: string;
 	castle?: ClanCastle;
-	clanWarRanking?: Pick<ClanWarRanking, 'reputation'>;
+	clanWarRanking?: Pick<ClanWarRanking, 'reputation'>[];
 };
 
 export type ClanForSearch = Pick<Clan, 'id' | 'name'>;

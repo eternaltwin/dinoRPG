@@ -50,18 +50,7 @@
 				<img :src="getImgURL('icons', 'act_treasure')" alt="Trésor de clan" />
 			</RouterLink>
 			<RouterLink
-				v-if="isClanMember"
-				class="tab"
-				:to="{ name: 'ClanWar' }"
-				v-tippy="{
-					content: formatContent($t('clan.tabs.war')),
-					theme: 'small'
-				}"
-			>
-				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
-			</RouterLink>
-			<RouterLink
-				v-if="!isClanMember && war"
+				v-if="war"
 				class="tab"
 				:to="{ name: 'ClanWar' }"
 				v-tippy="{

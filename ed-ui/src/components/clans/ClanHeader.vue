@@ -29,9 +29,10 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
+			test
 			<div
 				class="top-info-element"
-				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking"
+				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking.length > 0"
 				v-tippy="{
 					content: formatContent($t('clan.icons.reputation')),
 					theme: 'small'
