@@ -2505,7 +2505,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		name: 'Ondine',
 		type: SkillType.I,
 		energy: Energy.E50,
-		element: [ElementType.WATER, ElementType.LIGHTNING],
+		element: [ElementType.WATER, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENGEANCE, Skill.SANS_PITIE, Skill.INVOCATEUR],
@@ -3183,7 +3183,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41310],
+		unlockedFrom: [Skill.PUREE_SALVATRICE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
@@ -3888,7 +3888,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			col1: 0xffffff,
 			col2: 0x00ffff
 		},
-		damageEffect: DamagesEffect.Eject
+		damageEffect: DamagesEffect.Normal // Should be Eject but rendering is bugged currently
 	},
 	[Skill.VENT_VIF]: {
 		id: Skill.VENT_VIF,
@@ -4119,7 +4119,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		name: 'Hades',
 		type: SkillType.I,
 		energy: Energy.E60,
-		element: [ElementType.AIR, ElementType.WOOD],
+		element: [ElementType.AIR, ElementType.WOOD, ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.HALEINE_FETIVE, Skill.TENACITE, Skill.COUP_SOURNOIS, Skill.INVOCATEUR],

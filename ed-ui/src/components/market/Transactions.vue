@@ -184,6 +184,7 @@ export default defineComponent({
 				}
 
 				await this.fetchOffers();
+				await this.playerStore.update();
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;

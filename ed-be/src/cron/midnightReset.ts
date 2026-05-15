@@ -4,14 +4,14 @@ import { $Enums, ServerAction } from '@drpg/prisma';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import UnavailableReason = $Enums.UnavailableReason;
+import { SHARED_DINOZ_OPERATIONS_LOCK } from '../constants/index.js';
 
 const midnightReset = async () => {
 	const tommorow = dayjs().add(1, 'day').startOf('day').toDate();
-	const MIDNIGHT_RESET_LOCK_ID = 999001;
 	try {
 		await prisma.$transaction(
 			async tx => {
-				await tx.$executeRaw`SELECT pg_advisory_xact_lock(${MIDNIGHT_RESET_LOCK_ID})`;
+				await tx.$executeRaw`SELECT pg_advisory_xact_lock(${SHARED_DINOZ_OPERATIONS_LOCK})`;
 				// Unfreeze dinoz
 				await tx.dinoz.updateMany({
 					where: {
@@ -81,10 +81,10 @@ const midnightReset = async () => {
 				isolationLevel: 'ReadCommitted'
 			}
 		);
-		scheduleJob('midnightReset', tommorow, () => midnightReset());
 	} catch (err) {
 		LOGGER.error(`Cannot perform midnight actions: ${err}`);
 	}
+	scheduleJob('midnightReset', tommorow, () => midnightReset());
 };
 
 export { midnightReset };

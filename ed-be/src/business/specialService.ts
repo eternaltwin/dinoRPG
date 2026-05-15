@@ -3,7 +3,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightResult } from '@drpg/core/models/fight/FightResult';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
@@ -22,7 +22,7 @@ import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozP
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { auth, prepareConcentration } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import { DinozToRewardFight, calculateFightVsMonsters, rewardFight } from './fightService.js';
+import { DinozToRewardFight, calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 
 export async function concentrate(req: Request) {
 	const authed = await auth(req);
@@ -118,14 +118,15 @@ export async function movementListener(
 			if (!partyLeader) {
 				throw new ExpectedError(`Cannot find dinoz ${activeDinoz} in the team`);
 			}
-			const result: FightResult = await rewardFight(
+			const result: FightResult = await rewardFightVsMonsters(
 				team,
 				potentialSpecialActions.opponents,
 				fightResult,
 				finalPlace,
 				player
 			);
-			if (fightResult.winner) {
+			// Rewards against monsters are granted only by defeating them. Tie counts as defeat.
+			if (fightResult.outcome === FightOutcome.AttackerWin) {
 				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id, true);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
@@ -155,8 +156,15 @@ export async function movementListener(
 			if (actualStep?.stepId !== undefined) {
 				if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
 					const fightResult = calculateFightVsMonsters(team, player, finalPlace, actualStep.requirement.target);
-					const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
-					if (fightResult.winner) {
+					const result = await rewardFightVsMonsters(
+						team,
+						actualStep.requirement.target,
+						fightResult,
+						finalPlace,
+						player
+					);
+					// Rewards against monsters are granted only by defeating them. Tie counts as defeat.
+					if (fightResult.outcome === FightOutcome.AttackerWin) {
 						const teamIds = team.map(dinoz => dinoz.id);
 
 						await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);

@@ -228,8 +228,8 @@ export const initializeDinoz = (
 		nbrUpWater: race.nbrWater,
 		nbrUpLightning: race.nbrLightning,
 		nbrUpAir: race.nbrAir,
-		nextUpElementId: getRandomUpElement(race.upChance, seed),
-		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
+		nextUpElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt),
+		nextUpAltElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + 'pdc'),
 		player: { connect: { id: playerId } },
 		seed: seed
 	};
@@ -245,7 +245,7 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 	let lightning = 0;
 	let air = 0;
 	for (let i = 0; i < 5; i++) {
-		const element = getRandomUpElement(race.upChance);
+		const element = getRandomUpElement(race.upChance); // Seed is purposefully different so gained elements cannot be predicted
 		switch (element) {
 			case 1:
 				fire++;
@@ -270,8 +270,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 	return {
 		experience: 0,
 		level: 1,
-		nextUpElementId: getRandomUpElement(race.upChance, seed),
-		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
+		nextUpElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt),
+		nextUpAltElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + 'pdc'),
 		nbrUpFire: race.nbrFire + fire,
 		nbrUpWood: race.nbrWood + wood,
 		nbrUpWater: race.nbrWater + water,
@@ -310,11 +310,9 @@ export const useRice = async (
 		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
 
 		newDinozData.seed = randomUUID();
-		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + dinoz.level);
-		newDinozData.nextUpAltElementId = getRandomUpElement(
-			upChance,
-			newDinozData.seed + GLOBAL.config.salt + dinoz.level + 'pdc'
-		);
+		// Set next ups similarly to initialization and reincarnation
+		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
+		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
 	}
 	await updateDinoz(dinoz.id, newDinozData);
 };

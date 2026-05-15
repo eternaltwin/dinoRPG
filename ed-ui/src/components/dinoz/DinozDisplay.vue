@@ -43,13 +43,13 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
-import { dinozStore } from '../../store/index.js';
 import DinozElements from '../../components/dinoz/DinozElements.vue';
 import DinozBars from '../../components/dinoz/DinozBars.vue';
 import DinozEquip from '../../components/dinoz/DinozEquip.vue';
 import DinozStatus from '../../components/dinoz/DinozStatus.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { useDinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -64,7 +64,7 @@ export default defineComponent({
 	data() {
 		return {
 			UnavailableReason,
-			dinozStore: dinozStore(),
+
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement
 		};
@@ -90,20 +90,20 @@ export default defineComponent({
 			return 'top: -15px;';
 		},
 		getDinozId(shift: number): void | number {
-			if (!this.dinozStore.getDinozList) return;
+			if (!useDinozStore().getDinozList) return;
 
-			const currentIndex = this.dinozStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);
+			const currentIndex = useDinozStore().getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);
 			if (currentIndex === -1) return;
 
 			const newIndex = currentIndex + shift;
 			if (newIndex < 0) {
-				return this.dinozStore.getDinozList[this.dinozStore.getDinozList.length - 1].id;
+				return useDinozStore().getDinozList[useDinozStore().getDinozList.length - 1].id;
 			}
-			if (newIndex >= this.dinozStore.getDinozList.length) {
-				return this.dinozStore.getDinozList[0].id;
+			if (newIndex >= useDinozStore().getDinozList.length) {
+				return useDinozStore().getDinozList[0].id;
 			}
 
-			return this.dinozStore.getDinozList[newIndex].id;
+			return useDinozStore().getDinozList[newIndex].id;
 		}
 	}
 });

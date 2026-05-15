@@ -1,0 +1,33 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		// Target Node.js 18+ with native ESM
+		"target": "ES2022",
+		"module": "Node16",
+		"moduleResolution": "Node16",
+
+		// Output
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+
+		// Strictness
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"exactOptionalPropertyTypes": true,
+
+		// Interop
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+
+		// Emit
+		"skipLibCheck": true
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}

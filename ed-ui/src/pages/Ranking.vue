@@ -72,7 +72,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToAccount(p: Pick<Player, 'id' | 'name'>): void {
-			this.$router.push({ name: 'MyAccount', params: { id: p.id } });
+			this.$router.push({ name: 'Account', params: { id: p.id } });
 		},
 		goToClan(c: Pick<Clan, 'id' | 'name'>): void {
 			this.$router.push({ name: 'Clan', params: { id: c.id } });

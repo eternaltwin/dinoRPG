@@ -83,7 +83,7 @@ import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
 import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
-import { dinozStore, sessionStore } from '../../store/index.js';
+import { sessionStore, useDinozStore } from '../../store/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -102,7 +102,7 @@ export default defineComponent({
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			dinozStore: dinozStore(),
+
 			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
 				x: 0,
@@ -236,7 +236,7 @@ export default defineComponent({
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				const dinozId = this.dinozData.id;
-				const dinozList = this.dinozStore.getDinozList;
+				const dinozList = useDinozStore().getDinozList;
 				const place = placeList.find(place => place.placeId === placeId);
 
 				if (!dinozList || !dinozId || !place) {
@@ -249,10 +249,10 @@ export default defineComponent({
 				}
 
 				if (moveTry.result) {
-					this.dinozStore.setDinozList(
+					useDinozStore().setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-								this.dinozStore.clearNpc(dinoz.id);
+								useDinozStore().clearNpc(dinoz.id);
 								if (dinoz.life !== 0) {
 									// Update dinoz place
 									dinoz.placeId = place.alias || placeId;
@@ -299,6 +299,7 @@ export default defineComponent({
 			const actualPlace: PlaceDisplayed | undefined = placeList.find(place => place.placeId === this.dinozData.placeId);
 			const x1 = (((actualPlace?.posLeft ?? 0) + 8.5) / mapImage.width) * mapX;
 			const y1 = (((actualPlace?.posTop ?? 0) + 8.5) / mapImage.height) * mapY;
+			this.svgLines = new Array<svgLines>();
 
 			this.dinozData.borderPlace?.forEach(closePlace => {
 				const place = placeList.find(place => place.placeId === closePlace);
@@ -345,7 +346,7 @@ export default defineComponent({
 				return false;
 			}
 
-			const day = dayjs().day();
+			const day = dayjs().utc().day();
 
 			if (!SWAMP_FLOODED_DAYS.includes(day)) {
 				return false;
@@ -358,7 +359,7 @@ export default defineComponent({
 				return false;
 			}
 
-			const day = dayjs().day();
+			const day = dayjs().utc().day();
 
 			if (!SWAMP_FOG_DAYS.includes(day)) {
 				return false;

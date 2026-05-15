@@ -625,6 +625,7 @@ export default defineComponent({
 			display: flex;
 			gap: 10px;
 			max-width: 80%;
+			min-width: 0;
 			.newsImg {
 				border: 1px solid #ffee92;
 				min-width: 80px;
@@ -666,20 +667,22 @@ export default defineComponent({
 		.newsLike {
 			background-image: url('../../assets/design/marker.webp');
 			background-repeat: no-repeat;
+			background-position: left center;
 			display: flex;
+			flex-shrink: 0;
 			align-items: center;
 			margin-top: -22px;
 			margin-right: -12px;
-			margin-left: -25px;
-			min-width: 130px;
-			height: 70px;
+			min-width: 125px;
+			height: 62px;
+			padding-left: 0;
 			.newsCounter {
 				display: flex;
 				color: #ffee92;
 				cursor: pointer;
 				font-weight: bold;
 				margin-top: -15px;
-				margin-left: 25px;
+				margin-left: 10px;
 				& img {
 					height: 16px;
 					width: 20px;

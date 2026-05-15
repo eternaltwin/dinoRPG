@@ -1,6 +1,10 @@
 <template>
 	<div id="accountList">
-		<div class="money" v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }">
+		<div
+			class="money"
+			:class="war ? 'war' : ''"
+			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
+		>
 			{{ beautifulMoney }}
 			<img :src="getImgURL('icons', 'small_gold')" alt="or" />
 		</div>
@@ -52,7 +56,7 @@
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<DinozList :currentDinozId="currentDinozId()"></DinozList>
+		<DinozList />
 		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
@@ -77,17 +81,20 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import { defineComponent } from 'vue';
 import DinozList from '../../components/dinoz/DinozList.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'LeftPanel',
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
+
 			money: undefined as number | undefined,
-			clanId: undefined as number | undefined
+			clanId: undefined as number | undefined,
+			clanStore: clanStore(),
+			war: false as boolean
 		};
 	},
 	components: {
@@ -125,7 +132,7 @@ export default defineComponent({
 			return import.meta.env.MODE === 'development';
 		},
 		currentDinozId(): number | undefined {
-			return this.dinozStore.getCurrentDinozId;
+			return useDinozStore().getCurrentDinozId;
 		},
 		getPlaceImage(place: string | null) {
 			if (!place) return;
@@ -144,7 +151,7 @@ export default defineComponent({
 			const currentDinozId = this.currentDinozId();
 			if (!currentDinozId) return this.place;
 
-			const currentDinoz = this.dinozStore.getDinoz(currentDinozId) as DinozFiche | undefined;
+			const currentDinoz = useDinozStore().getDinoz(currentDinozId) as DinozFiche | undefined;
 			if (!currentDinoz) return this.place;
 
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
@@ -181,6 +188,7 @@ export default defineComponent({
 	mounted(): void {
 		this.money = this.playerStore.getMoney;
 		this.clanId = this.playerStore.getClanId;
+		this.war = !!this.clanStore.clanEvent;
 	}
 });
 </script>
@@ -259,6 +267,9 @@ export default defineComponent({
 		img {
 			vertical-align: -5%;
 		}
+	}
+	.war {
+		background-image: url('../../assets/background/goldbox_war.webp');
 	}
 	.iconMenu {
 		width: 143px;

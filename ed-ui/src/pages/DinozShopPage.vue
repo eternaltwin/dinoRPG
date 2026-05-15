@@ -65,7 +65,7 @@ import { DinozShopService, DinozService } from '../services/index.js';
 import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
-import { playerStore, dinozStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -77,7 +77,6 @@ export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			utils: utils,
 			dinozList: [] as Array<DinozShopFicheLite>,
@@ -111,12 +110,12 @@ export default defineComponent({
 					return;
 				}
 
-				const dinozStore = this.dinozStore.getDinozList;
+				const dinozStore = useDinozStore().getDinozList;
 
 				dinozStore.push(dinozCreated);
 
 				// Update dinoz list
-				this.dinozStore.setDinozList(dinozStore);
+				useDinozStore().setDinozList(dinozStore);
 
 				// Go to dinoz page
 				await this.$router.push({

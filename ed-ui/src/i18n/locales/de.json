@@ -84,12 +84,15 @@
 			"stats": "Aktuelle Statistiken",
 			"skipFight": "Kampfergebnis sofort anzeigen",
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
+			"archivedSiteId": "Site historique",
+			"shareArchivedData": "Partager ses stats Twinoid",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
 		}
 	},
 	"toast": {
+		"deletedPlayer": "Le joueur a supprimé son compte",
 		"noFBTournament": "Es ist noch keine Qualifikationsphase des Rohkraft-Turniers im Gange.",
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
@@ -180,9 +183,9 @@
 		"text3": "DinoRPG ist Teil des Projekts {EternalTwin}. Wenn Sie möchten, können Sie auf {OpenCollective} spenden."
 	},
 	"import": {
-		"disclaimer": "Du kannst dein Original-DinoRPG-Konto bei EternalDinoRPG sichern.&& &&Alle deine Dinoz, Gegenstände und Zutaten werden gespeichert. Dasselbe gilt für den Status, die Fähigkeiten, das Niveau und das Aussehen deiner Dinoz.&& &&Die von deinen Dinoz ausgeführten Missionen werden nicht gespeichert, einige werden jedoch automatisch abgeschlossen, da sie obligatorisch sind.&&Dasselbe gilt für die Gegenstände, die du an deinen Dinoz anbringst. Denke daran, sie vor dem Speichern zu entfernen.&& &&Die Fortschritte deiner Quests werden gespeichert.&& && && && && Um das Speichern zu starten, speichere den Cookie-Link als neues Lesezeichen, gehe auf die dinorRPG-Website und klicke auf das neue Lesezeichen. Fügen Sie dann das Cookie in die dafür vorgesehenen Felder ein und klicken Sie auf die Schaltfläche des Servers, den Sie importieren möchten.&& Stimmen Sie der Nutzung der twinoid-Anwendung zu, wenn Sie dazu aufgefordert werden.&& && Je mehr Dinos Ihr Konto enthält, desto länger dauert die Sicherung. **Verlassen Sie während des Imports auf keinen Fall die Seite.**&& &&Sie können den Import ein zweites Mal starten. Dadurch wird die Sicherung zwar gelöscht, aber Sie können später wieder eine neue erstellen.&&& Es kann nur ein Server gesichert werden. Sie können Ihren Fortschritt und Ihre Dinoz nicht auf allen Servern gleichzeitig speichern, wählen Sie also sorgfältig aus!&& &&Bei Fragen oder Problemen können Sie uns gerne im Discord Eternaltwin kontaktieren.",
+		"disclaimer": "Du kannst dein Original-DinoRPG-Konto bei DinoRPG sichern.&& &&Alle deine Dinoz, Gegenstände und Zutaten werden gespeichert. Dasselbe gilt für den Status, die Fähigkeiten, das Niveau und das Aussehen deiner Dinoz.&& &&Die von deinen Dinoz ausgeführten Missionen werden nicht gespeichert, einige werden jedoch automatisch abgeschlossen, da sie obligatorisch sind.&&Dasselbe gilt für die Gegenstände, die du an deinen Dinoz anbringst. Denke daran, sie vor dem Speichern zu entfernen.&& &&Die Fortschritte deiner Quests werden gespeichert.&& && && && && Um das Speichern zu starten, speichere den Cookie-Link als neues Lesezeichen, gehe auf die dinorRPG-Website und klicke auf das neue Lesezeichen. Fügen Sie dann das Cookie in die dafür vorgesehenen Felder ein und klicken Sie auf die Schaltfläche des Servers, den Sie importieren möchten.&& Stimmen Sie der Nutzung der twinoid-Anwendung zu, wenn Sie dazu aufgefordert werden.&& && Je mehr Dinos Ihr Konto enthält, desto länger dauert die Sicherung. **Verlassen Sie während des Imports auf keinen Fall die Seite.**&& &&Sie können den Import ein zweites Mal starten. Dadurch wird die Sicherung zwar gelöscht, aber Sie können später wieder eine neue erstellen.&&& Es kann nur ein Server gesichert werden. Sie können Ihren Fortschritt und Ihre Dinoz nicht auf allen Servern gleichzeitig speichern, wählen Sie also sorgfältig aus!&& &&Bei Fragen oder Problemen können Sie uns gerne im Discord Eternaltwin kontaktieren.",
 		"imported": "Herzlichen Glückwunsch, das Konto mit dem Namen {accountName} und der Twinoid-ID {accountID} wurde importiert!&&{nbDinos} Dinoz, von denen {nbDemons} Dinoz geopfert wurden, wurden vom Server {server} gespeichert!&& &&Ein neuer Import wird das löschen, was derzeit gespeichert ist.",
-		"deleted": "Herzlichen Glückwunsch, das Konto mit dem Namen {accountName} und der Twinoid-ID {accountID} wurde aus Eternal-Dino-RPG entfernt!&&{nbDinos} Dinoz, von denen {nbDemons} Dinoz geopfert wurden, wurden gelöscht. Sie können nun wieder importieren.",
+		"deleted": "Herzlichen Glückwunsch, das Konto mit dem Namen {accountName} und der Twinoid-ID {accountID} wurde aus DinoRPG entfernt!&&{nbDinos} Dinoz, von denen {nbDemons} Dinoz geopfert wurden, wurden gelöscht. Sie können nun wieder importieren.",
 		"disclaimer2": "Du kannst deine Twinoid-Trophäen und -Statistiken speichern, indem du auf die Schaltfläche unten klickst."
 	},
 	"element": {
@@ -211,6 +214,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Suche an diesem Ort nach einem Monster, um dagegen zu kämpfen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
@@ -306,6 +310,7 @@
 		"actions": "Aktionen",
 		"full": "Vorrat gefüllt",
 		"sortBy": "Sortieren nach",
+		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 		"sort": {
 			"default": "Standard",
 			"nameAsc": "Name (A → Z)",
@@ -396,7 +401,7 @@
 		"acidBloodDamage": "Schaden des säurehaltigen Blutes",
 		"baseValue": "Basiswert",
 		"criticalHitChance": "Chance auf kritischen Treffer",
-		"criticalHitDamage": "Schadensbonus kritischer Treffer"
+		"criticalHitBonus": "Schadensbonus kritischer Treffer"
 	},
 	"item": {
 		"name": {
@@ -519,7 +524,6 @@
 			"candle_card": "Jubiläumskerze",
 			"christmas_ticket": "Weihnachtsgutschein",
 			"tictac_ticket": "Tack-Ticket",
-			"anniversary_ticket": "Jubiläumsgutschein",
 			"easter_egg": "Ei von Madame Urma",
 			"fire_cracker": "Zauberknaller",
 			"special_potion_irma": "Madame Irmas Spezialtrank",
@@ -651,7 +655,6 @@
 			"candle_card": "Diese Jubiläumskerze gewährt Zugang zum Sandburgspiel am Predigerhafen!",
 			"christmas_ticket": "Ermöglicht es, an der Schneetzeljagd teilzunehmen, um 1.000 Gold, 5.000 Gold oder einen Santas zu gewinnen.",
 			"tictac_ticket": "Mit den Tack-Tickets kannst du in Papy Joes Garten graben und versuchen, den verlorenen Schatz seines Urgroßvaters zu finden.",
-			"anniversary_ticket": "Besuche mit einem deiner Dinoz den Predigerhafen, um deine Jubiläumskarten für das Sandburgspiel auszugeben!",
 			"easter_egg": "Ein Ei von Madame Urma kann einen der zahllosen Gegenstände enthalten, die es im Dinoland gibt. Ob es ein seltener oder ein gewöhnlicher wird, bestimmt allein das Schicksal. Wird das Glück dir hold sein?",
 			"fire_cracker": "Dieser Knaller ermöglicht es dir, in Dinoville Feuerwerk zu zünden, um Schätze zu gewinnen!",
 			"special_potion_irma": "Der berühmte Trank von Madame Irma gewährt dem Dinoz, der es trinkt, **sofort eine neue Aktion**, ohne auf den nächsten Tag warten zu müssen. Du kannst nicht mehr als 3 von ihnen bei dir haben.",
@@ -2440,7 +2443,7 @@
 			"MainsCollantes": "Nimmt einem Gegner die Fähigkeit auszuweichen.",
 			"GrosCostaud": "Erhöht die Stärke aller **Angriffe** um 5.",
 			"OrigineCaushemeshenne": "Erhöht die Stärke aller **Angriffe** um 30, wenn sich der Dinoz in Caushemesh befindet.",
-			"Ecrasement": "Erzeugt eine Schockwelle, die durch alle Gegner schmettert.",
+			"Ecrasement": "Erzeugt eine Schockwelle mit einer Kraft von 5 (basierend auf dem stärksten Element des Dinoz), die durch alle Gegner schmettert.",
 			"ForceDeLumiere": "Erhöht die Stärke aller **Angriffe** um 30, wenn sich der Dinoz in der Dunklen Welt befindet.",
 			"ChargePigmou": "Greift einen Gegner mit einer Feuerkraft von 5 + Holzkraft von 3 an.",
 			"ForceDesTenebres": "Erhöht die Ausdauer und die Erholung des Dinoz um 25%.",
@@ -2582,8 +2585,8 @@
 			"23": "Die Feuerverzauberung erhöht die Stärke der Feuerangriffe dieses Dinoz.",
 			"24": "Die Bao-Verzauberung erhöht die Abwehr dieses Dinoz gegen Wasserangriffe.",
 			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt.",
-			"72": "Dieser Schwimmreifen ist in einem Zustand fortlaufender Veränderung und ermöglicht es so deinen Dinoz, zu erkennen, ob der Klebrige Sumpf geflutet ist oder nicht.",
-			"73": "Die besondere Intensität dieser Laterne ermöglicht es deinen Dinoz, zu erkennen, ob der Klebrige Sumpf vom Nebel umhüllt ist."
+			"72": "Dieser Schwimmreifen ist in einem Zustand fortlaufender Veränderung und ermöglicht es so deinem Dinoz, zu erkennen, ob der Klebrige Sumpf geflutet ist oder nicht.",
+			"73": "Die besondere Intensität dieser Laterne ermöglicht es deinem Dinoz, zu erkennen, ob der Klebrige Sumpf vom Nebel umhüllt ist."
 		}
 	},
 	"tabs": {
@@ -3529,7 +3532,7 @@
 		"title": "Spieler:",
 		"labrute": "Belohnungen aus „MeinBrutalo“",
 		"labruteTooltip": "Indem du alle Kämpfe in „MeinBrutalo“ abschließt, kannst du jeden Tag 1 :irma: je 3 aktive Dinoz erhalten.",
-		"profil": "EternalDinoRPG Profil",
+		"profil": "DinoRPG Profil",
 		"options": {
 			"title": "Kontoeinstellungen",
 			"fight": "Kampf zeigen",
@@ -3538,10 +3541,13 @@
 			"retour": "Zurück"
 		},
 		"twinoidgoals": {
-			"name": "EternalDinoRPG Statistiken",
+			"name": "DinoRPG Statistiken",
+			"archivedTitle": "Statistiques Archivées Twinoid",
 			"points": "Punkte",
 			"linkStats": "Statistik",
 			"linkGains": "Auszeichnungen",
+			"seeArchivedStats": "Voir les stats archivées",
+			"seeStats": "Voir les stats",
 			"help": {
 				"question": "Was bedeuten diese Werte?",
 				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in DinoRPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
@@ -3555,7 +3561,8 @@
 		"completion": "Vollständigkeit",
 		"rewards": "Epische Belohnungen",
 		"level": "Stufe",
-		"edit": "Bearbeiten",
+		"editDescription": "Modifier ma description",
+		"save": "Sauvegarder ma description",
 		"quest": "Meine Quests",
 		"editAccount": "Meine Daten ändern",
 		"import": "Konto importieren",
@@ -4028,11 +4035,11 @@
 			"chpx2b": "Ce hot-dog issus de la plus pure tradition de street-food chinoise vous est offert pour avoir participé aux phases finales de la ligue Pro du 16ème Championnat des clans.",
 			"chpx3a": "Cet incroyable trophée vous est offert pour avoir remporté la finale de la ligue Starter du 16ème Championnat des clans. Le croquer vous donne du baume au cœur !",
 			"chpx3b": "Cette incroyable trophée vous a été offert pour avoir participé aux phases finales de la ligue Starter du 16ème Championnat des clans. Une carotte qui donne la patate !",
-			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
+			"cinec1": "Ce magnifique trophée a été offert au gagnant du Grand Prix du premier Festival de Films du Cinéma Paradino.",
 			"cinec2": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Outstanding Contribution Award.",
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
-			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
+			"hallow": "Ce magnifique trophée a été offert au gagnant de la parade d'Halloween !",
 			"tid1": "Herzlichen Glückwunsch zum Sieg im Inter-Dojo Turnier! Die Zen-Medaille kürt das beste Dojo, das es im Dinoland gibt und kein Dinoz-Meister kann dir das Wasser reichen! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"tid2": "Herzlichen Glückwunsch zum Sieg im Dinoz-Turnier! Die Figur von Meister Zenit aus massivem Gold gleicht dem Oscar für die furchtlosesten unter den Dinoz-Meistern von ganz Dinoland. Jene, die niemand zu überholen vermag! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"gazeli": "Für deinen leidenschaftlich geschriebenen Beitrag für die Dinoland Gazette hast du diese wunderbare Trophäe bekommen. Egon Arwin Kitsch wäre stolz auf dich!",
@@ -4301,7 +4308,6 @@
 			"goblin": "Goblin",
 			"bat": "Jägerflatter",
 			"ronciv": "Dornenschlinger",
-			"gardien": "Baumkronwächter",
 			"grdien": "Baumkronwächter",
 			"rkrgns": "Korgonenverstärkung",
 			"egrllz": "Gorillo-Geist",
@@ -4338,6 +4344,7 @@
 		},
 		"step": {
 			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** ist angekommen!",
 			"resist": "**{dinoz}** hat widerstanden und den Schaden reduziert.",
 			"hit": "**{fighter}** hat einen {elements}-Angriff ausgeführt und **{target}** **{damage}** Schaden zugefügt.",
@@ -4611,7 +4618,7 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Kampf von {player} ansehen",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
@@ -4690,7 +4697,7 @@
 		"challenge": {
 			"selectChampions": "Wähle deine Mitstreiter",
 			"selectTeam": "Stelle deine Dinoz-Mannschaft zusammen, um an den heutigen Herausforderungen teilzunehmen",
-			"disclaimer": "Du kannst deine Mannschaft aus bis zu **10** Dinoz bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
+			"disclaimer": "Du kannst deine Mannschaft aus **5 bis 10** Dinoz der Stufe 10 oder höher bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
 			"validate": "Auswahl bestätigen",
 			"edit": "Auswahl bearbeiten",
 			"launch": "Kampf starten",
@@ -5119,6 +5126,7 @@
 		"korgon_end": "Du hast einen besonders fetten Korgonen gefangengenommen... hoffentlich war er nicht als Abendessen für jemand anderen vorgesehen!"
 	},
 	"report": {
+		"clan": "Signaler le clan",
 		"header": "Unangemessene Inhalte melden",
 		"player": "Bist du sicher, dass du diesen Spieler den Moderatoren melden möchtest?",
 		"specify": "Bitte beschreibe den Grund für deine Beschwerde",
@@ -5127,7 +5135,13 @@
 			"avatar": "Unangemessener Avatar",
 			"accountName": "Unangemessener Spielername",
 			"dinozName": "Unangebrachter Name eines Dinoz",
-			"multi": "Dieser Spieler hat mehrere Konten"
+			"multi": "Dieser Spieler hat mehrere Konten",
+			"other": "Andere",
+			"clanBanner": "Bannière inappropriée",
+			"clanBehavior": "Comportement anti-jeu",
+			"clanPages": "Descriptions ou pages de clan inappropriées",
+			"clanOther": "Autre",
+			"deleted": "Clan supprimé"
 		},
 		"sorted": {
 			"open": "Offen",
@@ -5181,7 +5195,12 @@
 			"customText": "persönliche Beschreibung",
 			"multi": "Verdacht auf Mehrfachkonten",
 			"dinozName": "unangemessener Name eines Dinoz",
-			"avatar": "unangemessener Avatar"
+			"avatar": "unangemessener Avatar",
+			"clanBanner": "la bannière de votre clan",
+			"clanBehavior": "le comportement anti-jeu de votre clan",
+			"clanPages": "les pages de votre clan",
+			"clanOther": "votre clan",
+			"other": "ein anderer Grund"
 		},
 		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
 		"offerEnded": "Du hast dein Angebot für {value} :ticket: verkauft",

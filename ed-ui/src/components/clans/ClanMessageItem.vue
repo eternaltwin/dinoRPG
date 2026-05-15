@@ -1,14 +1,14 @@
 <template>
 	<article class="msg-card" :class="{ 'is-self': isSelf }">
 		<header class="msg-card__header">
-			<button class="avatar" @click="author ? emit('openProfile', author.id) : undefined">
+			<RouterLink class="avatar" :to="author ? { name: 'Account', params: { id: author.id } } : undefined">
 				<img v-if="author?.avatarUrl" :src="author.avatarUrl" alt="avatar" />
 				<span v-else class="avatar--stub">{{ author?.name?.[0]?.toUpperCase() ?? 'Unknown' }}</span>
-			</button>
+			</RouterLink>
 
 			<div class="meta">
 				<div class="name-row">
-					<button class="author" @click="author ? emit('openProfile', author.id) : undefined">
+					<RouterLink class="author" :to="author ? { name: 'Account', params: { id: author.id } } : undefined">
 						<img
 							src="\src\assets\icons\crown.png"
 							alt="rank"
@@ -16,7 +16,7 @@
 							v-tippy="{ content: t('clan.icons.crown'), theme: 'small' }"
 						/>
 						{{ author?.name ?? 'Unknown' }}
-					</button>
+					</RouterLink>
 					<span v-if="author?.isLeader" class="badge badge--leader">{{ t('clan.icons.crown') }}</span>
 					<span class="badge">{{ topItem }}</span>
 				</div>
@@ -25,7 +25,7 @@
 		</header>
 
 		<div class="msg-card__content">
-			<p v-html="contentHtml"></p>
+			<div v-html="contentHtml"></div>
 			<div class="actions divide-x">
 				<button class="btn" @click="emit('reply')">{{ t('messagerie.responseConv') }}</button>
 				<button v-if="canDelete" class="btn btn--danger" @click="emit('delete')">
@@ -55,7 +55,6 @@ const props = defineProps<{
 const emit = defineEmits<{
 	(e: 'delete'): void;
 	(e: 'reply'): void;
-	(e: 'openProfile', id: string): void;
 }>();
 
 const { t } = useI18n();
@@ -108,6 +107,7 @@ function formatShortDate(iso: string | Date): string {
 		background: #b87941;
 		color: #f4f0e6;
 		font-weight: 700;
+		text-decoration: none;
 		img {
 			width: 100%;
 			height: 100%;
@@ -135,6 +135,7 @@ function formatShortDate(iso: string | Date): string {
 			border: 0;
 			cursor: pointer;
 			text-transform: capitalize;
+			text-decoration: none;
 		}
 		.date {
 			font-size: 11px;
@@ -166,11 +167,9 @@ function formatShortDate(iso: string | Date): string {
 	.divide-x > * + * {
 		border-left: 1px solid #8e3e25 !important;
 	}
-
 	&__content {
 		white-space: pre-line;
-		overflow-wrap: break-word;
-		word-break: break-all;
+		word-break: break-word;
 	}
 	.badge {
 		color: #ffee92;
@@ -189,6 +188,16 @@ function formatShortDate(iso: string | Date): string {
 	a {
 		color: #0645ad;
 		text-decoration: underline;
+	}
+	:deep(ul),
+	:deep(ol) {
+		padding-left: 1.5em;
+		margin: 0.5em 0;
+		list-style: revert;
+	}
+
+	:deep(li) {
+		display: list-item;
 	}
 }
 </style>

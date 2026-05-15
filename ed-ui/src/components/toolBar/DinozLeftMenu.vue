@@ -173,15 +173,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, localStore, playerStore, useMenuStore } from '../../store';
+import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { utils } from '../../utils';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { placeList } from '../../constants';
 import { CINEMA_LINK } from '../../utils/goTo.js';
+import { mapState } from 'pinia';
 
 export default defineComponent({
 	name: 'DinozLeftMenu',
@@ -189,9 +189,8 @@ export default defineComponent({
 	data() {
 		return {
 			localStore: localStore(),
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			dinozList: useDinozStore().getDinozList as Array<DinozFiche>,
 			CINEMA_LINK
 		};
 	},
@@ -210,7 +209,8 @@ export default defineComponent({
 		},
 		isMenuOpened(): boolean {
 			return useMenuStore().isDinozMenuOpened;
-		}
+		},
+		...mapState(useDinozStore, ['getDinozList'])
 	},
 	methods: {
 		close() {
@@ -224,38 +224,26 @@ export default defineComponent({
 		currentDinozId(): number {
 			return +this.$route.params.id;
 		},
-		getLeaderGroup(dinoz: DinozFiche) {
-			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
+		getLeaderGroup(dinoz: DinozFiche): boolean {
+			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId());
 			if (!selectedDinoz) return false;
-			// Le dinoz est leader
-			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
-				return true;
-			}
-			// Le dinoz n'est pas suiveur
-			if (!dinoz.leaderId) return false;
 
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
-			if (!leader) return false;
-			// Si le dinoz est follower et que le dinoz courrant est son leader
-			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
-				return true;
-			}
-			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
-				return true;
-			}
-			if (dinoz.id === this.currentDinozId()) {
-				return true;
-			}
-			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
+			if (dinoz.id === selectedDinoz.id) return true;
+
+			if (selectedDinoz.leaderId === dinoz.id) return true;
+
+			if (dinoz.leaderId === selectedDinoz.id) return true;
+
+			return dinoz.leaderId !== null && dinoz.leaderId === selectedDinoz.leaderId;
 		},
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': {
+		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
+				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
 			},
 			deep: true
 		}

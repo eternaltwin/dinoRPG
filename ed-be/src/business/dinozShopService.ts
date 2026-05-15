@@ -7,8 +7,7 @@ import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
-import { getRandomLetter, getRandomNumber } from '../utils/index.js';
-import { getRace } from '@drpg/core/utils/DinozUtils';
+import { getRandomArrayElement, getRandomLetter } from '../utils/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
@@ -71,7 +70,7 @@ export async function getDinozFromDinozShop(req: Request) {
 		// Make x Dinoz object to fill shop
 		for (let i = 0; i < gameConfig.shop.dinozNumber; i++) {
 			// Set a random race to the dinoz
-			randomRace = availableRaces[getRandomNumber(0, availableRaces.length)];
+			randomRace = getRandomArrayElement(availableRaces);
 
 			// Make a random display
 			// First 2 digits are the race specific letters

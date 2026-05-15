@@ -233,7 +233,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -258,7 +258,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			tryNumber: 1 as number,
@@ -305,20 +304,30 @@ export default defineComponent({
 					await this.learnSkillAndSetStore(skillIdList);
 				}
 			} catch (error) {
-				//Do nothing
+				// Do nothing
+				console.error(error);
 			}
 		},
-		unlockSkill(): void {
-			if (!this.availableSkills) {
+		async unlockSkill(): Promise<void> {
+			if (!this.availableSkills || !this.availableSkills.unlockableSkills) {
+				console.warn(`No skills to unlock`);
 				return;
 			}
-			if (confirm(this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills?.length }))) {
-				if (!this.availableSkills.unlockableSkills) {
-					return;
+			try {
+				const prompt = await this.$confirm({
+					message: this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills.length }),
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popup.reject'),
+					icon: 'pi pi-trash'
+				});
+				if (prompt) {
+					const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
+					this.learnSkillAndSetStore(skillIdList);
 				}
-				const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
-
-				this.learnSkillAndSetStore(skillIdList);
+			} catch (error) {
+				//Do nothing
+				console.error(error);
 			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
@@ -372,7 +381,7 @@ export default defineComponent({
 	async created(): Promise<void> {
 		await this.getLearnableSkills(+this.id, 1);
 
-		this.dinoz = this.dinozStore.getDinoz(+this.id);
+		this.dinoz = useDinozStore().getDinoz(+this.id);
 	}
 });
 </script>

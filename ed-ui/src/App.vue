@@ -2,7 +2,8 @@
 	<TitleHeader :title="$t('pageTitle.default')" />
 	<TopBar />
 	<div id="dynamic">
-		<Report />
+		<ReportPlayer />
+		<ReportClan />
 		<Spinner />
 		<ErrorMessage />
 		<Messagerie />
@@ -13,7 +14,6 @@
 	</div>
 	<RouterView />
 	<FooterComp />
-	<Toast />
 	<div class="impact verdana"></div>
 </template>
 
@@ -23,8 +23,8 @@ import TitleHeader from './components/utils/TitleHeader.vue';
 import FooterComp from './components/utils/Footer.vue';
 import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
-import Toast from './components/utils/Toast.vue';
-import Report from './components/modal/ReportModal.vue';
+import ReportPlayer from './components/modal/ReportPlayerModal.vue';
+import ReportClan from './components/modal/ReportClanModal.vue';
 import Messagerie from './components/modal/MessagerieModal.vue';
 import TopBar from './components/toolBar/TopBar.vue';
 import TwinoRightMenu from './components/toolBar/TwinoRightMenu.vue';
@@ -40,8 +40,8 @@ export default defineComponent({
 		FooterComp,
 		Spinner,
 		ErrorMessage,
-		Toast,
-		Report,
+		ReportPlayer,
+		ReportClan,
 		DinozLeftMenu
 	}
 });

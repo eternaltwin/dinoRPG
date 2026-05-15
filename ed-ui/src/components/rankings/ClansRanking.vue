@@ -8,11 +8,18 @@
 			</RouterLink>
 		</i18n-t>
 
-		<DZButton v-if="eventInProgress && rankingType === ClanRankingType.TREASURE" @click="switchRanking()">{{
-			$t(`ranking.button.clanEvent`)
-		}}</DZButton>
-		<DZButton v-if="eventInProgress && rankingType === ClanRankingType.EVENT" @click="switchRanking()">{{
-			$t(`ranking.button.clanTreasure`)
+		<DZButton
+			v-if="eventInProgress && rankingType !== ClanRankingType.EVENT"
+			@click="switchRanking(ClanRankingType.EVENT)"
+			>{{ $t(`ranking.button.clanEvent`) }}</DZButton
+		>
+		<DZButton
+			v-if="(eventInProgress || warInProgress) && rankingType !== ClanRankingType.TREASURE"
+			@click="switchRanking(ClanRankingType.TREASURE)"
+			>{{ $t(`ranking.button.clanTreasure`) }}</DZButton
+		>
+		<DZButton v-if="warInProgress && rankingType !== ClanRankingType.WAR" @click="switchRanking(ClanRankingType.WAR)">{{
+			$t(`ranking.button.clanWar`)
 		}}</DZButton>
 		<table>
 			<tbody>
@@ -20,7 +27,7 @@
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="clans">{{ $t('ranking.th.clans') }}</th>
 					<th class="treasure">
-						{{ rankingType === ClanRankingType.TREASURE ? $t('ranking.th.treasure') : $t('ranking.th.event') }}
+						{{ $t(`ranking.th.${rankingType}`) }}
 					</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
@@ -46,7 +53,16 @@
 					</td>
 					<td class="other">
 						<div class="flex items-center gap-2">
-							{{ rankingType === ClanRankingType.TREASURE ? moneyLint(clan.treasureValue ?? 0) : clan.totalScore }}
+							<template v-if="rankingType === ClanRankingType.TREASURE">
+								{{ moneyLint(clan.treasureValue ?? 0) }}
+							</template>
+							<template v-else-if="rankingType === ClanRankingType.EVENT">
+								{{ clan.totalScore }}
+							</template>
+							<template v-else-if="rankingType === ClanRankingType.WAR">
+								{{ clan.clanWarRanking?.reputation ?? 0 }}
+								<img :src="getImgURL('icons', 'small_reput')" alt="reputation" />
+							</template>
 							<span
 								v-if="rankingType === ClanRankingType.TREASURE"
 								v-html="formatContent(':gold:')"
@@ -78,6 +94,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import DZButton from '../common/DZButton.vue';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { SelectOption } from '../common/DZSelect.vue';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -108,12 +125,8 @@ export default defineComponent({
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
 		},
-		async switchRanking() {
-			if (this.rankingType === ClanRankingType.TREASURE) {
-				this.rankingType = ClanRankingType.EVENT;
-			} else {
-				this.rankingType = ClanRankingType.TREASURE;
-			}
+		async switchRanking(type: ClanRankingType) {
+			this.rankingType = type;
 			await this.getClansRanking();
 		}
 	},
@@ -123,6 +136,9 @@ export default defineComponent({
 		},
 		eventInProgress() {
 			return currentEvents().length > 0;
+		},
+		warInProgress() {
+			return !!clanStore().clanEvent;
 		}
 	},
 	async created(): Promise<void> {

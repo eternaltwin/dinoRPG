@@ -10,10 +10,10 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { placeList, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
@@ -26,10 +26,9 @@ import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
-import { generateString, getRandomNumber } from '../utils/index.js';
+import { generateString, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -43,6 +42,9 @@ import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { getArchivedFightRequest } from '../dao/archiveDao.js';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
 
 /**
  * @summary Process a fight
@@ -159,7 +161,7 @@ export async function fightMonstersAtPlace(
 		}
 	}
 	const fightResult = calculateFightVsMonsters(team, player, placeId, monsters);
-	const result = await rewardFight(team, monsters, fightResult, placeId, player);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, player);
 
 	// If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
@@ -290,8 +292,8 @@ export function calculateFightBetweenPlayers(
 	return generateFight(fightConfiguration, place, rng);
 }
 
-export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
-export async function rewardFight(
+export type DinozToRewardFight = Parameters<typeof rewardFightVsMonsters>[0][number];
+export async function rewardFightVsMonsters(
 	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -305,6 +307,10 @@ export async function rewardFight(
 	if (!team.length) {
 		throw new ExpectedError('No player found');
 	}
+
+	// Victory and rewards against monsters are granted only by defeating them. Tie counts as defeat.
+
+	const victory = fightResult.outcome === FightOutcome.AttackerWin;
 
 	const playerId = player.id;
 
@@ -374,10 +380,10 @@ export async function rewardFight(
 				decrement: attacker.hpLost
 			},
 			experience: {
-				increment: fightResult.winner ? xp : 0
+				increment: victory ? xp : 0
 			}
 		});
-		await createLog(LogType.XPEarned, playerId, d.id, fightResult.winner ? xp : 0);
+		await createLog(LogType.XPEarned, playerId, d.id, victory ? xp : 0);
 		await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
 
 		// Log death if dinoz is dead
@@ -396,7 +402,7 @@ export async function rewardFight(
 		for (const dinozStatus of d.status) {
 			if (dinozStatus.statusId === DinozStatusId.FIRE_CHARM || dinozStatus.statusId === DinozStatusId.WATER_CHARM) {
 				// 1/11 chance to remove charm
-				if (randomBetween(0, 10) === 0) {
+				if (getRandomInteger(0, 10) === 0) {
 					await removeStatusFromDinoz(d.id, dinozStatus.statusId);
 				}
 			}
@@ -434,7 +440,7 @@ export async function rewardFight(
 	let itemWon = undefined;
 
 	for (const m of eventMonsters) {
-		if (m.events && m.events.length > 0 && fightResult.winner) {
+		if (m.events && m.events.length > 0 && victory) {
 			await increasePlayerEventProgression(playerId, m.events[0]);
 			switch (m.events[0]) {
 				case GameEvent.CHRISTMAS:
@@ -457,7 +463,7 @@ export async function rewardFight(
 	}
 
 	// If attackers won
-	if (fightResult.winner) {
+	if (victory) {
 		await addMoney(playerId, gold);
 	} else if (goldLost) {
 		await removeMoney(playerId, goldLost);
@@ -513,8 +519,8 @@ export async function rewardFight(
 		LogType.Fight,
 		playerId,
 		undefined,
-		fightResult.winner ? gold : -goldLost,
-		fightResult.winner ? totalWinXP : 0,
+		victory ? gold : -goldLost,
+		victory ? totalWinXP : 0,
 		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
 	);
 
@@ -523,30 +529,29 @@ export async function rewardFight(
 			id: f.id,
 			type: f.type,
 			name: f.name,
+			level: f.level,
+			survived: f.survived,
 			display: f.display,
 			attacker: f.attacker,
 			maxHp: f.maxHp,
 			startingHp: f.startingHp,
+			currentHp: f.startingHp,
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
-			dark:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined)
-					: undefined,
-			size:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined)
-					: undefined
+			costume: f.costume,
+			dark: f.dark,
+			size: f.size,
+			entrance: f.entrance
 		};
 	});
 	return {
 		fighters: fighters,
-		goldEarned: fightResult.winner ? gold : -goldLost,
-		xpEarned: fightResult.winner ? totalWinXP : 0,
-		levelUp: fightResult.winner ? levelup : false,
+		goldEarned: victory ? gold : -goldLost,
+		xpEarned: victory ? totalWinXP : 0,
+		levelUp: victory ? levelup : false,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
+		result: victory,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinozId,
@@ -622,7 +627,6 @@ export async function generateMonsterList(
 	const diff = (team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
-	const specialProb = getRandomNumber(0, 100);
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
@@ -664,7 +668,8 @@ export async function generateMonsterList(
 			}
 			// 2 - If monster is special, check if it appears
 			if (m.special) {
-				const display = m.odds >= specialProb;
+				const specialProb = getRandomNumber(0, 100);
+				const display = m.odds < specialProb;
 				return {
 					monster: m,
 					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
@@ -735,4 +740,23 @@ export async function generateMonsterList(
 	}
 
 	return monsterArray;
+}
+
+export async function replayFight(req: Request) {
+	const archiveId = req.params.archiveId;
+	const fight = await getArchivedFightRequest(archiveId);
+	if (!fight) {
+		throw new ExpectedError('No replay found.');
+	}
+
+	return {
+		id: archiveId,
+		fighters: JSON.parse(fight.fighters) as FighterRecap[],
+		result: fight.result,
+		history: JSON.parse(fight.steps) as FightStep[],
+		seed: fight.seed,
+		leftPlayer: fight.leftPlayer,
+		rightPlayer: fight.rightPlayer,
+		metadata: fight.metadata ? JSON.parse(fight.metadata) : undefined
+	};
 }

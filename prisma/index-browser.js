@@ -149,6 +149,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   updatedDate: 'updatedDate',
   order: 'order',
   concentrationId: 'concentrationId',
+  castleId: 'castleId',
   fight: 'fight',
   gather: 'gather',
   remaining: 'remaining',
@@ -287,7 +288,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin',
-  clanMemberId: 'clanMemberId',
+  clanId: 'clanId',
   matelasseur: 'matelasseur',
   messie: 'messie',
   labruteDone: 'labruteDone',
@@ -296,6 +297,8 @@ exports.Prisma.PlayerScalarFieldEnum = {
   dailyGridRewards: 'dailyGridRewards',
   skipFight: 'skipFight',
   skipLevel: 'skipLevel',
+  shareArchivedData: 'shareArchivedData',
+  archivedSiteId: 'archivedSiteId',
   banCaseId: 'banCaseId',
   discoveredSkills: 'discoveredSkills',
   lastVersionSeen: 'lastVersionSeen',
@@ -475,10 +478,29 @@ exports.Prisma.ClanScalarFieldEnum = {
   name: 'name',
   treasureValue: 'treasureValue',
   creationDate: 'creationDate',
-  clanWarId: 'clanWarId',
   banner: 'banner',
   leaderId: 'leaderId',
   langs: 'langs'
+};
+
+exports.Prisma.ClanCastleScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  placeId: 'placeId',
+  maxLife: 'maxLife',
+  currentLife: 'currentLife',
+  defenseOrder: 'defenseOrder'
+};
+
+exports.Prisma.ClanCastleRepairScalarFieldEnum = {
+  id: 'id',
+  castleId: 'castleId',
+  startedAt: 'startedAt',
+  endsAt: 'endsAt',
+  hpPerTick: 'hpPerTick',
+  frequency: 'frequency',
+  totalTicks: 'totalTicks',
+  appliedTicks: 'appliedTicks'
 };
 
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {
@@ -490,8 +512,33 @@ exports.Prisma.ClanJoinRequestScalarFieldEnum = {
 
 exports.Prisma.ClanWarScalarFieldEnum = {
   id: 'id',
-  dateStart: 'dateStart',
-  dateEnd: 'dateEnd'
+  eventId: 'eventId',
+  attackerClanId: 'attackerClanId',
+  defenderClanId: 'defenderClanId',
+  startedAt: 'startedAt',
+  endsAt: 'endsAt',
+  isCastleDestroyed: 'isCastleDestroyed',
+  winnerClanId: 'winnerClanId'
+};
+
+exports.Prisma.ClanWarRankingScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  eventId: 'eventId',
+  reputation: 'reputation',
+  downtimeCount: 'downtimeCount',
+  totalPWin: 'totalPWin',
+  totalPLost: 'totalPLost',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ClanEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  config: 'config'
 };
 
 exports.Prisma.ClanIngredientScalarFieldEnum = {
@@ -547,7 +594,8 @@ exports.Prisma.ModerationScalarFieldEnum = {
   banEndDate: 'banEndDate',
   sorted: 'sorted',
   reporterId: 'reporterId',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  targetClanId: 'targetClanId'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
@@ -712,7 +760,9 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting',
-  unfreezing: 'unfreezing'
+  unfreezing: 'unfreezing',
+  defending: 'defending',
+  restingAttack: 'restingAttack'
 };
 
 exports.NewsType = exports.$Enums.NewsType = {
@@ -784,6 +834,7 @@ exports.LogType = exports.$Enums.LogType = {
   AdminUpdateQuest: 'AdminUpdateQuest',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
   AdminUpdateSecret: 'AdminUpdateSecret',
+  AdminUpdateClan: 'AdminUpdateClan',
   IngredientSold: 'IngredientSold',
   XPEarned: 'XPEarned',
   HPLost: 'HPLost',
@@ -804,12 +855,22 @@ exports.PantheonMotif = exports.$Enums.PantheonMotif = {
   epic: 'epic'
 };
 
+exports.ClanEventType = exports.$Enums.ClanEventType = {
+  war: 'war',
+  mana_war: 'mana_war'
+};
+
 exports.ModerationReason = exports.$Enums.ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other',
+  clanBanner: 'clanBanner',
+  clanBehavior: 'clanBehavior',
+  clanPages: 'clanPages',
+  clanOther: 'clanOther'
 };
 
 exports.ModerationAction = exports.$Enums.ModerationAction = {
@@ -835,7 +896,8 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   event: 'event',
   newClanApply: 'newClanApply',
   clanApplyAccepted: 'clanApplyAccepted',
-  message: 'message'
+  message: 'message',
+  clanWar: 'clanWar'
 };
 
 exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {
@@ -894,8 +956,12 @@ exports.Prisma.ModelName = {
   PlayerTracking: 'PlayerTracking',
   Pantheon: 'Pantheon',
   Clan: 'Clan',
+  ClanCastle: 'ClanCastle',
+  ClanCastleRepair: 'ClanCastleRepair',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',
+  ClanWarRanking: 'ClanWarRanking',
+  ClanEvent: 'ClanEvent',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',
@@ -933,7 +999,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-
+        
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 

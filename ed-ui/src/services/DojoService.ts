@@ -61,7 +61,7 @@ export const DojoService = {
 		});
 		return res.data;
 	},
-	async getTournamentInfo(): Promise<{ id: string; teamRace: string; teamSize: number; levelLimit: number }> {
+	async getTournamentInfo(): Promise<{ id: string; teamRace: number[]; teamSize: number; levelLimit: number }> {
 		const res = await http().get(`/dojo/tournament/`);
 		return res.data;
 	},

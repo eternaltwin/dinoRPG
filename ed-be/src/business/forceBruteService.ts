@@ -10,7 +10,7 @@ import { getRandomUpElement } from '../utils/dinoz.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { randomUUID } from 'crypto';
-import { getLetter, getRandomNumber } from '../utils/index.js';
+import { getLetter, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
@@ -36,6 +36,11 @@ import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -251,7 +256,7 @@ export async function createTournamentDinoz(req: Request) {
 				display = generateDinozDisplay(currentRace, '1', '1', '0');
 				break;
 			case RaceEnum.CASTIVORE:
-				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0');
 				break;
 			case RaceEnum.ROCKY:
 			case RaceEnum.NUAGOZ:
@@ -264,7 +269,7 @@ export async function createTournamentDinoz(req: Request) {
 				break;
 			case RaceEnum.FEROSS:
 				display =
-					getRandomNumber(0, 1) === 0
+					getRandomInteger(0, 1) === 0
 						? generateDinozDisplay(currentRace, '1', '1', '0')
 						: generateDinozDisplay(currentRace, '2', '2', '0');
 				break;
@@ -278,7 +283,6 @@ export async function createTournamentDinoz(req: Request) {
 				break;
 		}
 	}
-	//TODO add a chance to get rare display (1%)
 
 	const newDinoz: Prisma.GameDinozCreateInput = {
 		name: req.body.name,
@@ -648,6 +652,10 @@ export async function fightFBTournamentOpponent(req: Request) {
 		PlaceEnum.FORCEBRUT
 	);
 
+	// Only defeating all opponents grants victory. Tie counts as defeat.
+
+	const victory = fightResult.outcome === FightOutcome.AttackerWin;
+
 	const attacker = fightResult.attackers.find(a => a.dinozId === dinoz.id);
 	if (!attacker) {
 		throw new ExpectedError(`Attacker ${dinoz.id} doesn't exist.`);
@@ -662,44 +670,54 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	gold += Math.round(gold * goldMultiplier);
 
-	if (fightResult.winner) {
-		await addMoney(authed.id, gold);
-	}
-	let xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
-	xp = calculateXPBonus(dinoz, xp, dinoz.player);
-	const max = getMaxXp(dinoz);
 	let levelup = false;
-	if (dinoz.experience >= max) {
-		// No xp if the dinoz was already at max
-		levelup = true;
-		xp = 0;
-	} else if (dinoz.experience + xp >= max) {
-		// Else, allow xp overflow (should happen only once) and raise levelup flag
-		levelup = true;
+	let xp = 0;
+
+	if (victory) {
+		await addMoney(authed.id, gold);
+		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
+		xp = calculateXPBonus(dinoz, xp, dinoz.player);
+		const max = getMaxXp(dinoz);
+
+		if (dinoz.experience >= max) {
+			// No xp if the dinoz was already at max
+			levelup = true;
+			xp = 0;
+		} else if (dinoz.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
+			levelup = true;
+		}
 	}
+
 	await updateDinoz(dinoz.id, {
 		life: {
 			decrement: attacker.hpLost
 		},
 		experience: {
-			increment: fightResult.winner ? xp : 0
+			increment: xp
 		},
 		FBTournamentStep: {
-			increment: fightResult.winner ? 1 : 0
+			increment: victory ? 1 : 0
 		}
 	});
 
-	await archiveFight(fightResult, authed.id, null);
+	await archiveFight(fightResult, victory, authed.id, null);
 
 	// Consume item used
+	let merguezUsed = 0;
 	for (const fighter of [...fightResult.attackers]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+
+			if (itemUsed === Item.GOBLIN_MERGUEZ) {
+				merguezUsed++;
+			}
 		}
 	}
+	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
 
 	let statusReward: DinozStatusId | undefined = undefined;
-	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
+	if (victory && dinoz.FBTournamentStep % 10 === 0) {
 		switch (dinoz.FBTournamentStep / 10) {
 			case 1:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.BRONZE_MEDAL_FORCEBRUT);
@@ -724,11 +742,11 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	return {
 		fighters: fightResult.fighters,
-		goldEarned: fightResult.winner ? gold : 0,
-		xpEarned: fightResult.winner ? xp : 0,
+		goldEarned: victory ? gold : 0,
+		xpEarned: victory ? xp : 0,
 		levelUp: levelup,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
+		result: victory,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinozId,

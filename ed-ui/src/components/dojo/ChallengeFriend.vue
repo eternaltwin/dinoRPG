@@ -2,14 +2,13 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<div class="preparation" v-if="!fightTransformed">
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.disclaimer')" />
+		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectYourDinoz')" />
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="6" @validate="composeMyTeam"></SelectDinoz>
-		<template v-if="opponentDinoz.length <= 0">
-			<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
-				{{ friend.player.name }}</DZButton
-			>
-		</template>
-		<template v-else>
-			<DZDisclaimer round help :content="$t('dojo.challengeFriend.friend')" />
+		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectOpponentDinoz')" />
+		<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
+			{{ friend.player.name }}</DZButton
+		>
+		<template v-if="opponentDinoz.length > 0">
 			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="6" @validate="composeEnnemyTeam"></SelectDinoz>
 		</template>
 		<div
@@ -29,18 +28,24 @@
 				</Suspense>
 			</div>
 		</div>
-		<FightRecap :stats="fightStat" />
-		{{ shareLink }}
+
+		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
+
+		<Transition name="bounce">
+			<FightRecap :stats="fightStat" />
+		</Transition>
+		<DZInput disabled type="text" v-model="shareLink" />
 	</template>
 </template>
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZInput from '../common/DZInput.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { ClanService, PlayerService } from '../../services/index.js';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
@@ -58,8 +63,9 @@ export default defineComponent({
 	name: 'ChallengeFriend',
 	components: {
 		DZButton,
-		TitleHeader,
 		DZDisclaimer,
+		DZInput,
+		TitleHeader,
 		SelectDinoz,
 		FightersHeader,
 		FightRecap,
@@ -67,7 +73,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			selectedDinoz: [] as number[],
 			clanMembers: [] as Array<ClanMember>,
@@ -87,6 +92,8 @@ export default defineComponent({
 	},
 	methods: {
 		async selectPlayer(playerId: string) {
+			this.opponentDinoz = [];
+			this.opponentTeam = [];
 			try {
 				const player = await PlayerService.getPlayerData(playerId);
 				this.opponentDinoz = player.dinoz
@@ -98,7 +105,8 @@ export default defineComponent({
 							display: d.display,
 							level: d.level
 						};
-					});
+					})
+					.sort((a, b) => b.level - a.level);
 				this.opponentId = playerId;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -118,14 +126,22 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t, fightResult.result);
-				if (!nexFight) {
+				const nextFight = transpileFight(
+					structuredClone(toRaw(fighters)),
+					fightSteps,
+					this.$t,
+					fightResult.result,
+					undefined,
+					undefined,
+					true
+				);
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
+					history: nextFight.filter(n => n != undefined)
 					// lang: this.lang
 				};
 				this.leftPlayer = fightResult.leftPlayer;
@@ -133,9 +149,23 @@ export default defineComponent({
 				this.loaded = true;
 				this.shareLink = `${window.location.origin}/dojo/share/${fightResult.id}`;
 				await this.$refreshGold();
+				dojoStore().incrementCashPrice(this.fightCost);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
+		},
+		returnToFighterSelection() {
+			this.selectedDinoz = [];
+			this.opponentDinoz = [];
+			this.myTeam = [];
+			this.opponentTeam = [];
+			this.fightCost = 0;
+			this.leftPlayer = null;
+			this.rightPlayer = null;
+			this.opponentId = undefined;
+			this.fightTransformed = undefined;
+			this.loaded = false;
+			this.shareLink = '';
 		},
 		composeMyTeam(data: number[]) {
 			this.myTeam = data;
@@ -152,8 +182,8 @@ export default defineComponent({
 			this.$router.push({ name: 'DojoHome' });
 			return;
 		}
-		this.myDinoz = this.dinozStore.getDinozList
-			.filter(d => d.unavailableReason !== UnavailableReason.frozen)
+		this.myDinoz = useDinozStore()
+			.getDinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen)
 			.map(d => {
 				return {
 					id: d.id,
@@ -161,7 +191,8 @@ export default defineComponent({
 					display: d.display,
 					level: d.level
 				};
-			});
+			})
+			.sort((a, b) => b.level - a.level);
 
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);

@@ -81,7 +81,7 @@ import DZButton from '../common/DZButton.vue';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import translateFightStep from '../../utils/translateFightStep.js';
-import { dinozStore } from '../../store/index.js';
+import { useDinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'FightBounce',
@@ -97,7 +97,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			displayFightHistory: false,
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
@@ -112,7 +111,7 @@ export default defineComponent({
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
 			} else {
-				this.dinozStore.clearNpc(this.dinozId);
+				useDinozStore().clearNpc(this.dinozId);
 				this.$router.push({ name: 'DinozPage', params: { id: this.dinozId.toString() } });
 			}
 		},
@@ -124,7 +123,7 @@ export default defineComponent({
 
 			if (!this.fightHistory) {
 				this.fightHistory = this.fight.history
-					.map(step => translateFightStep(step, this.$t))
+					.flatMap(step => translateFightStep(step, this.$t))
 					.filter(Boolean)
 					.join('<br />');
 			}
@@ -132,11 +131,13 @@ export default defineComponent({
 		}
 	},
 	mounted() {
+		useDinozStore().setCurrentDinozId(this.dinozId);
 		if (this.fight.result) {
-			this.npcSpeech = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
-			this.npcName = this.dinozStore.getNpc(this.dinozId)?.npcName;
+			const npc = useDinozStore().getCurrentDinoz.npcAwait;
+			this.npcSpeech = npc?.npcSpeech;
+			this.npcName = npc?.npcName;
 		} else {
-			this.dinozStore.clearNpc(this.dinozId);
+			useDinozStore().clearNpc(this.dinozId);
 		}
 	}
 });

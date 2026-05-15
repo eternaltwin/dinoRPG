@@ -69,7 +69,7 @@ export async function createTournamentTeam(req: Request) {
 	const playerRaces = new Set<number>();
 	playerFilteredDinoz.forEach(d => playerRaces.add(d.raceId));
 	if (playerRaces.size < latestTournament.raceMinimum) {
-		throw new ExpectedError(translate('dojo.notEnoughDiversity', authed));
+		throw new ExpectedError(translate('dojo.notEnoughDiversity', authed, { qty: latestTournament.raceMinimum }));
 	}
 
 	await prisma.tournamentTeam.create({
@@ -146,7 +146,7 @@ export async function getTournamentTeam(req: Request) {
 	});
 
 	if (!myTeam || !myTeam.TournamentTeam) {
-		throw new ExpectedError('No team found');
+		return [];
 	}
 
 	return myTeam.TournamentTeam.dinoz;
@@ -155,7 +155,10 @@ export async function getTournamentTeam(req: Request) {
 export async function tournamentInfo(req: Request) {
 	await auth(req);
 	const latestTournament = await getLatestTournament();
-	return latestTournament;
+	if (!latestTournament) {
+		throw new ExpectedError('No tournament found');
+	}
+	return { ...latestTournament, teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)) };
 }
 
 export async function getTournamentFightsToShow(
@@ -340,69 +343,6 @@ export async function tournamentsHistory(req: Request) {
 		})
 	]);
 	return { count, history };
-}
-
-export async function createFirstTournament(prisma: PismaClientLocal) {
-	// Check if there is at least:
-	// - 5000 dinoz active
-	//
-	const dinozCount = await prisma.dinoz.count({
-		where: {
-			OR: [
-				{ unavailableReason: null },
-				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-			]
-		}
-	});
-
-	if (dinozCount > 5000) {
-		const tournamentFormat = formatTID[1];
-		const teamSize = 4;
-		const teamRace = tournamentFormat.teamRace;
-		const raceMinimum = 4;
-		const levelLimit = await getLevelLimits(tournamentFormat.teamRace);
-
-		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
-		await prisma.tournament.create({
-			data: {
-				formatName: tournamentFormat.name,
-				teamSize: teamSize,
-				raceMinimum: raceMinimum,
-				poison: tournamentFormat.poison,
-				teamRace: teamRace.toString(),
-				levelLimit: levelLimit,
-				nextRound: endQualif
-			},
-			select: {
-				id: true
-			}
-		});
-	} else {
-		const nextMonday = dayjs()
-			.day(1)
-			.add(dayjs().day() === 1 ? 1 : 0, 'week')
-			.startOf('day')
-			.add(1, 'second');
-		LOGGER.error(`Not enough dinoz (currently ${dinozCount}), next check ${nextMonday}.`);
-		scheduleJob('createFirstTournament', nextMonday.toDate(), () => createFirstTournament(prisma));
-	}
-}
-
-export async function getLevelLimits(races: RaceEnum[]) {
-	let maxLevel = 0;
-	let currentLevel = 20;
-	while (currentLevel <= gameConfig.dinoz.maxLevel) {
-		const current = await prisma.dinoz.count({
-			where: {
-				AND: [{ raceId: { in: races } }, { level: { gte: currentLevel } }]
-			}
-		});
-		if (current >= 350 && maxLevel <= currentLevel) {
-			maxLevel = currentLevel;
-		}
-		currentLevel += 5;
-	}
-	return maxLevel;
 }
 
 export async function getNewLevelLimits(races: RaceEnum[]) {

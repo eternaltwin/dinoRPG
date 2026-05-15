@@ -4,15 +4,15 @@ import { LOGGER } from '../context.js';
 import dayjs from 'dayjs';
 import { scheduleJob } from 'node-schedule';
 import { ServerAction } from '@drpg/prisma';
+import { SHARED_DINOZ_OPERATIONS_LOCK } from '../constants/index.js';
 
 const healRestingDinoz = async () => {
-	const nextHour = dayjs().add(1, 'hour').startOf('hour').toDate();
-	const MIDNIGHT_RESET_LOCK_ID = 999002;
+	const nextHour = dayjs().startOf('hour').add(1, 'hour').toDate();
 	try {
 		await prisma.$transaction(
 			async tx => {
-				await tx.$executeRaw`SELECT pg_advisory_xact_lock(${MIDNIGHT_RESET_LOCK_ID})`;
-				await prisma.$executeRaw`
+				await tx.$executeRaw`SELECT pg_advisory_xact_lock(${SHARED_DINOZ_OPERATIONS_LOCK})`;
+				await tx.$executeRaw`
 					UPDATE
 						dinoz du
 					SET life = least(d.life + ( -- Repos
@@ -112,10 +112,10 @@ const healRestingDinoz = async () => {
 				timeout: 45000
 			}
 		);
-		scheduleJob('healRestingDinoz', nextHour, () => healRestingDinoz());
 	} catch (err) {
 		LOGGER.error(`Cannot heal resting dinoz: ${err}`);
 	}
+	scheduleJob('healRestingDinoz', nextHour, () => healRestingDinoz());
 };
 
 export { healRestingDinoz };

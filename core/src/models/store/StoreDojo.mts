@@ -2,6 +2,7 @@ import { DojoBasic } from '../dojo/dojoBasic.mjs';
 import { TournamentState } from '../dojo/tournament.mjs';
 import { Challenge } from '../dojo/challenge.mjs';
 import { DojoChallengeHistory, TournamentTeam } from '@drpg/prisma';
+import { DinozDojoFiche } from '../dinoz/DinozFiche.mjs';
 
 export interface StoreDojo {
 	dojoId?: string;
@@ -12,4 +13,6 @@ export interface StoreDojo {
 	currentTournament: TournamentState | null;
 	rank: number;
 	worth: number;
+	tournamentInfo?: { id: string; teamRace: number[]; teamSize: number; levelLimit: number };
+	myTeam: DinozDojoFiche[];
 }

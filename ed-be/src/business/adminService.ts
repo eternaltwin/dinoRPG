@@ -22,7 +22,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, LogType } from '@drpg/prisma';
+import { AdminRole, ClanEventType, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
@@ -36,6 +36,18 @@ import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '..
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { applySkillToDinoz, deApplySkillFromDinoz } from '../utils/skillParser.js';
 import { scheduledJobs } from 'node-schedule';
+import {
+	updateClanMemberRequest,
+	searchClansByName,
+	deleteClanRequest,
+	updateClanName,
+	updateClanLeader,
+	deleteClanMember,
+	updateClanLanguagesRequest
+} from '../dao/clansDao.js';
+import dayjs from 'dayjs';
+import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
+import TournamentManager from '../utils/tournamentManager.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -817,19 +829,28 @@ export async function getJobs() {
 		};
 	});
 
-	/*const activeOffer = await prisma.offer.findMany({
-		where: {
-			status: OfferStatus.ONGOING
-		},
-		select: {
-			id: true,
-			seller: { select: { id: true, name: true } }
-		}
-	})
-
-
-	console.log(rawJobs)*/
 	return rawJobs;
+}
+
+export async function runJob(req: Request) {
+	const authed = await auth(req);
+	const rawJobs = Object.values(scheduledJobs).map(job => {
+		return {
+			name: job.name,
+			nextRun: job.nextInvocation()
+		};
+	});
+
+	const targetJob = rawJobs.find(job => job.name === req.params.jobId);
+	if (!targetJob) {
+		throw new ExpectedError(`Job  ${req.params.jobId} not found`);
+	}
+
+	const job = scheduledJobs[targetJob.name];
+	job.runOnDate(new Date());
+	LOGGER.info(`Job ${job.name} has been runOnDate by ${authed.name}.`);
+
+	return;
 }
 
 export async function getMultiIps(page: number) {
@@ -894,4 +915,263 @@ export async function listPlayerBehindIp(req: Request) {
 	});
 
 	return playerList.map(p => ({ name: p.player.name, id: p.player.id, lastLogin: p.player.lastLogin }));
+}
+
+/**
+ * @summary Get clan details for admin panel (including members, description, and metadata)
+ * @param clanId {number} The ID of the clan
+ * @return {Promise<Clan | null>} The clan object
+ */
+export const getClanDetailsAdmin = async (clanId: number) => {
+	return await prisma.clan.findUnique({
+		where: { id: clanId },
+		include: {
+			members: {
+				include: {
+					player: {
+						select: {
+							name: true,
+							id: true
+						}
+					}
+				}
+			},
+			pages: true,
+			ingredients: {
+				select: { ingredientId: true, quantity: true }
+			}
+		}
+	});
+};
+
+/**
+ * @summary Get clan details for admin panel
+ */
+export async function searchClansAdmin(name: string) {
+	return await searchClansByName(name);
+}
+
+/**
+ * @summary Update a clan's name from admin panel
+ * @param clanId {number} The ID of the clan
+ * @param name {string} The new name for the clan
+ * @param adminId {string} ID of the admin performing the action (for logs)
+ * @return {Promise<Clan>} The updated clan object
+ */
+export async function updateClanNameAdmin(clanId: number, name: string, adminId: string) {
+	const result = await updateClanName(clanId, name);
+	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Changed clan "${clanId}" name to "${name}"`);
+	return result;
+}
+
+export const removeClanBannerAdmin = async (clanId: number, adminId: string) => {
+	const clan = await prisma.clan.update({
+		where: { id: clanId },
+		data: { banner: null }
+	});
+
+	await createLog(LogType.AdminUpdateClan, adminId, undefined, clan.name, 'Banner removed');
+	return clan;
+};
+
+/**
+ * @summary Change the leader of a clan and update associated rights
+ * @param clanId {number} The ID of the clan
+ * @param newLeaderId {string} The Player ID (UUID) of the new leader
+ * @param adminId {string} ID of the admin performing the action
+ */
+export async function setClanLeaderAdmin(clanId: number, newLeaderId: string, adminId: string) {
+	await updateClanLeader(clanId, newLeaderId);
+	const clanData = await getClanDetailsAdmin(clanId);
+
+	if (clanData) {
+		// Remove rights from existing leaders
+		const oldLeaders = clanData.members.filter(m => m.rights.includes('LEADER') && m.playerId !== newLeaderId);
+		for (const ol of oldLeaders) {
+			const remainingRights = ol.rights.filter(r => r !== 'LEADER');
+			await updateClanMemberRequest(ol.id, clanId, remainingRights, ol.nickname);
+		}
+
+		const member = clanData.members.find(m => m.playerId === newLeaderId);
+		if (member) {
+			const newRights = Array.from(new Set([...member.rights, 'LEADER', 'CAN_EDIT_BANNER', 'CAN_KICK_MEMBERS']));
+			await updateClanMemberRequest(member.id, clanId, newRights, member.nickname);
+		}
+	}
+
+	await createLog(
+		LogType.AdminUpdateClan,
+		adminId,
+		undefined,
+		`Set player "${newLeaderId}" as the new leader of clan "${clanId}"`
+	);
+}
+
+export async function updateClanLanguagesAdmin(clanId: number, langs: any[], adminId: string) {
+	const result = await updateClanLanguagesRequest(clanId, langs);
+	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Updated clan ${clanId} languages`);
+	return result;
+}
+
+/**
+ * @summary Forcefully remove a member from a clan (Admin action)
+ * @param playerId {string} The Player ID to kick
+ * @param adminId {string} ID of the admin performing the action (for logs)
+ * @return {Promise<ClanMember>} The deleted member record
+ */
+export async function kickClanMemberAdmin(playerId: string, adminId: string) {
+	const result = await deleteClanMember(playerId);
+	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Kicked player ${playerId} from their clan`);
+	return result;
+}
+
+/**
+ * @summary Delete a clan and all its associated data (members, messages, ingredients...)
+ * @param clanId {number} The ID of the clan to destroy
+ * @param adminId {string} ID of the admin performing the action (for logs)
+ * @return {Promise<{id: number}>} The ID of the deleted clan
+ */
+export async function deleteClanAdmin(clanId: number, adminId: string) {
+	await deleteClanRequest(clanId);
+	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Deleted clan ${clanId}`);
+	return clanId;
+}
+
+/**
+ * @summary Add or remove gold from a clan's treasure
+ */
+export async function updateClanTreasureGold(
+	clanId: number,
+	amount: number,
+	operation: 'add' | 'remove',
+	adminId: string
+) {
+	const clan = await prisma.clan.findUnique({ where: { id: clanId }, select: { treasureValue: true } });
+	if (!clan) throw new Error('Clan not found');
+
+	let newValue: number;
+	if (operation === 'add') {
+		newValue = clan.treasureValue + amount;
+	} else {
+		newValue = Math.max(0, clan.treasureValue - amount);
+	}
+
+	const updated = await prisma.clan.update({
+		where: { id: clanId },
+		data: { treasureValue: newValue },
+		select: { treasureValue: true }
+	});
+
+	await createLog(
+		LogType.AdminUpdateClan,
+		adminId,
+		undefined,
+		`${operation === 'add' ? 'Added' : 'Removed'} ${amount} gold ${operation === 'add' ? 'to' : 'from'} clan ${clanId} treasure`
+	);
+	return updated;
+}
+
+/**
+ * @summary Add or remove ingredients from a clan's treasure
+ */
+export async function updateClanTreasureIngredients(
+	clanId: number,
+	ingredientId: number,
+	quantity: number,
+	operation: 'add' | 'remove',
+	adminId: string
+) {
+	const existing = await prisma.clanIngredient.findUnique({
+		where: { ingredientId_clanId: { ingredientId, clanId } }
+	});
+
+	if (operation === 'add') {
+		if (existing) {
+			await prisma.clanIngredient.update({
+				where: { ingredientId_clanId: { ingredientId, clanId } },
+				data: { quantity: existing.quantity + quantity }
+			});
+		} else {
+			await prisma.clanIngredient.create({
+				data: { clanId, ingredientId, quantity }
+			});
+		}
+	} else {
+		if (!existing) throw new Error('Ingredient not found in clan treasure');
+		const newQuantity = existing.quantity - quantity;
+		if (newQuantity <= 0) {
+			await prisma.clanIngredient.delete({
+				where: { ingredientId_clanId: { ingredientId, clanId } }
+			});
+		} else {
+			await prisma.clanIngredient.update({
+				where: { ingredientId_clanId: { ingredientId, clanId } },
+				data: { quantity: newQuantity }
+			});
+		}
+	}
+
+	await createLog(
+		LogType.AdminUpdateClan,
+		adminId,
+		undefined,
+		`${operation === 'add' ? 'Added' : 'Removed'} ${quantity}x ingredient ${ingredientId} ${operation === 'add' ? 'to' : 'from'} clan ${clanId} treasure`
+	);
+
+	return await prisma.clanIngredient.findMany({
+		where: { clanId },
+		select: { ingredientId: true, quantity: true }
+	});
+}
+
+export async function startClanWarEvent(req: Request) {
+	const start = req.body.start;
+	const duration = req.body.duration;
+	const places = req.body.places as number[];
+	const winnerReward = req.body.winner;
+	const podiumReward = req.body.podium;
+	const participantReward = req.body.participant;
+
+	const startTime = dayjs(start).startOf('day').toDate();
+	const endTime = dayjs(startTime).add(duration, 'weeks').endOf('day').toDate();
+
+	const warPlaces = places.filter(p => Object.values(PlaceEnum).includes(p)).map(p => p as PlaceEnum);
+	const config: ClanEventConfig = {
+		eventType: ClanEventType.war,
+		rewards: {
+			winner: winnerReward as Reward,
+			podium: podiumReward as Reward,
+			participant: participantReward as Reward
+		},
+		fight: {
+			attackTime: 100,
+			defenderTotal: 100,
+			defenderActiveMax: 50
+		},
+		swampEnable: true,
+		warPlaces: warPlaces
+	};
+
+	const event = await prisma.clanEvent.create({
+		data: {
+			eventType: ClanEventType.war,
+			startDate: startTime,
+			endDate: endTime,
+			config: JSON.stringify(config)
+		}
+	});
+
+	await TournamentManager.postponeNextTournamentCreation(prisma, endTime);
+	// scheduleJob(event.id)
+}
+
+export async function getOngoingEvent(req: Request) {
+	const events = await prisma.clanEvent.findMany({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
 }

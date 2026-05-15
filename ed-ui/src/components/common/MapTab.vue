@@ -15,6 +15,8 @@ import { defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { placeList } from '../../constants/index.js';
 import WorldMap from '../../components/common/WorldMap.vue';
+import dayjs from 'dayjs';
+import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'MapTab',
@@ -23,34 +25,18 @@ export default defineComponent({
 		WorldMap
 	},
 	methods: {
-		changeTimezone(date: Date, ianatz: string) {
-			const invdate = new Date(
-				date.toLocaleString('en-US', {
-					timeZone: ianatz
-				})
-			);
-			const diff = date.getTime() - invdate.getTime();
-			return new Date(date.getTime() - diff); // needs to substract
-		},
 		getPlaceName(placeId: number): string {
 			const place = placeList.find(place => place.placeId === placeId);
 			if (!place) return '';
-			const today = this.changeTimezone(new Date(), 'GMT');
+
 			if (place.placeId === 29) {
-				const day = today.getDay();
-				switch (day) {
-					case 1:
-					case 2:
-					case 5:
-						return 'marais';
-					case 4:
-					case 6:
-						return 'marais_flood';
-					case 0:
-					case 3:
-						return 'marais_fog';
-					default:
-						return 'marais';
+				const day = dayjs().utc().day();
+				if (SWAMP_FLOODED_DAYS.includes(day)) {
+					return 'marais_flood';
+				} else if (SWAMP_FOG_DAYS.includes(day)) {
+					return 'marais_fog';
+				} else {
+					return 'marais';
 				}
 			}
 			return place.name;

@@ -16,6 +16,11 @@ const router = createRouter({
 					component: () => import('../components/common/News.vue')
 				},
 				{
+					path: '/replay/:archive',
+					name: 'ReplayFight',
+					component: () => import('../pages/ReplayFight.vue')
+				},
+				{
 					path: '/forum',
 					name: 'Forum',
 					component: () => import('../pages/ForumPage.vue')
@@ -71,8 +76,8 @@ const router = createRouter({
 				},
 				{
 					path: '/player/:id',
-					name: 'MyAccount',
-					component: () => import('../pages/MyAccount.vue')
+					name: 'Account',
+					component: () => import('../pages/Account.vue')
 				},
 				{
 					path: '/levelup/:id',
@@ -142,6 +147,14 @@ const router = createRouter({
 							})
 						},
 						{
+							path: 'clan',
+							name: 'AdminClan',
+							component: () => import('../components/admin/ClanEdit.vue'),
+							props: route => ({
+								id: route.query.id
+							})
+						},
+						{
 							path: 'dinoz',
 							name: 'Dinoz',
 							component: () => import('../components/admin/DinozEdit.vue'),
@@ -154,6 +167,11 @@ const router = createRouter({
 							path: 'secret',
 							name: 'Secret',
 							component: () => import('../components/admin/SecretEdit.vue')
+						},
+						{
+							path: 'event',
+							name: 'EventCreation',
+							component: () => import('../components/admin/EventCreation.vue')
 						},
 						{
 							path: 'logs',

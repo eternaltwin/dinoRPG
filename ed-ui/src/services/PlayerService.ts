@@ -98,7 +98,10 @@ export const PlayerService = {
 		});
 		return res.data;
 	},
-	async updateSetting(setting: 'skipLevel' | 'skipFight', value: boolean): Promise<void> {
+	async updateSetting(
+		setting: 'skipLevel' | 'skipFight' | 'archivedSiteId' | 'shareArchivedData',
+		value: boolean | number
+	): Promise<void> {
 		const res = await http().patch(`/player/settings/${setting}`, {
 			setting: value
 		});

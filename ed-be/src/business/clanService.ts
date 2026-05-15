@@ -27,12 +27,14 @@ import {
 	getClanMessagesRequest,
 	getClanPageRequest,
 	getClanPagesListRequest,
-	getClanRequest,
+	getClanRequestPrivate,
+	getClanRequestPublic,
 	getEventRankingClansRequest,
 	getFullClanTreasure,
 	getPlayerJoinListRequest,
 	getPlayerJoinRequest,
 	getRankingClansRequest,
+	getRankingWarClansRequest,
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
@@ -84,6 +86,8 @@ export async function getRankingClans(req: Request) {
 	} else if (req.params.type === ClanRankingType.EVENT) {
 		const event = currentEvents();
 		return await getEventRankingClansRequest(page, event[0].name);
+	} else if (req.params.type === ClanRankingType.WAR) {
+		return await getRankingWarClansRequest(page);
 	}
 	return await getRankingClansRequest(page);
 }
@@ -124,9 +128,15 @@ export async function searchClans(req: Request): Promise<ClanForSearch[]> {
  * @returns Clan
  */
 export async function getClan(req: Request) {
-	await auth(req);
-	const clan = await getClanRequest(Number(req.params.id));
-	return clan;
+	const authed = await auth(req);
+
+	if (authed.clanId && authed.clanId === +req.params.id) {
+		const clan = await getClanRequestPrivate(authed.clanId);
+		return clan;
+	} else {
+		const clanPublic = await getClanRequestPublic(Number(req.params.id));
+		return clanPublic;
+	}
 }
 
 /**
@@ -290,8 +300,8 @@ export async function deleteClan(req: Request) {
 		throw new ExpectedError(`Player ${authed.name} is not leader of clan ${req.params.id}`);
 	}
 
-	const clan = await deleteClanRequest(Number(req.params.id));
-	return clan;
+	await deleteClanRequest(Number(req.params.id));
+	return +req.params.id;
 }
 
 /**
@@ -619,9 +629,9 @@ export async function giveClanIngredients(req: Request) {
 	}
 
 	const ingredients = req.body.ingredients as ShopDTO[];
-	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
+	const player = await getAllIngredientsDataRequest(authed.id);
 	// Throw an exception if the player doesn't exist
-	if (!playerIngredients) {
+	if (!player) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
@@ -630,7 +640,7 @@ export async function giveClanIngredients(req: Request) {
 		throw new ExpectedError(translate(`wrongQuantity`));
 	}
 
-	const ingredientToGive = playerIngredients
+	const ingredientToGive = player.ingredients
 		.filter(i => ingredients.some(a => a.itemId === i.ingredientId))
 		.filter(i => {
 			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
@@ -686,9 +696,7 @@ export async function getClanTreasureDetails(req: Request) {
 
 	const treasure = await getFullClanTreasure(clanId);
 
-	return treasure.map(i => {
-		return { itemId: i.ingredientId, quantity: i.quantity } as ShopDTO;
-	});
+	return treasure;
 }
 
 export async function checkMessageCanBeDeleted(msgId: number, playerId: string): Promise<void> {

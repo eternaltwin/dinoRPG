@@ -10,6 +10,7 @@ import {
 	getAllSecrets,
 	getJobs,
 	getMultiIps,
+	getOngoingEvent,
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	listAllPlayerInformationForAdminDashboard,
@@ -18,8 +19,20 @@ import {
 	modifyPlayerIngredients,
 	modifyPlayerItems,
 	setPlayerMoney,
+	startClanWarEvent,
 	truncateAll,
-	updatePlayerQuestProgression
+	updatePlayerQuestProgression,
+	getClanDetailsAdmin,
+	searchClansAdmin,
+	updateClanNameAdmin,
+	updateClanLanguagesAdmin,
+	setClanLeaderAdmin,
+	kickClanMemberAdmin,
+	deleteClanAdmin,
+	removeClanBannerAdmin,
+	updateClanTreasureGold,
+	updateClanTreasureIngredients,
+	runJob
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkRole } from '../utils/jwt.js';
@@ -33,7 +46,10 @@ import {
 	takeActionOnReport,
 	updateBan
 } from '../business/moderationService.js';
-import { AdminRole } from '@drpg/prisma';
+import { AdminRole, LogType } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
+import { auth } from '../dao/playerDao.js';
+import { createLog } from '../dao/logDao.js';
 
 const routes: Router = Router();
 
@@ -404,7 +420,7 @@ routes.post(
 	[
 		param('id').exists().isString(),
 		body('action').exists().isString().isIn(['shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
-		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText', 'other']),
 		body('comment').exists().isString(),
 		body('dinozId').optional().toInt().isNumeric()
 	],
@@ -428,7 +444,7 @@ routes.put(
 	[
 		param('id').exists().isString(),
 		body('action').optional().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
-		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText', 'other']),
 		body('comment').optional().isString(),
 		body('dinozId').optional({ nullable: true }).toInt().isNumeric()
 	],
@@ -508,6 +524,19 @@ routes.get(`${commonPath}/jobs`, checkRole([AdminRole.ADMIN]), async (req: Reque
 	}
 });
 
+routes.patch(`${commonPath}/jobs/:jobId`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await runJob(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
 routes.get(`${commonPath}/accounts/page/:page`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -541,6 +570,305 @@ routes.put(`${commonPath}/massban`, checkRole([AdminRole.ADMIN]), async (req: Re
 
 	try {
 		const response = await multipleBan(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(
+	`${commonPath}/clans/search/:name`,
+	checkRole([AdminRole.ADMIN]),
+	param('name').isString().notEmpty(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await searchClansAdmin(req.params.name);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/clans/:id`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getClanDetailsAdmin(+req.params.id);
+			if (!response) {
+				return res.status(404).send({ message: 'Clan not found' });
+			}
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Change clan name
+routes.patch(
+	`${commonPath}/clans/:id/name`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	body('name').isString().notEmpty(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			const response = await updateClanNameAdmin(+req.params.id, req.body.name, adminId);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Update clan languages
+routes.patch(
+	`${commonPath}/clans/:id/langs`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	body('langs').isArray(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			const response = await updateClanLanguagesAdmin(+req.params.id, req.body.langs, adminId);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Remove clan banner
+routes.delete(
+	`${commonPath}/clans/:id/banner`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			const response = await removeClanBannerAdmin(+req.params.id, adminId);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Update clan pages
+routes.put(
+	`${commonPath}/clans/pages/:pageId`,
+	checkRole([AdminRole.ADMIN]),
+	param('pageId').isNumeric(),
+	body('name').isString().notEmpty(),
+	body('content').isString(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const { name, content } = req.body;
+			const response = await prisma.clanPage.update({
+				where: { id: +req.params.pageId },
+				data: { name, content }
+			});
+
+			const authed = await auth(req);
+			await createLog(LogType.AdminUpdateClan, authed.id, undefined, `Updated clan page ${req.params.pageId}`);
+
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Delete clan page
+routes.delete(
+	`${commonPath}/clans/pages/:pageId`,
+	checkRole([AdminRole.ADMIN]),
+	param('pageId').isNumeric(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await prisma.clanPage.delete({
+				where: { id: +req.params.pageId }
+			});
+
+			const authed = await auth(req);
+			await createLog(LogType.AdminUpdateClan, authed.id, undefined, `Deleted clan page ${req.params.pageId}`);
+
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Change clan leader
+routes.patch(
+	`${commonPath}/clans/:id/leader`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	body('newLeaderId').isString().notEmpty(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			await setClanLeaderAdmin(+req.params.id, req.body.newLeaderId, adminId);
+			return res.sendStatus(200);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Kick clan member
+routes.delete(
+	`${commonPath}/clans/member/:playerId`,
+	checkRole([AdminRole.ADMIN]),
+	param('playerId').isString().notEmpty(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			const response = await kickClanMemberAdmin(req.params.playerId, adminId);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Delete clan
+routes.delete(
+	`${commonPath}/clans/:id`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const adminId = authed.id;
+			const response = await deleteClanAdmin(+req.params.id, adminId);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Update clan treasure gold
+routes.patch(
+	`${commonPath}/clans/:id/treasure/gold`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	body('amount').isInt({ min: 0 }),
+	body('operation').isString().isIn(['add', 'remove']),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const response = await updateClanTreasureGold(+req.params.id, +req.body.amount, req.body.operation, authed.id);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Update clan treasure ingredients
+routes.patch(
+	`${commonPath}/clans/:id/treasure/ingredients`,
+	checkRole([AdminRole.ADMIN]),
+	param('id').isNumeric(),
+	body('ingredientId').isInt({ min: 1 }),
+	body('quantity').isInt({ min: 1 }),
+	body('operation').isString().isIn(['add', 'remove']),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const authed = await auth(req);
+			const response = await updateClanTreasureIngredients(
+				+req.params.id,
+				+req.body.ingredientId,
+				+req.body.quantity,
+				req.body.operation,
+				authed.id
+			);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(`${commonPath}/event/start`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await startClanWarEvent(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/event`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getOngoingEvent(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

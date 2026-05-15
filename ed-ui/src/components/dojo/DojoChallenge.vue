@@ -79,12 +79,11 @@
 					</Suspense>
 				</div>
 			</div>
+			<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 			<Transition name="bounce">
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
 			</Transition>
 		</template>
-
-		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 	</div>
 </template>
 
@@ -95,7 +94,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore, dojoStore, playerStore } from '../../store/index.js';
+import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
@@ -133,7 +132,7 @@ export default defineComponent({
 			})[],
 			composeTeam: false as boolean,
 			myDinoz: [] as DinozDojoFiche[],
-			dinozStore: dinozStore(),
+
 			opponent: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
@@ -201,7 +200,7 @@ export default defineComponent({
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				const nexFight = transpileFight(
+				const nextFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,
 					this.$t,
@@ -210,14 +209,13 @@ export default defineComponent({
 					undefined,
 					true
 				);
-				if (!nexFight) {
+				if (!nextFight) {
 					return;
 				}
 				const initPlace = resolveFightingPlace(116);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
-					// lang: this.lang
+					history: nextFight.filter(n => n != undefined)
 				};
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
@@ -236,8 +234,8 @@ export default defineComponent({
 				const dojo = await DojoService.getMyTeam();
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
-					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+					this.myDinoz = useDinozStore()
+						.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 						.filter(d => d.level >= 10)
 						.map(d => {
 							return {

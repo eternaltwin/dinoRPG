@@ -45,10 +45,15 @@
 	"maxFollowers": "You reached the maximum number of Dinoz in the group",
 	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"playerNotFound": "The player {{id}} was not found.",
+	"archivedPlayerNotFound": "The archive for player {{id}} was not found.",
 	"dinozNotFound": "The Dinoz {{id}} was not found.",
 	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
 	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
 	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
+	"error": {
+		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
+		"notYourDinoz": "This is not your Dinoz."
+	},
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Your account is still too young.",
@@ -252,11 +257,11 @@
 		"28": "Tricerithumps"
 	},
 	"position": {
-		"1": "first",
-		"2": "second",
-		"3": "third",
-		"4": "fourth",
-		"5": "fifth"
+		"1": "First",
+		"2": "Second",
+		"3": "Third",
+		"4": "Fourth",
+		"5": "Fifth"
 	},
 	"reward": {
 		"perle": "Fountain Pearl",
@@ -300,7 +305,7 @@
 		"demons": "only demons"
 	},
 	"announce": {
-		"dinoz": "Congratulations to {{player}} for their Dinoz {{dinoz}} who is the $t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
+		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
 	"UnavailableReason": {

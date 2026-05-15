@@ -5,6 +5,9 @@
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/player"> Player Edit </RouterLink>
 		</li>
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
+			<RouterLink to="/admin/clan"> Clan Edit </RouterLink>
+		</li>
 		<li>
 			<RouterLink to="/admin/news"> News </RouterLink>
 		</li>
@@ -37,6 +40,9 @@
 		</li>
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/multi"> Multicomptes </RouterLink>
+		</li>
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
+			<RouterLink to="/admin/event"> Events </RouterLink>
 		</li>
 	</ul>
 	<RouterView />

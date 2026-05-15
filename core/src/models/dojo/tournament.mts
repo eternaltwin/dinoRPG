@@ -104,6 +104,7 @@ export type DisplayedLeader = {
 	show: boolean;
 	slot: 'left' | 'right';
 	player: TournamentPlayer | null;
+	opponent: TournamentPlayer | null;
 };
 
 export enum TournamentPhase {

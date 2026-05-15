@@ -56,8 +56,12 @@
 			</div>
 			<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
 			<div class="buttonLand" v-if="isMyAccount()">
-				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
-				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
+				<DZButton v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)">{{
+					$t(`myAccount.saveDescription`)
+				}}</DZButton>
+				<DZButton v-if="hasPlume() && !isEditOn" @click="isEditOn = true">{{
+					$t(`myAccount.editDescription`)
+				}}</DZButton>
 				<DZButton @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
 				<DZButton v-if="hasPMI()" @click="goPMI">{{ $t(`myAccount.quest`) }}</DZButton>
 				<Tippy class="lb-button" theme="small" placement="top" :content="formatContent($t('myAccount.labruteTooltip'))">
@@ -71,28 +75,16 @@
 				{{ $t(`myAccount.options.title`) }}
 				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 			</h3>
-			<dl>
-				<dt>
-					{{ $t(`myAccount.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`myAccount.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`myAccount.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`myAccount.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`myAccount.options.todo`) }}
-				</dt>
-				<dd></dd>
-			</dl>
+			<div class="option">
+				{{ $t('topBar.rightMenu.archivedSiteId') }}
+				<DZSelect id="archivedSite" v-model="archivedSiteId" :options="possibleSites" @change="updateArchivedSiteId" />
+			</div>
+			<div class="option">
+				{{ $t('topBar.rightMenu.shareArchivedData') }}
+				<label class="switch">
+					<DZCheckbox id="shareArchivedData" v-model="shareArchivedData" @change="updateShareArchivedData" />
+				</label>
+			</div>
 			<div class="buttonLand" v-if="isMyAccount()">
 				<DZButton @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
 				<DZButton @click="option = false">{{ $t(`myAccount.options.retour`) }}</DZButton>
@@ -106,7 +98,7 @@ import { defineComponent, PropType } from 'vue';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, localStore, playerStore } from '../../store/index.js';
+import { localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -115,6 +107,8 @@ import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
 import { Tippy } from 'vue-tippy';
 import { formatDate } from '../../utils/formatDateTime';
+import DZSelect from '../common/DZSelect.vue';
+import DZCheckbox from '../common/DZCheckbox.vue';
 
 export default defineComponent({
 	name: 'Profile',
@@ -127,10 +121,19 @@ export default defineComponent({
 			playerPosition: null as number | null,
 			option: false as boolean,
 			localStore: localStore(),
-			dinozStore: dinozStore()
+			shareArchivedData: playerStore().getPlayerOptions.shareArchivedData,
+			archivedSiteId: playerStore().getPlayerOptions.archivedSiteId ?? undefined,
+			possibleSites: [
+				{ label: `www.dinorpg.com (FR)`, value: 2 },
+				{ label: `en.dinorpg.com (EN)`, value: 3 },
+				{ label: `es.dinorpg.com (ES)`, value: 45 },
+				{ label: `www.dinorpg.de (DE)`, value: 5 }
+			]
 		};
 	},
 	components: {
+		DZCheckbox,
+		DZSelect,
 		DZUser,
 		DZButton,
 		Tippy
@@ -162,7 +165,7 @@ export default defineComponent({
 					const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 					await PlayerService.resetAccount();
 					deleteCookie(`x-drpg-${channel}-token`);
-					this.dinozStore.$reset();
+					useDinozStore().$reset();
 					this.playerStore.$reset();
 					this.$router.go(0);
 				} catch (err) {
@@ -219,6 +222,22 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
+		},
+		updateArchivedSiteId() {
+			if (this.archivedSiteId) {
+				this.playerStore.setPlayerOptions({
+					...this.playerStore.playerOptions,
+					archivedSiteId: this.archivedSiteId
+				});
+				PlayerService.updateSetting('archivedSiteId', this.archivedSiteId);
+			}
+		},
+		updateShareArchivedData() {
+			this.playerStore.setPlayerOptions({
+				...this.playerStore.playerOptions,
+				shareArchivedData: this.shareArchivedData
+			});
+			PlayerService.updateSetting('shareArchivedData', this.shareArchivedData);
 		}
 	},
 	beforeRouteUpdate(to, from, next) {
@@ -263,6 +282,18 @@ export default defineComponent({
 			width: 7px;
 			padding-top: 5px;
 		}
+	}
+	.option {
+		color: #ffee92;
+		margin-left: 30px;
+		margin-right: 30px;
+		margin-top: 10px;
+		font-size: 9pt;
+		font-weight: bold;
+		font-variant: small-caps;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 	dl {
 		// position: absolute;

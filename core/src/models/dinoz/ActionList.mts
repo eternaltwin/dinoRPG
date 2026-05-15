@@ -31,12 +31,16 @@ export enum Action {
 	REST = 'rest',
 	STOP_REST = 'stop_rest',
 	REINCARNATION = 'reincarnation',
-	FB_TOURNAMENT = 'fb_tournament'
+	FB_TOURNAMENT = 'fb_tournament',
+	WAR_DEFEND = 'war_defend',
+	WAR_REMOVE = 'war_remove',
+	WAR_ATTACK = 'war_attack'
 }
 
 export interface ActionFiche {
 	name: Action | GatherType;
 	imgName: string;
+	confirm?: boolean;
 	prop?: number | string;
 	special?: boolean;
 	forDinoz?: number;
@@ -89,7 +93,8 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DIG]: {
 		name: Action.DIG,
-		imgName: 'act_dig'
+		imgName: 'act_dig',
+		confirm: true
 	},
 	//TODO: display text for front
 	[Action.CONCENTRATE]: {
@@ -146,11 +151,13 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.CONGEL]: {
 		name: Action.CONGEL,
-		imgName: 'act_congel'
+		imgName: 'act_congel',
+		confirm: true
 	},
 	[Action.STOP_CONGEL]: {
 		name: Action.STOP_CONGEL,
-		imgName: 'act_stop_congel'
+		imgName: 'act_stop_congel',
+		confirm: true
 	},
 	[Action.REST]: {
 		name: Action.REST,
@@ -162,10 +169,23 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.REINCARNATION]: {
 		name: Action.REINCARNATION,
-		imgName: 'act_resurrect'
+		imgName: 'act_resurrect',
+		confirm: true
 	},
 	[Action.FB_TOURNAMENT]: {
 		name: Action.FB_TOURNAMENT,
 		imgName: 'act_tournament'
+	},
+	[Action.WAR_DEFEND]: {
+		name: Action.WAR_DEFEND,
+		imgName: 'act_castle_defend'
+	},
+	[Action.WAR_REMOVE]: {
+		name: Action.WAR_REMOVE,
+		imgName: 'act_castle'
+	},
+	[Action.WAR_ATTACK]: {
+		name: Action.WAR_ATTACK,
+		imgName: 'act_castle_war'
 	}
 };

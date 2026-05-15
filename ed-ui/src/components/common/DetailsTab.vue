@@ -12,7 +12,7 @@
 		<p
 			v-if="playerStore.playerOptions.hasPAC"
 			class="wrapperMenu"
-			@click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })"
+			@click="goTo($router, 'DinozSkills', { params: { id: useDinozStore().currentDinozId } })"
 		>
 			{{ $t('skillTrees.title') }}
 		</p>
@@ -292,12 +292,12 @@
 	</div>
 </template>
 
-<script lang="ts" scoped>
+<script lang="ts">
 import { defineComponent } from 'vue';
-import { statusList } from '../../constants/index.js';
-import { DinozService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { statusList } from '../../constants';
+import { DinozService } from '../../services';
+import { errorHandler } from '../../utils';
+import { playerStore, useDinozStore } from '../../store';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
 import DZSelect from './DZSelect.vue';
@@ -323,7 +323,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			dinozSkill: [] as Array<SkillDetails>,
 			skillList,
 			statusList,
@@ -347,7 +346,7 @@ export default defineComponent({
 	computed: {
 		dinozSkills() {
 			try {
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				let skills = toSkillDetails(currentDinoz.skills);
 				this.sortSkills(skills); // Mutate the array
 				if (this.picked === 'desc') {
@@ -362,7 +361,7 @@ export default defineComponent({
 		},
 		assaultStats() {
 			try {
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				return Object.values(AssaultElement).map(stat =>
 					getAssaultStat(
 						currentDinoz,
@@ -378,7 +377,7 @@ export default defineComponent({
 		},
 		defenseStats() {
 			try {
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				return Object.values(DefenseElement).map(stat =>
 					getDefenseStat(
 						currentDinoz,
@@ -394,7 +393,7 @@ export default defineComponent({
 		},
 		specialStats() {
 			try {
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				const priest = this.playerStore.isPriest;
 				// Find global speed value to compute it with elemental speed
 				const global_speed_special = getSpecialStat(
@@ -478,7 +477,7 @@ export default defineComponent({
 						// Filter out critical hit damage if critical hit chance is default (0%)
 						if (
 							special &&
-							special.name.startsWith('criticalHitDamage') &&
+							special.name.startsWith('criticalHitBonus') &&
 							global_critical_hit &&
 							global_critical_hit.value === 1
 						) {
@@ -503,12 +502,13 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		useDinozStore,
 		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
-				this.dinozStore.setDinozSkillState(parseInt(dinozId), skill.id, !skill.state);
+				useDinozStore().setDinozSkillState(parseInt(dinozId), skill.id, !skill.state);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -516,7 +516,7 @@ export default defineComponent({
 		},
 		hasAmulst(): boolean {
 			try {
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				return currentDinoz.status.some(s => s.statusId === statusList.id.amulst) ?? false;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -550,7 +550,7 @@ export default defineComponent({
 		async loadComponent(): Promise<void> {
 			if (this.playerStore.playerOptions.hasPAC) {
 				try {
-					const currentDinoz = this.dinozStore.getCurrentDinoz;
+					const currentDinoz = useDinozStore().getCurrentDinoz;
 					this.ownBuilds = await DinozBuildService.getOwn();
 					this.dinozBuild = currentDinoz.build?.id;
 				} catch (err) {
@@ -559,19 +559,16 @@ export default defineComponent({
 			}
 		},
 		async changeDinozBuild() {
-			if (!this.dinozBuild || !this.dinozStore.currentDinozId) {
+			if (!this.dinozBuild || !useDinozStore().getCurrentDinoz.id) {
 				return;
 			}
 
 			try {
-				await DinozService.assignBuild(this.dinozStore.currentDinozId, this.dinozBuild);
-				const currentDinoz = this.dinozStore.getCurrentDinoz;
+				await DinozService.assignBuild(useDinozStore().getCurrentDinoz.id, this.dinozBuild);
+				const currentDinoz = useDinozStore().getCurrentDinoz;
 				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
 
-				this.dinozStore.setDinoz({
-					...currentDinoz,
-					build
-				});
+				useDinozStore().setDinoz({ ...currentDinoz, build });
 
 				this.$toast.success(this.$t('toast.buildAssigned', { name: build?.name ?? '' }).toString());
 			} catch (err) {

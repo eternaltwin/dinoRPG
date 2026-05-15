@@ -2,17 +2,10 @@
 	<template v-if="nameChoosen === false">
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</template>
-	<Suspense
-		><DinozDisplay
-			v-if="nameChoosen === true"
-			v-show="isReady"
-			:dinozData="dinozData"
-			:key="dinozData.display" /><template #fallback> <Loading /> </template
-	></Suspense>
+	<DinozDisplay v-if="nameChoosen === true" v-show="isReady" :dinozData="dinozData" :key="dinozData.display" />
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-show="isReady"
-			:dinoz="dinozData"
 			:refresh-dinoz="refreshDinoz"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
@@ -23,21 +16,21 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore, useDinozStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanel from '../components/common/TabPanel.vue';
+import DinozDisplay from '../components/dinoz/DinozDisplay.vue';
 
 export default defineComponent({
 	name: 'DinozPage',
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as DinozFiche,
@@ -48,7 +41,7 @@ export default defineComponent({
 		ChooseDinozName,
 		DinozActions,
 		TabPanel,
-		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
+		DinozDisplay
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
@@ -64,55 +57,23 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+				const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
 				if (dinozToUpdate) {
 					dinozToUpdate.missionId = this.dinozData.missionId;
 					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				}
-				this.dinozStore.setDinozList(dinozList);
+				useDinozStore().setDinozList(dinozList);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getFiche(): Promise<void> {
-			const dinozId = this.$route.params.id as string;
-			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
-			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
-			if (dinozToUpdate === -1) {
-				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				dinozList.push(this.dinozData);
-			} else {
-				dinozList.splice(dinozToUpdate, 1, {
-					...dinozList.find(dinoz => dinoz.id.toString() === dinozId),
-					...this.dinozData
-				});
-			}
-			if (this.dinozData.followers.length >= 1) {
-				for (const follower of this.dinozData.followers) {
-					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
-					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
-					dinozList.splice(followerIndex, 1, {
-						...dinozList.find(dinoz => dinoz.id === followerToUpdate.id),
-						...followerToUpdate
-					});
-				}
-			}
-			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
-			if (storedFollowers.length > 0) {
-				storedFollowers.map(d => {
-					if (!this.dinozData.followers.some(f => f.id === d.id)) {
-						d.leaderId = null;
-					}
-				});
-			}
-			this.dinozStore.setDinozList(dinozList);
-			this.playerStore.setPlayerOptions({
-				...this.playerStore.playerOptions
-			});
-			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
+			const dinozId = +this.$route.params.id;
+			useDinozStore().setCurrentDinozId(dinozId);
+			this.dinozData = await useDinozStore().refreshDinozFiche(dinozId);
+			this.playerStore.setPlayerOptions({ ...this.playerStore.playerOptions });
 			this.isReady = true;
 		},
 		async refreshDinoz() {

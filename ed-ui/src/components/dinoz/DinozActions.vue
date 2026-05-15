@@ -1,5 +1,5 @@
 <template>
-	<div class="actions">
+	<div class="actions" v-if="dinoz">
 		<Resurect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
@@ -28,6 +28,11 @@
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
+				help
+			/>
+			<DZDisclaimer
+				v-if="dinoz.unavailableReason === UnavailableReason.restingAttack"
+				:content="$t('hud.restingAttackCountdown', { time: attackCountdown })"
 				help
 			/>
 			<DZDisclaimer
@@ -88,7 +93,7 @@
 					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
-			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+			<DZDisclaimer timer v-if="isSelling" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
 </template>
@@ -113,8 +118,8 @@ import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
-import { DinozService, FightService, MissionService } from '../../services/index.js';
-import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
+import { ClanService, DinozService, FightService, MissionService } from '../../services/index.js';
+import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -128,24 +133,22 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			// mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-			// 	.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
-			dinozStore: dinozStore(),
+
 			MissionEnum: ConditionEnum,
 			digRewards: undefined as DigResponse | undefined,
 			Action,
 			hpRegen: 1,
 			itinerantName: '' as string,
-			dinozFullParty: [] as DinozFiche[],
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
-			mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-				?.missionHUD
+			mission: useDinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
+				?.missionHUD,
+			attackCountdown: 0 as number
 		};
 	},
 	components: {
@@ -157,10 +160,6 @@ export default defineComponent({
 		DZFollow
 	},
 	props: {
-		dinoz: {
-			type: Object as PropType<DinozFiche>,
-			required: true
-		},
 		refreshDinoz: {
 			type: Function as PropType<() => Promise<void>>,
 			required: true
@@ -192,7 +191,32 @@ export default defineComponent({
 				this.refreshDinoz();
 			}
 		},
+		updateAttackCountdown() {
+			const time = useDinozStore().getDinozAttackTimer(+this.$route.params.id);
+			if (!time) {
+				return;
+			}
+			this.attackCountdown = time;
+			return;
+		},
 		async launch(action: ActionFiche) {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
+			if (action.confirm) {
+				const res = await this.$confirm({
+					message: this.$t(`action.popupConfirm`, { action: this.$t(`action.name.${action.name}`) }),
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popup.reject'),
+					icon: 'pi pi-trash'
+				});
+				if (!res) return;
+			}
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
@@ -230,7 +254,7 @@ export default defineComponent({
 					});
 					break;
 				case Action.NPC:
-					this.dinozStore.clearNpc(+this.$route.params.id);
+					useDinozStore().clearNpc(+this.$route.params.id);
 					this.$router.push({
 						name: 'NPC',
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
@@ -387,7 +411,7 @@ export default defineComponent({
 					});
 					break;
 				case Action.FOLLOW: {
-					if (!this.dinozStore.getDinozList) {
+					if (!useDinozStore().getDinozList) {
 						this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 						return;
 					}
@@ -398,7 +422,7 @@ export default defineComponent({
 						await DinozService.unfollow(+this.$route.params.id);
 
 						// Refresh followed and following status
-						const currentDinozList = this.dinozStore.getDinozList;
+						const currentDinozList = useDinozStore().getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
@@ -420,7 +444,7 @@ export default defineComponent({
 							leaderDinoz.followers.splice(indexCurrentInFollowers, 1);
 						}
 
-						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						useDinozStore().setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -431,7 +455,7 @@ export default defineComponent({
 					try {
 						await DinozService.disband(+this.$route.params.id);
 
-						let currentDinozList = this.dinozStore.getDinozList;
+						let currentDinozList = useDinozStore().getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
@@ -457,7 +481,7 @@ export default defineComponent({
 							return dinoz;
 						});
 
-						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						useDinozStore().setDinozList(orderDinozList(currentDinozList));
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -466,7 +490,7 @@ export default defineComponent({
 				case Action.CHANGE_LEADER:
 					try {
 						const followerId = +this.$route.params.id;
-						const currentLeader = this.dinozStore.getDinozList.find(d => d.id === followerId)?.leaderId;
+						const currentLeader = useDinozStore().getDinozList.find(d => d.id === followerId)?.leaderId;
 
 						if (!currentLeader) {
 							this.$toast.open({ message: formatText(this.$t(`toast.noFollowers`)), type: 'error' });
@@ -475,13 +499,13 @@ export default defineComponent({
 
 						await DinozService.changeLeader(followerId, currentLeader);
 
-						const dinozList = this.dinozStore.getDinozList;
+						const dinozList = useDinozStore().getDinozList;
 						if (!dinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
 						}
 
-						this.dinozStore.setDinozList(orderDinozList(dinozList));
+						useDinozStore().setDinozList(orderDinozList(dinozList));
 
 						this.$toast.open({ message: formatText(this.$t(`toast.leaderChanged`)), type: 'success' });
 
@@ -494,7 +518,7 @@ export default defineComponent({
 					try {
 						await DinozService.frozeDinoz(+this.$route.params.id);
 
-						const currentDinozList = this.dinozStore.getDinozList;
+						const currentDinozList = useDinozStore().getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
@@ -506,7 +530,7 @@ export default defineComponent({
 							return;
 						}
 						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
-						this.dinozStore.setDinozList(currentDinozList);
+						useDinozStore().setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -554,6 +578,46 @@ export default defineComponent({
 						query: { dinozId: +this.$route.params.id }
 					});
 					break;
+				case Action.WAR_DEFEND:
+					try {
+						await ClanService.addDefenser(+this.$route.params.id);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
+					break;
+				case Action.WAR_REMOVE:
+					try {
+						await ClanService.removeDefender(+this.$route.params.id);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
+					break;
+				case Action.WAR_ATTACK:
+					try {
+						const fight = await ClanService.attackCastle(+this.$route.params.id);
+						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
+						if (!currentDinoz) {
+							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+							return;
+						}
+
+						const team = [currentDinoz.id, ...currentDinoz.followers.map(f => f.id)];
+						for (const teamKey of team) {
+							useDinozStore().setDinozAttackTimer(teamKey);
+						}
+						this.sessionStore.setFightResult(fight);
+
+						this.$router.push({
+							name: 'Fight',
+							params: { dinozId: this.$route.params.id.toString() }
+						});
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
+					break;
 				default:
 					console.log(action.name);
 					break;
@@ -565,10 +629,10 @@ export default defineComponent({
 		},
 		endMission(dinozId: number) {
 			this.missionReward = undefined;
-			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
+			const dinozToUpdate = useDinozStore().getDinoz(dinozId) as DinozFiche;
 			dinozToUpdate.missionHUD = null;
 			dinozToUpdate.missionId = undefined;
-			this.dinozStore.setDinoz(dinozToUpdate);
+			useDinozStore().setDinoz(dinozToUpdate);
 			this.$emit('endMission');
 		},
 		async validateMission() {
@@ -579,16 +643,18 @@ export default defineComponent({
 		npcDisplayName(npcId: number) {
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		},
-		isSelling() {
-			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
-			if (!dinoz) return false;
-			return dinoz.unavailableReason === UnavailableReason.selling;
-		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
 		async regenRate() {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
 			const data = this.dinoz;
 			const skills = toSkillDetails(data.skills);
 			const priest = this.playerStore.isPriest;
@@ -607,46 +673,64 @@ export default defineComponent({
 			regen ? (this.hpRegen = regen.value) : 1;
 		},
 		async loadComponent() {
+			if (!this.dinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
 			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
 			}
-			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
-				this.dinoz?.followers.some(a => a.id === dinoz.id)
-			);
-			this.dinozFullParty.push(this.dinoz);
 		}
 	},
 	computed: {
 		UnavailableReason() {
 			return UnavailableReason;
 		},
+		isSelling() {
+			return this.dinoz?.unavailableReason === UnavailableReason.selling;
+		},
 		missionName() {
+			if (!this.dinoz) {
+				return;
+			}
 			if (this.dinoz.missionId) {
 				return missionsList[this.dinoz.missionId];
 			}
 			return undefined;
 		},
 		storeMission() {
-			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null;
+			return (
+				useDinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null
+			);
 		},
 		leaderDinoz() {
+			if (!this.dinoz) {
+				return;
+			}
 			if (!this.dinoz.leaderId) return;
-			return dinozStore().getDinoz(this.dinoz.leaderId);
+			return useDinozStore().getDinoz(this.dinoz.leaderId);
+		},
+		dinoz() {
+			return useDinozStore().getDinoz(+this.$route.params.id);
+		},
+		dinozFullParty() {
+			return useDinozStore().getDinozParty(+this.$route.params.id);
 		}
 	},
 	watch: {
 		storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
-		},
-		dinoz() {
-			this.loadComponent();
 		}
 	},
 	async mounted() {
 		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
-		this.intervals.push(intervalId, intervalId2);
+		const intervalId3 = window.setInterval(() => this.updateAttackCountdown(), 1000);
+		this.intervals.push(intervalId, intervalId2, intervalId3);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);

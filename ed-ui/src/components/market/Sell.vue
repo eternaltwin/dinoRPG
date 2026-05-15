@@ -129,7 +129,7 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { IngredientsService } from '../../services/IngredientsService.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import { errorHandler } from '../../utils/index.js';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Tippy } from 'vue-tippy';
@@ -150,7 +150,7 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
+
 			MARKET_MIN_VALUE,
 			dinoz: null as DinozFiche | null,
 			ingredients: [] as IngredientFiche[],
@@ -274,7 +274,7 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		try {
-			const currentDinozId = this.dinozStore.getCurrentDinozId;
+			const currentDinozId: number | undefined = useDinozStore().getCurrentDinozId;
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {
@@ -284,7 +284,7 @@ export default defineComponent({
 			}
 
 			// Check if the dinoz exists
-			const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
+			const currentDinoz = useDinozStore().getDinoz(currentDinozId);
 			if (!currentDinoz) {
 				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				goTo(this.$router, 'MainPage');

@@ -5,7 +5,9 @@
 			:key="index"
 			:class="{
 				dead: dinoz.life === 0,
-				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
+				selected: useDinozStore().getCurrentDinozId
+					? dinoz.id === useDinozStore().getCurrentDinozId
+					: dinoz.id === pageId,
 				light: true,
 				group: getLeaderGroup(dinoz),
 				exhausted: dinoz.remaining === 0 && !dinoz.fight
@@ -70,26 +72,23 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, playerStore } from '../../store/index.js';
+import { playerStore, useDinozStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { mapState } from 'pinia';
 
 export default defineComponent({
 	name: 'DinozList',
-	props: {
-		currentDinozId: { type: Number, required: false }
-	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			dinozList: useDinozStore().getDinozList as Array<DinozFiche>,
 			hasPDA: false as boolean
 		};
 	},
 	methods: {
+		useDinozStore,
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
 			const width: number = Math.round((actual / max) * 36);
@@ -98,41 +97,33 @@ export default defineComponent({
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
-		getLeaderGroup(dinoz: DinozFiche) {
+		getLeaderGroup(dinoz: DinozFiche): boolean {
 			if (!this.currentDinozId) return false;
-			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId);
+			const selectedDinoz = useDinozStore().getDinoz(this.currentDinozId);
 			if (!selectedDinoz) return false;
-			// Le dinoz est leader
-			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
-				return true;
-			}
-			// Le dinoz n'est pas suiveur
-			if (!dinoz.leaderId) return false;
 
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
-			if (!leader) return false;
-			// Si le dinoz est follower et que le dinoz courrant est son leader
-			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
-				return true;
-			}
-			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
-				return true;
-			}
-			if (dinoz.id === this.currentDinozId) {
-				return true;
-			}
-			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
+			if (dinoz.id === selectedDinoz.id) return true;
+
+			if (selectedDinoz.leaderId === dinoz.id) return true;
+
+			if (dinoz.leaderId === selectedDinoz.id) return true;
+
+			return dinoz.leaderId !== null && dinoz.leaderId === selectedDinoz.leaderId;
 		}
 	},
 	computed: {
+		...mapState(useDinozStore, ['getDinozList']),
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
+		},
+		currentDinozId() {
+			return useDinozStore().getCurrentDinozId;
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': {
+		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
+				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
 			},
 			deep: true
 		}

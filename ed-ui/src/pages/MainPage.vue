@@ -1,6 +1,6 @@
 <template>
 	<div class="dinorpg">
-		<div id="centerHeader" v-if="loaded">
+		<div id="centerHeader" :class="war ? 'war' : 'bg'" v-if="loaded">
 			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
@@ -13,9 +13,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dinozStore, playerStore } from '../store/index.js';
+import { playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
+import { clanStore } from '../store/clanStore';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -23,8 +24,9 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
-			loaded: false as boolean
+			loaded: false as boolean,
+			clanStore: clanStore(),
+			war: false as boolean
 		};
 	},
 	methods: {
@@ -33,6 +35,7 @@ export default defineComponent({
 				// Set data in sessionStore
 				await this.playerStore.update();
 				this.loaded = true;
+				this.war = !!this.clanStore.clanEvent;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 				return;
@@ -57,13 +60,22 @@ export default defineComponent({
 }
 #centerHeader {
 	min-height: 100vh;
-	background:
-		url('../assets/background/full_bg.webp') no-repeat,
-		url('../assets/background/full_core_bg.webp') repeat-y;
-	background-position-x: calc(50% + 247px);
-	background-position-y: top;
 	padding-bottom: 50px;
 	padding-top: 15px;
+	&.bg {
+		background:
+			url('../assets/background/full_bg.webp') no-repeat,
+			url('../assets/background/full_core_bg.webp') repeat-y;
+		background-position-x: calc(50% + 247px);
+		background-position-y: top;
+	}
+	&.war {
+		background:
+			url('../assets/background/full_bg_war.webp') no-repeat,
+			url('../assets/background/full_core_bg.webp') repeat-y;
+		background-position-x: calc(50% + 247px);
+		background-position-y: top;
+	}
 	.linkHome {
 		grid-area: top;
 		cursor: pointer;

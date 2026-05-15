@@ -5,6 +5,9 @@ import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { FightText } from '../missions/specialActions.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
+import { EntranceEffect } from './transpiler.mjs';
+import { MonsterFiche } from './MonsterFiche.mjs';
+import { PlayerInfo } from '../player/PlayerInfo.mjs';
 
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -33,15 +36,30 @@ export interface FighterRecap {
 	id: number;
 	type: FighterType;
 	name: string;
+	level: number;
 	display: string | undefined;
+	survived: boolean;
 	attacker: boolean;
 	maxHp: number;
 	startingHp: number;
 	energy: number;
 	maxEnergy: number;
 	energyRecovery: number;
+	costume?: MonsterFiche;
 	dark?: boolean;
 	size?: number;
+	entrance?: EntranceEffect;
+}
+
+export interface FightReplay {
+	id: string;
+	fighters: FighterRecap[];
+	history: FightStep[];
+	result: boolean;
+	seed: string;
+	leftPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
+	rightPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
+	metadata: { placeId: number };
 }
 
 export interface CatchResult {
@@ -121,11 +139,22 @@ export type FightStats = {
 	>;
 };
 
+export enum FightOutcome {
+	// Left side, always a player
+	AttackerWin,
+	// Right side, can be player or monsters
+	DefenderWin,
+	// No one, all fighters on both side are dead
+	Tie,
+	// Fight timed out, rewards and other results depend on the context
+	Timeout
+}
+
 export interface FightProcessResult {
 	// Seed used for the fight
 	seed: string;
-	// true: attackers won, false: defenders won
-	winner: boolean;
+	// Outcome of the fight
+	outcome: FightOutcome;
 	// List of attackers
 	attackers: FighterResultFiche[];
 	// List of defenders

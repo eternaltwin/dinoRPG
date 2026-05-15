@@ -11,6 +11,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
 	private readonly TEAMS_PER_POOL = 16;
@@ -167,7 +168,7 @@ class ForceBruteManager {
 		);
 		team2Dinoz.life = team2Dinoz.maxLife;
 
-		const fight = calculateFightBetweenPlayers(
+		let fight = calculateFightBetweenPlayers(
 			STANDARD_PVP_RULES,
 			[team1Dinoz],
 			false,
@@ -176,6 +177,44 @@ class ForceBruteManager {
 			PlaceEnum.DOJO
 		);
 
+		// Determine winning side (true for left, false for right)
+		let winner = false;
+
+		// The winner and loser will be calculated based on the remaining hp (%) in case of timeout.
+		// See `fightChallenge` for explanation of the comparison.
+		const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
+		const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
+		if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+			winner = true;
+		}
+
+		// Replay the fight if a tie is determined (up to 5 times)
+		let retry_counter = 0;
+		while (fight.outcome === FightOutcome.Tie && retry_counter < 5) {
+			fight = calculateFightBetweenPlayers(
+				STANDARD_PVP_RULES,
+				[team1Dinoz],
+				false,
+				[team2Dinoz],
+				false,
+				PlaceEnum.DOJO
+			);
+
+			const left = fight.stats.attack.endingHp * fight.stats.defense.startingHp;
+			const right = fight.stats.defense.endingHp * fight.stats.attack.startingHp;
+			if (fight.outcome === FightOutcome.AttackerWin || (fight.outcome === FightOutcome.Timeout && left > right)) {
+				winner = true;
+			}
+
+			retry_counter++;
+		}
+
+		if (retry_counter >= 5) {
+			LOGGER.error('Maximum number of retries after ties reached in ForceBruteManager', {
+				fightData: fight
+			});
+		}
+
 		const metadata: FBMetaData = {
 			phase: phase,
 			round: round,
@@ -183,7 +222,7 @@ class ForceBruteManager {
 			matchNumber: matchNumber,
 			dinoz1: dinoz1,
 			dinoz2: dinoz2,
-			winner: fight.winner ? 'left' : 'right'
+			winner: winner ? 'left' : 'right'
 		};
 
 		const fightArchive = await prisma.fightArchive.create({
@@ -201,14 +240,15 @@ class ForceBruteManager {
 							energy: f.energy,
 							maxEnergy: f.maxEnergy,
 							energyRecovery: f.energyRecovery,
-							dark: undefined,
-							size: undefined
+							dark: f.dark,
+							size: f.size,
+							entrance: f.entrance
 						};
 					})
 				),
 				steps: JSON.stringify(fight.steps),
 				seed: fight.seed,
-				result: fight.winner,
+				result: winner,
 				tournamentStep: round,
 				FBTournamentId: tournamentId,
 				metadata: JSON.stringify(metadata),
@@ -219,7 +259,7 @@ class ForceBruteManager {
 			}
 		});
 
-		return { id: fightArchive.id, winner: fight.winner ? dinoz1 : dinoz2 };
+		return { id: fightArchive.id, winner: winner ? dinoz1 : dinoz2 };
 	}
 
 	private async getWinnersFromPreviousRound(

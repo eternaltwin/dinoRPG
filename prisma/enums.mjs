@@ -8,7 +8,9 @@ export const UnavailableReason = {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting',
-  unfreezing: 'unfreezing'
+  unfreezing: 'unfreezing',
+  defending: 'defending',
+  restingAttack: 'restingAttack'
 };
 
 export const NewsType = {
@@ -80,6 +82,7 @@ export const LogType = {
   AdminUpdateQuest: 'AdminUpdateQuest',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
   AdminUpdateSecret: 'AdminUpdateSecret',
+  AdminUpdateClan: 'AdminUpdateClan',
   IngredientSold: 'IngredientSold',
   XPEarned: 'XPEarned',
   HPLost: 'HPLost',
@@ -100,12 +103,22 @@ export const PantheonMotif = {
   epic: 'epic'
 };
 
+export const ClanEventType = {
+  war: 'war',
+  mana_war: 'mana_war'
+};
+
 export const ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
   accountName: 'accountName',
   avatar: 'avatar',
-  customText: 'customText'
+  customText: 'customText',
+  other: 'other',
+  clanBanner: 'clanBanner',
+  clanBehavior: 'clanBehavior',
+  clanPages: 'clanPages',
+  clanOther: 'clanOther'
 };
 
 export const ModerationAction = {
@@ -131,7 +144,8 @@ export const NotificationSeverity = {
   event: 'event',
   newClanApply: 'newClanApply',
   clanApplyAccepted: 'clanApplyAccepted',
-  message: 'message'
+  message: 'message',
+  clanWar: 'clanWar'
 };
 
 export const GameDinozUsage = {
@@ -158,6 +172,7 @@ export const $Enums = {
   OfferStatus,
   LogType,
   PantheonMotif,
+  ClanEventType,
   ModerationReason,
   ModerationAction,
   NotificationSeverity,

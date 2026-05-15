@@ -183,6 +183,9 @@ export type transpiled =
 			time: number;
 	  }
 	| {
+			action: DinoAction.DISPLAY;
+	  }
+	| {
 			action: DinoAction.PAUSE;
 			time: number;
 	  }
@@ -191,17 +194,35 @@ export type transpiled =
 			fighter: {
 				props: any[];
 				dino: boolean;
-				life: number | undefined;
+				life: number;
 				maxLife: number | undefined;
 				name: string;
 				side: boolean;
 				scale: number;
 				fid: number;
 				gfx: string | undefined;
-				entrance: EntranceEffect;
+				entrance: EntranceEffect | undefined;
 				x?: number;
 				y?: number;
 			};
+	  }
+	| {
+			action: DinoAction.ADDCASTLE;
+			castle: {
+				life: number;
+				maxLife: number;
+				enclos?: boolean;
+				ground?: number;
+				repair?: number;
+				armor?: number;
+				color?: number;
+				invisible?: boolean;
+			};
+	  }
+	| {
+			action: DinoAction.ATTACKCASTLE;
+			fid: number;
+			damages: number;
 	  }
 	| {
 			action: DinoAction.DEAD;
@@ -344,6 +365,10 @@ export type transpiled =
 	| {
 			action: DinoAction.TALK;
 			message: string;
+			fid: number;
+	  }
+	| {
+			action: DinoAction.ESCAPE;
 			fid: number;
 	  }
 	| {

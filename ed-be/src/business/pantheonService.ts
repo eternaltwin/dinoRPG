@@ -1,7 +1,7 @@
 import { Request } from 'express';
 // import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { PantheonMotif } from '@drpg/prisma';
-import { getPantheons } from '../dao/pantheonDao.js';
+import { getPantheonIllus, getPantheons } from '../dao/pantheonDao.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 export async function getPantheon(req: Request) {
@@ -13,4 +13,9 @@ export async function getPantheon(req: Request) {
 	const raceId = Object.values(raceList).find(r => r.name === race)?.raceId ?? null;
 
 	return await getPantheons(type, level, raceId, rewardId);
+}
+
+export async function getPantheonIllustration(req: Request) {
+	const pantheon = await getPantheonIllus(+req.params.id);
+	return pantheon.image;
 }

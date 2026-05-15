@@ -30,6 +30,7 @@
 	"alreadyOffer": "Vous avez déjà une vente en cours.",
 	"bidsOngoing": "Vous avez encore des enchères en cours.",
 	"inClan": "Vous appartenez toujours à un clan.",
+	"noClan": "Vous n'appartenez pas à un clan.",
 	"banPending": "Vous avez une demande de banissement en cours.",
 	"AlreadyAtMaxHealth": "Votre Dinoz a déjà sa vie au maximum.",
 	"DinozIsDead": "Votre Dinoz est mort.",
@@ -45,10 +46,27 @@
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 	"playerNotFound": "Le joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
 	"dinozNotFound": "Le Dinoz {{id}} n'a pas été trouvé.",
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
+	"clanWar": {
+		"noCastle": "Votre clan n'a pas de château de construit.",
+		"noCastleOpponent": "Le château adverse n'est pas constuit.",
+		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisament d'adversaires.",
+		"defenderActiveMax": "Vous avez la limite maximale de dinoz en défense.",
+		"notWar": "L'attaque n'est plus réalisable.",
+		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
+		"castleDestroyed": "Le chateau est déjà détruit.",
+		"castleFullLife": "Votre chateau a déjà le nombre maximum de :hpcastle:.",
+		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateur.",
+		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation."
+	},
+	"error": {
+		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+	},
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Votre compte est encore trop jeune.",
@@ -205,9 +223,10 @@
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
 		"dinozNotPlayer": "Un Dinoz n'appartient pas au joueur.",
-		"alreadyFighted": "Ce Dinoz a déjà combattu",
+		"alreadyFighted": "Ce Dinoz a déjà combattu.",
 		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
-		"wrongDinozQuantity": "Votre équipe doit être formée de {{qty}} Dinoz.",
+		"wrongDinozQuantity": "Votre équipe doit être formée d'exactement {{qty}} Dinoz.",
+		"notEnoughDiversity": "Votre équipe doit être formée de {{qty}} races différentes.",
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",
@@ -252,11 +271,11 @@
 		"28": "Triceragnon"
 	},
 	"position": {
-		"1": "premier",
-		"2": "deuxième",
-		"3": "troisième",
-		"4": "quatrième",
-		"5": "cinquième"
+		"1": "Premier",
+		"2": "Deuxième",
+		"3": "Troisième",
+		"4": "Quatrième",
+		"5": "Cinquième"
 	},
 	"reward": {
 		"perle": "Perle de la Fontaine",
@@ -300,7 +319,7 @@
 		"demons": "uniquement les démons"
 	},
 	"announce": {
-		"dinoz": "Félicitation à {{player}} pour son Dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
+		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
 	},
 	"UnavailableReason": {

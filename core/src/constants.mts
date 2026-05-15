@@ -9,7 +9,10 @@ import {
 	PlayerQuest,
 	Player,
 	Ranking,
-	PlayerIngredient
+	PlayerIngredient,
+	Clan,
+	ClanCastle,
+	ClanWar
 } from '@drpg/prisma';
 
 export const MARKET_MIN_VALUE = 5000;
@@ -33,6 +36,20 @@ export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 	quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
 	ingredients?: Pick<PlayerIngredient, 'ingredientId' | 'quantity'>[];
 	ranking: Pick<Ranking, 'dinozCount' | 'points'> | null;
+	clan?:
+		| (Pick<Clan, 'id'> & {
+				castle?:
+					| (Pick<ClanCastle, 'placeId'> & {
+							defender: Pick<Dinoz, 'id'>[];
+					  })
+					| null;
+				attackingWars: (Pick<ClanWar, 'id'> & {
+					defender: Pick<Clan, 'id'> & {
+						castle: Pick<ClanCastle, 'placeId'>;
+					};
+				})[];
+		  })
+		| null;
 	dinoz: (Pick<Dinoz, 'level' | 'placeId' | 'life' | 'id'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		missions: Pick<DinozMission, 'missionId' | 'isFinished' | 'step'>[];

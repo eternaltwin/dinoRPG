@@ -29,23 +29,45 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
-			<div class="top-info-element">
-				<img
-					src="\src\assets\icons\crown.png"
-					alt="rank"
-					v-tippy="{
-						content: formatContent($t('clan.icons.rank')),
-						theme: 'small'
-					}"
-				/>
-				Bronze
+			<div
+				class="top-info-element"
+				v-if="clanStore.getClan?.clanWarRanking && clanStore.getClan?.clanWarRanking.length > 0"
+				v-tippy="{
+					content: formatContent($t('clan.icons.reputation')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'small_reput')" alt="reputation" />
+				{{ Math.round(clanStore.getClan?.clanWarRanking[0].reputation) }}
+			</div>
+			<div
+				class="top-info-element"
+				v-if="clanStore.getClan?.castle"
+				v-tippy="{
+					content: formatContent($t('clan.icons.castle_life')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'small_castle_heart')" alt="gold" />
+				{{ clanStore.getClan.castle.currentLife }}
+			</div>
+			<div
+				v-if="castle"
+				class="top-info-element"
+				v-tippy="{
+					content: formatContent($t('clan.war.castleTooltip')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'small_home')" alt="castle" />
+				{{ $t(`place.name.${castle}`) }}
 			</div>
 			<div class="top-info-element">
 				<Flags :langs="clanStore.getClan?.langs" />
 			</div>
 		</div>
-		<div class="banner" v-if="clanStore.getClan?.bannerUrl">
-			<img class="banner-img" :src="clanStore.getClan.bannerUrl" alt="banner" />
+		<div class="banner" v-if="bannerDataUrl">
+			<img class="banner-img" :src="bannerDataUrl" alt="banner" />
 		</div>
 		<div class="bottom-info">
 			<p class="creation-date">
@@ -65,6 +87,7 @@ import { API_BASE, utils } from '../../utils';
 import DZUser from '../common/DZUser.vue';
 import { clanStore } from '../../store/clanStore';
 import Flags from '../common/Flags.vue';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'ClanHeader',
@@ -73,7 +96,8 @@ export default defineComponent({
 			API_BASE,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
 			clanStore: clanStore(),
-			bannerDataUrl: null as string | null
+			bannerDataUrl: null as string | null,
+			castle: undefined as string | undefined
 		};
 	},
 	components: { Flags, DZUser },
@@ -106,6 +130,9 @@ export default defineComponent({
 	},
 	mounted() {
 		this.loadBanner();
+		this.castle = Object.values(placeList).find(
+			place => place.placeId === this.clanStore.getClan?.castle?.placeId
+		)?.name;
 	},
 	watch: {
 		'clanStore.getClanId'(newVal: number | null) {
@@ -151,6 +178,10 @@ export default defineComponent({
 		color: white;
 		padding: 0 2px;
 		margin-right: 15px;
+		img {
+			max-width: 12px;
+			max-height: 12px;
+		}
 	}
 }
 

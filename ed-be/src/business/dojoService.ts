@@ -5,7 +5,7 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DOJO_CHALLENGE_RULES } from '@drpg/core/models/fight/FightConfiguration';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import {
@@ -56,6 +56,7 @@ import translate from '../utils/translate.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
+import { getLatestTournament, incrementCashPrice } from '../dao/tournamentDao.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -160,13 +161,19 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 	if (leftPlayer.money < fightCost) {
 		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
 	}
-	//Pay the fees
+
+	// Pay the fees
 	await removeMoney(authed.id, fightCost);
+	// Add the fees to the tournament cash price if one is ongoing
+	const tournament = await getLatestTournament();
+	if (tournament) {
+		await incrementCashPrice(tournament.id, fightCost);
+	}
 
 	const rightTeam = await getDinozForDojoFight(right);
 	const leftTeam = await getDinozForDojoFight(left);
 
-	// Remove items from dinoz for the fight and set life to maxLife
+	// Keep only magic items from dinoz for the fight and set life to maxLife
 	rightTeam.map(d => {
 		d.items = d.items.filter(i =>
 			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
@@ -189,7 +196,12 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 		PlaceEnum.DOJO
 	);
 
-	const fightArchive = await archiveFight(fightResult, authed.id, rightId);
+	const fightArchive = await archiveFight(
+		fightResult,
+		fightResult.outcome === FightOutcome.AttackerWin, // Save if one or the other win, the detail is not important
+		authed.id,
+		rightId
+	);
 	return { fight: fightArchive, stats: fightResult.stats };
 }
 
@@ -223,12 +235,21 @@ export async function getAllArchivedFight(req: Request) {
 	if (!archive) {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
-	const fights = archive.map(f => {
-		return {
-			fighters: JSON.parse(f.fighters) as FighterRecap[],
-			id: f.id
-		};
-	});
+	const fights = archive
+		.filter(f => {
+			if (f.metadata) {
+				const metadata = JSON.parse(f.metadata);
+				return metadata.placeId === PlaceEnum.DOJO;
+			} else {
+				return true;
+			}
+		})
+		.map(f => {
+			return {
+				fighters: JSON.parse(f.fighters) as FighterRecap[],
+				id: f.id
+			};
+		});
 
 	return { archive: fights, quantity: totalArchive };
 }
@@ -319,10 +340,34 @@ export async function fightChallenge(
 		100
 	);
 
-	const fightArchive = await archiveFight(fightResult, authed.id, rightTeam.length > 0 ? rightTeam[0].playerId : null);
+	let victory = false;
+
+	// Only defeating the opponent or having more % hp left on timeout give a victory. Defeat, having less % hp on timeout and tie give a defeat.
+
+	// The winner and loser will be calculated based on the remaining hp (%) in case of timeout
+	// That is, the loser will be the one with lowest endingHp / startingHp
+	// To avoid comparing non-integer numbers, instead of comparing
+	// "attack.endingHp / attack.startingHp" with "defense.endingHp / defense.startingHp"
+	// Compare: "attack.endingHp * defense.startingHp' with "defense.endingHp * attack.startingHp"
+	const left = fightResult.stats.attack.endingHp * fightResult.stats.defense.startingHp;
+	const right = fightResult.stats.defense.endingHp * fightResult.stats.attack.startingHp;
+	if (
+		fightResult.outcome === FightOutcome.AttackerWin ||
+		(fightResult.outcome === FightOutcome.Timeout && left > right)
+	) {
+		victory = true;
+	}
+
+	const fightArchive = await archiveFight(
+		fightResult,
+		victory,
+		authed.id,
+		rightTeam.length > 0 ? rightTeam[0].playerId : null,
+		JSON.stringify({ placeId: PlaceEnum.DOJO })
+	);
 
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
-	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
+	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && victory;
 
 	const promises = [];
 
@@ -414,12 +459,10 @@ export async function fightChallenge(
 			}
 		});
 
-		const addedReputation = fightResult.winner
-			? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0)
-			: 0;
+		const addedReputation = victory ? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0) : 0;
 		const newReputation = dojo.reputation + addedReputation;
 		const totalCombats = dojo.DojoChallengeHistory.length + 1;
-		const totalVictoires = dojo.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
+		const totalVictoires = dojo.DojoChallengeHistory.filter(h => h.victory).length + (victory ? 1 : 0);
 		const worth = totalVictoires / totalCombats;
 		const newDojoPoints = Math.round(worth * newReputation);
 
@@ -445,7 +488,7 @@ export async function fightChallenge(
 		});
 	});
 
-	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory: fightResult.winner };
+	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory };
 }
 
 export async function skipOpponent(req: Request) {
