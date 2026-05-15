@@ -4078,7 +4078,7 @@
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
-			"war": "Réputation de guerre"
+			"war": "Kriegsansehen"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4143,27 +4143,27 @@
 			"gold": "Wert der Schatzkammer",
 			"rank": "Rang",
 			"crown": "Klananführer",
-			"reputation": "Réputation pour la guerre en cours",
-			"castle_life": "Points de vie restant à votre château"
+			"reputation": "Ansehen im laufenden Krieg",
+			"castle_life": "Verbleibende Lebenspunkte eurer Burg"
 		},
 		"forum": {
 			"connectionFailed": "Bei der Verbindung zum Klan-Chat ist ein Fehler aufgetreten!",
 			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
 		},
 		"war": {
-			"buildCastle": "Construire votre château",
-			"castleTooltip": "Lieu où se situe votre château",
-			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
-			"declareWar": "Attaquer ce clan",
-			"attack": "Attaque",
-			"defense": "Défense",
-			"forfeit": "Déclarer forfait",
-			"counter": "Attaquer",
-			"defender": "{name} niveau {level}",
+			"buildCastle": "Erbaut eure Burg",
+			"castleTooltip": "An diesem Ort befindet sich eure Burg befindet",
+			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
+			"declareWar": "Diesen Klan angreifen",
+			"attack": "Angriff",
+			"defense": "Verteidigung",
+			"forfeit": "Sich geschlagen geben",
+			"counter": "Angreifen",
+			"defender": "{name}, Stufe {level}",
 			"repair": {
-				"title": "Réparation du château",
-				"active": "{count}/{max} réparation(s) en cours",
-				"info": "+{hp} HP toutes les {freq} minute(s)",
+				"title": "Burgreparaturen",
+				"active": "{count}/{max} Reparatur(en) im Gange",
+				"info": "+{hp} LP alle {freq} Minute(n)",
 				"tick": "{applied}/{total} ticks effectués",
 				"hpPerTick": "PV par tick",
 				"frequency": "Fréquence",
