@@ -8,6 +8,7 @@ import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 import { useDinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
 import { NotificationSeverity } from '@drpg/prisma/enums';
+import { clanStore } from './clanStore';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -109,6 +110,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
 			useDinozStore().setDinozList(commonData.dinoz);
+			clanStore().setClanEvent(commonData.clanEvent);
 		}
 	},
 	persist: {

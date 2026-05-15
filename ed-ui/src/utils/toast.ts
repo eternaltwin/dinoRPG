@@ -1,6 +1,7 @@
 import { App } from 'vue';
 import ToastPlugin from 'vue-toast-notification';
 import type { ToastPluginApi, ToastProps } from 'vue-toast-notification';
+import { formatText } from './formatText';
 
 interface ToastInstance {
 	dismiss: () => void;
@@ -27,8 +28,13 @@ export const createToastPlugin = (options: ToastProps) => {
 						oldestToast?.dismiss();
 					}
 
+					const formattedParams = {
+						...params,
+						message: typeof params.message === 'string' ? formatText(params.message) : params.message
+					};
+
 					// Open the new toast
-					const toastInstance = originalToast.open(params);
+					const toastInstance = originalToast.open(formattedParams);
 					activeToasts.push(toastInstance);
 
 					// Remove from tracking when dismissed
@@ -52,8 +58,8 @@ export const createToastPlugin = (options: ToastProps) => {
 				info: (message, options) => {
 					return wrappedToast.open({ message, type: 'info', ...options });
 				},
-				warning: (message, options) => {
-					return wrappedToast.open({ message, type: 'warning', ...options });
+				warning: (message) => {
+					return wrappedToast.open({ message, type: 'warning', position: 'bottom-right', duration: 10000 });
 				},
 				default: (message, options) => {
 					return wrappedToast.open({ message, type: 'default', ...options });

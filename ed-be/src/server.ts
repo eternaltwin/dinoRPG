@@ -28,6 +28,7 @@ import { prisma } from './prisma.js';
 import { resumeTournaments } from './business/forceBruteService.js';
 import { scheduleAtStart } from './business/scheduleService.js';
 import { schedulePollExpiration } from './business/newsService.js';
+import { scheduleWarExpiration } from './business/clanWar.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -86,6 +87,7 @@ export function main(cx: ServerContext) {
 	scheduleOffersExpiration();
 	scheduleEndedOffersExpiration();
 	schedulePollExpiration();
+	scheduleWarExpiration();
 	TournamentManager.resume(prisma);
 	resumeTournaments();
 

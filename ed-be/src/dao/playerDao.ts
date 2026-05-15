@@ -161,7 +161,8 @@ export async function auth(request: Request, banByPass = false) {
 				name: true,
 				lastLogin: true,
 				matelasseur: true,
-				lastVersionSeen: true
+				lastVersionSeen: true,
+				clanId: true
 			}
 		});
 

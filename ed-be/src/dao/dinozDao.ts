@@ -332,6 +332,40 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					where: {
 						OR: [{ id: dinozId }, { leaderId: dinozId }]
 					}
+				},
+				clan: {
+					select: {
+						id: true,
+						castle: {
+							select: {
+								placeId: true,
+								defender: {
+									select: {
+										id: true
+									}
+								}
+							}
+						},
+						attackingWars: {
+							where: {
+								winnerClanId: null // uniquement la guerre active
+							},
+							take: 1,
+							select: {
+								id: true,
+								defender: {
+									select: {
+										id: true,
+										castle: {
+											select: {
+												placeId: true
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -649,6 +683,54 @@ export async function getDinozNPCRequest(dinozId: number, playerId: string) {
 	});
 }
 
+export async function getDinozFightClanDataRequest(dinozId: number, playerId: string) {
+	return withSpan(getDinozFightClanDataRequest.name, async () => {
+		const player = await prisma.player.findUnique({
+			where: { id: playerId },
+			select: {
+				id: true,
+				money: true,
+				items: { select: { itemId: true, quantity: true } },
+				teacher: true,
+				cooker: true,
+				dinoz: {
+					select: {
+						id: true,
+						display: true,
+						playerId: true,
+						name: true,
+						level: true,
+						life: true,
+						maxLife: true,
+						experience: true,
+						nbrUpFire: true,
+						nbrUpWood: true,
+						unavailableReason: true,
+						nbrUpWater: true,
+						nbrUpLightning: true,
+						nbrUpAir: true,
+						placeId: true,
+						leaderId: true,
+						fight: true,
+						items: { select: { itemId: true } },
+						skills: {
+							select: { skillId: true },
+							where: { state: { equals: true } }
+						},
+						status: { select: { statusId: true } },
+						catches: { select: { id: true, hp: true, monsterId: true } }
+					},
+					where: {
+						OR: [{ id: dinozId }, { leaderId: dinozId }]
+					}
+				}
+			}
+		});
+
+		return player;
+	});
+}
+
 export async function getDinozSkillRequest(dinozId: number) {
 	return withSpan(getDinozSkillRequest.name, async () => {
 		const dinoz = await prisma.dinoz.findUnique({
@@ -808,6 +890,7 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 				id: true,
 				money: true,
 				dailyGridRewards: true,
+				shopKeeper: true,
 				items: { select: { id: true, itemId: true, quantity: true } },
 				rewards: { select: { rewardId: true } },
 				ingredients: true,

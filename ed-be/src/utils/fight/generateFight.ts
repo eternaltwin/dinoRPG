@@ -497,6 +497,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				type: f.type,
 				name: f.name,
 				display: f.display,
+				level: f.level,
+				survived: f.hp > 0,
 				costume: f.costume?.skin,
 				dark: f.dark,
 				size: f.size,

@@ -871,6 +871,18 @@ export function transpileFight(
 				break;
 			case 'survive':
 				break;
+			case 'addCastle':
+				history.push({
+					action: DinoAction.ADDCASTLE,
+					castle: step.castle
+				});
+				break;
+			case 'attackCastle':
+				history.push({
+					action: DinoAction.ATTACKCASTLE,
+					fid: step.fid,
+					damages: step.damages
+				});
 		}
 	}
 	if (endText && victory) {
@@ -884,6 +896,12 @@ export function transpileFight(
 			action: DinoAction.FINISH,
 			right: FinishState.STAND,
 			left: FinishState.STAND
+		});
+	} else if (history.some(s => s.action === DinoAction.ATTACKCASTLE)) {
+		history.push({
+			action: DinoAction.FINISH,
+			right: FinishState.GUARD,
+			left: FinishState.ESCAPE
 		});
 	} else if (victory) {
 		history.push({

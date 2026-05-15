@@ -8,7 +8,9 @@ export const UnavailableReason: {
   readonly selling: 'selling';
   readonly superdom: 'superdom';
   readonly resting: 'resting';
-  readonly unfreezing: 'unfreezing'
+  readonly unfreezing: 'unfreezing';
+  readonly defending: 'defending';
+  readonly restingAttack: 'restingAttack'
 };
 
 export namespace UnavailableReason {
@@ -17,7 +19,9 @@ export namespace UnavailableReason {
   export type selling = 'selling';
   export type superdom = 'superdom';
   export type resting = 'resting';
-  export type unfreezing = 'unfreezing'
+  export type unfreezing = 'unfreezing';
+  export type defending = 'defending';
+  export type restingAttack = 'restingAttack'
 }
 
 export type UnavailableReason = typeof UnavailableReason[keyof typeof UnavailableReason];
@@ -214,6 +218,18 @@ export namespace PantheonMotif {
 
 export type PantheonMotif = typeof PantheonMotif[keyof typeof PantheonMotif];
 
+export const ClanEventType: {
+  readonly war: 'war';
+  readonly mana_war: 'mana_war'
+};
+
+export namespace ClanEventType {
+  export type war = 'war';
+  export type mana_war = 'mana_war'
+}
+
+export type ClanEventType = typeof ClanEventType[keyof typeof ClanEventType];
+
 export const ModerationReason: {
   readonly multi: 'multi';
   readonly dinozName: 'dinozName';
@@ -276,7 +292,8 @@ export const NotificationSeverity: {
   readonly event: 'event';
   readonly newClanApply: 'newClanApply';
   readonly clanApplyAccepted: 'clanApplyAccepted';
-  readonly message: 'message'
+  readonly message: 'message';
+  readonly clanWar: 'clanWar'
 };
 
 export namespace NotificationSeverity {
@@ -293,7 +310,8 @@ export namespace NotificationSeverity {
   export type event = 'event';
   export type newClanApply = 'newClanApply';
   export type clanApplyAccepted = 'clanApplyAccepted';
-  export type message = 'message'
+  export type message = 'message';
+  export type clanWar = 'clanWar'
 }
 
 export type NotificationSeverity = typeof NotificationSeverity[keyof typeof NotificationSeverity];
@@ -344,6 +362,7 @@ export const $Enums: {
   readonly OfferStatus: typeof OfferStatus;
   readonly LogType: typeof LogType;
   readonly PantheonMotif: typeof PantheonMotif;
+  readonly ClanEventType: typeof ClanEventType;
   readonly ModerationReason: typeof ModerationReason;
   readonly ModerationAction: typeof ModerationAction;
   readonly NotificationSeverity: typeof NotificationSeverity;

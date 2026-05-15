@@ -32,6 +32,7 @@ import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 import { ETUser } from '@drpg/core/models/player/ETUser';
 import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
 import { GLOBAL } from '../context.js';
+import { eventState } from './clanWar.js';
 
 /**
  * @summary Get data from player on login
@@ -77,6 +78,9 @@ export async function getCommonData(req: Request) {
 
 	// Order dinoz
 	commonData.dinoz = orderDinozList(commonData.dinoz);
+
+	const clanEvent = await eventState();
+	commonData.clanEvent = clanEvent;
 
 	return commonData;
 }
