@@ -4163,11 +4163,11 @@
 			"repair": {
 				"title": "Burgreparaturen",
 				"active": "{count}/{max} Reparatur(en) im Gange",
-				"info": "+{hp} LP alle {freq} Minute(n)",
-				"tick": "{applied}/{total} ticks effectués",
-				"hpPerTick": "PV par tick",
-				"frequency": "Fréquence",
-				"ticks": "Répétitions",
+				"info": "+{hp} :hp_castle: alle {freq} Minute(n)",
+				"tick": "{applied}/{total} Takte ausgeführt",
+				"hpPerTick": ":hp_castle: pro Takt",
+				"frequency": "Frequenz",
+				"ticks": "Wiederholungen",
 				"freq": {
 					"1": "Toutes les minutes",
 					"5": "Toutes les 5 minutes",
