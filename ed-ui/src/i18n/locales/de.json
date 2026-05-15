@@ -120,6 +120,7 @@
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
+		"clan_war": "Alerte ! {attacker} vient d'attaquer votre chateau et a infligé {hpLost} :hp_castle: à votre chateau.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -247,7 +248,10 @@
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen.",
 			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
 			"change_leader": "Dein Dinoz wird zum neuen Gruppenanführer ernannt.",
-			"fb_tournament": "Das Rohkraft-Turnier betreten."
+			"fb_tournament": "Das Rohkraft-Turnier betreten.",
+			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan.",
+			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan.",
+			"war_attack": "Attaquer le château adverse."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -280,7 +284,10 @@
 			"itinerant_shop": "Der fliegende Händler",
 			"reincarnation": "Reinkarnation",
 			"change_leader": "Zum Anführer küren",
-			"fb_tournament": "Turnier"
+			"fb_tournament": "Turnier",
+			"war_defend": "Défendre le chateau",
+			"war_remove": "Retirer de la défense",
+			"war_attack": "Attaquer le chateau"
 		}
 	},
 	"button": {
@@ -2617,7 +2624,8 @@
 		"confirmBanAction": "Wirklich bannen?",
 		"attention": "Achtung",
 		"accept": "Ja",
-		"reject": "Nein"
+		"reject": "Nein",
+		"buildCastle": "Attention, constuire votre chateau vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4069,7 +4077,8 @@
 			"completion": "Vollst.",
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
-			"event": "Ereignispunkte"
+			"event": "Ereignispunkte",
+			"war": "Réputation de guerre"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4104,7 +4113,8 @@
 		},
 		"button": {
 			"clanEvent": "Ereignis-Rangliste",
-			"clanTreasure": "Schatzkammer-Rangliste"
+			"clanTreasure": "Schatzkammer-Rangliste",
+			"clanWar": "Classement de guerre"
 		}
 	},
 	"clan": {
@@ -4132,11 +4142,47 @@
 			"members": "Anzahl der Mitglieder",
 			"gold": "Wert der Schatzkammer",
 			"rank": "Rang",
-			"crown": "Klananführer"
+			"crown": "Klananführer",
+			"reputation": "Réputation pour la guerre en cours",
+			"castle_life": "Points de vie restant à votre château"
 		},
 		"forum": {
 			"connectionFailed": "Bei der Verbindung zum Klan-Chat ist ein Fehler aufgetreten!",
 			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
+		},
+		"war": {
+			"buildCastle": "Constuire le chateau",
+			"castleTooltip": "Lieu où se situe votre chateau",
+			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
+			"declareWar": "Attaquer ce clan",
+			"attack": "Attaque",
+			"defense": "Défense",
+			"forfeit": "Déclarer forfait",
+			"counter": "Attaquer",
+			"defender": "{name} niveau {level}",
+			"repair": {
+				"title": "Réparation du château",
+				"active": "{count}/{max} réparation(s) en cours",
+				"info": "+{hp} HP toutes les {freq} minute(s)",
+				"tick": "{applied}/{total} ticks effectués",
+				"hpPerTick": "HP par tick",
+				"frequency": "Fréquence",
+				"ticks": "Répétitions",
+				"freq": {
+					"1": "Toutes les minutes",
+					"5": "Toutes les 5 minutes",
+					"15": "Toutes les 15 minutes",
+					"30": "Toutes les 30 minutes"
+				},
+				"duration": "durée : {duration} min",
+				"totalHp": "HP total récupéré : {hp} (max {max})",
+				"cost": "Coût :",
+				"cantAfford": "Pas assez d'ingrédients dans le trésor du clan",
+				"start": "Lancer la réparation",
+				"stackFull": "Nombre maximum de réparations simultanées atteint ({max}/{max})",
+				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
+				"castleFullLife": "Le château est déjà à pleine vie"
+			}
 		}
 	},
 	"clansList": {
@@ -4175,7 +4221,8 @@
 				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
 				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
-				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
+				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten",
+				"CLAN_BUILD_CASTLLE": "Peut construire le chateau"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
@@ -4243,6 +4290,17 @@
 			"PLAYER_JOIN": "Ein Spieler ist dem Klan beigetreten.",
 			"PLAYER_LEAVE": "Dieser Spieler hat beschlossen, den Klan zu verlassen.",
 			"PLAYER_EXCLUSION": "Dieser Spieler wurde aus dem Klan ausgeschlossen.",
+			"CASTLE_BUILD": "J'ai construit le chateau.",
+			"CASTLE_REBUILD": "J'ai reconstruit le chateau.",
+			"WAR_ATTACKED": "En temps qu'officier de guerre de {name}, je lance une attaque contre votre clan !",
+			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
+			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau du clan {name}.",
+			"WAR_LOSED": "Au nom de {name} j'ai détruit votre chateau et avons gagné notre guerre contre vous.",
+			"WAR_DEFENDED": "Nous avons résisté aux attaques du clan {name} et avons gagné cette guerre défensive.",
+			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
+			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
+			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégats à votre château.",
+			"WAR_WON": "Nous avons gagner la guerre contre {name} !",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4546,7 +4604,8 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein"
+		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
+		"restingAttackCountdown": "Votre dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -5216,7 +5275,16 @@
 		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
 		"clanApply": "{name} möchte deinem Klan beitreten!",
 		"message": "Du hast eine neue Nachricht erhalten.",
-		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen."
+		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen.",
+		"clanWar": {
+			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
+			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
+			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
+			"WAR_LOSED": "Le clan {targetClan} a détruit notre chateau.",
+			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
+			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau de {targetClan}.",
+			"WAR_DEFENDED": "Nous avons résisté aux assault du clan {targetClan} !"
+		}
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",
