@@ -120,7 +120,7 @@
 			"notEnoughItems": "You don't have enough of this item.",
 			"offerClaimed": "Your earnings have been collected"
 		},
-		"clan_war": "Alerte ! {attacker} vient d'attaquer votre chateau et a infligé {hpLost} :hp_castle: à votre chateau.",
+		"clan_war": "Alert! {attacker} just attacked your castle and dealt {hpLost} :hp_castle:.",
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
 		"gold": "You received {value} :gold:.",
@@ -249,9 +249,9 @@
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
 			"fb_tournament": "Access the BrutForce Tournament.",
-			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan.",
-			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_defend": "Add your Dinoz to the defense lines of your clan castle.",
+			"war_remove": "Remove your Dinoz to the defense lines of your clan castle.",
+			"war_attack": "Attack the enemy castle."
 		},
 		"name": {
 			"fight": "Fight",
@@ -285,9 +285,9 @@
 			"reincarnation": "Reincarnate",
 			"change_leader": "Become Leader",
 			"fb_tournament": "Tournament",
-			"war_defend": "Défendre le chateau",
-			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le chateau"
+			"war_defend": "Defend your castle",
+			"war_remove": "Remove from defense",
+			"war_attack": "Attack the castle"
 		}
 	},
 	"button": {
@@ -2625,7 +2625,7 @@
 		"attention": "Attention",
 		"accept": "Yes",
 		"reject": "No",
-		"buildCastle": "Attention, constuire votre chateau vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?"
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -4078,7 +4078,7 @@
 			"clans": "Clans",
 			"treasure": "Clan Treasure",
 			"event": "Event Score",
-			"war": "Réputation de guerre"
+			"war": "War Standing"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -4114,7 +4114,7 @@
 		"button": {
 			"clanEvent": "Event Ranking",
 			"clanTreasure": "Treasury Ranking",
-			"clanWar": "Classement de guerre"
+			"clanWar": "War Ranking"
 		}
 	},
 	"clan": {
@@ -4143,45 +4143,45 @@
 			"gold": "Treasure value",
 			"rank": "Rank",
 			"crown": "Clan leader",
-			"reputation": "Réputation pour la guerre en cours",
-			"castle_life": "Points de vie restant à votre château"
+			"reputation": "Standing in the current war",
+			"castle_life": "Hit points left to your castle"
 		},
 		"forum": {
 			"connectionFailed": "An error happened when connecting to the clan's chat!",
 			"connectionFailed2": "Refresh the page or try again later!"
 		},
 		"war": {
-			"buildCastle": "Constuire le chateau",
-			"castleTooltip": "Lieu où se situe votre chateau",
-			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
-			"declareWar": "Attaquer ce clan",
-			"attack": "Attaque",
-			"defense": "Défense",
-			"forfeit": "Déclarer forfait",
-			"counter": "Attaquer",
-			"defender": "{name} niveau {level}",
+			"buildCastle": "Build your castle",
+			"castleTooltip": "Place where your castle is located",
+			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
+			"declareWar": "Attack this clan",
+			"attack": "Attack",
+			"defense": "Defense",
+			"forfeit": "Withdraw",
+			"counter": "Attack",
+			"defender": "{name} level {level}",
 			"repair": {
-				"title": "Réparation du château",
-				"active": "{count}/{max} réparation(s) en cours",
-				"info": "+{hp} HP toutes les {freq} minute(s)",
-				"tick": "{applied}/{total} ticks effectués",
-				"hpPerTick": "HP par tick",
-				"frequency": "Fréquence",
-				"ticks": "Répétitions",
+				"title": "Castle Repairs",
+				"active": "{count}/{max} ongoing repair(s)",
+				"info": "+{hp} :hp_castle: every {freq} minute(s)",
+				"tick": "{applied}/{total} processed ticks",
+				"hpPerTick": ":hp_castle: per tick",
+				"frequency": "Frequency",
+				"ticks": "Ticks",
 				"freq": {
-					"1": "Toutes les minutes",
-					"5": "Toutes les 5 minutes",
-					"15": "Toutes les 15 minutes",
-					"30": "Toutes les 30 minutes"
+					"1": "Every minute",
+					"5": "Every 5 minutes",
+					"15": "Every 15 minutes",
+					"30": "Every 30 minutes"
 				},
-				"duration": "durée : {duration} min",
-				"totalHp": "HP total récupéré : {hp} (max {max})",
-				"cost": "Coût :",
-				"cantAfford": "Pas assez d'ingrédients dans le trésor du clan",
-				"start": "Lancer la réparation",
-				"stackFull": "Nombre maximum de réparations simultanées atteint ({max}/{max})",
-				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
-				"castleFullLife": "Le château est déjà à pleine vie"
+				"duration": "duration: {duration} min",
+				"totalHp": "Total :hp_castle: repaired: {hp} (max {max})",
+				"cost": "Cost:",
+				"cantAfford": "Not enough ingredients in your clan treasury",
+				"start": "Start repair",
+				"stackFull": "Maximum number of ongoing repairs reached ({max}/{max})",
+				"castleDestroyed": "Your castle is destroyed, build it back first.",
+				"castleFullLife": "Your castle is already at max health."
 			}
 		}
 	},
@@ -4222,7 +4222,7 @@
 				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan",
-				"CLAN_BUILD_CASTLLE": "Peut construire le chateau"
+				"CLAN_BUILD_CASTLLE": "Can build the castle"
 			},
 			"nickname": "Player's nickname",
 			"save": "Save",
@@ -4290,17 +4290,17 @@
 			"PLAYER_JOIN": "A player has joined the clan.",
 			"PLAYER_LEAVE": "This player decided to leave the clan.",
 			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
-			"CASTLE_BUILD": "J'ai construit le chateau.",
-			"CASTLE_REBUILD": "J'ai reconstruit le chateau.",
-			"WAR_ATTACKED": "En temps qu'officier de guerre de {name}, je lance une attaque contre votre clan !",
-			"WAR_START": "J'ai lancé une attaque contre le clan {name} !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau du clan {name}.",
-			"WAR_LOSED": "Au nom de {name} j'ai détruit votre chateau et avons gagné notre guerre contre vous.",
-			"WAR_DEFENDED": "Nous avons résisté aux attaques du clan {name} et avons gagné cette guerre défensive.",
-			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
-			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
-			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégats à votre château.",
-			"WAR_WON": "Nous avons gagner la guerre contre {name} !",
+			"CASTLE_BUILD": "I built the castle.",
+			"CASTLE_REBUILD": "I rebuilt the castle.",
+			"WAR_ATTACKED": "As war office of {name}, I declare war against your clan!",
+			"WAR_START": "I launched a war against {name}!",
+			"WAR_LOSE": "We failed to destroy the castle of {name}.",
+			"WAR_LOSED": "In the name of {name}, I destroyed your castle and won this war against your clan.",
+			"WAR_DEFENDED": "We fended off the attacks of {name} and won this defensive war.",
+			"WAR_FORFEIT": "I decided to abandon the war against {name}.",
+			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
+			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
+			"WAR_WON": "We won the war against {name}!",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -4605,7 +4605,7 @@
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
-		"restingAttackCountdown": "Votre dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -5277,13 +5277,13 @@
 		"message": "You have received a new message.",
 		"clanApplyAccepted": "The clan {name} accepted your application.",
 		"clanWar": {
-			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
-			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
-			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
-			"WAR_LOSED": "Le clan {targetClan} a détruit notre chateau.",
-			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assault du clan {targetClan} !"
+			"WAR_ATTACKED": "We have been attacked by {targetClan}!",
+			"WAR_START": "I started a war with {targetClan}!",
+			"WAR_WON": "We won the war against {targetClan}!",
+			"WAR_LOSED": "{targetClan} destroyed our castle.",
+			"WAR_FORFEIT": "{targetClan} abandonned the war!",
+			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
+			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!"
 		}
 	},
 	"events": {
