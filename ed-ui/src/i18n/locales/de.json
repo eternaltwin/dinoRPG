@@ -120,7 +120,7 @@
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
-		"clan_war": "Alerte ! {attacker} vient d'attaquer votre chateau et a infligé {hpLost} :hp_castle: à votre chateau.",
+		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -249,8 +249,8 @@
 			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
 			"change_leader": "Dein Dinoz wird zum neuen Gruppenanführer ernannt.",
 			"fb_tournament": "Das Rohkraft-Turnier betreten.",
-			"war_defend": "Ajoutez votre dinoz aux lignes de défense du chateau de votre clan.",
-			"war_remove": "Retirer votre dinoz des lignes de défense du chateau de votre clan.",
+			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
+			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
 			"war_attack": "Attaquer le château adverse."
 		},
 		"name": {
@@ -285,9 +285,9 @@
 			"reincarnation": "Reinkarnation",
 			"change_leader": "Zum Anführer küren",
 			"fb_tournament": "Turnier",
-			"war_defend": "Défendre le chateau",
+			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le chateau"
+			"war_attack": "Attaquer le château"
 		}
 	},
 	"button": {
@@ -2625,7 +2625,7 @@
 		"attention": "Achtung",
 		"accept": "Ja",
 		"reject": "Nein",
-		"buildCastle": "Attention, constuire votre chateau vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4151,9 +4151,9 @@
 			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
 		},
 		"war": {
-			"buildCastle": "Constuire le chateau",
-			"castleTooltip": "Lieu où se situe votre chateau",
-			"disclaimerCastle": "Votre chateau se trouve à **{place}**, amenez y vos dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
+			"buildCastle": "Construire votre château",
+			"castleTooltip": "Lieu où se situe votre château",
+			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
 			"declareWar": "Attaquer ce clan",
 			"attack": "Attaque",
 			"defense": "Défense",
@@ -4165,7 +4165,7 @@
 				"active": "{count}/{max} réparation(s) en cours",
 				"info": "+{hp} HP toutes les {freq} minute(s)",
 				"tick": "{applied}/{total} ticks effectués",
-				"hpPerTick": "HP par tick",
+				"hpPerTick": "PV par tick",
 				"frequency": "Fréquence",
 				"ticks": "Répétitions",
 				"freq": {
@@ -4299,8 +4299,8 @@
 			"WAR_DEFENDED": "Nous avons résisté aux attaques du clan {name} et avons gagné cette guerre défensive.",
 			"WAR_FORFEIT": "J'ai décidé d'abandonner l'attaque contre {name}.",
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
-			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégats à votre château.",
-			"WAR_WON": "Nous avons gagner la guerre contre {name} !",
+			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
+			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4605,7 +4605,7 @@
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
 		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
-		"restingAttackCountdown": "Votre dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -5280,10 +5280,10 @@
 			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
 			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
 			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
-			"WAR_LOSED": "Le clan {targetClan} a détruit notre chateau.",
+			"WAR_LOSED": "Le clan {targetClan} a détruit notre château.",
 			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
-			"WAR_LOSE": "Nous n'avons pas réussi à détruire le chateau de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assault du clan {targetClan} !"
+			"WAR_LOSE": "Nous n'avons pas réussi à détruire le château de {targetClan}.",
+			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !"
 		}
 	},
 	"events": {
