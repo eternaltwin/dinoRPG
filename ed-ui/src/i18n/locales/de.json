@@ -120,7 +120,7 @@
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
-		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
+		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -249,8 +249,8 @@
 			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
 			"change_leader": "Dein Dinoz wird zum neuen Gruppenanführer ernannt.",
 			"fb_tournament": "Das Rohkraft-Turnier betreten.",
-			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
-			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
+			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
+			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
 			"war_attack": "Attaquer le château adverse."
 		},
 		"name": {
