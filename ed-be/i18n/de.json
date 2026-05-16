@@ -52,8 +52,8 @@
 	"reincarnationNotPossible": "Die Reinkarnation von Dinoz ist nur auf Stufe 40 möglich.",
 	"reincarnationWithEquippedItems": "Du kannst deinen Dinoz nicht mit ausgerüsteten Gegenständen reinkarnieren.",
 	"clanWar": {
-		"noCastle": "Dein Klan hat keine Burg erbaut.",
-		"noCastleOpponent": "Es ist keine gegnerische Burg erbaut.",
+		"noCastle": "Dein Klan hat keine Burg errichtet.",
+		"noCastleOpponent": "Es ist keine gegnerische Burg errichtet worden.",
 		"defenderAlreadyUnderAttack": "Dieser Klan wird bereits von ausreichend Gegnern angegriffen.",
 		"defenderActiveMax": "Dein Klan hat die Höchstanzahl an Verteidiger-Dinoz erreicht.",
 		"notWar": "Dieser Angriff ist nicht mehr möglich.",
