@@ -297,7 +297,7 @@ export async function fightChallenge(
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
 	if (player.money < DOJO_FIGHT_COST) {
-		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
+		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
 	}
 	const myDinoz = player.Dojo.team.find(d => d.dinozId === myDinozId);
 	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
@@ -507,7 +507,7 @@ export async function skipOpponent(req: Request) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
 	if (player.money < DOJO_FIGHT_COST) {
-		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
+		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
 	}
 
 	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
