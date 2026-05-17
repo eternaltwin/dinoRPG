@@ -4222,7 +4222,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
 				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten",
-				"CLAN_BUILD_CASTLLE": "Burg kann errichtet werden"
+				"CLAN_BUILD_CASTLLE": "Burg kann errichtet werden",
+				"WAR_OFFICER": "Peut déclarer des guerres"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
