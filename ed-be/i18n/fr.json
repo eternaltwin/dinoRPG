@@ -59,7 +59,7 @@
 		"notWar": "L'attaque n'est plus réalisable.",
 		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
 		"castleDestroyed": "Le château est déjà détruit.",
-		"castleFullLife": "Votre château a déjà le nombre maximum de :hpcastle:.",
+		"castleFullLife": "Votre château a déjà le nombre maximum de :hp_castle:.",
 		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
 		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation."
 	},
