@@ -53,14 +53,14 @@
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
 	"clanWar": {
 		"noCastle": "Votre clan n'a pas de château de construit.",
-		"noCastleOpponent": "Le château adverse n'est pas constuit.",
-		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisament d'adversaires.",
-		"defenderActiveMax": "Vous avez la limite maximale de dinoz en défense.",
+		"noCastleOpponent": "Le château adverse n'est pas construit.",
+		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisamment d'adversaires.",
+		"defenderActiveMax": "Vous avez la limite maximale de Dinoz en défense.",
 		"notWar": "L'attaque n'est plus réalisable.",
 		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
-		"castleDestroyed": "Le chateau est déjà détruit.",
-		"castleFullLife": "Votre chateau a déjà le nombre maximum de :hpcastle:.",
-		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateur.",
+		"castleDestroyed": "Le château est déjà détruit.",
+		"castleFullLife": "Votre château a déjà le nombre maximum de :hp_castle:.",
+		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
 		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation."
 	},
 	"error": {

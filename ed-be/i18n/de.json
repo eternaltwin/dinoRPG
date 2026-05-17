@@ -30,6 +30,7 @@
 	"alreadyOffer": "Du hast bereits ein laufendes Angebot.",
 	"bidsOngoing": "Du hast noch laufende Angebote.",
 	"inClan": "Du gehörst bereits zu einem Klan.",
+	"noClan": "Du gehörst keinem Klan an.",
 	"banPending": "Dein Anliegen zur Sperrung wird bearbeitet.",
 	"AlreadyAtMaxHealth": "Dein Dinoz hat bereits die maximalen Lebenspunkte.",
 	"DinozIsDead": "Dein Dinoz ist tot.",
@@ -50,6 +51,18 @@
 	"dinozCannotLvlUp": "Der Dinoz kann keine Stufe aufsteigen, da er beim IDT angemeldet ist.",
 	"reincarnationNotPossible": "Die Reinkarnation von Dinoz ist nur auf Stufe 40 möglich.",
 	"reincarnationWithEquippedItems": "Du kannst deinen Dinoz nicht mit ausgerüsteten Gegenständen reinkarnieren.",
+	"clanWar": {
+		"noCastle": "Dein Klan hat keine Burg errichtet.",
+		"noCastleOpponent": "Es ist keine gegnerische Burg errichtet worden.",
+		"defenderAlreadyUnderAttack": "Dieser Klan wird bereits von ausreichend Gegnern angegriffen.",
+		"defenderActiveMax": "Dein Klan hat die Höchstanzahl an Verteidiger-Dinoz erreicht.",
+		"notWar": "Dieser Angriff ist nicht mehr möglich.",
+		"notEnoughIngredients": "Diese Kriegserklärung würde {{cost}} :gold: kosten, was von der Schatzkammer deines Klans nicht gedeckt ist.",
+		"castleDestroyed": "Die Burg ist bereits zerstört.",
+		"castleFullLife": "Eure Burg hat bereits die Höchstanzahl an :hpcastle:.",
+		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
+		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur."
+	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
 		"notYourDinoz": "Dieser Dinoz gehört dir nicht"

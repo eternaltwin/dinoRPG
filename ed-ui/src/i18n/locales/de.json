@@ -120,6 +120,7 @@
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
+		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -247,7 +248,10 @@
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen.",
 			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
 			"change_leader": "Dein Dinoz wird zum neuen Gruppenanführer ernannt.",
-			"fb_tournament": "Das Rohkraft-Turnier betreten."
+			"fb_tournament": "Das Rohkraft-Turnier betreten.",
+			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
+			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
+			"war_attack": "Gegnerische Burg angreifen."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -280,7 +284,10 @@
 			"itinerant_shop": "Der fliegende Händler",
 			"reincarnation": "Reinkarnation",
 			"change_leader": "Zum Anführer küren",
-			"fb_tournament": "Turnier"
+			"fb_tournament": "Turnier",
+			"war_defend": "Eure Burg verteidigen.",
+			"war_remove": "Von der Verteidigung abziehen",
+			"war_attack": "Burg angreifen"
 		}
 	},
 	"button": {
@@ -2617,7 +2624,8 @@
 		"confirmBanAction": "Wirklich bannen?",
 		"attention": "Achtung",
 		"accept": "Ja",
-		"reject": "Nein"
+		"reject": "Nein",
+		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4069,7 +4077,8 @@
 			"completion": "Vollst.",
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
-			"event": "Ereignispunkte"
+			"event": "Ereignispunkte",
+			"war": "Kriegsansehen"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4104,7 +4113,8 @@
 		},
 		"button": {
 			"clanEvent": "Ereignis-Rangliste",
-			"clanTreasure": "Schatzkammer-Rangliste"
+			"clanTreasure": "Schatzkammer-Rangliste",
+			"clanWar": "Kriegsrangliste"
 		}
 	},
 	"clan": {
@@ -4132,11 +4142,47 @@
 			"members": "Anzahl der Mitglieder",
 			"gold": "Wert der Schatzkammer",
 			"rank": "Rang",
-			"crown": "Klananführer"
+			"crown": "Klananführer",
+			"reputation": "Ansehen im laufenden Krieg",
+			"castle_life": "Verbleibende Lebenspunkte eurer Burg"
 		},
 		"forum": {
 			"connectionFailed": "Bei der Verbindung zum Klan-Chat ist ein Fehler aufgetreten!",
 			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
+		},
+		"war": {
+			"buildCastle": "Errichtet eure Burg",
+			"castleTooltip": "An diesem Ort befindet sich eure Burg",
+			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
+			"declareWar": "Diesen Klan angreifen",
+			"attack": "Angriff",
+			"defense": "Verteidigung",
+			"forfeit": "Sich geschlagen geben",
+			"counter": "Angreifen",
+			"defender": "{name}, Stufe {level}",
+			"repair": {
+				"title": "Burgreparaturen",
+				"active": "{count}/{max} Reparatur(en) im Gange",
+				"info": "+{hp} :hp_castle: alle {freq} Minute(n)",
+				"tick": "{applied}/{total} Takte ausgeführt",
+				"hpPerTick": ":hp_castle: pro Takt",
+				"frequency": "Frequenz",
+				"ticks": "Wiederholungen",
+				"freq": {
+					"1": "Minütlich",
+					"5": "Alle 5 Minuten",
+					"15": "Alle 15 Minuten",
+					"30": "Alle 30 Minuten"
+				},
+				"duration": "Dauer: {duration} Minuten",
+				"totalHp": "Insgesamt :hp_castle: repariert: {hp} (Max. {max})",
+				"cost": "Kosten:",
+				"cantAfford": "Nicht genug Zutaten in der Klanschatzkammer",
+				"start": "Reparatur starten",
+				"stackFull": "Höchstanzahl gleichzeitiger Reparaturen erreicht ({max}/{max})",
+				"castleDestroyed": "Eure Burg ist zerstört – diese muss zunächst wiederaufgebaut werden",
+				"castleFullLife": "Eure Burg hat bereits die maximalen Lebenspunkte"
+			}
 		}
 	},
 	"clansList": {
@@ -4175,7 +4221,8 @@
 				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
 				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
 				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
-				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
+				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten",
+				"CLAN_BUILD_CASTLLE": "Burg kann errichtet werden"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
@@ -4243,6 +4290,17 @@
 			"PLAYER_JOIN": "Ein Spieler ist dem Klan beigetreten.",
 			"PLAYER_LEAVE": "Dieser Spieler hat beschlossen, den Klan zu verlassen.",
 			"PLAYER_EXCLUSION": "Dieser Spieler wurde aus dem Klan ausgeschlossen.",
+			"CASTLE_BUILD": "Ich habe die Burg errichtet.",
+			"CASTLE_REBUILD": "Ich habe die Burg wiederaufgebaut.",
+			"WAR_ATTACKED": "Als amtierender Kriegsoffizier von Klan {name} habe ich eurem Klan den Krieg erklärt!",
+			"WAR_START": "Ich habe dem Klan {name} den Krieg erklärt!",
+			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg von {name} zu zerstören.",
+			"WAR_LOSED": "Ich habe eure Burg im Namen vom Klan {name} zerstört und somit den Krieg gegen euch gewonnen.",
+			"WAR_DEFENDED": "Wir haben die Angriffe des Klans {name} überstanden und somit diesen Verteidigungskrieg gewonnen.",
+			"WAR_FORFEIT": "Ich habe beschlossen, uns im Krieg gegen {name} geschlagen zu geben.",
+			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
+			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
+			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4546,7 +4604,8 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein"
+		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
+		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -5216,7 +5275,16 @@
 		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
 		"clanApply": "{name} möchte deinem Klan beitreten!",
 		"message": "Du hast eine neue Nachricht erhalten.",
-		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen."
+		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen.",
+		"clanWar": {
+			"WAR_ATTACKED": "Der Klan {targetClan} hat uns den Krieg erklärt!",
+			"WAR_START": "Ich habe dem Klan {targetClan} den Krieg erklärt!",
+			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
+			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
+			"WAR_FORFEIT": "Der Klan {targetClan} hat sich im Krieg geschlagen gegeben!",
+			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
+			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
+		}
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",
