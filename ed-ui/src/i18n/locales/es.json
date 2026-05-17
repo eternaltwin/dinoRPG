@@ -120,7 +120,7 @@
 			"notEnoughItems": "No tienes suficiente de este artículo.",
 			"offerClaimed": "Has obtenido lo que ganaste"
 		},
-		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
+		"clan_war": "¡Alerta! {attacker} acaba de atacar tu castillo y le ha infligido {hpLost} :hp_castle:.",
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"heal": "Tu Dino ha recuperado {value} :hp:.",
 		"gold": "Recibiste {value} :gold:.",
@@ -146,7 +146,7 @@
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
 		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
 		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
-		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisamment de Dinoz",
+		"notEnoughDinozSelected": "No has seleccionado suficientes Dinos",
 		"noDinozSelected": "Ningún Dino seleccionado",
 		"basicError": "Se ha producido un error",
 		"buildSaved": "El plan de competencias \"{name}\" ha sido guardado",
@@ -249,9 +249,9 @@
 			"reincarnation": "¡Tu Dino puede reencarnarse! Conservará el mismo destino de los elementos.",
 			"change_leader": "Tu Dino puede convertirse en el nuevo líder del grupo.",
 			"fb_tournament": "Acceder al Torneo de Fuerzabruta.",
-			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
-			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_defend": "Añade tu Dino a las líneas de defensa del castillo de tu clan.",
+			"war_remove": "Retira tu Dino de las líneas de defensa del castillo de tu clan.",
+			"war_attack": "Atacar el castillo enemigo."
 		},
 		"name": {
 			"fight": "Combatir",
@@ -285,9 +285,9 @@
 			"reincarnation": "Reencarnación",
 			"change_leader": "Convertirse en líder",
 			"fb_tournament": "Torneo",
-			"war_defend": "Défendre votre château",
-			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_defend": "Defender tu castillo",
+			"war_remove": "Retirar de la defensa",
+			"war_attack": "Atacar el castillo"
 		}
 	},
 	"button": {
@@ -2625,7 +2625,7 @@
 		"attention": "Atención",
 		"accept": "Sí",
 		"reject": "No",
-		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?"
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -4078,7 +4078,7 @@
 			"clans": "Clanes",
 			"treasure": "Tesoro del Clan",
 			"event": "Puntos del evento",
-			"war": "Réputation de guerre"
+			"war": "Reputación de guerra"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4114,7 +4114,7 @@
 		"button": {
 			"clanEvent": "Clasificación del evento",
 			"clanTreasure": "Clasificación del tesoro",
-			"clanWar": "Classement de guerre"
+			"clanWar": "Clasificación de la Guerra"
 		}
 	},
 	"clan": {
@@ -4143,26 +4143,26 @@
 			"gold": "Valor del tesoro",
 			"rank": "Rango",
 			"crown": "Líder del Clan",
-			"reputation": "Réputation pour la guerre en cours",
-			"castle_life": "Points de vie restant à votre château"
+			"reputation": "Reputación de la guerra en curso",
+			"castle_life": "Puntos de vida restantes de tu castillo"
 		},
 		"forum": {
 			"connectionFailed": "¡Se produjo un error al conectarse al chat del clan!",
 			"connectionFailed2": "¡Actualiza la página o vuelve a intentarlo más tarde!"
 		},
 		"war": {
-			"buildCastle": "Construire votre château",
-			"castleTooltip": "Lieu où se situe votre château",
-			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
-			"declareWar": "Attaquer ce clan",
-			"attack": "Attaque",
-			"defense": "Défense",
-			"forfeit": "Déclarer forfait",
-			"counter": "Attaquer",
-			"defender": "{name} niveau {level}",
+			"buildCastle": "Construir tu castillo",
+			"castleTooltip": "Localización del castillo",
+			"disclaimerCastle": "Tu castillo se encuentra en **{place}**. Lleva allí a tus Dinos para defenderlo, ¡pero sobre todo no reveles su posición a tus enemigos!",
+			"declareWar": "Declarar la guerra a este clan",
+			"attack": "Ataque",
+			"defense": "Defensa",
+			"forfeit": "Rendirse",
+			"counter": "Declarar guerra en contraataque",
+			"defender": "{name}, nivel {level}",
 			"repair": {
-				"title": "Réparation du château",
-				"active": "{count}/{max} réparation(s) en cours",
+				"title": "Reparación del castillo",
+				"active": "{count}/{max} reparaciones en curso",
 				"info": "+{hp} HP toutes les {freq} minute(s)",
 				"tick": "{applied}/{total} ticks effectués",
 				"hpPerTick": "PV par tick",
