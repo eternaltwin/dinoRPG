@@ -120,6 +120,7 @@
 			"notEnoughItems": "You don't have enough of this item.",
 			"offerClaimed": "Your earnings have been collected"
 		},
+		"clan_war": "Alert! {attacker} just attacked your castle and dealt {hpLost} :hp_castle:.",
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
 		"gold": "You received {value} :gold:.",
@@ -247,7 +248,10 @@
 			"itinerant_shop": "The Itinerant Merchant travels throughout Dinoland and buys *Ingredients* from Dinoz Masters: he pays well.",
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
-			"fb_tournament": "Access the BrutForce Tournament."
+			"fb_tournament": "Access the BrutForce Tournament.",
+			"war_defend": "Add your Dinoz to the defense lines of your clan castle.",
+			"war_remove": "Remove your Dinoz to the defense lines of your clan castle.",
+			"war_attack": "Attack the enemy castle."
 		},
 		"name": {
 			"fight": "Fight",
@@ -280,7 +284,10 @@
 			"itinerant_shop": "Travelling Merchant",
 			"reincarnation": "Reincarnate",
 			"change_leader": "Become Leader",
-			"fb_tournament": "Tournament"
+			"fb_tournament": "Tournament",
+			"war_defend": "Defend your castle",
+			"war_remove": "Remove from defense",
+			"war_attack": "Attack the castle"
 		}
 	},
 	"button": {
@@ -2617,7 +2624,8 @@
 		"confirmBanAction": "Confirm this ban?",
 		"attention": "Attention",
 		"accept": "Yes",
-		"reject": "No"
+		"reject": "No",
+		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?"
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -4069,7 +4077,8 @@
 			"completion": "Comp.",
 			"clans": "Clans",
 			"treasure": "Clan Treasure",
-			"event": "Event Score"
+			"event": "Event Score",
+			"war": "War Standing"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -4104,7 +4113,8 @@
 		},
 		"button": {
 			"clanEvent": "Event Ranking",
-			"clanTreasure": "Treasury Ranking"
+			"clanTreasure": "Treasury Ranking",
+			"clanWar": "War Ranking"
 		}
 	},
 	"clan": {
@@ -4132,11 +4142,47 @@
 			"members": "Number of members",
 			"gold": "Treasure value",
 			"rank": "Rank",
-			"crown": "Clan leader"
+			"crown": "Clan leader",
+			"reputation": "Standing in the current war",
+			"castle_life": "Hit points left to your castle"
 		},
 		"forum": {
 			"connectionFailed": "An error happened when connecting to the clan's chat!",
 			"connectionFailed2": "Refresh the page or try again later!"
+		},
+		"war": {
+			"buildCastle": "Build your castle",
+			"castleTooltip": "Place where your castle is located",
+			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
+			"declareWar": "Attack this clan",
+			"attack": "Attack",
+			"defense": "Defense",
+			"forfeit": "Withdraw",
+			"counter": "Attack",
+			"defender": "{name} level {level}",
+			"repair": {
+				"title": "Castle Repairs",
+				"active": "{count}/{max} ongoing repair(s)",
+				"info": "+{hp} :hp_castle: every {freq} minute(s)",
+				"tick": "{applied}/{total} processed ticks",
+				"hpPerTick": ":hp_castle: per tick",
+				"frequency": "Frequency",
+				"ticks": "Ticks",
+				"freq": {
+					"1": "Every minute",
+					"5": "Every 5 minutes",
+					"15": "Every 15 minutes",
+					"30": "Every 30 minutes"
+				},
+				"duration": "duration: {duration} min",
+				"totalHp": "Total :hp_castle: repaired: {hp} (max {max})",
+				"cost": "Cost:",
+				"cantAfford": "Not enough ingredients in your clan treasury",
+				"start": "Start repair",
+				"stackFull": "Maximum number of ongoing repairs reached ({max}/{max})",
+				"castleDestroyed": "Your castle is destroyed, build it back first.",
+				"castleFullLife": "Your castle is already at max health."
+			}
 		}
 	},
 	"clansList": {
@@ -4175,7 +4221,8 @@
 				"MEMBER_EXCLUDE": "Can exclude members",
 				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
-				"CLAN_EDIT_LANG": "Can change the language of the Clan"
+				"CLAN_EDIT_LANG": "Can change the language of the Clan",
+				"CLAN_BUILD_CASTLLE": "Can build the castle"
 			},
 			"nickname": "Player's nickname",
 			"save": "Save",
@@ -4243,6 +4290,17 @@
 			"PLAYER_JOIN": "A player has joined the clan.",
 			"PLAYER_LEAVE": "This player decided to leave the clan.",
 			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
+			"CASTLE_BUILD": "I built the castle.",
+			"CASTLE_REBUILD": "I rebuilt the castle.",
+			"WAR_ATTACKED": "As war officer of {name}, I declare war against your clan!",
+			"WAR_START": "I launched a war against {name}!",
+			"WAR_LOSE": "We failed to destroy the castle of {name}.",
+			"WAR_LOSED": "In the name of {name}, I destroyed your castle and won this war against your clan.",
+			"WAR_DEFENDED": "We fended off the attacks of {name} and won this defensive war.",
+			"WAR_FORFEIT": "I decided to abandon the war against {name}.",
+			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
+			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
+			"WAR_WON": "We won the war against {name}!",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -4546,7 +4604,8 @@
 		"followed": "This Dinoz leads a group.",
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
-		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}"
+		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
+		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -4585,7 +4644,7 @@
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"GridFinished": "**{player} ({playerId})** finished a harvest grid and won {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
-		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of Dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**New player has arrived : {name}**.",
 		"PlayerConnected": "**Player {name}** has just logged on.",
 		"LBDone": "**Player {player}** just claimed his rewards.",
@@ -4609,7 +4668,7 @@
 		"ranking": "Ranking",
 		"position": "Rank",
 		"accessChallenges": "Access challenges",
-		"testDinoz": "Test your dinoz",
+		"testDinoz": "Test your Dinoz",
 		"fightHistory": "Fight history",
 		"tournamentHistory": "Tournament History",
 		"team": "My team",
@@ -5216,7 +5275,16 @@
 		"FBStarted": "A new event has started!",
 		"clanApply": "{name} would like to join your clan!",
 		"message": "You have received a new message.",
-		"clanApplyAccepted": "The clan {name} accepted your application."
+		"clanApplyAccepted": "The clan {name} accepted your application.",
+		"clanWar": {
+			"WAR_ATTACKED": "We have been attacked by {targetClan}!",
+			"WAR_START": "I started a war with {targetClan}!",
+			"WAR_WON": "We won the war against {targetClan}!",
+			"WAR_LOSED": "{targetClan} destroyed our castle.",
+			"WAR_FORFEIT": "{targetClan} abandonned the war!",
+			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
+			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!"
+		}
 	},
 	"events": {
 		"disclaimer": "Here you will find all ongoing community events.",
