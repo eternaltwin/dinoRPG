@@ -126,7 +126,7 @@
 		"gold": "Vous avez obtenu {value} :gold:.",
 		"sphere": "Votre Dinoz a appris la compétence {value}.",
 		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
-		"resurrect": "Votre Dinoz est ressuscité.",
+		"resurrect": "Votre Dinoz a été ressuscité.",
 		"egg": "Vous avez ouvert un œuf de {value}.",
 		"special": {
 			"box_common": "La boîte commune contenait {qty} {value} !",
