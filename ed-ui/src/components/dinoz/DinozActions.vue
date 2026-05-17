@@ -136,7 +136,6 @@ export default defineComponent({
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
-
 			MissionEnum: ConditionEnum,
 			digRewards: undefined as DigResponse | undefined,
 			Action,
