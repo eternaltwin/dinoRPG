@@ -22,7 +22,7 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_air')}" alt="air">`;
 			case 'neutre':
 			case 'void':
-				return `<img src="${mixin.methods.getImgURL('elements', 'elem_void')}" alt="pmo">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_void')}" alt="neutral">`;
 			case 'right':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_right')}" alt="pmo">`;
 			case 'gold':
@@ -37,6 +37,8 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'armor')}" alt="defense">`;
 			case 'hp':
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'hpRegen')}" alt="hp">`;
+			case 'hp_castle':
+				return `<img src="${mixin.methods.getImgURL('icons', 'small_castle_heart')}" alt="castle hp">`;
 			case 'pv':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_pv')}" alt="pv">`;
 			case 'xp':
