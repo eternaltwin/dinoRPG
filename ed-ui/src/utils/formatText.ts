@@ -108,6 +108,7 @@ export function formatText(text: string): string {
 				'attack',
 				'defense',
 				'hp',
+				'hp_castle',
 				'pv',
 				'xp',
 				'irma'

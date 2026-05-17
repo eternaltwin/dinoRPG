@@ -644,7 +644,7 @@ export default defineComponent({
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
-		},
+		}
 	},
 	computed: {
 		UnavailableReason() {
@@ -664,13 +664,15 @@ export default defineComponent({
 			}
 			const skills = toSkillDetails(currentDinoz.skills);
 			const priest = playerStore().isPriest;
-			return getSpecialStat(
+			return (
+				getSpecialStat(
 					currentDinoz,
 					currentDinoz.status.map(s => s.statusId),
 					skills,
 					SpecialStat.HP_REGEN,
 					priest
-				)?.value ?? 1;
+				)?.value ?? 1
+			);
 		},
 		missionName() {
 			if (!this.dinoz) {
