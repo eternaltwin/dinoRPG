@@ -75,13 +75,17 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
 		const value: DinozFiche[] = [];
 		if (!dinoz && dinozList.value.length > 0) {
+			// No dinoz found, if there is at least one Dinoz, find it, and if not found, just pick the first Dinoz of the list.
 			value.push(dinozList.value.find((dinoz: DinozFiche) => dinoz.id === currentDinozId.value) ?? dinozList.value[0]);
-		} else if (dinoz && dinoz.followers.length > 1) {
+		} else if (dinoz && dinoz.followers.length > 0) {
+			// Dinoz leads a group: add Dinoz and its followers.
 			value.push(dinoz);
 			value.push(...dinozList.value.filter(d => dinoz.followers.some(f => f.id === d.id)));
 		} else if (dinoz && dinoz.leaderId) {
+			// Dinoz follows another: add all Dinoz following the same leader and the leader.
 			value.push(...dinozList.value.filter(d => d.leaderId === dinoz.leaderId || d.id === dinoz.leaderId));
 		} else if (dinoz) {
+			// Dinoz is alone.
 			value.push(dinoz);
 		}
 		return value;

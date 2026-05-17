@@ -136,11 +136,9 @@ export default defineComponent({
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
-
 			MissionEnum: ConditionEnum,
 			digRewards: undefined as DigResponse | undefined,
 			Action,
-			hpRegen: 1,
 			itinerantName: '' as string,
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
@@ -647,43 +645,6 @@ export default defineComponent({
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
-		async regenRate() {
-			if (!this.dinoz) {
-				this.$toast.open({
-					message: formatText('Dinoz not found'),
-					type: 'error'
-				});
-				return;
-			}
-			const data = this.dinoz;
-			const skills = toSkillDetails(data.skills);
-			const priest = this.playerStore.isPriest;
-			const specialStats = Object.values(SpecialStat)
-				.map(stat =>
-					getSpecialStat(
-						data,
-						data.status.map(s => s.statusId),
-						skills,
-						stat as SpecialStat,
-						priest
-					)
-				)
-				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
-			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
-			regen ? (this.hpRegen = regen.value) : 1;
-		},
-		async loadComponent() {
-			if (!this.dinoz) {
-				this.$toast.open({
-					message: formatText('Dinoz not found'),
-					type: 'error'
-				});
-				return;
-			}
-			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
-				await this.regenRate();
-			}
-		}
 	},
 	computed: {
 		UnavailableReason() {
@@ -691,6 +652,25 @@ export default defineComponent({
 		},
 		isSelling() {
 			return this.dinoz?.unavailableReason === UnavailableReason.selling;
+		},
+		hpRegen() {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				this.$toast.open({
+					message: formatText('Dinoz not found'),
+					type: 'error'
+				});
+				return;
+			}
+			const skills = toSkillDetails(currentDinoz.skills);
+			const priest = playerStore().isPriest;
+			return getSpecialStat(
+					currentDinoz,
+					currentDinoz.status.map(s => s.statusId),
+					skills,
+					SpecialStat.HP_REGEN,
+					priest
+				)?.value ?? 1;
 		},
 		missionName() {
 			if (!this.dinoz) {
@@ -726,7 +706,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
 		const intervalId3 = window.setInterval(() => this.updateAttackCountdown(), 1000);

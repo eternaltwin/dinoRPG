@@ -121,7 +121,6 @@ export default defineComponent({
 							break;
 						case SseDataEnum.CLAN_WAR:
 							this.$toast.warning(this.$t(`toast.clan_war`, data.war));
-							console.log(data.war);
 							break;
 						default:
 							console.log(data);

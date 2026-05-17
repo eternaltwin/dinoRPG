@@ -16,6 +16,7 @@ import { SkillType } from '@drpg/core/models/enums/SkillType';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { GLOBAL } from '../context.js';
 import { updateDinoz } from '../dao/dinozDao.js';
+import { Auth } from '../dao/playerDao.js';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
 	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
@@ -321,7 +322,8 @@ export const learnNextSphereSkill = (
 	dinoz: {
 		skills: Pick<DinozSkill, 'skillId'>[];
 	},
-	element: ElementType
+	element: ElementType,
+	authed: Auth,
 ) => {
 	const sphereSkills = Object.values(skillList)
 		.filter(skill => skill.isSphereSkill)
@@ -344,7 +346,7 @@ export const learnNextSphereSkill = (
 	}
 
 	if (!sphereSkillToLearn) {
-		throw new ExpectedError(translate('knownSphereSkill'));
+		throw new ExpectedError(translate('knownSphereSkill', authed));
 	}
 
 	return sphereSkillToLearn?.id; // SAFETY: sphereSkillToLearn is not undefined
