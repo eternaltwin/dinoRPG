@@ -4292,7 +4292,7 @@
 			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
 			"CASTLE_BUILD": "I built the castle.",
 			"CASTLE_REBUILD": "I rebuilt the castle.",
-			"WAR_ATTACKED": "As war office of {name}, I declare war against your clan!",
+			"WAR_ATTACKED": "As war officer of {name}, I declare war against your clan!",
 			"WAR_START": "I launched a war against {name}!",
 			"WAR_LOSE": "We failed to destroy the castle of {name}.",
 			"WAR_LOSED": "In the name of {name}, I destroyed your castle and won this war against your clan.",
