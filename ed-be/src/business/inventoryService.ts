@@ -200,7 +200,7 @@ export async function useItem(req: Request) {
 			});
 			break;
 		case ItemEffect.SPHERE:
-			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value);
+			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value, authed);
 			const skill = Object.values(skillList).find(skill => skill.id === skillToLearn);
 
 			if (!skill) {
