@@ -4222,7 +4222,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Puede eliminar mensajes del hilo de discusión",
 				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
 				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan",
-				"CLAN_BUILD_CASTLLE": "Peut construire le chateau"
+				"CLAN_BUILD_CASTLLE": "Peut construire le chateau",
+				"WAR_OFFICER": "Peut déclarer des guerres"
 			},
 			"nickname": "Apodo del jugador",
 			"save": "Guardar",
