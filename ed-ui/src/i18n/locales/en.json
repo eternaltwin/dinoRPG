@@ -4222,7 +4222,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan",
-				"CLAN_BUILD_CASTLLE": "Can build the castle"
+				"CLAN_BUILD_CASTLLE": "Can build the castle",
+				"WAR_OFFICER": "Peut déclarer des guerres"
 			},
 			"nickname": "Player's nickname",
 			"save": "Save",
