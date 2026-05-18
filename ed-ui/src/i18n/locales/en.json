@@ -4161,8 +4161,8 @@
 			"counter": "Attack",
 			"defender": "{name} level {level}",
 			"type": "Type",
-			"enemy": "Opposant",
-			"endDate": "Date de fin",
+			"enemy": "Opponent",
+			"endDate": "End Date",
 			"action": "Action",
 			"repair": {
 				"title": "Castle Repairs",
