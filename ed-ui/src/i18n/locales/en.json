@@ -4160,6 +4160,10 @@
 			"forfeit": "Withdraw",
 			"counter": "Attack",
 			"defender": "{name} level {level}",
+			"type": "Type",
+			"enemy": "Opposant",
+			"endDate": "Date de fin",
+			"action": "Action",
 			"repair": {
 				"title": "Castle Repairs",
 				"active": "{count}/{max} ongoing repair(s)",
