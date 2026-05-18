@@ -39,6 +39,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { sendSseMessageToUserInChannel } from './serverEventService.js';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
+import { getRandomArrayElement } from '../utils/tools.js';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -116,7 +117,7 @@ export async function buildClanCastle(req: Request) {
 
 	const isRebuild = existingCastle !== null && existingCastle.currentLife <= 0;
 
-	const randomPlace = war.config.warPlaces[Math.round(Math.random() * war.config.warPlaces.length) - 1];
+	const randomPlace = getRandomArrayElement(war.config.warPlaces);
 
 	await prisma.clanCastle.upsert({
 		where: {
