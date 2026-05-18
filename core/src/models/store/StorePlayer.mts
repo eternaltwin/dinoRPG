@@ -12,7 +12,6 @@ export interface StorePlayer {
 	role: AdminRoleFront;
 	priest: boolean;
 	shopkeeper: boolean;
-	sortOption: string;
 	notificationCounter: number;
 	notifications: Notification[];
 	discoveredSkills: Skill[];

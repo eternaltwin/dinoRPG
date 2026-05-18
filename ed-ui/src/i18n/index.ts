@@ -42,8 +42,9 @@ export const Locales: Record<string, LangInfos> = {
 
 export const defaultLocale = LocalesEnum.FR;
 
-export const initI18n = async () => {
+export const initI18n = () => {
 	i18n = createI18n({
+		legacy: false,
 		locale: localStore().getLanguage || LocalesEnum.FR,
 		fallbackLocale: defaultLocale,
 		silentFallbackWarn: true,
@@ -59,13 +60,6 @@ export const initI18n = async () => {
 			}
 		}
 	});
-
-	// load default language
-	const messages = await import(`./locales/${defaultLocale}.json`);
-	i18n.global.setLocaleMessage(defaultLocale, messages.default);
-	loadedLanguages.push(defaultLocale);
-
-	await loadLanguage(i18n.global.locale as string);
 
 	return i18n;
 };

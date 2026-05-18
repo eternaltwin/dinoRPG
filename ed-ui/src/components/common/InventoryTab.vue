@@ -1,3 +1,161 @@
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { onMounted, Ref, ref } from 'vue';
+import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { useDinozStore, useInventoryStore } from '../../store';
+import { InventoryService, PlayerService } from '../../services';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import EventBus from '../../events';
+import { refreshGold } from '../../mixin/mixin';
+import { formatText } from '../../utils/formatText';
+import { useToast } from 'vue-toast-notification';
+import { errorHandler } from '../../utils';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import DZSelect from './DZSelect.vue';
+import { storeToRefs } from 'pinia';
+import { SortOptions } from '@drpg/core/models/inventory/sortOptions';
+import { confirm } from '../../mixin/confirmPlugin';
+
+const { t } = useI18n();
+const router = useRouter();
+const toast = useToast();
+
+const { inventory, sortOption } = storeToRefs(useInventoryStore());
+const { getCurrentDinozId, getDinozList } = storeToRefs(useDinozStore());
+const { useItem, sortItems, setInventory } = useInventoryStore();
+const { setDinozList, setItems } = useDinozStore();
+
+const hidden: Ref<boolean> = ref(true);
+const sortOptions = Object.values(SortOptions).map(o => ({
+	value: o,
+	label: t(`inventory.sort.${o}`)
+}));
+
+const goToItemShop = (): void => {
+	router.push({ name: 'ItemShopPage', params: { name: 'flying' } });
+};
+
+const isFull = (item: ItemFiche): boolean => {
+	return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
+};
+
+const refreshDinozList = async (): Promise<void> => {
+	const dinozList: Array<DinozFiche> = getDinozList.value;
+
+	const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
+
+	const newDinozList = commonData.dinoz.map(d => d.id);
+	const oldDinozList = dinozList.map(d => d.id);
+	setDinozList(commonData.dinoz);
+
+	router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
+};
+
+const itemUse = async (item: ItemFiche): Promise<void> => {
+	if (item.quantity === undefined || item.quantity <= 0) {
+		return;
+	}
+
+	const res = await confirm({
+		message: t(`inventory.confirmUse`, { name: t(`item.name.${itemNameList[item.itemId]}`) }),
+		header: t('popup.attention'),
+		acceptLabel: t('popup.accept'),
+		rejectLabel: t('popup.reject'),
+		icon: 'pi pi-trash'
+	});
+
+	const dinozId: number | undefined = getCurrentDinozId.value;
+	if (dinozId === undefined) {
+		return;
+	}
+
+	if (!res) return;
+	try {
+		const toasts = await InventoryService.useInventoryItem(item.itemId, dinozId);
+		for (const toast of toasts) {
+			useItem(item.itemId);
+			sortItems();
+			if (toast.category === ItemEffect.EGG) {
+				await refreshDinozList();
+			} else if (toast.category === ItemEffect.GOLD) {
+				await refreshGold();
+			} else {
+				EventBus.emit('refreshDinoz', true);
+			}
+
+			let message: string;
+			switch (toast.category) {
+				case ItemEffect.SPECIAL:
+					message = t(`toast.special.${toast.value}`, {
+						value: t(`item.name.${toast.effect}`),
+						qty: toast.quantity
+					});
+					break;
+				case ItemEffect.SPHERE:
+					message = t(`toast.sphere`, { value: t(`skill.name.${toast.value}`) });
+					break;
+				case ItemEffect.QUEST:
+					message = t(`quest.${toast.value}`);
+					break;
+				case ItemEffect.RESURRECT:
+					message = t(`toast.${toast.category}`);
+					break;
+				case ItemEffect.EGG:
+					message = t(`toast.${toast.category}`, { value: t(`race.name.${toast.value}`) });
+					break;
+				default:
+					message =
+						typeof toast.value === 'number'
+							? t(`toast.${toast.category}`, { value: toast.value }, toast.value)
+							: t(`toast.${toast.category}`, { value: toast.value });
+					break;
+			}
+
+			useToast().open({
+				message: formatText(message),
+				type: 'info'
+			});
+		}
+	} catch (error) {
+		errorHandler.handle(error, toast);
+		return;
+	}
+};
+
+const equipItem = async (item: ItemFiche): Promise<void> => {
+	const dinozId: number | undefined = getCurrentDinozId.value;
+	if (item.quantity === undefined || item.quantity <= 0 || dinozId === undefined) {
+		return;
+	}
+
+	try {
+		const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
+		useItem(item.itemId);
+		setItems(
+			dinozId,
+			items.map(item => item.itemId)
+		);
+	} catch (error) {
+		errorHandler.handle(error, toast);
+		return;
+	}
+};
+
+onMounted(async () => {
+	try {
+		const inventory: Array<ItemFicheDTO> = await InventoryService.getAllItemsData();
+		setInventory(inventory);
+		sortItems();
+	} catch (err) {
+		errorHandler.handle(err, toast);
+		return;
+	}
+});
+</script>
+
 <template>
 	<div class="inventory">
 		<p class="wrapperMenu" @click="hidden = !hidden">{{ $t('inventory.sortBy') }}</p>
@@ -13,7 +171,7 @@
 					<th class="qty">{{ $t('inventory.stock') }}</th>
 					<th class="act">{{ $t('inventory.actions') }}</th>
 				</tr>
-				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
+				<tr v-for="(item, index) in inventory" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
 						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
 						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
@@ -45,7 +203,7 @@
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
 							}"
-							@click="useItem(item)"
+							@click="itemUse(item)"
 						>
 							<img :src="getImgURL('icons', 'small_use')" alt="small_use" />
 						</a>
@@ -87,201 +245,6 @@
 		<a class="button" @click="goToItemShop()">{{ $t(`button.shop`) }}</a>
 	</div>
 </template>
-
-<script lang="ts" scoped>
-import { defineComponent } from 'vue';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { InventoryService, PlayerService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import EventBus from '../../events/index.js';
-import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { playerStore, useDinozStore } from '../../store/index.js';
-import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { formatText } from '../../utils/formatText.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
-import DZSelect from './DZSelect.vue';
-
-export default defineComponent({
-	name: 'InventoryTab',
-	components: {
-		DZSelect
-	},
-	data() {
-		return {
-			allItemsData: [] as Array<ItemFiche>,
-			itemNameList: itemNameList,
-			playerStore: playerStore(),
-			sortOption: playerStore().getSortOption,
-			sortOptions: ['default', 'nameAsc', 'nameDesc', 'priceAsc', 'priceDesc', 'qtyAsc', 'qtyDesc'].map(o => ({
-				value: o,
-				label: this.$t(`inventory.sort.${o}`)
-			})),
-			hidden: true as boolean
-		};
-	},
-	methods: {
-		goToItemShop() {
-			this.$router.push({
-				name: 'ItemShopPage',
-				params: { name: 'flying' }
-			});
-		},
-		isFull(item: ItemFiche): boolean {
-			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
-		},
-		async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-
-			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
-
-			const newDinozList = commonData.dinoz.map(d => d.id);
-			const oldDinozList = dinozList.map(d => d.id);
-			useDinozStore().setDinozList(commonData.dinoz);
-
-			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
-		},
-		async useItem(item: ItemFiche): Promise<void> {
-			if ((item.quantity ?? 0) > 0) {
-				const dinozId = this.$route.params.id as string;
-				const res = await this.$confirm({
-					message: this.$t(`inventory.confirmUse`, { name: this.$t(`item.name.${itemNameList[item.itemId]}`) }),
-					header: this.$t('popup.attention'),
-					acceptLabel: this.$t('popup.accept'),
-					rejectLabel: this.$t('popup.reject'),
-					icon: 'pi pi-trash'
-				});
-				if (!res) return;
-				try {
-					const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-					for (const toast of toasts) {
-						await this.resfreshInventory();
-						if (toast.category === ItemEffect.EGG) {
-							await this.refreshDinozList();
-						} else if (toast.category === ItemEffect.GOLD) {
-							await this.$refreshGold();
-						} else {
-							EventBus.emit('refreshDinoz', true);
-						}
-
-						let message: string;
-						switch (toast.category) {
-							case ItemEffect.SPECIAL:
-								message = this.$t(`toast.special.${toast.value}`, {
-									value: this.$t(`item.name.${toast.effect}`),
-									qty: toast.quantity
-								});
-								break;
-							case ItemEffect.SPHERE:
-								message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
-								break;
-							case ItemEffect.QUEST:
-								message = this.$t(`quest.${toast.value}`);
-								break;
-							case ItemEffect.RESURRECT:
-								message = this.$t(`toast.${toast.category}`);
-								break;
-							case ItemEffect.EGG:
-								message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
-								break;
-							default:
-								message =
-									typeof toast.value === 'number'
-										? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
-										: this.$t(`toast.${toast.category}`, { value: toast.value });
-								break;
-						}
-
-						this.$toast.open({
-							message: formatText(message),
-							type: 'info'
-						});
-					}
-				} catch (error) {
-					errorHandler.handle(error, this.$toast);
-					return;
-				}
-			}
-		},
-		async equipItem(item: ItemFiche): Promise<void> {
-			if ((item.quantity ?? 0) > 0) {
-				const dinozId = parseInt(this.$route.params.id as string);
-				try {
-					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
-					await this.resfreshInventory();
-					useDinozStore().setItems(
-						dinozId,
-						items.map(item => item.itemId)
-					);
-				} catch (error) {
-					errorHandler.handle(error, this.$toast);
-					return;
-				}
-			}
-		},
-		sortItems() {
-			switch (this.sortOption) {
-				case 'nameAsc':
-					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[a.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[b.itemId]}`)
-						)
-					);
-					break;
-				case 'nameDesc':
-					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[b.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[a.itemId]}`)
-						)
-					);
-					break;
-				case 'priceAsc':
-					this.allItemsData.sort((a, b) => a.price - b.price);
-					break;
-				case 'priceDesc':
-					this.allItemsData.sort((a, b) => b.price - a.price);
-					break;
-				case 'qtyAsc':
-					this.allItemsData.sort((a, b) => (a.quantity ?? 0) - (b.quantity ?? 0));
-					break;
-				case 'qtyDesc':
-					this.allItemsData.sort((a, b) => (b.quantity ?? 0) - (a.quantity ?? 0));
-					break;
-				default:
-					this.allItemsData.sort((a, b) => a.itemId - b.itemId);
-			}
-			this.playerStore.setSortOption(this.sortOption);
-		},
-		async resfreshInventory(): Promise<void> {
-			const items = await InventoryService.getAllItemsData();
-			this.allItemsData = items.map(i => {
-				return {
-					...itemList[i.id],
-					maxQuantity: i.maxQuantity,
-					quantity: i.quantity
-				};
-			});
-			this.sortOption = this.playerStore.getSortOption;
-			this.sortItems();
-		}
-	},
-	async mounted(): Promise<void> {
-		try {
-			await this.resfreshInventory();
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
-		}
-		EventBus.on('refreshInventory', async () => {
-			await this.resfreshInventory();
-		});
-	},
-	unmounted() {
-		EventBus.off('refreshInventory');
-	}
-});
-</script>
 
 <style lang="scss" scoped>
 .inventory {

@@ -28,9 +28,10 @@ import { defineComponent } from 'vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils';
 import { InventoryService } from '../../services';
-import EventBus from '../../events/index.js';
 import { useDinozStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
+import { useInventoryStore } from '../../store/useInventoryStore';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -48,12 +49,13 @@ export default defineComponent({
 		async unequip(itemId: number) {
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
-				const items = await InventoryService.equipInventoryItem(dinozId, itemId, false);
+				const items: Array<DinozItems> = await InventoryService.equipInventoryItem(dinozId, itemId, false);
 				useDinozStore().setItems(
 					dinozId,
 					items.map(item => item.itemId)
 				);
-				EventBus.emit('refreshInventory', true);
+				await useInventoryStore().addItem(itemId, 1);
+				useInventoryStore().sortItems();
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
