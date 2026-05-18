@@ -166,7 +166,6 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	const resetDinozAttackTimer = (dinozId: number): void => {
 		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
 		if (!dinozToUpdate) throw Error(`Dinoz ${dinozId} doesn't exist in store.`);
-		console.log('reset Dinoz');
 		dinozToUpdate.lastAttack = undefined;
 		refreshDinozFiche(dinozId);
 	};

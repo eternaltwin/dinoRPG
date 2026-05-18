@@ -2,10 +2,10 @@
 	<div class="clan_wrapper" v-if="war">
 		<DZTable v-if="ongoingAttack.length > 0">
 			<tr>
-				<th class="dinoz-header">Type</th>
-				<th class="items-header">Ennemi</th>
-				<th class="items-header">Date de fin</th>
-				<th class="items-header" v-if="isClanMember">Action</th>
+				<th class="dinoz-header">{{ $t('clan.war.type') }}</th>
+				<th class="items-header">{{ $t('clan.war.enemy') }}</th>
+				<th class="items-header">{{ $t('clan.war.endDate') }}</th>
+				<th class="items-header" v-if="isClanMember">{{ $t('clan.war.action') }}</th>
 			</tr>
 			<tr v-for="attack in ongoingAttack" :key="attack.id">
 				<td>{{ attack.attacker.id === clanId ? $t('clan.war.attack') : $t('clan.war.defense') }}</td>

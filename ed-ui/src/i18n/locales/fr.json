@@ -4160,6 +4160,10 @@
 			"forfeit": "Déclarer forfait",
 			"counter": "Attaquer",
 			"defender": "{name} niveau {level}",
+			"type": "Type",
+			"enemy": "Opposant",
+			"endDate": "Date de fin",
+			"action": "Action",
 			"repair": {
 				"title": "Réparation du château",
 				"active": "{count}/{max} réparation(s) en cours",
