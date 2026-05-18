@@ -4160,6 +4160,10 @@
 			"forfeit": "Sich geschlagen geben",
 			"counter": "Angreifen",
 			"defender": "{name}, Stufe {level}",
+			"type": "Type",
+			"enemy": "Opposant",
+			"endDate": "Date de fin",
+			"action": "Action",
 			"repair": {
 				"title": "Burgreparaturen",
 				"active": "{count}/{max} Reparatur(en) im Gange",
