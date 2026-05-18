@@ -4160,6 +4160,10 @@
 			"forfeit": "Rendirse",
 			"counter": "Declarar guerra en contraataque",
 			"defender": "{name}, nivel {level}",
+			"type": "Type",
+			"enemy": "Opposant",
+			"endDate": "Date de fin",
+			"action": "Action",
 			"repair": {
 				"title": "Reparación del castillo",
 				"active": "{count}/{max} reparación(es) en curso",
