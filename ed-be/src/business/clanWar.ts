@@ -929,6 +929,16 @@ export async function attackCastle(req: Request) {
 							}
 						}
 					},
+					attacker: {
+						select: {
+							castle: {
+								select: {
+									id: true,
+									currentLife: true,
+								}
+							}
+						}
+					},
 					defenderClanId: true,
 					attackerClanId: true
 				}
@@ -940,6 +950,10 @@ export async function attackCastle(req: Request) {
 
 	if (!warAttack || !activeWar || !activeWar.defender.castle) {
 		throw new ExpectedError(translate('clanWar.notWar', authed));
+	}
+
+	if (!activeWar.attacker.castle || activeWar.attacker.castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 
 	const player = await getDinozFightClanDataRequest(dinozId, authed.id);
