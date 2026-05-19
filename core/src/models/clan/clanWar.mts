@@ -1,7 +1,7 @@
 import { treasureIngredient } from './clan.mjs';
 
-export const WAR_BASE_VALUE = 22_500;
-export const WAR_SCALE_PER_100_POINTS = 5_625;
+export const WAR_BASE_VALUE = 11_250;
+export const WAR_SCALE_PER_100_POINTS = 2_250;
 export const REPAIR_MAX_TICKS = 15;
 export const REPAIR_MAX_STACK = 2;
 export const REPAIR_BASE_VALUE = 500;

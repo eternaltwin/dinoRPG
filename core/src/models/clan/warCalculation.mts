@@ -56,8 +56,8 @@ export function computeRepairCost(
 	};
 }
 
-export function computeWarCost(clanReputation: number, clanIngredients: treasureIngredient[]): WarCost {
-	const trueValue = WAR_BASE_VALUE + Math.floor(clanReputation / 100) * WAR_SCALE_PER_100_POINTS;
+export function computeWarCost(attackingClanReputation: number, clanIngredients: treasureIngredient[]): WarCost {
+	const trueValue = WAR_BASE_VALUE + Math.floor(attackingClanReputation / 100) * WAR_SCALE_PER_100_POINTS;
 
 	const sortedIngredients = clanIngredients
 		.map(ci => ({
