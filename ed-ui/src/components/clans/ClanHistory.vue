@@ -60,7 +60,7 @@ export default defineComponent({
 	},
 	methods: {
 		DateToString(date: Date): string {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
 		GetHistoryMessageFromType(type: ClanHistoryType, message: string) {
 			let formated;

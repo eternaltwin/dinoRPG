@@ -15,7 +15,7 @@
 					</tr>
 					<tr v-for="request in joinRequestsList" :key="request.id" :class="(request.id + 1) % 2 === 0 ? 'even' : ''">
 						<td>
-							{{ new Date(request.date).toLocaleString('fr-FR') }}
+							{{ new Date(request.date).toLocaleString('fr-FR', { timeZone: 'GMT' }) }}
 						</td>
 						<td>
 							<DZUser :user="request.player" />
@@ -160,7 +160,7 @@ export default defineComponent({
 			);
 		},
 		dateToString(date: Date | string) {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
 		async getClanMembersList(): Promise<void> {
 			try {

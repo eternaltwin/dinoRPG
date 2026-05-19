@@ -106,7 +106,7 @@ export default defineComponent({
 			return utils.beautifulNumber(quantity.toString());
 		},
 		DateToString(date: Date): string {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
 		loadBanner(): void {
 			const bannerImg = new Image();

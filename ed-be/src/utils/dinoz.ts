@@ -323,7 +323,7 @@ export const learnNextSphereSkill = (
 		skills: Pick<DinozSkill, 'skillId'>[];
 	},
 	element: ElementType,
-	authed: Auth,
+	authed: Auth
 ) => {
 	const sphereSkills = Object.values(skillList)
 		.filter(skill => skill.isSphereSkill)

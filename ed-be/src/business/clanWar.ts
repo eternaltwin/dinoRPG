@@ -934,7 +934,7 @@ export async function attackCastle(req: Request) {
 							castle: {
 								select: {
 									id: true,
-									currentLife: true,
+									currentLife: true
 								}
 							}
 						}
@@ -1012,7 +1012,7 @@ export async function attackCastle(req: Request) {
 	// Attack castle only and only if all defenders were eleminated.
 	if (victory) {
 		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-			const castleDamage = Math.max(1, Math.ceil(survivor.level / 6)) ;
+			const castleDamage = Math.max(1, Math.ceil(survivor.level / 6));
 			fight.steps.push({
 				action: 'attackCastle',
 				fid: survivor.id,
