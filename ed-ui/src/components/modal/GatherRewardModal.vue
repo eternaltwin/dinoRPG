@@ -24,7 +24,9 @@
 						{{ ' ' }}
 					</span>
 					<span class="ingredient-count">
-						({{ `${getIngredientCount(ingredient.ingredientId)}/${ingredient.maxQuantity}` }})
+						({{
+							`${getIngredientCount(ingredient.ingredientId)}/${ingredient.maxQuantity * (playerStore.isShopkeeper ? 1.5 : 1)}`
+						}})
 					</span>
 				</div>
 			</div>
