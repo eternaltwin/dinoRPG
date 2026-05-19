@@ -4,7 +4,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { computed, ComputedRef, ref, Ref } from 'vue';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { DinozService } from '../services';
-import {RESTING_ATTACK_TIMER} from "@drpg/core/models/clan/clanWar";
+import { RESTING_ATTACK_TIMER } from '@drpg/core/models/clan/clanWar';
 
 export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
