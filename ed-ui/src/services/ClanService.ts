@@ -14,6 +14,7 @@ import { LocalesEnum } from '../i18n';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
 
 export const ClanService = {
 	async getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
@@ -120,7 +121,7 @@ export const ClanService = {
 		const res = await http().get(`/clan/${clanId}/messages/${page}`);
 		return res.data;
 	},
-	async getClanHistory(id: number, page: number) {
+	async getClanHistory(id: number, page: number): Promise<{ history: ClanHistory[]; count: number }> {
 		const res = await http().get(`/clan/${id}/history/${page}`);
 		return res.data;
 	},

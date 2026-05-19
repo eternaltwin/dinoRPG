@@ -170,6 +170,11 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		refreshDinozFiche(dinozId);
 	};
 
+	const resetStore = (): void => {
+		dinozList.value = [];
+		currentDinozId.value = undefined;
+	};
+
 	return {
 		dinozList,
 		refreshDinozFiche,
@@ -188,6 +193,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		setItems,
 		setDinozAttackTimer,
 		getDinozAttackTimer,
-		resetDinozAttackTimer
+		resetDinozAttackTimer,
+		resetStore
 	};
 });

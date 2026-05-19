@@ -86,9 +86,9 @@ export default defineComponent({
 		},
 		async getClanHistory(): Promise<void> {
 			try {
-				this.history = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
-				const historyCount = await ClanService.getClanHistoryCount(Number(this.$route.params.id));
-				this.maxPage = Math.floor((historyCount.count + 19) / 20);
+				const { history, count } = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
+				this.history = history;
+				this.maxPage = Math.floor((count + 19) / 20);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

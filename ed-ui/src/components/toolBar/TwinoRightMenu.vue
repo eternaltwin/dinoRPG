@@ -250,7 +250,7 @@ export default defineComponent({
 			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 			deleteCookie(`x-drpg-${channel}-token`);
 			deleteCookie(`x-drpg-${channel}-user`);
-			useDinozStore().$reset();
+			useDinozStore().resetStore();
 			this.playerStore.$reset();
 			useMenuStore().setTwinoMenuOpened(false);
 		},
