@@ -191,7 +191,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			_count: {
 				select: {
@@ -208,7 +208,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
 			clanWarRanking: {
@@ -219,11 +219,11 @@ export async function declareWar(req: Request) {
 		}
 	});
 
-	if (!defender || !defender.castle) {
-		throw new ExpectedError(translate('clanWar.noCastle', authed));
-	}
-	if (!attacker || !attacker.castle) {
+	if (!defender || !defender.castle || defender.castle.currentLife <= 0) {
 		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
+	}
+	if (!attacker || !attacker.castle || attacker.castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 	if (defender._count.defendingWars >= 3) {
 		throw new ExpectedError(translate('clanWar.defenderAlreadyUnderAttack', authed));
@@ -692,11 +692,13 @@ export async function addDefender(req: Request) {
 		},
 		select: {
 			placeId: true,
+			defender: true,
 			_count: {
 				select: { defender: true }
 			}
 		}
 	});
+
 	if (!castle) {
 		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
@@ -706,6 +708,10 @@ export async function addDefender(req: Request) {
 
 	if (castle._count.defender >= currentWarEvent.config.fight.defenderActiveMax) {
 		throw new ExpectedError(translate('clanWar.defenderActiveMax', authed));
+	}
+
+	if (castle.defender.some(d => d.id === dinoz.id)) {
+		throw new ExpectedError(translate('clanWar.alreadyInDefense', authed));
 	}
 
 	const defendLine = await prisma.clanCastle.update({
@@ -923,6 +929,16 @@ export async function attackCastle(req: Request) {
 							}
 						}
 					},
+					attacker: {
+						select: {
+							castle: {
+								select: {
+									id: true,
+									currentLife: true,
+								}
+							}
+						}
+					},
 					defenderClanId: true,
 					attackerClanId: true
 				}
@@ -934,6 +950,10 @@ export async function attackCastle(req: Request) {
 
 	if (!warAttack || !activeWar || !activeWar.defender.castle) {
 		throw new ExpectedError(translate('clanWar.notWar', authed));
+	}
+
+	if (!activeWar.attacker.castle || activeWar.attacker.castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 
 	const player = await getDinozFightClanDataRequest(dinozId, authed.id);
@@ -989,15 +1009,21 @@ export async function attackCastle(req: Request) {
 	});
 	let totalCastleDamage = 0;
 
-	for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-		const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
-		fight.steps.push({
-			action: 'attackCastle',
-			fid: survivor.id,
-			damages: castleDamage
-		});
-		totalCastleDamage += castleDamage;
+	// Attack castle only and only if all defenders were eleminated.
+	if (victory) {
+		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+			const castleDamage = Math.max(1, Math.ceil(survivor.level / 6)) ;
+			fight.steps.push({
+				action: 'attackCastle',
+				fid: survivor.id,
+				damages: castleDamage
+			});
+			totalCastleDamage += castleDamage;
+		}
 	}
+
+	// Cap total damage to castle HP.
+	totalCastleDamage = Math.min(totalCastleDamage, activeWar.defender.castle.currentLife);
 
 	const archive = await archiveFight(
 		fight,
@@ -1118,14 +1144,6 @@ export async function attackCastle(req: Request) {
 	for (const d of defenders) {
 		let xp = 0;
 		const cur = d.level / teamLevel;
-
-		/** Restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
-		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
 
 		for (const attacker of team) {
 			const factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));

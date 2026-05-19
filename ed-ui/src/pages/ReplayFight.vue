@@ -56,7 +56,7 @@ export default defineComponent({
 				fightResult.result,
 				undefined,
 				undefined,
-				true
+				false
 			);
 			if (!nexFight) {
 				return;
