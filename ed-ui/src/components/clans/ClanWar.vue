@@ -45,17 +45,20 @@
 			<div class="df jcc defense">
 				<div id="pixiCanvas" />
 				<VueDraggable v-model="defenders" class="df jcc fww line" :animation="150" @update="onUpdate">
-					<DinozMini
+					<div
+						class="cell"
 						v-for="dinoz in defenders"
 						v-tippy="{
 							content: formatContent($t('clan.war.defender', { name: dinoz.name, level: dinoz.level })),
 							theme: 'small'
 						}"
 						:key="dinoz.id"
-						class="cell"
-						:display="dinoz.display"
-						flip
-					/>
+					>
+						<DinozMini :display="dinoz.display" flip />
+						<span class="tinyBar">
+							<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
+						</span>
+					</div>
 				</VueDraggable>
 			</div>
 
@@ -233,6 +236,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getBarWidth(actual: number, max: number): string {
+			if (actual > max) actual = max;
+			const width: number = Math.round((actual / max) * 36);
+			return `width : ${width}px`;
+		},
 		async onUpdate() {
 			try {
 				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
@@ -433,6 +441,23 @@ export default defineComponent({
 		background-position: -10px 0px;
 		border-radius: 4px;
 		padding: 2px 4px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.tinyBar {
+			margin-top: 4px;
+			display: block;
+			height: 2px;
+			width: 36px;
+			border: 1px solid #bc683c;
+			background-color: black;
+
+			.life {
+				display: block;
+				height: 2px;
+				background-color: yellow;
+			}
+		}
 	}
 }
 
