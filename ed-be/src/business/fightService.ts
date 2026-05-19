@@ -10,7 +10,7 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FighterRecap, FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightOutcome, FightProcessResult, FightReplay } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -742,14 +742,14 @@ export async function generateMonsterList(
 	return monsterArray;
 }
 
-export async function replayFight(req: Request) {
+export async function replayFight(req: Request): Promise<FightReplay> {
 	const archiveId = req.params.archiveId;
 	const fight = await getArchivedFightRequest(archiveId);
 	if (!fight) {
 		throw new ExpectedError('No replay found.');
 	}
 
-	return {
+	const replay: FightReplay = {
 		id: archiveId,
 		fighters: JSON.parse(fight.fighters) as FighterRecap[],
 		result: fight.result,
@@ -759,4 +759,6 @@ export async function replayFight(req: Request) {
 		rightPlayer: fight.rightPlayer,
 		metadata: fight.metadata ? JSON.parse(fight.metadata) : undefined
 	};
+
+	return replay;
 }
