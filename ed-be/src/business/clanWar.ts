@@ -991,9 +991,9 @@ export async function attackCastle(req: Request) {
 	const fight = calculateFightBetweenPlayers(
 		CLAN_WAR_PVP_RULES,
 		team,
-		false,
+		player.cooker,
 		defenders,
-		false,
+		defenders.some(d => d.skills.some(s => s.skillId === Skill.CUISINIER)),
 		activeWar.defender.castle?.placeId
 	);
 

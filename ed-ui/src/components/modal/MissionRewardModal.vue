@@ -65,7 +65,6 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList, statusList } from '../../constants/index.js';
 import { playerStore, useDinozStore } from '../../store/index.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
