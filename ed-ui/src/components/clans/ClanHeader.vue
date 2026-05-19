@@ -168,16 +168,28 @@ export default defineComponent({
 }
 
 .top-info {
-	//margin-left: 65px;
 	display: flex;
 	padding-top: 5px;
 	padding-bottom: 1px;
 	font-size: 14px;
+	width: 95%;
+	column-gap: 15px;
+	row-gap: 3px;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+
 	.top-info-element {
 		background-color: #bc683c;
 		color: white;
 		padding: 0 2px;
-		margin-right: 15px;
+		gap: 4px;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		white-space: nowrap;
+		flex-shrink: 0;
+
 		img {
 			max-width: 12px;
 			max-height: 12px;
