@@ -1022,6 +1022,9 @@ export async function attackCastle(req: Request) {
 		}
 	}
 
+	// Cap total damage to castle HP.
+	totalCastleDamage = Math.min(totalCastleDamage, activeWar.defender.castle.currentLife);
+
 	const archive = await archiveFight(
 		fight,
 		victory,
@@ -1141,14 +1144,6 @@ export async function attackCastle(req: Request) {
 	for (const d of defenders) {
 		let xp = 0;
 		const cur = d.level / teamLevel;
-
-		/** Restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
-		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
 
 		for (const attacker of team) {
 			const factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
