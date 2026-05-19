@@ -4,6 +4,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { computed, ComputedRef, ref, Ref } from 'vue';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { DinozService } from '../services';
+import {RESTING_ATTACK_TIMER} from "@drpg/core/models/clan/clanWar";
 
 export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
@@ -154,13 +155,15 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		const now = new Date();
 		const delta = (now.getTime() - (dinozToUpdate.lastAttack?.getTime() ?? 0)) / 1000;
+		const timerInSeconds = RESTING_ATTACK_TIMER / 1000;
+
 		if (!dinozToUpdate.lastAttack) {
 			return undefined;
-		} else if (delta > 61) {
+		} else if (delta > timerInSeconds) {
 			resetDinozAttackTimer(dinozId);
 			return undefined;
 		}
-		return Math.round(60 - delta);
+		return Math.round(timerInSeconds - delta);
 	};
 
 	const resetDinozAttackTimer = (dinozId: number): void => {

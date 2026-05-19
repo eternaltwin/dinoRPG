@@ -33,7 +33,13 @@ import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
+import {
+	REPAIR_MAX_HP,
+	REPAIR_MAX_STACK,
+	REPAIR_MAX_TICKS,
+	RepairFrequency,
+	RESTING_ATTACK_TIMER
+} from '@drpg/core/models/clan/clanWar';
 import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { sendSseMessageToUserInChannel } from './serverEventService.js';
@@ -1130,7 +1136,7 @@ export async function attackCastle(req: Request) {
 			fight: false,
 			unavailableReason: UnavailableReason.restingAttack
 		});
-		scheduleJob(`${UnavailableReason.restingAttack}_${d.id}`, now.getTime() + 60000, () =>
+		scheduleJob(`${UnavailableReason.restingAttack}_${d.id}`, now.getTime() + RESTING_ATTACK_TIMER, () =>
 			unrestingAttackingDinoz(d.id)
 		);
 		await createLog(LogType.XPEarned, authed.id, d.id, victory ? xp : 0);

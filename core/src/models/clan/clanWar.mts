@@ -7,6 +7,7 @@ export const REPAIR_MAX_STACK = 2;
 export const REPAIR_BASE_VALUE = 500;
 export const REPAIR_SCALE_FACTOR = 1.2;
 export const REPAIR_MAX_HP = 75;
+export const RESTING_ATTACK_TIMER = 1_000 * 60 * 10;
 
 export type WarCost = {
 	ingredients: treasureIngredient[];
