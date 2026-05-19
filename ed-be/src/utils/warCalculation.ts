@@ -56,6 +56,7 @@ export function computeWarCost(clanReputation: number, clanIngredients: treasure
 		.sort((a, b) => a.fiche.price - b.fiche.price);
 
 	let remainingValue = totalValue;
+	let realValue = 0;
 	const result: WarCostIngredient[] = [];
 
 	for (const ci of sortedIngredients) {
@@ -71,12 +72,13 @@ export function computeWarCost(clanReputation: number, clanIngredients: treasure
 				quantity: qtyUsed
 			});
 			remainingValue -= valueConsumed;
+			realValue += valueConsumed;
 		}
 	}
 
 	return {
 		ingredients: result,
-		totalValue,
+		totalValue: realValue,
 		canAfford: remainingValue <= 0
 	};
 }
