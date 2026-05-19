@@ -61,7 +61,8 @@
 		"castleDestroyed": "El castillo ya está destruido.",
 		"castleFullLife": "Tu castillo ya tiene la cantidad máxima de :hp_castle:.",
 		"repairStackFull": "No puedes añadir más reparaciones.",
-		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación."
+		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación.",
+		"alreadyInDefense": "Votre Dinoz fait déjà parti de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
