@@ -989,14 +989,17 @@ export async function attackCastle(req: Request) {
 	});
 	let totalCastleDamage = 0;
 
-	for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-		const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
-		fight.steps.push({
-			action: 'attackCastle',
-			fid: survivor.id,
-			damages: castleDamage
-		});
-		totalCastleDamage += castleDamage;
+	// Attack castle only and only if all defenders were eleminated.
+	if (victory) {
+		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+			const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
+			fight.steps.push({
+				action: 'attackCastle',
+				fid: survivor.id,
+				damages: castleDamage
+			});
+			totalCastleDamage += castleDamage;
+		}
 	}
 
 	const archive = await archiveFight(
