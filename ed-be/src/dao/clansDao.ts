@@ -211,6 +211,12 @@ export async function getClanRequestPrivate(id: number) {
 					select: {
 						reputation: true
 					}
+				},
+				ingredients: {
+					select: {
+						ingredientId: true,
+						quantity: true
+					}
 				}
 			}
 		});

@@ -153,9 +153,38 @@
 			</div>
 		</div>
 		<div id="clanOpponent" v-else>
-			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar(+$route.params.id)">{{
-				$t('clan.war.declareWar')
-			}}</DZButton>
+			<DZButton
+				:off="!attackCost?.canAfford"
+				v-if="clanStore.getClan && !clanStore.getClan.castle"
+				@click="declareWar(+$route.params.id)"
+				>{{ $t('clan.war.declareWar') }}</DZButton
+			>
+			<DZDisclaimer
+				help
+				round
+				:content="
+					$t('clan.war.disclaimerAttack', { cost: utils.beautifulNumber((attackCost?.trueValue ?? 0).toString()) })
+				"
+			/>
+			<div class="ingredientWrapper" v-if="attackCost && attackCost.canAfford">
+				<Tippy
+					theme="normal"
+					tag="div"
+					v-for="ingredient in attackCost.ingredients"
+					:key="ingredient.ingredientId"
+					class="container"
+				>
+					<img
+						:src="getImgURL('ingredients', ingredientList[ingredient.ingredientId].name)"
+						:alt="ingredientList[ingredient.ingredientId].name"
+					/>
+					<p>x {{ ingredient.quantity }}</p>
+					<template #content>
+						<h1 v-html="formatContent($t(`ingredients.name.${ingredientList[ingredient.ingredientId].name}`))" />
+						<p v-html="formatContent($t(`ingredients.description.${ingredientList[ingredient.ingredientId].name}`))" />
+					</template>
+				</Tippy>
+			</div>
 		</div>
 	</div>
 </template>
@@ -164,7 +193,7 @@
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import { ClanService } from '../../services';
-import { errorHandler } from '../../utils';
+import { errorHandler, utils } from '../../utils';
 import { clanStore } from '../../store/clanStore';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -181,10 +210,12 @@ import {
 	REPAIR_MAX_STACK,
 	REPAIR_MAX_TICKS,
 	RepairCost,
-	RepairFrequency
+	RepairFrequency,
+	WarCost
 } from '@drpg/core/models/clan/clanWar';
-import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
+import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -202,6 +233,8 @@ export default defineComponent({
 			castle: null as Castle | null,
 			defenders: [] as Defender[],
 			repairCost: null as RepairCost | null,
+			attackCost: null as WarCost | null,
+			utils: utils,
 			ingredients: [] as treasureIngredient[],
 			repairLoading: false,
 			repairForm: {
@@ -217,6 +250,9 @@ export default defineComponent({
 		};
 	},
 	computed: {
+		ingredientList() {
+			return ingredientList;
+		},
 		place() {
 			return this.$t(
 				'place.name.' +
@@ -311,6 +347,11 @@ export default defineComponent({
 				this.ingredients
 			);
 		},
+		loadAttackCost() {
+			const myClan = this.clanStore.getMyclan;
+			if (!myClan || !myClan.clanWarRanking || !myClan.ingredients) return;
+			this.attackCost = computeWarCost(myClan.clanWarRanking[0].reputation, myClan.ingredients);
+		},
 		async startRepair() {
 			if (!this.repairCost?.canAfford) return;
 			const res: boolean = await this.$confirm({
@@ -381,6 +422,7 @@ export default defineComponent({
 		async loadComponent() {
 			this.war = !!this.clanStore.clanEvent;
 			this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
+			this.loadAttackCost();
 			if (this.isClanMember) {
 				const castle = await ClanService.castleStatus();
 				if (!castle) return;
@@ -578,6 +620,32 @@ export default defineComponent({
 		font-weight: normal;
 		font-size: 75%;
 		color: #fce3bc;
+	}
+}
+#clanOpponent {
+	margin-top: 4px;
+	width: 95%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	.ingredientWrapper {
+		display: flex;
+		justify-content: space-around;
+	}
+	.container {
+		display: flex;
+		gap: 7px;
+		flex-wrap: wrap;
+		align-items: center;
+		background-color: #bc683c;
+		border-radius: 80% 30px 30px 80%;
+		color: white;
+		width: 100px;
+		p:first-letter {
+			font-weight: normal;
+			font-size: 75%;
+			color: #fce3bc;
+		}
 	}
 }
 </style>

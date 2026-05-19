@@ -1,3 +1,5 @@
+import { treasureIngredient } from './clan.mjs';
+
 export const WAR_BASE_VALUE = 22_500;
 export const WAR_SCALE_PER_100_POINTS = 5_625;
 export const REPAIR_MAX_TICKS = 15;
@@ -6,13 +8,9 @@ export const REPAIR_BASE_VALUE = 500;
 export const REPAIR_SCALE_FACTOR = 1.2;
 export const REPAIR_MAX_HP = 75;
 
-export type WarCostIngredient = {
-	ingredientId: number;
-	quantity: number;
-};
-
 export type WarCost = {
-	ingredients: WarCostIngredient[];
+	ingredients: treasureIngredient[];
+	trueValue: number;
 	totalValue: number;
 	canAfford: boolean;
 	totalHp?: number;
