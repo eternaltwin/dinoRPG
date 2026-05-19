@@ -4155,6 +4155,7 @@
 			"castleTooltip": "An diesem Ort befindet sich eure Burg",
 			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
 			"declareWar": "Diesen Klan angreifen",
+			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Angriff",
 			"defense": "Verteidigung",
 			"forfeit": "Sich geschlagen geben",
