@@ -4155,6 +4155,7 @@
 			"castleTooltip": "Localización del castillo",
 			"disclaimerCastle": "Tu castillo se encuentra en **{place}**. Lleva allí a tus Dinos para defenderlo, ¡pero sobre todo no reveles su posición a tus enemigos!",
 			"declareWar": "Declarar la guerra a este clan",
+			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Ataque",
 			"defense": "Defensa",
 			"forfeit": "Rendirse",
