@@ -4155,6 +4155,7 @@
 			"castleTooltip": "Place where your castle is located",
 			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
 			"declareWar": "Attack this clan",
+			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Attack",
 			"defense": "Defense",
 			"forfeit": "Withdraw",
