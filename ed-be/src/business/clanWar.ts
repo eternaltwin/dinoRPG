@@ -220,10 +220,10 @@ export async function declareWar(req: Request) {
 	});
 
 	if (!defender || !defender.castle) {
-		throw new ExpectedError(translate('clanWar.noCastle', authed));
+		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
 	}
 	if (!attacker || !attacker.castle) {
-		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 	if (defender._count.defendingWars >= 3) {
 		throw new ExpectedError(translate('clanWar.defenderAlreadyUnderAttack', authed));
