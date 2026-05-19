@@ -692,11 +692,13 @@ export async function addDefender(req: Request) {
 		},
 		select: {
 			placeId: true,
+			defender: true,
 			_count: {
 				select: { defender: true }
 			}
 		}
 	});
+
 	if (!castle) {
 		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
@@ -706,6 +708,10 @@ export async function addDefender(req: Request) {
 
 	if (castle._count.defender >= currentWarEvent.config.fight.defenderActiveMax) {
 		throw new ExpectedError(translate('clanWar.defenderActiveMax', authed));
+	}
+
+	if (castle.defender.some(d => d.id === dinoz.id)) {
+		throw new ExpectedError(translate('clanWar.alreadyInDefense', authed));
 	}
 
 	const defendLine = await prisma.clanCastle.update({
