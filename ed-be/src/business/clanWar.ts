@@ -191,7 +191,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			_count: {
 				select: {
@@ -208,7 +208,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
 			clanWarRanking: {
@@ -219,10 +219,10 @@ export async function declareWar(req: Request) {
 		}
 	});
 
-	if (!defender || !defender.castle) {
+	if (!defender || !defender.castle || defender.castle.currentLife <= 0) {
 		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
 	}
-	if (!attacker || !attacker.castle) {
+	if (!attacker || !attacker.castle || attacker.castle.currentLife <= 0) {
 		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 	if (defender._count.defendingWars >= 3) {
