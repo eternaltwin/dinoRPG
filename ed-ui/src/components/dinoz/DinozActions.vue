@@ -144,8 +144,7 @@ export default defineComponent({
 			timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
-			mission: useDinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-				?.missionHUD,
+			mission: useDinozStore().getDinoz(+this.$route.params.id.toString())?.missionHUD,
 			attackCountdown: 0 as number
 		};
 	},
@@ -516,19 +515,13 @@ export default defineComponent({
 					try {
 						await DinozService.frozeDinoz(+this.$route.params.id);
 
-						const currentDinozList = useDinozStore().getDinozList;
-						if (!currentDinozList) {
-							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
-							return;
-						}
-
-						const currentDinoz = currentDinozList.findIndex(dinoz => dinoz.id === +this.$route.params.id);
-						if (currentDinoz < 0) {
+						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
+						if (!currentDinoz) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
-						useDinozStore().setDinozList(currentDinozList);
+						currentDinoz.unavailableReason = UnavailableReason.frozen;
+						useDinozStore().setDinoz(currentDinoz);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);

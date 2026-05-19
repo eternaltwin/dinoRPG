@@ -102,12 +102,12 @@ export default defineComponent({
 		},
 		async reload(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+			const dinoz = useDinozStore().getDinoz(+dinozId);
 
-			if (dinozToUpdate) {
-				dinozToUpdate.missionId = undefined;
-				dinozToUpdate.missionHUD = null;
+			if (dinoz) {
+				dinoz.missionId = undefined;
+				dinoz.missionHUD = null;
+				useDinozStore().setDinoz(dinoz);
 			}
 			this.information = !this.information;
 			this.$emit('abort');
