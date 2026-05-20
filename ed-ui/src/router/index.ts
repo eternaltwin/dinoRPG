@@ -282,6 +282,11 @@ const router = createRouter({
 					]
 				},
 				{
+					path: '/cinema/create',
+					name: 'CinemaCreate',
+					component: () => import('../pages/CinemaCreate.vue')
+				},
+				{
 					path: '/dojo',
 					name: 'DojoHome',
 					component: () => import('../pages/DojoHome.vue'),

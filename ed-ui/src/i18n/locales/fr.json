@@ -2675,7 +2675,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Événements ]",
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]"
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"cinemaEditor": "DinoRPG [Créer un Film]"
 	},
 	"gather": {
 		"action": {
@@ -5322,5 +5323,39 @@
 		"select": "Voter",
 		"select_option": "Sélectionnez une option",
 		"total_participants": "{qty} votants"
+	},
+	"cinema": {
+		"editor": {
+			"header": "Edition :",
+			"import": "Importer",
+			"export": "Exporter",
+			"disclaimerScenes": "**Scènes** : un film est composé d'une ou plusieurs scènes, chaque scène se déroulant dans un lieu unique.",
+			"disclaimerOptions": "Options de la Scène",
+			"disclaimerActions": "**Actions** : une scène est découpée en plusieurs actions, qui permettent de scénariser le film. Il existe différentes\n\t\tactions, qui se déroulent dans l'ordre ci-dessous.",
+			"sceneEdit": "Éditer",
+			"sceneDelete": "Supprimer",
+			"sceneAdd": "Ajouter une scène",
+			"sceneWatchMovie": "Voir le film",
+			"name": "Nom",
+			"optionsPlace": "Lieu",
+			"optionsEndLeft": "Fin Gauche",
+			"optionsEndRight": "Fin Droite",
+			"optionsCastle": "Château",
+			"optionsVisualize": "Visualiser la scène",
+			"actionsDuplicate": "Dupliquer",
+			"actionsDelete": "Supprimer",
+			"actionsMonster": "Monstre",
+			"actionsCamp": "Camp",
+			"actionsEntrance": "Entrée",
+			"actionsLife": "Vie",
+			"actionsText": "Texte",
+			"actionsCharacter": "Personnage",
+			"actionsTarget": "Cible",
+			"actionsDamage": "Dégâts",
+			"actionsObject": "Objet",
+			"actionsAmount": "Montant",
+			"actionsEffect": "Effet",
+			"actionsAddAction": "Ajouter l'action"
+		}
 	}
 }

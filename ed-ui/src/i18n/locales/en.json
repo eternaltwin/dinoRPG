@@ -2666,7 +2666,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Events ]",
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
-		"skillTrees": "DinoRPG [ Skill Trees ]"
+		"skillTrees": "DinoRPG [ Skill Trees ]",
+		"cinemaEditor": "DinoRPG [Créer un Film]"
 	},
 	"gather": {
 		"action": {
@@ -5251,5 +5252,39 @@
 		"select": "Vote",
 		"select_option": "Select an option",
 		"total_participants": "{qty} voters"
+	},
+	"cinema": {
+		"editor": {
+			"header": "Edition :",
+			"import": "Import",
+			"export": "Export",
+			"disclaimerScenes": "**Scenes**: a movie is made up of one or more scenes, with each scene taking place in a single location.",
+			"disclaimerOptions": "Scene options",
+			"disclaimerActions": "**Actions**: a scene is divided into several actions, which allow the movie to be scripted. There are different actions, which take place in the order below.",
+			"sceneEdit": "Edit",
+			"sceneDelete": "Delete",
+			"sceneAdd": "Add a scene",
+			"sceneWatchMovie": "Watch the movie",
+			"name": "Name",
+			"optionsPlace": "Location",
+			"optionsEndLeft": "Left Action",
+			"optionsEndRight": "Right Action",
+			"optionsCastle": "Castle",
+			"optionsVisualize": "Visualize the scene",
+			"actionsDuplicate": "Duplicate",
+			"actionsDelete": "Delete",
+			"actionsMonster": "Monster",
+			"actionsCamp": "Camp",
+			"actionsEntrance": "Entrance",
+			"actionsLife": "Life",
+			"actionsText": "Text",
+			"actionsCharacter": "Character",
+			"actionsTarget": "Target",
+			"actionsDamage": "Damage",
+			"actionsObject": "Object",
+			"actionsAmount": "Amount",
+			"actionsEffect": "Effect",
+			"actionsAddAction": "Add action"
+		}
 	}
 }
