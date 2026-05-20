@@ -20,12 +20,12 @@ export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 }
 
 export function computePWin(yourRank: number, enemyRank: number): number {
-	const raw = (100 * (10000 + enemyRank)) / (10000 + yourRank);
+	const raw = (100 * (100 + enemyRank)) / (100 + yourRank);
 	return clamp(raw, 10, 300);
 }
 
 export function computePLost(yourRank: number, enemyRank: number): number {
-	const raw = (100 * (10000 + yourRank)) / (10000 + enemyRank);
+	const raw = (100 * (100 + yourRank)) / (100 + enemyRank);
 	return clamp(raw, 10, 300);
 }
 
