@@ -367,8 +367,19 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 						                                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
 					END)::float),
 				0.8
-			                            ) - ("downtimeCount" * ("downtimeCount" - 1))::float / 2.0)::numeric)
-		WHERE "eventId" = ${Prisma.raw(`'${war.eventId}'::uuid`)}
+			                            ) - (
+				                            CASE
+					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+					                            ELSE "downtimeCount"
+					                            END * (
+						                            CASE
+							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+							                            ELSE "downtimeCount"
+							                            END - 1)
+				                            )::float / 2.0)::numeric)
+		WHERE "eventId" = ${war.eventId}::uuid
 			AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
 	`;
 

@@ -4,8 +4,11 @@ export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 	const attackerRanking = war.attacker.clanWarRanking[0];
 	const defenderRanking = war.defender.clanWarRanking[0];
 
-	const pWin = computePWin(attackerRanking.reputation, defenderRanking.reputation);
-	const pLost = computePLost(attackerRanking.reputation, defenderRanking.reputation);
+	const attackerRep = attackerRanking?.reputation ?? 100;
+	const defenderRep = defenderRanking?.reputation ?? 100;
+
+	const pWin = computePWin(attackerRep, defenderRep);
+	const pLost = computePLost(attackerRep, defenderRep);
 
 	return {
 		attacker: {
