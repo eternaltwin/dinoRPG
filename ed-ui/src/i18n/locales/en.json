@@ -4078,7 +4078,8 @@
 			"clans": "Clans",
 			"treasure": "Clan Treasure",
 			"event": "Event Score",
-			"war": "War Standing"
+			"war": "War Standing",
+			"castle": "Chateau construit"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
