@@ -117,9 +117,13 @@ const router = createRouter({
 							component: () => import('../components/rankings/CompletionRanking.vue')
 						},
 						{
-							path: 'clans/:pageLoaded',
+							path: 'clans',
 							name: 'RankingClans',
-							component: () => import('../components/rankings/ClansRanking.vue')
+							component: () => import('../components/rankings/ClansRanking.vue'),
+							props: route => ({
+								page: Number(route.query.page) || 1,
+								type: route.query.type
+							})
 						},
 						{
 							path: 'pantheon',

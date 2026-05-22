@@ -14,6 +14,7 @@ export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDat
 	leader: Pick<Player, 'id' | 'name'>;
 	totalScore?: number;
 	bannerUrl?: string;
+	isCastleBuilt?: boolean;
 	castle?: ClanCastle;
 	clanWarRanking?: Pick<ClanWarRanking, 'reputation'>[];
 	ingredients?: treasureIngredient[];

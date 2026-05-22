@@ -1,4 +1,37 @@
 <template>
+	<ul class="onglets">
+		<li>
+			<RouterLink
+				:to="{
+					name: 'RankingClans',
+					query: { ...$route.query, type: ClanRankingType.TREASURE, page: 1 }
+				}"
+				:class="{ active: rankingType === ClanRankingType.TREASURE }"
+				>{{ $t(`ranking.button.clanTreasure`) }}</RouterLink
+			>
+		</li>
+		<li v-if="eventInProgress">
+			<RouterLink
+				:to="{
+					name: 'RankingClans',
+					query: { ...$route.query, type: ClanRankingType.EVENT, page: 1 }
+				}"
+				:class="{ active: rankingType === ClanRankingType.EVENT }"
+				>{{ $t(`ranking.button.clanEvent`) }}</RouterLink
+			>
+		</li>
+		<li v-if="warInProgress">
+			<RouterLink
+				:to="{
+					name: 'RankingClans',
+					query: { ...$route.query, type: ClanRankingType.WAR, page: 1 }
+				}"
+				:class="{ active: rankingType === ClanRankingType.WAR }"
+				>{{ $t(`ranking.button.clanWar`) }}</RouterLink
+			>
+		</li>
+	</ul>
+
 	<DZDisclaimer v-if="rankingType === ClanRankingType.TREASURE" content="ranking.disclaimer.clans" />
 	<DZDisclaimer v-if="rankingType === ClanRankingType.EVENT" content="ranking.disclaimer.clansEvent" />
 	<div class="wrapper">
@@ -8,19 +41,6 @@
 			</RouterLink>
 		</i18n-t>
 
-		<DZButton
-			v-if="eventInProgress && rankingType !== ClanRankingType.EVENT"
-			@click="switchRanking(ClanRankingType.EVENT)"
-			>{{ $t(`ranking.button.clanEvent`) }}</DZButton
-		>
-		<DZButton
-			v-if="(eventInProgress || warInProgress) && rankingType !== ClanRankingType.TREASURE"
-			@click="switchRanking(ClanRankingType.TREASURE)"
-			>{{ $t(`ranking.button.clanTreasure`) }}</DZButton
-		>
-		<DZButton v-if="warInProgress && rankingType !== ClanRankingType.WAR" @click="switchRanking(ClanRankingType.WAR)">{{
-			$t(`ranking.button.clanWar`)
-		}}</DZButton>
 		<table>
 			<tbody>
 				<tr>
@@ -29,9 +49,10 @@
 					<th class="treasure">
 						{{ $t(`ranking.th.${rankingType}`) }}
 					</th>
+					<th class="castle" v-if="rankingType === ClanRankingType.WAR">{{ $t('ranking.th.castle') }}</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
-					<td class="pos" colspan="5" style="text-align: center">
+					<td class="pos" :colspan="rankingType === ClanRankingType.WAR ? 4 : 3" style="text-align: center">
 						{{ $t('ranking.page.previous') }}
 					</td>
 				</tr>
@@ -70,10 +91,13 @@
 							/>
 						</div>
 					</td>
+					<td class="other text-center" v-if="rankingType === ClanRankingType.WAR" style="width: 30px">
+						<img v-if="clan.isCastleBuilt" :src="getImgURL('icons', 'small_star')" alt="castle" />
+					</td>
 				</tr>
 			</tbody>
 			<tr class="select" @click="changePage(1)" :class="{ hidden: clansList.length < 20 }">
-				<td class="pos" colspan="5" style="text-align: center">
+				<td class="pos" :colspan="rankingType === ClanRankingType.WAR ? 4 : 3" style="text-align: center">
 					{{ $t('ranking.page.next') }}
 				</td>
 			</tr>
@@ -83,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { ClanLite } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
 import { errorHandler, utils } from '../../utils/index.js';
@@ -98,13 +122,31 @@ import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { DZButton, Flags, SearchEntity, DZDisclaimer },
+	components: { Flags, SearchEntity, DZDisclaimer },
+	props: {
+		page: {
+			type: Number,
+			default: 1
+		},
+		type: {
+			type: String as PropType<ClanRankingType>,
+			default: ClanRankingType.TREASURE
+		}
+	},
 	data() {
 		return {
-			clansList: [] as Array<ClanLite>,
-			page: 1 as number,
-			rankingType: ClanRankingType.TREASURE as ClanRankingType
+			clansList: [] as Array<ClanLite>
 		};
+	},
+	watch: {
+		page: {
+			immediate: true,
+			handler: 'getClansRanking'
+		},
+		type: {
+			immediate: true,
+			handler: 'getClansRanking'
+		}
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
@@ -119,18 +161,21 @@ export default defineComponent({
 			this.$router.push({ name: 'Clan', params: { id: clan.value } });
 		},
 		changePage(i: number) {
-			this.page += i;
-			this.getClansRanking();
+			this.$router.push({
+				query: {
+					...this.$route.query,
+					page: this.page + i
+				}
+			});
 		},
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
-		},
-		async switchRanking(type: ClanRankingType) {
-			this.rankingType = type;
-			await this.getClansRanking();
 		}
 	},
 	computed: {
+		rankingType(): ClanRankingType {
+			return this.type || ClanRankingType.TREASURE;
+		},
 		ClanRankingType() {
 			return ClanRankingType;
 		},
@@ -140,9 +185,6 @@ export default defineComponent({
 		warInProgress() {
 			return !!clanStore().clanEvent;
 		}
-	},
-	async created(): Promise<void> {
-		await this.getClansRanking();
 	}
 });
 </script>

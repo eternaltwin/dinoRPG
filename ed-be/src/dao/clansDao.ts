@@ -95,7 +95,9 @@ export async function getRankingWarClansRequest(page: number) {
 						leader: {
 							select: { id: true, name: true }
 						},
-						castle: true
+						castle: {
+							select: { currentLife: true }
+						}
 					}
 				}
 			},
@@ -105,10 +107,14 @@ export async function getRankingWarClansRequest(page: number) {
 		});
 
 		// Reformater pour correspondre à ClanLite
-		return rankings.map(ranking => ({
-			...ranking.clan,
-			clanWarRanking: { reputation: Math.round(ranking.reputation) }
-		}));
+		return rankings.map(ranking => {
+			const { castle, ...clanWithoutCastle } = ranking.clan;
+			return {
+				...clanWithoutCastle,
+				isCastleBuilt: (castle?.currentLife ?? 0) > 0,
+				clanWarRanking: { reputation: Math.round(ranking.reputation) }
+			};
+		});
 	});
 }
 

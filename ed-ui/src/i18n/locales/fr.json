@@ -4078,7 +4078,8 @@
 			"clans": "Clans",
 			"treasure": "Trésor du Clan",
 			"event": "Score d'événement",
-			"war": "Réputation de guerre"
+			"war": "Réputation de guerre",
+			"castle": "Chateau construit"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
