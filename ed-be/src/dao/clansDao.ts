@@ -647,6 +647,12 @@ export async function deleteClanRequest(clanId: number) {
 			prisma.clanPage.deleteMany({ where: { clanId } }),
 			prisma.clanJoinRequest.deleteMany({ where: { clanId } }),
 			prisma.clanIngredient.deleteMany({ where: { clanId } }),
+			prisma.clanWar.deleteMany({
+				where: {
+					OR: [{ attackerClanId: clanId }, { defenderClanId: clanId }]
+				}
+			}),
+			prisma.clanCastle.deleteMany({ where: { clanId } }),
 			prisma.clan.delete({ where: { id: clanId } })
 		]);
 	});
