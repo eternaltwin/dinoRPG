@@ -6,7 +6,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Lang, NotificationSeverity, EventType, $Enums } from '@drpg/prisma';
+import { Lang, NotificationSeverity, EventType, $Enums, Prisma } from '@drpg/prisma';
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
@@ -846,7 +846,17 @@ export async function leaveClanSelfRequest(playerId: string) {
 		});
 
 		if (clan?.leaderId != member.playerId) {
-			await prisma.$transaction([
+			const castle = await prisma.clanCastle.findUnique({
+				where: { clanId: member.clanId },
+				select: { id: true, defenseOrder: true }
+			});
+
+			const dinozToUnassign = await prisma.dinoz.findMany({
+				where: { playerId: playerId, castleId: { not: null } },
+				select: { id: true }
+			});
+
+			const transactions: Prisma.PrismaPromise<any>[] = [
 				prisma.clanMember.delete({ where: { playerId } }),
 				prisma.player.update({
 					where: { id: playerId },
@@ -860,7 +870,27 @@ export async function leaveClanSelfRequest(playerId: string) {
 						authorMessage: member.player.name
 					}
 				})
-			]);
+			];
+
+			if (castle && dinozToUnassign.length > 0) {
+				const dinozIds = dinozToUnassign.map(d => d.id);
+				transactions.push(
+					prisma.clanCastle.update({
+						where: { id: castle.id },
+						data: {
+							defenseOrder: {
+								set: castle.defenseOrder.filter(id => !dinozIds.includes(id))
+							}
+						}
+					}),
+					prisma.dinoz.updateMany({
+						where: { id: { in: dinozIds } },
+						data: { castleId: null, unavailableReason: null }
+					})
+				);
+			}
+
+			await prisma.$transaction(transactions);
 		}
 
 		return member;

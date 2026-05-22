@@ -115,7 +115,6 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
-import DZButton from '../common/DZButton.vue';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { SelectOption } from '../common/DZSelect.vue';
 import { clanStore } from '../../store/clanStore';
