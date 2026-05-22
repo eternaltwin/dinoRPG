@@ -4078,7 +4078,8 @@
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
-			"war": "Kriegsansehen"
+			"war": "Kriegsansehen",
+			"castle": "Chateau construit"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
