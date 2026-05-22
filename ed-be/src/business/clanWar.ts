@@ -155,7 +155,10 @@ export async function buildClanCastle(req: Request) {
 			}),
 			prisma.clanWarRanking.upsert({
 				where: {
-					id: authed.clanId
+					clanId_eventId: {
+						clanId: authed.clanId,
+						eventId: war.id
+					}
 				},
 				create: {
 					clanId: authed.clanId,
