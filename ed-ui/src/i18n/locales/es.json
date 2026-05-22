@@ -4078,7 +4078,8 @@
 			"clans": "Clanes",
 			"treasure": "Tesoro del Clan",
 			"event": "Puntos del evento",
-			"war": "Reputación de guerra"
+			"war": "Reputación de guerra",
+			"castle": "Chateau construit"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
