@@ -26,9 +26,7 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { CLAN_WAR_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { archiveFight } from '../dao/archiveDao.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
-import { calculatePvPxp, getMaxXp } from '@drpg/core/utils/DinozUtils';
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import gameConfig from '../config/game.config.js';
+import { calculatePvPxp, calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -1005,8 +1003,8 @@ export async function attackCastle(req: Request) {
 
 	await setSpecificStat(StatTracking.GDC_ATK, player.id, team.length);
 
-	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const defenders = await computeDefenderTeam(teamLevel, activeWar.defender.castle.id);
+	const attackersTeamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
+	const defenders = await computeDefenderTeam(attackersTeamLevel, activeWar.defender.castle.id);
 
 	const fight = calculateFightBetweenPlayers(
 		CLAN_WAR_PVP_RULES,
@@ -1107,45 +1105,56 @@ export async function attackCastle(req: Request) {
 		await resolveClanWar(activeWar.id);
 	}
 
+	// Award xp to attackers
 	let totalWinXP = 0;
 	let levelup = false;
 	for (const d of team) {
 		let xp = 0;
-		const cur = d.level / teamLevel;
-
-		/** Restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
-		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
+		// Factor based on the level of the Dinoz within the team total.
+		const team_factor = d.level / attackersTeamLevel;
 
 		for (const defender of defenders) {
-			const factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
-			xp = Math.round(calculatePvPxp(defender.level, d.level) * factor * cur);
-			const max = getMaxXp(d);
-			if (d.experience >= max) {
-				// No xp if the dinoz was already at max
-				levelup = true;
-				xp = 0;
-			} else if (d.experience + xp >= max) {
-				// Else, allow xp overflow (should happen only once) and raise levelup flag
-				levelup = true;
+			// Skip defender if it escaped
+			const defenderFighter = fight.defenders.find(def => def.dinozId === defender.id);
+			if (!defenderFighter) {
+				throw new ExpectedError(`Defender ${defender.id} doesn't exist.`);
 			}
+			if (defenderFighter.escaped) continue;
+			// Factor based on level difference (if level is stricly above, then less xp)
+			const level_factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
+			// Factor based on starting HP, if defender was not full life, then less xp.
+			const hp_factor = defender.life / defender.maxLife;
+
+			xp += calculatePvPxp(defender.level, d.level) * level_factor * hp_factor * team_factor;
 		}
+
+		// Take into account bonuses and apply rounding.
+		xp = calculateXPBonus(d, xp, player);
+
+		const max = getMaxXp(d);
+		if (d.experience >= max) {
+			// No xp if the dinoz was already at max
+			levelup = true;
+			xp = 0;
+		} else if (d.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
+			levelup = true;
+		}
+
 		totalWinXP += xp;
-		const attacker = fight.attackers.find(a => a.dinozId === d.id);
-		if (!attacker) {
+
+		const attackerFighter = fight.attackers.find(a => a.dinozId === d.id);
+		if (!attackerFighter) {
 			throw new ExpectedError(`Attacker ${d.id} doesn't exist.`);
 		}
 
 		await updateDinoz(d.id, {
 			life: {
-				decrement: attacker.hpLost
+				decrement: attackerFighter.hpLost
 			},
 			experience: {
-				increment: victory ? xp : 0
+				// Award xp only if the attackers won and the fighter did not escape.
+				increment: (victory && !attackerFighter.escaped) ? xp : 0
 			},
 			fight: false,
 			unavailableReason: UnavailableReason.restingAttack
@@ -1154,25 +1163,42 @@ export async function attackCastle(req: Request) {
 			unrestingAttackingDinoz(d.id)
 		);
 		await createLog(LogType.XPEarned, authed.id, d.id, victory ? xp : 0);
-		await createLog(LogType.HPLost, authed.id, d.id, attacker.hpLost);
+		await createLog(LogType.HPLost, authed.id, d.id, attackerFighter.hpLost);
 
-		if (attacker.hpLost >= d.life) {
+		if (attackerFighter.hpLost >= d.life) {
 			await createLog(LogType.Death, authed.id, d.id);
 		}
 	}
 
+	const defendersTeamLevel = defenders.reduce((acc, dinoz) => acc + dinoz.level, 0);
+
 	for (const d of defenders) {
 		let xp = 0;
-		const cur = d.level / teamLevel;
+		// Factor based on the level of the Dinoz within the team total.
+		const team_factor = d.level / defendersTeamLevel;
 
 		for (const attacker of team) {
-			const factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
-			xp = calculatePvPxp(attacker.level, d.level) * factor * cur;
-			const max = getMaxXp(d);
-			if (d.experience >= max) {
-				xp = 0;
+			// Ignore attackers that escaped
+			const attackerFigther = fight.attackers.find(att => att.dinozId === attacker.id);
+			if (!attackerFigther) {
+				throw new ExpectedError(`Defender ${attacker.id} doesn't exist.`);
 			}
+			if (attackerFigther.escaped) continue;
+			// Factor based on level (if level is stricly above, then less xp)
+			const level_factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
+			// Factor based on starting HP, if attacker was not full life, then less xp.
+			const hp_factor = attacker.life / attacker.maxLife;
+			xp += calculatePvPxp(attacker.level, d.level) * level_factor * hp_factor * team_factor;
 		}
+
+		// Cannot apply defender xp bonuses without pulling in each Dinoz player data.
+		xp = Math.round(xp);
+
+		const max = getMaxXp(d);
+		if (d.experience >= max) {
+			xp = 0;
+		}
+
 		const defenderFighter = fight.defenders.find(a => a.dinozId === d.id);
 		if (!defenderFighter) {
 			throw new ExpectedError(`Defender ${d.id} doesn't exist.`);
@@ -1183,7 +1209,8 @@ export async function attackCastle(req: Request) {
 				decrement: defenderFighter.hpLost
 			},
 			experience: {
-				increment: !victory ? xp : 0
+				// Award xp only if the attackers lost and the fighter did not escape.
+				increment: (!victory && !defenderFighter.escaped) ? xp : 0
 			}
 		});
 		await createLog(LogType.XPEarned, d.playerId, d.id, victory ? xp : 0);
