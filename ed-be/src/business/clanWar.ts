@@ -1448,7 +1448,8 @@ function scheduleRepairTicks(
 				select: { currentLife: true, maxLife: true }
 			});
 
-			if (!castle) {
+			// Cancel repair if castle does not exist or has been destroyed.
+			if (!castle || castle && castle.currentLife <= 0) {
 				job.cancel();
 				return;
 			}
