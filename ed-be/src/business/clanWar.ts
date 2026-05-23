@@ -1006,7 +1006,7 @@ export async function attackCastle(req: Request) {
 	await setSpecificStat(StatTracking.GDC_ATK, player.id, team.length);
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const defenders = await computeDefenderTeam(teamLevel, team.length, activeWar.defender.castle.id);
+	const defenders = await computeDefenderTeam(teamLevel, activeWar.defender.castle.id);
 
 	const fight = calculateFightBetweenPlayers(
 		CLAN_WAR_PVP_RULES,
@@ -1263,7 +1263,7 @@ export async function attackCastle(req: Request) {
 	};
 }
 
-export async function computeDefenderTeam(attackerPower: number, teamSize: number, castleId: number) {
+export async function computeDefenderTeam(attackerPower: number, castleId: number) {
 	const defenderList = await prisma.clanCastle.findUniqueOrThrow({
 		where: {
 			id: castleId
