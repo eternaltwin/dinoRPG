@@ -420,7 +420,7 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 					prisma.clanHistory.create({
 						data: {
 							clan: { connect: { id: annexWar.attackerClanId } },
-							type: ClanHistoryType[ClanHistoryType.WAR_CANCELLED],
+							type: ClanHistoryType[ClanHistoryType.WAR_TIMEOUT],
 							authorMessage: JSON.stringify({
 								defenderName: war.defender.name,
 								destroyedBy: war.attacker.name
