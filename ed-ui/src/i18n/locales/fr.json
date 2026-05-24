@@ -4309,6 +4309,7 @@
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
 			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
+			"WAR_CANCELLED": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
