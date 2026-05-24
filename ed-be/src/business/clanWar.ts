@@ -547,7 +547,7 @@ async function notifyWarResults(
 					member.playerId,
 					JSON.stringify({
 						clanEvent: ClanHistoryType[forfeit ? ClanHistoryType.WAR_FORFEIT : ClanHistoryType.WAR_LOSE],
-						targetClan: war.defender.name
+						targetClan: forfeit ? war.attacker.name : war.defender.name
 					}),
 					NotificationSeverity.clanWar,
 					`/clan/${war.attacker.id}/history`
