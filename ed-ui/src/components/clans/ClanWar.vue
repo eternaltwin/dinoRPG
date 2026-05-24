@@ -34,7 +34,7 @@
 		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
 			<DZButton
 				v-if="clanStore.getClan && (!clanStore.getClan.castle || clanStore.getClan.castle.currentLife <= 0)"
-				@click="buildCastle()"
+				@click="buildCastle(clanStore.getClan.castle === undefined)"
 				>{{ $t('clan.war.buildCastle') }}</DZButton
 			>
 			<DZDisclaimer
@@ -287,9 +287,9 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async buildCastle() {
+		async buildCastle(firstTime: boolean) {
 			const res: boolean = await this.$confirm({
-				message: this.$t('popup.buildCastle'),
+				message: firstTime ? this.$t('popup.buildCastle') : this.$t('popup.repairCastle'),
 				header: this.$t('popup.attention'),
 				acceptLabel: this.$t('popup.accept'),
 				rejectLabel: this.$t('popup.reject'),

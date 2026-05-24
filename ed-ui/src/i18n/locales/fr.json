@@ -2625,7 +2625,8 @@
 		"attention": "Attention",
 		"accept": "Oui",
 		"reject": "Non",
-		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?",
+		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
