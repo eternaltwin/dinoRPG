@@ -2625,7 +2625,8 @@
 		"attention": "Attention",
 		"accept": "Oui",
 		"reject": "Non",
-		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?"
+		"buildCastle": "Attention, construire votre château pour la première fois vous coûtera tout votre trésor de clan. Êtes-vous sûr de vouloir continuer ?",
+		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
@@ -4308,6 +4309,7 @@
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
 			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
+			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
@@ -4440,7 +4442,8 @@
 			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
 			"newTurn": "C'est au tour de **{fighter}**.",
 			"statusTurn": "Vérication des statuts avant le tour de **{fighter}**",
-			"tired": "**{fighter}** est fatigué et passe son tour."
+			"tired": "**{fighter}** est fatigué et passe son tour.",
+			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
 		},
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"

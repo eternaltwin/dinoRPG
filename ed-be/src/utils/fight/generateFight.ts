@@ -458,7 +458,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			goldLost: fightData.fighters
 				.filter(fighter => !fighter.attacker && fighter.goldStolen?.[dinoz.id])
 				.reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
-			statusGained: dinoz.permanentStatusGained
+			statusGained: dinoz.permanentStatusGained,
+			escaped: dinoz.escaped ?? false
 		}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters
@@ -469,7 +470,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,
 			goldLost: 0,
-			statusGained: dinoz.permanentStatusGained
+			statusGained: dinoz.permanentStatusGained,
+			escaped: dinoz.escaped ?? false
 		}));
 
 	// Get catches data
