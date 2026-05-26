@@ -76,7 +76,6 @@ export default defineComponent({
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
-			page: 1 as number,
 			me: playerStore().getPlayerId,
 			seePlayer: false,
 			selectedPlayer: undefined as undefined | string
@@ -85,6 +84,10 @@ export default defineComponent({
 	props: {
 		sort: {
 			type: String as PropType<'classic' | 'average'>,
+			required: true
+		},
+		page: {
+			type: Number,
 			required: true
 		}
 	},
@@ -104,20 +107,17 @@ export default defineComponent({
 			}
 		},
 		changePage(i: number) {
-			this.$router.push({ name: this.$route.name ?? '', params: { pageLoaded: (this.page += i) } });
+			this.$router.push({
+				name: this.$route.name ?? '',
+				query: { ...this.$route.query, page: (this.page + i).toString() }
+			});
 		}
 	},
 	async created(): Promise<void> {
-		this.page = +this.$route.params.pageLoaded;
 		await this.getRanking();
 	},
 	watch: {
 		sort: 'getRanking',
-		'$route.params.pageLoaded': async function (to) {
-			if (to !== undefined && this.$route.name === 'RankingPlayers') {
-				this.page = +this.$route.params.pageLoaded;
-			}
-		},
 		page() {
 			this.getRanking();
 		}

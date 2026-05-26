@@ -69,7 +69,7 @@
 						class="link"
 						:to="{
 							name: 'RankingPlayers',
-							params: { pageLoaded: 1 }
+							query: { page: 1 }
 						}"
 					>
 						<svg
