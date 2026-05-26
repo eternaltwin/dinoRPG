@@ -4446,6 +4446,7 @@
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
 		},
 		"player": "Maître",
+		"clan": "Clan",
 		"vs": "VS"
 	},
 	"ingredients": {

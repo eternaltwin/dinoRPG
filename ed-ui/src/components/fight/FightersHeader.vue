@@ -1,5 +1,5 @@
 <template>
-	<div class="fighters-header" v-if="leftPlayer || rightPlayer">
+	<div class="fighters-header" v-if="leftPlayer || rightPlayer || rightName">
 		<div class="player">
 			<span class="title">{{ $t(`fight.player`) }}</span>
 
@@ -12,10 +12,11 @@
 		<span class="vs">{{ $t(`fight.vs`) }}</span>
 
 		<div class="player">
-			<span class="title">{{ $t(`fight.player`) }}</span>
+			<span class="title">{{ rightTitle || $t(`fight.player`) }}</span>
 			<div v-if="rightPlayer">
 				<DZUser :user="rightPlayer" />
 			</div>
+			<span class="plain-name" v-else-if="rightName">{{ rightName }}</span>
 			<span class="null-name" v-else> ??? </span>
 		</div>
 	</div>
@@ -37,6 +38,14 @@ export default defineComponent({
 		},
 		rightPlayer: {
 			type: Object as PropType<Pick<PlayerInfo, 'id' | 'name'> | null>
+		},
+		rightName: {
+			type: String as PropType<string | null>,
+			default: null
+		},
+		rightTitle: {
+			type: String as PropType<string | null>,
+			default: null
 		}
 	},
 	methods: {}
@@ -66,6 +75,11 @@ export default defineComponent({
 }
 
 .null-name {
+	color: #8b2f1c;
+	font-weight: bold;
+}
+
+.plain-name {
 	color: #8b2f1c;
 	font-weight: bold;
 }
