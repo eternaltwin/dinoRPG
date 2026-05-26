@@ -59,7 +59,7 @@ export interface FightReplay {
 	seed: string;
 	leftPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
 	rightPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
-	metadata: { placeId: number };
+	metadata: { placeId: number; rightClanName?: string };
 }
 
 export interface CatchResult {

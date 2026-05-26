@@ -4440,6 +4440,7 @@
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
 		},
 		"player": "Master",
+		"clan": "Clan",
 		"vs": "VS"
 	},
 	"ingredients": {

@@ -1048,7 +1048,7 @@ export async function attackCastle(req: Request) {
 		victory,
 		authed.id,
 		null,
-		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
+		JSON.stringify({ placeId: activeWar.defender.castle.placeId, rightClanName: activeWar.defender.name })
 	);
 
 	const castle = await prisma.clanCastle.update({
