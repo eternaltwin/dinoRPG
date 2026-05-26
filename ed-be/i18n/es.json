@@ -30,6 +30,7 @@
 	"alreadyOffer": "Ya tienes una oferta en curso.",
 	"bidsOngoing": "Aún tienes subastas en curso",
 	"inClan": "Todavía perteneces a un clan.",
+	"noClan": "No perteneces a un clan.",
 	"banPending": "Tienes una solicitud de baneo en curso.",
 	"AlreadyAtMaxHealth": "Tu Dino ya tiene su vida al máximo.",
 	"DinozIsDead": "Tu Dino está muerto.",
@@ -45,14 +46,26 @@
 	"maxFollowers": "Has alcanzado el máximo número de Dinos en el grupo",
 	"knownSphereSkill": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
 	"playerNotFound": "El jugador {{id}} no ha sido encontrado.",
-	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "El archivo del jugador {{id}} no ha sido encontrado.",
 	"dinozNotFound": "El Dino {{id}} no ha sido encontrado.",
 	"dinozCannotLvlUp": "El Dino no puede subir de nivel porque está inscrito en el TID.",
 	"reincarnationNotPossible": "La reencarnación del Dino solo es posible a partir del nivel 40.",
 	"reincarnationWithEquippedItems": "No puedes reencarnar a tu Dino con objetos equipados.",
+	"clanWar": {
+		"noCastle": "Tu clan no tiene un castillo construido.",
+		"noCastleOpponent": "El castillo enemigo no está construido.",
+		"defenderAlreadyUnderAttack": "Este clan ya está siendo atacado por demasiados adversarios.",
+		"defenderActiveMax": "Has alcanzado el límite máximo de Dinos en defensa.",
+		"notWar": "Ya no es posible realizar el ataque.",
+		"notEnoughIngredients": "Esta guerra cuesta {{cost}} :gold:. Tu clan no tiene suficientes ingredientes en su tesoro para declararla.",
+		"castleDestroyed": "El castillo ya está destruido.",
+		"castleFullLife": "Tu castillo ya tiene la cantidad máxima de :hp_castle:.",
+		"repairStackFull": "No puedes añadir más reparaciones.",
+		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación."
+	},
 	"error": {
-		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
+		"notYourDinoz": "Este Dino no es tuyo"
 	},
 	"fb": {
 		"error": {
@@ -210,9 +223,10 @@
 	"dojo": {
 		"inexistantDojo": "El dojo seleccionado no existe.",
 		"dinozNotPlayer": "Un Dino no pertenece al jugador.",
-		"alreadyFighted": "Este Dino ya ha combatido",
+		"alreadyFighted": "Este Dino ya ha combatido.",
 		"wrongDinozInTeam": "Tu equipo solo puede estar formado por una cantidad de Dinos entre 5 y 10.",
-		"wrongDinozQuantity": "Tu equipo debe estar formado por {{qty}} Dinos.",
+		"wrongDinozQuantity": "Tu equipo debe estar formado exactamente por {{qty}} Dinos.",
+		"notEnoughDiversity": "Tu equipo debe estar formado por al menos {{qty}} razas diferentes.",
 		"notEnoughGold": "No tienes suficiente oro para esta pelea",
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",

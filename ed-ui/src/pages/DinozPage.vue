@@ -57,13 +57,7 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
-				if (dinozToUpdate) {
-					dinozToUpdate.missionId = this.dinozData.missionId;
-					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
-				}
-				useDinozStore().setDinozList(dinozList);
+				useDinozStore().setDinoz(this.dinozData);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

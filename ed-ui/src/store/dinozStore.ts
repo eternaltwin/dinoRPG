@@ -4,6 +4,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { computed, ComputedRef, ref, Ref } from 'vue';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import { DinozService } from '../services';
+import { RESTING_ATTACK_TIMER } from '@drpg/core/models/clan/clanWar';
 
 export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
@@ -75,13 +76,17 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		const dinoz = dinozList.value.find((dinoz: DinozFiche) => dinoz.id === dinozId);
 		const value: DinozFiche[] = [];
 		if (!dinoz && dinozList.value.length > 0) {
+			// No dinoz found, if there is at least one Dinoz, find it, and if not found, just pick the first Dinoz of the list.
 			value.push(dinozList.value.find((dinoz: DinozFiche) => dinoz.id === currentDinozId.value) ?? dinozList.value[0]);
-		} else if (dinoz && dinoz.followers.length > 1) {
+		} else if (dinoz && dinoz.followers.length > 0) {
+			// Dinoz leads a group: add Dinoz and its followers.
 			value.push(dinoz);
 			value.push(...dinozList.value.filter(d => dinoz.followers.some(f => f.id === d.id)));
 		} else if (dinoz && dinoz.leaderId) {
+			// Dinoz follows another: add all Dinoz following the same leader and the leader.
 			value.push(...dinozList.value.filter(d => d.leaderId === dinoz.leaderId || d.id === dinoz.leaderId));
 		} else if (dinoz) {
+			// Dinoz is alone.
 			value.push(dinoz);
 		}
 		return value;
@@ -150,21 +155,27 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		const now = new Date();
 		const delta = (now.getTime() - (dinozToUpdate.lastAttack?.getTime() ?? 0)) / 1000;
+		const timerInSeconds = RESTING_ATTACK_TIMER / 1000;
+
 		if (!dinozToUpdate.lastAttack) {
 			return undefined;
-		} else if (delta > 61) {
+		} else if (delta > timerInSeconds) {
 			resetDinozAttackTimer(dinozId);
 			return undefined;
 		}
-		return Math.round(60 - delta);
+		return Math.round(timerInSeconds - delta);
 	};
 
 	const resetDinozAttackTimer = (dinozId: number): void => {
 		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
 		if (!dinozToUpdate) throw Error(`Dinoz ${dinozId} doesn't exist in store.`);
-		console.log('reset Dinoz');
 		dinozToUpdate.lastAttack = undefined;
 		refreshDinozFiche(dinozId);
+	};
+
+	const resetStore = (): void => {
+		dinozList.value = [];
+		currentDinozId.value = undefined;
 	};
 
 	return {
@@ -185,6 +196,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		setItems,
 		setDinozAttackTimer,
 		getDinozAttackTimer,
-		resetDinozAttackTimer
+		resetDinozAttackTimer,
+		resetStore
 	};
 });

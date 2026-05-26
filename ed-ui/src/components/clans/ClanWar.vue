@@ -2,10 +2,10 @@
 	<div class="clan_wrapper" v-if="war">
 		<DZTable v-if="ongoingAttack.length > 0">
 			<tr>
-				<th class="dinoz-header">Type</th>
-				<th class="items-header">Ennemi</th>
-				<th class="items-header">Date de fin</th>
-				<th class="items-header" v-if="isClanMember">Action</th>
+				<th class="dinoz-header">{{ $t('clan.war.type') }}</th>
+				<th class="items-header">{{ $t('clan.war.enemy') }}</th>
+				<th class="items-header">{{ $t('clan.war.endDate') }}</th>
+				<th class="items-header" v-if="isClanMember">{{ $t('clan.war.action') }}</th>
 			</tr>
 			<tr v-for="attack in ongoingAttack" :key="attack.id">
 				<td>{{ attack.attacker.id === clanId ? $t('clan.war.attack') : $t('clan.war.defense') }}</td>
@@ -34,7 +34,7 @@
 		<div id="clanPrivate" class="df jcc fdc aic" v-if="isClanMember">
 			<DZButton
 				v-if="clanStore.getClan && (!clanStore.getClan.castle || clanStore.getClan.castle.currentLife <= 0)"
-				@click="buildCastle()"
+				@click="buildCastle(clanStore.getClan.castle === undefined)"
 				>{{ $t('clan.war.buildCastle') }}</DZButton
 			>
 			<DZDisclaimer
@@ -45,17 +45,20 @@
 			<div class="df jcc defense">
 				<div id="pixiCanvas" />
 				<VueDraggable v-model="defenders" class="df jcc fww line" :animation="150" @update="onUpdate">
-					<DinozMini
+					<div
+						class="cell"
 						v-for="dinoz in defenders"
 						v-tippy="{
 							content: formatContent($t('clan.war.defender', { name: dinoz.name, level: dinoz.level })),
 							theme: 'small'
 						}"
 						:key="dinoz.id"
-						class="cell"
-						:display="dinoz.display"
-						flip
-					/>
+					>
+						<DinozMini :display="dinoz.display" flip />
+						<span class="tinyBar">
+							<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
+						</span>
+					</div>
 				</VueDraggable>
 			</div>
 
@@ -150,9 +153,38 @@
 			</div>
 		</div>
 		<div id="clanOpponent" v-else>
-			<DZButton v-if="clanStore.getClan && !clanStore.getClan.castle" @click="declareWar(+$route.params.id)">{{
-				$t('clan.war.declareWar')
-			}}</DZButton>
+			<DZButton
+				:off="!attackCost?.canAfford"
+				v-if="clanStore.getClan && !clanStore.getClan.castle"
+				@click="declareWar(+$route.params.id)"
+				>{{ $t('clan.war.declareWar') }}</DZButton
+			>
+			<DZDisclaimer
+				help
+				round
+				:content="
+					$t('clan.war.disclaimerAttack', { cost: utils.beautifulNumber((attackCost?.trueValue ?? 0).toString()) })
+				"
+			/>
+			<div class="ingredientWrapper" v-if="attackCost && attackCost.canAfford">
+				<Tippy
+					theme="normal"
+					tag="div"
+					v-for="ingredient in attackCost.ingredients"
+					:key="ingredient.ingredientId"
+					class="container"
+				>
+					<img
+						:src="getImgURL('ingredients', ingredientList[ingredient.ingredientId].name)"
+						:alt="ingredientList[ingredient.ingredientId].name"
+					/>
+					<p>x {{ ingredient.quantity }}</p>
+					<template #content>
+						<h1 v-html="formatContent($t(`ingredients.name.${ingredientList[ingredient.ingredientId].name}`))" />
+						<p v-html="formatContent($t(`ingredients.description.${ingredientList[ingredient.ingredientId].name}`))" />
+					</template>
+				</Tippy>
+			</div>
 		</div>
 	</div>
 </template>
@@ -161,7 +193,7 @@
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import { ClanService } from '../../services';
-import { errorHandler } from '../../utils';
+import { errorHandler, utils } from '../../utils';
 import { clanStore } from '../../store/clanStore';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -178,10 +210,12 @@ import {
 	REPAIR_MAX_STACK,
 	REPAIR_MAX_TICKS,
 	RepairCost,
-	RepairFrequency
+	RepairFrequency,
+	WarCost
 } from '@drpg/core/models/clan/clanWar';
-import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
+import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -199,6 +233,8 @@ export default defineComponent({
 			castle: null as Castle | null,
 			defenders: [] as Defender[],
 			repairCost: null as RepairCost | null,
+			attackCost: null as WarCost | null,
+			utils: utils,
 			ingredients: [] as treasureIngredient[],
 			repairLoading: false,
 			repairForm: {
@@ -214,6 +250,9 @@ export default defineComponent({
 		};
 	},
 	computed: {
+		ingredientList() {
+			return ingredientList;
+		},
 		place() {
 			return this.$t(
 				'place.name.' +
@@ -233,6 +272,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getBarWidth(actual: number, max: number): string {
+			if (actual > max) actual = max;
+			const width: number = Math.round((actual / max) * 36);
+			return `width : ${width}px`;
+		},
 		async onUpdate() {
 			try {
 				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
@@ -243,9 +287,9 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async buildCastle() {
+		async buildCastle(firstTime: boolean) {
 			const res: boolean = await this.$confirm({
-				message: this.$t('popup.buildCastle'),
+				message: firstTime ? this.$t('popup.buildCastle') : this.$t('popup.repairCastle'),
 				header: this.$t('popup.attention'),
 				acceptLabel: this.$t('popup.accept'),
 				rejectLabel: this.$t('popup.reject'),
@@ -302,6 +346,11 @@ export default defineComponent({
 				this.repairForm.ticks,
 				this.ingredients
 			);
+		},
+		loadAttackCost() {
+			const myClan = this.clanStore.getMyclan;
+			if (!myClan || !myClan.clanWarRanking || !myClan.ingredients) return;
+			this.attackCost = computeWarCost(myClan.clanWarRanking[0].reputation, myClan.ingredients);
 		},
 		async startRepair() {
 			if (!this.repairCost?.canAfford) return;
@@ -373,6 +422,7 @@ export default defineComponent({
 		async loadComponent() {
 			this.war = !!this.clanStore.clanEvent;
 			this.isClanMember = this.playerStore.clanId == +this.$route.params.id;
+			this.loadAttackCost();
 			if (this.isClanMember) {
 				const castle = await ClanService.castleStatus();
 				if (!castle) return;
@@ -433,6 +483,23 @@ export default defineComponent({
 		background-position: -10px 0px;
 		border-radius: 4px;
 		padding: 2px 4px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.tinyBar {
+			margin-top: 4px;
+			display: block;
+			height: 2px;
+			width: 36px;
+			border: 1px solid #bc683c;
+			background-color: black;
+
+			.life {
+				display: block;
+				height: 2px;
+				background-color: yellow;
+			}
+		}
 	}
 }
 
@@ -553,6 +620,32 @@ export default defineComponent({
 		font-weight: normal;
 		font-size: 75%;
 		color: #fce3bc;
+	}
+}
+#clanOpponent {
+	margin-top: 4px;
+	width: 95%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	.ingredientWrapper {
+		display: flex;
+		justify-content: space-around;
+	}
+	.container {
+		display: flex;
+		gap: 7px;
+		flex-wrap: wrap;
+		align-items: center;
+		background-color: #bc683c;
+		border-radius: 80% 30px 30px 80%;
+		color: white;
+		width: 100px;
+		p:first-letter {
+			font-weight: normal;
+			font-size: 75%;
+			color: #fce3bc;
+		}
 	}
 }
 </style>

@@ -18,7 +18,7 @@ import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { scheduledJobs, scheduleJob } from 'node-schedule';
-import { computeWarCost, computeWarPowers } from '../utils/warCalculation.js';
+import { computeWarPowers } from '../utils/warCalculation.js';
 import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
@@ -26,19 +26,24 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { CLAN_WAR_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { archiveFight } from '../dao/archiveDao.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
-import { calculatePvPxp, getMaxXp } from '@drpg/core/utils/DinozUtils';
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import gameConfig from '../config/game.config.js';
+import { calculatePvPxp, calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { REPAIR_MAX_HP, REPAIR_MAX_STACK, REPAIR_MAX_TICKS, RepairFrequency } from '@drpg/core/models/clan/clanWar';
-import { computeRepairCost } from '@drpg/core/models/clan/warCalculation';
+import {
+	REPAIR_MAX_HP,
+	REPAIR_MAX_STACK,
+	REPAIR_MAX_TICKS,
+	RepairFrequency,
+	RESTING_ATTACK_TIMER
+} from '@drpg/core/models/clan/clanWar';
+import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { sendSseMessageToUserInChannel } from './serverEventService.js';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
+import { getRandomArrayElement } from '../utils/tools.js';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -116,7 +121,7 @@ export async function buildClanCastle(req: Request) {
 
 	const isRebuild = existingCastle !== null && existingCastle.currentLife <= 0;
 
-	const randomPlace = war.config.warPlaces[Math.round(Math.random() * war.config.warPlaces.length) - 1];
+	const randomPlace = getRandomArrayElement(war.config.warPlaces);
 
 	await prisma.clanCastle.upsert({
 		where: {
@@ -148,7 +153,10 @@ export async function buildClanCastle(req: Request) {
 			}),
 			prisma.clanWarRanking.upsert({
 				where: {
-					id: authed.clanId
+					clanId_eventId: {
+						clanId: authed.clanId,
+						eventId: war.id
+					}
 				},
 				create: {
 					clanId: authed.clanId,
@@ -190,7 +198,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			_count: {
 				select: {
@@ -207,7 +215,7 @@ export async function declareWar(req: Request) {
 		select: {
 			id: true,
 			name: true,
-			castle: { select: { id: true } },
+			castle: { select: { id: true, currentLife: true } },
 			members: { select: { playerId: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
 			clanWarRanking: {
@@ -218,11 +226,11 @@ export async function declareWar(req: Request) {
 		}
 	});
 
-	if (!defender || !defender.castle) {
-		throw new ExpectedError(translate('clanWar.noCastle', authed));
-	}
-	if (!attacker || !attacker.castle) {
+	if (!defender || !defender.castle || defender.castle.currentLife <= 0) {
 		throw new ExpectedError(translate('clanWar.noCastleOpponent', authed));
+	}
+	if (!attacker || !attacker.castle || attacker.castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 	if (defender._count.defendingWars >= 3) {
 		throw new ExpectedError(translate('clanWar.defenderAlreadyUnderAttack', authed));
@@ -232,7 +240,7 @@ export async function declareWar(req: Request) {
 	const cost = computeWarCost(reputation, attacker.ingredients);
 
 	if (!cost.canAfford) {
-		throw new ExpectedError(translate('clanWar.notEnoughIngredients', authed, { cost: cost.totalValue }));
+		throw new ExpectedError(translate('clanWar.notEnoughIngredients', authed, { cost: cost.trueValue }));
 	}
 
 	await consumeWarCost(authed.clanId, cost);
@@ -357,8 +365,19 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 						                                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
 					END)::float),
 				0.8
-			                            ) - ("downtimeCount" * ("downtimeCount" - 1))::float / 2.0)::numeric)
-		WHERE "eventId" = ${Prisma.raw(`'${war.eventId}'::uuid`)}
+			                            ) - (
+				                            CASE
+					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+					                            ELSE "downtimeCount"
+					                            END * (
+						                            CASE
+							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
+							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
+							                            ELSE "downtimeCount"
+							                            END - 1)
+				                            )::float / 2.0)::numeric)
+		WHERE "eventId" = ${war.eventId}::uuid
 			AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
 	`;
 
@@ -401,7 +420,7 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 					prisma.clanHistory.create({
 						data: {
 							clan: { connect: { id: annexWar.attackerClanId } },
-							type: ClanHistoryType[ClanHistoryType.WAR_CANCELLED],
+							type: ClanHistoryType[ClanHistoryType.WAR_TIMEOUT],
 							authorMessage: JSON.stringify({
 								defenderName: war.defender.name,
 								destroyedBy: war.attacker.name
@@ -528,7 +547,7 @@ async function notifyWarResults(
 					member.playerId,
 					JSON.stringify({
 						clanEvent: ClanHistoryType[forfeit ? ClanHistoryType.WAR_FORFEIT : ClanHistoryType.WAR_LOSE],
-						targetClan: war.defender.name
+						targetClan: forfeit ? war.attacker.name : war.defender.name
 					}),
 					NotificationSeverity.clanWar,
 					`/clan/${war.attacker.id}/history`
@@ -691,11 +710,13 @@ export async function addDefender(req: Request) {
 		},
 		select: {
 			placeId: true,
+			defender: true,
 			_count: {
 				select: { defender: true }
 			}
 		}
 	});
+
 	if (!castle) {
 		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
@@ -705,6 +726,10 @@ export async function addDefender(req: Request) {
 
 	if (castle._count.defender >= currentWarEvent.config.fight.defenderActiveMax) {
 		throw new ExpectedError(translate('clanWar.defenderActiveMax', authed));
+	}
+
+	if (castle.defender.some(d => d.id === dinoz.id)) {
+		throw new ExpectedError(translate('clanWar.alreadyInDefense', authed));
 	}
 
 	const defendLine = await prisma.clanCastle.update({
@@ -922,6 +947,16 @@ export async function attackCastle(req: Request) {
 							}
 						}
 					},
+					attacker: {
+						select: {
+							castle: {
+								select: {
+									id: true,
+									currentLife: true
+								}
+							}
+						}
+					},
 					defenderClanId: true,
 					attackerClanId: true
 				}
@@ -933,6 +968,10 @@ export async function attackCastle(req: Request) {
 
 	if (!warAttack || !activeWar || !activeWar.defender.castle) {
 		throw new ExpectedError(translate('clanWar.notWar', authed));
+	}
+
+	if (!activeWar.attacker.castle || activeWar.attacker.castle.currentLife <= 0) {
+		throw new ExpectedError(translate('clanWar.noCastle', authed));
 	}
 
 	const player = await getDinozFightClanDataRequest(dinozId, authed.id);
@@ -964,15 +1003,15 @@ export async function attackCastle(req: Request) {
 
 	await setSpecificStat(StatTracking.GDC_ATK, player.id, team.length);
 
-	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const defenders = await computeDefenderTeam(teamLevel, team.length, activeWar.defender.castle.id);
+	const attackersTeamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
+	const defenders = await computeDefenderTeam(attackersTeamLevel, activeWar.defender.castle.id);
 
 	const fight = calculateFightBetweenPlayers(
 		CLAN_WAR_PVP_RULES,
 		team,
-		false,
+		player.cooker,
 		defenders,
-		false,
+		defenders.some(d => d.skills.some(s => s.skillId === Skill.CUISINIER)),
 		activeWar.defender.castle?.placeId
 	);
 
@@ -988,22 +1027,28 @@ export async function attackCastle(req: Request) {
 	});
 	let totalCastleDamage = 0;
 
-	for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
-		const castleDamage = Math.ceil((fight.fighters.find(d => d.id === survivor.id)?.level ?? 1) / 6);
-		fight.steps.push({
-			action: 'attackCastle',
-			fid: survivor.id,
-			damages: castleDamage
-		});
-		totalCastleDamage += castleDamage;
+	// Attack castle only and only if all defenders were eleminated.
+	if (victory) {
+		for (const survivor of fight.fighters.filter(d => d.attacker && d.survived)) {
+			const castleDamage = Math.max(1, Math.ceil(survivor.level / 6));
+			fight.steps.push({
+				action: 'attackCastle',
+				fid: survivor.id,
+				damages: castleDamage
+			});
+			totalCastleDamage += castleDamage;
+		}
 	}
+
+	// Cap total damage to castle HP.
+	totalCastleDamage = Math.min(totalCastleDamage, activeWar.defender.castle.currentLife);
 
 	const archive = await archiveFight(
 		fight,
 		victory,
 		authed.id,
 		null,
-		JSON.stringify({ placeId: activeWar.defender.castle.placeId })
+		JSON.stringify({ placeId: activeWar.defender.castle.placeId, rightClanName: activeWar.defender.name })
 	);
 
 	const castle = await prisma.clanCastle.update({
@@ -1060,80 +1105,100 @@ export async function attackCastle(req: Request) {
 		await resolveClanWar(activeWar.id);
 	}
 
+	// Award xp to attackers
 	let totalWinXP = 0;
 	let levelup = false;
 	for (const d of team) {
 		let xp = 0;
-		const cur = d.level / teamLevel;
-
-		/** Restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
-		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
+		// Factor based on the level of the Dinoz within the team total.
+		const team_factor = d.level / attackersTeamLevel;
 
 		for (const defender of defenders) {
-			const factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
-			xp = Math.round(calculatePvPxp(defender.level, d.level) * factor * cur);
-			const max = getMaxXp(d);
-			if (d.experience >= max) {
-				// No xp if the dinoz was already at max
-				levelup = true;
-				xp = 0;
-			} else if (d.experience + xp >= max) {
-				// Else, allow xp overflow (should happen only once) and raise levelup flag
-				levelup = true;
+			// Skip defender if it escaped
+			const defenderFighter = fight.defenders.find(def => def.dinozId === defender.id);
+			if (!defenderFighter) {
+				throw new ExpectedError(`Defender ${defender.id} doesn't exist.`);
 			}
+			if (defenderFighter.escaped) continue;
+			// Factor based on level difference (if level is stricly above, then less xp)
+			const level_factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
+			// Factor based on starting HP, if defender was not full life, then less xp.
+			const hp_factor = defender.life / defender.maxLife;
+
+			xp += calculatePvPxp(defender.level, d.level) * level_factor * hp_factor * team_factor;
 		}
+
+		// Take into account bonuses and apply rounding.
+		xp = calculateXPBonus(d, xp, player);
+
+		const max = getMaxXp(d);
+		if (d.experience >= max) {
+			// No xp if the dinoz was already at max
+			levelup = true;
+			xp = 0;
+		} else if (d.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
+			levelup = true;
+		}
+
 		totalWinXP += xp;
-		const attacker = fight.attackers.find(a => a.dinozId === d.id);
-		if (!attacker) {
+
+		const attackerFighter = fight.attackers.find(a => a.dinozId === d.id);
+		if (!attackerFighter) {
 			throw new ExpectedError(`Attacker ${d.id} doesn't exist.`);
 		}
 
 		await updateDinoz(d.id, {
 			life: {
-				decrement: attacker.hpLost
+				decrement: attackerFighter.hpLost
 			},
 			experience: {
-				increment: victory ? xp : 0
+				// Award xp only if the attackers won and the fighter did not escape.
+				increment: (victory && !attackerFighter.escaped) ? xp : 0
 			},
 			fight: false,
 			unavailableReason: UnavailableReason.restingAttack
 		});
-		scheduleJob(`${UnavailableReason.restingAttack}_${d.id}`, now.getTime() + 60000, () =>
+		scheduleJob(`${UnavailableReason.restingAttack}_${d.id}`, now.getTime() + RESTING_ATTACK_TIMER, () =>
 			unrestingAttackingDinoz(d.id)
 		);
 		await createLog(LogType.XPEarned, authed.id, d.id, victory ? xp : 0);
-		await createLog(LogType.HPLost, authed.id, d.id, attacker.hpLost);
+		await createLog(LogType.HPLost, authed.id, d.id, attackerFighter.hpLost);
 
-		if (attacker.hpLost >= d.life) {
+		if (attackerFighter.hpLost >= d.life) {
 			await createLog(LogType.Death, authed.id, d.id);
 		}
 	}
 
+	const defendersTeamLevel = defenders.reduce((acc, dinoz) => acc + dinoz.level, 0);
+
 	for (const d of defenders) {
 		let xp = 0;
-		const cur = d.level / teamLevel;
-
-		/** Restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
-		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
+		// Factor based on the level of the Dinoz within the team total.
+		const team_factor = d.level / defendersTeamLevel;
 
 		for (const attacker of team) {
-			const factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
-			xp = calculatePvPxp(attacker.level, d.level) * factor * cur;
-			const max = getMaxXp(d);
-			if (d.experience >= max) {
-				xp = 0;
+			// Ignore attackers that escaped
+			const attackerFigther = fight.attackers.find(att => att.dinozId === attacker.id);
+			if (!attackerFigther) {
+				throw new ExpectedError(`Defender ${attacker.id} doesn't exist.`);
 			}
+			if (attackerFigther.escaped) continue;
+			// Factor based on level (if level is stricly above, then less xp)
+			const level_factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
+			// Factor based on starting HP, if attacker was not full life, then less xp.
+			const hp_factor = attacker.life / attacker.maxLife;
+			xp += calculatePvPxp(attacker.level, d.level) * level_factor * hp_factor * team_factor;
 		}
+
+		// Cannot apply defender xp bonuses without pulling in each Dinoz player data.
+		xp = Math.round(xp);
+
+		const max = getMaxXp(d);
+		if (d.experience >= max) {
+			xp = 0;
+		}
+
 		const defenderFighter = fight.defenders.find(a => a.dinozId === d.id);
 		if (!defenderFighter) {
 			throw new ExpectedError(`Defender ${d.id} doesn't exist.`);
@@ -1144,7 +1209,8 @@ export async function attackCastle(req: Request) {
 				decrement: defenderFighter.hpLost
 			},
 			experience: {
-				increment: !victory ? xp : 0
+				// Award xp only if the attackers lost and the fighter did not escape.
+				increment: (!victory && !defenderFighter.escaped) ? xp : 0
 			}
 		});
 		await createLog(LogType.XPEarned, d.playerId, d.id, victory ? xp : 0);
@@ -1224,7 +1290,7 @@ export async function attackCastle(req: Request) {
 	};
 }
 
-export async function computeDefenderTeam(attackerPower: number, teamSize: number, castleId: number) {
+export async function computeDefenderTeam(attackerPower: number, castleId: number) {
 	const defenderList = await prisma.clanCastle.findUniqueOrThrow({
 		where: {
 			id: castleId
@@ -1409,7 +1475,8 @@ function scheduleRepairTicks(
 				select: { currentLife: true, maxLife: true }
 			});
 
-			if (!castle) {
+			// Cancel repair if castle does not exist or has been destroyed.
+			if (!castle || castle && castle.currentLife <= 0) {
 				job.cancel();
 				return;
 			}

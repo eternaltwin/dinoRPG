@@ -60,7 +60,7 @@ export default defineComponent({
 	},
 	methods: {
 		DateToString(date: Date): string {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
 		GetHistoryMessageFromType(type: ClanHistoryType, message: string) {
 			let formated;
@@ -71,6 +71,7 @@ export default defineComponent({
 				case ClanHistoryType.WAR_PLAYER_ATTACKED:
 				case ClanHistoryType.WAR_PLAYER_ATTACK:
 				case ClanHistoryType.WAR_LOSE:
+				case ClanHistoryType.WAR_LOSED:
 				case ClanHistoryType.WAR_DEFENDED:
 				case ClanHistoryType.WAR_WON:
 					if (message.length < 1) {
@@ -85,9 +86,9 @@ export default defineComponent({
 		},
 		async getClanHistory(): Promise<void> {
 			try {
-				this.history = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
-				const historyCount = await ClanService.getClanHistoryCount(Number(this.$route.params.id));
-				this.maxPage = Math.floor((historyCount.count + 19) / 20);
+				const { history, count } = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
+				this.history = history;
+				this.maxPage = Math.floor((count + 19) / 20);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

@@ -1,7 +1,12 @@
 <template>
 	<div id="shareFight">
 		<TitleHeader :title="$t('pageTitle.challengeFriend')" />
-		<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+		<FightersHeader
+			:leftPlayer="leftPlayer"
+			:rightPlayer="rightPlayer"
+			:rightName="rightClanName"
+			:rightTitle="rightClanName ? $t('fight.clan') : null"
+		/>
 		<template v-if="fightTransformed">
 			<div v-show="loaded" class="content">
 				<Suspense>
@@ -36,7 +41,8 @@ export default defineComponent({
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
 			leftPlayer: null as null | { id: string; name: string },
-			rightPlayer: null as null | { id: string; name: string }
+			rightPlayer: null as null | { id: string; name: string },
+			rightClanName: null as null | string
 		};
 	},
 	methods: {},
@@ -56,7 +62,7 @@ export default defineComponent({
 				fightResult.result,
 				undefined,
 				undefined,
-				true
+				false
 			);
 			if (!nexFight) {
 				return;
@@ -69,6 +75,7 @@ export default defineComponent({
 			};
 			this.leftPlayer = fightResult.leftPlayer;
 			this.rightPlayer = fightResult.rightPlayer;
+			this.rightClanName = fightResult.metadata.rightClanName ?? null;
 			this.loaded = true;
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);

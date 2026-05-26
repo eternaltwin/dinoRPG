@@ -1,7 +1,7 @@
 {
 	"tooManyActiveDinoz": "Du hast bereits zu viele aktive Dinoz.",
 	"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
-	"notEnoughMoney": "Du hast nicht genug Gold.",
+	"notEnoughMoney": "Du hast nicht genügend Gold.",
 	"notEnoughNapo": "Du hast nicht genug Napodinos.",
 	"OnlyLettersAndNumbers": "Name ungültig! Er muss aus Buchstaben oder Zahlen bestehen und 3-16 Zeichen lang sein.",
 	"notLeader": "Dieser Dinoz ist nicht der Gruppenführer.",
@@ -30,6 +30,7 @@
 	"alreadyOffer": "Du hast bereits ein laufendes Angebot.",
 	"bidsOngoing": "Du hast noch laufende Angebote.",
 	"inClan": "Du gehörst bereits zu einem Klan.",
+	"noClan": "Du gehörst keinem Klan an.",
 	"banPending": "Dein Anliegen zur Sperrung wird bearbeitet.",
 	"AlreadyAtMaxHealth": "Dein Dinoz hat bereits die maximalen Lebenspunkte.",
 	"DinozIsDead": "Dein Dinoz ist tot.",
@@ -45,14 +46,26 @@
 	"maxFollowers": "Du hast die Höchstanzahl einer Gruppe erreicht.",
 	"knownSphereSkill": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
 	"playerNotFound": "Spieler {{id}} nicht gefunden.",
-	"archivedPlayerNotFound": "L'archive du joueur {{id}} n'a pas été trouvé.",
+	"archivedPlayerNotFound": "Das Archiv von Spieler „{{id}}“ wurde nicht gefunden.",
 	"dinozNotFound": "Dinoz {{id}} nicht gefunden.",
 	"dinozCannotLvlUp": "Der Dinoz kann keine Stufe aufsteigen, da er beim IDT angemeldet ist.",
 	"reincarnationNotPossible": "Die Reinkarnation von Dinoz ist nur auf Stufe 40 möglich.",
 	"reincarnationWithEquippedItems": "Du kannst deinen Dinoz nicht mit ausgerüsteten Gegenständen reinkarnieren.",
+	"clanWar": {
+		"noCastle": "Dein Klan hat keine Burg errichtet.",
+		"noCastleOpponent": "Es ist keine gegnerische Burg errichtet worden.",
+		"defenderAlreadyUnderAttack": "Dieser Klan wird bereits von ausreichend Gegnern angegriffen.",
+		"defenderActiveMax": "Dein Klan hat die Höchstanzahl an Verteidiger-Dinoz erreicht.",
+		"notWar": "Dieser Angriff ist nicht mehr möglich.",
+		"notEnoughIngredients": "Diese Kriegserklärung würde {{cost}} :gold: kosten, was von der Schatzkammer deines Klans nicht gedeckt ist.",
+		"castleDestroyed": "Die Burg ist bereits zerstört.",
+		"castleFullLife": "Eure Burg hat bereits die Höchstanzahl an :hpcastle:.",
+		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
+		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur."
+	},
 	"error": {
-		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
+		"notYourDinoz": "Dieser Dinoz gehört dir nicht"
 	},
 	"fb": {
 		"error": {
@@ -210,9 +223,10 @@
 	"dojo": {
 		"inexistantDojo": "Das ausgewählte Dojo existiert nicht",
 		"dinozNotPlayer": "Ein Dinoz gehört nicht zum Spieler.",
-		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft",
+		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft.",
 		"wrongDinozInTeam": "Deine Mannschaft muss aus 5-10 Dinoz bestehen",
-		"wrongDinozQuantity": "Deine Mannschaft muss aus {{qty}} Dinoz bestehen.",
+		"wrongDinozQuantity": "Deine Mannschaft muss aus genau {{qty}} Dinoz bestehen.",
+		"notEnoughDiversity": "Deine Mannschaft muss aus {{qty}} unterschiedlichen Rassen bestehen.",
 		"notEnoughGold": "Du hast nicht genügend Gold, um diesen Kampf zu starten",
 		"archiveNotFound": "Archiv nicht gefunden",
 		"inexistantOpponent": "Gegner nicht gefunden",
@@ -305,7 +319,7 @@
 		"demons": "nur Dämonen"
 	},
 	"announce": {
-		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) die Stufe {{level}} erreicht hat!",
+		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** die Stufe {{level}} erreicht hat!",
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"UnavailableReason": {

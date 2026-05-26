@@ -565,7 +565,8 @@ export async function getClanHistory(req: Request) {
 	const authed = await auth(req);
 
 	const messages = await getClanHistoryRequest(authed.id, Number(req.params.id), Number(req.params.page));
-	return messages;
+	const count = await getClanHistoryCountRequest(+req.params.id);
+	return { history: messages, count: count };
 }
 
 /**

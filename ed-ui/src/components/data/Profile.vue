@@ -28,7 +28,7 @@
 						v-if="playerPosition"
 						:to="{
 							name: 'RankingPlayers',
-							params: { pageLoaded: Math.floor(playerPosition / 20) + 1 }
+							query: { page: Math.floor(playerPosition / 20) + 1 }
 						}"
 						>{{ playerPosition }}</RouterLink
 					>
@@ -165,7 +165,7 @@ export default defineComponent({
 					const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 					await PlayerService.resetAccount();
 					deleteCookie(`x-drpg-${channel}-token`);
-					useDinozStore().$reset();
+					useDinozStore().resetStore();
 					this.playerStore.$reset();
 					this.$router.go(0);
 				} catch (err) {

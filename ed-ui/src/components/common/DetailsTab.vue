@@ -313,6 +313,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { TIME_BASE } from '@drpg/core/utils/fightConstants';
+import { formatText } from '../../utils/formatText';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -394,6 +395,13 @@ export default defineComponent({
 		specialStats() {
 			try {
 				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz) {
+					this.$toast.open({
+						message: formatText('Dinoz not found'),
+						type: 'error'
+					});
+					return;
+				}
 				const priest = this.playerStore.isPriest;
 				// Find global speed value to compute it with elemental speed
 				const global_speed_special = getSpecialStat(

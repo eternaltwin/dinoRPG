@@ -27,7 +27,7 @@ export async function getAllIngredientsData(req: Request) {
 			ingredientId: ingredientFound.ingredientId,
 			name: ingredientFound.name.toLowerCase(),
 			quantity: ingr.quantity,
-			maxQuantity: player.shopKeeper ? Math.round(ingredientFound.maxQuantity * 1.5) : ingredientFound.quantity
+			maxQuantity: player.shopKeeper ? Math.round(ingredientFound.maxQuantity * 1.5) : ingredientFound.maxQuantity
 		};
 	});
 

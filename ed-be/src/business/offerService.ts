@@ -584,7 +584,7 @@ export async function checkRefund(
 			}
 			return {
 				ingredientId: i.ingredientId,
-				maxQuantity: shopKeeper ? i.maxQuantity * 1.5 : i.maxQuantity,
+				maxQuantity: shopKeeper ? Math.round(i.maxQuantity * 1.5) : i.maxQuantity,
 				futureQuantity: playerIng.quantity + marketIng.quantity
 			};
 		});
@@ -606,7 +606,7 @@ export async function checkRefund(
 			}
 			return {
 				itemId: i.itemId,
-				maxQuantity: shopKeeper ? i.maxQuantity * 1.5 : i.maxQuantity,
+				maxQuantity: shopKeeper ? Math.round(i.maxQuantity * 1.5) : i.maxQuantity,
 				futureQuantity: playerItems.quantity + marketItems.quantity
 			};
 		});

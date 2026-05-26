@@ -121,7 +121,7 @@ export default defineComponent({
 			this.$router.push({ name: 'Clan', params: { id: _id } });
 		},
 		dateToString(date: string | Date) {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
 		goToCreateClanPage() {
 			if (this.canCreateClan) {

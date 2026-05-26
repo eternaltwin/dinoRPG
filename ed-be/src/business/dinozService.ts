@@ -1137,7 +1137,7 @@ export async function gatherWithDinoz(req: Request) {
 
 	for (const i of returnGrid.rewards.ingredients) {
 		const ingredientToReward = player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
-		const effectiveMaxQuantity = player.shopKeeper ? Math.floor(i.maxQuantity * 1.5) : i.maxQuantity;
+		const effectiveMaxQuantity = player.shopKeeper ? Math.round(i.maxQuantity * 1.5) : i.maxQuantity;
 		let currentQuantity = ingredientToReward?.quantity ?? 0;
 
 		if (currentQuantity < effectiveMaxQuantity) {
