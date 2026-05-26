@@ -5,7 +5,7 @@
 			<RouterLink
 				:to="{
 					name: 'RankingPlayers',
-					params: { pageLoaded: 1 }
+					query: { page: 1 }
 				}"
 				><img :src="getImgURL('design', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</RouterLink
 			>
@@ -14,7 +14,7 @@
 			<RouterLink
 				:to="{
 					name: 'RankingAverage',
-					params: { pageLoaded: 1 }
+					query: { page: 1 }
 				}"
 				>{{ $t('tabs.average') }}</RouterLink
 			>
@@ -23,7 +23,7 @@
 			<RouterLink
 				:to="{
 					name: 'RankingCompletion',
-					params: { pageLoaded: 1 }
+					query: { page: 1 }
 				}"
 				>{{ $t('tabs.completion') }}</RouterLink
 			>

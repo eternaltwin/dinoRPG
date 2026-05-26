@@ -28,7 +28,7 @@
 						v-if="playerPosition"
 						:to="{
 							name: 'RankingPlayers',
-							params: { pageLoaded: Math.floor(playerPosition / 20) + 1 }
+							query: { page: Math.floor(playerPosition / 20) + 1 }
 						}"
 						>{{ playerPosition }}</RouterLink
 					>

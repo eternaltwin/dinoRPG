@@ -63,11 +63,16 @@ import { SelectOption } from '../common/DZSelect.vue';
 export default defineComponent({
 	name: 'CompletionRanking',
 	components: { SearchEntity, DZDisclaimer, DZUser },
+	props: {
+		page: {
+			type: Number,
+			required: true
+		}
+	},
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
-			me: playerStore().getPlayerId,
-			page: 1 as number
+			me: playerStore().getPlayerId
 		};
 	},
 	methods: {
@@ -83,12 +88,19 @@ export default defineComponent({
 			}
 		},
 		changePage(i: number) {
-			this.page += i;
-			this.getRanking();
+			this.$router.push({
+				name: this.$route.name ?? '',
+				query: { ...this.$route.query, page: (this.page + i).toString() }
+			});
 		}
 	},
 	async created(): Promise<void> {
 		await this.getRanking();
+	},
+	watch: {
+		page() {
+			this.getRanking();
+		}
 	}
 });
 </script>
