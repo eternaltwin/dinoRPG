@@ -242,7 +242,7 @@ export async function declareWar(req: Request) {
 	const cost = computeWarCost(reputation, attacker.ingredients);
 
 	if (!cost.canAfford) {
-		throw new ExpectedError(translate('clanWar.notEnoughIngredients', authed, { cost: cost.totalValue }));
+		throw new ExpectedError(translate('clanWar.notEnoughIngredients', authed, { cost: cost.trueValue }));
 	}
 
 	await consumeWarCost(authed.clanId, cost);
