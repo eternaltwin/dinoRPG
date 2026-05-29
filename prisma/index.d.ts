@@ -27080,6 +27080,7 @@ export namespace Prisma {
     clanId: number | null
     dailyGridRewards: number | null
     archivedSiteId: number | null
+    displayedNotifications: number | null
     banCaseId: number | null
     discoveredSkills: number | null
   }
@@ -27090,6 +27091,7 @@ export namespace Prisma {
     clanId: number | null
     dailyGridRewards: number | null
     archivedSiteId: number | null
+    displayedNotifications: number | null
     banCaseId: number | null
     discoveredSkills: number[]
   }
@@ -27121,6 +27123,7 @@ export namespace Prisma {
     skipLevel: boolean | null
     shareArchivedData: boolean | null
     archivedSiteId: number | null
+    displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
     id: string | null
@@ -27153,6 +27156,7 @@ export namespace Prisma {
     skipLevel: boolean | null
     shareArchivedData: boolean | null
     archivedSiteId: number | null
+    displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
     id: string | null
@@ -27185,6 +27189,7 @@ export namespace Prisma {
     skipLevel: number
     shareArchivedData: number
     archivedSiteId: number
+    displayedNotifications: number
     banCaseId: number
     discoveredSkills: number
     lastVersionSeen: number
@@ -27199,6 +27204,7 @@ export namespace Prisma {
     clanId?: true
     dailyGridRewards?: true
     archivedSiteId?: true
+    displayedNotifications?: true
     banCaseId?: true
     discoveredSkills?: true
   }
@@ -27209,6 +27215,7 @@ export namespace Prisma {
     clanId?: true
     dailyGridRewards?: true
     archivedSiteId?: true
+    displayedNotifications?: true
     banCaseId?: true
     discoveredSkills?: true
   }
@@ -27240,6 +27247,7 @@ export namespace Prisma {
     skipLevel?: true
     shareArchivedData?: true
     archivedSiteId?: true
+    displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
     id?: true
@@ -27272,6 +27280,7 @@ export namespace Prisma {
     skipLevel?: true
     shareArchivedData?: true
     archivedSiteId?: true
+    displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
     id?: true
@@ -27304,6 +27313,7 @@ export namespace Prisma {
     skipLevel?: true
     shareArchivedData?: true
     archivedSiteId?: true
+    displayedNotifications?: true
     banCaseId?: true
     discoveredSkills?: true
     lastVersionSeen?: true
@@ -27424,6 +27434,7 @@ export namespace Prisma {
     skipLevel: boolean
     shareArchivedData: boolean
     archivedSiteId: number | null
+    displayedNotifications: number
     banCaseId: number | null
     discoveredSkills: number[]
     lastVersionSeen: string
@@ -27476,6 +27487,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
+    displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -27548,6 +27560,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
+    displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -27583,6 +27596,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
+    displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
@@ -27618,13 +27632,14 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
+    displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "shareArchivedData" | "archivedSiteId" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -27744,6 +27759,7 @@ export namespace Prisma {
       skipLevel: boolean
       shareArchivedData: boolean
       archivedSiteId: number | null
+      displayedNotifications: number
       banCaseId: number | null
       discoveredSkills: number[]
       lastVersionSeen: string
@@ -28235,6 +28251,7 @@ export namespace Prisma {
     readonly skipLevel: FieldRef<"Player", 'Boolean'>
     readonly shareArchivedData: FieldRef<"Player", 'Boolean'>
     readonly archivedSiteId: FieldRef<"Player", 'Int'>
+    readonly displayedNotifications: FieldRef<"Player", 'Int'>
     readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly lastVersionSeen: FieldRef<"Player", 'String'>
@@ -83302,6 +83319,7 @@ export namespace Prisma {
     skipLevel: 'skipLevel',
     shareArchivedData: 'shareArchivedData',
     archivedSiteId: 'archivedSiteId',
+    displayedNotifications: 'displayedNotifications',
     banCaseId: 'banCaseId',
     discoveredSkills: 'discoveredSkills',
     lastVersionSeen: 'lastVersionSeen',
@@ -85381,6 +85399,7 @@ export namespace Prisma {
     skipLevel?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
+    displayedNotifications?: IntFilter<"Player"> | number
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
@@ -85452,6 +85471,7 @@ export namespace Prisma {
     skipLevel?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrderInput | SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -85528,6 +85548,7 @@ export namespace Prisma {
     skipLevel?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
+    displayedNotifications?: IntFilter<"Player"> | number
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
@@ -85597,6 +85618,7 @@ export namespace Prisma {
     skipLevel?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrderInput | SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -85638,6 +85660,7 @@ export namespace Prisma {
     skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
     shareArchivedData?: BoolWithAggregatesFilter<"Player"> | boolean
     archivedSiteId?: IntNullableWithAggregatesFilter<"Player"> | number | null
+    displayedNotifications?: IntWithAggregatesFilter<"Player"> | number
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
@@ -89873,6 +89896,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -89943,6 +89967,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -90011,6 +90036,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -90081,6 +90107,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -90150,6 +90177,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -90182,6 +90210,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -90214,6 +90243,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -94748,6 +94778,7 @@ export namespace Prisma {
     skipLevel?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
@@ -94760,6 +94791,7 @@ export namespace Prisma {
     clanId?: SortOrder
     dailyGridRewards?: SortOrder
     archivedSiteId?: SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
   }
@@ -94791,6 +94823,7 @@ export namespace Prisma {
     skipLevel?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
@@ -94823,6 +94856,7 @@ export namespace Prisma {
     skipLevel?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
     id?: SortOrder
@@ -94834,6 +94868,7 @@ export namespace Prisma {
     clanId?: SortOrder
     dailyGridRewards?: SortOrder
     archivedSiteId?: SortOrder
+    displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
   }
@@ -103968,6 +104003,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -104037,6 +104073,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -104771,6 +104808,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -104840,6 +104878,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -107321,6 +107360,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -107390,6 +107430,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -107580,6 +107621,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -107649,6 +107691,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -108146,6 +108189,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -108215,6 +108259,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -108352,6 +108397,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -108421,6 +108467,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -110998,6 +111045,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -111067,6 +111115,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -111150,6 +111199,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -111219,6 +111269,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -111286,6 +111337,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -111355,6 +111407,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -111539,6 +111592,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -111608,6 +111662,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -112380,6 +112435,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112449,6 +112505,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -112532,6 +112589,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112601,6 +112659,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -112668,6 +112727,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -112737,6 +112797,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -112820,6 +112881,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -112889,6 +112951,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -112956,6 +113019,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113025,6 +113089,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113108,6 +113173,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113177,6 +113243,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113244,6 +113311,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113313,6 +113381,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113396,6 +113465,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113465,6 +113535,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113532,6 +113603,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113601,6 +113673,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113684,6 +113757,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -113753,6 +113827,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -113820,6 +113895,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -113889,6 +113965,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -113972,6 +114049,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -114041,6 +114119,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -114108,6 +114187,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114177,6 +114257,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114260,6 +114341,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -114329,6 +114411,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -114396,6 +114479,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114465,6 +114549,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114548,6 +114633,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -114617,6 +114703,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -114774,6 +114861,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -114843,6 +114931,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -114960,6 +115049,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -115029,6 +115119,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -115198,6 +115289,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -115267,6 +115359,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -115504,6 +115597,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -115573,6 +115667,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -115785,6 +115880,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -115854,6 +115950,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -116045,6 +116142,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -116114,6 +116212,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -116391,6 +116490,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -116460,6 +116560,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -116543,6 +116644,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -116612,6 +116714,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -116781,6 +116884,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -116850,6 +116954,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -117041,6 +117146,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -117110,6 +117216,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -117201,6 +117308,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -117270,6 +117378,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -117577,6 +117686,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -117645,6 +117755,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -117829,6 +117940,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -117898,6 +118010,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -118203,6 +118316,7 @@ export namespace Prisma {
     skipLevel?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
+    displayedNotifications?: IntFilter<"Player"> | number
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
@@ -118653,6 +118767,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -118722,6 +118837,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -118859,6 +118975,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -118928,6 +119045,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -119702,6 +119820,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -119771,6 +119890,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -119902,6 +120022,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -119971,6 +120092,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -120092,6 +120214,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -120161,6 +120284,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -120292,6 +120416,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -120361,6 +120486,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -120530,6 +120656,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -120599,6 +120726,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -120736,6 +120864,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -120805,6 +120934,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -121076,6 +121206,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -121145,6 +121276,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -121217,6 +121349,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -121286,6 +121419,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -121358,6 +121492,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -121427,6 +121562,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -121666,6 +121802,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -121735,6 +121872,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -121813,6 +121951,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -121882,6 +122021,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -121960,6 +122100,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -122029,6 +122170,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -122150,6 +122292,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -122219,6 +122362,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -122313,6 +122457,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -122382,6 +122527,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -122515,6 +122661,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -122584,6 +122731,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -122690,6 +122838,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -122759,6 +122908,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -122887,6 +123037,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -122956,6 +123107,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -123074,6 +123226,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -123143,6 +123296,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -123268,6 +123422,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -123337,6 +123492,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -123490,6 +123646,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -123559,6 +123716,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -123626,6 +123784,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -123695,6 +123854,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -123778,6 +123938,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -123847,6 +124008,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -123914,6 +124076,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -123983,6 +124146,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -124055,6 +124219,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -124124,6 +124289,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -124196,6 +124362,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -124265,6 +124432,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -124608,6 +124776,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -124677,6 +124846,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -124755,6 +124925,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -124824,6 +124995,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -124902,6 +125074,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -124971,6 +125144,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -125375,6 +125549,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -125444,6 +125619,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -125580,6 +125756,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -125649,6 +125826,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -126373,6 +126551,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -126442,6 +126621,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -126764,6 +126944,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -126833,6 +127014,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -127045,6 +127227,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
     id: string
@@ -127114,6 +127297,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -127197,6 +127381,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -127266,6 +127451,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -129917,6 +130103,7 @@ export namespace Prisma {
     skipLevel?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
+    displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
@@ -130192,6 +130379,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
@@ -130260,6 +130448,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
@@ -130328,6 +130517,7 @@ export namespace Prisma {
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
