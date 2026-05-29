@@ -86,6 +86,7 @@
 			"skipLevel": "Passer l'animation de gain de niveau",
 			"archivedSiteId": "Site historique",
 			"shareArchivedData": "Partager ses stats Twinoid",
+			"displayedNotifications": "Nombre de notifications affichées simultanément",
 			"connectedPlayers": "Joueurs connectés",
 			"totalDinoz": "Nombre total de Dinoz",
 			"totalPlayers": "Nombre total de joueurs"
