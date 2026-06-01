@@ -4079,7 +4079,7 @@
 			"treasure": "Tesoro del Clan",
 			"event": "Puntos del evento",
 			"war": "Reputación de guerra",
-			"castle": "Chateau construit"
+			"castle": "Castillo construido"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4156,7 +4156,7 @@
 			"castleTooltip": "Localización del castillo",
 			"disclaimerCastle": "Tu castillo se encuentra en **{place}**. Lleva allí a tus Dinos para defenderlo, ¡pero sobre todo no reveles su posición a tus enemigos!",
 			"declareWar": "Declarar la guerra a este clan",
-			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
+			"disclaimerAttack": "Atacar a este clan tendrá un costo de {cost} :gold:. Los ingredientes del tesoro de tu clan serán consumidos automáticamente para pagar este impuesto.",
 			"attack": "Ataque",
 			"defense": "Defensa",
 			"forfeit": "Rendirse",
@@ -4187,7 +4187,7 @@
 				"start": "Iniciar la reparación",
 				"stackFull": "Se alcanzó el número máximo de reparaciones simultáneas ({max}/{max})",
 				"castleDestroyed": "El castillo está destruido, primero debes reconstruirlo",
-				"castleFullLife": "El castillo ya está con el máximo de vida"
+				"castleFullLife": "El castillo ya está completamente reparado."
 			}
 		}
 	},
@@ -4228,8 +4228,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Puede eliminar mensajes del hilo de discusión",
 				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
 				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan",
-				"CLAN_BUILD_CASTLLE": "Puede construir el castillo",
-				"WAR_OFFICER": "Puede declarar guerras"
+				"WAR_OFFICER": "Puede declarar guerras",
+				"CLAN_BUILD_CASTLE": "Puede construir el castillo"
 			},
 			"nickname": "Apodo del jugador",
 			"save": "Guardar",
