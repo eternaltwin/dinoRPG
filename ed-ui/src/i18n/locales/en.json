@@ -4079,7 +4079,7 @@
 			"treasure": "Clan Treasure",
 			"event": "Event Score",
 			"war": "War Standing",
-			"castle": "Chateau construit"
+			"castle": "Castle built"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -4156,7 +4156,7 @@
 			"castleTooltip": "Place where your castle is located",
 			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
 			"declareWar": "Attack this clan",
-			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
+			"disclaimerAttack": "It will cost {cost} :gold: to declare war to this clan. The ingredients will be automatically taxed from the clan's treasury.",
 			"attack": "Attack",
 			"defense": "Defense",
 			"forfeit": "Withdraw",
@@ -4187,7 +4187,7 @@
 				"start": "Start repair",
 				"stackFull": "Maximum number of ongoing repairs reached ({max}/{max})",
 				"castleDestroyed": "Your castle is destroyed, build it back first.",
-				"castleFullLife": "Your castle is already at max health."
+				"castleFullLife": "Your castle is already fully repaired."
 			}
 		}
 	},
@@ -4228,8 +4228,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 				"CLAN_EDIT_BANNER": "Can change the clan banner",
 				"CLAN_EDIT_LANG": "Can change the language of the Clan",
-				"CLAN_BUILD_CASTLLE": "Can build the castle",
-				"WAR_OFFICER": "Can declare war"
+				"WAR_OFFICER": "Can declare war",
+				"CLAN_BUILD_CASTLE": "Can build the castle"
 			},
 			"nickname": "Player's nickname",
 			"save": "Save",
