@@ -62,7 +62,7 @@
 		"castleFullLife": "Eure Burg hat bereits die Höchstanzahl an :hpcastle:.",
 		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
 		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur.",
-		"alreadyInDefense": "Votre Dinoz fait déjà parti de la défense du château."
+		"alreadyInDefense": "Dein Dinoz ist bereits Teil der Burgverteidigung."
 	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
