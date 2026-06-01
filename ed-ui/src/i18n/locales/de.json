@@ -285,7 +285,7 @@
 			"reincarnation": "Reinkarnation",
 			"change_leader": "Zum Anführer küren",
 			"fb_tournament": "Turnier",
-			"war_defend": "Eure Burg verteidigen.",
+			"war_defend": "Burg verteidigen",
 			"war_remove": "Von der Verteidigung abziehen",
 			"war_attack": "Burg angreifen"
 		}
@@ -4078,7 +4078,8 @@
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
-			"war": "Kriegsansehen"
+			"war": "Kriegsansehen",
+			"castle": "Burg errichtet"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4155,11 +4156,16 @@
 			"castleTooltip": "An diesem Ort befindet sich eure Burg",
 			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
 			"declareWar": "Diesen Klan angreifen",
+			"disclaimerAttack": "Diesen Klan anzugreifen würde euch {cost} :gold: kosten. Die Zutaten aus der Klanschatzkammer werden automatisch verbraucht, um diese Gebühr zu bezahlen.",
 			"attack": "Angriff",
 			"defense": "Verteidigung",
 			"forfeit": "Sich geschlagen geben",
 			"counter": "Angreifen",
 			"defender": "{name}, Stufe {level}",
+			"type": "Typ",
+			"enemy": "Gegner",
+			"endDate": "Beendigungsdatum",
+			"action": "Aktion",
 			"repair": {
 				"title": "Burgreparaturen",
 				"active": "{count}/{max} Reparatur(en) im Gange",
@@ -4215,15 +4221,15 @@
 		"edit": {
 			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitglied <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> zu bearbeiten.",
 			"right": {
-				"MEMBER_EDIT": "Kann Rechte und Spitznamen der Mitglieder bearbeiten",
-				"PAGE_MANAGE": "Kann Klanseiten verwalten",
-				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Kann Beitrittsanfragen annehmen und ablehnen",
-				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
-				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
-				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
-				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten",
-				"CLAN_BUILD_CASTLLE": "Burg kann errichtet werden",
-				"WAR_OFFICER": "Peut déclarer des guerres"
+				"MEMBER_EDIT": "Darf Rechte und Spitznamen der Mitglieder bearbeiten",
+				"PAGE_MANAGE": "Darf Klanseiten verwalten",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Darf Beitrittsanfragen annehmen und ablehnen",
+				"MEMBER_EXCLUDE": "Darf Mitglieder ausschließen",
+				"DISCUSSION_DELETE_MESSAGE": "Darf Beiträge in Diskussionen löschen",
+				"CLAN_EDIT_BANNER": "Darf Klanbanner ändern",
+				"CLAN_EDIT_LANG": "Darf Klansprachen verwalten",
+				"WAR_OFFICER": "Darf Kriege erklären",
+				"CLAN_BUILD_CASTLE": "Darf die Burg errichten"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",

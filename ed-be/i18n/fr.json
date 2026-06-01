@@ -62,7 +62,7 @@
 		"castleFullLife": "Votre château a déjà le nombre maximum de :hp_castle:.",
 		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
 		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation.",
-		"alreadyInDefense": "Votre Dinoz fait déjà parti de la défense du château."
+		"alreadyInDefense": "Votre Dinoz fait déjà partie de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
