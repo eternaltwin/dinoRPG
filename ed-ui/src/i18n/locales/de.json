@@ -4079,7 +4079,7 @@
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
 			"war": "Kriegsansehen",
-			"castle": "Chateau construit"
+			"castle": "Burg errichtet"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4228,8 +4228,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Darf Beiträge in Diskussionen löschen",
 				"CLAN_EDIT_BANNER": "Darf Klanbanner ändern",
 				"CLAN_EDIT_LANG": "Darf Klansprachen verwalten",
-				"CLAN_BUILD_CASTLLE": "Darf die Burg errichten",
-				"WAR_OFFICER": "Darf Kriege erklären"
+				"WAR_OFFICER": "Darf Kriege erklären",
+				"CLAN_BUILD_CASTLE": "Darf die Burg errichten"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
