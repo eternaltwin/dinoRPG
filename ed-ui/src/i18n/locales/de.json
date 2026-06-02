@@ -86,6 +86,7 @@
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
 			"archivedSiteId": "Historisierte Seite",
 			"shareArchivedData": "Twinoid-Statistiken teilen",
+			"displayedNotifications": "Nombre de notifications affichées simultanément",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
@@ -2625,7 +2626,8 @@
 		"attention": "Achtung",
 		"accept": "Ja",
 		"reject": "Nein",
-		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?"
+		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?",
+		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4308,6 +4310,7 @@
 			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
+			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4440,7 +4443,8 @@
 			"gainEnergy": "**{fighter}** hat Energie wiederhergestellt und hat jetzt **{energy}** Energie.",
 			"newTurn": " **{fighter}** ist dran!",
 			"statusTurn": "Statusüberprüfung bevor **{fighter}** dran ist.",
-			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus."
+			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus.",
+			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
 		},
 		"event": {
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
