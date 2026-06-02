@@ -74,6 +74,11 @@ export type DetailedFight = {
 		attack: FightStats;
 		defense: FightStats;
 	};
+	/**
+	 * Tracker for passives that need to only be shown once
+	 * Format: {fighter}:{skillId}
+	 */
+	passivesTracker: Partial<Record<string, boolean>>;
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -244,7 +249,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					}
 				}
 			}
-		}
+		},
+		passivesTracker: {}
 	};
 
 	// If a timeout is present, display it.
