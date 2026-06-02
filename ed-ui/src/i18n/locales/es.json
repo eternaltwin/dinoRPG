@@ -86,6 +86,7 @@
 			"skipLevel": "Saltar la animación de subida de nivel",
 			"archivedSiteId": "Sitio web histórico",
 			"shareArchivedData": "Compartir sus estadísticas Twinoid",
+			"displayedNotifications": "Nombre de notifications affichées simultanément",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
@@ -2625,7 +2626,8 @@
 		"attention": "Atención",
 		"accept": "Sí",
 		"reject": "No",
-		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?"
+		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?",
+		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -4441,7 +4443,8 @@
 			"gainEnergy": "**{fighter}** recupera energía y ahora tiene **{energy}** energía.",
 			"newTurn": "Es el turno de **{fighter}**.",
 			"statusTurn": "Verificación de estados antes del turno de **{fighter}**",
-			"tired": "**{fighter}** está cansado y pierde su turno."
+			"tired": "**{fighter}** está cansado y pierde su turno.",
+			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
 		},
 		"event": {
 			"christmas_ticket": "Parece que este monstruo tenía un ticket de Navidad consigo. ¡Qué suerte!"
