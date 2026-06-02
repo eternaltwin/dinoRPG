@@ -61,7 +61,8 @@
 		"castleDestroyed": "El castillo ya está destruido.",
 		"castleFullLife": "Tu castillo ya tiene la cantidad máxima de :hp_castle:.",
 		"repairStackFull": "No puedes añadir más reparaciones.",
-		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación."
+		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación.",
+		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo."
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
@@ -319,7 +320,7 @@
 		"demons": "únicamente demonios"
 	},
 	"announce": {
-		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
+		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"UnavailableReason": {

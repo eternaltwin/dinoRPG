@@ -4081,7 +4081,7 @@
 			"treasure": "Trésor du Clan",
 			"event": "Score d'événement",
 			"war": "Réputation de guerre",
-			"castle": "Chateau construit"
+			"castle": "Château construit"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
@@ -4189,7 +4189,7 @@
 				"start": "Lancer la réparation",
 				"stackFull": "Nombre maximum de réparations simultanées atteint ({max}/{max})",
 				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
-				"castleFullLife": "Le château est déjà à pleine vie"
+				"castleFullLife": "Le château est déjà complètement réparé."
 			}
 		}
 	},
@@ -4230,8 +4230,8 @@
 				"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
 				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
 				"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
-				"CLAN_BUILD_CASTLLE": "Peut construire le chateau",
-				"WAR_OFFICER": "Peut déclarer des guerres"
+				"WAR_OFFICER": "Peut déclarer des guerres",
+				"CLAN_BUILD_CASTLE": "Peut construire le château"
 			},
 			"nickname": "Surnom du joueur",
 			"save": "Enregistrer",
