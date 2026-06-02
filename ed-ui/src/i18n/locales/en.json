@@ -86,6 +86,7 @@
 			"skipLevel": "Skip level up animation",
 			"archivedSiteId": "Historical Site",
 			"shareArchivedData": "Share Twinoid Stats",
+			"displayedNotifications": "Nombre de notifications affichées simultanément",
 			"connectedPlayers": "Online Players",
 			"totalDinoz": "Total Number of Dinoz",
 			"totalPlayers": "Total Number of Players"
@@ -2625,7 +2626,8 @@
 		"attention": "Attention",
 		"accept": "Yes",
 		"reject": "No",
-		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?"
+		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?",
+		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -4309,6 +4311,7 @@
 			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
 			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
 			"WAR_WON": "We won the war against {name}!",
+			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -4441,7 +4444,8 @@
 			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy.",
 			"newTurn": "It is **{fighter}**'s turn.",
 			"statusTurn": "Verification of status before the turn of **{fighter}**",
-			"tired": "**{fighter}** is tired and passed its turn."
+			"tired": "**{fighter}** is tired and passed its turn.",
+			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
 		},
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
