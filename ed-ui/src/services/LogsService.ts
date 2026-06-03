@@ -19,5 +19,9 @@ export const LogsService = {
 	async listByDate(type: LogType | null, fromDate: Date | null): Promise<LogListResponse> {
 		const res = await http().get(`/log/list/${type}/${fromDate}`);
 		return res.data;
+	},
+	async listWarLogs(page: number, clanId: number | null): Promise<LogListResponse> {
+		const res = await http().get(`/log/war/${page}/${clanId}`);
+		return res.data;
 	}
 };

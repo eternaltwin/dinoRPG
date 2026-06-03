@@ -95,7 +95,16 @@ export const LogType = {
   OfferExpired: 'OfferExpired',
   OfferWon: 'OfferWon',
   GridFinished: 'GridFinished',
-  ItemFound: 'ItemFound'
+  ItemFound: 'ItemFound',
+  ClanWarCastleBuilt: 'ClanWarCastleBuilt',
+  ClanWarDeclared: 'ClanWarDeclared',
+  ClanWarForfeited: 'ClanWarForfeited',
+  ClanWarDefenderAdded: 'ClanWarDefenderAdded',
+  ClanWarDefenderRemoved: 'ClanWarDefenderRemoved',
+  ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated',
+  ClanWarCastleAttacked: 'ClanWarCastleAttacked',
+  ClanWarCastleRepaired: 'ClanWarCastleRepaired',
+  ClanWarResolved: 'ClanWarResolved'
 };
 
 export const PantheonMotif = {

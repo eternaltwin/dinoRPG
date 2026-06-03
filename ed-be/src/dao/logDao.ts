@@ -69,4 +69,32 @@ const getLogListByDate = async (type?: LogType, fromDate?: Date) => {
 	});
 };
 
-export { createLog, createLogForMultipleDinoz, getLogList, getLogListAll, getLogListByDate };
+const warLogTypes: LogType[] = [
+	LogType.ClanWarCastleBuilt,
+	LogType.ClanWarDeclared,
+	LogType.ClanWarForfeited,
+	LogType.ClanWarDefenderAdded,
+	LogType.ClanWarDefenderRemoved,
+	LogType.ClanWarDefenseOrderUpdated,
+	LogType.ClanWarCastleAttacked,
+	LogType.ClanWarCastleRepaired,
+	LogType.ClanWarResolved
+];
+
+const getWarLogList = async (page: number, clanId?: string) => {
+	return prisma.log.findMany({
+		where: {
+			type: { in: warLogTypes },
+			...(clanId ? { values: { has: clanId } } : {})
+		},
+		orderBy: { createdAt: 'desc' },
+		skip: (page - 1) * 20,
+		take: 20,
+		include: {
+			player: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true } }
+		}
+	});
+};
+
+export { createLog, createLogForMultipleDinoz, getLogList, getLogListAll, getLogListByDate, getWarLogList };

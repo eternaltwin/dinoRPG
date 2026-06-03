@@ -1091,6 +1091,15 @@ enum LogType {
   OfferWon
   GridFinished
   ItemFound
+  ClanWarCastleBuilt
+  ClanWarDeclared
+  ClanWarForfeited
+  ClanWarDefenderAdded
+  ClanWarDefenderRemoved
+  ClanWarDefenseOrderUpdated
+  ClanWarCastleAttacked
+  ClanWarCastleRepaired
+  ClanWarResolved
 }
 
 enum NotificationSeverity {

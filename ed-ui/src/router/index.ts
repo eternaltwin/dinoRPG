@@ -204,6 +204,11 @@ const router = createRouter({
 							component: () => import('../components/admin/LogsView.vue')
 						},
 						{
+							path: 'war-logs',
+							name: 'WarLogs',
+							component: () => import('../components/admin/WarLogsView.vue')
+						},
+						{
 							path: 'gamestat',
 							name: 'GameStats',
 							component: () => import('../components/admin/GameStats.vue')
