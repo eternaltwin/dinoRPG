@@ -2607,7 +2607,8 @@
 		"clans": "Clans",
 		"completion": "Complétion",
 		"pantheon": "Panthéon",
-		"stats": "Stats"
+		"stats": "Stats",
+		"wars": "Guerres"
 	},
 	"layout": {
 		"fx": "Statuts",
@@ -4081,7 +4082,11 @@
 			"treasure": "Trésor du Clan",
 			"event": "Score d'événement",
 			"war": "Réputation de guerre",
-			"castle": "Château construit"
+			"castle": "Château construit",
+			"warAttacker": "Attaquant",
+			"warDefender": "Défenseur",
+			"warStart": "Date de début",
+			"warResult": "Résultat"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
@@ -4118,6 +4123,12 @@
 			"clanEvent": "Classement d'événement",
 			"clanTreasure": "Classement de trésor",
 			"clanWar": "Classement de guerre"
+		},
+		"war": {
+			"forfeit": "Forfait",
+			"ongoing": "En cours",
+			"castleDestroyed": "Chateau détruit",
+			"timeout": "Défendu"
 		}
 	},
 	"clan": {

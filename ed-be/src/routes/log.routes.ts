@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
-import { getAllLogs, getLogs, getLogsByDate } from '../business/logService.js';
+import { getAllLogs, getLogs, getLogsByDate, getWarLogs } from '../business/logService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkRole } from '../utils/index.js';
 import sendError from '../utils/sendErrors.js';
@@ -52,6 +52,24 @@ routes.get(
 
 		try {
 			const logs = await getLogsByDate(req);
+			return res.status(200).send(logs);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/war/:page/:clanId`,
+	[param('clanId').exists(), param('page').isInt({ min: 1 })],
+	checkRole([AdminRole.ADMIN]),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const logs = await getWarLogs(req);
 			return res.status(200).send(logs);
 		} catch (err) {
 			sendError(res, err);

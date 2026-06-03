@@ -151,7 +151,16 @@ export const LogType: {
   readonly OfferExpired: 'OfferExpired';
   readonly OfferWon: 'OfferWon';
   readonly GridFinished: 'GridFinished';
-  readonly ItemFound: 'ItemFound'
+  readonly ItemFound: 'ItemFound';
+  readonly ClanWarCastleBuilt: 'ClanWarCastleBuilt';
+  readonly ClanWarDeclared: 'ClanWarDeclared';
+  readonly ClanWarForfeited: 'ClanWarForfeited';
+  readonly ClanWarDefenderAdded: 'ClanWarDefenderAdded';
+  readonly ClanWarDefenderRemoved: 'ClanWarDefenderRemoved';
+  readonly ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated';
+  readonly ClanWarCastleAttacked: 'ClanWarCastleAttacked';
+  readonly ClanWarCastleRepaired: 'ClanWarCastleRepaired';
+  readonly ClanWarResolved: 'ClanWarResolved'
 };
 
 export namespace LogType {
@@ -201,7 +210,16 @@ export namespace LogType {
   export type OfferExpired = 'OfferExpired';
   export type OfferWon = 'OfferWon';
   export type GridFinished = 'GridFinished';
-  export type ItemFound = 'ItemFound'
+  export type ItemFound = 'ItemFound';
+  export type ClanWarCastleBuilt = 'ClanWarCastleBuilt';
+  export type ClanWarDeclared = 'ClanWarDeclared';
+  export type ClanWarForfeited = 'ClanWarForfeited';
+  export type ClanWarDefenderAdded = 'ClanWarDefenderAdded';
+  export type ClanWarDefenderRemoved = 'ClanWarDefenderRemoved';
+  export type ClanWarDefenseOrderUpdated = 'ClanWarDefenseOrderUpdated';
+  export type ClanWarCastleAttacked = 'ClanWarCastleAttacked';
+  export type ClanWarCastleRepaired = 'ClanWarCastleRepaired';
+  export type ClanWarResolved = 'ClanWarResolved'
 }
 
 export type LogType = typeof LogType[keyof typeof LogType];

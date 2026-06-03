@@ -40,6 +40,15 @@
 		<li>
 			<RouterLink
 				:to="{
+					name: 'RankingWars',
+					query: { page: 1 }
+				}"
+				>{{ $t('tabs.wars') }}</RouterLink
+			>
+		</li>
+		<li>
+			<RouterLink
+				:to="{
 					name: 'RankingPantheon'
 				}"
 				>{{ $t('tabs.pantheon') }}</RouterLink

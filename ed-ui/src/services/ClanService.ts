@@ -15,6 +15,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
+import { WarHistoryResponse } from '@drpg/core/returnTypes/WarHistory';
 
 export const ClanService = {
 	async getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
@@ -183,6 +184,10 @@ export const ClanService = {
 	},
 	async startRepair(hpPerTick: number, frequency: number, tick: number): Promise<void> {
 		const res = await http().put(`/clan/war/repair`, { hpPerTick: hpPerTick, frequency: frequency, tick: tick });
+		return res.data;
+	},
+	async getWarHistory(page: number): Promise<WarHistoryResponse> {
+		const res = await http().get(`/ranking/war/history/${page}`);
 		return res.data;
 	}
 };
