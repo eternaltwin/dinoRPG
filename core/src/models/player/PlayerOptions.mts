@@ -7,4 +7,5 @@ export interface PlayerOptions {
 	skipLevel: boolean;
 	archivedSiteId: number | null;
 	shareArchivedData: boolean;
+	displayedNotifications: number;
 }

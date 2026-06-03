@@ -65,7 +65,6 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList, statusList } from '../../constants/index.js';
 import { playerStore, useDinozStore } from '../../store/index.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
@@ -88,15 +87,13 @@ export default defineComponent({
 	computed: {
 		missionName(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			const myDinoz = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+			const myDinoz = useDinozStore().getDinoz(+dinozId);
 			const missionId = myDinoz?.missionId;
 			return missionsList[missionId ?? -1];
 		},
 		validator(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			const myDinoz = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+			const myDinoz = useDinozStore().getDinoz(+dinozId);
 			return typeof myDinoz?.missionHUD?.target === 'string'
 				? myDinoz.missionHUD?.target
 				: typeof myDinoz?.missionHUD?.target[0] === 'string'

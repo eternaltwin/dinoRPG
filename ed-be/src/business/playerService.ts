@@ -32,6 +32,7 @@ import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 import { ETUser } from '@drpg/core/models/player/ETUser';
 import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
 import { GLOBAL } from '../context.js';
+import { eventState } from './clanWar.js';
 
 /**
  * @summary Get data from player on login
@@ -66,7 +67,8 @@ export async function getCommonData(req: Request) {
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel,
 			archivedSiteId: playerCommonData.archivedSiteId,
-			shareArchivedData: playerCommonData.shareArchivedData
+			shareArchivedData: playerCommonData.shareArchivedData,
+			displayedNotifications: playerCommonData.displayedNotifications
 		},
 		role: playerCommonData.role,
 		priest: playerCommonData.priest,
@@ -77,6 +79,9 @@ export async function getCommonData(req: Request) {
 
 	// Order dinoz
 	commonData.dinoz = orderDinozList(commonData.dinoz);
+
+	const clanEvent = await eventState();
+	commonData.clanEvent = clanEvent;
 
 	return commonData;
 }
@@ -318,5 +323,12 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'shareArchivedData') {
 		await setPlayer(authed.id, { shareArchivedData: req.body.setting });
+	}
+	if (req.params.setting === 'displayedNotifications') {
+		if (typeof req.body.setting !== 'number' || req.body.setting < 1) {
+			throw new ExpectedError('Invalid number of displayed notifications');
+		}
+
+		await setPlayer(authed.id, { displayedNotifications: req.body.setting });
 	}
 }

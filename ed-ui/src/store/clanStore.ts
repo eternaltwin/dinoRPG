@@ -2,18 +2,31 @@ import { defineStore } from 'pinia';
 import { StoreClan } from '@drpg/core/models/store/StoreClan';
 import { ClanService } from '../services';
 import { LocalesEnum } from '../i18n';
+import { playerStore } from './playerStore';
 
 export const clanStore = defineStore('clanStore', {
 	state: (): StoreClan => ({
-		clan: undefined
+		clan: undefined,
+		myClan: undefined,
+		clanEvent: undefined
 	}),
 	getters: {
 		getClan: (state: StoreClan) => state.clan,
-		getClanId: (state: StoreClan) => state.clan?.id ?? 0
+		getMyclan: (state: StoreClan) => state.myClan,
+		getClanId: (state: StoreClan) => state.clan?.id ?? 0,
+		getOngoingEvent: (state: StoreClan) => {
+			if (state.clanEvent && state.clanEvent.endDate > new Date()) {
+				return state.clanEvent.id;
+			}
+		}
 	},
 	actions: {
 		async loadClan(clanId: number) {
+			this.clan = undefined;
 			this.clan = await ClanService.getClan(clanId);
+			if (this.clan.id === playerStore().clanId) {
+				this.myClan = this.clan;
+			}
 		},
 		async updateLang(clanId: number, languages: LocalesEnum[]) {
 			if (this.clan) {
@@ -24,6 +37,9 @@ export const clanStore = defineStore('clanStore', {
 		updateBanner(bannerUrl: string): void {
 			if (!this.clan) return;
 			this.clan.bannerUrl = bannerUrl;
+		},
+		setClanEvent(clanEvent: { id: string; endDate: Date } | undefined): void {
+			this.clanEvent = clanEvent;
 		}
 	},
 	persist: {

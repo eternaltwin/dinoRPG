@@ -1,6 +1,10 @@
 <template>
 	<div id="accountList">
-		<div class="money" v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }">
+		<div
+			class="money"
+			:class="war ? 'war' : ''"
+			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
+		>
 			{{ beautifulMoney }}
 			<img :src="getImgURL('icons', 'small_gold')" alt="or" />
 		</div>
@@ -79,6 +83,7 @@ import { defineComponent } from 'vue';
 import DinozList from '../../components/dinoz/DinozList.vue';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -87,7 +92,9 @@ export default defineComponent({
 			playerStore: playerStore(),
 
 			money: undefined as number | undefined,
-			clanId: undefined as number | undefined
+			clanId: undefined as number | undefined,
+			clanStore: clanStore(),
+			war: false as boolean
 		};
 	},
 	components: {
@@ -181,6 +188,7 @@ export default defineComponent({
 	mounted(): void {
 		this.money = this.playerStore.getMoney;
 		this.clanId = this.playerStore.getClanId;
+		this.war = !!this.clanStore.clanEvent;
 	}
 });
 </script>
@@ -259,6 +267,9 @@ export default defineComponent({
 		img {
 			vertical-align: -5%;
 		}
+	}
+	.war {
+		background-image: url('../../assets/background/goldbox_war.webp');
 	}
 	.iconMenu {
 		width: 143px;

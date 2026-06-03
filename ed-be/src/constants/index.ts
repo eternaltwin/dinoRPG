@@ -20,6 +20,7 @@ export const apiRoutes = {
 	testingRoute: '/api/v1/testing',
 	eternalTwinRoute: '/api/v1/eternaltwin',
 	clanRoutes: '/api/v1/clan',
+	clanWarRoutes: '/api/v1/clan/war',
 	moderation: '/api/v1/moderation',
 	pantheon: '/api/v1/pantheon',
 	messagerie: '/api/v1/messagerie',

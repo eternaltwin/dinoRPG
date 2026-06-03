@@ -69,7 +69,7 @@
 						class="link"
 						:to="{
 							name: 'RankingPlayers',
-							params: { pageLoaded: 1 }
+							query: { page: 1 }
 						}"
 					>
 						<svg
@@ -250,7 +250,7 @@ export default defineComponent({
 			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 			deleteCookie(`x-drpg-${channel}-token`);
 			deleteCookie(`x-drpg-${channel}-user`);
-			useDinozStore().$reset();
+			useDinozStore().resetStore();
 			this.playerStore.$reset();
 			useMenuStore().setTwinoMenuOpened(false);
 		},
@@ -413,6 +413,16 @@ export default defineComponent({
 						message: this.$t(`notification.clanApplyAccepted`, {
 							name: notification.message
 						}),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
+				case NotificationSeverity.clanWar:
+					// eslint-disable-next-line no-case-declarations
+					const clanWar = JSON.parse(notification.message);
+					return {
+						id: notification.id,
+						message: this.$t('notification.clanWar.' + clanWar.clanEvent, { targetClan: clanWar.targetClan }),
 						severity: notification.severity,
 						link: notification.link,
 						date: notification.date

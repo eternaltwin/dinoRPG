@@ -2,7 +2,7 @@ import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.j
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { PismaClientLocal } from '../prisma.js';
-import { getRandomNumber, shuffle } from './tools.js';
+import { getRandomInteger, shuffle } from './tools.js';
 import {
 	MetaData,
 	RawTournamentMatch,
@@ -18,7 +18,7 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { addMoney } from '../dao/playerDao.js';
 import { DISCORD, LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob, scheduledJobs } from 'node-schedule';
 import dayjs from 'dayjs';
 import { createNews } from '../dao/newsDao.js';
 import { translateTarget } from './translate.js';
@@ -29,7 +29,7 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { $Enums, NotificationSeverity, Tournament } from '@drpg/prisma';
+import { $Enums, ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -47,6 +47,7 @@ class TournamentManager {
 	private readonly NUMBER_OF_POOLS = 4;
 	private readonly TEAMS_PER_POOL = this.QUALIFIED_TEAMS / this.NUMBER_OF_POOLS;
 	private readonly MATCHES_PER_POOL = this.TEAMS_PER_POOL / 2;
+	private readonly NEXT_TOURNAMENT_DELAY_MS = 1000;
 
 	constructor(
 		private tournamentId: string,
@@ -633,20 +634,20 @@ class TournamentManager {
 				nextRound: nextTournament.time
 			}
 		});
-		scheduleJob('Next tournament', nextTournament.time, () => this.initializeTournament(prisma));
+		scheduleJob('Next tournament', nextTournament.time, () => this.initializeTournamentIfNoActiveClanWar(prisma));
 	}
 
 	static async createTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.toDate();
 
-		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
+		const tournamentFormat = formatTID[getRandomInteger(0, Object.keys(formatTID).length - 1) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(1, Math.min(tournamentFormat.teamRace.length, 3));
+		const teamSize = tournamentFormat.teamSize ?? getRandomInteger(1, Math.min(tournamentFormat.teamRace.length, 3));
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = 1;
 		const levelLimit = 50;
-		const poison = tournamentFormat.poison ?? getRandomNumber(1, 2) === 1;
+		const poison = tournamentFormat.poison ?? getRandomInteger(0, 1) === 0;
 
 		const endQualif = today.add(5, 'minutes').toDate();
 		const newTournament = await prisma.tournament.create({
@@ -780,6 +781,55 @@ class TournamentManager {
 		return tournament;
 	}
 
+	private async getActiveClanWarEndDate(prisma: PismaClientLocal): Promise<Date | null> {
+		const activeWar = await prisma.clanEvent.findFirst({
+			where: {
+				eventType: ClanEventType.war,
+				endDate: {
+					gt: new Date()
+				}
+			},
+			orderBy: {
+				endDate: 'asc'
+			},
+			select: {
+				endDate: true
+			}
+		});
+
+		return activeWar?.endDate ?? null;
+	}
+
+	private async rescheduleNextTournamentCreation(prisma: PismaClientLocal, postponedUntil: Date): Promise<void> {
+		await prisma.tournament.update({
+			where: {
+				id: this.tournamentId
+			},
+			data: {
+				nextRound: postponedUntil
+			}
+		});
+
+		scheduleJob(`tournament_${this.tournamentId}`, postponedUntil, () =>
+			this.initializeTournamentIfNoActiveClanWar(prisma)
+		);
+	}
+
+	private async initializeTournamentIfNoActiveClanWar(prisma: PismaClientLocal): Promise<TournamentManager | null> {
+		const warEndDate = await this.getActiveClanWarEndDate(prisma);
+
+		if (warEndDate) {
+			const postponedUntil = new Date(warEndDate.getTime() + this.NEXT_TOURNAMENT_DELAY_MS);
+			await this.rescheduleNextTournamentCreation(prisma, postponedUntil);
+			LOGGER.log(
+				`Tournament ${this.tournamentId} next creation delayed to ${postponedUntil} because clan war is active until ${warEndDate}.`
+			);
+			return null;
+		}
+
+		return this.initializeTournament(prisma);
+	}
+
 	static async createFirstTournament(prisma: PismaClientLocal) {
 		// Check if there is at least:
 		// - 5000 dinoz active
@@ -843,6 +893,67 @@ class TournamentManager {
 
 	static async getCurrentTournamentState(prisma: PismaClientLocal): Promise<TournamentState | null> {
 		return TournamentManager.getCurrentTournament(prisma);
+	}
+
+	static async postponeNextTournamentIfPending(prisma: PismaClientLocal, postponedUntil: Date): Promise<boolean> {
+		const latestTournament = await prisma.tournament.findFirst({
+			orderBy: {
+				date: 'desc'
+			},
+			select: {
+				id: true,
+				date: true,
+				nextRound: true
+			}
+		});
+
+		if (!latestTournament || !latestTournament.nextRound) {
+			return false;
+		}
+
+		const manager = new TournamentManager(latestTournament.id, latestTournament.date);
+		const currentState = await manager.getCurrentState(prisma);
+
+		if (currentState.round !== 8) {
+			LOGGER.log(
+				`Tournament ${latestTournament.id} is ongoing (round ${currentState.round}), next tournament postponing skipped.`
+			);
+			return false;
+		}
+
+		if (postponedUntil <= latestTournament.nextRound) {
+			LOGGER.log(
+				`Tournament ${latestTournament.id} next creation already planned for ${latestTournament.nextRound}, postponing skipped.`
+			);
+			return false;
+		}
+
+		const delayMs = postponedUntil.getTime() - latestTournament.nextRound.getTime();
+		const postponedDate = new Date(latestTournament.date.getTime() + delayMs);
+
+		await prisma.tournament.update({
+			where: {
+				id: latestTournament.id
+			},
+			data: {
+				date: postponedDate,
+				nextRound: postponedUntil
+			}
+		});
+
+		const jobName = `tournament_${latestTournament.id}`;
+		scheduledJobs[jobName]?.cancel();
+		scheduleJob(jobName, postponedUntil, () => manager.initializeTournamentIfNoActiveClanWar(prisma));
+
+		LOGGER.log(
+			`Tournament ${latestTournament.id} next creation postponed from ${latestTournament.nextRound} to ${postponedUntil}.`
+		);
+
+		return true;
+	}
+
+	static async postponeNextTournamentCreation(prisma: PismaClientLocal, postponedUntil: Date): Promise<boolean> {
+		return TournamentManager.postponeNextTournamentIfPending(prisma, postponedUntil);
 	}
 
 	static async getActiveTeams(prisma: PismaClientLocal) {
@@ -935,17 +1046,18 @@ LIMIT ${64};`;
 			return manager;
 		} else if (currentState.nextScheduledMatch && currentState.round === 8) {
 			if (currentState.nextScheduledMatch <= new Date()) {
-				await manager.initializeTournament(prisma);
+				await manager.initializeTournamentIfNoActiveClanWar(prisma);
 				return manager;
 			}
 			LOGGER.log(`Création du prochain tournois prévu pour ${currentState.nextScheduledMatch}`);
 			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () =>
-				manager.initializeTournament(prisma)
+				manager.initializeTournamentIfNoActiveClanWar(prisma)
 			);
 			return manager;
 		} else {
 			LOGGER.log(`Le tournoi ${activeTournament.id} est déjà terminé, création d'un nouveau.`);
-			return await manager.initializeTournament(prisma);
+			await manager.initializeTournamentIfNoActiveClanWar(prisma);
+			return manager;
 		}
 	}
 

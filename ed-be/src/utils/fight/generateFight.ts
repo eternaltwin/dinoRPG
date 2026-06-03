@@ -14,7 +14,6 @@ import {
 	hasSkill
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
-import { randomBetweenSeeded } from './randomBetween.js';
 import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
@@ -36,6 +35,7 @@ import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import seedrandom from 'seedrandom';
 import { LOGGER } from '../../context.js';
+import { getRandomInteger } from '../tools.js';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -398,7 +398,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		if (fighter.skills.some(skill => skill.id === Skill.MEDECINE)) {
 			// Heal beteen 0 and 3HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 0, 3), undefined, LifeEffect.Heal);
+			heal(fightData, fighter, getRandomInteger(0, 3, fightData.rng), undefined, LifeEffect.Heal);
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.BRANCARDIER)) {
@@ -412,7 +412,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				const ally = allies[Math.floor(fightData.rng() * allies.length)];
 
 				// Heal 1-5HP
-				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, 5), undefined, LifeEffect.Heal);
+				heal(fightData, ally, getRandomInteger(1, 5, fightData.rng), undefined, LifeEffect.Heal);
 			}
 		}
 
@@ -458,7 +458,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			goldLost: fightData.fighters
 				.filter(fighter => !fighter.attacker && fighter.goldStolen?.[dinoz.id])
 				.reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
-			statusGained: dinoz.permanentStatusGained
+			statusGained: dinoz.permanentStatusGained,
+			escaped: dinoz.escaped ?? false
 		}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters
@@ -469,7 +470,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,
 			goldLost: 0,
-			statusGained: dinoz.permanentStatusGained
+			statusGained: dinoz.permanentStatusGained,
+			escaped: dinoz.escaped ?? false
 		}));
 
 	// Get catches data
@@ -497,6 +499,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				type: f.type,
 				name: f.name,
 				display: f.display,
+				level: f.level,
+				survived: f.hp > 0,
 				costume: f.costume?.skin,
 				dark: f.dark,
 				size: f.size,

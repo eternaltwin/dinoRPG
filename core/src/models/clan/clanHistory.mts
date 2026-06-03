@@ -8,5 +8,6 @@ export interface ClanHistory {
 	authorId?: string;
 	author?: Pick<Player, 'name' | 'id'>;
 	authorName: string;
+	authorMessage: string;
 	type: ClanHistoryType;
 }

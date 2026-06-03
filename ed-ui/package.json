@@ -1,6 +1,6 @@
 {
   "name": "ed-ui",
-  "version": "0.17.31",
+  "version": "0.18.3",
   "private": true,
   "scripts": {
     "serve": "yarn concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
@@ -29,6 +29,7 @@
     "url-join": "^5.0.0",
     "vue": "^3.3.8",
     "vue-chartjs": "^5.3.1",
+    "vue-draggable-plus": "^0.6.1",
     "vue-i18n": "^11.1.12",
     "vue-router": "^4.2.5",
     "vue-tippy": "^6.3.1",

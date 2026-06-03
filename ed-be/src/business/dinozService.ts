@@ -94,13 +94,14 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
 import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
-import { getRandomNumber } from '../utils/index.js';
+import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
+import { currentWar } from './clanWar.js';
 
 /**
  * @summary Get available action from dinoz
@@ -136,6 +137,10 @@ export async function getAvailableActions(
 		return [];
 	}
 
+	if (dinoz.unavailableReason === UnavailableReason.restingAttack) {
+		return [];
+	}
+
 	// Nothing else if dinoz is being sold
 	if (dinoz.unavailableReason === UnavailableReason.selling) {
 		return [actionList[Action.MARKET]];
@@ -149,6 +154,40 @@ export async function getAvailableActions(
 	// Stop rest
 	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
+	}
+
+	// War actions
+	const currentWar = await prisma.clanEvent.findFirst({
+		where: {
+			endDate: {
+				gt: new Date()
+			}
+		}
+	});
+	if (
+		currentWar !== null &&
+		player.clan &&
+		player.clan.castle &&
+		isAlive(dinoz) &&
+		dinoz.fight &&
+		dinoz.followers.filter(f => !f.fight).length <= 0 &&
+		!dinoz.leaderId
+	) {
+		// Defend
+		if (dinoz.placeId === player.clan.castle.placeId && !dinoz.leaderId && dinoz.followers.length === 0) {
+			if (!player.clan.castle.defender.some(d => d.id === dinoz.id)) {
+				availableActions.push(actionList[Action.WAR_DEFEND]);
+			} else if (dinoz.unavailableReason === UnavailableReason.defending) {
+				return [actionList[Action.WAR_REMOVE]];
+			}
+		}
+
+		if (
+			player.clan.attackingWars.length > 0 &&
+			player.clan.attackingWars[0].defender.castle.placeId === dinoz.placeId
+		) {
+			availableActions.push(actionList[Action.WAR_ATTACK]);
+		}
 	}
 
 	// Leaders actions
@@ -886,20 +925,20 @@ export async function digWithDinoz(req: Request) {
 		}
 	}
 	if (rewards.length === 0 && !fight) {
-		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(0, 125) }];
+		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomInteger(0, 125) }];
 	}
 	await rewarder(rewards, [dinozData], authed.id, false);
 
-	//Broke shovel
+	// Always break normal shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_SHOVEL);
 		await setSpecificStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 	}
 
-	//Try to broke enhanced shovel (75% of keeping it)
+	// Try to break enhanced shovel (75% of keeping it)
 	if (
-		getRandomNumber(0, 100) > 75 &&
+		getRandomNumber(0, 100) >= 75 &&
 		dinozData.status.some(status => status.statusId === DinozStatusId.ENHANCED_SHOVEL)
 	) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
@@ -1098,35 +1137,27 @@ export async function gatherWithDinoz(req: Request) {
 
 	for (const i of returnGrid.rewards.ingredients) {
 		const ingredientToReward = player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
-		let isMaxQuantity = false;
-		let currentQuantity = ingredientToReward ? ingredientToReward.quantity : 0;
+		const effectiveMaxQuantity = player.shopKeeper ? Math.round(i.maxQuantity * 1.5) : i.maxQuantity;
+		let currentQuantity = ingredientToReward?.quantity ?? 0;
 
-		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
-			if (!ingredientToReward.playerId) {
+		if (currentQuantity < effectiveMaxQuantity) {
+			if (ingredientToReward && !ingredientToReward.playerId) {
 				throw new ExpectedError(`Ingredient ${ingredientToReward.ingredientId} doesn't belong to any player.`);
 			}
-			await increaseIngredientQuantity(ingredientToReward.playerId, ingredientToReward.ingredientId, 1);
-			// Update quantity in case multiple were obtained and the max was reached
-			currentQuantity += 1;
-			ingredientToReward.quantity = currentQuantity;
 
-			isMaxQuantity = ingredientToReward.quantity >= i.maxQuantity;
-		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
-			// Do nothing
-			currentQuantity = ingredientToReward.quantity;
-			isMaxQuantity = true;
-		} else {
-			currentQuantity = 1;
-			player.ingredients.push(
-				await setIngredient({
-					player: { connect: { id: player.id } },
-					ingredientId: i.ingredientId,
-					quantity: currentQuantity
-				})
-			);
+			const updated = await increaseIngredientQuantity(player.id, i.ingredientId, 1);
+			currentQuantity = updated.quantity;
+
+			if (ingredientToReward) {
+				ingredientToReward.quantity = currentQuantity;
+			} else {
+				player.ingredients.push(updated);
+			}
 		}
-		// Add or update the ingredient in ingredientsAtMaxQuantity
+
+		const isMaxQuantity = currentQuantity >= effectiveMaxQuantity;
 		const existingEntry = returnGrid.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === i.ingredientId);
+
 		if (existingEntry) {
 			existingEntry.quantity = currentQuantity;
 			existingEntry.isMaxQuantity = isMaxQuantity;
@@ -1134,7 +1165,7 @@ export async function gatherWithDinoz(req: Request) {
 			returnGrid.ingredientsAtMaxQuantity.push({
 				ingredientId: i.ingredientId,
 				quantity: currentQuantity,
-				isMaxQuantity: isMaxQuantity
+				isMaxQuantity
 			});
 		}
 	}

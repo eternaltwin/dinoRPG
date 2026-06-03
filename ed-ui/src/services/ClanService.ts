@@ -1,4 +1,11 @@
-import { ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import {
+	AttackStatus,
+	Castle,
+	ClanForSearch,
+	ClanLite,
+	PlayerClanJoinRequest,
+	treasureIngredient
+} from '@drpg/core/models/clan/clan';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
@@ -6,6 +13,8 @@ import { http } from '../utils/index.js';
 import { LocalesEnum } from '../i18n';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
 
 export const ClanService = {
 	async getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
@@ -112,7 +121,7 @@ export const ClanService = {
 		const res = await http().get(`/clan/${clanId}/messages/${page}`);
 		return res.data;
 	},
-	async getClanHistory(id: number, page: number) {
+	async getClanHistory(id: number, page: number): Promise<{ history: ClanHistory[]; count: number }> {
 		const res = await http().get(`/clan/${id}/history/${page}`);
 		return res.data;
 	},
@@ -132,8 +141,48 @@ export const ClanService = {
 		const res = await http().put(`/clan/${clanId}/give`, { ingredients: ingredients });
 		return res.data;
 	},
-	async getClanTreasure(clanId: number): Promise<ShopDTO[]> {
+	async getClanTreasure(clanId: number): Promise<treasureIngredient[]> {
 		const res = await http().get(`/clan/${clanId}/treasure`);
+		return res.data;
+	},
+	async buildCastle(): Promise<void> {
+		const res = await http().put(`/clan/war/castle`);
+		return res.data;
+	},
+	async warStatus(clanId: number): Promise<AttackStatus[]> {
+		const res = await http().get(`/clan/war/${clanId}`);
+		return res.data;
+	},
+	async declareWar(clanId: number): Promise<void> {
+		const res = await http().post(`/clan/war/${clanId}`);
+		return res.data;
+	},
+	async forfeitWar(warId: number): Promise<void> {
+		const res = await http().delete(`/clan/war/${warId}`);
+		return res.data;
+	},
+	async addDefenser(dinozId: number): Promise<void> {
+		const res = await http().put(`/clan/war/dinoz/${dinozId}`);
+		return res.data;
+	},
+	async castleStatus(): Promise<Castle | null> {
+		const res = await http().get(`/clan/war/castle`);
+		return res.data;
+	},
+	async removeDefender(dinozId: number): Promise<Castle> {
+		const res = await http().delete(`/clan/war/dinoz/${dinozId}`);
+		return res.data;
+	},
+	async reorderDefender(order: number[]): Promise<number[]> {
+		const res = await http().patch(`/clan/war/dinoz`, { dinozIds: order });
+		return res.data;
+	},
+	async attackCastle(dinozId: number): Promise<FightResult> {
+		const res = await http().put(`/clan/war/attack/${dinozId}`);
+		return res.data;
+	},
+	async startRepair(hpPerTick: number, frequency: number, tick: number): Promise<void> {
+		const res = await http().put(`/clan/war/repair`, { hpPerTick: hpPerTick, frequency: frequency, tick: tick });
 		return res.data;
 	}
 };

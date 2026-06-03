@@ -6,7 +6,6 @@
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-show="isReady"
-			:dinoz="dinozData"
 			:refresh-dinoz="refreshDinoz"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
@@ -58,55 +57,17 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
-				if (dinozToUpdate) {
-					dinozToUpdate.missionId = this.dinozData.missionId;
-					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
-				}
-				useDinozStore().setDinozList(dinozList);
+				useDinozStore().setDinoz(this.dinozData);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getFiche(): Promise<void> {
-			const dinozId = this.$route.params.id as string;
-			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
-			if (dinozToUpdate === -1) {
-				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				dinozList.push(this.dinozData);
-			} else {
-				dinozList.splice(dinozToUpdate, 1, {
-					...dinozList.find(dinoz => dinoz.id.toString() === dinozId),
-					...this.dinozData
-				});
-			}
-			if (this.dinozData.followers.length >= 1) {
-				for (const follower of this.dinozData.followers) {
-					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
-					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
-					dinozList.splice(followerIndex, 1, {
-						...dinozList.find(dinoz => dinoz.id === followerToUpdate.id),
-						...followerToUpdate
-					});
-				}
-			}
-			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
-			if (storedFollowers.length > 0) {
-				storedFollowers.map(d => {
-					if (!this.dinozData.followers.some(f => f.id === d.id)) {
-						d.leaderId = null;
-					}
-				});
-			}
-			useDinozStore().setDinozList(dinozList);
-			this.playerStore.setPlayerOptions({
-				...this.playerStore.playerOptions
-			});
-			useDinozStore().setCurrentDinozId(+dinozId);
+			const dinozId = +this.$route.params.id;
+			useDinozStore().setCurrentDinozId(dinozId);
+			this.dinozData = await useDinozStore().refreshDinozFiche(dinozId);
+			this.playerStore.setPlayerOptions({ ...this.playerStore.playerOptions });
 			this.isReady = true;
 		},
 		async refreshDinoz() {

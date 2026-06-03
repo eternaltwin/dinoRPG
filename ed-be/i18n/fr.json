@@ -30,6 +30,7 @@
 	"alreadyOffer": "Vous avez déjà une vente en cours.",
 	"bidsOngoing": "Vous avez encore des enchères en cours.",
 	"inClan": "Vous appartenez toujours à un clan.",
+	"noClan": "Vous n'appartenez pas à un clan.",
 	"banPending": "Vous avez une demande de banissement en cours.",
 	"AlreadyAtMaxHealth": "Votre Dinoz a déjà sa vie au maximum.",
 	"DinozIsDead": "Votre Dinoz est mort.",
@@ -50,6 +51,19 @@
 	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
 	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
 	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
+	"clanWar": {
+		"noCastle": "Votre clan n'a pas de château de construit.",
+		"noCastleOpponent": "Le château adverse n'est pas construit.",
+		"defenderAlreadyUnderAttack": "Ce clan est déjà attaqué par suffisamment d'adversaires.",
+		"defenderActiveMax": "Vous avez la limite maximale de Dinoz en défense.",
+		"notWar": "L'attaque n'est plus réalisable.",
+		"notEnoughIngredients": "Cette guerre coûte {{cost}} :gold:, votre clan n'a pas assez de trésorerie pour la déclarer.",
+		"castleDestroyed": "Le château est déjà détruit.",
+		"castleFullLife": "Votre château a déjà le nombre maximum de :hp_castle:.",
+		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
+		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation.",
+		"alreadyInDefense": "Votre Dinoz fait déjà partie de la défense du château."
+	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
 		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"

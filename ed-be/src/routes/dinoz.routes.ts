@@ -418,7 +418,7 @@ routes.get(
 /**
  * @openapi
  * /api/v1/dinoz/gather/{dinozId}:
- *   get:
+ *   put:
  *     summary: Gather with the dinoz
  *     security:
  *       - bearerAuth: []

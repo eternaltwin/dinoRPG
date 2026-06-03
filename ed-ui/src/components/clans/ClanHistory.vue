@@ -3,12 +3,20 @@
 		<div class="history-container" v-for="evt in history" :key="evt.id">
 			<div class="history-header">
 				<img :src="getImgURL('icons', 'small_edit')" alt="Fil de discussion" />
-				<div v-if="evt.author" class="author" @click="goToPlayer(evt.author.id)">{{ evt.author.name }}</div>
+				<DZUser v-if="evt.author" :user="evt.author" />
 				<div v-else class="author">{{ evt.authorName }}</div>
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
 
-			<div class="message">{{ GetHistoryMessageFromType(evt.type) }}</div>
+			<div class="message">
+				<RouterLink
+					v-if="evt.type === ClanHistoryType.WAR_PLAYER_ATTACKED || evt.type === ClanHistoryType.WAR_PLAYER_ATTACK"
+					:to="`/replay/${JSON.parse(evt.authorMessage).archiveId}`"
+				>
+					<img :src="getImgURL('icons', 'small_right')" alt="right" />
+				</RouterLink>
+				{{ GetHistoryMessageFromType(evt.type, evt.authorMessage) }}
+			</div>
 		</div>
 		<div class="switch-page-container">
 			<div class="arrow-button">
@@ -31,10 +39,16 @@ import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { playerStore } from '../../store';
 import { ClanService } from '../../services';
 import { errorHandler } from '../../utils/index.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanHistory',
-	components: {},
+	computed: {
+		ClanHistoryType() {
+			return ClanHistoryType;
+		}
+	},
+	components: { DZUser },
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -46,19 +60,35 @@ export default defineComponent({
 	},
 	methods: {
 		DateToString(date: Date): string {
-			return new Date(date).toLocaleString('fr-FR');
+			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
 		},
-		GetHistoryMessageFromType(type: ClanHistoryType) {
-			return this.$t('clanHistory.type.' + type);
-		},
-		goToPlayer(id: string) {
-			this.$router.push({ name: 'Account', params: { id } });
+		GetHistoryMessageFromType(type: ClanHistoryType, message: string) {
+			let formated;
+			switch (type) {
+				case ClanHistoryType.WAR_ATTACKED:
+				case ClanHistoryType.WAR_START:
+				case ClanHistoryType.WAR_FORFEIT:
+				case ClanHistoryType.WAR_PLAYER_ATTACKED:
+				case ClanHistoryType.WAR_PLAYER_ATTACK:
+				case ClanHistoryType.WAR_LOSE:
+				case ClanHistoryType.WAR_LOSED:
+				case ClanHistoryType.WAR_DEFENDED:
+				case ClanHistoryType.WAR_WON:
+					if (message.length < 1) {
+						formated = {};
+					} else {
+						formated = JSON.parse(message);
+					}
+					return this.$t('clanHistory.type.' + type, { ...formated });
+				default:
+					return this.$t('clanHistory.type.' + type);
+			}
 		},
 		async getClanHistory(): Promise<void> {
 			try {
-				this.history = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
-				const historyCount = await ClanService.getClanHistoryCount(Number(this.$route.params.id));
-				this.maxPage = Math.floor((historyCount.count + 19) / 20);
+				const { history, count } = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
+				this.history = history;
+				this.maxPage = Math.floor((count + 19) / 20);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

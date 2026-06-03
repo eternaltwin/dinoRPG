@@ -8,6 +8,8 @@ import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 import { useDinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
 import { NotificationSeverity } from '@drpg/prisma/enums';
+import { clanStore } from './clanStore';
+import { DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS } from '@drpg/core/constants';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -22,7 +24,8 @@ export const playerStore = defineStore('playerStore', {
 			skipFight: false,
 			skipLevel: false,
 			archivedSiteId: null,
-			shareArchivedData: false
+			shareArchivedData: false,
+			displayedNotifications: DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS
 		},
 		role: AdminRoleFront.PLAYER,
 		priest: false,
@@ -109,6 +112,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setRole(commonData.role as AdminRoleFront);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
 			useDinozStore().setDinozList(commonData.dinoz);
+			clanStore().setClanEvent(commonData.clanEvent);
 		}
 	},
 	persist: {

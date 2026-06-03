@@ -1,15 +1,42 @@
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import seedrandom from 'seedrandom';
 
 /**
- * @summary Return a random number between min and max - 1
+ * @summary Return a random *float* between min and max (excluded, range is [min, max))
  * @param min {number}
  * @param max {number}
+ * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
+ * @example getRandomInteger(0, 10) generates a random *float* between 0 and 10 (excluded).
+ * @description Generates a random float between [min, max). Max is excluded.
+ * Throws a range error is min > max.
  * @return number
  */
-function getRandomNumber(min: number, max: number) {
+export function getRandomNumber(min: number, max: number, random?: seedrandom.PRNG) {
+	if (min > max) throw new RangeError('min must be <= max');
+	if (min === max) return min;
+
+	const randomValue = random ? random() : Math.random();
+	return randomValue * (max - min) + min;
+}
+
+/**
+ * @summary Return a random *integer* between min and max (included, range is [min, max])
+ * @param min {number} Must be an integer, otherwise, closes biggest integer is picked.
+ * @param max {number} Must be an integer, otherwise, closes lowest integer is picked.
+ * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
+ * @example getRandomInteger(0, 10) generates a random *integer* between 0 and 10.
+ * @description Generates a random integer between [min, max]. Max is included.
+ * Throws a range error is min > max.
+ * @return number
+ */
+export function getRandomInteger(min: number, max: number, random?: seedrandom.PRNG) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min;
+
+	if (min > max) throw new RangeError('min must be <= max');
+	if (min === max) return min;
+
+	const randomValue = random ? random() : Math.random();
+	return Math.floor(randomValue * (max - min + 1)) + min;
 }
 
 /**
@@ -18,11 +45,11 @@ function getRandomNumber(min: number, max: number) {
  * @param maxLetter {string}
  * @return string
  */
-function getRandomLetter(maxLetter: string): string {
+export function getRandomLetter(maxLetter: string): string {
 	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
 
-	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
+	return lettersAvailable[getRandomInteger(0, lettersAvailable.length - 1)];
 }
 
 /**
@@ -31,13 +58,12 @@ function getRandomLetter(maxLetter: string): string {
  * @param length {number}
  * @return string
  */
-function generateString(length: number): string {
+export function generateString(length: number): string {
 	let result = '';
 	const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	const charactersLength = characters.length;
 	let counter = 0;
 	while (counter < length) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		result += characters.charAt(getRandomInteger(0, characters.length - 1));
 		counter += 1;
 	}
 	return result;
@@ -48,7 +74,7 @@ function generateString(length: number): string {
  * 			The letter will be part of '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
  * @return string
  */
-function getLetter(index: number): string {
+export function getLetter(index: number): string {
 	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	return allLetters[index];
 }
@@ -69,13 +95,29 @@ export function fromBase62(s: string) {
 export function shuffle<T>(array: T[]): T[] {
 	const shuffledArray = [...array];
 	for (let i = array.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
+		const j = getRandomInteger(0, i);
 		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
 	}
 
 	return shuffledArray;
 }
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+/**
+ * @summary Return a element of an array at random
+ * @param array {T[]} Array containing elements
+ * @param rng {seedrandom} Optional random generator. Default to Math.random() if not provided.
+ * @example getRandomArrayElement(array) picks a random element of the array.
+ * @description Returns a random element of an array.
+ * Throws an error if the array is empty.
+ * If the array contains a single element, it is returned.
+ * @return T
+ */
+export function getRandomArrayElement<T>(array: T[], random?: seedrandom.PRNG): T {
+	if (array.length === 0) throw new Error('array cannot be empty');
+	if (array.length === 1) return array[0];
+	return array[getRandomInteger(0, array.length - 1, random)];
+}
 
-export { getRandomNumber, getRandomLetter, generateString, getLetter, sleep };
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export default getRandomNumber;

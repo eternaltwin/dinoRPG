@@ -32,6 +32,7 @@ export interface DinozFiche {
 	actions: ActionFiche[];
 	items: number[];
 	maxItems: number;
+	lastAttack?: Date;
 	skills: Pick<DinozSkill, 'skillId' | 'state'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
 	borderPlace: number[];

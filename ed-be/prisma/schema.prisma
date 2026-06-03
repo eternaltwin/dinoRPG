@@ -40,6 +40,8 @@ model Dinoz {
   updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
   order              Int?
   concentrationId    Int?
+  castleId           Int?
+  castle             ClanCastle?            @relation(fields: [castleId], references: [id])
   fight              Boolean                @default(true)
   gather             Boolean                @default(true)
   remaining          Int                    @default(2)
@@ -260,73 +262,75 @@ model NPC {
 }
 
 model Player {
-  customText           String?
-  name                 String             @db.VarChar
-  connexionToken       String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  money                Int
-  quetzuBought         Int
-  leader               Boolean            @default(false)
-  engineer             Boolean            @default(false)
-  cooker               Boolean            @default(false)
-  shopKeeper           Boolean            @default(false)
-  merchant             Boolean            @default(false)
-  priest               Boolean            @default(false)
-  teacher              Boolean            @default(false)
-  createdDate          DateTime           @default(now()) @db.Timestamp(6)
-  updatedDate          DateTime           @default(now()) @updatedAt @db.Timestamp(6)
-  lastLogin            DateTime           @default(now()) @db.Timestamp(6)
-  clanMemberId         Int?               @unique
-  matelasseur          Boolean            @default(false)
-  messie               Boolean            @default(false)
-  labruteDone          Boolean            @default(false)
-  role                 AdminRole          @default(PLAYER)
-  lang                 Lang               @default(fr)
-  dailyGridRewards     Int                @default(0)
-  skipFight            Boolean            @default(false)
-  skipLevel            Boolean            @default(false)
-	shareArchivedData    Boolean            @default(false)
-	archivedSiteId       Int?
-  banCaseId            Int?               @unique
-  discoveredSkills     Int[]              @default([])
-  lastVersionSeen      String             @default("0.16.3")
-  id                   String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
-  leaderOf             Clan?              @relation("leader")
-  ClanHistory          ClanHistory[]
-  ClanJoinRequest      ClanJoinRequest?   @relation("clanRequest")
-  ClanMember           ClanMember?
-  createdConversations Conversation[]     @relation("CreatedConversations")
-  Conversation         Conversation[]
-  logs                 Log[]
-  messages             Message[]
-  reportedCases        Moderation[]       @relation("ReporterRelation")
-  targetedCases        Moderation[]       @relation("TargetRelation")
-  notifications        Notification[]
-  offers               Offer[]
-  bids                 OfferBid[]
-  Pantheon             Pantheon[]
-  conversations        Participants[]
-  usernameHistory      UsernameHistory[]
-  ClanMessage          ClanMessage[]
-  dinoz                Dinoz[]
-  banCase              Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
-  playerTracking       PlayerTracking[]
-  dinozShop            PlayerDinozShop[]
-  gathers              PlayerGather[]
-  ingredients          PlayerIngredient[]
-  items                PlayerItem[]
-  quests               PlayerQuest[]
-  rewards              PlayerReward[]
-  ranking              Ranking?
-  Dojo                 Dojo?
-  FightArchive         FightArchive[]     @relation("PlayerRelation")
-  LeftFightArchives    FightArchive[]     @relation("LeftPlayerRelation")
-  RightFightArchives   FightArchive[]     @relation("RightPlayerRelation")
-  FightWatched         FightWatched[]
-  GameDinoz            GameDinoz[]
-  ips                  PlayerIp[]
-  pollVotes            PollVote[]
-  Events               Events[]
-  dinozBuilds          DinozBuild[]
+  customText             String?
+  name                   String             @db.VarChar
+  connexionToken         String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  money                  Int
+  quetzuBought           Int
+  leader                 Boolean            @default(false)
+  engineer               Boolean            @default(false)
+  cooker                 Boolean            @default(false)
+  shopKeeper             Boolean            @default(false)
+  merchant               Boolean            @default(false)
+  priest                 Boolean            @default(false)
+  teacher                Boolean            @default(false)
+  createdDate            DateTime           @default(now()) @db.Timestamp(6)
+  updatedDate            DateTime           @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin              DateTime           @default(now()) @db.Timestamp(6)
+  clanId                 Int?
+  clan                   Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  matelasseur            Boolean            @default(false)
+  messie                 Boolean            @default(false)
+  labruteDone            Boolean            @default(false)
+  role                   AdminRole          @default(PLAYER)
+  lang                   Lang               @default(fr)
+  dailyGridRewards       Int                @default(0)
+  skipFight              Boolean            @default(false)
+  skipLevel              Boolean            @default(false)
+  shareArchivedData      Boolean            @default(false)
+  archivedSiteId         Int?
+  displayedNotifications Int                @default(3)
+  banCaseId              Int?               @unique
+  discoveredSkills       Int[]              @default([])
+  lastVersionSeen        String             @default("0.16.3")
+  id                     String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
+  leaderOf               Clan?              @relation("leader")
+  ClanHistory            ClanHistory[]
+  ClanJoinRequest        ClanJoinRequest?   @relation("clanRequest")
+  ClanMember             ClanMember?
+  createdConversations   Conversation[]     @relation("CreatedConversations")
+  Conversation           Conversation[]
+  logs                   Log[]
+  messages               Message[]
+  reportedCases          Moderation[]       @relation("ReporterRelation")
+  targetedCases          Moderation[]       @relation("TargetRelation")
+  notifications          Notification[]
+  offers                 Offer[]
+  bids                   OfferBid[]
+  Pantheon               Pantheon[]
+  conversations          Participants[]
+  usernameHistory        UsernameHistory[]
+  ClanMessage            ClanMessage[]
+  dinoz                  Dinoz[]
+  banCase                Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
+  playerTracking         PlayerTracking[]
+  dinozShop              PlayerDinozShop[]
+  gathers                PlayerGather[]
+  ingredients            PlayerIngredient[]
+  items                  PlayerItem[]
+  quests                 PlayerQuest[]
+  rewards                PlayerReward[]
+  ranking                Ranking?
+  Dojo                   Dojo?
+  FightArchive           FightArchive[]     @relation("PlayerRelation")
+  LeftFightArchives      FightArchive[]     @relation("LeftPlayerRelation")
+  RightFightArchives     FightArchive[]     @relation("RightPlayerRelation")
+  FightWatched           FightWatched[]
+  GameDinoz              GameDinoz[]
+  ips                    PlayerIp[]
+  pollVotes              PollVote[]
+  Events                 Events[]
+  dinozBuilds            DinozBuild[]
 
   @@map("player")
 }
@@ -580,23 +584,54 @@ model Pantheon {
 }
 
 model Clan {
-  id            Int               @id @default(autoincrement())
-  name          String            @unique
-  treasureValue Int               @default(0)
-  creationDate  DateTime          @default(now()) @db.Timestamp(6)
-  clanWarId     Int?
-  banner        Bytes?
-  leaderId      String            @unique @db.Uuid
-  langs         Lang[]            @default([fr])
-  war           ClanWar?          @relation(fields: [clanWarId], references: [id])
-  leader        Player            @relation("leader", fields: [leaderId], references: [id])
-  history       ClanHistory[]
-  joinRequests  ClanJoinRequest[]
-  members       ClanMember[]      @relation("member")
-  pages         ClanPage[]
-  ingredients   ClanIngredient[]
-  discussion    ClanMessage[]
-  targetedCases Moderation[]      @relation("TargetClanRelation")
+  id             Int               @id @default(autoincrement())
+  name           String            @unique
+  treasureValue  Int               @default(0)
+  creationDate   DateTime          @default(now()) @db.Timestamp(6)
+  banner         Bytes?
+  leaderId       String            @unique @db.Uuid
+  langs          Lang[]            @default([fr])
+  castle         ClanCastle?
+  leader         Player            @relation("leader", fields: [leaderId], references: [id])
+  history        ClanHistory[]
+  joinRequests   ClanJoinRequest[]
+  members        ClanMember[]      @relation("member")
+  pages          ClanPage[]
+  ingredients    ClanIngredient[]
+  discussion     ClanMessage[]
+  attackingWars  ClanWar[]         @relation("attacker")
+  defendingWars  ClanWar[]         @relation("defender")
+  clanWarRanking ClanWarRanking[]
+  players        Player[]
+  targetedCases  Moderation[]      @relation("TargetClanRelation")
+  warWon         ClanWar[]         @relation("warWon")
+}
+
+model ClanCastle {
+  id           Int                @id @default(autoincrement())
+  clanId       Int                @unique
+  placeId      Int
+  clan         Clan               @relation(fields: [clanId], references: [id])
+  maxLife      Int                @default(300)
+  currentLife  Int                @default(300)
+  defender     Dinoz[]
+  defenseOrder Int[]              @default([])
+  repairs      ClanCastleRepair[]
+}
+
+model ClanCastleRepair {
+  id           Int        @id @default(autoincrement())
+  castleId     Int
+  castle       ClanCastle @relation(fields: [castleId], references: [id], onDelete: Cascade)
+  startedAt    DateTime   @default(now()) @db.Timestamp(6)
+  endsAt       DateTime   @db.Timestamp(6)
+  hpPerTick    Int
+  frequency    Int // en minutes
+  totalTicks   Int // = REPAIR_MAX_TICKS
+  appliedTicks Int        @default(0)
+
+  @@index([castleId])
+  @@map("clan_castle_repair")
 }
 
 model ClanJoinRequest {
@@ -609,10 +644,55 @@ model ClanJoinRequest {
 }
 
 model ClanWar {
-  id        Int       @id @default(autoincrement())
-  dateStart DateTime  @default(now()) @db.Timestamp(6)
-  dateEnd   DateTime?
-  clans     Clan[]
+  id String @id @default(uuid()) @db.Uuid
+
+  eventId        String    @db.Uuid
+  event          ClanEvent @relation(fields: [eventId], references: [id])
+  attackerClanId Int
+  defenderClanId Int
+  attacker       Clan      @relation("attacker", fields: [attackerClanId], references: [id])
+  defender       Clan      @relation("defender", fields: [defenderClanId], references: [id])
+
+  startedAt DateTime @default(now())
+  endsAt    DateTime
+
+  isCastleDestroyed Boolean @default(false)
+  winnerClanId      Int?
+  winner            Clan?   @relation("warWon", fields: [winnerClanId], references: [id])
+}
+
+model ClanWarRanking {
+  id Int @id @default(autoincrement())
+
+  clanId Int
+  clan   Clan @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  eventId String    @db.Uuid
+  event   ClanEvent @relation(fields: [eventId], references: [id])
+
+  reputation Float @default(100)
+
+  downtimeCount Int @default(0)
+
+  totalPWin  Int @default(0)
+  totalPLost Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([clanId, eventId])
+  @@index([eventId, reputation])
+  @@map("clan_war_ranking")
+}
+
+model ClanEvent {
+  id              String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventType       ClanEventType
+  startDate       DateTime         @db.Timestamp(6)
+  endDate         DateTime         @db.Timestamp(6)
+  config          String           @db.Text
+  clanWarRankings ClanWarRanking[]
+  clanWars        ClanWar[]
 }
 
 model ClanIngredient {
@@ -679,19 +759,19 @@ model ClanPage {
 }
 
 model Moderation {
-  id         Int               @id @default(autoincrement())
-  dinozId    Int?
-  reason     ModerationReason
-  comment    String
-  banDate    DateTime?
-  banEndDate DateTime?
-  sorted     ModerationAction?
-  reporterId String?           @db.Uuid
-  targetId   String            @db.Uuid
-  dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
-  reporter   Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
-  target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
-  bannedUser Player?           @relation("AcceptedBan")
+  id           Int               @id @default(autoincrement())
+  dinozId      Int?
+  reason       ModerationReason
+  comment      String
+  banDate      DateTime?
+  banEndDate   DateTime?
+  sorted       ModerationAction?
+  reporterId   String?           @db.Uuid
+  targetId     String            @db.Uuid
+  dinoz        Dinoz?            @relation(fields: [dinozId], references: [id])
+  reporter     Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
+  target       Player            @relation("TargetRelation", fields: [targetId], references: [id])
+  bannedUser   Player?           @relation("AcceptedBan")
   targetClanId Int?
   targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id], onDelete: SetNull)
 }
@@ -910,6 +990,8 @@ enum UnavailableReason {
   superdom
   resting
   unfreezing
+  defending
+  restingAttack
 }
 
 enum Lang {
@@ -1026,6 +1108,7 @@ enum NotificationSeverity {
   newClanApply
   clanApplyAccepted
   message
+  clanWar
 }
 
 enum NewsType {
@@ -1044,4 +1127,9 @@ enum NewsType {
 enum EventType {
   CHRISTMAS
   VALENTINE
+}
+
+enum ClanEventType {
+  war
+  mana_war
 }

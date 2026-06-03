@@ -470,7 +470,8 @@ export default defineComponent({
 			return {
 				...realIngredient,
 				price: item.price,
-				quantity: item.quantity ?? 0
+				quantity: item.quantity ?? 0,
+				maxQuantity: (realIngredient?.maxQuantity ?? 0) * (this.playerStore.isShopkeeper ? 1.5 : 1)
 			} as IngredientFiche;
 		},
 		selectItem(itemId: number) {

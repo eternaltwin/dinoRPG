@@ -84,15 +84,15 @@
 			"stats": "Aktuelle Statistiken",
 			"skipFight": "Kampfergebnis sofort anzeigen",
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
-			"archivedSiteId": "Site historique",
-			"shareArchivedData": "Partager ses stats Twinoid",
+			"archivedSiteId": "Historisierte Seite",
+			"shareArchivedData": "Twinoid-Statistiken teilen",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
 		}
 	},
 	"toast": {
-		"deletedPlayer": "Le joueur a supprimé son compte",
+		"deletedPlayer": "Der Spieler hat sein Konto gelöscht",
 		"noFBTournament": "Es ist noch keine Qualifikationsphase des Rohkraft-Turniers im Gange.",
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
@@ -120,6 +120,7 @@
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
+		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -145,6 +146,7 @@
 		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht.",
 		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten.",
 		"maxDinozSelected": "Du hast bereits die Höchstanzahl an Dinoz ausgewählt.",
+		"notEnoughDinozSelected": "Du hast nicht genügend Dinoz ausgewählt",
 		"noDinozSelected": "Keine Dinoz ausgewählt.",
 		"basicError": "Ein Fehler ist aufgetreten",
 		"buildSaved": "Plan der Fähigkeiten „{name}“ wurde gespeichert",
@@ -214,7 +216,7 @@
 		}
 	},
 	"action": {
-		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
+		"popupConfirm": "Soll wirklich {action} von deinem Dinoz ausgeführt werden?",
 		"description": {
 			"fight": "Suche an diesem Ort nach einem Monster, um dagegen zu kämpfen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
@@ -246,7 +248,10 @@
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen.",
 			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
 			"change_leader": "Dein Dinoz wird zum neuen Gruppenanführer ernannt.",
-			"fb_tournament": "Das Rohkraft-Turnier betreten."
+			"fb_tournament": "Das Rohkraft-Turnier betreten.",
+			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
+			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
+			"war_attack": "Gegnerische Burg angreifen."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -279,7 +284,10 @@
 			"itinerant_shop": "Der fliegende Händler",
 			"reincarnation": "Reinkarnation",
 			"change_leader": "Zum Anführer küren",
-			"fb_tournament": "Turnier"
+			"fb_tournament": "Turnier",
+			"war_defend": "Burg verteidigen",
+			"war_remove": "Von der Verteidigung abziehen",
+			"war_attack": "Burg angreifen"
 		}
 	},
 	"button": {
@@ -310,7 +318,7 @@
 		"actions": "Aktionen",
 		"full": "Vorrat gefüllt",
 		"sortBy": "Sortieren nach",
-		"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
+		"confirmUse": "Möchtest du wirklich {name} auf deinen Dinoz anwenden?",
 		"sort": {
 			"default": "Standard",
 			"nameAsc": "Name (A → Z)",
@@ -2616,7 +2624,8 @@
 		"confirmBanAction": "Wirklich bannen?",
 		"attention": "Achtung",
 		"accept": "Ja",
-		"reject": "Nein"
+		"reject": "Nein",
+		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -2832,7 +2841,7 @@
 			"hucure": "Sas is wirklich fehr nett von dir... Ih glaube, sass sie Bönche ser Butierenden Furzfluden bir helfen könnten... Nimm die Flansen bit, sie du bir gebracht hass und suh die Bönche für bich auf... Schnief...",
 			"bckpck": "Bevor ich meine unglaubliche Reise in ein unbekanntes Land antrete, fehlt mir noch etwas Unverzichtbares! Ein guter Rucksack. Meinen hab' ich verloren, als ich die Mutierenden Sturzfluten umschifft habe... Könntest du ihn für mich wiederfinden?",
 			"rodriz": "Ich brauche Reis, um meinen magischen Umhang aufzuladen. Es gibt scheinbar welchen im Klebrigen Sumpf der Atlantinischen Inseln. Kannst du mir eine ausreichende Menge bringen, damit ich mich wieder unsichtbar machen kann? Beeil dich, es ist dringend!",
-			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir zurück, um dir deine Belohnung abzuholen... Ich rate dir, sie nicht mit nur einem Dinoz allein anzugreifen, denn er könnte dabei sterben!",
+			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir, um dir deine Belohnung abzuholen... Aber ich rate dir, sie nicht mit nur einem einzigen Dinoz anzugreifen, sonst geht er noch drauf!",
 			"skully1": "Moulder wurde von meinem Unfluch erwischt, gerade als wir dabei waren, zusammen alt zu werden. Er hat mich auf einen Schlag vergessen und ist in die Welt hinaus gezogen, dieser Unhold! Sein Neffe, der kleine Joe, hat bestimmt Neuigkeiten von ihm... Besuch ihn doch mal und bring mich auf den neuesten Stand!",
 			"skully2": "„Ich werde an dem Ort auf dich warten, wo wir uns das erste Mal begegnet sind.“ Oh oh oh oh! Wie romantisch er doch ist, mein geliebter Moulder! Ich hoffe, dass er dort noch immer auf mich wartet! Schnell, begib dich an diesen wunderbaren Ort, der süßlich nach Seerosen duftet und wo wir uns das erste Mal getroffen haben. Bring mir meinen Liebsten wieder zurück!",
 			"skully3": "Oh oh oh! Mir ist gerade noch etwas eingefallen... etwas Problematisches. Selbst wenn ich Moulder wiederfinden sollte, wird er unser Wiedersehen wieder vergessen und erneut fortgehen, um irgendwo auf mich zu warten. Du musst unbedingt eine Lösung für dieses Problem finden, bevor du Moulder aufsuchst. Besuche mal dieses liebe Fräulein Bao. Sie hat bestimmt eine Lösung!",
@@ -3542,12 +3551,12 @@
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistiken",
-			"archivedTitle": "Statistiques Archivées Twinoid",
+			"archivedTitle": "Archivierte Twinoid-Statistiken",
 			"points": "Punkte",
 			"linkStats": "Statistik",
 			"linkGains": "Auszeichnungen",
-			"seeArchivedStats": "Voir les stats archivées",
-			"seeStats": "Voir les stats",
+			"seeArchivedStats": "Archivierte Statistiken anzeigen",
+			"seeStats": "Statistiken anzeigen",
 			"help": {
 				"question": "Was bedeuten diese Werte?",
 				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in DinoRPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
@@ -3561,8 +3570,7 @@
 		"completion": "Vollständigkeit",
 		"rewards": "Epische Belohnungen",
 		"level": "Stufe",
-		"editDescription": "Modifier ma description",
-		"save": "Sauvegarder ma description",
+		"editDescription": "Meine Beschreibung bearbeiten",
 		"quest": "Meine Quests",
 		"editAccount": "Meine Daten ändern",
 		"import": "Konto importieren",
@@ -3600,7 +3608,8 @@
 			"84": "MTPass",
 			"92": "Rockfaller Journey",
 			"94": "Monster Hotel"
-		}
+		},
+		"saveDescription": "Meine Beschreibung speichern"
 	},
 	"levelup": {
 		"disclaimer": "{name} hat die Stufe {level} erreicht! Mit welchem Element er sich wohl weiterentwickelt?",
@@ -4068,7 +4077,9 @@
 			"completion": "Vollst.",
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
-			"event": "Ereignispunkte"
+			"event": "Ereignispunkte",
+			"war": "Kriegsansehen",
+			"castle": "Burg errichtet"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4103,7 +4114,8 @@
 		},
 		"button": {
 			"clanEvent": "Ereignis-Rangliste",
-			"clanTreasure": "Schatzkammer-Rangliste"
+			"clanTreasure": "Schatzkammer-Rangliste",
+			"clanWar": "Kriegsrangliste"
 		}
 	},
 	"clan": {
@@ -4131,11 +4143,52 @@
 			"members": "Anzahl der Mitglieder",
 			"gold": "Wert der Schatzkammer",
 			"rank": "Rang",
-			"crown": "Klananführer"
+			"crown": "Klananführer",
+			"reputation": "Ansehen im laufenden Krieg",
+			"castle_life": "Verbleibende Lebenspunkte eurer Burg"
 		},
 		"forum": {
 			"connectionFailed": "Bei der Verbindung zum Klan-Chat ist ein Fehler aufgetreten!",
 			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
+		},
+		"war": {
+			"buildCastle": "Errichtet eure Burg",
+			"castleTooltip": "An diesem Ort befindet sich eure Burg",
+			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
+			"declareWar": "Diesen Klan angreifen",
+			"disclaimerAttack": "Diesen Klan anzugreifen würde euch {cost} :gold: kosten. Die Zutaten aus der Klanschatzkammer werden automatisch verbraucht, um diese Gebühr zu bezahlen.",
+			"attack": "Angriff",
+			"defense": "Verteidigung",
+			"forfeit": "Sich geschlagen geben",
+			"counter": "Angreifen",
+			"defender": "{name}, Stufe {level}",
+			"type": "Typ",
+			"enemy": "Gegner",
+			"endDate": "Beendigungsdatum",
+			"action": "Aktion",
+			"repair": {
+				"title": "Burgreparaturen",
+				"active": "{count}/{max} Reparatur(en) im Gange",
+				"info": "+{hp} :hp_castle: alle {freq} Minute(n)",
+				"tick": "{applied}/{total} Takte ausgeführt",
+				"hpPerTick": ":hp_castle: pro Takt",
+				"frequency": "Frequenz",
+				"ticks": "Wiederholungen",
+				"freq": {
+					"1": "Minütlich",
+					"5": "Alle 5 Minuten",
+					"15": "Alle 15 Minuten",
+					"30": "Alle 30 Minuten"
+				},
+				"duration": "Dauer: {duration} Minuten",
+				"totalHp": "Insgesamt :hp_castle: repariert: {hp} (Max. {max})",
+				"cost": "Kosten:",
+				"cantAfford": "Nicht genug Zutaten in der Klanschatzkammer",
+				"start": "Reparatur starten",
+				"stackFull": "Höchstanzahl gleichzeitiger Reparaturen erreicht ({max}/{max})",
+				"castleDestroyed": "Eure Burg ist zerstört – diese muss zunächst wiederaufgebaut werden",
+				"castleFullLife": "Eure Burg hat bereits die maximalen Lebenspunkte"
+			}
 		}
 	},
 	"clansList": {
@@ -4168,13 +4221,15 @@
 		"edit": {
 			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitglied <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> zu bearbeiten.",
 			"right": {
-				"MEMBER_EDIT": "Kann Rechte und Spitznamen der Mitglieder bearbeiten",
-				"PAGE_MANAGE": "Kann Klanseiten verwalten",
-				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Kann Beitrittsanfragen annehmen und ablehnen",
-				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
-				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
-				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
-				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
+				"MEMBER_EDIT": "Darf Rechte und Spitznamen der Mitglieder bearbeiten",
+				"PAGE_MANAGE": "Darf Klanseiten verwalten",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Darf Beitrittsanfragen annehmen und ablehnen",
+				"MEMBER_EXCLUDE": "Darf Mitglieder ausschließen",
+				"DISCUSSION_DELETE_MESSAGE": "Darf Beiträge in Diskussionen löschen",
+				"CLAN_EDIT_BANNER": "Darf Klanbanner ändern",
+				"CLAN_EDIT_LANG": "Darf Klansprachen verwalten",
+				"WAR_OFFICER": "Darf Kriege erklären",
+				"CLAN_BUILD_CASTLE": "Darf die Burg errichten"
 			},
 			"nickname": "Spitzname des Spielers",
 			"save": "Speichern",
@@ -4242,6 +4297,17 @@
 			"PLAYER_JOIN": "Ein Spieler ist dem Klan beigetreten.",
 			"PLAYER_LEAVE": "Dieser Spieler hat beschlossen, den Klan zu verlassen.",
 			"PLAYER_EXCLUSION": "Dieser Spieler wurde aus dem Klan ausgeschlossen.",
+			"CASTLE_BUILD": "Ich habe die Burg errichtet.",
+			"CASTLE_REBUILD": "Ich habe die Burg wiederaufgebaut.",
+			"WAR_ATTACKED": "Als amtierender Kriegsoffizier von Klan {name} habe ich eurem Klan den Krieg erklärt!",
+			"WAR_START": "Ich habe dem Klan {name} den Krieg erklärt!",
+			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg von {name} zu zerstören.",
+			"WAR_LOSED": "Ich habe eure Burg im Namen vom Klan {name} zerstört und somit den Krieg gegen euch gewonnen.",
+			"WAR_DEFENDED": "Wir haben die Angriffe des Klans {name} überstanden und somit diesen Verteidigungskrieg gewonnen.",
+			"WAR_FORFEIT": "Ich habe beschlossen, uns im Krieg gegen {name} geschlagen zu geben.",
+			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
+			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
+			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4344,7 +4410,7 @@
 		},
 		"step": {
 			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
-			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
+			"timeOut": "Der Kampf wurde beendet, weil seine Höchstdauer erreicht wurde.",
 			"arrive": "**{name}** ist angekommen!",
 			"resist": "**{dinoz}** hat widerstanden und den Schaden reduziert.",
 			"hit": "**{fighter}** hat einen {elements}-Angriff ausgeführt und **{target}** **{damage}** Schaden zugefügt.",
@@ -4380,6 +4446,7 @@
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
 		},
 		"player": "Meister",
+		"clan": "Klan",
 		"vs": "VS"
 	},
 	"ingredients": {
@@ -4545,7 +4612,8 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein"
+		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
+		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -4618,25 +4686,27 @@
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
 		"soon": "Bald",
-		"seeFight": "Voir le combat entre {playerA} et {playerB}",
+		"seeFight": "Kampf zwischen {playerA} und {playerB} ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
 			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
 			"pools": ":chrono: Die nächste Runde der Gruppenphase wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"finals": ":chrono: Die nächste Finalrunde wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
 			"nextQualif": ":chrono: Die nächste Qualifikation wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
-			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!"
+			"cashPrice": ":gold: Das Preisgeld für dieses Turnier beträgt {cashPrice} :gold:!",
+			"noTeam": "Du hast für dieses Turnier keine Mannschaft angemeldet."
 		},
-		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
+		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Diese muss aus **{team} Dinoz** bestehen, die höchstens die **Stufe {level}** haben. Die verfügbaren Dinoz-Rassen sind: **{races}**. Diese sind für dich bereits gefiltert.",
 		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
 		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",
 		"finals": "Die heiß begehrten Endrunden haben begonnen!&&Das Preisgeld beträgt nun **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
 		"challengeFriend": {
-			"disclaimer": "Hier kannst du bis zu **5 deiner Dinoz** auswählen, um gegen ein Mitglied deines Klans zu kämpfen. Wähle dann einen Mitstreiter und bis zu **5 seiner Dinoz** aus, bevor du den Kampf startest. Es werden keine :pv: verloren, keine :xp: erhalten und keine Gegenstände verbraucht.&&Der Preis für einen Kampf beträgt **50 :gold: pro Dinoz-Kämpfer**. Die verwendeten Goldmünzen :gold: werden zur Finanzierung der nächsten Wettkämpfe verwendet.",
-			"friend": "Wähle hier die Dinoz deines Mitstreiters zum Gegenübertreten aus.",
+			"disclaimer": "Es werden keine :pv: verloren, keine :xp: gesammelt und keine Gegenstände verbraucht.&&Die Gebühr für die Nutzung des Trainings-Dojos beträgt **50 :gold: pro Dinoz-Kämpfer**. Dieses Geld fließt ins Preisgeld des laufenden Turniers.",
+			"selectYourDinoz": "Wähle bis zu **6 deiner Dinoz** aus.",
+			"selectOpponentDinoz": "Wähle hier deinen Gegner und bis zu **6 Dinoz**, um gegen sie anzutreten.",
 			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Ein Dinoz darf nicht mehr als ein Mal kämpfen"
+			"doubleDinoz": "Du kannst einen Dinoz nicht gegen sich selbst kämpfen lassen."
 		},
 		"tournamentFormats": {
 			"uncommon": "Ungewöhnliche Dinoz",
@@ -5126,7 +5196,7 @@
 		"korgon_end": "Du hast einen besonders fetten Korgonen gefangengenommen... hoffentlich war er nicht als Abendessen für jemand anderen vorgesehen!"
 	},
 	"report": {
-		"clan": "Signaler le clan",
+		"clan": "Klan melden",
 		"header": "Unangemessene Inhalte melden",
 		"player": "Bist du sicher, dass du diesen Spieler den Moderatoren melden möchtest?",
 		"specify": "Bitte beschreibe den Grund für deine Beschwerde",
@@ -5136,12 +5206,12 @@
 			"accountName": "Unangemessener Spielername",
 			"dinozName": "Unangebrachter Name eines Dinoz",
 			"multi": "Dieser Spieler hat mehrere Konten",
-			"other": "Andere",
-			"clanBanner": "Bannière inappropriée",
-			"clanBehavior": "Comportement anti-jeu",
-			"clanPages": "Descriptions ou pages de clan inappropriées",
-			"clanOther": "Autre",
-			"deleted": "Clan supprimé"
+			"other": "Sonstiges",
+			"clanBanner": "Unangemessenes Banner",
+			"clanBehavior": "Unsportliches Verhalten",
+			"clanPages": "Unangemessene Beschreibungen oder Seiten",
+			"clanOther": "Sonstiges",
+			"deleted": "Klan gelöscht"
 		},
 		"sorted": {
 			"open": "Offen",
@@ -5196,10 +5266,10 @@
 			"multi": "Verdacht auf Mehrfachkonten",
 			"dinozName": "unangemessener Name eines Dinoz",
 			"avatar": "unangemessener Avatar",
-			"clanBanner": "la bannière de votre clan",
-			"clanBehavior": "le comportement anti-jeu de votre clan",
-			"clanPages": "les pages de votre clan",
-			"clanOther": "votre clan",
+			"clanBanner": "das Banner deines Klans",
+			"clanBehavior": "das unsportliche Verhalten deines Klans",
+			"clanPages": "die Seiten deines Klans",
+			"clanOther": "dein Klan",
 			"other": "ein anderer Grund"
 		},
 		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
@@ -5213,7 +5283,16 @@
 		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
 		"clanApply": "{name} möchte deinem Klan beitreten!",
 		"message": "Du hast eine neue Nachricht erhalten.",
-		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen."
+		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen.",
+		"clanWar": {
+			"WAR_ATTACKED": "Der Klan {targetClan} hat uns den Krieg erklärt!",
+			"WAR_START": "Ich habe dem Klan {targetClan} den Krieg erklärt!",
+			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
+			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
+			"WAR_FORFEIT": "Der Klan {targetClan} hat sich im Krieg geschlagen gegeben!",
+			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
+			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
+		}
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",

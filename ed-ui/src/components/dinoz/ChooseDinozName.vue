@@ -64,10 +64,9 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData.id);
+				const dinoz = useDinozStore().getDinoz(this.dinozData.id);
 
-				if (!dinozToUpdate) {
+				if (!dinoz) {
 					this.$toast.open({
 						message: this.$t('toast.dinozNotFound'),
 						type: 'error'
@@ -75,9 +74,9 @@ export default defineComponent({
 					return;
 				}
 
-				dinozToUpdate.name = this.dinozName;
+				dinoz.name = this.dinozName;
 
-				useDinozStore().setDinozList(dinozList);
+				useDinozStore().setDinoz(dinoz);
 
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.dinozName);

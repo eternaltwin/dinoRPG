@@ -1,12 +1,13 @@
 import { App } from 'vue';
-import ToastPlugin from 'vue-toast-notification';
 import type { ToastPluginApi, ToastProps } from 'vue-toast-notification';
+import ToastPlugin from 'vue-toast-notification';
+import { playerStore } from '../store';
+import { formatText } from './formatText';
 
 interface ToastInstance {
 	dismiss: () => void;
 }
 
-const MAX_TOASTS = 3;
 const activeToasts: ToastInstance[] = [];
 
 export const createToastPlugin = (options: ToastProps) => {
@@ -21,14 +22,19 @@ export const createToastPlugin = (options: ToastProps) => {
 			// Create a wrapper that tracks toasts
 			const wrappedToast: ToastPluginApi = {
 				open: params => {
-					// If we have 3 toasts, dismiss the oldest one
-					if (activeToasts.length >= MAX_TOASTS) {
+					// If we have max toasts, dismiss the oldest one
+					if (activeToasts.length >= playerStore().getPlayerOptions.displayedNotifications) {
 						const oldestToast = activeToasts.shift();
 						oldestToast?.dismiss();
 					}
 
+					const formattedParams = {
+						...params,
+						message: typeof params.message === 'string' ? formatText(params.message) : params.message
+					};
+
 					// Open the new toast
-					const toastInstance = originalToast.open(params);
+					const toastInstance = originalToast.open(formattedParams);
 					activeToasts.push(toastInstance);
 
 					// Remove from tracking when dismissed
@@ -52,8 +58,8 @@ export const createToastPlugin = (options: ToastProps) => {
 				info: (message, options) => {
 					return wrappedToast.open({ message, type: 'info', ...options });
 				},
-				warning: (message, options) => {
-					return wrappedToast.open({ message, type: 'warning', ...options });
+				warning: message => {
+					return wrappedToast.open({ message, type: 'warning', position: 'bottom-right', duration: 10000 });
 				},
 				default: (message, options) => {
 					return wrappedToast.open({ message, type: 'default', ...options });

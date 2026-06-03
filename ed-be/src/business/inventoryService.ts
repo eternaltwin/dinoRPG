@@ -47,7 +47,7 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
 import { initializeDinoz, learnNextSphereSkill, useRice } from '../utils/dinoz.js';
-import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
+import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
 import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
@@ -200,7 +200,7 @@ export async function useItem(req: Request) {
 			});
 			break;
 		case ItemEffect.SPHERE:
-			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value);
+			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value, authed);
 			const skill = Object.values(skillList).find(skill => skill.id === skillToLearn);
 
 			if (!skill) {
@@ -263,7 +263,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			break;
 		case itemList[Item.PIGMOU_EGG_RARE].itemId:
 			// Body tatoo
-			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomInteger(0, 4) === 0 ? '1' : '0', '1', '0');
 			break;
 		case itemList[Item.WINKS_EGG_RARE].itemId:
 			// Fore-head horn thingy
@@ -275,7 +275,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			break;
 		case itemList[Item.CASTIVORE_EGG_RARE].itemId:
 			// Bow-tie
-			randomDisplay = generateDinozDisplay(raceList[race], '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', getLetter(1 + getRandomInteger(0, 1)), '0');
 			break;
 		case itemList[Item.ROCKY_EGG_RARE].itemId:
 			// Just color palette, no other graphical rare stuff in swf
@@ -293,7 +293,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			break;
 		case itemList[Item.SIRAIN_EGG_RARE].itemId:
 			// Scarf & tatoo
-			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomInteger(0, 4) === 0 ? '1' : '0', '1', '0');
 			break;
 		case itemList[Item.HIPPOCLAMP_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
@@ -325,7 +325,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			randomDisplay = generateDinozDisplay(raceList[race], '2', '2', '0');
 			break;
 		case itemList[Item.RARE_KABUKI_EGG].itemId:
-			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', getLetter(1 + getRandomInteger(0, 1)), '0');
 			break;
 		case itemList[Item.RARE_MAHAMUTI_EGG].itemId:
 			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
@@ -344,7 +344,7 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			break;
 		// Classic smog egg can get color palette to 0 or 1
 		case itemList[Item.SMOG_EGG].itemId:
-			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 2) === 0 ? '1' : '0', '0', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomInteger(0, 1) === 0 ? '2' : '0', '0', '0');
 			break;
 		case itemList[Item.SMOG_EGG_RARE].itemId:
 			// TODO: does not exist in MT's code: invent or just use the anniversary format. Currently placeholder
@@ -368,8 +368,8 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.CHRISTMAS_EGG].itemId:
-			// MT is [0,3], we switched to [0,10] to increase trice rarity
-			if (getRandomNumber(0, 10) === 0) {
+			// MT is [0,2], we switched to [0,9] to increase trice rarity
+			if (getRandomInteger(0, 9) === 0) {
 				race = RaceEnum.TRICERAGNON;
 				randomDisplay = generateDinozDisplay(raceList[race], '0', '0', '0');
 			} else {

@@ -38,10 +38,9 @@ export default defineComponent({
 	},
 	methods: {
 		async updateMission(status: string) {
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId);
+			const dinoz = useDinozStore().getDinoz(this.dinozId);
 			try {
-				if (!this.mission || !dinozToUpdate) {
+				if (!this.mission || !dinoz) {
 					this.$toast.open({
 						message: this.$t('toast.missingData'),
 						type: 'error'
@@ -51,12 +50,12 @@ export default defineComponent({
 				}
 				await MissionService.updateMissions(this.dinozId, this.mission.missionId, status);
 				if (status === 'start') {
-					dinozToUpdate.missionId = this.mission.missionId;
+					dinoz.missionId = this.mission.missionId;
 					this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 				} else {
-					dinozToUpdate.missionId = undefined;
+					dinoz.missionId = undefined;
 				}
-				useDinozStore().setDinozList(dinozList);
+				useDinozStore().setDinoz(dinoz);
 
 				this.$emit('reload');
 			} catch (err) {
@@ -70,8 +69,7 @@ export default defineComponent({
 			return missionsList[this.mission?.missionId ?? -1];
 		},
 		dinoz(): DinozFiche | undefined {
-			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;
-			return dinozList.find(dinozs => dinozs.id === this.dinozId);
+			return useDinozStore().getDinoz(this.dinozId);
 		}
 	}
 });

@@ -30,6 +30,7 @@
 	"alreadyOffer": "You already have an offer ongoing.",
 	"bidsOngoing": "You still have ongoing bids.",
 	"inClan": "You still belong to a clan.",
+	"noClan": "You do not belong to a clan.",
 	"banPending": "You have a pending ban request.",
 	"AlreadyAtMaxHealth": "Your Dinoz is already at max health.",
 	"DinozIsDead": "Your dinoz is dead.",
@@ -50,6 +51,19 @@
 	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
 	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
 	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
+	"clanWar": {
+		"noCastle": "Your clan has not built a castle.",
+		"noCastleOpponent": "The enemy castle is not built.",
+		"defenderAlreadyUnderAttack": "This clan is already attacked by too many opponents.",
+		"defenderActiveMax": "Your clan reached the maximum number of Dinoz in defense.",
+		"notWar": "The attack is no longer possible.",
+		"notEnoughIngredients": "This war costs {{cost}} :gold:, your clan does not have enough treasury to start it.",
+		"castleDestroyed": "The castle is destroyed.",
+		"castleFullLife": "Your castle has already the maximum number of :hp_castle:.",
+		"repairStackFull": "You cannot start more repairs.",
+		"notEnoughIngredientsForRepair": "You do not have enough ingredients to start this repair.",
+		"alreadyInDefense": "Your Dinoz is already part of the castle defense."
+	},
 	"error": {
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
 		"notYourDinoz": "This is not your Dinoz."
@@ -212,7 +226,8 @@
 		"dinozNotPlayer": "A Dinoz does not belong to the player.",
 		"alreadyFighted": "This Dinoz has already fought.",
 		"wrongDinozInTeam": "Your team must have between 5 and 10 Dinoz.",
-		"wrongDinozQuantity": "Your team must be composed of {{qty}} Dinoz.",
+		"wrongDinozQuantity": "Your team must be composed of exactly {{qty}} Dinoz.",
+		"notEnoughDiversity": "Your team must be composed of {{qty}} different Dinoz races.",
 		"notEnoughGold": "You don't have enough gold to start the fight.",
 		"archiveNotFound": "The archive was not found.",
 		"inexistantOpponent": "Opponent not found.",

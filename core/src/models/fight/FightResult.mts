@@ -7,6 +7,7 @@ import { FightText } from '../missions/specialActions.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { EntranceEffect } from './transpiler.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
+import { PlayerInfo } from '../player/PlayerInfo.mjs';
 
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -35,7 +36,9 @@ export interface FighterRecap {
 	id: number;
 	type: FighterType;
 	name: string;
+	level: number;
 	display: string | undefined;
+	survived: boolean;
 	attacker: boolean;
 	maxHp: number;
 	startingHp: number;
@@ -46,6 +49,17 @@ export interface FighterRecap {
 	dark?: boolean;
 	size?: number;
 	entrance?: EntranceEffect;
+}
+
+export interface FightReplay {
+	id: string;
+	fighters: FighterRecap[];
+	history: FightStep[];
+	result: boolean;
+	seed: string;
+	leftPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
+	rightPlayer: Pick<PlayerInfo, 'id' | 'name'> | null;
+	metadata: { placeId: number; rightClanName?: string };
 }
 
 export interface CatchResult {

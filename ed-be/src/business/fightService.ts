@@ -10,7 +10,7 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightOutcome, FightProcessResult, FightReplay } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -26,10 +26,9 @@ import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
-import { generateString, getRandomNumber } from '../utils/index.js';
+import { generateString, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -44,6 +43,8 @@ import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { getArchivedFightRequest } from '../dao/archiveDao.js';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
 
 /**
  * @summary Process a fight
@@ -401,7 +402,7 @@ export async function rewardFightVsMonsters(
 		for (const dinozStatus of d.status) {
 			if (dinozStatus.statusId === DinozStatusId.FIRE_CHARM || dinozStatus.statusId === DinozStatusId.WATER_CHARM) {
 				// 1/11 chance to remove charm
-				if (randomBetween(0, 10) === 0) {
+				if (getRandomInteger(0, 10) === 0) {
 					await removeStatusFromDinoz(d.id, dinozStatus.statusId);
 				}
 			}
@@ -528,6 +529,8 @@ export async function rewardFightVsMonsters(
 			id: f.id,
 			type: f.type,
 			name: f.name,
+			level: f.level,
+			survived: f.survived,
 			display: f.display,
 			attacker: f.attacker,
 			maxHp: f.maxHp,
@@ -624,7 +627,6 @@ export async function generateMonsterList(
 	const diff = (team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
-	const specialProb = getRandomNumber(0, 100);
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
@@ -666,7 +668,8 @@ export async function generateMonsterList(
 			}
 			// 2 - If monster is special, check if it appears
 			if (m.special) {
-				const display = m.odds >= specialProb;
+				const specialProb = getRandomNumber(0, 100);
+				const display = m.odds < specialProb;
 				return {
 					monster: m,
 					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
@@ -737,4 +740,25 @@ export async function generateMonsterList(
 	}
 
 	return monsterArray;
+}
+
+export async function replayFight(req: Request): Promise<FightReplay> {
+	const archiveId = req.params.archiveId;
+	const fight = await getArchivedFightRequest(archiveId);
+	if (!fight) {
+		throw new ExpectedError('No replay found.');
+	}
+
+	const replay: FightReplay = {
+		id: archiveId,
+		fighters: JSON.parse(fight.fighters) as FighterRecap[],
+		result: fight.result,
+		history: JSON.parse(fight.steps) as FightStep[],
+		seed: fight.seed,
+		leftPlayer: fight.leftPlayer,
+		rightPlayer: fight.rightPlayer,
+		metadata: fight.metadata ? JSON.parse(fight.metadata) : undefined
+	};
+
+	return replay;
 }

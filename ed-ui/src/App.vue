@@ -14,7 +14,6 @@
 	</div>
 	<RouterView />
 	<FooterComp />
-	<Toast />
 	<div class="impact verdana"></div>
 </template>
 
@@ -24,7 +23,6 @@ import TitleHeader from './components/utils/TitleHeader.vue';
 import FooterComp from './components/utils/Footer.vue';
 import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
-import Toast from './components/utils/Toast.vue';
 import ReportPlayer from './components/modal/ReportPlayerModal.vue';
 import ReportClan from './components/modal/ReportClanModal.vue';
 import Messagerie from './components/modal/MessagerieModal.vue';
@@ -42,7 +40,6 @@ export default defineComponent({
 		FooterComp,
 		Spinner,
 		ErrorMessage,
-		Toast,
 		ReportPlayer,
 		ReportClan,
 		DinozLeftMenu

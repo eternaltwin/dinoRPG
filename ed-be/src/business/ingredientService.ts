@@ -12,9 +12,13 @@ import { auth } from '../dao/playerDao.js';
  */
 export async function getAllIngredientsData(req: Request) {
 	const authed = await auth(req);
-	const allIngredientsData = await getAllIngredientsDataRequest(authed.id);
+	const player = await getAllIngredientsDataRequest(authed.id);
 
-	const ingredients = allIngredientsData.map(ingr => {
+	if (!player) {
+		throw new ExpectedError(`playerNotFound`);
+	}
+
+	const ingredients = player.ingredients.map(ingr => {
 		const ingredientFound = Object.values(ingredientList).find(value => value.ingredientId === ingr.ingredientId);
 
 		if (!ingredientFound) throw new ExpectedError('Ingredient not found');
@@ -23,7 +27,7 @@ export async function getAllIngredientsData(req: Request) {
 			ingredientId: ingredientFound.ingredientId,
 			name: ingredientFound.name.toLowerCase(),
 			quantity: ingr.quantity,
-			maxQuantity: ingredientFound.maxQuantity
+			maxQuantity: player.shopKeeper ? Math.round(ingredientFound.maxQuantity * 1.5) : ingredientFound.maxQuantity
 		};
 	});
 

@@ -207,6 +207,24 @@ export type transpiled =
 			};
 	  }
 	| {
+			action: DinoAction.ADDCASTLE;
+			castle: {
+				life: number;
+				maxLife: number;
+				enclos?: boolean;
+				ground?: number;
+				repair?: number;
+				armor?: number;
+				color?: number;
+				invisible?: boolean;
+			};
+	  }
+	| {
+			action: DinoAction.ATTACKCASTLE;
+			fid: number;
+			damages: number;
+	  }
+	| {
 			action: DinoAction.DEAD;
 			fid: number;
 	  }

@@ -16,6 +16,11 @@ const router = createRouter({
 					component: () => import('../components/common/News.vue')
 				},
 				{
+					path: '/replay/:archive',
+					name: 'ReplayFight',
+					component: () => import('../pages/ReplayFight.vue')
+				},
+				{
 					path: '/forum',
 					name: 'Forum',
 					component: () => import('../pages/ForumPage.vue')
@@ -72,7 +77,7 @@ const router = createRouter({
 				{
 					path: '/player/:id',
 					name: 'Account',
-					component: () => import('../pages/./Account')
+					component: () => import('../pages/Account.vue')
 				},
 				{
 					path: '/levelup/:id',
@@ -95,26 +100,51 @@ const router = createRouter({
 					component: () => import('../pages/Ranking.vue'),
 					children: [
 						{
-							path: 'player/:pageLoaded',
+							path: 'player',
 							name: 'RankingPlayers',
 							component: () => import('../components/rankings/PlayerRanking.vue'),
-							props: { sort: 'classic' }
+							props: route => {
+								const page = Number(route.query.page);
+								return {
+									sort: 'classic',
+									page: isNaN(page) || page < 1 ? 1 : page
+								};
+							}
 						},
 						{
-							path: 'average/:pageLoaded',
+							path: 'average',
 							name: 'RankingAverage',
 							component: () => import('../components/rankings/PlayerRanking.vue'),
-							props: { sort: 'average' }
+							props: route => {
+								const page = Number(route.query.page);
+								return {
+									sort: 'average',
+									page: isNaN(page) || page < 1 ? 1 : page
+								};
+							}
 						},
 						{
-							path: 'completion/:pageLoaded',
+							path: 'completion',
 							name: 'RankingCompletion',
-							component: () => import('../components/rankings/CompletionRanking.vue')
+							component: () => import('../components/rankings/CompletionRanking.vue'),
+							props: route => {
+								const page = Number(route.query.page);
+								return {
+									page: isNaN(page) || page < 1 ? 1 : page
+								};
+							}
 						},
 						{
-							path: 'clans/:pageLoaded',
+							path: 'clans',
 							name: 'RankingClans',
-							component: () => import('../components/rankings/ClansRanking.vue')
+							component: () => import('../components/rankings/ClansRanking.vue'),
+							props: route => {
+								const page = Number(route.query.page);
+								return {
+									page: isNaN(page) || page < 1 ? 1 : page,
+									type: route.query.type
+								};
+							}
 						},
 						{
 							path: 'pantheon',
@@ -162,6 +192,11 @@ const router = createRouter({
 							path: 'secret',
 							name: 'Secret',
 							component: () => import('../components/admin/SecretEdit.vue')
+						},
+						{
+							path: 'event',
+							name: 'EventCreation',
+							component: () => import('../components/admin/EventCreation.vue')
 						},
 						{
 							path: 'logs',

@@ -229,4 +229,5 @@ export interface FighterResultFiche {
 	itemsUsed: Item[];
 	goldLost: number;
 	statusGained: DinozStatusId[];
+	escaped: boolean;
 }

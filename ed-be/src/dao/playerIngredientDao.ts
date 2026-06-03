@@ -3,9 +3,13 @@ import { prisma } from '../prisma.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export const getAllIngredientsDataRequest = async (playerId: string) => {
-	const ingredients = await prisma.playerIngredient.findMany({
+	const ingredients = await prisma.player.findFirst({
 		where: {
-			playerId
+			id: playerId
+		},
+		select: {
+			shopKeeper: true,
+			ingredients: true
 		}
 	});
 	return ingredients;
