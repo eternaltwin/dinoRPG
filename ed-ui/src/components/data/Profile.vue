@@ -85,6 +85,16 @@
 					<DZCheckbox id="shareArchivedData" v-model="shareArchivedData" @change="updateShareArchivedData" />
 				</label>
 			</div>
+			<div class="option">
+				{{ $t('topBar.rightMenu.displayedNotifications') }}
+				<DZInput
+					type="number"
+					min="1"
+					step="1"
+					v-model="displayedNotifications"
+					@input="updateDisplayedNotifications"
+				/>
+			</div>
 			<div class="buttonLand" v-if="isMyAccount()">
 				<DZButton @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
 				<DZButton @click="option = false">{{ $t(`myAccount.options.retour`) }}</DZButton>
@@ -109,6 +119,7 @@ import { Tippy } from 'vue-tippy';
 import { formatDate } from '../../utils/formatDateTime';
 import DZSelect from '../common/DZSelect.vue';
 import DZCheckbox from '../common/DZCheckbox.vue';
+import DZInput from '../common/DZInput.vue';
 
 export default defineComponent({
 	name: 'Profile',
@@ -123,6 +134,7 @@ export default defineComponent({
 			localStore: localStore(),
 			shareArchivedData: playerStore().getPlayerOptions.shareArchivedData,
 			archivedSiteId: playerStore().getPlayerOptions.archivedSiteId ?? undefined,
+			displayedNotifications: playerStore().getPlayerOptions.displayedNotifications,
 			possibleSites: [
 				{ label: `www.dinorpg.com (FR)`, value: 2 },
 				{ label: `en.dinorpg.com (EN)`, value: 3 },
@@ -133,6 +145,7 @@ export default defineComponent({
 	},
 	components: {
 		DZCheckbox,
+		DZInput,
 		DZSelect,
 		DZUser,
 		DZButton,
@@ -238,6 +251,13 @@ export default defineComponent({
 				shareArchivedData: this.shareArchivedData
 			});
 			PlayerService.updateSetting('shareArchivedData', this.shareArchivedData);
+		},
+		updateDisplayedNotifications() {
+			this.playerStore.setPlayerOptions({
+				...this.playerStore.playerOptions,
+				displayedNotifications: this.displayedNotifications
+			});
+			PlayerService.updateSetting('displayedNotifications', this.displayedNotifications);
 		}
 	},
 	beforeRouteUpdate(to, from, next) {

@@ -99,7 +99,7 @@ export const PlayerService = {
 		return res.data;
 	},
 	async updateSetting(
-		setting: 'skipLevel' | 'skipFight' | 'archivedSiteId' | 'shareArchivedData',
+		setting: 'skipLevel' | 'skipFight' | 'archivedSiteId' | 'shareArchivedData' | 'displayedNotifications',
 		value: boolean | number
 	): Promise<void> {
 		const res = await http().patch(`/player/settings/${setting}`, {

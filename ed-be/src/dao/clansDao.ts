@@ -6,7 +6,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Lang, NotificationSeverity, EventType, $Enums, Prisma } from '@drpg/prisma';
+import { Lang, NotificationSeverity, EventType, $Enums, Prisma, LogType } from '@drpg/prisma';
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
@@ -1382,5 +1382,60 @@ export async function consumeRepairCost(clanId: number, cost: NonNullable<WarCos
 				}
 			})
 		]);
+	});
+}
+
+export async function getWarHistory(page: number) {
+	const wars = await prisma.clanWar.findMany({
+		orderBy: { startedAt: 'desc' },
+		skip: (page - 1) * 20,
+		take: 20,
+		select: {
+			id: true,
+			startedAt: true,
+			winnerClanId: true,
+			attackerClanId: true,
+			isCastleDestroyed: true,
+			attacker: { select: { id: true, name: true } },
+			defender: { select: { id: true, name: true } }
+		}
+	});
+
+	const resolvedWarIds = wars.filter(w => w.winnerClanId !== null).map(w => w.id);
+	const logs =
+		resolvedWarIds.length > 0
+			? await prisma.log.findMany({
+					where: { type: LogType.ClanWarResolved, values: { hasSome: resolvedWarIds } }
+				})
+			: [];
+
+	const logReasonByWarId = new Map<string, string>();
+	for (const log of logs) {
+		if (!logReasonByWarId.has(log.values[0])) logReasonByWarId.set(log.values[0], log.values[2]);
+	}
+
+	return wars.map(w => {
+		let endReason: string | null = null;
+		if (w.winnerClanId !== null) {
+			const logReason = logReasonByWarId.get(w.id);
+			if (logReason) {
+				endReason = logReason;
+			} else if (w.isCastleDestroyed) {
+				endReason = 'castleDestroyed';
+			} else if (w.winnerClanId === w.attackerClanId) {
+				endReason = 'castleDestroyed';
+			} else {
+				// No log and castle not destroyed: could be timeout, forfeit, or stolen.
+				// Without logs we cannot distinguish — default to expiration.
+				endReason = 'expiration';
+			}
+		}
+		return {
+			id: w.id,
+			startedAt: w.startedAt,
+			attacker: w.attacker,
+			defender: w.defender,
+			endReason
+		};
 	});
 }

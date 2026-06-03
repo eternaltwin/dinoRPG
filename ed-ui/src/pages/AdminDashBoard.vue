@@ -17,6 +17,9 @@
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/logs"> Logs </RouterLink>
 		</li>
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
+			<RouterLink to="/admin/war-logs"> War Logs </RouterLink>
+		</li>
 		<li>
 			<RouterLink to="/admin/gamestat"> GameStats </RouterLink>
 		</li>

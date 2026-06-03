@@ -262,74 +262,75 @@ model NPC {
 }
 
 model Player {
-  customText           String?
-  name                 String             @db.VarChar
-  connexionToken       String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  money                Int
-  quetzuBought         Int
-  leader               Boolean            @default(false)
-  engineer             Boolean            @default(false)
-  cooker               Boolean            @default(false)
-  shopKeeper           Boolean            @default(false)
-  merchant             Boolean            @default(false)
-  priest               Boolean            @default(false)
-  teacher              Boolean            @default(false)
-  createdDate          DateTime           @default(now()) @db.Timestamp(6)
-  updatedDate          DateTime           @default(now()) @updatedAt @db.Timestamp(6)
-  lastLogin            DateTime           @default(now()) @db.Timestamp(6)
-  clanId               Int?
-  clan                 Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
-  matelasseur          Boolean            @default(false)
-  messie               Boolean            @default(false)
-  labruteDone          Boolean            @default(false)
-  role                 AdminRole          @default(PLAYER)
-  lang                 Lang               @default(fr)
-  dailyGridRewards     Int                @default(0)
-  skipFight            Boolean            @default(false)
-  skipLevel            Boolean            @default(false)
-  shareArchivedData    Boolean            @default(false)
-  archivedSiteId       Int?
-  banCaseId            Int?               @unique
-  discoveredSkills     Int[]              @default([])
-  lastVersionSeen      String             @default("0.16.3")
-  id                   String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
-  leaderOf             Clan?              @relation("leader")
-  ClanHistory          ClanHistory[]
-  ClanJoinRequest      ClanJoinRequest?   @relation("clanRequest")
-  ClanMember           ClanMember?
-  createdConversations Conversation[]     @relation("CreatedConversations")
-  Conversation         Conversation[]
-  logs                 Log[]
-  messages             Message[]
-  reportedCases        Moderation[]       @relation("ReporterRelation")
-  targetedCases        Moderation[]       @relation("TargetRelation")
-  notifications        Notification[]
-  offers               Offer[]
-  bids                 OfferBid[]
-  Pantheon             Pantheon[]
-  conversations        Participants[]
-  usernameHistory      UsernameHistory[]
-  ClanMessage          ClanMessage[]
-  dinoz                Dinoz[]
-  banCase              Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
-  playerTracking       PlayerTracking[]
-  dinozShop            PlayerDinozShop[]
-  gathers              PlayerGather[]
-  ingredients          PlayerIngredient[]
-  items                PlayerItem[]
-  quests               PlayerQuest[]
-  rewards              PlayerReward[]
-  ranking              Ranking?
-  Dojo                 Dojo?
-  FightArchive         FightArchive[]     @relation("PlayerRelation")
-  LeftFightArchives    FightArchive[]     @relation("LeftPlayerRelation")
-  RightFightArchives   FightArchive[]     @relation("RightPlayerRelation")
-  FightWatched         FightWatched[]
-  GameDinoz            GameDinoz[]
-  ips                  PlayerIp[]
-  pollVotes            PollVote[]
-  Events               Events[]
-  dinozBuilds          DinozBuild[]
+  customText             String?
+  name                   String             @db.VarChar
+  connexionToken         String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  money                  Int
+  quetzuBought           Int
+  leader                 Boolean            @default(false)
+  engineer               Boolean            @default(false)
+  cooker                 Boolean            @default(false)
+  shopKeeper             Boolean            @default(false)
+  merchant               Boolean            @default(false)
+  priest                 Boolean            @default(false)
+  teacher                Boolean            @default(false)
+  createdDate            DateTime           @default(now()) @db.Timestamp(6)
+  updatedDate            DateTime           @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin              DateTime           @default(now()) @db.Timestamp(6)
+  clanId                 Int?
+  clan                   Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  matelasseur            Boolean            @default(false)
+  messie                 Boolean            @default(false)
+  labruteDone            Boolean            @default(false)
+  role                   AdminRole          @default(PLAYER)
+  lang                   Lang               @default(fr)
+  dailyGridRewards       Int                @default(0)
+  skipFight              Boolean            @default(false)
+  skipLevel              Boolean            @default(false)
+  shareArchivedData      Boolean            @default(false)
+  archivedSiteId         Int?
+  displayedNotifications Int                @default(3)
+  banCaseId              Int?               @unique
+  discoveredSkills       Int[]              @default([])
+  lastVersionSeen        String             @default("0.16.3")
+  id                     String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
+  leaderOf               Clan?              @relation("leader")
+  ClanHistory            ClanHistory[]
+  ClanJoinRequest        ClanJoinRequest?   @relation("clanRequest")
+  ClanMember             ClanMember?
+  createdConversations   Conversation[]     @relation("CreatedConversations")
+  Conversation           Conversation[]
+  logs                   Log[]
+  messages               Message[]
+  reportedCases          Moderation[]       @relation("ReporterRelation")
+  targetedCases          Moderation[]       @relation("TargetRelation")
+  notifications          Notification[]
+  offers                 Offer[]
+  bids                   OfferBid[]
+  Pantheon               Pantheon[]
+  conversations          Participants[]
+  usernameHistory        UsernameHistory[]
+  ClanMessage            ClanMessage[]
+  dinoz                  Dinoz[]
+  banCase                Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
+  playerTracking         PlayerTracking[]
+  dinozShop              PlayerDinozShop[]
+  gathers                PlayerGather[]
+  ingredients            PlayerIngredient[]
+  items                  PlayerItem[]
+  quests                 PlayerQuest[]
+  rewards                PlayerReward[]
+  ranking                Ranking?
+  Dojo                   Dojo?
+  FightArchive           FightArchive[]     @relation("PlayerRelation")
+  LeftFightArchives      FightArchive[]     @relation("LeftPlayerRelation")
+  RightFightArchives     FightArchive[]     @relation("RightPlayerRelation")
+  FightWatched           FightWatched[]
+  GameDinoz              GameDinoz[]
+  ips                    PlayerIp[]
+  pollVotes              PollVote[]
+  Events                 Events[]
+  dinozBuilds            DinozBuild[]
 
   @@map("player")
 }
@@ -1090,6 +1091,15 @@ enum LogType {
   OfferWon
   GridFinished
   ItemFound
+  ClanWarCastleBuilt
+  ClanWarDeclared
+  ClanWarForfeited
+  ClanWarDefenderAdded
+  ClanWarDefenderRemoved
+  ClanWarDefenseOrderUpdated
+  ClanWarCastleAttacked
+  ClanWarCastleRepaired
+  ClanWarResolved
 }
 
 enum NotificationSeverity {

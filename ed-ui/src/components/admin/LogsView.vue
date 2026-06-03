@@ -77,7 +77,16 @@ const LogTypes = [
 	'AdminRemoveIngredient',
 	'AdminUpdateQuest',
 	'AdminUpdatePlayer',
-	'AdminUpdateSecret'
+	'AdminUpdateSecret',
+	'ClanWarCastleBuilt',
+	'ClanWarDeclared',
+	'ClanWarForfeited',
+	'ClanWarDefenderAdded',
+	'ClanWarDefenderRemoved',
+	'ClanWarDefenseOrderUpdated',
+	'ClanWarCastleAttacked',
+	'ClanWarCastleRepaired',
+	'ClanWarResolved'
 ] as const;
 
 const getLogPropsForTranslation = (
@@ -334,6 +343,50 @@ const getLogPropsForTranslation = (
 				key: log.values[0],
 				value: log.values[1]
 			};
+			break;
+		case 'ClanWarCastleBuilt':
+			values = { clanId: log.values[0], action: log.values[1] };
+			break;
+		case 'ClanWarDeclared':
+			values = {
+				warId: log.values[0],
+				attackerClanId: log.values[1],
+				defenderClanId: log.values[2],
+				endWar: log.values[3]
+			};
+			break;
+		case 'ClanWarForfeited':
+			values = { warId: log.values[0], clanId: log.values[1] };
+			break;
+		case 'ClanWarDefenderAdded':
+			values = { clanId: log.values[0], dinozId: String(log.dinozId) };
+			break;
+		case 'ClanWarDefenderRemoved':
+			values = { clanId: log.values[0], dinozId: String(log.dinozId) };
+			break;
+		case 'ClanWarDefenseOrderUpdated':
+			values = { clanId: log.values[0], order: log.values[1] };
+			break;
+		case 'ClanWarCastleAttacked':
+			values = {
+				warId: log.values[0],
+				defenderClanId: log.values[1],
+				damage: log.values[2],
+				currentLife: log.values[3],
+				dinozId: String(log.dinozId)
+			};
+			break;
+		case 'ClanWarCastleRepaired':
+			values = {
+				clanId: log.values[0],
+				repairId: log.values[1],
+				hpPerTick: log.values[2],
+				frequency: log.values[3],
+				tick: log.values[4]
+			};
+			break;
+		case 'ClanWarResolved':
+			values = { warId: log.values[0], winnerClanId: log.values[1], reason: log.values[2] };
 			break;
 		default:
 			break;

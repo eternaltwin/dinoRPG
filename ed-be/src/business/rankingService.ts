@@ -7,6 +7,7 @@ import {
 	getPlayersSumRanking
 } from '../dao/rankingDao.js';
 import { getEveryStatTop3 } from '../dao/trackingDao.js';
+import { getWarHistory } from '../dao/clansDao.js';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
@@ -61,4 +62,9 @@ export async function getPlayerPosition(req: Request) {
 
 export async function getStatRankings() {
 	return getEveryStatTop3();
+}
+
+export async function getWarHistoryRanking(req: Request) {
+	const page = +req.params.page || 1;
+	return getWarHistory(page);
 }

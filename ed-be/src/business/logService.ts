@@ -1,6 +1,6 @@
 import { Log, LogType } from '@drpg/prisma';
 import { Request } from 'express';
-import { getLogList, getLogListAll, getLogListByDate } from '../dao/logDao.js';
+import { getLogList, getLogListAll, getLogListByDate, getWarLogList } from '../dao/logDao.js';
 
 const getAllLogs = async () => {
 	return getLogListAll();
@@ -80,4 +80,10 @@ const getLogTypeTotal = (type: LogType, values: string[]): number => {
 	}
 };
 
-export { getAllLogs, getLogs, getLogsByDate };
+const getWarLogs = async (req: Request) => {
+	const page = req.params.page ? +req.params.page : 1;
+	const clanId = req.params.clanId === 'null' ? undefined : req.params.clanId;
+	return getWarLogList(page, clanId);
+};
+
+export { getAllLogs, getLogs, getLogsByDate, getWarLogs };

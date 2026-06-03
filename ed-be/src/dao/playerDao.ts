@@ -39,6 +39,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 				skipLevel: true,
 				archivedSiteId: true,
 				shareArchivedData: true,
+				displayedNotifications: true,
 				ClanMember: { select: { clanId: true } },
 				discoveredSkills: true,
 				notifications: {
@@ -661,6 +662,7 @@ export async function getCommonDataRequest(playerId: string) {
 					skipLevel: true,
 					archivedSiteId: true,
 					shareArchivedData: true,
+					displayedNotifications: true,
 					discoveredSkills: true,
 					ClanMember: { select: { clanId: true } },
 					notifications: {

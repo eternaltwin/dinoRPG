@@ -175,6 +175,8 @@ export async function buildClanCastle(req: Request) {
 		},
 		select: { id: true }
 	});
+
+	await createLog(LogType.ClanWarCastleBuilt, authed.id, undefined, authed.clanId, isRebuild ? 'rebuild' : 'build');
 }
 
 export async function declareWar(req: Request) {
@@ -254,6 +256,16 @@ export async function declareWar(req: Request) {
 			eventId: war.id
 		}
 	});
+
+	await createLog(
+		LogType.ClanWarDeclared,
+		authed.id,
+		undefined,
+		attack.id,
+		authed.clanId,
+		defender.id,
+		endWar.toISOString()
+	);
 
 	const notifications: Promise<void>[] = [];
 
@@ -443,12 +455,31 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 				])
 			)
 		);
+
+		await Promise.all(
+			annexWars.map(annexWar =>
+				createLog(
+					LogType.ClanWarResolved,
+					annexWar.attacker.leaderId,
+					undefined,
+					annexWar.id,
+					war.defender.id,
+					'stolen'
+				)
+			)
+		);
 	}
 
 	await notifyWarResults(war, forfeit);
 
-	const reason = isCastleDestroyed ? 'castle detroyed' : forfeit ? 'forfeit' : 'expiration';
-	LOGGER.log(`War ${warId} is over by ${reason}.`);
+	const reason = isCastleDestroyed ? 'castleDestroyed' : forfeit ? 'forfeit' : 'expiration';
+	await Promise.all([
+		createLog(LogType.ClanWarResolved, war.attacker.leaderId, undefined, war.id, winnerClanId, reason),
+		createLog(LogType.ClanWarResolved, war.defender.leaderId, undefined, war.id, winnerClanId, reason)
+	]);
+
+	const logReason = isCastleDestroyed ? 'castle detroyed' : forfeit ? 'forfeit' : 'expiration';
+	LOGGER.log(`War ${warId} is over by ${logReason}.`);
 	const job = scheduledJobs[`war_${warId}`];
 	if (job) {
 		LOGGER.log(`Job war_${warId} is canceled.`);
@@ -670,6 +701,7 @@ export async function forfeitWar(req: Request) {
 	}
 
 	await resolveClanWar(req.params.warId, true);
+	await createLog(LogType.ClanWarForfeited, authed.id, undefined, req.params.warId, authed.clanId);
 }
 
 export async function addDefender(req: Request) {
@@ -760,6 +792,7 @@ export async function addDefender(req: Request) {
 	});
 
 	await updateDinoz(dinoz.id, { unavailableReason: UnavailableReason.defending });
+	await createLog(LogType.ClanWarDefenderAdded, authed.id, dinoz.id, authed.clanId);
 	return defendLine;
 }
 
@@ -857,6 +890,8 @@ export async function removeDefender(req: Request) {
 		})
 	]);
 
+	await createLog(LogType.ClanWarDefenderRemoved, authed.id, dinoz.id, authed.clanId);
+
 	return defendLine;
 }
 
@@ -891,11 +926,15 @@ export async function updateDefenseOrder(req: Request) {
 		throw new ExpectedError('invalidDefenseOrder');
 	}
 
-	return prisma.clanCastle.update({
+	const updatedCastle = await prisma.clanCastle.update({
 		where: { clanId: authed.clanId },
 		data: { defenseOrder: dinozIds },
 		select: { defenseOrder: true }
 	});
+
+	await createLog(LogType.ClanWarDefenseOrderUpdated, authed.id, undefined, authed.clanId, dinozIds.join(','));
+
+	return updatedCastle;
 }
 
 export async function attackCastle(req: Request) {
@@ -1065,6 +1104,16 @@ export async function attackCastle(req: Request) {
 		}
 	});
 
+	await createLog(
+		LogType.ClanWarCastleAttacked,
+		authed.id,
+		dinozId,
+		activeWar.id,
+		activeWar.defenderClanId,
+		totalCastleDamage,
+		castle.currentLife
+	);
+
 	// Add attack history
 	await prisma.$transaction([
 		// Attacker history
@@ -1154,7 +1203,7 @@ export async function attackCastle(req: Request) {
 			},
 			experience: {
 				// Award xp only if the attackers won and the fighter did not escape.
-				increment: (victory && !attackerFighter.escaped) ? xp : 0
+				increment: victory && !attackerFighter.escaped ? xp : 0
 			},
 			fight: false,
 			unavailableReason: UnavailableReason.restingAttack
@@ -1210,7 +1259,7 @@ export async function attackCastle(req: Request) {
 			},
 			experience: {
 				// Award xp only if the attackers lost and the fighter did not escape.
-				increment: (!victory && !defenderFighter.escaped) ? xp : 0
+				increment: !victory && !defenderFighter.escaped ? xp : 0
 			}
 		});
 		await createLog(LogType.XPEarned, d.playerId, d.id, victory ? xp : 0);
@@ -1449,6 +1498,17 @@ export async function repairCastle(req: Request) {
 		}
 	});
 
+	await createLog(
+		LogType.ClanWarCastleRepaired,
+		authed.id,
+		undefined,
+		authed.clanId,
+		repair.id,
+		hpPerTick,
+		frequency,
+		tick
+	);
+
 	// schedule ticks
 	scheduleRepairTicks(repair.id, castle.id, hpPerTick, frequency, REPAIR_MAX_TICKS);
 
@@ -1476,7 +1536,7 @@ function scheduleRepairTicks(
 			});
 
 			// Cancel repair if castle does not exist or has been destroyed.
-			if (!castle || castle && castle.currentLife <= 0) {
+			if (!castle || (castle && castle.currentLife <= 0)) {
 				job.cancel();
 				return;
 			}
