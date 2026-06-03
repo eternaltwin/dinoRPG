@@ -2607,7 +2607,8 @@
 		"clans": "Klane",
 		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
-		"stats": "Statistiken"
+		"stats": "Statistiken",
+		"wars": "Guerres"
 	},
 	"layout": {
 		"fx": "Status",
@@ -4081,7 +4082,11 @@
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
 			"war": "Kriegsansehen",
-			"castle": "Burg errichtet"
+			"castle": "Burg errichtet",
+			"warAttacker": "Attaquant",
+			"warDefender": "Défenseur",
+			"warStart": "Date de début",
+			"warResult": "Résultat"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4118,6 +4123,12 @@
 			"clanEvent": "Ereignis-Rangliste",
 			"clanTreasure": "Schatzkammer-Rangliste",
 			"clanWar": "Kriegsrangliste"
+		},
+		"war": {
+			"forfeit": "Forfait",
+			"ongoing": "En cours",
+			"castleDestroyed": "Chateau détruit",
+			"timeout": "Défendu"
 		}
 	},
 	"clan": {
