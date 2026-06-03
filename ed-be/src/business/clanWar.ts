@@ -455,6 +455,19 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 				])
 			)
 		);
+
+		await Promise.all(
+			annexWars.map(annexWar =>
+				createLog(
+					LogType.ClanWarResolved,
+					annexWar.attacker.leaderId,
+					undefined,
+					annexWar.id,
+					war.defender.id,
+					'stolen'
+				)
+			)
+		);
 	}
 
 	await notifyWarResults(war, forfeit);
@@ -1190,7 +1203,7 @@ export async function attackCastle(req: Request) {
 			},
 			experience: {
 				// Award xp only if the attackers won and the fighter did not escape.
-				increment: (victory && !attackerFighter.escaped) ? xp : 0
+				increment: victory && !attackerFighter.escaped ? xp : 0
 			},
 			fight: false,
 			unavailableReason: UnavailableReason.restingAttack
@@ -1246,7 +1259,7 @@ export async function attackCastle(req: Request) {
 			},
 			experience: {
 				// Award xp only if the attackers lost and the fighter did not escape.
-				increment: (!victory && !defenderFighter.escaped) ? xp : 0
+				increment: !victory && !defenderFighter.escaped ? xp : 0
 			}
 		});
 		await createLog(LogType.XPEarned, d.playerId, d.id, victory ? xp : 0);
@@ -1523,7 +1536,7 @@ function scheduleRepairTicks(
 			});
 
 			// Cancel repair if castle does not exist or has been destroyed.
-			if (!castle || castle && castle.currentLife <= 0) {
+			if (!castle || (castle && castle.currentLife <= 0)) {
 				job.cancel();
 				return;
 			}

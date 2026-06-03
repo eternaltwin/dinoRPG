@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
-import { getPlayerPosition, getRanking, getStatRankings } from '../business/rankingService.js';
+import { getPlayerPosition, getRanking, getStatRankings, getWarHistoryRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
 
@@ -67,6 +67,23 @@ routes.get(
 		try {
 			const position = await getPlayerPosition(req);
 			return res.status(200).send({ position });
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/war/history/:page`,
+	[param('page').isInt({ min: 1 })],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const wars = await getWarHistoryRanking(req);
+			return res.status(200).send(wars);
 		} catch (err) {
 			sendError(res, err);
 		}

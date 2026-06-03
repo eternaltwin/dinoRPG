@@ -155,6 +155,15 @@ const router = createRouter({
 							path: 'stats',
 							name: 'StatRanking',
 							component: () => import('../components/rankings/StatRanking.vue')
+						},
+						{
+							path: 'wars',
+							name: 'RankingWars',
+							component: () => import('../components/rankings/WarHistory.vue'),
+							props: route => {
+								const page = Number(route.query.page);
+								return { page: isNaN(page) || page < 1 ? 1 : page };
+							}
 						}
 					]
 				},
