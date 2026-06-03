@@ -5289,7 +5289,6 @@
 			"WAR_START": "Ich habe dem Klan {targetClan} den Krieg erklärt!",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
 			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
-			"WAR_FORFEIT": "Der Klan {targetClan} hat sich im Krieg geschlagen gegeben!",
 			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
 			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
 		}

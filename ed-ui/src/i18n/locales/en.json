@@ -5289,7 +5289,7 @@
 			"WAR_START": "I started a war with {targetClan}!",
 			"WAR_WON": "We won the war against {targetClan}!",
 			"WAR_LOSED": "{targetClan} destroyed our castle.",
-			"WAR_FORFEIT": "{targetClan} abandonned the war!",
+			"WAR_FORFEIT": "We abandonned the war against {targetClan}.",
 			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
 			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!"
 		}
