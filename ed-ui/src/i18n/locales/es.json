@@ -2607,7 +2607,8 @@
 		"clans": "Clanes",
 		"completion": "Completado",
 		"pantheon": "Panteón",
-		"stats": "Estadísticas"
+		"stats": "Estadísticas",
+		"wars": "Guerres"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -4081,7 +4082,11 @@
 			"treasure": "Tesoro del Clan",
 			"event": "Puntos del evento",
 			"war": "Reputación de guerra",
-			"castle": "Castillo construido"
+			"castle": "Castillo construido",
+			"warAttacker": "Attaquant",
+			"warDefender": "Défenseur",
+			"warStart": "Date de début",
+			"warResult": "Résultat"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4118,6 +4123,12 @@
 			"clanEvent": "Clasificación del evento",
 			"clanTreasure": "Clasificación del tesoro",
 			"clanWar": "Clasificación de la Guerra"
+		},
+		"war": {
+			"forfeit": "Forfait",
+			"ongoing": "En cours",
+			"castleDestroyed": "Chateau détruit",
+			"timeout": "Défendu"
 		}
 	},
 	"clan": {
