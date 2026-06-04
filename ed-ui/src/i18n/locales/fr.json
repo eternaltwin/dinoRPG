@@ -4321,7 +4321,7 @@
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
 			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
-			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
@@ -5306,7 +5306,8 @@
 			"WAR_LOSED": "Le clan {targetClan} a détruit notre château.",
 			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
 			"WAR_LOSE": "Nous n'avons pas réussi à détruire le château de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !"
+			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre."
 		}
 	},
 	"events": {
