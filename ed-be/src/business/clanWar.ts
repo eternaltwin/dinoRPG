@@ -195,6 +195,10 @@ export async function declareWar(req: Request) {
 
 	await checkCanDeclareWar(authed.clanId);
 
+	if (authed.clanId === +req.params.clanId) {
+		throw new ExpectedError(translate('clanWar.sameClan', authed));
+	}
+
 	const defender = await prisma.clan.findUnique({
 		where: { id: +req.params.clanId },
 		select: {
