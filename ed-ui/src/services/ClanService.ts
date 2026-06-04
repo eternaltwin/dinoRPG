@@ -46,7 +46,7 @@ export const ClanService = {
 		const res = await http().post(`/clan`, { name, description, languages });
 		return res.data;
 	},
-	async deleteClan(id: number): Promise<ClanLite> {
+	async deleteClan(id: number): Promise<string> {
 		const res = await http().delete(`/clan/${id}`);
 		return res.data;
 	},

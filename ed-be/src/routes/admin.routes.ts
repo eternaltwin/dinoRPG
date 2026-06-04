@@ -791,7 +791,7 @@ routes.delete(
 			const authed = await auth(req);
 			const adminId = authed.id;
 			const response = await deleteClanAdmin(+req.params.id, adminId);
-			return res.status(200).send(response);
+			return res.status(200).send(response.toString());
 		} catch (err) {
 			sendError(res, err);
 		}
