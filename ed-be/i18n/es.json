@@ -62,7 +62,8 @@
 		"castleFullLife": "Tu castillo ya tiene la cantidad máxima de :hp_castle:.",
 		"repairStackFull": "No puedes añadir más reparaciones.",
 		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación.",
-		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo."
+		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo.",
+		"sameClan": "No puedes declarar la guerra a tu mismo clan."
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
