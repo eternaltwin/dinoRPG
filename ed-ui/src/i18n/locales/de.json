@@ -86,7 +86,7 @@
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
 			"archivedSiteId": "Historisierte Seite",
 			"shareArchivedData": "Twinoid-Statistiken teilen",
-			"displayedNotifications": "Nombre de notifications affichées simultanément",
+			"displayedNotifications": "Anzahl der Benachrichtigungen, die gleichzeitig angezeigt werden",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
@@ -2608,7 +2608,7 @@
 		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
 		"stats": "Statistiken",
-		"wars": "Guerres"
+		"wars": "Kriege"
 	},
 	"layout": {
 		"fx": "Status",
@@ -2628,7 +2628,7 @@
 		"accept": "Ja",
 		"reject": "Nein",
 		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?",
-		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
+		"repairCastle": "Sobald sie repariert ist, kann die Burg wieder angegriffen werden. Bist du sicher, dass du fortfahren möchtest?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4083,10 +4083,10 @@
 			"event": "Ereignispunkte",
 			"war": "Kriegsansehen",
 			"castle": "Burg errichtet",
-			"warAttacker": "Attaquant",
-			"warDefender": "Défenseur",
-			"warStart": "Date de début",
-			"warResult": "Résultat"
+			"warAttacker": "Angreifer",
+			"warDefender": "Verteidiger",
+			"warStart": "Anfangsdatum",
+			"warResult": "Ergebnis"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4125,10 +4125,10 @@
 			"clanWar": "Kriegsrangliste"
 		},
 		"war": {
-			"forfeit": "Forfait",
-			"ongoing": "En cours",
-			"castleDestroyed": "Chateau détruit",
-			"timeout": "Défendu"
+			"forfeit": "Aufgegeben",
+			"ongoing": "Im Gange",
+			"castleDestroyed": "Burg zerstört",
+			"timeout": "Verteidigt"
 		}
 	},
 	"clan": {
@@ -4318,10 +4318,10 @@
 			"WAR_LOSED": "Ich habe eure Burg im Namen vom Klan {name} zerstört und somit den Krieg gegen euch gewonnen.",
 			"WAR_DEFENDED": "Wir haben die Angriffe des Klans {name} überstanden und somit diesen Verteidigungskrieg gewonnen.",
 			"WAR_FORFEIT": "Ich habe beschlossen, uns im Krieg gegen {name} geschlagen zu geben.",
-			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
+			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
-			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
+			"WAR_TIMEOUT": "{name} hat es nicht geschafft, eure Burg in der gegebenen Zeit zu zerstören.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4455,7 +4455,7 @@
 			"newTurn": " **{fighter}** ist dran!",
 			"statusTurn": "Statusüberprüfung bevor **{fighter}** dran ist.",
 			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus.",
-			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
+			"attackCastle": "**{fighter}** hat der Burg **{damages}** Schaden zugefügt."
 		},
 		"event": {
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
