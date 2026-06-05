@@ -86,7 +86,7 @@
 			"skipLevel": "Saltar la animación de subida de nivel",
 			"archivedSiteId": "Sitio web histórico",
 			"shareArchivedData": "Compartir sus estadísticas Twinoid",
-			"displayedNotifications": "Nombre de notifications affichées simultanément",
+			"displayedNotifications": "Número de notificaciones mostradas simultáneamente",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
@@ -2608,7 +2608,7 @@
 		"completion": "Completado",
 		"pantheon": "Panteón",
 		"stats": "Estadísticas",
-		"wars": "Guerres"
+		"wars": "Guerras"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -2628,7 +2628,7 @@
 		"accept": "Sí",
 		"reject": "No",
 		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?",
-		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
+		"repairCastle": "Una vez reparado, tu castillo podrá volver a ser atacado. ¿Estás seguro de que deseas continuar?"
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -4083,10 +4083,10 @@
 			"event": "Puntos del evento",
 			"war": "Reputación de guerra",
 			"castle": "Castillo construido",
-			"warAttacker": "Attaquant",
-			"warDefender": "Défenseur",
-			"warStart": "Date de début",
-			"warResult": "Résultat"
+			"warAttacker": "Atacante",
+			"warDefender": "Defensor",
+			"warStart": "Fecha de inicio",
+			"warResult": "Resultado"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4125,10 +4125,10 @@
 			"clanWar": "Clasificación de la Guerra"
 		},
 		"war": {
-			"forfeit": "Forfait",
-			"ongoing": "En cours",
-			"castleDestroyed": "Château détruit",
-			"timeout": "Défendu"
+			"forfeit": "Abandonada",
+			"ongoing": "En curso",
+			"castleDestroyed": "Castillo destruido",
+			"timeout": "Defendido"
 		}
 	},
 	"clan": {
@@ -4455,7 +4455,7 @@
 			"newTurn": "Es el turno de **{fighter}**.",
 			"statusTurn": "Verificación de estados antes del turno de **{fighter}**",
 			"tired": "**{fighter}** está cansado y pierde su turno.",
-			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
+			"attackCastle": "**{fighter}** infligió **{damages}** de daño al castillo."
 		},
 		"event": {
 			"christmas_ticket": "Parece que este monstruo tenía un ticket de Navidad consigo. ¡Qué suerte!"
