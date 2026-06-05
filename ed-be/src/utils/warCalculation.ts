@@ -16,8 +16,8 @@ export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 			attackerPLost: attackerWon ? 0 : Math.round(pLost)
 		},
 		defender: {
-			defenderPWin: attackerWon ? 0 : Math.round(pWin),
-			defenderPLost: attackerWon ? Math.round(pLost) : 0
+			defenderPWin: attackerWon ? 0 : Math.round(pLost),
+			defenderPLost: attackerWon ? Math.round(pWin) : 0
 		}
 	};
 }
