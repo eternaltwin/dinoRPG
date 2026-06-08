@@ -548,6 +548,8 @@ model Log {
   player      Player?  @relation(fields: [playerId], references: [id])
 
   @@index([playerId, dinozId, type])
+  @@index([type])
+  @@index([values], type: Gin)
 }
 
 model DinozCatch {
@@ -659,6 +661,10 @@ model ClanWar {
   isCastleDestroyed Boolean @default(false)
   winnerClanId      Int?
   winner            Clan?   @relation("warWon", fields: [winnerClanId], references: [id])
+
+  @@index([startedAt(sort: Desc)])
+  @@index([attackerClanId])
+  @@index([defenderClanId])
 }
 
 model ClanWarRanking {
