@@ -65,7 +65,8 @@
 		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo.",
 		"sameClan": "No puedes declarar la guerra a tu propio clan.",
 		"castleAlreadyBuilt": "El castillo de tu clan ya está construido.",
-		"notInDefense": "Este Dino no forma parte de la defensa del castillo."
+		"notInDefense": "Este Dino no forma parte de la defensa del castillo.",
+		"outdatedDefense": "Defensa desactualizada"
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",

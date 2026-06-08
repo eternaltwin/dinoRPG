@@ -1,6 +1,6 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Clan, ClanMember, ClanWar, LogType, NotificationSeverity, Prisma, ServerAction } from '@drpg/prisma';
+import { ExpectedError, OutdatedError } from '@drpg/core/utils/ExpectedError';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import {
@@ -46,6 +46,7 @@ import { sendSseMessageToUserInChannel } from './serverEventService.js';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 import { getRandomArrayElement } from '../utils/tools.js';
+import equal from 'fast-deep-equal';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -828,7 +829,10 @@ export async function addDefender(req: Request) {
  * retrieve the correct sorted defense
  * @returns An array of defenders
  */
-export async function getSortedDefenders<T extends Defender>(defenders: T[], defenseOrder: number[]): Promise<T[]> {
+export async function getSortedDefenders<T extends Pick<Defender, 'id'>>(
+	defenders: T[],
+	defenseOrder: number[]
+): Promise<T[]> {
 	defenseOrder = [...new Set(defenseOrder)]; // Remove duplicates, keep the first appearance
 	const foundDefenders = defenseOrder.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined);
 	const missingDefenders = defenders.filter(d => !defenseOrder.includes(d.id)).sort((a, b) => a.id - b.id);
@@ -962,15 +966,20 @@ export async function updateDefenseOrder(req: Request): Promise<Defender[]> {
 		throw new ExpectedError(translate('noRight', authed));
 	}
 
-	const { dinozIds } = req.body as { dinozIds: number[] };
+	const { previousDinozIds, dinozIds } = req.body as { previousDinozIds: number[]; dinozIds: number[] };
 
 	const castle = await prisma.clanCastle.findUnique({
 		where: { clanId: authed.clanId },
-		select: { defender: { select: { id: true } } }
+		select: { defender: { select: { id: true } }, defenseOrder: true }
 	});
 
 	if (!castle) {
 		throw new ExpectedError(translate('clanWar.noCastle', authed));
+	}
+
+	const currentOrder = (await getSortedDefenders(castle.defender, castle.defenseOrder)).map(d => d.id);
+	if (!equal(previousDinozIds, currentOrder)) {
+		throw new OutdatedError(translate('clanWar.outdatedDefense', authed));
 	}
 
 	const validIds = new Set(castle.defender.map(d => d.id));
