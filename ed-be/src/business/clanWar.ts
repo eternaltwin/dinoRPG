@@ -32,6 +32,7 @@ import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { Castle, Defender } from '@drpg/core/models/clan/clan';
 import {
 	REPAIR_MAX_HP,
 	REPAIR_MAX_STACK,
@@ -819,12 +820,27 @@ export async function addDefender(req: Request) {
 	return defendLine;
 }
 
-export async function castleStatus(req: Request) {
+/**
+ * @summary Retrieve the defense in the correct order
+ * @param defenders The defenders of the castle
+ * @param defenseOrder The ids of the sorted defense
+ * @description Remove duplicates from the defenseOrder and add missing defenders to
+ * retrieve the correct sorted defense
+ * @returns An array of defenders
+ */
+export async function getSortedDefenders<T extends Defender>(defenders: T[], defenseOrder: number[]): Promise<T[]> {
+	defenseOrder = [...new Set(defenseOrder)]; // Remove duplicates, keep the first appearance
+	const foundDefenders = defenseOrder.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined);
+	const missingDefenders = defenders.filter(d => !defenseOrder.includes(d.id)).sort((a, b) => a.id - b.id);
+	return foundDefenders.concat(missingDefenders);
+}
+
+export async function castleStatus(req: Request): Promise<Castle | null> {
 	const authed = await auth(req);
 	if (!authed.clanId) {
 		throw new ExpectedError(translate('noClan', authed));
 	}
-	const castle = await prisma.clanCastle.findUnique({
+	let castle = await prisma.clanCastle.findUnique({
 		where: {
 			clanId: authed.clanId
 		},
@@ -858,6 +874,7 @@ export async function castleStatus(req: Request) {
 		where: { action: ServerAction.prospector }
 	});
 
+	castle.defender = await getSortedDefenders(castle.defender, castle.defenseOrder);
 	return { ...castle, nextProspectorVisit: prospectorState?.nextCheck ?? null };
 }
 
@@ -932,7 +949,7 @@ export async function removeDefender(req: Request) {
 	return defendLine;
 }
 
-export async function updateDefenseOrder(req: Request) {
+export async function updateDefenseOrder(req: Request): Promise<Defender[]> {
 	const authed = await auth(req);
 
 	if (!authed.clanId) {
@@ -969,12 +986,24 @@ export async function updateDefenseOrder(req: Request) {
 	const updatedCastle = await prisma.clanCastle.update({
 		where: { clanId: authed.clanId },
 		data: { defenseOrder: dinozIds },
-		select: { defenseOrder: true }
+		select: {
+			defenseOrder: true,
+			defender: {
+				select: {
+					id: true,
+					name: true,
+					life: true,
+					maxLife: true,
+					display: true,
+					level: true
+				}
+			}
+		}
 	});
 
 	await createLog(LogType.ClanWarDefenseOrderUpdated, authed.id, undefined, authed.clanId, dinozIds.join(','));
 
-	return updatedCastle;
+	return await getSortedDefenders(updatedCastle.defender, updatedCastle.defenseOrder);
 }
 
 export async function attackCastle(req: Request) {
@@ -1431,7 +1460,7 @@ export async function computeDefenderTeam(attackerPower: number, castleId: numbe
 
 	const { defender, defenseOrder } = defenderList;
 
-	const sortedDefenders = defenseOrder.map(id => defender.find(d => d.id === id)).filter(Boolean);
+	const sortedDefenders = await getSortedDefenders(defender, defenseOrder);
 	let defenderPower = 0;
 	let index = 0;
 	const defenderTeam = [];

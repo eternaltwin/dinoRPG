@@ -3,6 +3,7 @@ import {
 	Castle,
 	ClanForSearch,
 	ClanLite,
+	Defender,
 	PlayerClanJoinRequest,
 	treasureIngredient
 } from '@drpg/core/models/clan/clan';
@@ -174,7 +175,7 @@ export const ClanService = {
 		const res = await http().delete(`/clan/war/dinoz/${dinozId}`);
 		return res.data;
 	},
-	async reorderDefender(order: number[]): Promise<number[]> {
+	async reorderDefender(order: number[]): Promise<Defender[]> {
 		const res = await http().patch(`/clan/war/dinoz`, { dinozIds: order });
 		return res.data;
 	},

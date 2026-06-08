@@ -302,10 +302,7 @@ export default defineComponent({
 		},
 		async onUpdate() {
 			try {
-				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
-				this.defenders = [
-					...order.map(id => this.castle?.defender.find(d => d.id === id)).filter(d => d !== undefined)
-				];
+				this.defenders = await ClanService.reorderDefender(this.defenders.map(d => d.id));
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -452,9 +449,7 @@ export default defineComponent({
 				this.castle = castle;
 				this.ingredients = await ClanService.getClanTreasure(+this.$route.params.id);
 
-				const order = this.castle.defenseOrder;
-				const defenders = this.castle.defender;
-				this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
+				this.defenders = this.castle.defender;
 
 				this.loadRepairCost();
 				setTimeout(() => this.loadAnimation(), 250);
