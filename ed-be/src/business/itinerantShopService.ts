@@ -95,7 +95,7 @@ export async function sellIngredient(req: Request) {
 	}
 
 	// Lock negative quantities
-	if (ingredients.filter(i => i.quantity <= 0).length > 0) {
+	if (ingredients.filter(i => i.quantity <= 0 || !Number.isInteger(i.quantity)).length > 0) {
 		throw new ExpectedError(translate(`wrongQuantity`, authed));
 	}
 
