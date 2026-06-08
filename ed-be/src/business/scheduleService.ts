@@ -13,7 +13,7 @@ export async function scheduleAtStart() {
 				if (action.nextCheck < new Date()) {
 					await healRestingDinoz();
 				} else {
-					scheduleJob(action.action, dayjs().add(1, 'day').startOf('day').toDate(), () => healRestingDinoz());
+					scheduleJob(action.action, action.nextCheck, () => healRestingDinoz());
 				}
 				break;
 			case ServerAction.midnightReset:
