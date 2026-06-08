@@ -5290,7 +5290,7 @@
 			"WAR_START": "¡He declarado la guerra contra el clan {targetClan}!",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {targetClan}!",
 			"WAR_LOSED": "El clan {targetClan} destruyó nuestro castillo.",
-			"WAR_FORFEIT": "¡El clan {targetClan} se ha rendido!",
+			"WAR_FORFEIT": "Abandonamos la guerra contra {targetClan}.",
 			"WAR_LOSE": "No logramos destruir el castillo del clan {targetClan}.",
 			"WAR_DEFENDED": "¡Resistimos los ataques del clan {targetClan}!",
 			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y nos robó la guerra."
