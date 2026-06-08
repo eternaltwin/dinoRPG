@@ -313,7 +313,6 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { TIME_BASE } from '@drpg/core/utils/fightConstants';
-import { formatText } from '../../utils/formatText';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -397,7 +396,7 @@ export default defineComponent({
 				const currentDinoz = useDinozStore().getCurrentDinoz;
 				if (!currentDinoz) {
 					this.$toast.open({
-						message: formatText('Dinoz not found'),
+						message: 'Dinoz not found',
 						type: 'error'
 					});
 					return;

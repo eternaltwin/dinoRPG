@@ -30,7 +30,6 @@ import { playerStore, useDinozStore } from '../store/index.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
-import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'MarketPage',
@@ -76,7 +75,7 @@ export default defineComponent({
 
 				return;
 			}
-			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
+			this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
 			goTo(this.$router, 'News');
 			return;
 		}
@@ -84,7 +83,7 @@ export default defineComponent({
 		// Check if the dinoz exists
 		const currentDinoz = useDinozStore().getDinoz(currentDinozId);
 		if (!currentDinoz) {
-			this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+			this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 			goTo(this.$router, 'News');
 			return;
 		}
@@ -100,7 +99,7 @@ export default defineComponent({
 			return;
 		}
 
-		this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
+		this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
 		goTo(this.$router, 'News');
 		return;
 	}

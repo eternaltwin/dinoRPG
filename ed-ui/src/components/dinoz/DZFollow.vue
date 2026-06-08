@@ -43,7 +43,6 @@ import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils'
 import { errorHandler } from '../../utils/index.js';
 import { useDinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { formatText } from '../../utils/formatText.js';
 import DinozMini from './DinozMini.vue';
 
 export default defineComponent({
@@ -58,7 +57,7 @@ export default defineComponent({
 	methods: {
 		displayFollow(): void {
 			if (!useDinozStore().getDinozList) {
-				this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
+				this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 				return;
 			}
 
@@ -70,7 +69,7 @@ export default defineComponent({
 			const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
 
 			if (!currentDinoz) {
-				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+				this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 				return;
 			}
 
@@ -88,13 +87,13 @@ export default defineComponent({
 				// Refresh followed and following status
 				const currentDinozList = useDinozStore().getDinozList;
 				if (!currentDinozList) {
-					this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
+					this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 					return;
 				}
 
 				const targetDinoz = currentDinozList.find(dinoz => dinoz.id === targetId);
 				if (!targetDinoz) {
-					this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+					this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 					return;
 				}
 

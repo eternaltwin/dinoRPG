@@ -42,7 +42,6 @@ import { Player, Dinoz } from '@drpg/prisma';
 import { ReportService } from '../../services/index.js';
 import DZButton from '../common/DZButton.vue';
 import { ModerationReason } from '@drpg/prisma/enums';
-import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
@@ -80,21 +79,21 @@ export default defineComponent({
 		async reports(): Promise<void> {
 			if (!this.reportedArgument || !this.reportedReason) {
 				this.$toast.open({
-					message: formatText(this.$t('report.error')),
+					message: this.$t('report.error'),
 					type: 'info'
 				});
 				return;
 			}
 			if (this.reportedReason === ModerationReason.dinozName && !this.selectedDinoz) {
 				this.$toast.open({
-					message: formatText(this.$t('report.errorDinoz')),
+					message: this.$t('report.errorDinoz'),
 					type: 'info'
 				});
 				return;
 			}
 			if (!this.player) {
 				this.$toast.open({
-					message: formatText('No player found.'),
+					message: 'No player found.',
 					type: 'info'
 				});
 				return;
@@ -111,7 +110,7 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			this.$toast.open({
-				message: formatText(this.$t('report.success')),
+				message: this.$t('report.success'),
 				type: 'info'
 			});
 			this.close();

@@ -50,7 +50,6 @@ import { DinozService, InventoryService } from '../../services/index.js';
 import { defineComponent } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
-import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'Resurrect',
@@ -64,7 +63,7 @@ export default defineComponent({
 				const rez = await DinozService.resurrectDinoz(dinozId);
 				if (rez && rez.category === ItemEffect.QUEST) {
 					this.$toast.open({
-						message: formatText(this.$t(`quest.${rez.value}`)),
+						message: this.$t(`quest.${rez.value}`),
 						type: 'info'
 					});
 				}

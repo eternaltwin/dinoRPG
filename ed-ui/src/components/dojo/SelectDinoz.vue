@@ -29,7 +29,6 @@ import { playerStore, useDinozStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'SelectDinoz',
@@ -67,7 +66,7 @@ export default defineComponent({
 			} else {
 				// Max selectLimit
 				if (this.selectedDinoz.length >= this.selectLimit) {
-					this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
+					this.$toast.open({ message: this.$t(`toast.maxDinozSelected`), type: 'error' });
 					return;
 				}
 
@@ -79,12 +78,12 @@ export default defineComponent({
 				// In this scenario, it means the player is validating (confirming) its choice.
 				if (this.selectedDinoz.length === 0) {
 					// Do nothing if no dinoz selected
-					this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
+					this.$toast.open({ message: this.$t(`toast.noDinozSelected`), type: 'error' });
 					return;
 				}
 				if (this.selectedDinoz.length < this.minLimit) {
 					// Do nothing if not enough dinoz selected
-					this.$toast.open({ message: formatText(this.$t(`toast.notEnoughDinozSelected`)), type: 'error' });
+					this.$toast.open({ message: this.$t(`toast.notEnoughDinozSelected`), type: 'error' });
 					return;
 				}
 				// Only emit "validate" upon actual validation (not cancel)
@@ -97,7 +96,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		if (!useDinozStore().dinozList) {
-			this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
+			this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 			return;
 		}
 	}

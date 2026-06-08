@@ -88,7 +88,6 @@ import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { formatText } from '../../utils/formatText.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
@@ -227,7 +226,7 @@ export default defineComponent({
 
 			// Check if dinoz is being sold
 			if (this.dinozData.unavailableReason === UnavailableReason.selling) {
-				this.$toast.open({ message: formatText(this.$t(`toast.isSelling`)), type: 'error' });
+				this.$toast.open({ message: this.$t(`toast.isSelling`), type: 'error' });
 				return;
 			}
 
@@ -241,7 +240,7 @@ export default defineComponent({
 
 				if (!dinozList || !dinozId || !place) {
 					this.$toast.open({
-						message: formatText(this.$t(`toast.missingData`)),
+						message: this.$t(`toast.missingData`),
 						type: 'error'
 					});
 

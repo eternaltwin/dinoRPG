@@ -91,7 +91,6 @@ import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../utils/errorHandler.js';
-import { formatText } from '../utils/formatText.js';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
@@ -140,7 +139,7 @@ export default defineComponent({
 		// Redirect to last page if no PDA
 		if (!this.playerStore.playerOptions.hasPMI) {
 			this.$toast.open({
-				message: formatText(this.$t(`toast.noPMI`)),
+				message: this.$t(`toast.noPMI`),
 				type: 'error'
 			});
 			this.$router.back();
