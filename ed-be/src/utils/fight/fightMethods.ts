@@ -283,10 +283,10 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 /**
  * Announce a skill use
  */
-const announce = (fightData: DetailedFight, fighter: DetailedFighter, skillId: Skill) => {
+const announceSkill = (fightData: DetailedFight, fighter: DetailedFighter, skillId: Skill) => {
 	const passiveKey = `${fighter.id}:${skillId}`;
 
-	// These skills should only be announced once per fight for the same fighter, opponent and skill combination
+	// These skills should only be announced once per fight for the same fighter and skill combination
 	const passiveSkills = [Skill.AURA_PUANTE, Skill.SELF_CONTROL];
 	const isPassiveSkill = passiveSkills.includes(skillId);
 
@@ -1245,7 +1245,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 	// If event is a skill
 	if ('id' in event) {
 		// Add announce step, capture the index
-		announce(fightData, fighter, event.id);
+		announceSkill(fightData, fighter, event.id);
 
 		switch (event.id) {
 			// AIR Vanilla
@@ -2221,7 +2221,7 @@ export const addStatus = (
 
 	// Negate if SELF_CONTROL
 	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) {
-		announce(fightData, fighter, Skill.SELF_CONTROL);
+		announceSkill(fightData, fighter, Skill.SELF_CONTROL);
 		return false;
 	}
 
@@ -2395,7 +2395,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	};
 
 	// Add announce step
-	announce(fightData, fighter, skill.id);
+	announceSkill(fightData, fighter, skill.id);
 
 	switch (skill.id) {
 		// AIR
@@ -3824,7 +3824,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (random < 0.2) {
 				// Add skillActivate step
-				announce(fightData, opponent, Skill.SHARIGNAN);
+				announceSkill(fightData, opponent, Skill.SHARIGNAN);
 
 				// Add skill to opponent
 				opponent.skills.push({ ...skill });
@@ -4445,7 +4445,7 @@ const checkDefensiveEffects = (
 		// 6% chance
 		getRandomNumber(0, 100, fightData.rng) < 6
 	) {
-		announce(fightData, target, Skill.FORME_VAPOREUSE);
+		announceSkill(fightData, target, Skill.FORME_VAPOREUSE);
 
 		// Add INTANGIBLE
 		addStatus(fightData, target, FightStatus.INTANGIBLE, FightStatusLength.SHORT);
@@ -4458,7 +4458,7 @@ const checkDefensiveEffects = (
 		// 5 % chance
 		getRandomNumber(0, 100, fightData.rng) < 5
 	) {
-		announce(fightData, target, Skill.CUIRASSE);
+		announceSkill(fightData, target, Skill.CUIRASSE);
 
 		// Reduce damage by 5
 		damage = Math.max(damage - 5, 0);
@@ -4467,7 +4467,7 @@ const checkDefensiveEffects = (
 	// Check for mud wall
 	if (target.mudWall) {
 		// TODO announce skill only the first time it tanks damage
-		announce(fightData, target, Skill.MUR_DE_BOUE);
+		announceSkill(fightData, target, Skill.MUR_DE_BOUE);
 
 		target.mudWall -= damage;
 
@@ -4497,7 +4497,7 @@ const checkDefensiveEffects = (
 		// 0 damage if skill
 		damage = 0;
 
-		announce(fightData, target, Skill.M_RESISTANCE);
+		announceSkill(fightData, target, Skill.M_RESISTANCE);
 	}
 
 	// M_PROTECTION
@@ -4673,7 +4673,7 @@ const checkAfterDefenseEffects = (
 		!hasStatus(attacker, FightStatus.POISONED) &&
 		hasSkill(target, Skill.AURA_PUANTE)
 	) {
-		announce(fightData, target, Skill.AURA_PUANTE);
+		announceSkill(fightData, target, Skill.AURA_PUANTE);
 		poison(fightData, attacker, target, Skill.AURA_PUANTE, FightStatusLength.MEDIUM);
 	}
 
@@ -4724,7 +4724,7 @@ const checkAfterDefenseEffects = (
 		// 1/5 chance
 		getRandomInteger(0, 4, fightData.rng) === 0
 	) {
-		announce(fightData, target, Skill.M_CONTAMINATION);
+		announceSkill(fightData, target, Skill.M_CONTAMINATION);
 		poison(fightData, attacker, target, Skill.M_CONTAMINATION, FightStatusLength.SHORT);
 	}
 
@@ -4873,7 +4873,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				fighter.canSurvive = false;
 
 				// Update history & heal
-				announce(fightData, fighter, Skill.SURVIE);
+				announceSkill(fightData, fighter, Skill.SURVIE);
 
 				fightData.steps.push({
 					action: 'skillActivate',
