@@ -1225,7 +1225,7 @@ export async function attackCastle(req: Request) {
 	}
 
 	const defendersTeamLevel = defenders.reduce((acc, dinoz) => acc + dinoz.level, 0);
-
+	let defenseOrder = activeWar.defender.castle.defenseOrder;
 	for (const d of defenders) {
 		let xp = 0;
 		// Factor based on the level of the Dinoz within the team total.
@@ -1271,6 +1271,7 @@ export async function attackCastle(req: Request) {
 		await createLog(LogType.HPLost, d.playerId, d.id, defenderFighter.hpLost);
 
 		if (defenderFighter.hpLost >= d.life) {
+			defenseOrder = defenseOrder.filter(id => id !== d.id);
 			await prisma.clanCastle.update({
 				where: {
 					id: activeWar.defender.castle.id
@@ -1282,7 +1283,7 @@ export async function attackCastle(req: Request) {
 						}
 					},
 					defenseOrder: {
-						set: activeWar.defender.castle.defenseOrder.filter(id => id !== d.id)
+						set: defenseOrder
 					}
 				}
 			});
