@@ -982,13 +982,7 @@ export async function updateDefenseOrder(req: Request): Promise<Defender[]> {
 		throw new OutdatedError(translate('clanWar.outdatedDefense', authed));
 	}
 
-	const validIds = new Set(castle.defender.map(d => d.id));
-	const isValid =
-		dinozIds.length === validIds.size &&
-		new Set(dinozIds).size === dinozIds.length &&
-		dinozIds.every(id => validIds.has(id));
-
-	if (!isValid) {
+	if (!equal([...currentOrder].sort(), [...dinozIds].sort())) {
 		throw new ExpectedError('invalidDefenseOrder');
 	}
 
