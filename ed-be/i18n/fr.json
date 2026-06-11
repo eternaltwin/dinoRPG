@@ -63,7 +63,9 @@
 		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
 		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation.",
 		"alreadyInDefense": "Votre Dinoz fait déjà partie de la défense du château.",
-		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan."
+		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan.",
+		"castleAlreadyBuilt": "Le château de votre clan est déjà construit.",
+		"notInDefense": "Ce Dinoz ne fait pas partie de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",

@@ -1323,9 +1323,15 @@ export async function getWarForResolve(warId: string) {
 	});
 }
 
-export async function checkCanDeclareWar(attackerClanId: number): Promise<void> {
+// Transaction client matching the local (extended) prisma client, usable both standalone and inside $transaction.
+type LocalTransactionClient = Omit<
+	typeof prisma,
+	'$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'
+>;
+
+export async function checkCanDeclareWar(attackerClanId: number, tx: LocalTransactionClient = prisma): Promise<void> {
 	return withSpan(checkCanDeclareWar.name, async () => {
-		const activeWar = await prisma.clanWar.findFirst({
+		const activeWar = await tx.clanWar.findFirst({
 			where: {
 				attackerClanId,
 				winnerClanId: null
@@ -1337,28 +1343,26 @@ export async function checkCanDeclareWar(attackerClanId: number): Promise<void> 
 	});
 }
 
-export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>) {
+export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>, tx: LocalTransactionClient = prisma) {
 	return withSpan(consumeWarCost.name, async () => {
 		const totalValue = cost.totalValue;
 
-		await prisma.$transaction([
-			...cost.ingredients.map(({ ingredientId, quantity }) =>
-				prisma.clanIngredient.update({
-					where: {
-						ingredientId_clanId: { ingredientId, clanId }
-					},
-					data: {
-						quantity: { decrement: quantity }
-					}
-				})
-			),
-			prisma.clan.update({
-				where: { id: clanId },
+		for (const { ingredientId, quantity } of cost.ingredients) {
+			await tx.clanIngredient.update({
+				where: {
+					ingredientId_clanId: { ingredientId, clanId }
+				},
 				data: {
-					treasureValue: { decrement: totalValue }
+					quantity: { decrement: quantity }
 				}
-			})
-		]);
+			});
+		}
+		await tx.clan.update({
+			where: { id: clanId },
+			data: {
+				treasureValue: { decrement: totalValue }
+			}
+		});
 	});
 }
 

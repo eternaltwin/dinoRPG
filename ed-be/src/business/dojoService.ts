@@ -20,12 +20,7 @@ import {
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Dojo, NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
-import {
-	archiveFight,
-	getAllArchivedFightRequest,
-	getArchivedFightRequest,
-	viewFight
-} from '../dao/archiveDao.js';
+import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest, viewFight } from '../dao/archiveDao.js';
 import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
 import {
 	addOpponent,
@@ -638,5 +633,7 @@ const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
 ];
 
 function availableDinozIds(dinoz: { id: number; unavailableReason: UnavailableReason | null }[]): number[] {
-	return dinoz.filter(d => !d.unavailableReason || !FIGHT_BLOCKING_REASONS.includes(d.unavailableReason)).map(d => d.id);
+	return dinoz
+		.filter(d => !d.unavailableReason || !FIGHT_BLOCKING_REASONS.includes(d.unavailableReason))
+		.map(d => d.id);
 }
