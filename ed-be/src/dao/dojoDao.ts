@@ -131,15 +131,13 @@ export async function createMyDojo(playerId: string, challenge: Challenge) {
 	return dojo;
 }
 
-export async function createMyTeamDao(dinozList: number[], dojoId: string) {
-	for (const dinoz of dinozList) {
-		await prisma.dojoTeam.create({
-			data: {
-				dinoz: { connect: { id: dinoz } },
-				dojo: { connect: { id: dojoId } }
-			}
-		});
-	}
+export async function replaceMyTeamDao(dinozList: number[], opponentIds: number[], dojoId: string) {
+	await prisma.$transaction([
+		prisma.dojoTeam.deleteMany({ where: { dojoId } }),
+		prisma.dojoOpponents.deleteMany({ where: { dojoId } }),
+		prisma.dojoTeam.createMany({ data: dinozList.map(dinozId => ({ dojoId, dinozId })) }),
+		prisma.dojoOpponents.createMany({ data: opponentIds.map(dinozId => ({ dojoId, dinozId })) })
+	]);
 	const dojo = await prisma.dojo.findUniqueOrThrow({
 		where: {
 			id: dojoId

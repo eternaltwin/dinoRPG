@@ -35,6 +35,16 @@ export async function createTournamentTeam(req: Request) {
 
 	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);
 
+	// The player must have visited the dojo at least once
+	if (!playerDinoz.Dojo) {
+		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+
+	// Check if player already has a registered team
+	if (playerDinoz.Dojo.tournamentTeamId) {
+		throw new ExpectedError(translate('dojo.alreadyRegistered', authed));
+	}
+
 	// Check if player possess all the selected dinoz
 	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
@@ -75,9 +85,9 @@ export async function createTournamentTeam(req: Request) {
 				connect: { id: latestTournament.id }
 			},
 			dojo: {
-				connect: { id: playerDinoz.Dojo?.id }
+				connect: { id: playerDinoz.Dojo.id }
 			},
-			dojoId: playerDinoz.Dojo?.id,
+			dojoId: playerDinoz.Dojo.id,
 			teamCount: teamIds.length
 		},
 		include: {
@@ -320,6 +330,7 @@ export async function readAllFightFromPool(req: Request) {
 }
 
 export async function tournamentsHistory(req: Request) {
+	await auth(req);
 	const page = +req.params.page;
 	const [count, history] = await prisma.$transaction([
 		prisma.tournament.count(),
