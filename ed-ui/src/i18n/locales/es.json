@@ -1863,7 +1863,7 @@
 			"merchant": {
 				"name": "Mercader ambulante",
 				"description": "El Mercader Ambulante se pasea por todo Dinoland y compra *Ingredientes* a los maestros de Dinos. Ofrece precios muy interesantes...",
-				"dimanche": "El comerciante ambulante se ha tomado el día libre, tendrás que esperar hasta mañana para poder volver a vender tus ingredientes. Por supuesto, el comerciante ambulante se habrá mudado a una ubicación diferente, por lo que tendrás que encontrarlo antes de poder vender tus ingredientes."
+				"dimanche": "El Mercader Ambulante se ha tomado el día libre. Tendrás que esperar hasta mañana para poder volver a vender tus ingredientes. Claro que, para mañana, el Mercader Ambulante se habrá desplazado a una ubicación diferente, por lo que tendrás que encontrarlo antes de poder vender tus ingredientes."
 			},
 			"filou": {
 				"name": "Hombre Sospechoso",
