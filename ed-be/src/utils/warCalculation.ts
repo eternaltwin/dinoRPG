@@ -22,6 +22,71 @@ export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 	};
 }
 
+export type WarRankingUpdate = {
+	clanId: number;
+	totalPWin: number;
+	totalPLost: number;
+	downtimeCount: number;
+	reputation: number;
+};
+
+type ClanWarRanking = ResolvedWar['attacker']['clanWarRanking'][number];
+
+export function computeWarRankingUpdates(
+	war: ResolvedWar,
+	attackerWon: boolean,
+	isCastleDestroyed: boolean
+): WarRankingUpdate[] {
+	const powers = computeWarPowers(war, attackerWon);
+
+	const attackerUpdate = buildRankingUpdate({
+		clanId: war.attacker.id,
+		ranking: war.attacker.clanWarRanking[0],
+		pWin: powers.attacker.attackerPWin,
+		pLost: powers.attacker.attackerPLost,
+		// The attacker is never under siege, so its downtime never changes.
+		nextDowntimeCount: count => count
+	});
+
+	const defenderUpdate = buildRankingUpdate({
+		clanId: war.defender.id,
+		ranking: war.defender.clanWarRanking[0],
+		pWin: powers.defender.defenderPWin,
+		pLost: powers.defender.defenderPLost,
+		// A destroyed castle adds one downtime; surviving it resets the streak.
+		nextDowntimeCount: count => (isCastleDestroyed ? count + 1 : 0)
+	});
+
+	return [attackerUpdate, defenderUpdate].filter((update): update is WarRankingUpdate => update !== undefined);
+}
+
+function buildRankingUpdate(params: {
+	clanId: number;
+	ranking: ClanWarRanking | undefined;
+	pWin: number;
+	pLost: number;
+	nextDowntimeCount: (currentCount: number) => number;
+}): WarRankingUpdate | undefined {
+	const { clanId, ranking, pWin, pLost, nextDowntimeCount } = params;
+
+	if (!ranking) {
+		return undefined;
+	}
+
+	const totalPWin = ranking.totalPWin + pWin;
+	const totalPLost = ranking.totalPLost + pLost;
+	const downtimeCount = nextDowntimeCount(ranking.downtimeCount);
+	const reputation = computeReputation(totalPWin, totalPLost, downtimeCount);
+
+	return { clanId, totalPWin, totalPLost, downtimeCount, reputation };
+}
+
+function computeReputation(totalPWin: number, totalPLost: number, downtimeCount: number): number {
+	const winLossRatio = (500 + totalPWin) / (500 + totalPLost);
+	const downtimePenalty = (downtimeCount * (downtimeCount - 1)) / 2;
+	return Math.round(100 * Math.pow(winLossRatio, 0.8) - downtimePenalty);
+}
+
 export function computePWin(yourRank: number, enemyRank: number): number {
 	const raw = (100 * (100 + enemyRank)) / (100 + yourRank);
 	return clamp(raw, 10, 300);

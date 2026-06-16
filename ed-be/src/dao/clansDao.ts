@@ -10,6 +10,7 @@ import { Lang, NotificationSeverity, EventType, $Enums, Prisma, LogType } from '
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
+import { WarRankingUpdate } from '../utils/warCalculation.js';
 import ClanEventType = $Enums.ClanEventType;
 import { WarCost } from '@drpg/core/models/clan/clanWar';
 
@@ -1320,6 +1321,23 @@ export async function getWarForResolve(warId: string) {
 				isCastleDestroyed: true
 			}
 		});
+	});
+}
+
+export async function updateWarRankings(eventId: string, updates: WarRankingUpdate[]) {
+	return withSpan(updateWarRankings.name, async () => {
+		if (updates.length === 0) {
+			return;
+		}
+
+		await prisma.$transaction(
+			updates.map(({ clanId, totalPWin, totalPLost, downtimeCount, reputation }) =>
+				prisma.clanWarRanking.update({
+					where: { clanId_eventId: { clanId, eventId } },
+					data: { totalPWin, totalPLost, downtimeCount, reputation }
+				})
+			)
+		);
 	});
 }
 

@@ -8,7 +8,8 @@ import {
 	consumeRepairCost,
 	consumeWarCost,
 	getWarForResolve,
-	playerHasRightRequest
+	playerHasRightRequest,
+	updateWarRankings
 } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
@@ -18,7 +19,7 @@ import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { scheduledJobs, scheduleJob } from 'node-schedule';
-import { computeWarPowers } from '../utils/warCalculation.js';
+import { computeWarRankingUpdates } from '../utils/warCalculation.js';
 import { getDinozFightClanDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
@@ -364,8 +365,6 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 	const attackerWon = winnerClanId === war.attacker.id;
 	const isCastleDestroyed = forfeit ? false : war.isCastleDestroyed;
 
-	const pwin = computeWarPowers(war, attackerWon);
-
 	await prisma.clanWar.update({
 		where: { id: war.id },
 		data: {
@@ -374,49 +373,8 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 		}
 	});
 
-	await prisma.$executeRaw`
-		UPDATE clan_war_ranking
-		SET
-			"totalPWin" = "totalPWin" +
-			              CASE
-											WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-				              WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-											END,
-			"totalPLost" = "totalPLost" +
-			               CASE
-											 WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-				               WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-											 END,
-			"downtimeCount" =
-				CASE
-					WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
-					WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
-					ELSE "downtimeCount"
-					END,
-			reputation = ROUND((100.0 * POWER(
-				(500.0 + ("totalPWin" + CASE
-																	WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPWin}
-					                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPWin}
-					END)::float) / (500.0 + ("totalPLost" + CASE
-																										WHEN "clanId" = ${war.attacker.id} THEN ${pwin.attacker.attackerPLost}
-						                                        WHEN "clanId" = ${war.defender.id} THEN ${pwin.defender.defenderPLost}
-					END)::float),
-				0.8
-			                            ) - (
-				                            CASE
-					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
-					                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
-					                            ELSE "downtimeCount"
-					                            END * (
-						                            CASE
-							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 1 THEN "downtimeCount" + 1
-							                            WHEN "clanId" = ${war.defender.id} AND ${isCastleDestroyed ? 1 : 0} = 0 THEN 0
-							                            ELSE "downtimeCount"
-							                            END - 1)
-				                            )::float / 2.0)::numeric)
-		WHERE "eventId" = ${war.eventId}::uuid
-			AND "clanId" = ANY(ARRAY[${war.attacker.id}, ${war.defender.id}]::int[])
-	`;
+	const rankingUpdates = computeWarRankingUpdates(war, attackerWon, isCastleDestroyed);
+	await updateWarRankings(war.eventId, rankingUpdates);
 
 	if (isCastleDestroyed) {
 		const annexWars = await prisma.clanWar.findMany({
