@@ -1,6 +1,6 @@
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Clan, ClanMember, ClanWar, LogType, NotificationSeverity, Prisma } from '@drpg/prisma';
+import { Clan, ClanMember, ClanWar, LogType, NotificationSeverity, Prisma, ServerAction } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
 import {
@@ -850,7 +850,15 @@ export async function castleStatus(req: Request) {
 		}
 	});
 
-	return castle;
+	if (!castle) {
+		return castle;
+	}
+
+	const prospectorState = await prisma.serverState.findUnique({
+		where: { action: ServerAction.prospector }
+	});
+
+	return { ...castle, nextProspectorVisit: prospectorState?.nextCheck ?? null };
 }
 
 export async function removeDefender(req: Request) {

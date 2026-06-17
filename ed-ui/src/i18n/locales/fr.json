@@ -122,6 +122,8 @@
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
+		"clan_prospector_reward": "Le Prospecteur a inspecté votre château intact — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
@@ -4168,6 +4170,7 @@
 			"buildCastle": "Construire votre château",
 			"castleTooltip": "Lieu où se situe votre château",
 			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
+			"disclaimerProspector": "Le Prospecteur passe entre {morning} et {evening}. Prochaine visite : {next}.",
 			"declareWar": "Attaquer ce clan",
 			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Attaque",

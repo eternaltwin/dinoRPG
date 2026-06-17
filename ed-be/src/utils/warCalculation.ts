@@ -1,4 +1,9 @@
 import { ResolvedWar } from '../dao/clansDao.js';
+import {
+	PROSPECTOR_DESTROYED_PENALTY_BASE,
+	PROSPECTOR_STANDING_REWARD_BASE,
+	PROSPECTOR_STREAK_CAP
+} from '@drpg/core/models/clan/clanWar';
 
 export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 	const attackerRanking = war.attacker.clanWarRanking[0];
@@ -79,6 +84,53 @@ function buildRankingUpdate(params: {
 	const reputation = computeReputation(totalPWin, totalPLost, downtimeCount);
 
 	return { clanId, totalPWin, totalPLost, downtimeCount, reputation };
+}
+
+export type ProspectorUpdate = WarRankingUpdate & {
+	castleStandingStreak: number;
+	castleDownStreak: number;
+};
+
+/**
+ * Applies one Prospector visit to a single war-ranking row. A standing castle is rewarded with
+ * escalating `totalPWin`, a destroyed one penalised with escalating `totalPLost`; the opposite
+ * streak resets. Reputation is recomputed with the unchanged formula. `downtimeCount` is carried
+ * through untouched — it is owned by war resolution.
+ */
+export function computeProspectorUpdate(
+	ranking: {
+		clanId: number;
+		totalPWin: number;
+		totalPLost: number;
+		downtimeCount: number;
+		castleStandingStreak: number;
+		castleDownStreak: number;
+	},
+	castleStanding: boolean
+): ProspectorUpdate {
+	let { totalPWin, totalPLost, castleStandingStreak, castleDownStreak } = ranking;
+
+	if (castleStanding) {
+		castleStandingStreak += 1;
+		castleDownStreak = 0;
+		totalPWin += PROSPECTOR_STANDING_REWARD_BASE * Math.min(castleStandingStreak, PROSPECTOR_STREAK_CAP);
+	} else {
+		castleDownStreak += 1;
+		castleStandingStreak = 0;
+		totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * Math.min(castleDownStreak, PROSPECTOR_STREAK_CAP);
+	}
+
+	const reputation = computeReputation(totalPWin, totalPLost, ranking.downtimeCount);
+
+	return {
+		clanId: ranking.clanId,
+		totalPWin,
+		totalPLost,
+		downtimeCount: ranking.downtimeCount,
+		reputation,
+		castleStandingStreak,
+		castleDownStreak
+	};
 }
 
 function computeReputation(totalPWin: number, totalPLost: number, downtimeCount: number): number {

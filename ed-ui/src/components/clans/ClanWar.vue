@@ -42,6 +42,18 @@
 				round
 				:content="$t('clan.war.disclaimerCastle', { place })"
 			/>
+			<DZDisclaimer
+				v-if="war && castle && castle.nextProspectorVisit"
+				round
+				timer
+				:content="
+					$t('clan.war.disclaimerProspector', {
+						morning: prospectorWindows.morning,
+						evening: prospectorWindows.evening,
+						next: formatDate(castle.nextProspectorVisit)
+					})
+				"
+			/>
 			<div class="df jcc defense">
 				<div id="pixiCanvas" />
 				<VueDraggable v-model="defenders" class="df jcc fww line" :animation="150" @update="onUpdate">
@@ -206,6 +218,8 @@ import DZTable from '../common/DZTable.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { VueDraggable } from 'vue-draggable-plus';
 import {
+	PROSPECTOR_EVENING_WINDOW,
+	PROSPECTOR_MORNING_WINDOW,
 	REPAIR_MAX_HP,
 	REPAIR_MAX_STACK,
 	REPAIR_MAX_TICKS,
@@ -258,6 +272,15 @@ export default defineComponent({
 				'place.name.' +
 					Object.values(placeList).find(place => place.placeId === this.clanStore.getClan?.castle?.placeId)?.name
 			);
+		},
+		prospectorWindows() {
+			const pad = (hour: number) => hour.toString().padStart(2, '0');
+			const formatWindow = (window: { startHour: number; endHour: number }) =>
+				`${pad(window.startHour)}:00–${pad(window.endHour)}:00`;
+			return {
+				morning: formatWindow(PROSPECTOR_MORNING_WINDOW),
+				evening: formatWindow(PROSPECTOR_EVENING_WINDOW)
+			};
 		},
 		activeRepairs() {
 			return this.castle?.repairs ?? [];

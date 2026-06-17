@@ -4155,6 +4155,7 @@
 			"buildCastle": "Build your castle",
 			"castleTooltip": "Place where your castle is located",
 			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
+			"disclaimerProspector": "The Prospector visits between {morning} and {evening}. Next visit: {next}.",
 			"declareWar": "Attack this clan",
 			"disclaimerAttack": "It will cost {cost} :gold: to declare war to this clan. The ingredients will be automatically taxed from the clan's treasury.",
 			"attack": "Attack",

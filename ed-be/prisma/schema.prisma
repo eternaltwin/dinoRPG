@@ -680,6 +680,9 @@ model ClanWarRanking {
 
   downtimeCount Int @default(0)
 
+  castleStandingStreak Int @default(0)
+  castleDownStreak     Int @default(0)
+
   totalPWin  Int @default(0)
   totalPLost Int @default(0)
 
@@ -983,6 +986,7 @@ enum ServerAction {
   healRestingDinoz
   itinerantMerchant
   midnightReset
+  prospector
 }
 
 enum GameDinozUsage {

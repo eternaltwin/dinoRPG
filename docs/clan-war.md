@@ -161,6 +161,33 @@ Winner:
 
 ---
 
+### 2.8 The Prospector
+
+`prospector()` (`ed-be/src/cron/clanWarProspector.ts`) is a recurring upkeep visit that runs
+**twice a day at random times** — once in a morning window, once in an evening window — and only
+while a war event is active (it no-ops when `eventState()` returns nothing). Per visit, for every
+`ClanWarRanking` row of the active event (joined to its clan's castle):
+
+- **Castle standing** (`currentLife > 0`): `castleStandingStreak += 1`, `castleDownStreak = 0`,
+  and an escalating reward is added to `totalPWin`.
+- **Castle destroyed** (`currentLife <= 0`): `castleDownStreak += 1`, `castleStandingStreak = 0`,
+  and an escalating penalty is added to `totalPLost`.
+- `reputation` is recomputed with the **unchanged** `computeReputation()` (see
+  [§5](#5-constants--formulas)). `downtimeCount` is **not** touched — it is owned by resolution,
+  and `applyProspectorUpdates()` deliberately omits it to avoid clobbering a concurrent
+  `updateWarRankings()`.
+
+The reward/penalty math is `computeProspectorUpdate()` (`utils/warCalculation.ts`); reads/writes
+go through `getProspectorRankings()` / `applyProspectorUpdates()` (`dao/clansDao.ts`). Affected
+clan members receive a real-time SSE `CLAN_PROSPECTOR` toast (see [§7](#7-observability)).
+
+Scheduling reuses the self-rescheduling `node-schedule` + `ServerState` pattern: each visit
+persists its next time in `ServerState[prospector]` and re-arms via `scheduleJob`. On boot
+`scheduleProspector()` (registered in `server.ts`) runs it immediately if the stored visit is
+missing or overdue, otherwise reschedules for the stored time.
+
+---
+
 ## 3. Data model
 
 Source of truth: `ed-be/prisma/schema.prisma`. The generated client lives in the root
@@ -170,12 +197,16 @@ Source of truth: `ed-be/prisma/schema.prisma`. The generated client lives in the
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `ClanEvent`        | `id` (uuid), `eventType` (`war` \| `mana_war`), `startDate`, `endDate`, `config` (JSON text of `ClanEventConfig`)                         |
 | `ClanWar`          | `id` (uuid), `eventId`, `attackerClanId`, `defenderClanId`, `startedAt`, `endsAt`, `isCastleDestroyed` (default `false`), `winnerClanId?` |
-| `ClanWarRanking`   | `clanId` + `eventId` (unique together), `reputation` (default `100`), `downtimeCount`, `totalPWin`, `totalPLost`                          |
+| `ClanWarRanking`   | `clanId` + `eventId` (unique together), `reputation` (default `100`), `downtimeCount`, `castleStandingStreak`, `castleDownStreak`, `totalPWin`, `totalPLost` |
 | `ClanCastle`       | `clanId` (unique), `placeId`, `maxLife`/`currentLife` (default `300`), `defender` (Dinoz[]), `defenseOrder` (Int[]), `repairs`            |
 | `ClanCastleRepair` | `castleId`, `startedAt`, `endsAt`, `hpPerTick`, `frequency` (minutes), `totalTicks`, `appliedTicks`                                       |
 
 War-relevant `Dinoz.unavailableReason` values: `defending` (stationed at castle),
 `restingAttack` (post-attack cooldown).
+
+The `castleStandingStreak` / `castleDownStreak` counters (default `0`) track the Prospector's
+consecutive standing/destroyed streak per clan (see [§2.8](#28-the-prospector)). The Prospector's
+next visit time is persisted in `ServerState` under the `prospector` `ServerAction`.
 
 ---
 
@@ -217,6 +248,11 @@ Constants live in `core/src/models/clan/clanWar.mts`:
 | `REPAIR_MAX_HP`            | `75`                       | max HP restored per repair      |
 | `RESTING_ATTACK_TIMER`     | `600000` (10 min)          | attacker cooldown               |
 | `RepairFrequency`          | `1 \| 5 \| 15 \| 30` (min) | tick cadence                    |
+| `PROSPECTOR_STANDING_REWARD_BASE`  | `5`                | per-streak reward for a standing castle  |
+| `PROSPECTOR_DESTROYED_PENALTY_BASE`| `5`                | per-streak penalty for a destroyed castle|
+| `PROSPECTOR_STREAK_CAP`            | `7`                | max streak multiplier                    |
+| `PROSPECTOR_MORNING_WINDOW`        | `{6, 11}` (hours)  | random morning visit window              |
+| `PROSPECTOR_EVENING_WINDOW`        | `{18, 23}` (hours) | random evening visit window              |
 
 ### War cost — `computeWarCost` (`core/.../warCalculation.mts`)
 
@@ -257,6 +293,25 @@ term is a compounding penalty for repeated castle losses. The resulting `WarRank
 is written by `updateWarRankings()` via typed `clanWarRanking.update` calls in one
 transaction — no raw SQL.
 
+### Prospector upkeep — `computeProspectorUpdate` (`ed-be/src/utils/warCalculation.ts`)
+
+Each Prospector visit ([§2.8](#28-the-prospector)) feeds an escalating delta into the same point
+pools and reuses `computeReputation()` unchanged:
+
+```
+standing  : castleStandingStreak += 1; castleDownStreak = 0
+            totalPWin  += PROSPECTOR_STANDING_REWARD_BASE   * min(castleStandingStreak, PROSPECTOR_STREAK_CAP)
+destroyed : castleDownStreak     += 1; castleStandingStreak = 0
+            totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * min(castleDownStreak,     PROSPECTOR_STREAK_CAP)
+reputation = computeReputation(totalPWin, totalPLost, downtimeCount)   // downtimeCount unchanged
+```
+
+The delta is linear in the streak up to `PROSPECTOR_STREAK_CAP`; the `^0.8` ratio in
+`computeReputation` naturally dampens the result. The next visit time is
+`computeNextProspectorRun()` (`ed-be/src/utils/date.ts`): a random minute inside the next
+un-fired daily window (morning, then evening), chosen by window-start boundary so exactly one
+visit fires per window per day.
+
 ---
 
 ## 6. Frontend touchpoints
@@ -286,4 +341,7 @@ project's Vite/Prisma rule.
   `ClanWarDefenseOrderUpdated`, `ClanWarCastleAttacked`, `ClanWarCastleRepaired`,
   `ClanWarResolved`), surfaced in `WarLogsView.vue`.
 - **Real-time** — when a castle is attacked, defending clan members receive an SSE
-  `SseDataEnum.CLAN_WAR` notification `{ attacker, hpLost }`.
+  `SseDataEnum.CLAN_WAR` notification `{ attacker, hpLost }`. On each Prospector visit
+  ([§2.8](#28-the-prospector)), the affected clan's members receive an SSE
+  `SseDataEnum.CLAN_PROSPECTOR` notification `{ standing, reputation }`, shown as a success
+  (reward) or warning (penalty) toast on the war page.

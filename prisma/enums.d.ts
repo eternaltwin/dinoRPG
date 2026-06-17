@@ -360,14 +360,16 @@ export const ServerAction: {
   readonly checkBans: 'checkBans';
   readonly healRestingDinoz: 'healRestingDinoz';
   readonly itinerantMerchant: 'itinerantMerchant';
-  readonly midnightReset: 'midnightReset'
+  readonly midnightReset: 'midnightReset';
+  readonly prospector: 'prospector'
 };
 
 export namespace ServerAction {
   export type checkBans = 'checkBans';
   export type healRestingDinoz = 'healRestingDinoz';
   export type itinerantMerchant = 'itinerantMerchant';
-  export type midnightReset = 'midnightReset'
+  export type midnightReset = 'midnightReset';
+  export type prospector = 'prospector'
 }
 
 export type ServerAction = typeof ServerAction[keyof typeof ServerAction];
