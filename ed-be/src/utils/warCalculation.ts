@@ -1,8 +1,9 @@
 import { ResolvedWar } from '../dao/clansDao.js';
 import {
+	PROSPECTOR_DESTROYED_GRACE_VISITS,
 	PROSPECTOR_DESTROYED_PENALTY_BASE,
 	PROSPECTOR_STANDING_REWARD_BASE,
-	PROSPECTOR_STREAK_CAP
+	PROSPECTOR_STANDING_REWARD_GROWTH
 } from '@drpg/core/models/clan/clanWar';
 
 export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
@@ -111,13 +112,20 @@ export function computeProspectorUpdate(
 	let { totalPWin, totalPLost, castleStandingStreak, castleDownStreak } = ranking;
 
 	if (castleStanding) {
+		// Reward: uncapped, escalating ("strong & rising"). Rounded so totalPWin stays integer.
 		castleStandingStreak += 1;
 		castleDownStreak = 0;
-		totalPWin += PROSPECTOR_STANDING_REWARD_BASE * Math.min(castleStandingStreak, PROSPECTOR_STREAK_CAP);
+		totalPWin += Math.round(
+			PROSPECTOR_STANDING_REWARD_BASE + PROSPECTOR_STANDING_REWARD_GROWTH * (castleStandingStreak - 1)
+		);
 	} else {
+		// Penalty: uncapped, with a grace window. The first PROSPECTOR_DESTROYED_GRACE_VISITS visits
+		// after destruction are free (rebuild window); afterwards the loss grows every visit, so
+		// camping a ruined castle becomes ruinous (cumulative penalty is quadratic).
 		castleDownStreak += 1;
 		castleStandingStreak = 0;
-		totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * Math.min(castleDownStreak, PROSPECTOR_STREAK_CAP);
+		const steps = Math.max(0, castleDownStreak - PROSPECTOR_DESTROYED_GRACE_VISITS);
+		totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * steps;
 	}
 
 	const reputation = computeReputation(totalPWin, totalPLost, ranking.downtimeCount);
@@ -136,7 +144,10 @@ export function computeProspectorUpdate(
 function computeReputation(totalPWin: number, totalPLost: number, downtimeCount: number): number {
 	const winLossRatio = (500 + totalPWin) / (500 + totalPLost);
 	const downtimePenalty = (downtimeCount * (downtimeCount - 1)) / 2;
-	return Math.round(100 * Math.pow(winLossRatio, 0.8) - downtimePenalty);
+	// Clamp at 0: the uncapped Prospector penalty (plus the downtime term) must never drive
+	// reputation negative, which would feed floor(reputation/100) in the war-cost formula and let a
+	// wrecked clan declare war more cheaply.
+	return Math.max(0, Math.round(100 * Math.pow(winLossRatio, 0.8) - downtimePenalty));
 }
 
 export function computePWin(yourRank: number, enemyRank: number): number {
