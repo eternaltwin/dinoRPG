@@ -83,30 +83,35 @@ update_staging_via_api:
     - if: '$CI_COMMIT_BRANCH == "staging"'
       when: on_success
 
-#back-coverage:
-#  stage: test
-#  image: "demurgos/node:2022.1"
-#  needs: [container-build]
-#  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-#  variables:
-#    CARGO_HOME: ".cargo"
-#    RUSTFLAGS: "-C target-feature=-crt-static"
-#  cache:
-#    paths:
-#      - "ed-be/coverage/"
-#      - junit.xml
-#  script:
-#    - yarn test:ci
-#  dependencies:
-#    - container-build
-#  rules:
-#    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-#    - if: '$CI_COMMIT_BRANCH == "develop"'
-#  artifacts:
-#    when: always
-#    reports:
-#      junit:
-#        - ed-be/junit.xml
-#      coverage_report:
-#        coverage_format: cobertura
-#        path: ed-be/coverage/cobertura-coverage.xml
+back-coverage:
+  stage: test
+  image: "demurgos/node:2024.2"
+  needs: [container-build]
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  cache:
+    paths:
+      - "ed-be/coverage/"
+      - junit.xml
+  script:
+    - cd ed-be
+    - >-
+      yarn vitest run --coverage
+      --coverage.reporter=text
+      --coverage.reporter=cobertura
+      --reporter=default
+      --reporter=junit
+      --outputFile.junit=junit.xml
+  dependencies:
+    - container-build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - ed-be/junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: ed-be/coverage/cobertura-coverage.xml
