@@ -171,7 +171,7 @@ while a war event is active (it no-ops when `eventState()` returns nothing). Per
 - **Castle standing** (`currentLife > 0`): `castleStandingStreak += 1`, `castleDownStreak = 0`,
   and an escalating reward is added to `totalPWin`.
 - **Castle destroyed** (`currentLife <= 0`): `castleDownStreak += 1`, `castleStandingStreak = 0`,
-  and an escalating penalty is added to `totalPLost`.
+  and (after a short grace window) an escalating penalty is added to `totalPLost`.
 - `reputation` is recomputed with the **unchanged** `computeReputation()` (see
   [§5](#5-constants--formulas)). `downtimeCount` is **not** touched — it is owned by resolution,
   and `applyProspectorUpdates()` deliberately omits it to avoid clobbering a concurrent
@@ -248,9 +248,10 @@ Constants live in `core/src/models/clan/clanWar.mts`:
 | `REPAIR_MAX_HP`            | `75`                       | max HP restored per repair      |
 | `RESTING_ATTACK_TIMER`     | `600000` (10 min)          | attacker cooldown               |
 | `RepairFrequency`          | `1 \| 5 \| 15 \| 30` (min) | tick cadence                    |
-| `PROSPECTOR_STANDING_REWARD_BASE`  | `5`                | per-streak reward for a standing castle  |
-| `PROSPECTOR_DESTROYED_PENALTY_BASE`| `5`                | per-streak penalty for a destroyed castle|
-| `PROSPECTOR_STREAK_CAP`            | `7`                | max streak multiplier                    |
+| `PROSPECTOR_STANDING_REWARD_BASE`  | `20`               | pWin on the first standing visit         |
+| `PROSPECTOR_STANDING_REWARD_GROWTH`| `0.4`              | +pWin per extra consecutive standing visit (uncapped) |
+| `PROSPECTOR_DESTROYED_PENALTY_BASE`| `3`                | pLost per destroyed-streak step past grace (uncapped) |
+| `PROSPECTOR_DESTROYED_GRACE_VISITS`| `1`                | free destroyed visits (~12h) before the penalty bites |
 | `PROSPECTOR_MORNING_WINDOW`        | `{6, 11}` (hours)  | random morning visit window              |
 | `PROSPECTOR_EVENING_WINDOW`        | `{18, 23}` (hours) | random evening visit window              |
 
@@ -283,8 +284,8 @@ On resolution `computeWarRankingUpdates()` accrues `pWin` into the winner's `tot
 `pLost` into the loser's `totalPLost`, then `computeReputation()` recomputes `reputation`:
 
 ```
-reputation = round( 100 * ((500 + totalPWin) / (500 + totalPLost)) ^ 0.8
-                    - downtime * (downtime - 1) / 2 )
+reputation = max( 0, round( 100 * ((500 + totalPWin) / (500 + totalPLost)) ^ 0.8
+                            - downtime * (downtime - 1) / 2 ) )
 ```
 
 `downtimeCount` increments each time the defender's castle is destroyed and resets to 0 on a
@@ -300,14 +301,20 @@ pools and reuses `computeReputation()` unchanged:
 
 ```
 standing  : castleStandingStreak += 1; castleDownStreak = 0
-            totalPWin  += PROSPECTOR_STANDING_REWARD_BASE   * min(castleStandingStreak, PROSPECTOR_STREAK_CAP)
+            totalPWin  += round(PROSPECTOR_STANDING_REWARD_BASE + PROSPECTOR_STANDING_REWARD_GROWTH * (castleStandingStreak - 1))
 destroyed : castleDownStreak     += 1; castleStandingStreak = 0
-            totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * min(castleDownStreak,     PROSPECTOR_STREAK_CAP)
+            steps = max(0, castleDownStreak - PROSPECTOR_DESTROYED_GRACE_VISITS)
+            totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * steps
 reputation = computeReputation(totalPWin, totalPLost, downtimeCount)   // downtimeCount unchanged
 ```
 
-The delta is linear in the streak up to `PROSPECTOR_STREAK_CAP`; the `^0.8` ratio in
-`computeReputation` naturally dampens the result. The next visit time is
+Both sides are **uncapped** and escalate with the consecutive-visit streak. The reward grows each
+standing visit (a full-event holder, ~86 visits, reaches reputation ~495 — an intentional,
+near-impossible flex, since ~85% of wars end in destruction). The penalty side grants a
+`PROSPECTOR_DESTROYED_GRACE_VISITS`-visit grace window (~12h) so a clan that rebuilds quickly pays
+nothing; past that it compounds every visit (cumulative loss is quadratic), so camping a ruined
+castle becomes ruinous. The reward intentionally outweighs the penalty. `computeReputation` is
+clamped at `0` so the uncapped penalty can never produce negative reputation. The next visit time is
 `computeNextProspectorRun()` (`ed-be/src/utils/date.ts`): a random minute inside the next
 un-fired daily window (morning, then evening), chosen by window-start boundary so exactly one
 visit fires per window per day.

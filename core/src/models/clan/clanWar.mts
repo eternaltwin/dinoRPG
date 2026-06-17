@@ -9,9 +9,10 @@ export const REPAIR_SCALE_FACTOR = 1.2;
 export const REPAIR_MAX_HP = 75;
 export const RESTING_ATTACK_TIMER = 1_000 * 60 * 10;
 
-export const PROSPECTOR_STANDING_REWARD_BASE = 5;
-export const PROSPECTOR_DESTROYED_PENALTY_BASE = 5;
-export const PROSPECTOR_STREAK_CAP = 7;
+export const PROSPECTOR_STANDING_REWARD_BASE = 20;
+export const PROSPECTOR_STANDING_REWARD_GROWTH = 0.4;
+export const PROSPECTOR_DESTROYED_PENALTY_BASE = 3;
+export const PROSPECTOR_DESTROYED_GRACE_VISITS = 1;
 // Visit windows (local server time, 24h). One random visit per window per day.
 export const PROSPECTOR_MORNING_WINDOW = { startHour: 6, endHour: 11 };
 export const PROSPECTOR_EVENING_WINDOW = { startHour: 18, endHour: 23 };
