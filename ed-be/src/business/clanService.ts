@@ -58,6 +58,8 @@ import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
+import { prisma } from '../prisma.js';
+import { updateDinoz } from '../dao/dinozDao.js';
 
 /**
  * Get all the clans
@@ -299,7 +301,16 @@ export async function deleteClan(req: Request) {
 	if (!isPlayerLeader) {
 		throw new ExpectedError(`Player ${authed.name} is not leader of clan ${req.params.id}`);
 	}
-
+	const defendingDinoz = await prisma.clanCastle.findUnique({
+		where: {
+			clanId: +req.params.id
+		}
+	});
+	if (defendingDinoz && defendingDinoz.defenseOrder.length > 0) {
+		for (const dinoz of defendingDinoz.defenseOrder) {
+			await updateDinoz(dinoz, { unavailableReason: null });
+		}
+	}
 	await deleteClanRequest(Number(req.params.id));
 	return +req.params.id;
 }

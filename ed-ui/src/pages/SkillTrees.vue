@@ -6,7 +6,6 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
-import { formatText } from '..//utils/formatText';
 import DZButton from '../components/common/DZButton.vue';
 import DZCheckbox from '../components/common/DZCheckbox.vue';
 import DZInput from '../components/common/DZInput.vue';
@@ -49,7 +48,7 @@ const init = async () => {
 		const dinozId = +route.params.id;
 		if (isNaN(dinozId)) {
 			toast.open({
-				message: formatText(t(`toast.unknownDinoz`)),
+				message: t(`toast.unknownDinoz`),
 				type: 'error'
 			});
 			router.back();
@@ -161,7 +160,7 @@ const saveBuild = async () => {
 		}
 
 		toast.open({
-			message: formatText(t(`toast.buildSaved`, { name: buildName.value })),
+			message: t(`toast.buildSaved`, { name: buildName.value }),
 			type: 'success'
 		});
 
@@ -170,7 +169,7 @@ const saveBuild = async () => {
 		resetBuild();
 	} catch (error) {
 		toast.open({
-			message: formatText(t(`toast.buildSaveError`)),
+			message: t(`toast.buildSaveError`),
 			type: 'error'
 		});
 	}
@@ -186,7 +185,7 @@ const deleteBuild = async () => {
 		ownBuilds.value = ownBuilds.value.filter(b => b.id !== buildId.value);
 
 		toast.open({
-			message: formatText(t(`toast.buildDeleted`, { name: buildName.value })),
+			message: t(`toast.buildDeleted`, { name: buildName.value }),
 			type: 'success'
 		});
 
@@ -210,7 +209,7 @@ onMounted(async () => {
 	// Redirect to last page if no PAC
 	if (!store.playerOptions.hasPAC) {
 		toast.open({
-			message: formatText(t(`toast.noPAC`)),
+			message: t(`toast.noPAC`),
 			type: 'error'
 		});
 		router.back();

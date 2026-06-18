@@ -20,7 +20,6 @@ import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { localStore, playerStore, sessionStore, useDinozStore } from '../store';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
-import { formatText } from '../utils/formatText.js';
 import FightBounce from '../components/fight/FightBounce.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
@@ -114,7 +113,7 @@ export default defineComponent({
 
 		if (!dinozList) {
 			this.$toast.open({
-				message: formatText(this.$t(`toast.missingData`)),
+				message: this.$t(`toast.missingData`),
 				type: 'error'
 			});
 			return;

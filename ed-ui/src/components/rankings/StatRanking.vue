@@ -7,7 +7,6 @@ import { useRouter } from 'vue-router';
 import DZUser from '../common/DZUser.vue';
 import { RankingService } from '../../services/RankingService';
 import { localStore } from '../../store';
-import { formatText } from '../../utils/formatText';
 import { formatLargeNumber } from '../../utils/formatLargeNumber';
 
 // State
@@ -36,7 +35,7 @@ onMounted(async () => {
 		rankings.value = groupedRankings;
 	} catch (error) {
 		instance?.proxy?.$toast.open({
-			message: formatText(instance?.proxy?.$t(`toast.errorFetchingRankings`)),
+			message: instance?.proxy?.$t(`toast.errorFetchingRankings`),
 			type: 'error'
 		});
 		router.back();

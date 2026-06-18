@@ -1,4 +1,10 @@
 import { ResolvedWar } from '../dao/clansDao.js';
+import {
+	PROSPECTOR_DESTROYED_GRACE_VISITS,
+	PROSPECTOR_DESTROYED_PENALTY_BASE,
+	PROSPECTOR_STANDING_REWARD_BASE,
+	PROSPECTOR_STANDING_REWARD_GROWTH
+} from '@drpg/core/models/clan/clanWar';
 
 export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 	const attackerRanking = war.attacker.clanWarRanking[0];
@@ -16,10 +22,132 @@ export function computeWarPowers(war: ResolvedWar, attackerWon: boolean) {
 			attackerPLost: attackerWon ? 0 : Math.round(pLost)
 		},
 		defender: {
-			defenderPWin: attackerWon ? 0 : Math.round(pWin),
-			defenderPLost: attackerWon ? Math.round(pLost) : 0
+			defenderPWin: attackerWon ? 0 : Math.round(pLost),
+			defenderPLost: attackerWon ? Math.round(pWin) : 0
 		}
 	};
+}
+
+export type WarRankingUpdate = {
+	clanId: number;
+	totalPWin: number;
+	totalPLost: number;
+	downtimeCount: number;
+	reputation: number;
+};
+
+type ClanWarRanking = ResolvedWar['attacker']['clanWarRanking'][number];
+
+export function computeWarRankingUpdates(
+	war: ResolvedWar,
+	attackerWon: boolean,
+	isCastleDestroyed: boolean
+): WarRankingUpdate[] {
+	const powers = computeWarPowers(war, attackerWon);
+
+	const attackerUpdate = buildRankingUpdate({
+		clanId: war.attacker.id,
+		ranking: war.attacker.clanWarRanking[0],
+		pWin: powers.attacker.attackerPWin,
+		pLost: powers.attacker.attackerPLost,
+		// The attacker is never under siege, so its downtime never changes.
+		nextDowntimeCount: count => count
+	});
+
+	const defenderUpdate = buildRankingUpdate({
+		clanId: war.defender.id,
+		ranking: war.defender.clanWarRanking[0],
+		pWin: powers.defender.defenderPWin,
+		pLost: powers.defender.defenderPLost,
+		// A destroyed castle adds one downtime; surviving it resets the streak.
+		nextDowntimeCount: count => (isCastleDestroyed ? count + 1 : 0)
+	});
+
+	return [attackerUpdate, defenderUpdate].filter((update): update is WarRankingUpdate => update !== undefined);
+}
+
+function buildRankingUpdate(params: {
+	clanId: number;
+	ranking: ClanWarRanking | undefined;
+	pWin: number;
+	pLost: number;
+	nextDowntimeCount: (currentCount: number) => number;
+}): WarRankingUpdate | undefined {
+	const { clanId, ranking, pWin, pLost, nextDowntimeCount } = params;
+
+	if (!ranking) {
+		return undefined;
+	}
+
+	const totalPWin = ranking.totalPWin + pWin;
+	const totalPLost = ranking.totalPLost + pLost;
+	const downtimeCount = nextDowntimeCount(ranking.downtimeCount);
+	const reputation = computeReputation(totalPWin, totalPLost, downtimeCount);
+
+	return { clanId, totalPWin, totalPLost, downtimeCount, reputation };
+}
+
+export type ProspectorUpdate = WarRankingUpdate & {
+	castleStandingStreak: number;
+	castleDownStreak: number;
+};
+
+/**
+ * Applies one Prospector visit to a single war-ranking row. A standing castle is rewarded with
+ * escalating `totalPWin`, a destroyed one penalised with escalating `totalPLost`; the opposite
+ * streak resets. Reputation is recomputed with the unchanged formula. `downtimeCount` is carried
+ * through untouched — it is owned by war resolution.
+ */
+export function computeProspectorUpdate(
+	ranking: {
+		clanId: number;
+		totalPWin: number;
+		totalPLost: number;
+		downtimeCount: number;
+		castleStandingStreak: number;
+		castleDownStreak: number;
+	},
+	castleStanding: boolean
+): ProspectorUpdate {
+	let { totalPWin, totalPLost, castleStandingStreak, castleDownStreak } = ranking;
+
+	if (castleStanding) {
+		// Reward: uncapped, escalating ("strong & rising"). Rounded so totalPWin stays integer.
+		castleStandingStreak += 1;
+		castleDownStreak = 0;
+		totalPWin += Math.round(
+			PROSPECTOR_STANDING_REWARD_BASE + PROSPECTOR_STANDING_REWARD_GROWTH * (castleStandingStreak - 1)
+		);
+	} else {
+		// Penalty: uncapped, with a grace window. The first PROSPECTOR_DESTROYED_GRACE_VISITS visits
+		// after destruction are free (rebuild window); afterwards the loss grows every visit, so
+		// camping a ruined castle becomes ruinous (cumulative penalty is quadratic).
+		castleDownStreak += 1;
+		castleStandingStreak = 0;
+		const steps = Math.max(0, castleDownStreak - PROSPECTOR_DESTROYED_GRACE_VISITS);
+		totalPLost += PROSPECTOR_DESTROYED_PENALTY_BASE * steps;
+	}
+
+	const reputation = computeReputation(totalPWin, totalPLost, ranking.downtimeCount);
+
+	return {
+		clanId: ranking.clanId,
+		totalPWin,
+		totalPLost,
+		downtimeCount: ranking.downtimeCount,
+		reputation,
+		castleStandingStreak,
+		castleDownStreak
+	};
+}
+
+function computeReputation(totalPWin: number, totalPLost: number, downtimeCount: number): number {
+	const winLossRatio = (500 + totalPWin) / (500 + totalPLost);
+	const downtimePenalty = (downtimeCount * (downtimeCount - 1)) / 2;
+	// Clamp at 0: the uncapped Prospector penalty (plus the downtime term) must never drive
+	// reputation negative, which would feed floor(reputation/100) in the war-cost formula and let a
+	// wrecked clan declare war more cheaply.
+	return Math.max(0, Math.round(100 * Math.pow(winLossRatio, 0.8) - downtimePenalty));
 }
 
 export function computePWin(yourRank: number, enemyRank: number): number {

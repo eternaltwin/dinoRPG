@@ -385,7 +385,7 @@ routes.delete(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], a
 	}
 	try {
 		const response = await deleteClan(req);
-		return res.status(200).send(response);
+		return res.status(200).send(response.toString());
 	} catch (err) {
 		sendError(res, err);
 	}

@@ -2,7 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "../../prisma"
   previewFeatures = ["nativeDistinct", "relationJoins"]
-  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -548,6 +548,8 @@ model Log {
   player      Player?  @relation(fields: [playerId], references: [id])
 
   @@index([playerId, dinozId, type])
+  @@index([type])
+  @@index([values], type: Gin)
 }
 
 model DinozCatch {
@@ -659,6 +661,10 @@ model ClanWar {
   isCastleDestroyed Boolean @default(false)
   winnerClanId      Int?
   winner            Clan?   @relation("warWon", fields: [winnerClanId], references: [id])
+
+  @@index([startedAt(sort: Desc)])
+  @@index([attackerClanId])
+  @@index([defenderClanId])
 }
 
 model ClanWarRanking {
@@ -673,6 +679,9 @@ model ClanWarRanking {
   reputation Float @default(100)
 
   downtimeCount Int @default(0)
+
+  castleStandingStreak Int @default(0)
+  castleDownStreak     Int @default(0)
 
   totalPWin  Int @default(0)
   totalPLost Int @default(0)
@@ -977,6 +986,7 @@ enum ServerAction {
   healRestingDinoz
   itinerantMerchant
   midnightReset
+  prospector
 }
 
 enum GameDinozUsage {

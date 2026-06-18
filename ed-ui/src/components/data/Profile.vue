@@ -112,7 +112,6 @@ import { localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
-import { formatText } from '../../utils/formatText.js';
 import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
 import { Tippy } from 'vue-tippy';
@@ -198,7 +197,7 @@ export default defineComponent({
 				const irma = await PlayerService.getLBRewards();
 
 				this.$toast.open({
-					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity }, irma.quantity)),
+					message: this.$t(`toast.labrute`, { quantity: irma.quantity }, irma.quantity),
 					type: 'info'
 				});
 			} catch (err) {

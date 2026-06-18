@@ -528,6 +528,8 @@ exports.Prisma.ClanWarRankingScalarFieldEnum = {
   eventId: 'eventId',
   reputation: 'reputation',
   downtimeCount: 'downtimeCount',
+  castleStandingStreak: 'castleStandingStreak',
+  castleDownStreak: 'castleDownStreak',
   totalPWin: 'totalPWin',
   totalPLost: 'totalPLost',
   createdAt: 'createdAt',
@@ -923,7 +925,8 @@ exports.ServerAction = exports.$Enums.ServerAction = {
   checkBans: 'checkBans',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  midnightReset: 'midnightReset'
+  midnightReset: 'midnightReset',
+  prospector: 'prospector'
 };
 
 exports.Prisma.ModelName = {

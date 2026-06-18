@@ -337,7 +337,8 @@ export namespace $Enums {
   checkBans: 'checkBans',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  midnightReset: 'midnightReset'
+  midnightReset: 'midnightReset',
+  prospector: 'prospector'
 };
 
 export type ServerAction = (typeof ServerAction)[keyof typeof ServerAction]
@@ -59353,6 +59354,8 @@ export namespace Prisma {
     clanId: number | null
     reputation: number | null
     downtimeCount: number | null
+    castleStandingStreak: number | null
+    castleDownStreak: number | null
     totalPWin: number | null
     totalPLost: number | null
   }
@@ -59362,6 +59365,8 @@ export namespace Prisma {
     clanId: number | null
     reputation: number | null
     downtimeCount: number | null
+    castleStandingStreak: number | null
+    castleDownStreak: number | null
     totalPWin: number | null
     totalPLost: number | null
   }
@@ -59372,6 +59377,8 @@ export namespace Prisma {
     eventId: string | null
     reputation: number | null
     downtimeCount: number | null
+    castleStandingStreak: number | null
+    castleDownStreak: number | null
     totalPWin: number | null
     totalPLost: number | null
     createdAt: Date | null
@@ -59384,6 +59391,8 @@ export namespace Prisma {
     eventId: string | null
     reputation: number | null
     downtimeCount: number | null
+    castleStandingStreak: number | null
+    castleDownStreak: number | null
     totalPWin: number | null
     totalPLost: number | null
     createdAt: Date | null
@@ -59396,6 +59405,8 @@ export namespace Prisma {
     eventId: number
     reputation: number
     downtimeCount: number
+    castleStandingStreak: number
+    castleDownStreak: number
     totalPWin: number
     totalPLost: number
     createdAt: number
@@ -59409,6 +59420,8 @@ export namespace Prisma {
     clanId?: true
     reputation?: true
     downtimeCount?: true
+    castleStandingStreak?: true
+    castleDownStreak?: true
     totalPWin?: true
     totalPLost?: true
   }
@@ -59418,6 +59431,8 @@ export namespace Prisma {
     clanId?: true
     reputation?: true
     downtimeCount?: true
+    castleStandingStreak?: true
+    castleDownStreak?: true
     totalPWin?: true
     totalPLost?: true
   }
@@ -59428,6 +59443,8 @@ export namespace Prisma {
     eventId?: true
     reputation?: true
     downtimeCount?: true
+    castleStandingStreak?: true
+    castleDownStreak?: true
     totalPWin?: true
     totalPLost?: true
     createdAt?: true
@@ -59440,6 +59457,8 @@ export namespace Prisma {
     eventId?: true
     reputation?: true
     downtimeCount?: true
+    castleStandingStreak?: true
+    castleDownStreak?: true
     totalPWin?: true
     totalPLost?: true
     createdAt?: true
@@ -59452,6 +59471,8 @@ export namespace Prisma {
     eventId?: true
     reputation?: true
     downtimeCount?: true
+    castleStandingStreak?: true
+    castleDownStreak?: true
     totalPWin?: true
     totalPLost?: true
     createdAt?: true
@@ -59551,6 +59572,8 @@ export namespace Prisma {
     eventId: string
     reputation: number
     downtimeCount: number
+    castleStandingStreak: number
+    castleDownStreak: number
     totalPWin: number
     totalPLost: number
     createdAt: Date
@@ -59582,6 +59605,8 @@ export namespace Prisma {
     eventId?: boolean
     reputation?: boolean
     downtimeCount?: boolean
+    castleStandingStreak?: boolean
+    castleDownStreak?: boolean
     totalPWin?: boolean
     totalPLost?: boolean
     createdAt?: boolean
@@ -59596,6 +59621,8 @@ export namespace Prisma {
     eventId?: boolean
     reputation?: boolean
     downtimeCount?: boolean
+    castleStandingStreak?: boolean
+    castleDownStreak?: boolean
     totalPWin?: boolean
     totalPLost?: boolean
     createdAt?: boolean
@@ -59610,6 +59637,8 @@ export namespace Prisma {
     eventId?: boolean
     reputation?: boolean
     downtimeCount?: boolean
+    castleStandingStreak?: boolean
+    castleDownStreak?: boolean
     totalPWin?: boolean
     totalPLost?: boolean
     createdAt?: boolean
@@ -59624,13 +59653,15 @@ export namespace Prisma {
     eventId?: boolean
     reputation?: boolean
     downtimeCount?: boolean
+    castleStandingStreak?: boolean
+    castleDownStreak?: boolean
     totalPWin?: boolean
     totalPLost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ClanWarRankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "eventId" | "reputation" | "downtimeCount" | "totalPWin" | "totalPLost" | "createdAt" | "updatedAt", ExtArgs["result"]["clanWarRanking"]>
+  export type ClanWarRankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "eventId" | "reputation" | "downtimeCount" | "castleStandingStreak" | "castleDownStreak" | "totalPWin" | "totalPLost" | "createdAt" | "updatedAt", ExtArgs["result"]["clanWarRanking"]>
   export type ClanWarRankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | ClanDefaultArgs<ExtArgs>
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
@@ -59656,6 +59687,8 @@ export namespace Prisma {
       eventId: string
       reputation: number
       downtimeCount: number
+      castleStandingStreak: number
+      castleDownStreak: number
       totalPWin: number
       totalPLost: number
       createdAt: Date
@@ -60090,6 +60123,8 @@ export namespace Prisma {
     readonly eventId: FieldRef<"ClanWarRanking", 'String'>
     readonly reputation: FieldRef<"ClanWarRanking", 'Float'>
     readonly downtimeCount: FieldRef<"ClanWarRanking", 'Int'>
+    readonly castleStandingStreak: FieldRef<"ClanWarRanking", 'Int'>
+    readonly castleDownStreak: FieldRef<"ClanWarRanking", 'Int'>
     readonly totalPWin: FieldRef<"ClanWarRanking", 'Int'>
     readonly totalPLost: FieldRef<"ClanWarRanking", 'Int'>
     readonly createdAt: FieldRef<"ClanWarRanking", 'DateTime'>
@@ -83638,6 +83673,8 @@ export namespace Prisma {
     eventId: 'eventId',
     reputation: 'reputation',
     downtimeCount: 'downtimeCount',
+    castleStandingStreak: 'castleStandingStreak',
+    castleDownStreak: 'castleDownStreak',
     totalPWin: 'totalPWin',
     totalPLost: 'totalPLost',
     createdAt: 'createdAt',
@@ -87303,6 +87340,8 @@ export namespace Prisma {
     eventId?: UuidFilter<"ClanWarRanking"> | string
     reputation?: FloatFilter<"ClanWarRanking"> | number
     downtimeCount?: IntFilter<"ClanWarRanking"> | number
+    castleStandingStreak?: IntFilter<"ClanWarRanking"> | number
+    castleDownStreak?: IntFilter<"ClanWarRanking"> | number
     totalPWin?: IntFilter<"ClanWarRanking"> | number
     totalPLost?: IntFilter<"ClanWarRanking"> | number
     createdAt?: DateTimeFilter<"ClanWarRanking"> | Date | string
@@ -87317,6 +87356,8 @@ export namespace Prisma {
     eventId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
     createdAt?: SortOrder
@@ -87335,6 +87376,8 @@ export namespace Prisma {
     eventId?: UuidFilter<"ClanWarRanking"> | string
     reputation?: FloatFilter<"ClanWarRanking"> | number
     downtimeCount?: IntFilter<"ClanWarRanking"> | number
+    castleStandingStreak?: IntFilter<"ClanWarRanking"> | number
+    castleDownStreak?: IntFilter<"ClanWarRanking"> | number
     totalPWin?: IntFilter<"ClanWarRanking"> | number
     totalPLost?: IntFilter<"ClanWarRanking"> | number
     createdAt?: DateTimeFilter<"ClanWarRanking"> | Date | string
@@ -87349,6 +87392,8 @@ export namespace Prisma {
     eventId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
     createdAt?: SortOrder
@@ -87369,6 +87414,8 @@ export namespace Prisma {
     eventId?: UuidWithAggregatesFilter<"ClanWarRanking"> | string
     reputation?: FloatWithAggregatesFilter<"ClanWarRanking"> | number
     downtimeCount?: IntWithAggregatesFilter<"ClanWarRanking"> | number
+    castleStandingStreak?: IntWithAggregatesFilter<"ClanWarRanking"> | number
+    castleDownStreak?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     totalPWin?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     totalPLost?: IntWithAggregatesFilter<"ClanWarRanking"> | number
     createdAt?: DateTimeWithAggregatesFilter<"ClanWarRanking"> | Date | string
@@ -91758,6 +91805,8 @@ export namespace Prisma {
   export type ClanWarRankingCreateInput = {
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -91772,6 +91821,8 @@ export namespace Prisma {
     eventId: string
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -91781,6 +91832,8 @@ export namespace Prisma {
   export type ClanWarRankingUpdateInput = {
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -91795,6 +91848,8 @@ export namespace Prisma {
     eventId?: StringFieldUpdateOperationsInput | string
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -91807,6 +91862,8 @@ export namespace Prisma {
     eventId: string
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -91816,6 +91873,8 @@ export namespace Prisma {
   export type ClanWarRankingUpdateManyMutationInput = {
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -91828,6 +91887,8 @@ export namespace Prisma {
     eventId?: StringFieldUpdateOperationsInput | string
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -96170,6 +96231,8 @@ export namespace Prisma {
     eventId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
     createdAt?: SortOrder
@@ -96181,6 +96244,8 @@ export namespace Prisma {
     clanId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
   }
@@ -96191,6 +96256,8 @@ export namespace Prisma {
     eventId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
     createdAt?: SortOrder
@@ -96203,6 +96270,8 @@ export namespace Prisma {
     eventId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
     createdAt?: SortOrder
@@ -96214,6 +96283,8 @@ export namespace Prisma {
     clanId?: SortOrder
     reputation?: SortOrder
     downtimeCount?: SortOrder
+    castleStandingStreak?: SortOrder
+    castleDownStreak?: SortOrder
     totalPWin?: SortOrder
     totalPLost?: SortOrder
   }
@@ -117641,6 +117712,8 @@ export namespace Prisma {
   export type ClanWarRankingCreateWithoutClanInput = {
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -117653,6 +117726,8 @@ export namespace Prisma {
     eventId: string
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -118273,6 +118348,8 @@ export namespace Prisma {
     eventId?: UuidFilter<"ClanWarRanking"> | string
     reputation?: FloatFilter<"ClanWarRanking"> | number
     downtimeCount?: IntFilter<"ClanWarRanking"> | number
+    castleStandingStreak?: IntFilter<"ClanWarRanking"> | number
+    castleDownStreak?: IntFilter<"ClanWarRanking"> | number
     totalPWin?: IntFilter<"ClanWarRanking"> | number
     totalPLost?: IntFilter<"ClanWarRanking"> | number
     createdAt?: DateTimeFilter<"ClanWarRanking"> | Date | string
@@ -119611,6 +119688,8 @@ export namespace Prisma {
   export type ClanWarRankingCreateWithoutEventInput = {
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -119623,6 +119702,8 @@ export namespace Prisma {
     clanId: number
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -130080,6 +130161,8 @@ export namespace Prisma {
     eventId: string
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -130333,6 +130416,8 @@ export namespace Prisma {
   export type ClanWarRankingUpdateWithoutClanInput = {
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -130345,6 +130430,8 @@ export namespace Prisma {
     eventId?: StringFieldUpdateOperationsInput | string
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -130356,6 +130443,8 @@ export namespace Prisma {
     eventId?: StringFieldUpdateOperationsInput | string
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -130807,6 +130896,8 @@ export namespace Prisma {
     clanId: number
     reputation?: number
     downtimeCount?: number
+    castleStandingStreak?: number
+    castleDownStreak?: number
     totalPWin?: number
     totalPLost?: number
     createdAt?: Date | string
@@ -130826,6 +130917,8 @@ export namespace Prisma {
   export type ClanWarRankingUpdateWithoutEventInput = {
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -130838,6 +130931,8 @@ export namespace Prisma {
     clanId?: IntFieldUpdateOperationsInput | number
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -130849,6 +130944,8 @@ export namespace Prisma {
     clanId?: IntFieldUpdateOperationsInput | number
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
+    castleStandingStreak?: IntFieldUpdateOperationsInput | number
+    castleDownStreak?: IntFieldUpdateOperationsInput | number
     totalPWin?: IntFieldUpdateOperationsInput | number
     totalPLost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

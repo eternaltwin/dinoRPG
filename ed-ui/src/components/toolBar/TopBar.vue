@@ -122,6 +122,13 @@ export default defineComponent({
 						case SseDataEnum.CLAN_WAR:
 							this.$toast.warning(this.$t(`toast.clan_war`, data.war));
 							break;
+						case SseDataEnum.CLAN_PROSPECTOR:
+							if (data.prospector.standing) {
+								this.$toast.success(this.$t(`toast.clan_prospector_reward`, data.prospector));
+							} else {
+								this.$toast.warning(this.$t(`toast.clan_prospector_penalty`, data.prospector));
+							}
+							break;
 						default:
 							console.log(data);
 							console.error('Not handled SSE data type');

@@ -62,7 +62,10 @@
 		"castleFullLife": "Eure Burg hat bereits die Höchstanzahl an :hpcastle:.",
 		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
 		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur.",
-		"alreadyInDefense": "Dein Dinoz ist bereits Teil der Burgverteidigung."
+		"alreadyInDefense": "Dein Dinoz ist bereits Teil der Burgverteidigung.",
+		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan.",
+		"castleAlreadyBuilt": "Le château de votre clan est déjà construit.",
+		"notInDefense": "Ce Dinoz ne fait pas partie de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
@@ -232,6 +235,11 @@
 		"archiveNotFound": "Archiv nicht gefunden",
 		"inexistantOpponent": "Gegner nicht gefunden",
 		"notFightedOpponent": "Dieser Gegner wurde bereits bezwungen",
+		"qualificationOver": "La phase de qualification est terminée.",
+		"dinozTooLowLevel": "Un Dinoz n'a pas le niveau requis (niveau 10 minimum).",
+		"dinozTooHighLevel": "Un Dinoz dépasse le niveau maximum autorisé.",
+		"wrongRace": "Une race de votre équipe n'est pas autorisée pour ce tournoi.",
+		"alreadyRegistered": "Vous avez déjà une équipe inscrite pour ce tournoi.",
 		"teamSize": "Mannschaften bestehen aus {{nb}} Mitgliedern mindestens {{races}} verschiedener Rassen.",
 		"teamSize_singleRace": "Die Mannschaften bestehen aus {{nb}} Mitgliedern.",
 		"raceLimit": "Die für die Teilnahme gestatteten Rassen sind:{{races}}.",

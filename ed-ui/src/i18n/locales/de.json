@@ -86,6 +86,7 @@
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
 			"archivedSiteId": "Historisierte Seite",
 			"shareArchivedData": "Twinoid-Statistiken teilen",
+			"displayedNotifications": "Anzahl der Benachrichtigungen, die gleichzeitig angezeigt werden",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
@@ -121,6 +122,8 @@
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
 		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
+		"clan_prospector_reward": "Le Prospecteur a pu inspecter votre château — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -2606,7 +2609,8 @@
 		"clans": "Klane",
 		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
-		"stats": "Statistiken"
+		"stats": "Statistiken",
+		"wars": "Kriege"
 	},
 	"layout": {
 		"fx": "Status",
@@ -2625,7 +2629,8 @@
 		"attention": "Achtung",
 		"accept": "Ja",
 		"reject": "Nein",
-		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?"
+		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?",
+		"repairCastle": "Sobald sie repariert ist, kann die Burg wieder angegriffen werden. Bist du sicher, dass du fortfahren möchtest?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4079,7 +4084,11 @@
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
 			"war": "Kriegsansehen",
-			"castle": "Burg errichtet"
+			"castle": "Burg errichtet",
+			"warAttacker": "Angreifer",
+			"warDefender": "Verteidiger",
+			"warStart": "Anfangsdatum",
+			"warResult": "Ergebnis"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4116,6 +4125,12 @@
 			"clanEvent": "Ereignis-Rangliste",
 			"clanTreasure": "Schatzkammer-Rangliste",
 			"clanWar": "Kriegsrangliste"
+		},
+		"war": {
+			"forfeit": "Aufgegeben",
+			"ongoing": "Im Gange",
+			"castleDestroyed": "Burg zerstört",
+			"timeout": "Verteidigt"
 		}
 	},
 	"clan": {
@@ -4155,6 +4170,7 @@
 			"buildCastle": "Errichtet eure Burg",
 			"castleTooltip": "An diesem Ort befindet sich eure Burg",
 			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
+			"disclaimerProspector": "Le Prospecteur passera entre {morning} et {evening}. Sa prochaine visite sera le {next}.",
 			"declareWar": "Diesen Klan angreifen",
 			"disclaimerAttack": "Diesen Klan anzugreifen würde euch {cost} :gold: kosten. Die Zutaten aus der Klanschatzkammer werden automatisch verbraucht, um diese Gebühr zu bezahlen.",
 			"attack": "Angriff",
@@ -4305,9 +4321,10 @@
 			"WAR_LOSED": "Ich habe eure Burg im Namen vom Klan {name} zerstört und somit den Krieg gegen euch gewonnen.",
 			"WAR_DEFENDED": "Wir haben die Angriffe des Klans {name} überstanden und somit diesen Verteidigungskrieg gewonnen.",
 			"WAR_FORFEIT": "Ich habe beschlossen, uns im Krieg gegen {name} geschlagen zu geben.",
-			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
+			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et a volé la victoire.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4440,7 +4457,8 @@
 			"gainEnergy": "**{fighter}** hat Energie wiederhergestellt und hat jetzt **{energy}** Energie.",
 			"newTurn": " **{fighter}** ist dran!",
 			"statusTurn": "Statusüberprüfung bevor **{fighter}** dran ist.",
-			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus."
+			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus.",
+			"attackCastle": "**{fighter}** hat der Burg **{damages}** Schaden zugefügt."
 		},
 		"event": {
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
@@ -5289,9 +5307,10 @@
 			"WAR_START": "Ich habe dem Klan {targetClan} den Krieg erklärt!",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
 			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
-			"WAR_FORFEIT": "Der Klan {targetClan} hat sich im Krieg geschlagen gegeben!",
+			"WAR_FORFEIT": "Nous avons abandonné l'attaque contre {targetClan}.",
 			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
-			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
+			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre."
 		}
 	},
 	"events": {

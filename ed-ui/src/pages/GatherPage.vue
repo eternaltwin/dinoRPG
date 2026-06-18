@@ -55,7 +55,6 @@ import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import GatherRewardModal from '../components/modal/GatherRewardModal.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'GatherPage',
@@ -95,10 +94,10 @@ export default defineComponent({
 					if (this.gatherResult.isGridComplete) {
 						// If there is a gold reward, show a success message
 						if (this.gatherResult.goldReward > 0) {
-							this.$toast.success(formatText(this.$t('toast.finishGrid')));
+							this.$toast.success(this.$t('toast.finishGrid'));
 						} else {
 							// If no gold reward, show an informational message about daily rewards being finished
-							this.$toast.info(formatText(this.$t('toast.dailyGridRewardsFinished')));
+							this.$toast.info(this.$t('toast.dailyGridRewardsFinished'));
 						}
 					}
 				} catch (err) {

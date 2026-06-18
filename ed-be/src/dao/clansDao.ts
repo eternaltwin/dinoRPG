@@ -10,6 +10,7 @@ import { Lang, NotificationSeverity, EventType, $Enums, Prisma, LogType } from '
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/tracing.js';
+import { ProspectorUpdate, WarRankingUpdate } from '../utils/warCalculation.js';
 import ClanEventType = $Enums.ClanEventType;
 import { WarCost } from '@drpg/core/models/clan/clanWar';
 
@@ -1323,9 +1324,81 @@ export async function getWarForResolve(warId: string) {
 	});
 }
 
-export async function checkCanDeclareWar(attackerClanId: number): Promise<void> {
+export async function updateWarRankings(eventId: string, updates: WarRankingUpdate[]) {
+	return withSpan(updateWarRankings.name, async () => {
+		if (updates.length === 0) {
+			return;
+		}
+
+		await prisma.$transaction(
+			updates.map(({ clanId, totalPWin, totalPLost, downtimeCount, reputation }) =>
+				prisma.clanWarRanking.update({
+					where: { clanId_eventId: { clanId, eventId } },
+					data: { totalPWin, totalPLost, downtimeCount, reputation }
+				})
+			)
+		);
+	});
+}
+
+/**
+ * Fetches every war-ranking row of an event together with its clan's castle life (to decide the
+ * standing/destroyed state) and member ids (to target the Prospector SSE notification).
+ */
+export async function getProspectorRankings(eventId: string) {
+	return withSpan(getProspectorRankings.name, async () => {
+		return prisma.clanWarRanking.findMany({
+			where: { eventId },
+			select: {
+				clanId: true,
+				totalPWin: true,
+				totalPLost: true,
+				downtimeCount: true,
+				reputation: true,
+				castleStandingStreak: true,
+				castleDownStreak: true,
+				clan: {
+					select: {
+						castle: { select: { currentLife: true } },
+						members: { select: { playerId: true } }
+					}
+				}
+			}
+		});
+	});
+}
+
+/**
+ * Persists a batch of Prospector updates. Writes only the fields the Prospector owns —
+ * `downtimeCount` is intentionally left untouched (owned by war resolution) to avoid clobbering a
+ * concurrent `updateWarRankings`.
+ */
+export async function applyProspectorUpdates(eventId: string, updates: ProspectorUpdate[]) {
+	return withSpan(applyProspectorUpdates.name, async () => {
+		if (updates.length === 0) {
+			return;
+		}
+
+		await prisma.$transaction(
+			updates.map(({ clanId, totalPWin, totalPLost, reputation, castleStandingStreak, castleDownStreak }) =>
+				prisma.clanWarRanking.update({
+					where: { clanId_eventId: { clanId, eventId } },
+					data: { totalPWin, totalPLost, reputation, castleStandingStreak, castleDownStreak }
+				})
+			)
+		);
+	});
+}
+
+// Transaction client matching the local (extended) prisma client, usable both standalone and inside $transaction.
+type LocalTransactionClient = Omit<
+	typeof prisma,
+	'$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'
+>;
+
+export async function checkCanDeclareWar(attackerClanId: number, tx: LocalTransactionClient = prisma): Promise<void> {
 	return withSpan(checkCanDeclareWar.name, async () => {
-		const activeWar = await prisma.clanWar.findFirst({
+		const activeWar = await tx.clanWar.findFirst({
 			where: {
 				attackerClanId,
 				winnerClanId: null
@@ -1337,28 +1410,26 @@ export async function checkCanDeclareWar(attackerClanId: number): Promise<void> 
 	});
 }
 
-export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>) {
+export async function consumeWarCost(clanId: number, cost: NonNullable<WarCost>, tx: LocalTransactionClient = prisma) {
 	return withSpan(consumeWarCost.name, async () => {
 		const totalValue = cost.totalValue;
 
-		await prisma.$transaction([
-			...cost.ingredients.map(({ ingredientId, quantity }) =>
-				prisma.clanIngredient.update({
-					where: {
-						ingredientId_clanId: { ingredientId, clanId }
-					},
-					data: {
-						quantity: { decrement: quantity }
-					}
-				})
-			),
-			prisma.clan.update({
-				where: { id: clanId },
+		for (const { ingredientId, quantity } of cost.ingredients) {
+			await tx.clanIngredient.update({
+				where: {
+					ingredientId_clanId: { ingredientId, clanId }
+				},
 				data: {
-					treasureValue: { decrement: totalValue }
+					quantity: { decrement: quantity }
 				}
-			})
-		]);
+			});
+		}
+		await tx.clan.update({
+			where: { id: clanId },
+			data: {
+				treasureValue: { decrement: totalValue }
+			}
+		});
 	});
 }
 

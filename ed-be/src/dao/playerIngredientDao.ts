@@ -15,6 +15,16 @@ export const getAllIngredientsDataRequest = async (playerId: string) => {
 	return ingredients;
 };
 
+export const getIngredientsDataRequest = async (playerId: string, ingredientId: number) => {
+	const ingredients = await prisma.playerIngredient.findFirst({
+		where: {
+			playerId,
+			ingredientId
+		}
+	});
+	return ingredients;
+};
+
 export const increaseIngredientQuantity = async (playerId: string | null, ingredientId: number, quantity: number) => {
 	if (!playerId) {
 		throw new ExpectedError(`No playerId for increaseIngredientQuantity`);
