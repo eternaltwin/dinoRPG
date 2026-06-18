@@ -4170,7 +4170,7 @@
 			"buildCastle": "Build your castle",
 			"castleTooltip": "Place where your castle is located",
 			"disclaimerCastle": "Your castle is located at **{place}**, bring there your Dinoz but most importantly do not share its location to your enemies!",
-			"disclaimerProspector": "The Prospector will come between {morning} and {evening}. Its next visit will be the {next}.",
+			"disclaimerProspector": "The Prospector will inspect between {morning} and {evening}. Its next visit will be the {next}.",
 			"declareWar": "Attack this clan",
 			"disclaimerAttack": "It will cost {cost} :gold: to declare war to this clan. The ingredients will be automatically taxed from the clan's treasury.",
 			"attack": "Attack",
@@ -4324,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
 			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
 			"WAR_WON": "We won the war against {name}!",
-			"WAR_STOLEN": "The clan {destroyedBy} destroyed the castle from {defenderName} and took away the victory.",
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took away the victory.",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -5310,7 +5310,7 @@
 			"WAR_FORFEIT": "We have abandoned the attack against {targetClan}.",
 			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
 			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!",
-			"WAR_STOLEN": "The clan {destroyedBy} destroyed the castle of {defenderName} and took the victory from us."
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took the victory away from us."
 		}
 	},
 	"events": {
