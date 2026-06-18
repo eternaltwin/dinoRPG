@@ -86,7 +86,7 @@
 			"skipLevel": "Skip level up animation",
 			"archivedSiteId": "Historical Site",
 			"shareArchivedData": "Share Twinoid Stats",
-			"displayedNotifications": "Nombre de notifications affichées simultanément",
+			"displayedNotifications": "Number of toasts displayed",
 			"connectedPlayers": "Online Players",
 			"totalDinoz": "Total Number of Dinoz",
 			"totalPlayers": "Total Number of Players"
@@ -2608,7 +2608,7 @@
 		"completion": "Completion",
 		"pantheon": "Pantheon",
 		"stats": "Stats",
-		"wars": "Guerres"
+		"wars": "Wars"
 	},
 	"layout": {
 		"fx": "Statuses",
@@ -2628,7 +2628,7 @@
 		"accept": "Yes",
 		"reject": "No",
 		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?",
-		"repairCastle": "Une fois réparer votre château pourra de nouveau être attaqué. Êtes-vous sûr de vouloir continuer ?"
+		"repairCastle": "Once repaired, your castle can be attacked again. Do you wish to continue with the repair?"
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -4083,10 +4083,10 @@
 			"event": "Event Score",
 			"war": "War Standing",
 			"castle": "Castle built",
-			"warAttacker": "Attaquant",
-			"warDefender": "Défenseur",
-			"warStart": "Date de début",
-			"warResult": "Résultat"
+			"warAttacker": "Attacker",
+			"warDefender": "Defender",
+			"warStart": "Start Date",
+			"warResult": "Result"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -4125,10 +4125,10 @@
 			"clanWar": "War Ranking"
 		},
 		"war": {
-			"forfeit": "Forfait",
-			"ongoing": "En cours",
-			"castleDestroyed": "Château détruit",
-			"timeout": "Défendu"
+			"forfeit": "Forfeit",
+			"ongoing": "Ongoing",
+			"castleDestroyed": "Destroyed Castle",
+			"timeout": "Defended"
 		}
 	},
 	"clan": {
@@ -4322,7 +4322,7 @@
 			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
 			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
 			"WAR_WON": "We won the war against {name}!",
-			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
+			"WAR_TIMEOUT": "{name} did not succeed to destroy the castle in the allotted time.",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -4456,7 +4456,7 @@
 			"newTurn": "It is **{fighter}**'s turn.",
 			"statusTurn": "Verification of status before the turn of **{fighter}**",
 			"tired": "**{fighter}** is tired and passed its turn.",
-			"attackCastle": "**{fighter}** a infligé **{damages}** dégâts au château."
+			"attackCastle": "**{fighter}** dealt **{damages}** damage to the castle."
 		},
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
