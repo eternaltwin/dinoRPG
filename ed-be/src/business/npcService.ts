@@ -221,20 +221,6 @@ const nextStepServices = (data: NpcData) => {
 		.reduce((acc, curr) => (curr ? acc?.concat(curr) : acc), []);
 };
 
-/**
- * Get item rewards after the NPC talk
- */
-const getSpeechItemRewards = (data: NpcData) => {
-	return data.reward?.reduce(
-		(acc, curr) => {
-			if (curr.rewardType !== RewardEnum.ITEM) return acc;
-			acc[curr.value as Item] = (acc[curr.value as Item] ?? 0) + curr.quantity;
-			return acc;
-		},
-		{} as Partial<Record<Item, number>>
-	);
-};
-
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {
 	// Send redirection request if there is one as a rewards
 	if (reward.find(r => r.rewardType === RewardEnum.REDIRECT)) {
