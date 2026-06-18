@@ -37,7 +37,8 @@ import {
 	initializeDinoz,
 	reincarnateDinoz,
 	useRice,
-	learnNextSphereSkill
+	learnNextSphereSkill,
+	sanitizeGatherBoxes
 } from '../../utils/dinoz.js';
 
 const mockUpdateDinoz = vi.mocked(updateDinoz);
@@ -304,5 +305,48 @@ describe('useRice', () => {
 	it('throws when a level 1 dinoz references an unknown race', async () => {
 		await expect(useRice(freshDinoz(1, -1))).rejects.toThrow(ExpectedError);
 		expect(mockUpdateDinoz).not.toHaveBeenCalled();
+	});
+});
+
+describe('sanitizeGatherBoxes', () => {
+	it('returns the in-bounds coordinates as [row, col] tuples', () => {
+		expect(
+			sanitizeGatherBoxes(
+				[
+					[0, 0],
+					[2, 4]
+				],
+				5
+			)
+		).toEqual([
+			[0, 0],
+			[2, 4]
+		]);
+	});
+
+	it('deduplicates repeated coordinates so a cell is only opened once', () => {
+		expect(
+			sanitizeGatherBoxes(
+				[
+					[2, 2],
+					[2, 2],
+					[2, 2]
+				],
+				5
+			)
+		).toEqual([[2, 2]]);
+	});
+
+	it('rejects a coordinate equal to the grid size (off-by-one upper bound)', () => {
+		// For a size-5 grid the valid indices are 0..4, so 5 is out of bounds.
+		expect(() => sanitizeGatherBoxes([[0, 5]], 5)).toThrow(ExpectedError);
+	});
+
+	it('rejects negative coordinates', () => {
+		expect(() => sanitizeGatherBoxes([[-1, 0]], 5)).toThrow(ExpectedError);
+	});
+
+	it('rejects non-numeric coordinates', () => {
+		expect(() => sanitizeGatherBoxes([['1', 2] as unknown as number[]], 5)).toThrow(ExpectedError);
 	});
 });
