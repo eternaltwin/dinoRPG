@@ -124,10 +124,10 @@ describe('computeProspectorUpdate', () => {
 	});
 
 	it('penalises a destroyed castle, growing the streak and resetting the standing streak', () => {
-		const update = computeProspectorUpdate({ ...base, castleStandingStreak: 4 }, false);
-		expect(update.castleDownStreak).toBe(1);
+		const update = computeProspectorUpdate({ ...base, castleDownStreak: 4 }, false);
+		expect(update.castleDownStreak).toBe(5);
 		expect(update.castleStandingStreak).toBe(0);
-		expect(update.totalPLost).toBe(PROSPECTOR_DESTROYED_PENALTY_BASE * 1);
+		expect(update.totalPLost).toBe(PROSPECTOR_DESTROYED_PENALTY_BASE * 4);
 		expect(update.totalPWin).toBe(0);
 	});
 
