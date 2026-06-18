@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 
 export async function checkPlayerLB(req: Request) {
 	const eternalTwinID = req.params.uuid;

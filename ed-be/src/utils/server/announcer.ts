@@ -1,9 +1,9 @@
-import { DISCORD, GLOBAL } from '../context.js';
-import { getDinozForAnnounce } from '../dao/dinozDao.js';
+import { DISCORD, GLOBAL } from '../../context.js';
+import { getDinozForAnnounce } from '../../dao/dinozDao.js';
 import { PantheonMotif } from '@drpg/prisma';
-import { addDinozToPantheon, addPlayerToPantheon, getPantheonFromType } from '../dao/pantheonDao.js';
+import { addDinozToPantheon, addPlayerToPantheon, getPantheonFromType } from '../../dao/pantheonDao.js';
 import { translateAll } from './translate.js';
-import { getPlayerForAnnounce } from '../dao/playerDao.js';
+import { getPlayerForAnnounce } from '../../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { renderBigDino } from '@drpg/renderer';
 

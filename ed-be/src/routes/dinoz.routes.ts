@@ -30,7 +30,7 @@ import {
 import { reincarnate } from '../business/skillService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();

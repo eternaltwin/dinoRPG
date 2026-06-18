@@ -21,7 +21,7 @@ vi.mock('../../context.js', () => ({
 vi.mock('../../dao/dinozDao.js', () => ({
 	updateDinoz: vi.fn()
 }));
-vi.mock('../../utils/translate.js', () => ({
+vi.mock('../../utils/server/translate.js', () => ({
 	default: vi.fn((key: string) => key)
 }));
 

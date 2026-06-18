@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { AttachmentBuilder, EmbedBuilder, WebhookClient } from 'discord.js';
 import type { Response } from 'express';
-import { Logger } from '../logger/index.js';
+import { Logger } from '../../logger/index.js';
 import fs from 'fs';
-import { GLOBAL } from '../context.js';
+import { GLOBAL } from '../../context.js';
 import { Player } from '@drpg/prisma';
 
 const DEFAULT_TIMEOUT = 5000;

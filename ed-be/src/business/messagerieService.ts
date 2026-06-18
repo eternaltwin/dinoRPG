@@ -9,7 +9,7 @@ import {
 	getMoreMessages
 } from '../dao/messagerieDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { createNotification, readNotificationFromMessages } from '../dao/notificationDao.js';
 import { NotificationSeverity } from '@drpg/prisma';
 

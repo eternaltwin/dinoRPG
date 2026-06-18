@@ -19,7 +19,7 @@ vi.mock('../../dao/npcDao.js', () => ({
 vi.mock('../../utils/rewarder.js', () => ({
 	rewarder: vi.fn()
 }));
-vi.mock('../../utils/translate.js', () => ({
+vi.mock('../../utils/server/translate.js', () => ({
 	default: vi.fn((key: string) => key)
 }));
 vi.mock('../../business/fightService.js', () => ({

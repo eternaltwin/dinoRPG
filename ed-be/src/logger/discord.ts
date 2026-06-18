@@ -1,5 +1,5 @@
-import { DiscordClient, SEND_MESSAGE_SAFE_LENGTH } from '../utils/DiscordUtils.js';
-import { ASYNC_DISPOSE } from '../utils/dispose.js';
+import { DiscordClient, SEND_MESSAGE_SAFE_LENGTH } from '../utils/server/DiscordUtils.js';
+import { ASYNC_DISPOSE } from '../utils/server/dispose.js';
 import { formatLogRecord, LogHandler, LogRecord } from './index.js';
 
 /**

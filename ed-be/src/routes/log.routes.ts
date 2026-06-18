@@ -3,7 +3,7 @@ import { param, validationResult } from 'express-validator';
 import { getAllLogs, getLogs, getLogsByDate, getWarLogs } from '../business/logService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkRole } from '../utils/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { AdminRole } from '@drpg/prisma';
 
 const routes: Router = Router();

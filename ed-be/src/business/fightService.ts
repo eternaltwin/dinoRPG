@@ -33,7 +33,7 @@ import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { movementListener } from './specialService.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
 import { Request } from 'express';

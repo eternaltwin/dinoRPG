@@ -14,7 +14,7 @@ import {
 import { apiRoutes } from '../constants/index.js';
 import { auth, getPlayerMoney, updatePlayerLanguage } from '../dao/playerDao.js';
 import { checkLB } from '../business/eternaltwinService.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Lang } from '@drpg/prisma';
 

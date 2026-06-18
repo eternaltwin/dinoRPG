@@ -97,7 +97,7 @@ import { getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from 
 import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';

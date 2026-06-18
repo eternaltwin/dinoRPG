@@ -12,7 +12,7 @@ import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';

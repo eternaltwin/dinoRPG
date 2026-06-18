@@ -2,7 +2,7 @@ import { prisma } from '../prisma.js';
 import { Request } from 'express';
 import { auth, getPlayerDinozInformationForTeam } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 import TournamentManager from '../utils/tournamentManager.js';

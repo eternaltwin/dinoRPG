@@ -18,7 +18,7 @@ import { createLog } from './logDao.js';
 import { increaseItemQuantity } from './playerItemDao.js';
 import { updateCompletion } from './rankingDao.js';
 import { setSpecificStat } from './trackingDao.js';
-import { withSpan } from '../utils/tracing.js';
+import { withSpan } from '../utils/server/tracing.js';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return withSpan(createPlayer.name, async () => {

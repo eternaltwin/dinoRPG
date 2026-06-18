@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import { register } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import ServerState from './utils/ServerState.js';
+import ServerState from './utils/server/ServerState.js';
 
 register('@opentelemetry/instrumentation/hook.mjs', pathToFileURL('./'));
 

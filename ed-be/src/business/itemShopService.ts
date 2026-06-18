@@ -15,7 +15,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { decreaseIngredientQuantity, getIngredientsDataRequest } from '../dao/playerIngredientDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { Player } from '@drpg/prisma';
 
 /**

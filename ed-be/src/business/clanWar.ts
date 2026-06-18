@@ -13,7 +13,7 @@ import {
 } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { prisma } from '../prisma.js';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import dayjs from 'dayjs';
