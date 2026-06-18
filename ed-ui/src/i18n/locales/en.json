@@ -86,6 +86,7 @@
 			"skipLevel": "Skip level up animation",
 			"archivedSiteId": "Historical Site",
 			"shareArchivedData": "Share Twinoid Stats",
+			"displayedNotifications": "Number of toasts displayed",
 			"connectedPlayers": "Online Players",
 			"totalDinoz": "Total Number of Dinoz",
 			"totalPlayers": "Total Number of Players"
@@ -2606,7 +2607,8 @@
 		"clans": "Clans",
 		"completion": "Completion",
 		"pantheon": "Pantheon",
-		"stats": "Stats"
+		"stats": "Stats",
+		"wars": "Wars"
 	},
 	"layout": {
 		"fx": "Statuses",
@@ -2625,7 +2627,8 @@
 		"attention": "Attention",
 		"accept": "Yes",
 		"reject": "No",
-		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?"
+		"buildCastle": "Warning, building your castle for the first time will cost your clan its entire treasury. Do you confirm this action?",
+		"repairCastle": "Once repaired, your castle can be attacked again. Do you wish to continue with the repair?"
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -4079,7 +4082,11 @@
 			"treasure": "Clan Treasure",
 			"event": "Event Score",
 			"war": "War Standing",
-			"castle": "Castle built"
+			"castle": "Castle built",
+			"warAttacker": "Attacker",
+			"warDefender": "Defender",
+			"warStart": "Start Date",
+			"warResult": "Result"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -4116,6 +4123,12 @@
 			"clanEvent": "Event Ranking",
 			"clanTreasure": "Treasury Ranking",
 			"clanWar": "War Ranking"
+		},
+		"war": {
+			"forfeit": "Forfeit",
+			"ongoing": "Ongoing",
+			"castleDestroyed": "Destroyed Castle",
+			"timeout": "Defended"
 		}
 	},
 	"clan": {
@@ -4309,6 +4322,7 @@
 			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
 			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
 			"WAR_WON": "We won the war against {name}!",
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took the victory away from us.",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -4441,7 +4455,8 @@
 			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy.",
 			"newTurn": "It is **{fighter}**'s turn.",
 			"statusTurn": "Verification of status before the turn of **{fighter}**",
-			"tired": "**{fighter}** is tired and passed its turn."
+			"tired": "**{fighter}** is tired and passed its turn.",
+			"attackCastle": "**{fighter}** dealt **{damages}** damage to the castle."
 		},
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
@@ -5292,7 +5307,8 @@
 			"WAR_LOSED": "{targetClan} destroyed our castle.",
 			"WAR_FORFEIT": "We abandonned the war against {targetClan}.",
 			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
-			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!"
+			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!",
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took the victory away from us."
 		}
 	},
 	"events": {
