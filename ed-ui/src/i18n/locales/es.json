@@ -122,6 +122,8 @@
 			"offerClaimed": "Has obtenido lo que ganaste"
 		},
 		"clan_war": "¡Alerta! {attacker} acaba de atacar tu castillo y le ha infligido {hpLost} :hp_castle:.",
+		"clan_prospector_reward": "Le Prospecteur a pu inspecter votre château — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"heal": "Tu Dino ha recuperado {value} :hp:.",
 		"gold": "Recibiste {value} :gold:.",
@@ -4168,6 +4170,7 @@
 			"buildCastle": "Construir tu castillo",
 			"castleTooltip": "Localización del castillo",
 			"disclaimerCastle": "Tu castillo se encuentra en **{place}**. Lleva allí a tus Dinos para defenderlo, ¡pero sobre todo no reveles su posición a tus enemigos!",
+			"disclaimerProspector": "Le Prospecteur passera entre {morning} et {evening}. Sa prochaine visite sera le {next}.",
 			"declareWar": "Declarar la guerra a este clan",
 			"disclaimerAttack": "Atacar a este clan tendrá un costo de {cost} :gold:. Los ingredientes del tesoro de tu clan serán consumidos automáticamente para pagar este impuesto.",
 			"attack": "Ataque",
@@ -4321,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "He atacado al clan {clan} e infligí {damage} de daño al castillo enemigo.",
 			"WAR_PLAYER_ATTACK": "Les he atacado e infligí {damage} de daño a tu castillo.",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {name}!",
-			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y nos robó la guerra.",
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y robó la guerra.",
 			"UNKNOWN": "Evento desconocido."
 		}
 	},
