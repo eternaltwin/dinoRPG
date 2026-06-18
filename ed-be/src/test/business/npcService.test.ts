@@ -44,6 +44,8 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../business/
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { getNpcSpeech } from '../../business/npcService.js';
 
 const mockAuth = vi.mocked(auth);
@@ -301,6 +303,34 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'choiceReward');
 		expect(result.rewards).toEqual({ rock: 2 });
 	});
+
+	it('runs the redirect reward path and surfaces its services', async () => {
+		// A redirect reward exercises checkRedirect and the service aggregation of the response.
+		(npc.data.choiceReward as Record<string, unknown>).reward = [
+			{ rewardType: RewardEnum.REDIRECT, service: [ServiceEnum.REFRESH_PLAYER] }
+		];
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
+		mockRewarder.mockResolvedValue([]);
+
+		const result = await getNpcSpeech(req({ step: 'choiceReward' }));
+
+		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'choiceReward');
+		expect(result.speech).toBe('choiceReward');
+		expect(result.service).toEqual([ServiceEnum.REFRESH_PLAYER]);
+		expect(result.rewards).toEqual({});
+	});
+
+	it('throws when the player vanishes during the post-reward refresh', async () => {
+		// choiceReward carries a reward, so the player is re-fetched; a null refresh must be rejected
+		// while building the next player choices.
+		(npc.data.choiceReward as Record<string, unknown>).nextStep = ['end'];
+		mockGetNPC
+			.mockResolvedValueOnce(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never)
+			.mockResolvedValueOnce(null);
+		mockRewarder.mockResolvedValue([]);
+
+		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow("doesn't exist");
+	});
 });
 
 describe('getNpcSpeech - fight step', () => {
@@ -334,6 +364,22 @@ describe('getNpcSpeech - fight step', () => {
 		expect(result.service).toEqual(['fight']);
 	});
 
+	it('grants the step reward after a won fight', async () => {
+		(npc.data.choiceFight as Record<string, unknown>).reward = [{ rewardType: RewardEnum.ITEM, value: 1, quantity: 1 }];
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
+		mockGetFightData.mockResolvedValue(fightPlayer() as never);
+		mockCalcFight.mockReturnValue({ rounds: [] } as never);
+		mockRewardFight.mockResolvedValue({ result: true } as never);
+
+		await getNpcSpeech(req({ step: 'choiceFight' }));
+
+		expect(mockRewarder).toHaveBeenCalledOnce();
+		const [rewardArg, , playerIdArg, applyFlag] = mockRewarder.mock.calls[0];
+		expect(rewardArg).toEqual([{ rewardType: RewardEnum.ITEM, value: 1, quantity: 1 }]);
+		expect(playerIdArg).toBe('player-1');
+		expect(applyFlag).toBe(true);
+	});
+
 	it('does not advance the step when the fight is lost', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
 		mockGetFightData.mockResolvedValue(fightPlayer() as never);
@@ -357,5 +403,12 @@ describe('getNpcSpeech - fight step', () => {
 		mockGetFightData.mockResolvedValue(null);
 
 		await expect(getNpcSpeech(req({ step: 'choiceFight' }))).rejects.toThrow('No player');
+	});
+
+	it('throws when the fight data does not contain the requested dinoz', async () => {
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
+		mockGetFightData.mockResolvedValue({ id: 'player-1', dinoz: [{ id: 999, placeId: PLACE_ID, life: 100 }] } as never);
+
+		await expect(getNpcSpeech(req({ step: 'choiceFight' }))).rejects.toThrow("doesn't exist");
 	});
 });
