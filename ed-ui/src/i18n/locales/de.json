@@ -4321,7 +4321,6 @@
 			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
-			"WAR_TIMEOUT": "{name} hat es nicht geschafft, eure Burg in der gegebenen Zeit zu zerstören.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -5305,7 +5304,7 @@
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
 			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
 			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
-			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
+			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!",
 		}
 	},
 	"events": {

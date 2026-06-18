@@ -4322,7 +4322,7 @@
 			"WAR_PLAYER_ATTACKED": "I attacked {name} and dealt {damage} damage to their castle.",
 			"WAR_PLAYER_ATTACK": "I attacked you and dealt {damage} damage to your castle.",
 			"WAR_WON": "We won the war against {name}!",
-			"WAR_TIMEOUT": "{name} did not succeed to destroy the castle in the allotted time.",
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took the victory away from us.",
 			"UNKNOWN": "Unknown event."
 		}
 	},
@@ -5307,7 +5307,8 @@
 			"WAR_LOSED": "{targetClan} destroyed our castle.",
 			"WAR_FORFEIT": "We abandonned the war against {targetClan}.",
 			"WAR_LOSE": "We failed to destroy {targetClan}'s castle.",
-			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!"
+			"WAR_DEFENDED": "We fended off the assaults of {targetClan}!",
+			"WAR_STOLEN": "{destroyedBy} destroyed {defenderName}'s castle and took the victory away from us."
 		}
 	},
 	"events": {
