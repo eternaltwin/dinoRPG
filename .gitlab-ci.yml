@@ -86,7 +86,6 @@ update_staging_via_api:
 back-coverage:
   stage: test
   image: "demurgos/node:2024.2"
-  needs: [container-build]
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   cache:
     paths:
