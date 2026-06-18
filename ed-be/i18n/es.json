@@ -63,7 +63,9 @@
 		"repairStackFull": "No puedes añadir más reparaciones.",
 		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación.",
 		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo.",
-		"sameClan": "No puedes declarar la guerra a tu mismo clan."
+		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan.",
+		"castleAlreadyBuilt": "Le château de votre clan est déjà construit.",
+		"notInDefense": "Ce Dinoz ne fait pas partie de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
@@ -233,6 +235,11 @@
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",
 		"notFightedOpponent": "Adversario ya derrotado",
+		"qualificationOver": "La phase de qualification est terminée.",
+		"dinozTooLowLevel": "Un Dinoz n'a pas le niveau requis (niveau 10 minimum).",
+		"dinozTooHighLevel": "Un Dinoz dépasse le niveau maximum autorisé.",
+		"wrongRace": "Une race de votre équipe n'est pas autorisée pour ce tournoi.",
+		"alreadyRegistered": "Vous avez déjà une équipe inscrite pour ce tournoi.",
 		"teamSize": "Los equipos deben estar compuestos por {{nb}} Dinos con al menos {{races}} razas distintas.",
 		"teamSize_singleRace": "Los equipos están formados por {{nb}} miembros.",
 		"raceLimit": "Las razas permitidas para participar son {{races}}.",
