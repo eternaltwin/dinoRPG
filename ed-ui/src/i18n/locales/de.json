@@ -4324,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
-			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et lui a volé la victoire.",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et a volé la victoire.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
