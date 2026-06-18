@@ -62,7 +62,10 @@
 		"castleFullLife": "Votre château a déjà le nombre maximum de :hp_castle:.",
 		"repairStackFull": "Vous ne pouvez pas ajouter plus de réparateurs.",
 		"notEnoughIngredientsForRepair": "Vous n'avez pas assez d'ingrédients pour cette réparation.",
-		"alreadyInDefense": "Votre Dinoz fait déjà partie de la défense du château."
+		"alreadyInDefense": "Votre Dinoz fait déjà partie de la défense du château.",
+		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan.",
+		"castleAlreadyBuilt": "Le château de votre clan est déjà construit.",
+		"notInDefense": "Ce Dinoz ne fait pas partie de la défense du château."
 	},
 	"error": {
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
@@ -232,6 +235,11 @@
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",
 		"notFightedOpponent": "Adversaire déjà vaincu",
+		"qualificationOver": "La phase de qualification est terminée.",
+		"dinozTooLowLevel": "Un Dinoz n'a pas le niveau requis (niveau 10 minimum).",
+		"dinozTooHighLevel": "Un Dinoz dépasse le niveau maximum autorisé.",
+		"wrongRace": "Une race de votre équipe n'est pas autorisée pour ce tournoi.",
+		"alreadyRegistered": "Vous avez déjà une équipe inscrite pour ce tournoi.",
 		"teamSize": "Les équipes sont constituées de {{nb}} membres avec au moins {{races}} races différentes.",
 		"teamSize_singleRace": "Les équipes sont constituées de {{nb}} membres.",
 		"raceLimit": "Les races autorisées à participer sont les{{races}}.",
