@@ -8,7 +8,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
-import translate from './translate.js';
+import translate from './server/translate.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';

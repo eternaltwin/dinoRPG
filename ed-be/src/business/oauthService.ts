@@ -32,7 +32,7 @@ import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
 import { eventState } from './clanWar.js';
 

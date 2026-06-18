@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { getPlayerToReport, reportPlayer, reportClan } from '../business/moderationService.js';
 import { param, validationResult, body } from 'express-validator';
 import { ModerationReason } from '@drpg/prisma';

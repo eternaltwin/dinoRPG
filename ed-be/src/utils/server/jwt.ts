@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { auth, getRolePlayer } from '../dao/playerDao.js';
+import { auth, getRolePlayer } from '../../dao/playerDao.js';
 import { AdminRole } from '@drpg/prisma';
 
 const checkRole = (role: AdminRole[]) => {

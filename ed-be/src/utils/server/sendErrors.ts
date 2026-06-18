@@ -1,7 +1,7 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Prisma } from '@drpg/prisma';
 import type { Response } from 'express';
-import { DISCORD } from '../context.js';
+import { DISCORD } from '../../context.js';
 
 const sendError = (res: Response, error: unknown) => {
 	if (!(error instanceof Error)) {

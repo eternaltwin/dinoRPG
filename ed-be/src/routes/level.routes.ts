@@ -3,7 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

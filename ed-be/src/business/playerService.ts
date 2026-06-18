@@ -23,7 +23,7 @@ import {
 	searchPlayersByNameOrId,
 	setPlayer
 } from '../dao/playerDao.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { getAvailableActions } from './dinozService.js';
 import { getLatestTournament } from '../dao/tournamentDao.js';
 import fetch from 'node-fetch';

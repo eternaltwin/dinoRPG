@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { param, body, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { createThread, getAllThreadsFromPage, getThread } from '../business/forumService.js';
 
 const routes: Router = Router();

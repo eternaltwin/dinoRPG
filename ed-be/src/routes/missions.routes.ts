@@ -9,7 +9,7 @@ import {
 	updateMission
 } from '../business/missionsService.js';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

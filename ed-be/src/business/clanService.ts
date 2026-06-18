@@ -51,7 +51,7 @@ import {
 import { createNotification } from '../dao/notificationDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { currentEvents } from '@drpg/core/models/event/Events';

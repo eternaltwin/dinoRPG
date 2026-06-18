@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
-import ServerState from '../../utils/ServerState.js';
+import ServerState from '../../utils/server/ServerState.js';
 
 beforeEach(() => {
 	// `setReady` logs the transition; silence it so the test output stays clean.

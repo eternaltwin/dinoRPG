@@ -14,8 +14,8 @@ import {
 	getNewsAdmin
 } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
-import { checkRole } from '../utils/jwt.js';
-import sendError from '../utils/sendErrors.js';
+import { checkRole } from '../utils/server/jwt.js';
+import sendError from '../utils/server/sendErrors.js';
 import { AdminRole } from '@drpg/prisma';
 
 const routes: Router = Router();

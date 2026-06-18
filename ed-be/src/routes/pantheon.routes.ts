@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { param, query, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { getPantheon, getPantheonIllustration } from '../business/pantheonService.js';
 
 const routes: Router = Router();

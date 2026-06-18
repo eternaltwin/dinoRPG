@@ -1,6 +1,6 @@
 import { Player, Lang } from '@drpg/prisma';
 import { t } from 'i18next';
-import i18next from '../i18n.js';
+import i18next from '../../i18n.js';
 
 const translate = (key: string, user?: Pick<Player, 'lang'> | null, options?: Record<string, unknown>) =>
 	i18next.t(key, { lng: user?.lang, ...options });

@@ -48,7 +48,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
 import { initializeDinoz, learnNextSphereSkill, useRice } from '../utils/dinoz.js';
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
 import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 import UnavailableReason = $Enums.UnavailableReason;
