@@ -122,7 +122,7 @@
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
 		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
-		"clan_prospector_reward": "Le Prospecteur a inspecté votre château intact — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_reward": "Le Prospecteur a pu inspecter votre château — votre réputation est maintenant de {reputation}.",
 		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
@@ -4170,7 +4170,7 @@
 			"buildCastle": "Errichtet eure Burg",
 			"castleTooltip": "An diesem Ort befindet sich eure Burg",
 			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
-			"disclaimerProspector": "Le Prospecteur passe entre {morning} et {evening}. Prochaine visite : {next}.",
+			"disclaimerProspector": "Le Prospecteur passera entre {morning} et {evening}. Sa prochaine visite sera le {next}.",
 			"declareWar": "Diesen Klan angreifen",
 			"disclaimerAttack": "Diesen Klan anzugreifen würde euch {cost} :gold: kosten. Die Zutaten aus der Klanschatzkammer werden automatisch verbraucht, um diese Gebühr zu bezahlen.",
 			"attack": "Angriff",
@@ -4324,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
-			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre.",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et lui a volé la victoire.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
