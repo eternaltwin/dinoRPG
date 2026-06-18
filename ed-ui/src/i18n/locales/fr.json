@@ -122,6 +122,8 @@
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
+		"clan_prospector_reward": "Le Prospecteur a pu inspecter votre château — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
@@ -4168,6 +4170,7 @@
 			"buildCastle": "Construire votre château",
 			"castleTooltip": "Lieu où se situe votre château",
 			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
+			"disclaimerProspector": "Le Prospecteur passera entre {morning} et {evening}. Sa prochaine visite sera le {next}.",
 			"declareWar": "Attaquer ce clan",
 			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Attaque",
@@ -4321,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
 			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
-			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et lui a volé la victoire.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
@@ -5304,9 +5307,10 @@
 			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
 			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
 			"WAR_LOSED": "Le clan {targetClan} a détruit notre château.",
-			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
+			"WAR_FORFEIT": "Nous avons abandonné l'attaque contre {targetClan}.",
 			"WAR_LOSE": "Nous n'avons pas réussi à détruire le château de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !"
+			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre."
 		}
 	},
 	"events": {
