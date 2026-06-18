@@ -92,6 +92,7 @@ back-coverage:
       - "ed-be/coverage/"
       - junit.xml
   script:
+    - yarn build:core
     - cd ed-be
     - >-
       yarn vitest run --coverage
