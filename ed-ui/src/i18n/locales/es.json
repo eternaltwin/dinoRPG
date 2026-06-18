@@ -4324,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "He atacado al clan {clan} e infligí {damage} de daño al castillo enemigo.",
 			"WAR_PLAYER_ATTACK": "Les he atacado e infligí {damage} de daño a tu castillo.",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {name}!",
-			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et a volé la victoire.",
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y robó la guerra.",
 			"UNKNOWN": "Evento desconocido."
 		}
 	},
@@ -5307,10 +5307,10 @@
 			"WAR_START": "¡He declarado la guerra contra el clan {targetClan}!",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {targetClan}!",
 			"WAR_LOSED": "El clan {targetClan} destruyó nuestro castillo.",
-			"WAR_FORFEIT": "Nous avons abandonné l'attaque contre {targetClan}.",
+			"WAR_FORFEIT": "Abandonamos la guerra contra {targetClan}.",
 			"WAR_LOSE": "No logramos destruir el castillo del clan {targetClan}.",
 			"WAR_DEFENDED": "¡Resistimos los ataques del clan {targetClan}!",
-			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre."
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y nos robó la guerra."
 		}
 	},
 	"events": {
