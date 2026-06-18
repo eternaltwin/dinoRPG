@@ -206,6 +206,33 @@ export const getNumberOfGatheringTries = (
 	return gridData.minimumClick + click;
 };
 
+/**
+ * Validate and deduplicate the gather grid coordinates sent by the client.
+ * Each coordinate must be a numeric `[row, col]` pair within `0 .. gridSize - 1`.
+ * Duplicates are dropped because the gather reward logic credits every coordinate it
+ * receives, so the same cell submitted twice would otherwise be rewarded twice.
+ */
+export const sanitizeGatherBoxes = (rawBoxes: number[][], gridSize: number): [number, number][] => {
+	const boxes: [number, number][] = [];
+	const seen = new Set<string>();
+	for (const element of rawBoxes) {
+		if (!element.every(coord => typeof coord === 'number')) {
+			throw new ExpectedError(`This coordinate is not correct : ${element}`);
+		}
+		// Valid indices are 0 .. gridSize - 1, so anything >= gridSize is out of bounds.
+		if (element.some(coord => coord >= gridSize || coord < 0)) {
+			throw new ExpectedError(`This coordinate is out of the grid : ${element}`);
+		}
+		const [row, col] = element as [number, number];
+		const key = `${row},${col}`;
+		if (!seen.has(key)) {
+			seen.add(key);
+			boxes.push([row, col]);
+		}
+	}
+	return boxes;
+};
+
 export const initializeDinoz = (
 	race: DinozRace,
 	playerId: string,
