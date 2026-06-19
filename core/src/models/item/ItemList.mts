@@ -513,7 +513,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 50,
-		display: 'hlmsos'
+		display: 'hlmsos',
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.TEAM_STATUS]: FightStatus.SHIELDED
+			}
+		}
 	},
 	// Little pepper: increases next assault value by 10
 	[Item.LITTLE_PEPPER]: {
