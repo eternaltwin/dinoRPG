@@ -1836,7 +1836,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor *= 1.05;
+				// Use condition checked prior and defined in ITEM details so the ITEM is not used if the fighter already has the status.
+				// Still check and throw an error just in case.
+				if (hasStatus(fighter, FightStatus.SHIELDED)) {
+					LOGGER.error('`Already has shielded status` in `activateEvent`.', {
+						fightData: fightData,
+						item: event
+					});
+					throw new Error(`Fighter already has shielded status`);
+				}
+
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.MEDIUM);
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
