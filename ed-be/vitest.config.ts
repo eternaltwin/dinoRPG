@@ -19,7 +19,12 @@ export default defineConfig({
 				'src/helps/**',
 				'src/utils/server/**',
 				'src/utils/helpers/**',
-				'src/business/adminService.ts'
+				'src/business/adminService.ts',
+				// Persistence and scheduling layers are integration boundaries: DAOs are thin
+				// Prisma wrappers (always mocked in unit tests) and cron jobs orchestrate them on
+				// a timer. They are excluded from unit coverage, consistent with routes/middleware.
+				'src/dao/**',
+				'src/cron/**'
 			]
 		}
 	}
