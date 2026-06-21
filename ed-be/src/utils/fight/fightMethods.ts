@@ -1310,7 +1310,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					throw new Error(`Fighter already has shielded status`);
 				}
 
-				addStatus(fightData, fighter, FightStatus.SHIELDED);
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.LONG);
 				break;
 			}
 			case Skill.BENEDICTION: {
