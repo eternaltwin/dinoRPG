@@ -48,7 +48,8 @@ import {
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
-	getMultiElementalAttack
+	getMultiElementalAttack,
+	powerOf
 } from './getDamage.js';
 import {
 	cloneDinoz,
@@ -1405,8 +1406,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				addSkillFx(fightData, fighter.id, event.id, [opponent.id]);
 
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
-					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					// Increase the opponent's time based on fighter's wood element
+					opponent.time += powerOf(fightData.rng, fighter, [[ElementType.WOOD, 2]]) * TIME_FACTOR;
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',

@@ -4,6 +4,7 @@ import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConst
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
 import { getFighterArmor, getFighterArmorBreak, getFighterCriticalHitBonus } from './getFighters.js';
+import getRandomNumber from '../tools.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -23,6 +24,19 @@ export const applyResilienceToDamage = (target: DetailedFighter, damage: number)
 
 	return Math.round(Math.pow(Math.max(damage, 0), factor));
 };
+
+// Determine the balanced power for the given elements for the fighter.
+export const powerOf = (random: seedrandom.PRNG, fighter: DetailedFighter, elements: [ElementType, number][]) => {
+	let sum_power = elements.reduce((acc, val) => acc + val[1], 0);
+	// Power * fighter element * power ratio for that element
+	let total_raw_power = elements.reduce((acc, val) => acc + val[1] * fighter.stats.base[val[0]] * val[1] / sum_power, 0);
+	return Math.round(balanceAndRandomizeNumber(random, total_raw_power));
+}
+
+// Balance number with math power of 0.6 and apply random from -15% to +15%
+export const balanceAndRandomizeNumber = (random: seedrandom.PRNG, n: number) => {
+	return Math.pow(n * getRandomNumber(0.85, 1.15, random), 0.6);
+}
 
 // Calculates the attack power for a given element, the fighter and the power of the attack
 export const getElementalAttack = (fighter: DetailedFighter, element_type: ElementType, power: number) => {
