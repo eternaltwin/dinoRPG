@@ -138,6 +138,8 @@ beforeEach(() => {
 	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(null as never);
 	vi.mocked(DinozUtils.isAlive).mockReturnValue(true as never);
 	vi.mocked(DinozUtils.canLevelUp).mockReturnValue(false as never);
+	vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: undefined, specialGather: undefined, borderPlace: [2], name: 'P' } as never);
+	vi.mocked(checkCondition).mockReturnValue(false as never);
 });
 
 describe('getAvailableActions', () => {
@@ -237,6 +239,28 @@ describe('getAvailableActions', () => {
 		);
 		expect(result.length).toBeGreaterThan(0);
 	});
+
+	it('offers a mission action when one is available', async () => {
+		vi.mocked(getMissionAction).mockReturnValue(5 as never);
+		const result = await getAvailableActions(baseDinoz() as never, player());
+		expect(result.length).toBeGreaterThan(0);
+	});
+
+	it('offers a gather action when the place has a gather and condition passes', async () => {
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: 0, specialGather: undefined } as never);
+		vi.mocked(checkCondition).mockReturnValue(true as never);
+		const result = await getAvailableActions(baseDinoz({ gather: true }) as never, player());
+		expect(result.length).toBeGreaterThan(0);
+		vi.mocked(checkCondition).mockReturnValue(false as never);
+	});
+
+	it('offers the FB tournament action at the forcebrute place', async () => {
+		const result = await getAvailableActions(
+			baseDinoz({ placeId: PlaceEnum.FORCEBRUT, status: [{ statusId: DinozStatusId.TOURNA }] }) as never,
+			player()
+		);
+		expect(result.length).toBeGreaterThan(0);
+	});
 });
 
 describe('getDinozFiche', () => {
@@ -292,6 +316,12 @@ describe('buyDinoz', () => {
 	it('throws when not enough money', async () => {
 		vi.mocked(getDinozShopDetailsRequest).mockResolvedValue({ player: { id: 'p1', money: 0 }, display: 'd' } as never);
 		await expect(buyDinoz(req({ id: '5' }))).rejects.toThrow('notEnoughMoney');
+	});
+	it('throws when the player already has too many active dinoz', async () => {
+		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue(
+			Array.from({ length: 20 }, () => ({ player: { leader: false, messie: false } })) as never
+		);
+		await expect(buyDinoz(req({ id: '5' }))).rejects.toThrow('tooManyActiveDinoz');
 	});
 });
 
