@@ -1446,11 +1446,6 @@ export async function computeDefenderTeam(attackerPower: number, castleId: numbe
 			defenderPower = attackerPower;
 		}
 		defenderPower += def.level;
-
-		// Add a second time the level if the dinoz defender is Brave
-		if (def.skills.some(skill => skill.skillId === Skill.BRAVE)) {
-			defenderPower += def.level;
-		}
 	}
 
 	return defenderTeam.filter(d => d !== undefined);
