@@ -1004,7 +1004,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 6 },
-			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 },
 			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.EQUAL, value: 0 }
 		}
 	},
