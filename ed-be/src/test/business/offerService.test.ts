@@ -233,6 +233,16 @@ describe('expireOffer', () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue(null as never);
 		await expect(expireOffer(5)).rejects.toThrow('Offer not found');
 	});
+	it('archives the dinoz snapshot when the offer has a dinoz', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			seller: { id: 's' },
+			bids: [{ userId: 'w', value: 10 }],
+			dinoz: { id: 9, level: 5 }
+		} as never);
+		await expireOffer(5);
+		expect(offerDao.updateOfferDinoz).toHaveBeenCalled();
+	});
 });
 
 describe('claimOffer', () => {
@@ -244,6 +254,20 @@ describe('claimOffer', () => {
 	it('throws when offer missing', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue(null as never);
 		await expect(claimOffer(req({ offerId: '5' }))).rejects.toThrow('Offer not found');
+	});
+	it('gives items to the winner when there is no dinoz', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			sellerId: 's',
+			seller: { id: 's' },
+			items: [
+				{ itemId: 9, quantity: 1, isIngredient: false },
+				{ itemId: 1, quantity: 1, isIngredient: true }
+			],
+			bids: [{ userId: 'w', value: 10 }],
+			dinoz: null
+		} as never);
+		await claimOffer(req({ offerId: '5' }));
+		expect(offerDao.updateOfferStatus).toHaveBeenCalledWith(5, OfferStatus.CLAIMED);
 	});
 	it('transfers a dinoz to the winner', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({

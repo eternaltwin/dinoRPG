@@ -183,7 +183,10 @@ describe('useItem', () => {
 
 describe('useItem - egg hatching', () => {
 	// A broad set of egg item ids exercises most of the hatchEgg display switch.
-	const EGG_IDS = [63, 65, 66, 67, 68, 69, 71, 73, 75, 77, 79, 81, 83, 85, 88, 90, 93, 95, 97, 99, 101];
+	const EGG_IDS = [
+		63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+		91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 130, 144
+	];
 	beforeEach(() => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([{ player: { leader: false, messie: false } }] as never);
 		vi.mocked(dinozDao.createDinoz).mockResolvedValue({ id: 9 } as never);
