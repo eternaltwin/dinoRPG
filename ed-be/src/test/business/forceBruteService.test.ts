@@ -23,7 +23,8 @@ vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k })
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		fBTournament: { findMany: vi.fn(), findFirst: vi.fn(), findFirstOrThrow: vi.fn() },
-		gameDinoz: { findMany: vi.fn(), findFirst: vi.fn(), count: vi.fn(), create: vi.fn() },
+		gameDinoz: { findMany: vi.fn(), findFirst: vi.fn(), findFirstOrThrow: vi.fn(), count: vi.fn(), create: vi.fn() },
+		dinoz: { findFirst: vi.fn() },
 		fightArchive: { findMany: vi.fn() },
 		player: { findUniqueOrThrow: vi.fn() },
 		$queryRaw: vi.fn()
@@ -40,10 +41,13 @@ import {
 	getPlayerParticipation,
 	createTournamentDinoz,
 	getFBTournamentFights,
-	readAllFightFromEventPool
+	readAllFightFromEventPool,
+	getFBTournamentOpponent
 } from '../../business/forceBruteService.js';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { viewFight } from '../../dao/archiveDao.js';
+import { ownsDinoz } from '../../dao/playerDao.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -169,5 +173,30 @@ describe('fight list handlers', () => {
 		] as never);
 		await readAllFightFromEventPool(req({ id: 't1', pool: '0', phase: TournamentPhase.POOLS }));
 		expect(viewFight).toHaveBeenCalled();
+	});
+});
+
+describe('getFBTournamentOpponent', () => {
+	beforeEach(() => vi.mocked(ownsDinoz).mockResolvedValue(true as never));
+	it('returns a generated opponent', async () => {
+		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({ FBTournamentStep: 10, placeId: PlaceEnum.FORCEBRUT } as never);
+		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({ winnerId: 'w1' } as never);
+		vi.mocked(prisma.gameDinoz.findFirstOrThrow).mockResolvedValue({ display: 'd', level: 20, seed: 'seed' } as never);
+		const result = await getFBTournamentOpponent(req({ dinozId: '1' }));
+		expect(result.level).toBe(20);
+		expect(result.stage).toBe(10);
+	});
+	it('throws when the player does not own the dinoz', async () => {
+		vi.mocked(ownsDinoz).mockResolvedValue(false as never);
+		await expect(getFBTournamentOpponent(req({ dinozId: '1' }))).rejects.toThrow('does not own');
+	});
+	it('throws when not at the forcebrute place', async () => {
+		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({ FBTournamentStep: 10, placeId: 1 } as never);
+		await expect(getFBTournamentOpponent(req({ dinozId: '1' }))).rejects.toThrow('right place');
+	});
+	it('throws when there is no opponent', async () => {
+		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({ FBTournamentStep: 10, placeId: PlaceEnum.FORCEBRUT } as never);
+		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({ winnerId: null } as never);
+		await expect(getFBTournamentOpponent(req({ dinozId: '1' }))).rejects.toThrow('noOpponent');
 	});
 });
