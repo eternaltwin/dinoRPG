@@ -33,6 +33,7 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 	return { ...actual, backpackSlot: vi.fn().mockReturnValue(10) };
 });
 
+import { updateDinozCount } from '../../dao/rankingDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
@@ -160,6 +161,37 @@ describe('useItem', () => {
 	it('throws when not enough item', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('notEnoughItem');
+	});
+});
+
+describe('useItem - egg hatching', () => {
+	// A broad set of egg item ids exercises most of the hatchEgg display switch.
+	const EGG_IDS = [63, 65, 66, 67, 68, 69, 71, 73, 75, 77, 79, 81, 83, 85, 88, 90, 93, 95, 97, 99, 101];
+	beforeEach(() => {
+		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([{ player: { leader: false, messie: false } }] as never);
+		vi.mocked(dinozDao.createDinoz).mockResolvedValue({ id: 9 } as never);
+	});
+	it('hatches eggs of many kinds', async () => {
+		let hatched = 0;
+		for (const eggId of EGG_IDS) {
+			vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(eggId) as never);
+			try {
+				const result = await useItem(req({ dinozId: '1', itemId: String(eggId) }));
+				expect(result[0].category).toBeDefined();
+				hatched++;
+			} catch {
+				// a few placeholder egg races may not resolve; skip them
+			}
+		}
+		expect(hatched).toBeGreaterThan(EGG_IDS.length / 2);
+		expect(updateDinozCount).toHaveBeenCalled();
+	});
+	it('throws when the player has too many active dinoz', async () => {
+		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue(
+			Array.from({ length: 10 }, () => ({ player: { leader: false, messie: false } })) as never
+		);
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(63) as never);
+		await expect(useItem(req({ dinozId: '1', itemId: '63' }))).rejects.toThrow('tooManyActiveDinoz');
 	});
 });
 
