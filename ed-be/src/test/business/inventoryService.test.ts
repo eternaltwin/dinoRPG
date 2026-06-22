@@ -247,6 +247,16 @@ describe('equipItem', () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(null as never);
 		await expect(equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }))).rejects.toThrow("doesn't exist");
 	});
+	it('throws when too many magic items are equipped', async () => {
+		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
+			equipDinoz({ items: [{ id: 1, itemId: 35 }], skills: [], player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 35, quantity: 5 }] } }) as never
+		);
+		await expect(equipItem(req({ dinozId: '1' }, { itemId: 35, equip: true }))).rejects.toThrow('tooManyMagicItemEquiped');
+	});
+	it('throws when the dinoz is being sold', async () => {
+		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(equipDinoz({ unavailableReason: 'selling' }) as never);
+		await expect(equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }))).rejects.toThrow('UnavailableReason');
+	});
 });
 
 describe('heal / resurrect helpers', () => {

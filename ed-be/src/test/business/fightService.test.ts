@@ -180,6 +180,22 @@ describe('processFight', () => {
 		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({ id: 'p1', dinoz: [dinoz] } as never);
 		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('not able to fight');
 	});
+
+	it('uses the special movement fight when one occurs and drops unavailable followers', async () => {
+		const leader = { ...makeDinoz({ id: 1 }), fight: true, gather: true, unavailableReason: null, canChangeName: false, concentration: null, missions: [] };
+		const deadFollower = { ...makeDinoz({ id: 2 }), life: 0, fight: true, unavailableReason: null, canChangeName: false, concentration: null, missions: [] };
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({ id: 'p1', teacher: false, cooker: false, dinoz: [leader, deadFollower] } as never);
+		vi.mocked(movementListener).mockResolvedValue({ result: true, fighters: [] } as never);
+		const result = await processFight(req({}, { dinozId: 1 }));
+		expect(result).toEqual({ result: true, fighters: [] });
+		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+	});
+
+	it('throws when the dinoz still needs naming', async () => {
+		const dinoz = { ...makeDinoz({ id: 1 }), canChangeName: true, unavailableReason: null };
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({ id: 'p1', dinoz: [dinoz] } as never);
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('has to be named');
+	});
 });
 
 describe('replayFight', () => {
