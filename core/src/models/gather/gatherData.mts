@@ -20,8 +20,8 @@ export type GatherData =
 				| GatherType.FISH;
 			size: number;
 			minimumClick: number;
-			condition: Condition; //Skill needed
-			apparence: string; //skin
+			condition: Condition; // Skill needed
+			apparence: string; // Skin
 			items: GatherItems[];
 	  }
 	| {
@@ -36,8 +36,8 @@ export type GatherData =
 				| GatherType.DAILY;
 			size: number;
 			minimumClick: number;
-			condition: Condition; //Skill needed
-			apparence: string; //skin
+			condition: Condition; // Conditions needed
+			apparence: string; // Skin
 			items: GatherItems[];
 			cost: ItemFiche;
 	  };

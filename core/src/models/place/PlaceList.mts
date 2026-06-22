@@ -718,7 +718,7 @@ export const placeList: Record<
 		name: 'sport',
 		borderPlace: [66, 69],
 		map: MapZone.STEPPE,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.SEEK
 	},
 	[PlaceEnum.APPROCHER_SYPHON]: {
 		placeId: PlaceEnum.APPROCHER_SYPHON,
