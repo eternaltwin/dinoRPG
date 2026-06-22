@@ -253,6 +253,22 @@ describe('checkRefund', () => {
 		} as never);
 		expect(await checkRefund('p1', [], [], { playerId: 'x' }, 5)).toBe('tooMuchDinoz');
 	});
+	it('returns tooMuchIngredient when an ingredient would overflow', async () => {
+		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
+			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false,
+			ingredients: [{ ingredientId: 1, quantity: 49 }], items: []
+		} as never);
+		const result = await checkRefund('p1', [{ itemId: 1, quantity: 5, isIngredient: true }], [], null, 5);
+		expect(result).toBe('tooMuchIngredient');
+	});
+	it('returns tooMuchItem when an item would overflow', async () => {
+		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
+			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false,
+			ingredients: [], items: [{ itemId: 9, quantity: 19 }]
+		} as never);
+		const result = await checkRefund('p1', [], [{ itemId: 9, quantity: 5, isIngredient: false }], null, 5);
+		expect(result).toBe('tooMuchItem');
+	});
 });
 
 describe('scheduling helpers', () => {
