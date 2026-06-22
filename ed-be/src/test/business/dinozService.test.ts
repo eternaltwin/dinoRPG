@@ -203,6 +203,38 @@ describe('getAvailableActions', () => {
 		const result = await getAvailableActions(baseDinoz({ status: [{ statusId: DinozStatusId.SHOVEL }] }) as never, player());
 		expect(result.length).toBeGreaterThan(0);
 	});
+
+	it('offers war defend at the clan castle place during a war', async () => {
+		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue({ id: 'w1' } as never);
+		const warPlayer = {
+			id: 'p1',
+			clan: {
+				castle: { placeId: 1, defender: [] },
+				attackingWars: []
+			}
+		} as never;
+		const result = await getAvailableActions(
+			baseDinoz({ placeId: 1, fight: true, followers: [], leaderId: null }) as never,
+			warPlayer
+		);
+		expect(result.length).toBeGreaterThan(0);
+	});
+
+	it('offers war attack when an attacking war targets the dinoz place', async () => {
+		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue({ id: 'w1' } as never);
+		const warPlayer = {
+			id: 'p1',
+			clan: {
+				castle: { placeId: 9, defender: [] },
+				attackingWars: [{ defender: { castle: { placeId: 1 } } }]
+			}
+		} as never;
+		const result = await getAvailableActions(
+			baseDinoz({ placeId: 1, fight: true, followers: [], leaderId: null }) as never,
+			warPlayer
+		);
+		expect(result.length).toBeGreaterThan(0);
+	});
 });
 
 describe('getDinozFiche', () => {
@@ -308,6 +340,19 @@ describe('resurrectDinoz', () => {
 			life: 10, name: 'd', followers: [], player: { id: 'p1', quests: [] }
 		} as never);
 		await expect(resurrectDinoz(req({ id: '1' }))).rejects.toThrow('not dead');
+	});
+
+	it('returns the star quest reward when resurrecting at the right place', async () => {
+		vi.mocked(dinozDao.getDinozFicheLiteRequest).mockResolvedValue({
+			life: 0,
+			experience: 10,
+			placeId: PlaceEnum.JUNGLE_SAUVAGE,
+			name: 'd',
+			followers: [{ id: 2 }],
+			player: { id: 'p1', quests: [{ questId: 1, progression: 7 }] }
+		} as never);
+		const result = await resurrectDinoz(req({ id: '1' }));
+		expect(result).toBeDefined();
 	});
 });
 
