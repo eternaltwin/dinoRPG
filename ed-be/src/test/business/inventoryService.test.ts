@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
 vi.mock('../../config/game.config.js', () => ({ default: { dinoz: { maxQuantity: 5, leaderBonus: 3 } } }));
 vi.mock('../../dao/dinozDao.js', () => ({
@@ -157,6 +158,18 @@ describe('useItem', () => {
 	it('throws when item does not exist', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(1) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '999999' }))).rejects.toThrow("didn't exist");
+	});
+	it('uses ointment to remove the curse', async () => {
+		const d = withItem(25);
+		d.status = [{ statusId: DinozStatusId.CURSED }] as never;
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(d as never);
+		const result = await useItem(req({ dinozId: '1', itemId: '25' }));
+		expect(result.length).toBeGreaterThan(0);
+	});
+	it('uses rice (special)', async () => {
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(109) as never);
+		const result = await useItem(req({ dinozId: '1', itemId: '109' }));
+		expect(result.length).toBeGreaterThan(0);
 	});
 	it('throws when not enough item', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never);
