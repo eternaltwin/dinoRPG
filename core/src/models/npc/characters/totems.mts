@@ -1,4 +1,4 @@
-import { RewardEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
@@ -14,6 +14,9 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.PTEROZ],
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.PLAYER_EPIC]: Reward.PTEROZ }
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -56,6 +59,9 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.HIPPOCLAMP],
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.PLAYER_EPIC]: Reward.HIPPO }
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -99,6 +105,9 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight_win'],
 		fight: [bossList.ROCKY],
 		alias: 'grave',
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.PLAYER_EPIC]: Reward.ROCKY }
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
