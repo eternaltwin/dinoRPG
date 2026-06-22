@@ -77,6 +77,9 @@ import { getSpecificSecret } from '../../dao/secretDao.js';
 import { prisma } from '../../prisma.js';
 import TournamentManager from '../../utils/tournamentManager.js';
 import { getMissionAction } from '../../business/missionsService.js';
+import { movementListener } from '../../business/specialService.js';
+import * as fightService from '../../business/fightService.js';
+import { rewarder } from '../../utils/rewarder.js';
 import * as DinozUtils from '@drpg/core/utils/DinozUtils';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import {
@@ -84,6 +87,8 @@ import {
 	getDinozFiche,
 	getDinozSkill,
 	buyDinoz,
+	betaMove,
+	digWithDinoz,
 	setDinozName,
 	setSkillState,
 	resurrectDinoz,
@@ -369,6 +374,74 @@ describe('useIrma', () => {
 			player: { id: 'p1', items: [] }
 		} as never);
 		await expect(useIrma(req({ id: '1' }))).rejects.toThrow('notEnoughIrma');
+	});
+});
+
+describe('betaMove', () => {
+	const fightablePlayer = (dinozOverrides = {}) => ({
+		id: 'p1',
+		items: [],
+		rewards: [],
+		quests: [],
+		ranking: null,
+		dinoz: [
+			{
+				id: 1,
+				life: 100,
+				fight: true,
+				gather: true,
+				leaderId: null,
+				unavailableReason: null,
+				canChangeName: false,
+				concentration: null,
+				status: [],
+				...dinozOverrides
+			}
+		]
+	});
+
+	it('moves the dinoz and fights monsters at the destination', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer() as never);
+		vi.mocked(movementListener).mockResolvedValue(false as never);
+		vi.mocked(fightService.fightMonstersAtPlace).mockResolvedValue({ result: true, fighters: [] } as never);
+		const result = await betaMove(req({}, { dinozId: 1, placeId: 2 }));
+		expect(result).toBeDefined();
+		expect(dinozDao.updateMultipleDinoz).toHaveBeenCalled();
+	});
+
+	it('throws when the dinoz is unavailable', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
+			fightablePlayer({ unavailableReason: 'frozen' }) as never
+		);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('not able to move');
+	});
+
+	it('throws when the destination does not exist', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer() as never);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 999999 }))).rejects.toThrow('the void');
+	});
+});
+
+describe('digWithDinoz', () => {
+	it('digs and rewards gold when no treasure matches', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue({
+			dinoz: [{ id: 1, placeId: 1, status: [{ statusId: DinozStatusId.SHOVEL }] }]
+		} as never);
+		const result = await digWithDinoz(req({ id: '1' }));
+		expect(rewarder).toHaveBeenCalled();
+		expect(result.rewards.length).toBeGreaterThan(0);
+	});
+
+	it('throws when the dinoz cannot dig', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue({
+			dinoz: [{ id: 1, placeId: 1, status: [] }]
+		} as never);
+		await expect(digWithDinoz(req({ id: '1' }))).rejects.toThrow('cannot dig');
+	});
+
+	it('throws when the player is not found', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue(null as never);
+		await expect(digWithDinoz(req({ id: '1' }))).rejects.toThrow('playerNotFound');
 	});
 });
 
