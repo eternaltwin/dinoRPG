@@ -45,7 +45,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [Ingredient.GLOBULOS], //4
+				ingredientId: [Ingredient.GLOBULOS],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -56,7 +56,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [Ingredient.SUPER_POISSON], //5
+				ingredientId: [Ingredient.SUPER_POISSON],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
