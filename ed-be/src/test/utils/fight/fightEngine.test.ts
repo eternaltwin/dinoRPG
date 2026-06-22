@@ -9,7 +9,16 @@ vi.mock('../../../context.js', () => ({
 
 import seedrandom from 'seedrandom';
 import generateFight from '../../../utils/fight/generateFight.js';
-import getFighters from '../../../utils/fight/getFighters.js';
+import getFighters, {
+	getFighterCounter,
+	getFighterMultihit,
+	getFighterEvasion,
+	getFighterSuperEvasion,
+	getFighterArmor,
+	getFighterArmorBreak,
+	getFighterCriticalHitChance,
+	getFighterCriticalHitBonus
+} from '../../../utils/fight/getFighters.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -431,6 +440,23 @@ describe('fight engine - special items and costumes', () => {
 			}
 		}
 		expect(completed).toBeGreaterThan(0);
+	});
+});
+
+describe('fight engine - fighter stat getters', () => {
+	const fighter = (special: Record<string, number>) => ({ stats: { special } }) as never;
+	it('clamps counter/multihit/evasion/armor between 0 and 0.9', () => {
+		expect(getFighterCounter(fighter({ counter: 1.5 }))).toBeCloseTo(0.5);
+		expect(getFighterCounter(fighter({ counter: 5 }))).toBe(0.9);
+		expect(getFighterCounter(fighter({ counter: 0 }))).toBe(0);
+		expect(getFighterMultihit(fighter({ multihit: 1.5 }))).toBeCloseTo(0.5);
+		expect(getFighterMultihit(fighter({ multihit: 1.5 }), 1)).toBeCloseTo(0.25);
+		expect(getFighterEvasion(fighter({ evasion: 1.3 }))).toBeCloseTo(0.3);
+		expect(getFighterSuperEvasion(fighter({ superEvasion: 1.2 }))).toBeCloseTo(0.2);
+		expect(getFighterArmor(fighter({ armor: 1.4 }))).toBeCloseTo(0.4);
+		expect(getFighterArmorBreak(fighter({ armorBreak: 1.6 }))).toBeCloseTo(0.6);
+		expect(getFighterCriticalHitChance(fighter({ criticalHitChance: 1.2 }))).toBeCloseTo(0.2);
+		expect(getFighterCriticalHitBonus(fighter({ criticalHitBonus: 25 }))).toBe(25);
 	});
 });
 

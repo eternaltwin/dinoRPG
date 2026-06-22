@@ -190,6 +190,29 @@ describe('bidOffer', () => {
 		vi.mocked(playerItemDao.getPlayerItems).mockResolvedValue([{ quantity: 0 }] as never);
 		await expect(bidOffer(req({ offerId: '5' }, { value: 5 }))).rejects.toThrow('notEnoughTickets');
 	});
+	it('repays the previous bidder when outbidding', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			seller: { id: 'x' },
+			status: OfferStatus.ONGOING,
+			total: 1000,
+			bids: [{ userId: 'prev', value: 3 }]
+		} as never);
+		vi.mocked(playerItemDao.getPlayerItems).mockResolvedValue([{ quantity: 100 }] as never);
+		await bidOffer(req({ offerId: '5' }, { value: 5 }));
+		expect(offerDao.addBid).toHaveBeenCalled();
+	});
+	it('throws when the bid is below the previous one', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			seller: { id: 'x' },
+			status: OfferStatus.ONGOING,
+			total: 1000,
+			bids: [{ userId: 'p1', value: 10 }]
+		} as never);
+		vi.mocked(playerItemDao.getPlayerItems).mockResolvedValue([{ quantity: 100 }] as never);
+		await expect(bidOffer(req({ offerId: '5' }, { value: 8 }))).rejects.toThrow('bidIsLower');
+	});
 });
 
 describe('expireOffer', () => {
