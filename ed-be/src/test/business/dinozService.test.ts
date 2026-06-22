@@ -45,6 +45,13 @@ vi.mock('../../business/missionsService.js', () => ({ getMissionAction: vi.fn() 
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
 vi.mock('../../business/clanWar.js', () => ({ currentWar: vi.fn() }));
 vi.mock('@drpg/core/utils/checkCondition', () => ({ checkCondition: vi.fn().mockReturnValue(false) }));
+vi.mock('@drpg/core/utils/GatherUtils', () => ({
+	discoverBox: vi.fn().mockReturnValue({ rewards: { item: [], ingredients: [] }, ingredientsAtMaxQuantity: [] }),
+	getGridSize: vi.fn().mockReturnValue(5),
+	hideGridIngredients: vi.fn().mockReturnValue([1, 2, 3, 4, 5]),
+	initializeGatherGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 }),
+	saveGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 })
+}));
 vi.mock('../../utils/dinoz.js', () => ({
 	getNumberOfGatheringTries: vi.fn().mockReturnValue(3),
 	initializeDinoz: vi.fn().mockReturnValue({ name: 'new' }),
@@ -80,6 +87,8 @@ import { getMissionAction } from '../../business/missionsService.js';
 import { movementListener } from '../../business/specialService.js';
 import * as fightService from '../../business/fightService.js';
 import { rewarder } from '../../utils/rewarder.js';
+import { getCommonGatherInfo, createGrid, updateGrid } from '../../dao/playerGatherDao.js';
+import { checkCondition } from '@drpg/core/utils/checkCondition';
 import * as DinozUtils from '@drpg/core/utils/DinozUtils';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import {
@@ -89,6 +98,8 @@ import {
 	buyDinoz,
 	betaMove,
 	digWithDinoz,
+	getGatherGrid,
+	gatherWithDinoz,
 	setDinozName,
 	setSkillState,
 	resurrectDinoz,
@@ -442,6 +453,51 @@ describe('digWithDinoz', () => {
 	it('throws when the player is not found', async () => {
 		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue(null as never);
 		await expect(digWithDinoz(req({ id: '1' }))).rejects.toThrow('playerNotFound');
+	});
+});
+
+describe('gather', () => {
+	const gatherPlayer = (overrides = {}) => ({
+		id: 'p1',
+		shopKeeper: false,
+		dailyGridRewards: 5,
+		items: [],
+		ingredients: [],
+		dinoz: [{ id: 1, placeId: 1, gather: true }],
+		...overrides
+	});
+	beforeEach(() => {
+		// FISH gather (type 0) at the dinoz's place.
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: 0, specialGather: undefined } as never);
+		vi.mocked(checkCondition).mockReturnValue(true as never);
+		vi.mocked(dinozDao.getDinozGatherData).mockResolvedValue(gatherPlayer() as never);
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([] as never);
+		vi.mocked(createGrid).mockResolvedValue({ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 } as never);
+		vi.mocked(updateGrid).mockResolvedValue({ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 } as never);
+	});
+
+	it('getGatherGrid returns a hidden grid', async () => {
+		const result = await getGatherGrid(req({ id: '1', type: 'fish' }));
+		expect(result.gatherType).toBe('fish');
+		expect(result.gatherTurn).toBe(3);
+	});
+
+	it('getGatherGrid throws for an unknown grid type', async () => {
+		await expect(getGatherGrid(req({ id: '1', type: 'nonexistent' }))).rejects.toThrow("doesn't exist");
+	});
+
+	it('gatherWithDinoz opens boxes and consumes the action', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 }] as never);
+		const r = makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } });
+		const result = await gatherWithDinoz(r);
+		expect(result).toBeDefined();
+		expect(updateGrid).toHaveBeenCalled();
+	});
+
+	it('gatherWithDinoz throws when no grid exists', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([] as never);
+		const r = makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } });
+		await expect(gatherWithDinoz(r)).rejects.toThrow('generated any grid');
 	});
 });
 
