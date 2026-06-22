@@ -57,8 +57,10 @@ import { addMultipleUnlockableSkills } from '../../dao/dinozSkillUnlockableDao.j
 import * as playerDao from '../../dao/playerDao.js';
 import { addStatusToDinoz } from '../../dao/dinozStatusDao.js';
 import TournamentManager from '../../utils/tournamentManager.js';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 import {
 	getLearnableAndUnlockableSkills,
+	learnSkill,
 	unlockDoubleSkills,
 	applySkillEffect,
 	computeUSkillsForPlayer,
@@ -96,6 +98,53 @@ describe('getLearnableAndUnlockableSkills', () => {
 	it('throws when race does not exist', async () => {
 		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({ level: 20, player: { id: 'p1' }, canChangeName: false, raceId: 9999 } as never);
 		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow("race");
+	});
+});
+
+describe('learnSkill', () => {
+	const levelUpDinoz = (overrides = {}) => ({
+		id: 1,
+		level: 1,
+		experience: 100,
+		raceId: 1,
+		canChangeName: false,
+		nextUpElementId: ElementType.FIRE,
+		nextUpAltElementId: ElementType.WATER,
+		nbrUpFire: 0,
+		nbrUpWood: 0,
+		nbrUpWater: 0,
+		nbrUpLightning: 0,
+		nbrUpAir: 0,
+		display: 'AB000000000000',
+		seed: 's',
+		skills: [],
+		items: [],
+		status: [],
+		unlockableSkills: [],
+		player: { id: 'p1', discoveredSkills: [] },
+		...overrides
+	});
+
+	it('levels up a dinoz via the unlockable (empty) path', async () => {
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz() as never);
+		const result = await learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }));
+		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+		expect(result.newMaxExperience).toBeGreaterThanOrEqual(0);
+	});
+
+	it('throws when dinoz is not found', async () => {
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(null as never);
+		await expect(learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }))).rejects.toThrow('dinozNotFound');
+	});
+
+	it('throws when not owned', async () => {
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz({ player: { id: 'x', discoveredSkills: [] } }) as never);
+		await expect(learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }))).rejects.toThrow("doesn't belong");
+	});
+
+	it('throws when the skill cannot be learnt', async () => {
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz() as never);
+		await expect(learnSkill(req({ id: '1' }, { skillIdList: [99999], tryNumber: '1' }))).rejects.toThrow("can't learn this");
 	});
 });
 
