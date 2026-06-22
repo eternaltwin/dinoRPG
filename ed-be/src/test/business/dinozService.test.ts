@@ -261,6 +261,25 @@ describe('getAvailableActions', () => {
 		);
 		expect(result.length).toBeGreaterThan(0);
 	});
+
+	it('offers the congel action at the gorges with the spelunking status', async () => {
+		const result = await getAvailableActions(
+			baseDinoz({ placeId: PlaceEnum.GORGES_PROFONDES, status: [{ statusId: DinozStatusId.FSPELE }] }) as never,
+			player()
+		);
+		expect(result.length).toBeGreaterThan(0);
+	});
+
+	it('offers follower gather actions when a follower can gather', async () => {
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: 0, specialGather: undefined } as never);
+		vi.mocked(checkCondition).mockReturnValue(true as never);
+		const leader = baseDinoz({
+			followers: [{ id: 2, fight: true, remaining: 1, gather: true }]
+		});
+		const result = await getAvailableActions(leader as never, player());
+		expect(result.length).toBeGreaterThan(0);
+		vi.mocked(checkCondition).mockReturnValue(false as never);
+	});
 });
 
 describe('getDinozFiche', () => {
