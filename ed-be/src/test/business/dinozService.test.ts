@@ -88,6 +88,8 @@ import { movementListener } from '../../business/specialService.js';
 import * as fightService from '../../business/fightService.js';
 import { rewarder } from '../../utils/rewarder.js';
 import { getCommonGatherInfo, createGrid, updateGrid } from '../../dao/playerGatherDao.js';
+import { increaseIngredientQuantity } from '../../dao/playerIngredientDao.js';
+import { discoverBox } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import * as DinozUtils from '@drpg/core/utils/DinozUtils';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -537,6 +539,20 @@ describe('gather', () => {
 		const result = await gatherWithDinoz(r);
 		expect(result).toBeDefined();
 		expect(updateGrid).toHaveBeenCalled();
+	});
+
+	it('gatherWithDinoz grants item and ingredient rewards', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [-1, -1, -1, -1, -1], place: 1, type: 0 }] as never);
+		vi.mocked(discoverBox).mockReturnValue({
+			rewards: { item: [{ id: 3, maxQuantity: 10, price: 5 }], ingredients: [{ ingredientId: 1, maxQuantity: 10 }] },
+			ingredientsAtMaxQuantity: [],
+			isGridComplete: false
+		} as never);
+		vi.mocked(increaseIngredientQuantity).mockResolvedValue({ ingredientId: 1, quantity: 1, playerId: 'p1' } as never);
+		const r = makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } });
+		const result = await gatherWithDinoz(r);
+		expect(result).toBeDefined();
+		expect(increaseIngredientQuantity).toHaveBeenCalled();
 	});
 
 	it('gatherWithDinoz throws when no grid exists', async () => {
