@@ -9,11 +9,18 @@ vi.mock('../../context.js', () => ({
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), getClanIdAndNameFromPlayerId: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ createClanMessageRequest: vi.fn(), deleteClanMessageRequest: vi.fn() }));
 vi.mock('../../business/clanService.js', () => ({ checkMessageCanBeDeleted: vi.fn() }));
-vi.mock('../../utils/helpers/ValidatorHelper.js', () => ({ isJson: vi.fn() }));
+vi.mock('../../utils/helpers/ValidatorHelper.js', () => ({ isJson: vi.fn().mockReturnValue(true) }));
 
+import { WebSocket } from 'ws';
+import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
 import { auth, getClanIdAndNameFromPlayerId } from '../../dao/playerDao.js';
+import { createClanMessageRequest } from '../../dao/clansDao.js';
+import { checkMessageCanBeDeleted } from '../../business/clanService.js';
 import {
 	authenticate,
+	connectUserToWsChannel,
+	processWsIncomingMessage,
+	disconnectWsUser,
 	setWsConnectionToAlive,
 	checkIfWsClientsAreAlive,
 	disconnectSseUser,
@@ -65,6 +72,48 @@ describe('websocket keepalive', () => {
 		checkIfWsClientsAreAlive(wss);
 		expect(ping).toHaveBeenCalled();
 		expect(ws.isAlive).toBe(false);
+	});
+});
+
+describe('websocket channel flow', () => {
+	it('connects a user, processes create/delete messages and disconnects', async () => {
+		const ua = 'jest';
+		const ip = '9.9.9.9';
+		vi.mocked(getClanIdAndNameFromPlayerId).mockResolvedValue({ ClanMember: { clan: { id: 1 } } } as never);
+		vi.mocked(createClanMessageRequest).mockResolvedValue({ id: 7, content: 'hi' } as never);
+
+		const ticketDto = await authenticate(
+			{ body: { channel: WsChannel.CLAN_FORUM }, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			ServerEventType.WEBSOCKET
+		);
+
+		const ws = { id: '', isAlive: false } as never;
+		await connectUserToWsChannel(ws, {
+			url: `/ws?ticket=${ticketDto.ticket}`,
+			socket: { remoteAddress: ip },
+			headers: { 'user-agent': ua }
+		} as never);
+		expect((ws as { id: string }).id).toBeTruthy();
+
+		const client = { id: (ws as { id: string }).id, readyState: WebSocket.OPEN, send: vi.fn() };
+		const wss = { clients: new Set([client]) } as never;
+
+		await processWsIncomingMessage(
+			wss,
+			(ws as { id: string }).id,
+			Buffer.from(JSON.stringify({ action: WsMessageAction.CREATE, message: 'hello' }))
+		);
+		expect(createClanMessageRequest).toHaveBeenCalled();
+		expect(client.send).toHaveBeenCalled();
+
+		await processWsIncomingMessage(
+			wss,
+			(ws as { id: string }).id,
+			Buffer.from(JSON.stringify({ action: WsMessageAction.DELETE, msgId: 7 }))
+		);
+		expect(checkMessageCanBeDeleted).toHaveBeenCalled();
+
+		disconnectWsUser(ws);
 	});
 });
 
