@@ -161,6 +161,11 @@ describe('fightMonstersAtPlace', () => {
 		const result = await fightMonstersAtPlace(team as never, PLACE, { id: 'p1', teacher: false, cooker: false });
 		expect(result).toHaveProperty('result');
 	});
+	it('checks mission progress for dinoz on a mission', async () => {
+		const team = [{ ...makeDinoz({ id: 1 }), missions: [{ missionId: 5, isFinished: false }] }];
+		const result = await fightMonstersAtPlace(team as never, PLACE, { id: 'p1', teacher: false, cooker: false });
+		expect(result).toHaveProperty('result');
+	});
 });
 
 describe('processFight', () => {

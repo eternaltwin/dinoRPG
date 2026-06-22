@@ -175,6 +175,10 @@ describe('useItem', () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('notEnoughItem');
 	});
+	it('throws for an item with no usable effect', async () => {
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(6) as never);
+		await expect(useItem(req({ dinozId: '1', itemId: '6' }))).rejects.toThrow('WTF');
+	});
 });
 
 describe('useItem - egg hatching', () => {
