@@ -685,7 +685,7 @@ const startFight = (fightData: DetailedFight) => {
 
 	// Then process all skills
 	fightData.fighters.forEach(fighter => {
-		const opponents = fightData.fighters.filter(f => f.id !== fighter.id);
+		const allOtherFighters = fightData.fighters.filter(f => f.id !== fighter.id);
 		// Cleptomania
 		if (hasSkill(fighter, Skill.CLEPTOMANE)) {
 			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
