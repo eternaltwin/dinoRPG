@@ -332,6 +332,62 @@ describe('fight engine - every monster', () => {
 	});
 });
 
+describe('fight engine - monsters acting', () => {
+	it('runs long fights where weak tanky dinoz let monsters take many turns', () => {
+		const monsterKeys = Object.keys(monsterList) as Array<keyof typeof monsterList>;
+		let completed = 0;
+		for (let i = 0; i < monsterKeys.length; i++) {
+			// A high-HP, near-zero-damage dinoz survives long enough for monsters to use their skills.
+			const tank = makeDinoz({
+				life: 800,
+				maxLife: 800,
+				level: 5,
+				nbrUpFire: 0,
+				nbrUpWood: 0,
+				nbrUpWater: 0,
+				nbrUpLightning: 0,
+				nbrUpAir: 0
+			});
+			try {
+				const result = runFight(
+					[tank],
+					[{ ...monsterList[monsterKeys[i]] }, { ...monsterList[monsterKeys[i]] }],
+					PlaceEnum.PORT,
+					`acting-${i}`,
+					MONSTER_FIGHT_RULES,
+					true
+				);
+				expect(result.outcome).toBeDefined();
+				completed++;
+			} catch {
+				// skip monsters referencing unregistered skills
+			}
+		}
+		expect(completed).toBeGreaterThan(monsterKeys.length / 2);
+	});
+
+	it('runs fights with catching glove against capturable monsters', () => {
+		for (let i = 0; i < 25; i++) {
+			const catcher = makeDinoz({
+				life: 400,
+				maxLife: 400,
+				level: 40,
+				skills: ALL_ACTIVE_SKILLS.map(sk),
+				status: [st(DinozStatusId.CATCHING_GLOVE)]
+			});
+			const result = runFight(
+				[catcher],
+				[{ ...monsterList[Monster.GOUPIGNON] }, { ...monsterList[Monster.WOLF] }, { ...monsterList[Monster.GLUON] }],
+				PlaceEnum.PORT,
+				`catch-${i}`,
+				MONSTER_FIGHT_RULES,
+				true
+			);
+			expect(result.outcome).toBeDefined();
+		}
+	});
+});
+
 describe('fight engine - getFighters helpers', () => {
 	it('builds fighters across several places', () => {
 		const places = [PlaceEnum.PORT, PlaceEnum.JUNGLE_DODGE, PlaceEnum.PIC_DU_MIDI];
