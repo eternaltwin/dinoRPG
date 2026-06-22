@@ -266,7 +266,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: [Ingredient.POUSSE_SOMBRE],
 				startQuantity: 1,
 				condition: {
-					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id //TODO: lieu du monde sombre
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			}
 		]
