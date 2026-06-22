@@ -994,7 +994,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid);
 
 	if (!myGrid) {
-		myGrid = await createGrid(initializeGatherGrid(authed.id, place.placeId, gatherPlace));
+		myGrid = await createGrid(initializeGatherGrid(authed.id, place.placeId, gatherPlace, player));
 	}
 
 	// Generate a new one if all box are empty
@@ -1003,7 +1003,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 			player.id,
 			dinozId,
 			myGrid.id,
-			initializeGatherGrid(authed.id, place.placeId, gatherPlace)
+			initializeGatherGrid(authed.id, place.placeId, gatherPlace, player)
 		);
 	}
 
@@ -1085,7 +1085,7 @@ export async function gatherWithDinoz(req: Request) {
 		await createLog(LogType.ItemUsed, player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
 	}
 
-	const returnGrid = discoverBox(myGrid, player, gatherPlace, ...boxToOpen);
+	const returnGrid = discoverBox(myGrid, gatherPlace, ...boxToOpen);
 	await updateGrid(player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
 
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
