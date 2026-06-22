@@ -9,14 +9,14 @@ import { Item, itemList } from '../models/item/ItemList.mjs';
 import { ingredientList } from '../models/ingredient/ingredientList.mjs';
 import { checkCondition } from './checkCondition.mjs';
 
-export const initializeGatherGrid = (playerId: string, placeId: number, gridInformation: GatherData) => {
+export const initializeGatherGrid = (playerId: string, placeId: number, gridInformation: GatherData, player: PlayerForConditionCheck) => {
 	const data: Prisma.PlayerGatherCreateInput = {
 		player: { connect: { id: playerId } },
 		place: placeId,
 		type: gridInformation.type
 	};
 
-	// Create arry with ingredientId. 0 for no element
+	// Create array with ingredientId. 0 for no element
 
 	let grid: number[] = new Array(gridInformation.size * gridInformation.size);
 	let ingredientCount = 0;
@@ -25,9 +25,13 @@ export const initializeGatherGrid = (playerId: string, placeId: number, gridInfo
 	gridInformation.items.forEach(ingredient => {
 		const buffer = new Array(ingredient.startQuantity);
 		for (let i = 0; i < ingredient.startQuantity; i++) {
+			// Pick a random ingredient if multiple are possible.
 			let ingredientId = ingredient.ingredientId[Math.floor(Math.random() * ingredient.ingredientId.length)];
 			if (ingredient.type === 'item') ingredientId += 1000;
-			buffer[i] = ingredientId;
+			// Add ingredient if conditions are met
+			if (checkCondition(ingredient.condition, player, player.dinoz[0].id)) {
+				buffer[i] = ingredientId;
+			}
 		}
 
 		grid.splice(ingredientCount, ingredient.startQuantity, ...buffer);
@@ -65,7 +69,6 @@ export const getPublicGrid = (grid: Pick<PlayerGather, 'grid'>) => {
 
 export const discoverBox = (
 	grid: Pick<PlayerGather, 'grid'>,
-	player: PlayerForConditionCheck,
 	gridInformation: GatherData,
 	...box: [number, number][]
 ): {
@@ -97,14 +100,11 @@ export const discoverBox = (
 				ingredientFiche => ingredientFiche.ingredientId === ingredientId
 			);
 			if (ingredient) {
-				const gridIngredient = gridInformation.items.filter(ing => ing.ingredientId.includes(ingredient.ingredientId));
-				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
-				for (const possibleGater of gridIngredient) {
-					if (checkCondition(possibleGater.condition, player, player.dinoz[0].id)) {
-						ingredient.name = ingredient.name.toLowerCase();
-						rewards.ingredients.push(ingredient);
-					}
-				}
+				ingredient.name = ingredient.name.toLowerCase();
+				rewards.ingredients.push(ingredient);
+			} else if (ingredientId === 0) { // NOOP, this is the ID of an empty space in the grid 
+			} else {
+				throw new Error(`Unknown ingredient ${ingredientId} in grid`);
 			}
 		}
 	}
