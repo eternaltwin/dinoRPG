@@ -27,7 +27,7 @@ import {
 } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration, FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { FightOutcome, FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
-import { FightStep, PrepareStep } from '@drpg/core/models/fight/FightStep';
+import { FightStep, NotifyStep, PrepareStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -36,6 +36,7 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import seedrandom from 'seedrandom';
 import { LOGGER } from '../../context.js';
 import { getRandomInteger } from '../tools.js';
+import { powerOf } from './getDamage.js';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -684,6 +685,7 @@ const startFight = (fightData: DetailedFight) => {
 
 	// Then process all skills
 	fightData.fighters.forEach(fighter => {
+		const opponents = fightData.fighters.filter(f => f.id !== fighter.id);
 		// Cleptomania
 		if (hasSkill(fighter, Skill.CLEPTOMANE)) {
 			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
@@ -731,6 +733,25 @@ const startFight = (fightData: DetailedFight) => {
 				fid: fighter.id,
 				skill: Skill.DOUBLE_FACE
 			});
+		}
+
+		// Reduce init of all other fighters
+		if (hasSkill(fighter, Skill.BRAVE)) {
+			fightData.steps.push({
+				action: 'skillAnnounce',
+				fid: fighter.id,
+				skill: Skill.BRAVE
+			});
+			const init_down_notify = {
+				action: 'notify',
+				fids: [],
+				notification: NotificationList.InitDown
+			} as NotifyStep;
+			opponents.forEach(opponent => {
+				opponent.time += powerOf(fightData.rng, fighter, [[ElementType.FIRE, 2]]) * TIME_FACTOR;
+				init_down_notify.fids.push(opponent.id);
+			});
+			fightData.steps.push(init_down_notify);
 		}
 	});
 
