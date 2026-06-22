@@ -21,6 +21,10 @@ vi.mock('../../dao/dinozItemDao.js', () => ({ removeItemFromDinoz: vi.fn() }));
 vi.mock('../../utils/warCalculation.js', () => ({ computeWarRankingUpdates: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../utils/tools.js', () => ({ getRandomArrayElement: vi.fn().mockReturnValue(1) }));
+vi.mock('@drpg/core/models/clan/warCalculation', () => ({
+	computeWarCost: vi.fn().mockReturnValue({ canAfford: true, trueValue: 0 }),
+	computeRepairCost: vi.fn().mockReturnValue({ canAfford: true, trueValue: 0 })
+}));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
 vi.mock('../../business/serverEventService.js', () => ({ sendSseMessageToUserInChannel: vi.fn() }));
 vi.mock('node-schedule', () => {
@@ -30,7 +34,9 @@ vi.mock('node-schedule', () => {
 
 const txObj = {
 	clanCastle: { findUnique: vi.fn(), update: vi.fn() },
-	dinoz: { update: vi.fn() }
+	dinoz: { update: vi.fn() },
+	clan: { findUnique: vi.fn() },
+	clanWar: { create: vi.fn() }
 };
 vi.mock('../../prisma.js', () => ({
 	prisma: {
@@ -54,6 +60,7 @@ import { playerHasRightRequest } from '../../dao/clansDao.js';
 import {
 	eventState,
 	currentWar,
+	declareWar,
 	buildClanCastle,
 	scheduleWarExpiration,
 	warStatus,
@@ -102,6 +109,42 @@ describe('eventState / currentWar', () => {
 	it('currentWar throws when no war', async () => {
 		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue(null as never);
 		await expect(currentWar()).rejects.toThrow('No event in progress');
+	});
+});
+
+describe('declareWar', () => {
+	const defender = () => ({
+		id: 2,
+		name: 'Foes',
+		castle: { id: 'c2', currentLife: 300 },
+		members: [{ playerId: 'd1' }],
+		_count: { defendingWars: 0 }
+	});
+	const attacker = () => ({
+		id: 1,
+		name: 'Us',
+		castle: { id: 'c1', currentLife: 300 },
+		members: [{ playerId: 'p1' }],
+		ingredients: [{ ingredientId: 1, quantity: 100 }],
+		clanWarRanking: [{ reputation: 100 }]
+	});
+	it('declares a war when all checks pass', async () => {
+		txObj.clan.findUnique.mockResolvedValueOnce(defender()).mockResolvedValueOnce(attacker());
+		txObj.clanWar.create.mockResolvedValue({ id: 'war1' });
+		await declareWar(req({ clanId: '2' }));
+		expect(txObj.clanWar.create).toHaveBeenCalled();
+		expect(prisma.clanHistory.create).toHaveBeenCalled();
+	});
+	it('throws when attacking your own clan', async () => {
+		await expect(declareWar(req({ clanId: '1' }))).rejects.toThrow('sameClan');
+	});
+	it('throws when the defender has no castle', async () => {
+		txObj.clan.findUnique.mockResolvedValueOnce({ ...defender(), castle: null }).mockResolvedValueOnce(attacker());
+		await expect(declareWar(req({ clanId: '2' }))).rejects.toThrow('noCastleOpponent');
+	});
+	it('throws without the right', async () => {
+		vi.mocked(playerHasRightRequest).mockResolvedValue(false as never);
+		await expect(declareWar(req({ clanId: '2' }))).rejects.toThrow('noRight');
 	});
 });
 
