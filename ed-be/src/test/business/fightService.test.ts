@@ -24,6 +24,8 @@ vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }
 vi.mock('../../utils/scenarioChecker.js', () => ({ scenarioChecker: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { createCatch, removeCatch, updateCatch } from '../../dao/dinozCatchDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { getPlayerEventProgression } from '../../dao/eventsDao.js';
@@ -109,6 +111,32 @@ describe('rewardFightVsMonsters', () => {
 		await expect(
 			rewardFightVsMonsters([], [], { outcome: 0, attackers: [], defenders: [], fighters: [], catches: [], steps: [] } as never, PLACE, { id: 'p1', teacher: false })
 		).rejects.toThrow('No player found');
+	});
+
+	it('handles a defeat with gold loss and catch lifecycle', async () => {
+		const team = [{ id: 1, level: 20, experience: 0, life: 120, placeId: PLACE, status: [], skills: [], items: [] }];
+		const monsters = [{ ...monsterList[Monster.GOUPIGNON] }];
+		const fightResult = {
+			outcome: FightOutcome.DefenderWin,
+			attackers: [{ dinozId: 1, hpLost: 10, statusGained: [], itemsUsed: [], goldLost: 5, playerId: 'p1' }],
+			defenders: [],
+			fighters: [
+				{ id: 1, type: 'dinoz', name: 'd', level: 20, survived: true, display: 'x', attacker: true, maxHp: 120, startingHp: 120, energy: 0, maxEnergy: 0, energyRecovery: 0 }
+			],
+			catches: [
+				{ id: null, dinozId: 1, monsterId: Monster.GOUPIGNON, hp: 5 },
+				{ id: null, dinozId: 1, monsterId: Monster.GOUPIGNON, hp: 0 },
+				{ id: 3, dinozId: 1, monsterId: Monster.GOUPIGNON, hp: 10 },
+				{ id: 4, dinozId: 1, monsterId: Monster.GOUPIGNON, hp: 0 }
+			],
+			steps: []
+		};
+		const result = await rewardFightVsMonsters(team as never, monsters, fightResult as never, PLACE, { id: 'p1', teacher: false });
+		expect(result.result).toBe(false);
+		expect(playerDao.removeMoney).toHaveBeenCalled();
+		expect(createCatch).toHaveBeenCalled();
+		expect(updateCatch).toHaveBeenCalled();
+		expect(removeCatch).toHaveBeenCalled();
 	});
 });
 
