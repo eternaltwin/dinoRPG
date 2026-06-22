@@ -13,12 +13,14 @@ vi.mock('../../utils/helpers/ValidatorHelper.js', () => ({ isJson: vi.fn().mockR
 
 import { WebSocket } from 'ws';
 import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
+import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { auth, getClanIdAndNameFromPlayerId } from '../../dao/playerDao.js';
 import { createClanMessageRequest } from '../../dao/clansDao.js';
 import { checkMessageCanBeDeleted } from '../../business/clanService.js';
 import {
 	authenticate,
 	connectUserToWsChannel,
+	connectUserToSseChannel,
 	processWsIncomingMessage,
 	disconnectWsUser,
 	setWsConnectionToAlive,
@@ -124,5 +126,23 @@ describe('SSE helpers', () => {
 	});
 	it('sendSseMessageToUserInChannel is a no-op when the channel is empty', async () => {
 		await expect(sendSseMessageToUserInChannel('p1', 'empty-channel' as never, { a: 1 })).resolves.toBeUndefined();
+	});
+
+	it('connects an SSE user, sends a message and disconnects', async () => {
+		const ua = 'jest';
+		const ip = '7.7.7.7';
+		vi.mocked(auth).mockResolvedValue({ id: 'sse-player' } as never);
+		const ticketDto = await authenticate(
+			{ body: { channel: SseChannel.NOTIFICATION }, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			ServerEventType.SSE
+		);
+		const res = { write: vi.fn() } as never;
+		await connectUserToSseChannel(
+			{ url: `/sse?ticket=${ticketDto.ticket}`, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			res
+		);
+		await sendSseMessageToUserInChannel('sse-player', SseChannel.NOTIFICATION, { hello: true });
+		expect((res as { write: ReturnType<typeof vi.fn> }).write).toHaveBeenCalled();
+		await disconnectSseUser({ url: `/sse?ticket=${ticketDto.ticket}` } as never);
 	});
 });
