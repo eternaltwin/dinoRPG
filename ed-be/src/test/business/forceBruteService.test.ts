@@ -18,11 +18,13 @@ vi.mock('../../utils/dinoz.js', () => ({ getRandomUpElement: vi.fn() }));
 vi.mock('../../utils/randomEnum.js', () => ({ getRandomEnumValue: vi.fn() }));
 vi.mock('../../business/inventoryService.js', () => ({ generateDinozDisplay: vi.fn().mockReturnValue('d') }));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
+vi.mock('../../business/tournamentService.js', () => ({ getTournamentFightsToShow: vi.fn().mockResolvedValue([]) }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		fBTournament: { findMany: vi.fn(), findFirst: vi.fn(), findFirstOrThrow: vi.fn() },
-		gameDinoz: { findMany: vi.fn(), findFirst: vi.fn() },
+		gameDinoz: { findMany: vi.fn(), findFirst: vi.fn(), count: vi.fn(), create: vi.fn() },
+		fightArchive: { findMany: vi.fn() },
 		player: { findUniqueOrThrow: vi.fn() },
 		$queryRaw: vi.fn()
 	}
@@ -36,8 +38,12 @@ import {
 	getCurrentTournament,
 	getCurrentEvents,
 	getPlayerParticipation,
-	createTournamentDinoz
+	createTournamentDinoz,
+	getFBTournamentFights,
+	readAllFightFromEventPool
 } from '../../business/forceBruteService.js';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { viewFight } from '../../dao/archiveDao.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -125,5 +131,43 @@ describe('createTournamentDinoz', () => {
 		} as never);
 		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
 		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow('notEnoughPoints');
+	});
+
+	it('creates a tournament dinoz when all checks pass', async () => {
+		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
+			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000), ranking: { points: 100 }
+		} as never);
+		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
+		vi.mocked(prisma.gameDinoz.findFirst).mockResolvedValue(null as never);
+		vi.mocked(prisma.gameDinoz.count).mockResolvedValue(0 as never);
+		vi.mocked(prisma.gameDinoz.create).mockResolvedValue({ id: 9 } as never);
+		await createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }));
+		expect(prisma.gameDinoz.create).toHaveBeenCalled();
+	});
+
+	it('throws when a dinoz was already created today', async () => {
+		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
+			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000), ranking: { points: 100 }
+		} as never);
+		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
+		vi.mocked(prisma.gameDinoz.findFirst).mockResolvedValue({ id: 1, createdDate: new Date() } as never);
+		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow('alreadyCreatedDinoz');
+	});
+});
+
+describe('fight list handlers', () => {
+	it('getFBTournamentFights transforms and returns fights', async () => {
+		vi.mocked(prisma.fightArchive.findMany).mockResolvedValue([
+			{ id: 1, fighters: '[]', metadata: JSON.stringify({ phase: 'pools', poolNumber: 0 }), result: true, FBTournamentLeft: { id: 1 }, FBTournamentRight: { id: 2 }, leftPlayer: null, rightPlayer: null }
+		] as never);
+		const result = await getFBTournamentFights(req({ id: 't1', pool: '0', phase: TournamentPhase.POOLS }));
+		expect(result).toEqual([]);
+	});
+	it('readAllFightFromEventPool views matching pool fights', async () => {
+		vi.mocked(prisma.fightArchive.findMany).mockResolvedValue([
+			{ id: 1, metadata: JSON.stringify({ phase: TournamentPhase.POOLS, poolNumber: 0 }), result: true, FBTournamentLeft: { id: 1 }, FBTournamentRight: { id: 2 } }
+		] as never);
+		await readAllFightFromEventPool(req({ id: 't1', pool: '0', phase: TournamentPhase.POOLS }));
+		expect(viewFight).toHaveBeenCalled();
 	});
 });
