@@ -1182,9 +1182,9 @@ export async function gatherWithDinoz(req: Request) {
 
 	switch (gatherPlace.type) {
 		case GatherType.CUEILLE1:
+		case GatherType.CUEILLE2:
 		case GatherType.CUEILLE3:
 		case GatherType.CUEILLE4:
-		case GatherType.CUEILLE2:
 			await setSpecificStat(StatTracking.CUEILLE, player.id, 1);
 			break;
 		case GatherType.ENERGY1:
