@@ -58,6 +58,7 @@ const PLAYER_ID = 'player-1';
 const BUILD_ID = 'build-1';
 const DINOZ_ID = 42;
 
+/** Player as returned by getPlayerForDinozBuildChecks; PAC and discovered skills drive the guards. */
 function buildPlayer(overrides: Record<string, unknown> = {}) {
 	return {
 		rewards: [{ rewardId: Reward.PAC }],
