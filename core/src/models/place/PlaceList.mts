@@ -992,7 +992,8 @@ export const placeList: Record<
 		conditions: {
 			[ConditionEnum.CURRENT_MISSION]: MissionID.TODO //'roid'
 		},
-		map: MapZone.DARKWORLD
+		map: MapZone.DARKWORLD,
+		gather: GatherType.CUEILLE4
 	},
 	[PlaceEnum.TOUR_SOMBRE_ENTREE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_ENTREE,
