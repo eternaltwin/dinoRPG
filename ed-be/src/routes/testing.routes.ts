@@ -3,10 +3,10 @@ import { validationResult } from 'express-validator';
 
 import { apiRoutes } from '../constants/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { checkRole } from '../utils/jwt.js';
+import { checkRole } from '../utils/server/jwt.js';
 import { calculateFightVsMonsters, generateMonsterList, rewardFightVsMonsters } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { LOGGER } from '../context.js';
 import { AdminRole } from '@drpg/prisma';
 

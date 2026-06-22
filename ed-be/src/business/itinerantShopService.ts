@@ -12,7 +12,7 @@ import { getDinozItinerantShop } from '../dao/dinozDao.js';
 import { getSpecificSecret } from '../dao/secretDao.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 
 /**
  * @summary Get all ingredients from itinerant shop

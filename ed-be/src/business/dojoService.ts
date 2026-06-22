@@ -44,7 +44,7 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';

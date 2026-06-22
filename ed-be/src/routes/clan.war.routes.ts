@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { body, param, validationResult } from 'express-validator';
 import {
 	addDefender,

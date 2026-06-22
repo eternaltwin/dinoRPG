@@ -13,7 +13,7 @@ import {
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { FBTournamentFightOpponentResponse } from '@drpg/core/returnTypes/Fight';
 import { ErrorResponse } from './index.js';
 

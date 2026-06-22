@@ -5,8 +5,8 @@ import { CONSOLE } from './logger/console.js';
 import { DiscordLogHandler } from './logger/discord.js';
 import { Logger } from './logger/index.js';
 import { PARENT_PORT } from './logger/parent-port.js';
-import { DiscordClient, NetworkDiscordClient, NOOP_DISCORD_CLIENT } from './utils/DiscordUtils.js';
-import { ASYNC_DISPOSE } from './utils/dispose.js';
+import { DiscordClient, NetworkDiscordClient, NOOP_DISCORD_CLIENT } from './utils/server/DiscordUtils.js';
+import { ASYNC_DISPOSE } from './utils/server/dispose.js';
 import { LiveStats } from './liveStats.js';
 
 const DEBUG_QUERIES = false;

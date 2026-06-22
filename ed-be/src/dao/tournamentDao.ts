@@ -1,5 +1,5 @@
 import { prisma } from '../prisma.js';
-import { withSpan } from '../utils/tracing.js';
+import { withSpan } from '../utils/server/tracing.js';
 
 export async function getLatestTournament() {
 	return withSpan(getLatestTournament.name, async () => {

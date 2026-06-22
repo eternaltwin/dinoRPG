@@ -9,7 +9,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Lang, NotificationSeverity, EventType, $Enums, Prisma, LogType } from '@drpg/prisma';
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
-import { withSpan } from '../utils/tracing.js';
+import { withSpan } from '../utils/server/tracing.js';
 import { ProspectorUpdate, WarRankingUpdate } from '../utils/warCalculation.js';
 import ClanEventType = $Enums.ClanEventType;
 import { WarCost } from '@drpg/core/models/clan/clanWar';

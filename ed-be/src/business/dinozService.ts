@@ -93,11 +93,11 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
-import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
+import { getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from '../utils/dinoz.js';
 import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
@@ -1066,31 +1066,23 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ExpectedError(`Dinoz don't have the skill to gather at this place`);
 	}
 
-	// Consume token if it's a special gather
+	// Validate and deduplicate the selected boxes (rejects out-of-bounds coords and prevents the
+	// same cell from being rewarded multiple times within a single request).
+	const boxToOpen = sanitizeGatherBoxes(req.body.box, getGridSize(myGrid));
+
+	// Check if number of box to open is equal or lower than the number of maximum click
+	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gatherPlace)) {
+		throw new ExpectedError(`You have selected too many square`);
+	}
+
+	// Consume token if it's a special gather. Done after every input check so an invalid
+	// request can never burn the token without gathering.
 	if (gatherPlace.special) {
 		const playerToken = player.items.find(item => item.itemId === gatherPlace.cost.itemId);
 		if (!playerToken) throw new ExpectedError(`You don't have the needed token to gather here.`);
 		await decreaseItemQuantity(player.id, gatherPlace.cost.itemId, 1);
 
 		await createLog(LogType.ItemUsed, player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
-	}
-
-	// Sanitize the box to open
-	const boxToSanitize: number[][] = req.body.box;
-	for (const element of boxToSanitize) {
-		if (!element.every(coord => typeof coord === 'number')) {
-			throw new ExpectedError(`This coordinate is not correct : ${element}`);
-		}
-		if (element.some(coord => coord > getGridSize(myGrid) || coord < 0)) {
-			throw new ExpectedError(`This coordinate is out of the grid : ${element}`);
-		}
-	}
-
-	const boxToOpen: [number, number][] = boxToSanitize as [number, number][];
-
-	// Check if number of box to open is equal or lower than the number of maximum click
-	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gatherPlace)) {
-		throw new ExpectedError(`You have selected too many square`);
 	}
 
 	const returnGrid = discoverBox(myGrid, player, gatherPlace, ...boxToOpen);

@@ -8,7 +8,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
-import translate from './translate.js';
+import translate from './server/translate.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
@@ -204,6 +204,33 @@ export const getNumberOfGatheringTries = (
 			break;
 	}
 	return gridData.minimumClick + click;
+};
+
+/**
+ * Validate and deduplicate the gather grid coordinates sent by the client.
+ * Each coordinate must be a numeric `[row, col]` pair within `0 .. gridSize - 1`.
+ * Duplicates are dropped because the gather reward logic credits every coordinate it
+ * receives, so the same cell submitted twice would otherwise be rewarded twice.
+ */
+export const sanitizeGatherBoxes = (rawBoxes: number[][], gridSize: number): [number, number][] => {
+	const boxes: [number, number][] = [];
+	const seen = new Set<string>();
+	for (const element of rawBoxes) {
+		if (!element.every(coord => typeof coord === 'number')) {
+			throw new ExpectedError(`This coordinate is not correct : ${element}`);
+		}
+		// Valid indices are 0 .. gridSize - 1, so anything >= gridSize is out of bounds.
+		if (element.some(coord => coord >= gridSize || coord < 0)) {
+			throw new ExpectedError(`This coordinate is out of the grid : ${element}`);
+		}
+		const [row, col] = element as [number, number];
+		const key = `${row},${col}`;
+		if (!seen.has(key)) {
+			seen.add(key);
+			boxes.push([row, col]);
+		}
+	}
+	return boxes;
 };
 
 export const initializeDinoz = (
