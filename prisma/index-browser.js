@@ -297,6 +297,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   dailyGridRewards: 'dailyGridRewards',
   skipFight: 'skipFight',
   skipLevel: 'skipLevel',
+  autoReequipItems: 'autoReequipItems',
   shareArchivedData: 'shareArchivedData',
   archivedSiteId: 'archivedSiteId',
   displayedNotifications: 'displayedNotifications',

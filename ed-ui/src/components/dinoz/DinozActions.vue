@@ -120,6 +120,7 @@ import { itinerantShopNameList, missionsList, shopNameList } from '../../constan
 import { mixin } from '../../mixin/mixin.js';
 import { ClanService, DinozService, FightService, MissionService } from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
@@ -260,6 +261,25 @@ export default defineComponent({
 					try {
 						const fight = await FightService.processFight(+this.$route.params.id);
 						this.sessionStore.setFightResult(fight);
+
+						if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+							const itemsStr = fight.autoReequipped
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemNameList[item.itemId]}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+								type: 'success'
+							});
+						}
+						if (fight.missingReequip && fight.missingReequip.length > 0) {
+							const itemsStr = fight.missingReequip
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemNameList[item.itemId]}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+								type: 'warning'
+							});
+						}
 
 						this.$router.push({
 							name: 'Fight',

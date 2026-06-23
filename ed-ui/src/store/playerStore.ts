@@ -23,6 +23,7 @@ export const playerStore = defineStore('playerStore', {
 			hasPAC: false,
 			skipFight: false,
 			skipLevel: false,
+			autoReequipItems: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS
