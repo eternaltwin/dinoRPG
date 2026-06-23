@@ -5,6 +5,7 @@ export interface PlayerOptions {
 	currentDinozId?: number;
 	skipFight: boolean;
 	skipLevel: boolean;
+	autoReequipItems: boolean;
 	archivedSiteId: number | null;
 	shareArchivedData: boolean;
 	displayedNotifications: number;

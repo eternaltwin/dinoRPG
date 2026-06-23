@@ -30,6 +30,8 @@ export interface FightResult {
 	endText?: FightText;
 	itemWon?: number;
 	statusReward?: DinozStatusId;
+	autoReequipped?: { itemId: number; count: number }[];
+	missingReequip?: { itemId: number; count: number }[];
 }
 
 export interface FighterRecap {

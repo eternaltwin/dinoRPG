@@ -72,6 +72,7 @@ describe('getCommonData', () => {
 			rewards: [{ rewardId: Reward.PDA }],
 			skipFight: false,
 			skipLevel: false,
+			autoReequipItems: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: 3,
@@ -276,7 +277,7 @@ describe('resetAccount', () => {
 });
 
 describe('updatePlayerSettings', () => {
-	it.each(['skipLevel', 'skipFight', 'archivedSiteId', 'shareArchivedData'])('updates %s', async setting => {
+	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])('updates %s', async setting => {
 		await updatePlayerSettings(req({ setting }, { setting: true }));
 		expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
 	});
