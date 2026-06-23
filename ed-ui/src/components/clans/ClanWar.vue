@@ -230,6 +230,7 @@ import {
 import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import axios from 'axios';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -246,6 +247,7 @@ export default defineComponent({
 			clanId: clanStore().getClanId as number,
 			castle: null as Castle | null,
 			defenders: [] as Defender[],
+			previousDefendersIds: [] as number[],
 			repairCost: null as RepairCost | null,
 			attackCost: null as WarCost | null,
 			utils: utils,
@@ -302,12 +304,14 @@ export default defineComponent({
 		},
 		async onUpdate() {
 			try {
-				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
-				this.defenders = [
-					...order.map(id => this.castle?.defender.find(d => d.id === id)).filter(d => d !== undefined)
-				];
+				const newOrder = this.defenders.map(d => d.id);
+				this.defenders = await ClanService.reorderDefender(this.previousDefendersIds, newOrder);
+				this.previousDefendersIds = newOrder;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+				if (axios.isAxiosError(e) && e.response?.status === 409) {
+					await this.loadComponent();
+				}
 			}
 		},
 		async buildCastle(firstTime: boolean) {
@@ -452,9 +456,8 @@ export default defineComponent({
 				this.castle = castle;
 				this.ingredients = await ClanService.getClanTreasure(+this.$route.params.id);
 
-				const order = this.castle.defenseOrder;
-				const defenders = this.castle.defender;
-				this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
+				this.defenders = this.castle.defender;
+				this.previousDefendersIds = this.defenders.map(d => d.id);
 
 				this.loadRepairCost();
 				setTimeout(() => this.loadAnimation(), 250);

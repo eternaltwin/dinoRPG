@@ -15,6 +15,7 @@ import {
 	declareWar,
 	repairCastle
 } from '../business/clanWar.js';
+import { OutdatedError } from '@drpg/core/utils/ExpectedError';
 
 const routes: Router = Router();
 
@@ -178,7 +179,11 @@ routes.patch(
 			const response = await updateDefenseOrder(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			sendError(res, err);
+			if (err instanceof OutdatedError) {
+				res.status(409).send(err.message);
+			} else {
+				sendError(res, err);
+			}
 		}
 	}
 );
