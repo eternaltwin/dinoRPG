@@ -568,6 +568,7 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: string
 				ingredients: { select: { ingredientId: true, quantity: true } },
 				teacher: true,
 				cooker: true,
+				autoReequipItems: true,
 				dinoz: {
 					select: {
 						id: true,

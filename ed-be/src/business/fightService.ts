@@ -28,7 +28,8 @@ import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
-import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
+import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
+import { decreaseItemQuantity } from '../dao/playerItemDao.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -146,7 +147,9 @@ export async function processFight(req: Request) {
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
+	player: Pick<Player, 'id' | 'teacher' | 'cooker' | 'autoReequipItems'> & {
+		items: { itemId: number; quantity: number }[];
+	}
 ) {
 	const dayOfWeek = dayjs().day();
 	let monsters = await generateMonsterList(team, placeId);
@@ -302,7 +305,7 @@ export async function rewardFightVsMonsters(
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
-	player: Pick<Player, 'id' | 'teacher'>
+	player: Pick<Player, 'id' | 'teacher' | 'autoReequipItems'> & { items: { itemId: number; quantity: number }[] }
 ) {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
@@ -471,9 +474,23 @@ export async function rewardFightVsMonsters(
 
 	// Items used
 	const merguezPerPlayer: Record<string, number> = {};
+	const autoReequippedItems: Record<number, number> = {};
+	const missingReequipItems: Record<number, number> = {};
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+
+			if (player.autoReequipItems && fighter.playerId === player.id) {
+				const inventoryItem = player.items.find(i => i.itemId === itemUsed);
+				if (inventoryItem && inventoryItem.quantity > 0) {
+					inventoryItem.quantity--;
+					await decreaseItemQuantity(player.id, itemUsed, 1);
+					await addItemToDinoz(fighter.dinozId, itemUsed);
+					autoReequippedItems[itemUsed] = (autoReequippedItems[itemUsed] || 0) + 1;
+				} else {
+					missingReequipItems[itemUsed] = (missingReequipItems[itemUsed] || 0) + 1;
+				}
+			}
 
 			if (fighter.playerId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.playerId]) {
@@ -562,7 +579,9 @@ export async function rewardFightVsMonsters(
 			itemsUsed: a.itemsUsed
 		})),
 		place: place,
-		itemWon: itemWon
+		itemWon: itemWon,
+		autoReequipped: Object.entries(autoReequippedItems).map(([id, count]) => ({ itemId: Number(id), count })),
+		missingReequip: Object.entries(missingReequipItems).map(([id, count]) => ({ itemId: Number(id), count }))
 	};
 }
 
