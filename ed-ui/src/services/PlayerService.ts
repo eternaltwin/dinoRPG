@@ -107,6 +107,7 @@ export const PlayerService = {
 			| 'skipLevel'
 			| 'skipFight'
 			| 'autoReequipItems'
+			| 'bypassGatheringGrid'
 			| 'archivedSiteId'
 			| 'shareArchivedData'
 			| 'displayedNotifications',

@@ -73,6 +73,7 @@ describe('getCommonData', () => {
 			skipFight: false,
 			skipLevel: false,
 			autoReequipItems: false,
+			bypassGatheringGrid: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: 3,
@@ -284,7 +285,7 @@ describe('resetAccount', () => {
 });
 
 describe('updatePlayerSettings', () => {
-	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])(
+	it.each(['skipLevel', 'skipFight', 'bypassGatheringGrid', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])(
 		'updates %s',
 		async setting => {
 			await updatePlayerSettings(req({ setting }, { setting: true }));
