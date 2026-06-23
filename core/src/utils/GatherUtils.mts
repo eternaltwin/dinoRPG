@@ -6,7 +6,7 @@ import { PlayerForConditionCheck } from '../constants.mjs';
 import { GatherRewards } from '../models/gather/gatherRewards.mjs';
 import { GatherResultGrid } from '../models/gather/gatherResultGrid.mjs';
 import { Item, itemList } from '../models/item/ItemList.mjs';
-import { ingredientList } from '../models/ingredient/ingredientList.mjs';
+import { Ingredient, ingredientList } from '../models/ingredient/ingredientList.mjs';
 import { checkCondition } from './checkCondition.mjs';
 
 export const initializeGatherGrid = (playerId: string, placeId: number, gridInformation: GatherData) => {
@@ -22,17 +22,17 @@ export const initializeGatherGrid = (playerId: string, placeId: number, gridInfo
 	let ingredientCount = 0;
 
 	// Generate a list of ingredient
-	gridInformation.items.forEach(ingredient => {
-		const buffer = new Array(ingredient.startQuantity);
-		for (let i = 0; i < ingredient.startQuantity; i++) {
-			let ingredientId = ingredient.ingredientId[Math.floor(Math.random() * ingredient.ingredientId.length)];
-			if (ingredient.type === 'item') ingredientId += 1000;
-			buffer[i] = ingredientId;
-		}
+	for (const [key, item] of Object.entries(gridInformation.items)) {
+		if (item) {
+			const buffer = new Array(item.startQuantity);
+			for (let i = 0; i < item.startQuantity; i++) {
+				buffer[i] = Number(key); // Save the **key**, for proper mapping on discovery with the record.
+			}
 
-		grid.splice(ingredientCount, ingredient.startQuantity, ...buffer);
-		ingredientCount += ingredient.startQuantity;
-	});
+			grid.splice(ingredientCount, item.startQuantity, ...buffer);
+			ingredientCount += item.startQuantity;
+		}
+	}
 
 	// Fill the empty spot with 0
 	grid = Array.from(grid, v => (v === undefined ? 0 : v));
@@ -81,30 +81,27 @@ export const discoverBox = (
 	const goldReward = 0;
 	const ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[] = [];
 	for (let i = 0; i < box.length; i++) {
-		let ingredientId: number = grid.grid[box[i][0] * gridInformation.size + box[i][1]];
-		let itemCheck = false;
-		if (ingredientId > 1000) {
-			ingredientId -= 1000;
-			itemCheck = true;
-		}
+		let boxValue: number = grid.grid[box[i][0] * gridInformation.size + box[i][1]];
+
+		// Mark the box as discovered.
 		flatReturnGrid[box[i][0] * gridInformation.size + box[i][1]] = -1;
 
-		if (itemCheck) {
-			const item = itemList[ingredientId as Item];
-			rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
-		} else {
-			const ingredient = Object.values(ingredientList).find(
-				ingredientFiche => ingredientFiche.ingredientId === ingredientId
-			);
-			if (ingredient) {
-				const gridIngredient = gridInformation.items.filter(ing => ing.ingredientId.includes(ingredient.ingredientId));
-				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
-				for (const possibleGater of gridIngredient) {
-					if (checkCondition(possibleGater.condition, player, player.dinoz[0].id)) {
-						ingredient.name = ingredient.name.toLowerCase();
-						rewards.ingredients.push(ingredient);
-					}
-				}
+		// If the box was not empty, get the entry from the grid
+		if (boxValue !== 0) {
+			let value = gridInformation.items[boxValue];
+			if (!value) throw new Error(`Item entry ID ${boxValue} not found in gridInformation ${gridInformation.type} items`);
+
+			// Select at random from the possibilities of that entry (don't roll the random if only one entry)
+			let ingredientOrItemId = value.ingredientOrItemId[value.ingredientOrItemId.length > 1 ? Math.floor(Math.random() * value.ingredientOrItemId.length) : 0];
+
+			if (checkCondition(value.condition, player, player.dinoz[0].id))
+			if (value.type === 'item') {
+				const item = itemList[ingredientOrItemId as Item];
+				rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
+			} else {
+				const ingredient = ingredientList[ingredientOrItemId as Ingredient];
+				ingredient.name = ingredient.name.toLowerCase();
+				rewards.ingredients.push(ingredient);
 			}
 		}
 	}

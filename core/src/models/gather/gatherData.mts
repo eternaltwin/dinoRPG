@@ -22,7 +22,7 @@ export type GatherData =
 			minimumClick: number;
 			condition: Condition; // Conditions needed
 			apparence: string; // Skin
-			items: GatherItems[];
+			items: Readonly<Partial<Record<number, GatherItems>>>; // Each item entry must be matched with a unique number for stable identification
 	  }
 	| {
 			action: Action;
@@ -38,6 +38,6 @@ export type GatherData =
 			minimumClick: number;
 			condition: Condition; // Conditions needed
 			apparence: string; // Skin
-			items: GatherItems[];
+			items: Readonly<Partial<Record<number, GatherItems>>>; // Each item entry must be matched with a unique number for stable identification
 			cost: ItemFiche;
 	  };
