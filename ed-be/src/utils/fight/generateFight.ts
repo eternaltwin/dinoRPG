@@ -747,7 +747,7 @@ const startFight = (fightData: DetailedFight) => {
 				fids: [],
 				notification: NotificationList.InitDown
 			} as NotifyStep;
-			opponents.forEach(opponent => {
+			allOtherFighters.forEach(opponent => {
 				opponent.time += powerOf(fightData.rng, fighter, [[ElementType.FIRE, 2]]) * TIME_FACTOR;
 				init_down_notify.fids.push(opponent.id);
 			});
