@@ -2272,7 +2272,7 @@
 			"Sieste": "The Dinoz recovers up to 20 health points and falls asleep",
 			"Meteores": "Attack all enemies with a Fire power of 10",
 			"SelfControl": "Prevent all negative statuses and decrease the initiative by 3",
-			"Brave": "The Dinoz won't be able to be part of a Group anymore. Increase the Fire element by 6, maximum health points by 50 and speed by 15%.",
+			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6 et le maximum de vie de 50. Diminue également l'initiative de **tous** les combattants avec un pouvoir Feu de 2.",
 			"Planificateur": "Enable the Dinoz to search an additional square during an excavation",
 			"HeritageFaroe": "Increase the strength of Wood **assaults** by 12 and the armor by 10%",
 			"PrintempsPrecoce": "All the other Dinoz in the Group recover health points up to the Wood element of the Dinoz",
