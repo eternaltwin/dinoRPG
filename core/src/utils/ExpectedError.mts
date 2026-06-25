@@ -3,3 +3,5 @@ export class ExpectedError extends Error {
 		super(message);
 	}
 }
+
+export class OutdatedError extends ExpectedError {}
