@@ -46,10 +46,9 @@ export interface AttackStatus {
 export interface Castle {
 	maxLife: number;
 	currentLife: number;
-	defenseOrder: number[];
 	defender: Defender[];
 	repairs: ClanCastleRepair[];
-	nextProspectorVisit: string | null; // ISO datetime of the next prospector visit, member-only
+	nextProspectorVisit: Date | null; // ISO datetime of the next prospector visit, member-only
 }
 
 export type Defender = Pick<Dinoz, 'id' | 'name' | 'life' | 'maxLife' | 'display' | 'level'>;

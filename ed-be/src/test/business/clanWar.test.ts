@@ -211,7 +211,15 @@ describe('forfeitWar', () => {
 
 describe('addDefender', () => {
 	const dinoz = (overrides = {}) => ({
-		id: 5, name: 'd', display: 'x', maxLife: 100, life: 100, placeId: 1, playerId: 'p1', unavailableReason: null, ...overrides
+		id: 5,
+		name: 'd',
+		display: 'x',
+		maxLife: 100,
+		life: 100,
+		placeId: 1,
+		playerId: 'p1',
+		unavailableReason: null,
+		...overrides
 	});
 	it('adds a defender', async () => {
 		vi.mocked(prisma.dinoz.findUnique).mockResolvedValue(dinoz() as never);
@@ -236,7 +244,12 @@ describe('addDefender', () => {
 
 describe('castleStatus', () => {
 	it('returns the castle with next prospector visit', async () => {
-		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ currentLife: 100, defender: [], defenseOrder: [], repairs: [] } as never);
+		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({
+			currentLife: 100,
+			defender: [],
+			defenseOrder: [],
+			repairs: []
+		} as never);
 		vi.mocked(prisma.serverState.findUnique).mockResolvedValue({ nextCheck: new Date() } as never);
 		const result = await castleStatus(req());
 		expect(result).toHaveProperty('nextProspectorVisit');
@@ -263,13 +276,33 @@ describe('removeDefender', () => {
 
 describe('updateDefenseOrder', () => {
 	it('updates the defense order', async () => {
-		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ defender: [{ id: 1 }, { id: 2 }] } as never);
-		vi.mocked(prisma.clanCastle.update).mockResolvedValue({ defenseOrder: [2, 1] } as never);
-		const result = await updateDefenseOrder(req({}, { dinozIds: [2, 1] }));
-		expect(result.defenseOrder).toEqual([2, 1]);
+		vi.mocked(prisma.clanCastle.findUnique).mockReturnValue({
+			defender: [{ id: 1 }, { id: 2 }],
+			defenseOrder: [1, 2]
+		} as never);
+		vi.mocked(prisma.clanCastle.update).mockReturnValue({
+			defender: [{ id: 1 }, { id: 2 }],
+			defenseOrder: [2, 1]
+		} as never);
+		const result = await updateDefenseOrder(req({}, { previousDinozIds: [1, 2], dinozIds: [2, 1] }));
+		expect(result.map(defender => defender.id)).toEqual([2, 1]);
+	});
+	it('throws on outdated defense', async () => {
+		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({
+			defender: [{ id: 1 }, { id: 2 }],
+			defenseOrder: [1, 2]
+		} as never);
+		await expect(updateDefenseOrder(req({}, { previousDinozIds: [1, 2, 3], dinozIds: [2, 1, 3] }))).rejects.toThrow(
+			'outdatedDefense'
+		);
 	});
 	it('throws on invalid order', async () => {
-		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ defender: [{ id: 1 }] } as never);
-		await expect(updateDefenseOrder(req({}, { dinozIds: [9] }))).rejects.toThrow('invalidDefenseOrder');
+		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({
+			defender: [{ id: 1 }, { id: 2 }],
+			defenseOrder: [1, 2]
+		} as never);
+		await expect(updateDefenseOrder(req({}, { previousDinozIds: [1, 2], dinozIds: [2, 1, 3] }))).rejects.toThrow(
+			'invalidDefenseOrder'
+		);
 	});
 });
