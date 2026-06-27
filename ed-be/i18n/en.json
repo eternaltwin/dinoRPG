@@ -65,8 +65,8 @@
 		"alreadyInDefense": "Your Dinoz is already part of the castle defense.",
 		"sameClan": "You cannot declare war to your own clan.",
 		"castleAlreadyBuilt": "The castle of your clan is already built.",
-		"notInDefense": "This Dinoz is part of the castle's defense.",
-		"outdatedDefense": "Défense obsolète"
+		"notInDefense": "This Dinoz is not part of the castle's defense.",
+		"outdatedDefense": "Obsolete Defense"
 	},
 	"error": {
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
