@@ -2272,7 +2272,7 @@
 			"Sieste": "Der Dinoz schläft ein und stellt bis zu 20 Lebenspunkte wieder her.",
 			"Meteores": "Greift alle Feinde mit einer Feuerkraft von 10 an.",
 			"SelfControl": "Immunisiert den Dinoz gegen alle negativen Effekte und verringert seine Initiative um 3.",
-			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6 et le maximum de vie de 50. Diminue également l'initiative de **tous** les combattants avec un pouvoir Feu de 2.",
+			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6 et le maximum de vie de 50. Diminue également l'initiative de **tous** les autres combattants avec un pouvoir Feu de 2.",
 			"Planificateur": "Ermöglicht es dem Dinoz, ein zusätzliches Feld freizulegen.",
 			"HeritageFaroe": "Erhöht die Stärke von Holz**angriffen** um 12 und die Rüstung um 10%.",
 			"PrintempsPrecoce": "Alle anderen Dinoz der Gruppe erhalten maximal so viele Lebenspunkte zurück wie der Dinoz Holzelementepunkte besitzt.",
