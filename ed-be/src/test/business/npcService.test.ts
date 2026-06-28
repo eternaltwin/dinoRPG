@@ -44,7 +44,7 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../business/
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { getNpcSpeech } from '../../business/npcService.js';
 
@@ -75,7 +75,7 @@ const baseNpc = {
 		choiceReward: { stepName: 'choiceReward', nextStep: [], reward: [{ rewardType: 'item' }] },
 		choiceFight: { stepName: 'choiceFight', nextStep: ['victory'], fight: [{ id: 1 }] },
 		choiceAlias: { stepName: 'choiceAlias', alias: 'shortcut', nextStep: [] },
-		choiceTarget: { stepName: 'choiceTarget', target: 'end', nextStep: [] },
+		choiceRedirect: { stepName: 'choiceRedirect', redirect: 'end', nextStep: [] },
 		end: { stepName: 'end', nextStep: [] },
 		victory: { stepName: 'victory', nextStep: [] },
 		stop: { stepName: 'stop', nextStep: ['begin'] }
@@ -92,6 +92,7 @@ function buildPlayer(overrides: Partial<Record<string, unknown>> = {}, npcs: { n
 				id: DINOZ_ID,
 				canChangeName: false,
 				placeId: PLACE_ID,
+				life: 1,
 				npcs,
 				...overrides
 			}
@@ -127,7 +128,7 @@ describe('getNpcSpeech - guard clauses', () => {
 
 	it('throws when the dinoz is not in the player team', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({ id: 999 }) as never);
-		await expect(getNpcSpeech(req())).rejects.toThrow('Dinoz is not here');
+		await expect(getNpcSpeech(req())).rejects.toThrow('Dinoz not found');
 	});
 
 	it('throws when the dinoz still needs to be named', async () => {
@@ -147,26 +148,31 @@ describe('getNpcSpeech - guard clauses', () => {
 		await expect(getNpcSpeech(req())).rejects.toThrow("NPC michel doesn't exists");
 	});
 
-	it('throws when the dinoz does not meet the NPC condition', async () => {
-		(npcList as Record<string, unknown>).michel = { ...npc, condition: { minLevel: 5 } };
+	it('throws when the dinoz is dead', async () => {
+		mockGetNPC.mockResolvedValue(buildPlayer({ life: 0 }) as never);
+		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('Dinoz is dead');
+	});
+
+	it('throws when the dinoz does not meet the NPC condition at the initial step', async () => {
+		(npcList as Record<string, unknown>).michel = { ...npc, condition: { [ConditionEnum.MINLEVEL]: 99 } };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		mockCheckCondition.mockReturnValue(false);
-		await expect(getNpcSpeech(req())).rejects.toThrow('requirement to talk');
+		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
+		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('doesn\'t meet requirement to talk to');
 	});
 
 	it('throws when the dinoz is not on the same place as the NPC', async () => {
 		(placeList as Record<string, unknown>).town = { placeId: PLACE_ID, name: 'town' };
 		(npcList as Record<string, unknown>).michel = { ...npc, placeId: 999 };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		await expect(getNpcSpeech(req())).rejects.toThrow('cannot talk to this NPC');
+		await expect(getNpcSpeech(req())).rejects.toThrow('not in same location as NPC');
 	});
 
 	it('throws when no valid initial step is found', async () => {
 		// The only initial step carries a condition that is not met.
-		(npc.data.begin as Record<string, unknown>).condition = { minLevel: 99 };
+		(npc.data.begin as Record<string, unknown>).condition = { [ConditionEnum.MINLEVEL]: 99 };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
-		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('No valid initial step');
+		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('doesn\'t fulfill the conditions');
 	});
 
 	it('throws when the requested step does not exist', async () => {
@@ -175,22 +181,22 @@ describe('getNpcSpeech - guard clauses', () => {
 	});
 });
 
-describe('getNpcSpeech - stop step', () => {
-	it('resets the conversation to begin and returns the stop step', async () => {
-		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		const result = await getNpcSpeech(req({ stop: true }));
-		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'begin');
-		expect(result).toEqual({ name: 'michel', speech: 'stop', playerChoice: ['begin'] });
-	});
+// describe('getNpcSpeech - stop step', () => {
+// 	it('resets the conversation to begin and returns the stop step', async () => {
+// 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
+// 		const result = await getNpcSpeech(req({ stop: true }));
+// 		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'begin');
+// 		expect(result).toEqual({ name: 'michel', speech: 'stop', playerChoice: ['begin'] });
+// 	});
 
-	it('throws when the NPC has no stop step', async () => {
-		const noStop = { ...npc, data: { ...npc.data } };
-		delete (noStop.data as Record<string, unknown>).stop;
-		(npcList as Record<string, unknown>).michel = noStop;
-		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		await expect(getNpcSpeech(req({ stop: true }))).rejects.toThrow("step stop doesn't exist");
-	});
-});
+// 	it('throws when the NPC has no stop step', async () => {
+// 		const noStop = { ...npc, data: { ...npc.data } };
+// 		delete (noStop.data as Record<string, unknown>).stop;
+// 		(npcList as Record<string, unknown>).michel = noStop;
+// 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
+// 		await expect(getNpcSpeech(req({ stop: true }))).rejects.toThrow("stop step doesn't exist");
+// 	});
+// });
 
 describe('getNpcSpeech - first conversation', () => {
 	it('creates the NPC entry and returns the initial step with filtered choices', async () => {
@@ -200,6 +206,20 @@ describe('getNpcSpeech - first conversation', () => {
 		const result = await getNpcSpeech(req({ step: 'begin' }));
 
 		expect(mockCreateStep).toHaveBeenCalledWith(DINOZ_ID, { npcId: NPC_ID, step: 'begin' });
+		expect(result).toEqual({
+			name: 'michel',
+			speech: 'begin',
+			playerChoice: ['choice1', 'choiceReward']
+		});
+	});
+
+	it('updates existing NPC entry and returns the initial step with filtered choices', async () => {
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'end' }]) as never);
+		mockCreateStep.mockResolvedValue({ npcId: NPC_ID, step: 'begin' } as never);
+
+		const result = await getNpcSpeech(req({ step: 'begin' }));
+
+		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'begin');
 		expect(result).toEqual({
 			name: 'michel',
 			speech: 'begin',
@@ -245,23 +265,32 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'choiceAlias');
 	});
 
-	it('resets to the initial step when the requested step is not reachable', async () => {
-		// Current step is `choice1`, whose only next step is `end`; ask for `choiceReward`.
+	it('proceeds when the requested step is reachable', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
+		
+		const result = await getNpcSpeech(req({ step: 'end' }));
 
-		const result = await getNpcSpeech(req({ step: 'choiceReward' }));
-
-		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'begin');
+		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'end');
 		expect(result).toEqual({
 			name: 'michel',
-			speech: 'begin',
-			playerChoice: ['choice1', 'choiceReward']
+			speech: 'end',
+			playerChoice: [],
+			flashvars: "fv",
+			rewards: {},
+			service: undefined
 		});
+	});
+
+	it('throws when the requested step is not reachable', async () => {
+		// Remove 'end' from 'choice1' nest steps.
+		(npc.data.choice1 as Record<string, unknown>).nextStep = [];
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
+		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('not available for your Dinoz');
 	});
 
 	it('throws when the stored current step no longer exists', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'ghost' }]) as never);
-		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow("step ghost doesn't exist");
+		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow("does not exist for NPC");
 	});
 
 	it('throws when the requested step condition is not fulfilled', async () => {
@@ -270,25 +299,25 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		// NPC condition + reachability pass; only the step condition fails.
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
 
-		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow("doesn't fullfill the conditions");
+		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow("doesn't fulfill the conditions");
 	});
 
-	it('redirects to the target step when the requested step has a target', async () => {
-		(npc.data.begin.nextStep as string[]) = ['choiceTarget'];
-		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
+	it('redirects when the requested step has a redirection set', async () => {
+		(npc.data.begin.nextStep as string[]) = ['choiceRedirect'];
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
 
-		const result = await getNpcSpeech(req({ step: 'choiceTarget' }));
+		const result = await getNpcSpeech(req({ step: 'choiceRedirect' }));
 
 		expect(result.speech).toBe('end');
 		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'end');
 	});
 
-	it('throws when the target step is invalid', async () => {
-		(npc.data.begin.nextStep as string[]) = ['choiceTarget'];
-		(npc.data.choiceTarget as Record<string, unknown>).target = 'missing';
+	it('throws when the redirect is invalid', async () => {
+		(npc.data.begin.nextStep as string[]) = ['choiceRedirect'];
+		(npc.data.choiceRedirect as Record<string, unknown>).redirect = 'missing';
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
 
-		await expect(getNpcSpeech(req({ step: 'choiceTarget' }))).rejects.toThrow('Invalid target');
+		await expect(getNpcSpeech(req({ step: 'choiceRedirect' }))).rejects.toThrow('Invalid redirect');
 	});
 
 	it('grants rewards and refreshes the player on a rewarding step', async () => {
@@ -318,6 +347,29 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		expect(result.speech).toBe('choiceReward');
 		expect(result.service).toEqual([ServiceEnum.REFRESH_PLAYER]);
 		expect(result.rewards).toEqual({});
+	});
+
+	it('no existing current step redirects to initial step if one valid exists', async () => {
+		// No existing current step. Ask for 'choiceReward'. Expect 'begin'.
+		mockGetNPC.mockResolvedValue(buildPlayer() as never);
+		const result = await getNpcSpeech(req({ step: 'choiceReward' }));
+		expect(mockCreateStep).toHaveBeenCalledWith(DINOZ_ID, { npcId: NPC_ID, step: 'begin' });
+		expect(result).toEqual({
+			name: 'michel',
+			speech: 'begin',
+			playerChoice: ['choice1', 'choiceReward']
+		});
+	});
+
+	it('no existing current step throws if no valid initial step can be found', async () => {
+		(npc.data.begin as Record<string, unknown>).initialStep = false;
+		mockGetNPC.mockResolvedValue(buildPlayer() as never);
+		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow("No valid initial step found for NPC");;
+	});
+
+	it('throws if current step does not contain requested step', async () => {
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{npcId: NPC_ID, step: 'begin'}]) as never);
+		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('end is not available');
 	});
 
 	it('throws when the player vanishes during the post-reward refresh', async () => {

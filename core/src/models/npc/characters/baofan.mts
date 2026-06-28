@@ -66,9 +66,5 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	no: {
 		stepName: 'no',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

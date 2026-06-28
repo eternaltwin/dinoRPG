@@ -40,9 +40,5 @@ export const GARDE_ATLANTE: Readonly<Record<string, NpcData>> = {
 	thanks: {
 		stepName: 'thanks',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

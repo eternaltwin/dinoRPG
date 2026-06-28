@@ -161,9 +161,5 @@ export const ALIEN: Readonly<Record<string, NpcData>> = {
 				value: Reward.PLUME
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

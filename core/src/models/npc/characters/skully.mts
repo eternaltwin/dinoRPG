@@ -70,7 +70,7 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 		stepName: 'reset',
 		nextStep: [],
 		alias: 'forgot',
-		target: 'forgot'
+		redirect: 'forgot'
 	},
 	next: {
 		stepName: 'next',
@@ -92,13 +92,13 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 		stepName: 'question',
 		nextStep: [],
 		alias: 'forgot',
-		target: 'forgot'
+		redirect: 'forgot'
 	},
 	maybe: {
 		stepName: 'maybe',
 		nextStep: [],
 		alias: 'forgot',
-		target: 'forgot'
+		redirect: 'forgot'
 	},
 	accept: {
 		stepName: 'accept',
@@ -220,10 +220,6 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 			}
 		],
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };
 
@@ -259,10 +255,6 @@ export const MOULDEUR: Readonly<Record<string, NpcData>> = {
 	},
 	exp: {
 		stepName: 'exp',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

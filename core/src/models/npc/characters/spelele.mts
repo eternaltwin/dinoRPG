@@ -40,7 +40,7 @@ export const SPELELE: Readonly<Record<string, NpcData>> = {
 	again: {
 		stepName: 'again',
 		nextStep: [],
-		target: 'congel'
+		redirect: 'congel'
 	},
 	thanks: {
 		stepName: 'thanks',
@@ -54,10 +54,6 @@ export const SPELELE: Readonly<Record<string, NpcData>> = {
 	},
 	bye: {
 		stepName: 'bye',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

@@ -108,7 +108,7 @@ export default defineComponent({
 			if (this.npcSpeech && this.fight.result) {
 				this.$router.push({
 					name: 'NPC',
-					params: { id: this.dinozId.toString(), npc: this.npcName }
+					params: { id: this.dinozId.toString(), npc: this.npcName, step: this.npcSpeech }
 				});
 			} else {
 				useDinozStore().clearNpc(this.dinozId);

@@ -111,10 +111,6 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 				value: DinozStatusId.BUOY
 			},
 			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
-			},
-			{
 				rewardType: RewardEnum.REDIRECT,
 				service: [ServiceEnum.FIGHT]
 			}
@@ -128,10 +124,6 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.CLIMBING_GEAR
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			},
 			{
 				rewardType: RewardEnum.REDIRECT,
@@ -193,7 +185,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	stone_no: {
 		stepName: 'stone_no',
-		target: 'question',
+		redirect: 'question',
 		nextStep: ['menu']
 	},
 	noquestion: {
@@ -202,17 +194,11 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	fire_win: {
 		stepName: 'fire_win',
-		nextStep: [],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-		}
+		nextStep: []
 	},
 	water_win: {
 		stepName: 'water_win',
-		nextStep: [],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-		}
+		nextStep: []
 	},
 	pac_start: {
 		stepName: 'pac_start',
@@ -266,10 +252,6 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 				step: 13
 			}
 		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

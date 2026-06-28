@@ -38,9 +38,5 @@ export const GARDIEN: Readonly<Record<string, NpcData>> = {
 				service: [ServiceEnum.MISSIONS]
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

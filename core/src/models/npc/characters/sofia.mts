@@ -80,9 +80,5 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 	no2: {
 		stepName: 'no2',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

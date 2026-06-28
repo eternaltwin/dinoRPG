@@ -108,6 +108,8 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_BUOY } },
 				// Know about swamp monsters
 				{ [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN },
+				// Can use the power of the Zors glove
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 				// Flooded day
 				{
 					[Operator.OR]: SWAMP_FLOODED_DAYS.map(day => ({ [ConditionEnum.DAY]: day })) as [
@@ -144,6 +146,8 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_LANTERN } },
 				// Know about swamp monsters
 				{ [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN },
+				// Can use the power of the Zors glove
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 				// Fog day
 				{
 					[Operator.OR]: SWAMP_FOG_DAYS.map(day => ({ [ConditionEnum.DAY]: day })) as [

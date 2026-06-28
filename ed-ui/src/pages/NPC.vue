@@ -47,10 +47,10 @@ export default defineComponent({
 	data() {
 		return {
 			npcName: undefined as string | undefined,
+			npcStep: undefined as string | undefined,
 			dinozId: +this.$route.params.id as number,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-
 			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
@@ -127,13 +127,14 @@ export default defineComponent({
 			}
 		},
 		async stop(): Promise<void> {
-			await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
+			// await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
 			useDinozStore().clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}
 	},
 	async mounted(): Promise<void> {
 		this.npcName = this.$route.params.npc as string;
+		this.npcStep = this.$route.params.step as string;
 		if (this.dialog) {
 			this.npcSpeech = {
 				name: this.npcName,
@@ -143,7 +144,7 @@ export default defineComponent({
 		} else {
 			const npc = useDinozStore().getCurrentDinoz.npcAwait;
 
-			let step = 'begin';
+			let step = this.npcStep;
 
 			if (npc && npc.npcName === this.npcName) {
 				step = npc.npcSpeech;
