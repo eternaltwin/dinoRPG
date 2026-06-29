@@ -63,6 +63,11 @@ export class DinozActor {
 		return { ...this.pos };
 	}
 
+	/** Number of cells still queued ahead of the current position. */
+	get pending(): number {
+		return this.path.length - 1 - this.seg;
+	}
+
 	/** Drop any auto-walk path and hold at the current cell for manual control. */
 	takeControl(): void {
 		this.stop();
