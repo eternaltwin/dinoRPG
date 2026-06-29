@@ -74,7 +74,8 @@
 			"core/",
 			"prisma/",
 			"Eternaltwin/",
-			"dino-renderer/"
+			"dino-renderer/",
+			"maze-poc/"
 		]
 	},
 	"packageManager": "yarn@4.10.3",

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DinoRPG — Maze POC</title>
+	</head>
+	<body>
+		<header>
+			<h1>DinoRPG — Maze POC</h1>
+			<p>
+				Dungeon generated &rarr; encoded &rarr; decoded with the ported
+				<code>DungeonCodec</code>, rendered with Pixi.js. The dinoz uses
+				<code>@eternaltwin/dinorpg_animations</code> and walks from the green start to the purple exit.
+			</p>
+		</header>
+
+		<div class="toolbar">
+			<button id="regen">New maze ▸</button>
+			<button id="replay">Replay walk ↻</button>
+			<div id="levels" class="levels"></div>
+			<span class="seed">seed: <span id="seed">1</span></span>
+		</div>
+
+		<div id="stage" class="stage"></div>
+
+		<div class="legend">
+			<span><i class="sw start"></i>start</span>
+			<span><i class="sw exit"></i>exit</span>
+			<span><i class="sw monster"></i>monster door</span>
+			<span><i class="sw locked"></i>locked door</span>
+			<span><i class="sw up"></i>stairs up</span>
+			<span><i class="sw down"></i>stairs down</span>
+			<span><i class="sw key"></i>key</span>
+			<span><i class="sw gold"></i>gold</span>
+			<span><i class="sw heal"></i>heal</span>
+		</div>
+
+		<details class="codec">
+			<summary>Encoded string</summary>
+			<pre id="signature"></pre>
+			<pre id="encoded"></pre>
+		</details>
+
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>
