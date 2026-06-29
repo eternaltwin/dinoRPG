@@ -155,6 +155,9 @@ export class DungeonCodec {
 		const rbits = bc.read(5);
 		const xybits = DungeonCodec.nbits(width > height ? width : height);
 		const whbits = xybits - 1;
+		// Guard against arbitrary / incompatible strings: bail cleanly instead of
+		// allocating huge tables or looping over garbage room counts.
+		if (width < 1 || width > 256 || height < 1 || height > 256 || nlevels < 1 || nlevels > 64) return false;
 		const levels: DungeonLevel[] = [];
 		this.d = {
 			width,
@@ -169,6 +172,7 @@ export class DungeonCodec {
 			for (let x = 0; x < width; x++) t[x] = new Array<boolean>(height).fill(false);
 			const rooms: DungeonRoom[] = [];
 			const nr = bc.read(rbits);
+			if (nr > width * height) return false;
 			for (let j = 0; j < nr; j++) {
 				const x = bc.read(xybits);
 				const y = bc.read(xybits);
@@ -176,6 +180,7 @@ export class DungeonCodec {
 				const h = bc.read(whbits);
 				const doors: DungeonDoor[] = [];
 				let item: DungeonItemPlacement | null = null;
+				if (x < 0 || y < 0 || w < 1 || h < 1 || x + w > width || y + h > height) return false;
 				this.decodeTable(t, x, y, w, h);
 				const nd = bc.read(5);
 				for (let k = 0; k < nd; k++) {
@@ -198,6 +203,7 @@ export class DungeonCodec {
 							key = bc.read(6);
 							break;
 					}
+					if (dx < 0 || dy < 0 || dx >= width || dy >= height) return false;
 					doors.push({ x: dx, y: dy, up, key });
 					t[dx][dy] = true;
 				}

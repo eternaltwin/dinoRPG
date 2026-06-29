@@ -19,8 +19,15 @@
 		<div class="toolbar">
 			<button id="regen">New maze ▸</button>
 			<button id="replay">Replay walk ↻</button>
+			<button id="gen-toggle">Generator: Original</button>
 			<div id="levels" class="levels"></div>
 			<span class="seed">seed: <span id="seed">1</span></span>
+		</div>
+
+		<div class="import-row">
+			<input id="import-str" type="text" placeholder="Paste an encoded string (from the panel below) and load it…" />
+			<button id="import-btn">Load string</button>
+			<span id="import-msg" class="import-msg"></span>
 		</div>
 
 		<div id="stage" class="stage"></div>

@@ -8,7 +8,7 @@
 		"dev": "vite",
 		"build": "tsc --noEmit && vite build",
 		"preview": "vite preview",
-		"test": "tsc -p tsconfig.node.json && node -e \"require('fs').writeFileSync('dist-test/package.json','{\\\"type\\\":\\\"commonjs\\\"}')\" && node dist-test/test/codec.test.js"
+		"test": "tsc -p tsconfig.node.json && node -e \"require('fs').writeFileSync('dist-test/package.json','{\\\"type\\\":\\\"commonjs\\\"}')\" && node dist-test/test/codec.test.js && node dist-test/test/original.test.js"
 	},
 	"dependencies": {
 		"@eternaltwin/dinorpg_animations": "^1.0.9",
