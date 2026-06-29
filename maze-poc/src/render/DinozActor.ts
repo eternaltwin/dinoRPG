@@ -32,6 +32,7 @@ export class DinozActor {
 	private seg = 0;
 	private t = 0;
 	private facing = 1;
+	private pos: Cell = { l: 0, x: 0, y: 0 };
 	private readonly tick = (delta: number) => this.update(delta);
 
 	constructor(renderer: MazeRenderer, opts: DinozActorOptions) {
@@ -54,6 +55,27 @@ export class DinozActor {
 		}
 		const p = this.renderer.center(cell.x, cell.y);
 		this.sprite.position.set(p.x, p.y + this.renderer.cell * 0.25);
+		this.pos = { ...cell };
+	}
+
+	/** The cell the dinoz currently occupies. */
+	get cell(): Cell {
+		return { ...this.pos };
+	}
+
+	/** Drop any auto-walk path and hold at the current cell for manual control. */
+	takeControl(): void {
+		this.stop();
+		this.path = [{ ...this.pos }];
+		this.seg = 0;
+		this.t = 0;
+	}
+
+	/** Queue one adjacent cell to walk to (manual control); resumes the ticker. */
+	enqueue(cell: Cell): void {
+		this.path.push(cell);
+		this.renderer.app.ticker.remove(this.tick);
+		this.renderer.app.ticker.add(this.tick);
 	}
 
 	/** Start walking the given path. Restarts any walk in progress. */
@@ -111,6 +133,7 @@ export class DinozActor {
 		this.sprite.position.set(a.x + (b.x - a.x) * k, a.y + yOff + (b.y - a.y) * k);
 
 		if (this.t >= 1) {
+			this.pos = { l: to.l, x: to.x, y: to.y };
 			this.seg++;
 			this.t = 0;
 		}

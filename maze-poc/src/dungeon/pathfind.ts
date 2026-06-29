@@ -14,10 +14,11 @@ export interface Cell {
 	y: number;
 }
 
-const key = (l: number, x: number, y: number) => `${l},${x},${y}`;
+export const stairKey = (l: number, x: number, y: number) => `${l},${x},${y}`;
+const key = stairKey;
 
 /** Map every stair-door cell to the level it connects to. */
-function buildStairs(d: DungeonStruct): Map<string, number> {
+export function buildStairs(d: DungeonStruct): Map<string, number> {
 	const stairs = new Map<string, number>();
 	d.levels.forEach((level, l) => {
 		for (const room of level.rooms) {

@@ -12,7 +12,8 @@
 import './style.css';
 import { OriginalGenerator } from './dungeon/original';
 import { DungeonCodec } from './dungeon/DungeonCodec';
-import { findPath } from './dungeon/pathfind';
+import { findPath, buildStairs, stairKey } from './dungeon/pathfind';
+import type { Cell } from './dungeon/pathfind';
 import { MazeRenderer } from './render/MazeRenderer';
 import { DinozActor } from './render/DinozActor';
 import { loadDungeonAssets } from './render/assets';
@@ -31,21 +32,64 @@ const seedEl = document.getElementById('seed') as HTMLSpanElement;
 const importInput = document.getElementById('import-str') as HTMLInputElement;
 const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
 const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
+const autoBtn = document.getElementById('autosolve') as HTMLButtonElement;
 
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
 let seed = 1;
 
+// Manual control: when the auto solver is off, the arrow keys drive the dinoz.
+let autoSolve = true;
+let dungeon: DungeonStruct | null = null;
+let stairs = new Map<string, number>();
+// Logical target cell — where the dinoz will end up once queued moves finish.
+// Driving moves off this (not the animated position) lets key presses buffer.
+let cursor: Cell = { l: 0, x: 0, y: 0 };
+
+function setAutoLabel(): void {
+	autoBtn.textContent = autoSolve ? 'Auto solver: ON' : 'Auto solver: OFF (use arrow keys)';
+	autoBtn.classList.toggle('on', autoSolve);
+}
+
+/** Switch the current dinoz between auto-walking the solution and manual control. */
+function applyMode(): void {
+	if (!actor || !dungeon) return;
+	if (autoSolve) {
+		const path = findPath(dungeon, actor.cell, { ...dungeon.exit });
+		if (path) actor.walk(path);
+	} else {
+		actor.takeControl();
+		cursor = actor.cell;
+	}
+	setAutoLabel();
+}
+
+/** Move the dinoz one cell when in manual mode; auto-traverse stairs stepped onto. */
+function tryMove(dx: number, dy: number): void {
+	if (autoSolve || !actor || !dungeon) return;
+	const nx = cursor.x + dx;
+	const ny = cursor.y + dy;
+	if (nx < 0 || ny < 0 || nx >= dungeon.width || ny >= dungeon.height) return;
+	if (!dungeon.levels[cursor.l].table[nx][ny]) return; // wall
+	cursor = { l: cursor.l, x: nx, y: ny };
+	actor.enqueue(cursor);
+	const to = stairs.get(stairKey(cursor.l, nx, ny));
+	if (to !== undefined) {
+		cursor = { l: to, x: nx, y: ny };
+		actor.enqueue(cursor);
+	}
+}
+
 /** Render an already-decoded dungeon: (re)build renderer, level buttons, dino. */
-function renderDungeon(dungeon: DungeonStruct, salt: number): void {
-	const skins: Skin[] = dungeon.levels.map((_, l) => SKINS[(salt + l) % SKINS.length]);
+function renderDungeon(dungeonStruct: DungeonStruct, salt: number): void {
+	const skins: Skin[] = dungeonStruct.levels.map((_, l) => SKINS[(salt + l) % SKINS.length]);
 
 	actor?.destroy();
 	renderer?.destroy();
-	renderer = new MazeRenderer(stage, dungeon, { cell: 24, skins });
+	renderer = new MazeRenderer(stage, dungeonStruct, { cell: 24, skins });
 
 	levelsEl.replaceChildren();
-	for (let l = 0; l < dungeon.levels.length; l++) {
+	for (let l = 0; l < dungeonStruct.levels.length; l++) {
 		const btn = document.createElement('button');
 		btn.textContent = `Level ${l + 1}`;
 		btn.onclick = () => renderer?.showLevel(l);
@@ -54,9 +98,15 @@ function renderDungeon(dungeon: DungeonStruct, salt: number): void {
 
 	const code = DINO_CODES[Math.abs(salt) % DINO_CODES.length];
 	actor = new DinozActor(renderer, { code, speed: 5, onLevelChange: l => renderer?.showLevel(l) });
-	const path = findPath(dungeon, { ...dungeon.start }, { ...dungeon.exit });
-	if (path) actor.walk(path);
-	else actor.placeAt({ ...dungeon.start });
+
+	dungeon = dungeonStruct;
+	stairs = buildStairs(dungeonStruct);
+	actor.placeAt({ ...dungeonStruct.start });
+	cursor = actor.cell;
+	if (autoSolve) {
+		const path = findPath(dungeonStruct, { ...dungeonStruct.start }, { ...dungeonStruct.exit });
+		if (path) actor.walk(path);
+	}
 }
 
 /** Generate a fresh dungeon, run it through the codec, and render the decoded result. */
@@ -108,6 +158,7 @@ function importString(raw: string): void {
 async function main(): Promise<void> {
 	await loadDungeonAssets(allAssetNames());
 
+	setAutoLabel();
 	build(seed);
 
 	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
@@ -116,6 +167,25 @@ async function main(): Promise<void> {
 	importInput.onkeydown = e => {
 		if (e.key === 'Enter') importString(importInput.value);
 	};
+
+	autoBtn.onclick = () => {
+		autoSolve = !autoSolve;
+		applyMode();
+	};
+
+	const ARROWS: Record<string, [number, number]> = {
+		ArrowUp: [0, -1],
+		ArrowDown: [0, 1],
+		ArrowLeft: [-1, 0],
+		ArrowRight: [1, 0]
+	};
+	window.addEventListener('keydown', e => {
+		const d = ARROWS[e.key];
+		// Don't hijack arrows while typing in the import box.
+		if (!d || document.activeElement === importInput) return;
+		e.preventDefault();
+		tryMove(d[0], d[1]);
+	});
 }
 
 void main();
