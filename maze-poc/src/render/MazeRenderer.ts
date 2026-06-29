@@ -117,14 +117,14 @@ export class MazeRenderer {
 				// down/right from there. front caps the N edge, side is a tall strip
 				// on W/E that overhangs downward, back sits on the S edge, corners
 				// fill the diagonals.
-				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 0);
+				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1);
 				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, T, 0, 0);
 				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, T, 1, 0, true);
-				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 1);
-				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 0);
-				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 0, true);
-				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 1);
-				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 1, true);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0);
+				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 1);
+				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 0);
+				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 0, true);
 			}
 		}
 	}
