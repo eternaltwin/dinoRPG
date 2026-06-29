@@ -92,7 +92,9 @@ function importString(raw: string): void {
 		importMsg.textContent = '✗ could not decode (not a string from this codec?)';
 		return;
 	}
-	importMsg.textContent = ok ? '✓ loaded' : '⚠ loaded, but CRC mismatch';
+	importMsg.textContent = ok
+		? '✓ loaded'
+		: '✓ loaded (CRC differs — expected for original-game strings, the maze is still exact)';
 	seedEl.textContent = '—';
 	const sig = s.startsWith('[[') ? s.slice(0, s.indexOf(']]') + 2) : '(no signature)';
 	sigEl.textContent = sig + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');

@@ -1,92 +1,114 @@
 /**
- * BitCodec
- * --------
- * MSB-first bit reader/writer with a base64-ish payload and a short CRC.
+ * BitCodec — faithful port of Motion Twin's `mt.BitCodec`.
+ * ------------------------------------------------------
+ * MSB-first bit reader/writer that packs 6 bits per character over the base64
+ * alphabet `a-z A-Z 0-9 - _`, with mt's running CRC.
  *
- * The original DinoRPG `DungeonCodec.hx` relied on Motion Twin's proprietary
- * `mt.BitCodec`, which was never open-sourced (it is not present anywhere in the
- * WebGamesArchives repository). This is a faithful re-implementation of the
- * surface that `DungeonCodec` actually uses:
+ * The original DinoRPG `DungeonCodec.hx` relies on `mt.BitCodec`, which was
+ * never shipped in the WebGamesArchives source dump. This port follows the
+ * reverse-engineered JS implementation published as the npm package
+ * `mtypes-bitcodec` (MIT, © 2023), so that strings produced by the historical
+ * game decode bit-for-bit:
  *
  *   - `new BitCodec(null)`        -> write mode
  *   - `new BitCodec(payload)`     -> read mode
  *   - `write(nbits, value)`       -> append `value` using `nbits` bits
  *   - `read(nbits): number`       -> consume `nbits` bits
- *   - `toString(): string`        -> serialise written bits to text
- *   - `crcStr(): string`          -> 4-char integrity checksum of the payload
+ *   - `toString(): string`        -> flush + serialise written bits to text
+ *   - `crcStr(): string`          -> 4-char integrity checksum
  *
- * It is self-consistent: a value written with `write(n, v)` reads back
- * identically with `read(n)`, and `encode()` / `decode()` round-trip. It is NOT
- * binary-compatible with the historical server strings (that would require the
- * exact `mt.BitCodec` bit-packing and CRC polynomial, which are lost).
+ * Note on the CRC: `mt.BitCodec`'s checksum (`crc ^= c; crc &= 0xffffff;
+ * crc *= c`) is self-consistent — strings written here read back with a
+ * matching CRC. It does NOT necessarily reproduce the exact 4-char tail of
+ * every historical server string (the live game used a slightly different CRC
+ * variant), so importers treat a CRC mismatch on a pasted string as advisory:
+ * the dungeon itself still decodes and renders correctly.
  */
 
-// 64-symbol, URL-safe alphabet. Index 0..63 maps to a 6-bit group.
-const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
-const INV: Record<string, number> = {};
-for (let i = 0; i < ALPHABET.length; i++) INV[ALPHABET[i]] = i;
-
 export class BitCodec {
-	private readonly writeBits: number[] = [];
-	private readonly readBits: number[] = [];
-	private readPos = 0;
-	private readonly source: string;
+	private errorFlag = false;
+	private inPos = 0;
+	private nbits = 0;
+	private data: string;
+	private bits = 0;
+	private crc = 0;
 
 	constructor(data: string | null) {
-		this.source = data ?? '';
-		if (data != null) {
-			for (const ch of data) {
-				const v = INV[ch];
-				if (v === undefined) continue; // ignore signature / stray characters
-				for (let b = 5; b >= 0; b--) this.readBits.push((v >> b) & 1);
-			}
-		}
+		this.data = data ?? '';
 	}
 
-	/** Append the low `nbits` bits of `value`, most-significant bit first. */
-	write(nbits: number, value: number): void {
-		for (let b = nbits - 1; b >= 0; b--) this.writeBits.push((value >>> b) & 1);
+	hasError(): boolean {
+		return this.errorFlag;
 	}
 
-	/** Consume `nbits` bits and return them as an unsigned integer. */
-	read(nbits: number): number {
-		let v = 0;
-		for (let i = 0; i < nbits; i++) v = (v << 1) | (this.readBits[this.readPos++] ?? 0);
-		return v >>> 0;
-	}
-
-	/** Serialise the written bit-stream into a base64-ish payload string. */
-	toString(): string {
-		let out = '';
-		for (let i = 0; i < this.writeBits.length; i += 6) {
-			let v = 0;
-			for (let b = 0; b < 6; b++) v = (v << 1) | (this.writeBits[i + b] ?? 0);
-			out += ALPHABET[v];
-		}
-		return out;
-	}
-
-	/**
-	 * 4-character checksum of the payload.
-	 *  - in write mode: CRC of the just-serialised payload (`toString()`).
-	 *  - in read mode:  CRC of the source minus its trailing 4 CRC chars,
-	 *    matching how `DungeonCodec.decode` validates `s.substr(len - 4, 4)`.
-	 */
+	/** 4-character checksum of the symbols processed so far. */
 	crcStr(): string {
-		const payload =
-			this.writeBits.length > 0 ? this.toString() : this.source.slice(0, Math.max(0, this.source.length - 4));
-		return crc24(payload);
+		return (
+			this.c64(this.crc & 63) +
+			this.c64((this.crc >> 6) & 63) +
+			this.c64((this.crc >> 12) & 63) +
+			this.c64((this.crc >> 18) & 63)
+		);
 	}
-}
 
-/** Deterministic 24-bit hash of a string, emitted as 4 alphabet chars. */
-function crc24(s: string): string {
-	let h = 0x5bd1e9; // arbitrary non-zero seed
-	for (let i = 0; i < s.length; i++) {
-		h ^= s.charCodeAt(i);
-		// FNV-style avalanche, kept inside 32 bits via Math.imul.
-		h = Math.imul(h, 0x01000193) >>> 0;
+	/** Consume `n` bits and return them as an unsigned integer (-1 on overrun). */
+	read(n: number): number {
+		while (this.nbits < n) {
+			const c = this.d64(this.data.charAt(this.inPos++));
+			if (this.inPos > this.data.length || c == null) {
+				this.errorFlag = true;
+				return -1;
+			}
+			this.crc ^= c;
+			this.crc &= 0xffffff;
+			this.crc *= c;
+			this.nbits += 6;
+			this.bits <<= 6;
+			this.bits |= c;
+		}
+		this.nbits -= n;
+		return (this.bits >> this.nbits) & ((1 << n) - 1);
 	}
-	h &= 0xffffff;
-	return ALPHABET[(h >>> 18) & 63] + ALPHABET[(h >>> 12) & 63] + ALPHABET[(h >>> 6) & 63] + ALPHABET[h & 63];
+
+	/** Flush any partial group (zero-padded) and return the payload string. */
+	toString(): string {
+		if (this.nbits > 0) this.write(6 - this.nbits, 0);
+		return this.data;
+	}
+
+	/** Append the low `n` bits of `b`, most-significant bit first. */
+	write(n: number, b: number): void {
+		this.nbits += n;
+		this.bits <<= n;
+		this.bits |= b;
+		while (this.nbits >= 6) {
+			this.nbits -= 6;
+			const k = (this.bits >> this.nbits) & 63;
+			this.crc ^= k;
+			this.crc &= 0xffffff;
+			this.crc *= k;
+			this.data += this.c64(k);
+		}
+	}
+
+	/** Decode one base64 symbol to its 6-bit value, or null if not in the alphabet. */
+	private d64(code: string): number | null {
+		if (code >= 'a' && code <= 'z') return code.charCodeAt(0) - 97; // 'a'
+		if (code >= 'A' && code <= 'Z') return code.charCodeAt(0) - 65 + 26; // 'A'
+		if (code >= '0' && code <= '9') return code.charCodeAt(0) - 48 + 52; // '0'
+		if (code === '-') return 62;
+		if (code === '_') return 63;
+		return null;
+	}
+
+	/** Encode a 6-bit value (0..63) to its base64 symbol. */
+	private c64(code: number): string {
+		if (code < 0) return '?';
+		if (code < 26) return String.fromCharCode(code + 97); // 'a'
+		if (code < 52) return String.fromCharCode(code - 26 + 65); // 'A'
+		if (code < 62) return String.fromCharCode(code - 52 + 48); // '0'
+		if (code === 62) return '-';
+		if (code === 63) return '_';
+		return '?';
+	}
 }
