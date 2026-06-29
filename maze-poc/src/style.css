@@ -52,6 +52,11 @@ button:hover {
 	background: #353a47;
 }
 
+#autosolve.on {
+	background: #2e4d34;
+	border-color: #3f6b48;
+}
+
 .levels {
 	display: flex;
 	gap: 6px;
