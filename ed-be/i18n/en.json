@@ -10,7 +10,7 @@
 	"dead": "Your Dinoz is dead.",
 	"missingStatus": "One of your Dinoz doesn't fulfill the requirements to do this action.",
 	"noMovement": "Today, the swamp is flooded ! You can't move there. You'll have to wait tomorrow to get out of this quagmire.",
-	"shovelMine": "You aren't going to dig right next to the miner !?!",
+	"shovelMine": "You wouldn't dig next to the Miner, would you?!",
 	"notEnoughIrma": "You don't have enough Irma's potion.",
 	"alreadyClaimed": "You already received the prize.",
 	"needToDoAllAction": "You still have fights to do.",
@@ -49,7 +49,7 @@
 	"archivedPlayerNotFound": "The archive for player {{id}} was not found.",
 	"dinozNotFound": "The Dinoz {{id}} was not found.",
 	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
-	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
+	"reincarnationNotPossible": "A Dinoz needs to be level 40 or higher to reincarnate.",
 	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
 	"clanWar": {
 		"noCastle": "Your clan has not built a castle.",
@@ -241,14 +241,14 @@
 		"dinozTooHighLevel": "A Dinoz is above the maximum level authorized.",
 		"wrongRace": "A race of your team is not authorized in this tournament.",
 		"alreadyRegistered": "You already have a team registered for this tournament.",
-		"teamSize": "The teams must be composed of {{nb}} members with a least {{races}} different races.",
+		"teamSize": "The teams must be composed of {{nb}} members with at least {{races}} different races.",
 		"teamSize_singleRace": "The team must be formed of {{nb}} members.",
 		"raceLimit": "The authorized races to participate are {{races}}.",
 		"levelLimit": "The maximum level limit is set to {{level}}.",
 		"poison": "Poison is enabled.",
 		"nopoison": "Poison is disabled.",
 		"newsTitle": "New Inter Dojo Tournament",
-		"newsCorpus": "# Tournament {{number}}\n## Archetype {{type}}\nThe qualification phase will last until {{endQualif}}. The rules to create a team are:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Rewards\nThe rewards are the following:\n- First place gets: a rare Tofufu egg, a legendary box and 12% of the cash prize.\n- Second, third and fourth places get: a Tofufu egg, an epic box and 6% of the cash prize each.\n- 5th to 8th place get: a rare box and 3.75% of the cash prize each.\n- 9th to 16th places get: a rare box and 1.875% of the cash prize each.\n- Those with only with one win get: 0.75% of the cash prize each.\n- The others qualified get: 0.25% of the cash prize.\n# Rewards for Qualifiers\nDo not forget there are rewards for reaching 500, 750, 1000, 1200, 1300 and 1400 points during qualifications!\n\nHappy tournament to all!"
+		"newsCorpus": "# Tournament {{number}}\n## Archetype {{type}}\nThe qualification phase will last until {{endQualif}}. The rules to create a team are:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Rewards\nThe rewards are the following:\n- First place gets: a rare Tofufu egg, a legendary box and 12% of the cash prize.\n- Second, third and fourth places get: a Tofufu egg, an epic box and 6% of the cash prize each.\n- 5th to 8th place get: a rare box and 3.75% of the cash prize each.\n- 9th to 16th places get: a rare box and 1.875% of the cash prize each.\n- Those with only one win get: 0.75% of the cash prize each.\n- The others qualified get: 0.25% of the cash prize.\n# Rewards for Qualifiers\nDo not forget there are rewards for reaching 500, 750, 1000, 1200, 1300 and 1400 points during qualifications!\n\nHappy tournament to all!"
 	},
 	"race": {
 		"1": "Moueffe",
