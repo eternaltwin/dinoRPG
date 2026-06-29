@@ -83,7 +83,10 @@ describe('concentrate', () => {
 				{ id: 2, name: 'e', concentration: { id: 7 } }
 			]
 		} as never);
-		vi.mocked(concentrationDao.getConcentration).mockResolvedValue({ id: 7, dinoz: [{ id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }] } as never);
+		vi.mocked(concentrationDao.getConcentration).mockResolvedValue({
+			id: 7,
+			dinoz: [{ id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }]
+		} as never);
 		await concentrate(req({ id: '1' }));
 		expect(updateMultipleDinozPlaceId).toHaveBeenCalled();
 		expect(concentrationDao.removeConcentration).toHaveBeenCalled();

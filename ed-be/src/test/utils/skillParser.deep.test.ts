@@ -2,9 +2,22 @@ import { describe, it, expect } from 'vitest';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { MathOperator } from '@drpg/core/models/enums/Parser';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { applyUSkillEffect, applySkillToDinoz, computeUSkillEffects, deApplySkillFromDinoz } from '../../utils/skillParser.js';
+import {
+	applyUSkillEffect,
+	applySkillToDinoz,
+	computeUSkillEffects,
+	deApplySkillFromDinoz
+} from '../../utils/skillParser.js';
 
-const baseDinoz = () => ({ id: 1, maxLife: 100, nbrUpFire: 1, nbrUpAir: 1, nbrUpLightning: 1, nbrUpWater: 1, nbrUpWood: 1 });
+const baseDinoz = () => ({
+	id: 1,
+	maxLife: 100,
+	nbrUpFire: 1,
+	nbrUpAir: 1,
+	nbrUpLightning: 1,
+	nbrUpWater: 1,
+	nbrUpWood: 1
+});
 
 describe('applySkillToDinoz', () => {
 	it('applies stat effects across every element and max hp', () => {
@@ -55,8 +68,15 @@ describe('applyUSkillEffect', () => {
 		[Skill.MATELASSEUR, 'matelasseur']
 	])('sets the %s player flag', (skillId, field) => {
 		const player = {
-			leader: false, engineer: false, shopKeeper: false, cooker: false, merchant: false,
-			priest: false, teacher: false, messie: false, matelasseur: false
+			leader: false,
+			engineer: false,
+			shopKeeper: false,
+			cooker: false,
+			merchant: false,
+			priest: false,
+			teacher: false,
+			messie: false,
+			matelasseur: false
 		};
 		applyUSkillEffect(player as never, { id: skillId } as never);
 		expect((player as Record<string, boolean>)[field]).toBe(true);
@@ -71,8 +91,15 @@ describe('applyUSkillEffect', () => {
 describe('computeUSkillEffects', () => {
 	it('recomputes player flags from a skill list', () => {
 		const player = {
-			leader: true, engineer: false, shopKeeper: false, cooker: false, merchant: false,
-			priest: false, teacher: false, messie: false, matelasseur: false
+			leader: true,
+			engineer: false,
+			shopKeeper: false,
+			cooker: false,
+			merchant: false,
+			priest: false,
+			teacher: false,
+			messie: false,
+			matelasseur: false
 		};
 		computeUSkillEffects(player as never, [Skill.INGENIEUR] as never);
 		expect(player.engineer).toBe(true);

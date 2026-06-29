@@ -15,9 +15,13 @@ vi.mock('@eternaltwin/client-node', () => ({
 		return etwinClientInstance;
 	})
 }));
-vi.mock('@eternaltwin/client-node/error', () => ({ ErrorCode: { OauthCodeTimeError: 'timeerr', OauthCodeFormatError: 'fmterr' } }));
+vi.mock('@eternaltwin/client-node/error', () => ({
+	ErrorCode: { OauthCodeTimeError: 'timeerr', OauthCodeFormatError: 'fmterr' }
+}));
 vi.mock('../../context.js', () => ({ GLOBAL: { config: {} }, LOGGER: { error: vi.fn(), log: vi.fn() } }));
-vi.mock('../../config/game.config.js', () => ({ default: { general: { initialMoney: 100, dailyGridRewards: 5 }, dinoz: {} } }));
+vi.mock('../../config/game.config.js', () => ({
+	default: { general: { initialMoney: 100, dailyGridRewards: 5 }, dinoz: {} }
+}));
 vi.mock('../../dao/dinozDao.js', () => ({ updateDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({
@@ -75,7 +79,11 @@ describe('OAuth', () => {
 		vi.mocked(createPlayer).mockResolvedValue({ id: 'u1', connexionToken: 'ct', name: 'Bob' } as never);
 		const oauth = new OAuth(config, {} as never);
 		const res = makeRes();
-		const req = { query: { code: 'abc' }, headers: { 'user-agent': 'jest' }, socket: { remoteAddress: '1.2.3.4' } } as never;
+		const req = {
+			query: { code: 'abc' },
+			headers: { 'user-agent': 'jest' },
+			socket: { remoteAddress: '1.2.3.4' }
+		} as never;
 		await oauth.token(req, res);
 		expect(createPlayer).toHaveBeenCalled();
 		expect(addPlayerInRanking).toHaveBeenCalled();
@@ -99,7 +107,11 @@ describe('OAuth', () => {
 		} as never);
 		const oauth = new OAuth(config, {} as never);
 		const res = makeRes();
-		const req = { query: { code: 'abc' }, headers: { 'user-agent': 'jest' }, socket: { remoteAddress: '5.6.7.8' } } as never;
+		const req = {
+			query: { code: 'abc' },
+			headers: { 'user-agent': 'jest' },
+			socket: { remoteAddress: '5.6.7.8' }
+		} as never;
 		await oauth.token(req, res);
 		expect((res as { send: ReturnType<typeof vi.fn> }).send).toHaveBeenCalled();
 	});

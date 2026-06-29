@@ -63,7 +63,9 @@ describe('getIngredientsFromItinerantShop', () => {
 
 describe('sellIngredient', () => {
 	it('sells ingredients and credits gold', async () => {
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({ ingredients: [{ ingredientId: 1, quantity: 10 }] } as never);
+		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({
+			ingredients: [{ ingredientId: 1, quantity: 10 }]
+		} as never);
 		const result = await sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 2 }] }));
 		expect(decreaseIngredientQuantity).toHaveBeenCalled();
 		expect(addMoney).toHaveBeenCalledWith('p1', 20);

@@ -57,7 +57,9 @@ describe('authenticate', () => {
 	});
 	it('throws when accessing the clan forum without a clan', async () => {
 		vi.mocked(getClanIdAndNameFromPlayerId).mockResolvedValue({ ClanMember: null } as never);
-		await expect(authenticate(reqFor(WsChannel.CLAN_FORUM), ServerEventType.WEBSOCKET)).rejects.toThrow('not in a clan');
+		await expect(authenticate(reqFor(WsChannel.CLAN_FORUM), ServerEventType.WEBSOCKET)).rejects.toThrow(
+			'not in a clan'
+		);
 	});
 });
 
@@ -85,7 +87,11 @@ describe('websocket channel flow', () => {
 		vi.mocked(createClanMessageRequest).mockResolvedValue({ id: 7, content: 'hi' } as never);
 
 		const ticketDto = await authenticate(
-			{ body: { channel: WsChannel.CLAN_FORUM }, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			{
+				body: { channel: WsChannel.CLAN_FORUM },
+				socket: { remoteAddress: ip },
+				headers: { 'user-agent': ua }
+			} as never,
 			ServerEventType.WEBSOCKET
 		);
 
@@ -133,7 +139,11 @@ describe('SSE helpers', () => {
 		const ip = '7.7.7.7';
 		vi.mocked(auth).mockResolvedValue({ id: 'sse-player' } as never);
 		const ticketDto = await authenticate(
-			{ body: { channel: SseChannel.NOTIFICATION }, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			{
+				body: { channel: SseChannel.NOTIFICATION },
+				socket: { remoteAddress: ip },
+				headers: { 'user-agent': ua }
+			} as never,
 			ServerEventType.SSE
 		);
 		const res = { write: vi.fn() } as never;

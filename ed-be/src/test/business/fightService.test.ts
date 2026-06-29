@@ -5,7 +5,10 @@ import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import type { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 
-vi.mock('../../context.js', () => ({ LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() }, GLOBAL: { config: {} } }));
+vi.mock('../../context.js', () => ({
+	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
+	GLOBAL: { config: {} }
+}));
 vi.mock('../../config/game.config.js', () => ({
 	default: { dinoz: { maxLevel: 60, initialMaxLevel: 40, maxQuantity: 5 }, general: {} }
 }));
@@ -17,7 +20,10 @@ vi.mock('../../dao/dinozItemDao.js', () => ({ removeItemFromDinoz: vi.fn() }));
 vi.mock('../../dao/dinozCatchDao.js', () => ({ createCatch: vi.fn(), removeCatch: vi.fn(), updateCatch: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
 vi.mock('../../dao/playerItemDao.js', () => ({ increaseItemQuantity: vi.fn() }));
-vi.mock('../../dao/eventsDao.js', () => ({ getPlayerEventProgression: vi.fn(), increasePlayerEventProgression: vi.fn() }));
+vi.mock('../../dao/eventsDao.js', () => ({
+	getPlayerEventProgression: vi.fn(),
+	increasePlayerEventProgression: vi.fn()
+}));
 vi.mock('../../dao/archiveDao.js', () => ({ getArchivedFightRequest: vi.fn() }));
 vi.mock('../../business/missionsService.js', () => ({ checkMissionFight: vi.fn() }));
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
@@ -79,7 +85,13 @@ beforeEach(() => {
 
 describe('calculateFightVsMonsters', () => {
 	it('runs a seeded fight against monsters', () => {
-		const result = calculateFightVsMonsters([makeDinoz()], { cooker: false }, PLACE, [{ ...monsterList[Monster.GOUPIGNON] }], 'seed-1');
+		const result = calculateFightVsMonsters(
+			[makeDinoz()],
+			{ cooker: false },
+			PLACE,
+			[{ ...monsterList[Monster.GOUPIGNON] }],
+			'seed-1'
+		);
 		expect(result.outcome).toBeDefined();
 		expect(result.attackers.length).toBe(1);
 	});
@@ -87,7 +99,16 @@ describe('calculateFightVsMonsters', () => {
 
 describe('calculateFightBetweenPlayers', () => {
 	it('runs a seeded pvp fight', () => {
-		const result = calculateFightBetweenPlayers(STANDARD_PVP_RULES, [makeDinoz()], false, [makeDinoz()], false, PLACE, 1000, 'seed-pvp');
+		const result = calculateFightBetweenPlayers(
+			STANDARD_PVP_RULES,
+			[makeDinoz()],
+			false,
+			[makeDinoz()],
+			false,
+			PLACE,
+			1000,
+			'seed-pvp'
+		);
 		expect(result.outcome).toBeDefined();
 	});
 });
@@ -109,7 +130,13 @@ describe('rewardFightVsMonsters', () => {
 	});
 	it('throws when team is empty', async () => {
 		await expect(
-			rewardFightVsMonsters([], [], { outcome: 0, attackers: [], defenders: [], fighters: [], catches: [], steps: [] } as never, PLACE, { id: 'p1', teacher: false })
+			rewardFightVsMonsters(
+				[],
+				[],
+				{ outcome: 0, attackers: [], defenders: [], fighters: [], catches: [], steps: [] } as never,
+				PLACE,
+				{ id: 'p1', teacher: false }
+			)
 		).rejects.toThrow('No player found');
 	});
 
@@ -121,7 +148,20 @@ describe('rewardFightVsMonsters', () => {
 			attackers: [{ dinozId: 1, hpLost: 10, statusGained: [], itemsUsed: [], goldLost: 5, playerId: 'p1' }],
 			defenders: [],
 			fighters: [
-				{ id: 1, type: 'dinoz', name: 'd', level: 20, survived: true, display: 'x', attacker: true, maxHp: 120, startingHp: 120, energy: 0, maxEnergy: 0, energyRecovery: 0 }
+				{
+					id: 1,
+					type: 'dinoz',
+					name: 'd',
+					level: 20,
+					survived: true,
+					display: 'x',
+					attacker: true,
+					maxHp: 120,
+					startingHp: 120,
+					energy: 0,
+					maxEnergy: 0,
+					energyRecovery: 0
+				}
 			],
 			catches: [
 				{ id: null, dinozId: 1, monsterId: Monster.GOUPIGNON, hp: 5 },
@@ -131,7 +171,10 @@ describe('rewardFightVsMonsters', () => {
 			],
 			steps: []
 		};
-		const result = await rewardFightVsMonsters(team as never, monsters, fightResult as never, PLACE, { id: 'p1', teacher: false });
+		const result = await rewardFightVsMonsters(team as never, monsters, fightResult as never, PLACE, {
+			id: 'p1',
+			teacher: false
+		});
 		expect(result.result).toBe(false);
 		expect(playerDao.removeMoney).toHaveBeenCalled();
 		expect(createCatch).toHaveBeenCalled();
@@ -149,9 +192,9 @@ describe('generateMonsterList', () => {
 		expect(Array.isArray(result)).toBe(true);
 	});
 	it('throws when the place does not exist', async () => {
-		await expect(generateMonsterList([{ level: 20, placeId: 1, playerId: 'p1', missions: [] }] as never, 999999 as never)).rejects.toThrow(
-			"doesn't exist"
-		);
+		await expect(
+			generateMonsterList([{ level: 20, placeId: 1, playerId: 'p1', missions: [] }] as never, 999999 as never)
+		).rejects.toThrow("doesn't exist");
 	});
 });
 
@@ -174,8 +217,21 @@ describe('processFight', () => {
 		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow("doesn't exist");
 	});
 	it('runs a fight when conditions are met', async () => {
-		const dinoz = { ...makeDinoz({ id: 1 }), fight: true, gather: true, unavailableReason: null, canChangeName: false, concentration: null, missions: [] };
-		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({ id: 'p1', teacher: false, cooker: false, dinoz: [dinoz] } as never);
+		const dinoz = {
+			...makeDinoz({ id: 1 }),
+			fight: true,
+			gather: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({
+			id: 'p1',
+			teacher: false,
+			cooker: false,
+			dinoz: [dinoz]
+		} as never);
 		vi.mocked(movementListener).mockResolvedValue(false as never);
 		const result = await processFight(req({}, { dinozId: 1 }));
 		expect(result).toBeDefined();
@@ -187,9 +243,30 @@ describe('processFight', () => {
 	});
 
 	it('uses the special movement fight when one occurs and drops unavailable followers', async () => {
-		const leader = { ...makeDinoz({ id: 1 }), fight: true, gather: true, unavailableReason: null, canChangeName: false, concentration: null, missions: [] };
-		const deadFollower = { ...makeDinoz({ id: 2 }), life: 0, fight: true, unavailableReason: null, canChangeName: false, concentration: null, missions: [] };
-		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({ id: 'p1', teacher: false, cooker: false, dinoz: [leader, deadFollower] } as never);
+		const leader = {
+			...makeDinoz({ id: 1 }),
+			fight: true,
+			gather: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		const deadFollower = {
+			...makeDinoz({ id: 2 }),
+			life: 0,
+			fight: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({
+			id: 'p1',
+			teacher: false,
+			cooker: false,
+			dinoz: [leader, deadFollower]
+		} as never);
 		vi.mocked(movementListener).mockResolvedValue({ result: true, fighters: [] } as never);
 		const result = await processFight(req({}, { dinozId: 1 }));
 		expect(result).toEqual({ result: true, fighters: [] });
@@ -206,7 +283,13 @@ describe('processFight', () => {
 describe('replayFight', () => {
 	it('returns a parsed replay', async () => {
 		vi.mocked(getArchivedFightRequest).mockResolvedValue({
-			fighters: '[]', result: true, steps: '[]', seed: 's', leftPlayer: null, rightPlayer: null, metadata: null
+			fighters: '[]',
+			result: true,
+			steps: '[]',
+			seed: 's',
+			leftPlayer: null,
+			rightPlayer: null,
+			metadata: null
 		} as never);
 		const result = await replayFight(req({ archiveId: 'a1' }));
 		expect(result.id).toBe('a1');

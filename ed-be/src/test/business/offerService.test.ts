@@ -85,7 +85,10 @@ beforeEach(() => {
 
 describe('getOfferList', () => {
 	it('returns offers', async () => {
-		vi.mocked(offerDao.getOffers).mockResolvedValue({ offers: [{ id: 1, bids: [], status: OfferStatus.ONGOING }], total: 1 } as never);
+		vi.mocked(offerDao.getOffers).mockResolvedValue({
+			offers: [{ id: 1, bids: [], status: OfferStatus.ONGOING }],
+			total: 1
+		} as never);
 		const result = await getOfferList(req({ filter: 'all' }));
 		expect(result.total).toBe(1);
 	});
@@ -110,12 +113,17 @@ describe('createOffer', () => {
 	beforeEach(() => {
 		vi.mocked(offerDao.getOffers).mockResolvedValue({ offers: [] } as never);
 		vi.mocked(playerItemDao.getPlayerItems).mockResolvedValue([{ itemId: 9, quantity: 10 }] as never);
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({ ingredients: [{ ingredientId: 1, quantity: 10 }] } as never);
+		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({
+			ingredients: [{ ingredientId: 1, quantity: 10 }]
+		} as never);
 		vi.mocked(offerDao.insertOffer).mockResolvedValue({ id: 5, total: 1000, endDate: new Date() } as never);
 	});
 	it('creates an offer with items and ingredients', async () => {
 		await createOffer(
-			req({}, { total: 1000, ingredients: [{ name: 'merou_lujidane', count: 1 }], items: [{ name: 'pampleboum', count: 1 }] })
+			req(
+				{},
+				{ total: 1000, ingredients: [{ name: 'merou_lujidane', count: 1 }], items: [{ name: 'pampleboum', count: 1 }] }
+			)
 		);
 		expect(offerDao.insertOffer).toHaveBeenCalled();
 		expect(scheduleJob).toHaveBeenCalled();
@@ -149,29 +157,54 @@ describe('createOffer', () => {
 describe('cancelOffer', () => {
 	beforeEach(() => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false, ingredients: [], items: []
+			leader: false,
+			messie: false,
+			_count: { dinoz: 0 },
+			shopKeeper: false,
+			ingredients: [],
+			items: []
 		} as never);
 	});
 	it('cancels an ongoing offer with no bids', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			seller: { id: 'p1' }, status: OfferStatus.ONGOING, bids: [], dinoz: null, items: []
+			seller: { id: 'p1' },
+			status: OfferStatus.ONGOING,
+			bids: [],
+			dinoz: null,
+			items: []
 		} as never);
 		await cancelOffer(req({ offerId: '5' }));
 		expect(offerDao.deleteOffer).toHaveBeenCalledWith(5);
 	});
 	it('throws when not the seller', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({ seller: { id: 'x' }, status: OfferStatus.ONGOING, bids: [], items: [] } as never);
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			seller: { id: 'x' },
+			status: OfferStatus.ONGOING,
+			bids: [],
+			items: []
+		} as never);
 		await expect(cancelOffer(req({ offerId: '5' }))).rejects.toThrow('invalidOffer');
 	});
 	it('throws when bids exist', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({ seller: { id: 'p1' }, status: OfferStatus.ONGOING, bids: [{ value: 1 }], items: [] } as never);
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			seller: { id: 'p1' },
+			status: OfferStatus.ONGOING,
+			bids: [{ value: 1 }],
+			items: []
+		} as never);
 		await expect(cancelOffer(req({ offerId: '5' }))).rejects.toThrow('offerInProgress');
 	});
 });
 
 describe('bidOffer', () => {
 	beforeEach(() => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({ id: 5, seller: { id: 'x' }, status: OfferStatus.ONGOING, total: 1000, bids: [] } as never);
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			seller: { id: 'x' },
+			status: OfferStatus.ONGOING,
+			total: 1000,
+			bids: []
+		} as never);
 		vi.mocked(playerItemDao.getPlayerItems).mockResolvedValue([{ quantity: 100 }] as never);
 		vi.mocked(offerDao.extendTimer).mockResolvedValue({ endDate: new Date() } as never);
 	});
@@ -180,7 +213,12 @@ describe('bidOffer', () => {
 		expect(offerDao.addBid).toHaveBeenCalled();
 	});
 	it('throws when bidding own offer', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({ seller: { id: 'p1' }, status: OfferStatus.ONGOING, total: 1000, bids: [] } as never);
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			seller: { id: 'p1' },
+			status: OfferStatus.ONGOING,
+			total: 1000,
+			bids: []
+		} as never);
 		await expect(bidOffer(req({ offerId: '5' }, { value: 5 }))).rejects.toThrow('invalidOffer');
 	});
 	it('throws when bid below minimum', async () => {
@@ -218,7 +256,10 @@ describe('bidOffer', () => {
 describe('expireOffer', () => {
 	it('awards the winner', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			id: 5, seller: { id: 's' }, bids: [{ userId: 'w', value: 10 }], dinoz: null
+			id: 5,
+			seller: { id: 's' },
+			bids: [{ userId: 'w', value: 10 }],
+			dinoz: null
 		} as never);
 		await expireOffer(5);
 		expect(createNotification).toHaveBeenCalled();
@@ -248,7 +289,12 @@ describe('expireOffer', () => {
 describe('claimOffer', () => {
 	beforeEach(() => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false, ingredients: [], items: []
+			leader: false,
+			messie: false,
+			_count: { dinoz: 0 },
+			shopKeeper: false,
+			ingredients: [],
+			items: []
 		} as never);
 	});
 	it('throws when offer missing', async () => {
@@ -271,7 +317,10 @@ describe('claimOffer', () => {
 	});
 	it('transfers a dinoz to the winner', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			sellerId: 's', seller: { id: 's' }, items: [], bids: [{ userId: 'w', value: 10 }],
+			sellerId: 's',
+			seller: { id: 's' },
+			items: [],
+			bids: [{ userId: 'w', value: 10 }],
 			dinoz: { id: 9, level: 5, skills: [{ skillId: 1 }] }
 		} as never);
 		vi.mocked(playerDao.getPlayerDiscoveredSkills).mockResolvedValue({ discoveredSkills: [] } as never);
@@ -280,7 +329,11 @@ describe('claimOffer', () => {
 	});
 	it('refunds the seller when no bids', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			sellerId: 's', seller: { id: 's' }, items: [], bids: [], dinoz: { id: 9 }
+			sellerId: 's',
+			seller: { id: 's' },
+			items: [],
+			bids: [],
+			dinoz: { id: 9 }
 		} as never);
 		await claimOffer(req({ offerId: '5' }));
 		expect(offerDao.updateOfferStatus).toHaveBeenCalledWith(5, OfferStatus.CLAIMED);
@@ -290,28 +343,46 @@ describe('claimOffer', () => {
 describe('checkRefund', () => {
 	it('returns true when there is room', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false, ingredients: [], items: []
+			leader: false,
+			messie: false,
+			_count: { dinoz: 0 },
+			shopKeeper: false,
+			ingredients: [],
+			items: []
 		} as never);
 		expect(await checkRefund('p1', [], [], null, 5)).toBe(true);
 	});
 	it('returns tooMuchDinoz when over the dinoz limit', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 9999 }, shopKeeper: false, ingredients: [], items: []
+			leader: false,
+			messie: false,
+			_count: { dinoz: 9999 },
+			shopKeeper: false,
+			ingredients: [],
+			items: []
 		} as never);
 		expect(await checkRefund('p1', [], [], { playerId: 'x' }, 5)).toBe('tooMuchDinoz');
 	});
 	it('returns tooMuchIngredient when an ingredient would overflow', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false,
-			ingredients: [{ ingredientId: 1, quantity: 49 }], items: []
+			leader: false,
+			messie: false,
+			_count: { dinoz: 0 },
+			shopKeeper: false,
+			ingredients: [{ ingredientId: 1, quantity: 49 }],
+			items: []
 		} as never);
 		const result = await checkRefund('p1', [{ itemId: 1, quantity: 5, isIngredient: true }], [], null, 5);
 		expect(result).toBe('tooMuchIngredient');
 	});
 	it('returns tooMuchItem when an item would overflow', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
-			leader: false, messie: false, _count: { dinoz: 0 }, shopKeeper: false,
-			ingredients: [], items: [{ itemId: 9, quantity: 19 }]
+			leader: false,
+			messie: false,
+			_count: { dinoz: 0 },
+			shopKeeper: false,
+			ingredients: [],
+			items: [{ itemId: 9, quantity: 19 }]
 		} as never);
 		const result = await checkRefund('p1', [], [{ itemId: 9, quantity: 5, isIngredient: false }], null, 5);
 		expect(result).toBe('tooMuchItem');
@@ -330,7 +401,14 @@ describe('scheduling helpers', () => {
 	});
 	it('scheduleEndedOffersExpiration refunds old and schedules others', async () => {
 		vi.mocked(offerDao.getEndedOffers).mockResolvedValue([
-			{ id: 1, endDate: new Date(Date.now() - 14 * 24 * 3600 * 1000), items: [], bids: [], sellerId: 's', dinozId: null },
+			{
+				id: 1,
+				endDate: new Date(Date.now() - 14 * 24 * 3600 * 1000),
+				items: [],
+				bids: [],
+				sellerId: 's',
+				dinozId: null
+			},
 			{ id: 2, endDate: new Date(Date.now() + 14 * 24 * 3600 * 1000), items: [], bids: [] }
 		] as never);
 		await scheduleEndedOffersExpiration();
@@ -338,7 +416,10 @@ describe('scheduling helpers', () => {
 	});
 	it('refundEndedOffers refunds seller and bidder', async () => {
 		await refundEndedOffers({
-			id: 1, sellerId: 's', dinozId: 9, endDate: new Date(),
+			id: 1,
+			sellerId: 's',
+			dinozId: 9,
+			endDate: new Date(),
 			items: [{ itemId: 9, quantity: 1, isIngredient: false }],
 			bids: [{ userId: 'w', value: 5 }]
 		} as never);

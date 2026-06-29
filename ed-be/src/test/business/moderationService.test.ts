@@ -81,7 +81,9 @@ describe('reportClan', () => {
 	});
 	it('throws when clan missing', async () => {
 		vi.mocked(prisma.clan.findUnique).mockResolvedValue(null as never);
-		await expect(reportClan(req({ id: '3' }, { reason: ModerationReason.clanBehavior }))).rejects.toThrow('Inexistent clan');
+		await expect(reportClan(req({ id: '3' }, { reason: ModerationReason.clanBehavior }))).rejects.toThrow(
+			'Inexistent clan'
+		);
 	});
 });
 
@@ -100,7 +102,9 @@ describe('takeActionOnReport', () => {
 
 	it('throws when report missing', async () => {
 		vi.mocked(modDao.getModerationReport).mockResolvedValue(null as never);
-		await expect(takeActionOnReport(req({ id: '1' }, { action: ModerationAction.closed }))).rejects.toThrow('Missing moderation');
+		await expect(takeActionOnReport(req({ id: '1' }, { action: ModerationAction.closed }))).rejects.toThrow(
+			'Missing moderation'
+		);
 	});
 	it('closes a report', async () => {
 		await takeActionOnReport(req({ id: '1' }, { action: ModerationAction.closed }));
@@ -131,7 +135,9 @@ describe('banPlayer', () => {
 	});
 	it('throws when player not found', async () => {
 		vi.mocked(playerDao.getPlayerBanInfo).mockResolvedValue(null as never);
-		await expect(banPlayer(req({ id: 'p2' }, { action: ModerationAction.shortBan }))).rejects.toThrow('Player not found');
+		await expect(banPlayer(req({ id: 'p2' }, { action: ModerationAction.shortBan }))).rejects.toThrow(
+			'Player not found'
+		);
 	});
 	it.each([ModerationAction.shortBan, ModerationAction.mediumBan, ModerationAction.longBan])(
 		'bans with %s',
@@ -163,7 +169,10 @@ describe('updateBan', () => {
 	it('updates the ban', async () => {
 		vi.mocked(playerDao.getPlayerBanInfo).mockResolvedValue(player() as never);
 		await updateBan(req({ id: 'p2' }, { action: ModerationAction.mediumBan, reason: ModerationReason.multi }));
-		expect(modDao.setModerationReport).toHaveBeenCalledWith(3, expect.objectContaining({ sorted: ModerationAction.mediumBan }));
+		expect(modDao.setModerationReport).toHaveBeenCalledWith(
+			3,
+			expect.objectContaining({ sorted: ModerationAction.mediumBan })
+		);
 	});
 });
 

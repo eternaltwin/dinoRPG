@@ -35,7 +35,10 @@ describe('getRanking', () => {
 	});
 	it('dojo maps worth', async () => {
 		vi.mocked(rankingDao.getPlayersDojoRanking).mockResolvedValue([
-			{ dojo: 10, player: { id: 'p', name: 'n', Dojo: { DojoChallengeHistory: [{ victory: true }, { victory: false }] } } }
+			{
+				dojo: 10,
+				player: { id: 'p', name: 'n', Dojo: { DojoChallengeHistory: [{ victory: true }, { victory: false }] } }
+			}
 		] as never);
 		const result = await getRanking(req({ page: '1', sort: 'dojo' }));
 		expect(result[0].player.worth).toBe(50);

@@ -24,7 +24,11 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
-import { MONSTER_FIGHT_RULES, STANDARD_PVP_RULES, DOJO_CHALLENGE_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import {
+	MONSTER_FIGHT_RULES,
+	STANDARD_PVP_RULES,
+	DOJO_CHALLENGE_RULES
+} from '@drpg/core/models/fight/FightConfiguration';
 import type { DinozToGetFighter, FightConfiguration, FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import type { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 
@@ -65,7 +69,12 @@ function runFight(
 	cooker = false
 ) {
 	const rng = seedrandom(seed);
-	const fighters = getFighters({ dinozList: team, monsterList: [] }, { dinozList: [], monsterList: monsters }, place, rng);
+	const fighters = getFighters(
+		{ dinozList: team, monsterList: [] },
+		{ dinozList: [], monsterList: monsters },
+		place,
+		rng
+	);
 	const config: FightConfiguration = {
 		seed,
 		rules,
@@ -213,13 +222,12 @@ describe('fight engine - PvP', () => {
 // both fighters across many long seeded fights activates a large slice of the activateSkill
 // switch in fightMethods.
 const ALL_ACTIVE_SKILLS = [
-	11102, 11104, 11201, 11207, 11303, 11304, 11305, 11307, 11311, 11312, 11314, 11407, 11411, 11412, 11413, 12201,
-	12302, 12501, 12502, 12504, 21104, 21201, 21202, 21301, 21307, 21309, 21313, 21401, 21407, 21409, 22203, 22301,
-	22302, 22403, 22501, 22504, 22505, 31101, 31201, 31202, 31203, 31208, 31302, 31305, 31308, 31311, 31313, 31401,
-	31409, 31502, 32303, 32404, 32405, 32502, 32504, 41102, 41207, 41301, 41308, 41310, 41311, 41401, 41403, 41404,
-	41410, 41411, 41412, 41413, 41504, 41505, 41507, 41508, 42301, 42302, 42501, 42502, 51103, 51104, 51105, 51206,
-	51301, 51303, 51307, 51310, 51311, 51313, 51314, 51401, 51407, 51408, 51502, 51503, 51506, 52401, 52405, 52502,
-	52504, 52505, 61101, 61113, 61115, 61117
+	11102, 11104, 11201, 11207, 11303, 11304, 11305, 11307, 11311, 11312, 11314, 11407, 11411, 11412, 11413, 12201, 12302,
+	12501, 12502, 12504, 21104, 21201, 21202, 21301, 21307, 21309, 21313, 21401, 21407, 21409, 22203, 22301, 22302, 22403,
+	22501, 22504, 22505, 31101, 31201, 31202, 31203, 31208, 31302, 31305, 31308, 31311, 31313, 31401, 31409, 31502, 32303,
+	32404, 32405, 32502, 32504, 41102, 41207, 41301, 41308, 41310, 41311, 41401, 41403, 41404, 41410, 41411, 41412, 41413,
+	41504, 41505, 41507, 41508, 42301, 42302, 42501, 42502, 51103, 51104, 51105, 51206, 51301, 51303, 51307, 51310, 51311,
+	51313, 51314, 51401, 51407, 51408, 51502, 51503, 51506, 52401, 52405, 52502, 52504, 52505, 61101, 61113, 61115, 61117
 ];
 
 describe('fight engine - kitchen sink combat', () => {
@@ -259,11 +267,7 @@ describe('fight engine - kitchen sink combat', () => {
 			for (let i = 0; i < 20; i++) {
 				const result = runFight(
 					[makeDinoz({ life: 400, maxLife: 400, level: 60, skills: ALL_ACTIVE_SKILLS.map(sk) })],
-					[
-						{ ...monsterList[Monster.WOLF] },
-						{ ...monsterList[Monster.GOUPIGNON] },
-						{ ...monsterList[Monster.GLUON] }
-					],
+					[{ ...monsterList[Monster.WOLF] }, { ...monsterList[Monster.GOUPIGNON] }, { ...monsterList[Monster.GLUON] }],
 					place,
 					`ks-monster-${pi}-${i}`,
 					MONSTER_FIGHT_RULES,
@@ -282,10 +286,22 @@ describe('fight engine - items', () => {
 		let completed = 0;
 		for (let i = 0; i < 40; i++) {
 			const teamA = [
-				makeDinoz({ life: 300, maxLife: 300, level: 50, skills: ALL_ACTIVE_SKILLS.map(sk), items: USABLE_ITEMS.map(it_) })
+				makeDinoz({
+					life: 300,
+					maxLife: 300,
+					level: 50,
+					skills: ALL_ACTIVE_SKILLS.map(sk),
+					items: USABLE_ITEMS.map(it_)
+				})
 			];
 			const teamB = [
-				makeDinoz({ life: 300, maxLife: 300, level: 50, skills: ALL_ACTIVE_SKILLS.map(sk), items: USABLE_ITEMS.map(it_) })
+				makeDinoz({
+					life: 300,
+					maxLife: 300,
+					level: 50,
+					skills: ALL_ACTIVE_SKILLS.map(sk),
+					items: USABLE_ITEMS.map(it_)
+				})
 			];
 			const seed = `items-${i}`;
 			const rng = seedrandom(seed);

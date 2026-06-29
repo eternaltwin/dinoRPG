@@ -154,7 +154,9 @@ describe('getArchivedData', () => {
 	});
 
 	it('returns empty when no twinoid link', async () => {
-		vi.mocked(fetch as never).mockResolvedValue({ json: vi.fn().mockResolvedValue({ links: { twinoid: {} } }) } as never);
+		vi.mocked(fetch as never).mockResolvedValue({
+			json: vi.fn().mockResolvedValue({ links: { twinoid: {} } })
+		} as never);
 		vi.mocked(playerDao.getPlayerArchivedSiteId).mockResolvedValue(null as never);
 		expect(await getArchivedData(req({ id: 'p2' }))).toEqual([]);
 	});
@@ -268,9 +270,7 @@ describe('resetAccount', () => {
 
 	it('throws when qualified for ongoing tournament', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue({ id: 5 } as never);
-		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(
-			deletable({ LeftFightArchives: [{ id: 1 }] }) as never
-		);
+		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(deletable({ LeftFightArchives: [{ id: 1 }] }) as never);
 		await expect(resetAccount(req())).rejects.toThrow('ongoingDojoTournament');
 	});
 });
@@ -287,8 +287,8 @@ describe('updatePlayerSettings', () => {
 	});
 
 	it('throws for invalid displayedNotifications', async () => {
-		await expect(
-			updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 0 }))
-		).rejects.toThrow('Invalid number');
+		await expect(updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 0 }))).rejects.toThrow(
+			'Invalid number'
+		);
 	});
 });

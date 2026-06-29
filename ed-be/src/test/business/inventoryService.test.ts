@@ -17,7 +17,11 @@ vi.mock('../../dao/dinozSkillDao.js', () => ({ addMultipleSkillToDinoz: vi.fn(),
 vi.mock('../../dao/dinozStatusDao.js', () => ({ removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), getPlayerInventoryDataRequest: vi.fn() }));
-vi.mock('../../dao/playerItemDao.js', () => ({ decreaseItemQuantity: vi.fn(), increaseItemQuantity: vi.fn(), insertItem: vi.fn() }));
+vi.mock('../../dao/playerItemDao.js', () => ({
+	decreaseItemQuantity: vi.fn(),
+	increaseItemQuantity: vi.fn(),
+	insertItem: vi.fn()
+}));
 vi.mock('../../dao/questsDao.js', () => ({ upsertQuest: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ updateDinozCount: vi.fn(), updatePoints: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
@@ -87,18 +91,28 @@ function withItem(itemId: number, overrides = {}) {
 
 describe('getItemMaxQuantity', () => {
 	it('applies shopkeeper bonus to non-magical items', () => {
-		const result = getItemMaxQuantity({ shopKeeper: true, rewards: [] } as never, { itemType: ItemType.CLASSIC, maxQuantity: 100 } as never);
+		const result = getItemMaxQuantity(
+			{ shopKeeper: true, rewards: [] } as never,
+			{ itemType: ItemType.CLASSIC, maxQuantity: 100 } as never
+		);
 		expect(result).toBe(150);
 	});
 	it('returns base max otherwise', () => {
-		const result = getItemMaxQuantity({ shopKeeper: false, rewards: [] } as never, { itemType: ItemType.CLASSIC, maxQuantity: 100 } as never);
+		const result = getItemMaxQuantity(
+			{ shopKeeper: false, rewards: [] } as never,
+			{ itemType: ItemType.CLASSIC, maxQuantity: 100 } as never
+		);
 		expect(result).toBe(100);
 	});
 });
 
 describe('getAllItemsData', () => {
 	it('maps player items', async () => {
-		vi.mocked(playerDao.getPlayerInventoryDataRequest).mockResolvedValue({ shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 2 }] } as never);
+		vi.mocked(playerDao.getPlayerInventoryDataRequest).mockResolvedValue({
+			shopKeeper: false,
+			rewards: [],
+			items: [{ itemId: 3, quantity: 2 }]
+		} as never);
 		const result = await getAllItemsData(req());
 		expect(result[0].id).toBe(3);
 	});
@@ -152,7 +166,9 @@ describe('useItem', () => {
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow("doesn't exist");
 	});
 	it('throws when not owned', async () => {
-		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(1, { player: { id: 'x', items: [{ itemId: 1, quantity: 1 }], quests: [] } }) as never);
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			withItem(1, { player: { id: 'x', items: [{ itemId: 1, quantity: 1 }], quests: [] } }) as never
+		);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow("doesn't belong");
 	});
 	it('throws when item does not exist', async () => {
@@ -172,7 +188,9 @@ describe('useItem', () => {
 		expect(result.length).toBeGreaterThan(0);
 	});
 	it('throws when not enough item', async () => {
-		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never);
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never
+		);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('notEnoughItem');
 	});
 	it('throws for an item with no usable effect', async () => {
@@ -184,8 +202,8 @@ describe('useItem', () => {
 describe('useItem - egg hatching', () => {
 	// A broad set of egg item ids exercises most of the hatchEgg display switch.
 	const EGG_IDS = [
-		63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-		91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 130, 144
+		63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
+		92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 130, 144
 	];
 	beforeEach(() => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([{ player: { leader: false, messie: false } }] as never);
@@ -241,7 +259,10 @@ describe('equipItem', () => {
 	});
 	it('unequips an item', async () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
-			equipDinoz({ items: [{ id: 9, itemId: 3 }], player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 0 }] } }) as never
+			equipDinoz({
+				items: [{ id: 9, itemId: 3 }],
+				player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 0 }] }
+			}) as never
 		);
 		await equipItem(req({ dinozId: '1' }, { itemId: 3, equip: false }));
 		expect(removeItemFromDinoz).toHaveBeenCalled();
@@ -256,12 +277,20 @@ describe('equipItem', () => {
 	});
 	it('throws when too many magic items are equipped', async () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
-			equipDinoz({ items: [{ id: 1, itemId: 35 }], skills: [], player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 35, quantity: 5 }] } }) as never
+			equipDinoz({
+				items: [{ id: 1, itemId: 35 }],
+				skills: [],
+				player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 35, quantity: 5 }] }
+			}) as never
 		);
-		await expect(equipItem(req({ dinozId: '1' }, { itemId: 35, equip: true }))).rejects.toThrow('tooManyMagicItemEquiped');
+		await expect(equipItem(req({ dinozId: '1' }, { itemId: 35, equip: true }))).rejects.toThrow(
+			'tooManyMagicItemEquiped'
+		);
 	});
 	it('throws when the dinoz is being sold', async () => {
-		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(equipDinoz({ unavailableReason: 'selling' }) as never);
+		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
+			equipDinoz({ unavailableReason: 'selling' }) as never
+		);
 		await expect(equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }))).rejects.toThrow('UnavailableReason');
 	});
 });

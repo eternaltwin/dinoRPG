@@ -42,7 +42,9 @@ const req = (params = {}, body = {}) => makeRequest({ params, body });
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
-	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ phase: TournamentPhase.QUALIFICATION } as never);
+	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+		phase: TournamentPhase.QUALIFICATION
+	} as never);
 });
 
 const latest = (overrides = {}) => ({
@@ -72,7 +74,9 @@ describe('createTournamentTeam', () => {
 	});
 
 	it('throws when not in qualification phase', async () => {
-		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ phase: TournamentPhase.FINALS } as never);
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+			phase: TournamentPhase.FINALS
+		} as never);
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('qualificationOver');
 	});
 
@@ -120,9 +124,13 @@ describe('createTournamentTeam', () => {
 
 	it('throws when not enough race diversity', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest({ raceMinimum: 2, teamRace: '1' }) as never);
-		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
-			{ Dojo: { id: 'd1', tournamentTeamId: null }, dinoz: [{ id: 1, raceId: 1, level: 20 }, { id: 2, raceId: 1, level: 20 }] } as never
-		);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			Dojo: { id: 'd1', tournamentTeamId: null },
+			dinoz: [
+				{ id: 1, raceId: 1, level: 20 },
+				{ id: 2, raceId: 1, level: 20 }
+			]
+		} as never);
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('notEnoughDiversity');
 	});
 });
@@ -169,8 +177,18 @@ describe('tournamentInfo', () => {
 describe('getTournamentFightsToShow', () => {
 	it('marks bye fights as watched and limits to most advanced step', async () => {
 		const fights = [
-			{ id: 1, metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 1 }, tournamentTeamLeft: {}, tournamentTeamRight: {} },
-			{ id: 2, metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 2 }, tournamentTeamLeft: {}, tournamentTeamRight: null }
+			{
+				id: 1,
+				metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 1 },
+				tournamentTeamLeft: {},
+				tournamentTeamRight: {}
+			},
+			{
+				id: 2,
+				metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 2 },
+				tournamentTeamLeft: {},
+				tournamentTeamRight: null
+			}
 		];
 		vi.mocked(getViewedTournamentFight).mockResolvedValue([] as never);
 		const result = await getTournamentFightsToShow(fights as never, 'p1', TournamentPhase.QUALIFICATION, 0);

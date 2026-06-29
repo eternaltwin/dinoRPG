@@ -31,7 +31,10 @@ describe('checkPlayerLB', () => {
 		await expect(checkPlayerLB(req({ uuid: 'u' }))).rejects.toThrow("doesn't exist");
 	});
 	it('returns false when last login is not today', async () => {
-		vi.mocked(playerDao.getLBPlayer).mockResolvedValue({ lastLogin: new Date('2000-01-01'), dinoz: [{ remaining: 0 }] } as never);
+		vi.mocked(playerDao.getLBPlayer).mockResolvedValue({
+			lastLogin: new Date('2000-01-01'),
+			dinoz: [{ remaining: 0 }]
+		} as never);
 		expect(await checkPlayerLB(req({ uuid: 'u' }))).toBe(false);
 	});
 	it('returns false when no dinoz', async () => {
@@ -39,7 +42,10 @@ describe('checkPlayerLB', () => {
 		expect(await checkPlayerLB(req({ uuid: 'u' }))).toBe(false);
 	});
 	it('returns true when all actions used today', async () => {
-		vi.mocked(playerDao.getLBPlayer).mockResolvedValue({ lastLogin: dayjs().toDate(), dinoz: [{ remaining: 0 }] } as never);
+		vi.mocked(playerDao.getLBPlayer).mockResolvedValue({
+			lastLogin: dayjs().toDate(),
+			dinoz: [{ remaining: 0 }]
+		} as never);
 		expect(await checkPlayerLB(req({ uuid: 'u' }))).toBe(true);
 	});
 });
@@ -50,23 +56,35 @@ describe('checkLB', () => {
 		await expect(checkLB(req())).rejects.toThrow("doesn't exist");
 	});
 	it('throws when already claimed', async () => {
-		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({ labruteDone: true, _count: { dinoz: 3 } } as never);
+		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({
+			labruteDone: true,
+			_count: { dinoz: 3 }
+		} as never);
 		await expect(checkLB(req())).rejects.toThrow('alreadyClaimed');
 	});
 	it('grants the reward when LB is done', async () => {
-		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({ labruteDone: false, _count: { dinoz: 6 } } as never);
+		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({
+			labruteDone: false,
+			_count: { dinoz: 6 }
+		} as never);
 		vi.mocked(fetch as never).mockResolvedValue({ text: vi.fn().mockResolvedValue('true') } as never);
 		const result = await checkLB(req());
 		expect(increaseItemQuantity).toHaveBeenCalled();
 		expect(result.quantity).toBe(2);
 	});
 	it('throws when no brutes found', async () => {
-		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({ labruteDone: false, _count: { dinoz: 3 } } as never);
+		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({
+			labruteDone: false,
+			_count: { dinoz: 3 }
+		} as never);
 		vi.mocked(fetch as never).mockResolvedValue({ text: vi.fn().mockResolvedValue('No brutes found') } as never);
 		await expect(checkLB(req())).rejects.toThrow('noBruteFound');
 	});
 	it('throws when not done', async () => {
-		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({ labruteDone: false, _count: { dinoz: 3 } } as never);
+		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({
+			labruteDone: false,
+			_count: { dinoz: 3 }
+		} as never);
 		vi.mocked(fetch as never).mockResolvedValue({ text: vi.fn().mockResolvedValue('false') } as never);
 		await expect(checkLB(req())).rejects.toThrow('needToDoAllAction');
 	});
