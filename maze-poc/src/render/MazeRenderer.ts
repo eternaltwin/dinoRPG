@@ -111,19 +111,20 @@ export class MazeRenderer {
 				const T = y * c;
 				const R = L + c;
 				const B = T + c;
-				const CX = L + c / 2;
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
-				// Wall pieces sit on the cell edge at their native aspect (like
-				// View.hx), not stretched to fill the cell. front/back cap the
-				// N/S edges; side is a tall strip on W/E; corners fill diagonals.
-				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, CX, T, 0.5, 0);
-				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, CX, B, 0.5, 1, false, true);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B, 0, 1);
-				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B, 1, 1, true);
+				// Faithful to View.hx: every wall piece is pinned to the cell's
+				// top-left origin at native aspect (scaled by cell/40) and extends
+				// down/right from there. front caps the N edge, side is a tall strip
+				// on W/E that overhangs downward, back sits on the S edge, corners
+				// fill the diagonals.
+				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 0);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, T, 0, 0);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, T, 1, 0, true);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 1);
 				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 0);
 				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 0, true);
-				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 1, false, true);
-				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 1, true, true);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 1);
+				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 1, true);
 			}
 		}
 	}
