@@ -8,7 +8,7 @@
 import assert from 'node:assert/strict';
 import { BitCodec } from '../src/dungeon/BitCodec';
 import { DungeonCodec } from '../src/dungeon/DungeonCodec';
-import { DungeonGenerator } from '../src/dungeon/DungeonGenerator';
+import { OriginalGenerator } from '../src/dungeon/original';
 import { findPath } from '../src/dungeon/pathfind';
 import type { DungeonStruct } from '../src/dungeon/types';
 
@@ -57,7 +57,7 @@ function assertStructEqual(a: DungeonStruct, b: DungeonStruct): void {
 check('DungeonCodec encode/decode is stable across 40 seeds', () => {
 	for (let seed = 1; seed <= 40; seed++) {
 		const levels = 1 + (seed % 3);
-		const original = DungeonGenerator.generate({ seed, levels });
+		const original = OriginalGenerator.generate({ seed, width: 24, height: 24, levels });
 
 		const codec = new DungeonCodec();
 		const s1 = codec.encode(original);
@@ -76,7 +76,7 @@ check('DungeonCodec encode/decode is stable across 40 seeds', () => {
 check('every generated dungeon is solvable (start -> exit)', () => {
 	for (let seed = 1; seed <= 40; seed++) {
 		const levels = 1 + (seed % 3);
-		const d = DungeonGenerator.generate({ seed, levels });
+		const d = OriginalGenerator.generate({ seed, width: 24, height: 24, levels });
 		const path = findPath(d, { ...d.start }, { ...d.exit });
 		assert.ok(path && path.length > 0, `seed ${seed}: exit unreachable`);
 		assert.deepEqual(path![0], { l: d.start.l, x: d.start.x, y: d.start.y });
@@ -85,7 +85,7 @@ check('every generated dungeon is solvable (start -> exit)', () => {
 });
 
 check('signature reports the right counts', () => {
-	const d = DungeonGenerator.generate({ seed: 7, levels: 2 });
+	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
 	const s = new DungeonCodec().encode(d);
 	const sig = s.slice(2, s.indexOf(']]'));
 	const rooms = d.levels.reduce((n, l) => n + l.rooms.length, 0);
