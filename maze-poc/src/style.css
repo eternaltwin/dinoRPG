@@ -117,6 +117,10 @@ button:hover {
 	border-radius: 8px;
 }
 
+.stair-btn[hidden] {
+	display: none;
+}
+
 .stair-btn img {
 	width: 32px;
 	height: 32px;
