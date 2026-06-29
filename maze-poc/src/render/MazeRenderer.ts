@@ -117,7 +117,7 @@ export class MazeRenderer {
 				// View.hx), not stretched to fill the cell. front/back cap the
 				// N/S edges; side is a tall strip on W/E; corners fill diagonals.
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, CX, T, 0.5, 0);
-				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, CX, B, 0.5, 1);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, CX, B, 0.5, 1, false, true);
 				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B, 0, 1);
 				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B, 1, 1, true);
 				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 0);
