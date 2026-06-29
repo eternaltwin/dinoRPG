@@ -10,13 +10,21 @@ the start to the exit. The dinoz sprite is produced by
 The data model and codec are ported from the Motion Twin
 [WebGamesArchives](https://github.com/motion-twin/WebGamesArchives) DinoRPG sources:
 
-| This module | Haxe source |
-|-------------|-------------|
-| `src/dungeon/types.ts` | `com/DungeonCodec.hx` typedefs + `com/DungeonData.hx` |
+| This module                   | Haxe source                                                   |
+| ----------------------------- | ------------------------------------------------------------- |
+| `src/dungeon/types.ts`        | `com/DungeonCodec.hx` typedefs + `com/DungeonData.hx`         |
 | `src/dungeon/DungeonCodec.ts` | `com/DungeonCodec.hx` (encode/decode, RLE table, bit packing) |
-| `src/dungeon/BitCodec.ts` | re-implementation of `mt.BitCodec` |
+| `src/dungeon/BitCodec.ts`     | re-implementation of `mt.BitCodec`                            |
+| `src/render/skins.ts`         | skin/fog table from `gfx/dungeon/View.hx`                     |
+| `public/dungeon/gfx/*`        | tileset PNGs copied from `gfx/dungeon/gfx/`                   |
 
-### Two important caveats
+The renderer follows the original `gfx/dungeon/View.hx`: 40px cells, walkable
+cells get a ground tile, and wall edges are composited from front (N) / back (S)
+/ side (W/E, mirrored) / corner (diagonal, mirrored) pieces of the level's
+**skin**, over the skin's fog colour. Items, doors and stairs use the real
+`item_` / `interf_` sprites. Each level is assigned a different skin.
+
+### Caveats
 
 1. **`mt.BitCodec` is not in the archive.** It was part of Motion Twin's
    proprietary `mt` library and was never open-sourced. `BitCodec.ts` is a
@@ -24,15 +32,16 @@ The data model and codec are ported from the Motion Twin
    binary-compatible** with the historical server strings (the original
    bit-packing order and CRC polynomial are lost).
 
-2. **The dungeon *generator* is not in the archive either.** `data/Dungeon.hx`
-   only *parses* dungeon XML, and the real layouts were generated server-side and
-   shipped as pre-encoded strings. `src/dungeon/DungeonGenerator.ts` is therefore
-   an original generator that emits structures matching the ported data model
+2. **The generator here is original.** The real server-side generator _does_
+   exist in the archive under `gfx/dungeon/gen/` (`Generator.hx`, `Rooms.hx`,
+   `Noise.hx`, …) but is not ported yet; `src/dungeon/DungeonGenerator.ts` is an
+   independent generator that emits structures matching the ported data model
    (grid of rooms, a perfect maze of doors carved by recursive backtracking, plus
-   loops, stairs between levels, a locked door + key, and chests).
+   loops, stairs between levels, a locked door + key, and chests). Porting the
+   archive's `gen/` is a natural next step.
 
-So the faithful, archive-derived part is the **data model + codec**; the
-**generator** and **renderer** are new code built on top of it.
+So the faithful, archive-derived parts are the **data model + codec** and the
+**tileset / skin rendering**; the **generator** is new code built on top.
 
 ## Layout
 
@@ -44,9 +53,12 @@ src/dungeon/   pure logic, no DOM/Pixi (Node-testable)
   DungeonGenerator.ts generate() -> DungeonStruct
   pathfind.ts        multi-level BFS (used by the walk + the test)
 src/render/    Pixi.js rendering
-  MazeRenderer.ts    draws one level: walls, floors, doors, items, start/exit
+  skins.ts           skin table (wall/ground themes + fog) + asset-name lists
+  assets.ts          preloads + caches the tileset textures
+  MazeRenderer.ts    draws one level from the tileset: ground, walls, items, ...
   DinozActor.ts      sdino wrapper that walks a path, flips, and changes level
 src/main.ts    wires generate -> encode -> decode -> render -> walk
+public/dungeon/gfx/  201 tileset PNGs from the archive
 test/          pure-logic round-trip + solvability tests
 ```
 
@@ -71,8 +83,9 @@ yarn build    # type-check + production bundle
 1. `DungeonGenerator.generate({ seed })` builds a `DungeonStruct`.
 2. `DungeonCodec.encode()` serialises it; `decode()` reads it back and checks the
    CRC. The app renders the **decoded** struct, proving the round-trip.
-3. `MazeRenderer` draws the current level; coloured markers show doors, items,
-   start and exit (see the in-page legend).
+3. `MazeRenderer` draws the current level from the tileset (ground + wall edges
+   for the level's skin), with item / door / stair sprites; start and exit are
+   marked with coloured rings (see the in-page legend).
 4. `findPath()` computes a start→exit route across levels (stairs included), and
    `DinozActor` tweens the `sdino` along it, flipping to face its direction and
    asking the renderer to switch levels when it takes a staircase.
