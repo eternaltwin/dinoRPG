@@ -10,7 +10,6 @@
  */
 
 import './style.css';
-import { DungeonGenerator } from './dungeon/DungeonGenerator';
 import { OriginalGenerator } from './dungeon/original';
 import { DungeonCodec } from './dungeon/DungeonCodec';
 import { findPath } from './dungeon/pathfind';
@@ -29,14 +28,12 @@ const sigEl = document.getElementById('signature') as HTMLPreElement;
 const codeEl = document.getElementById('encoded') as HTMLPreElement;
 const levelsEl = document.getElementById('levels') as HTMLDivElement;
 const seedEl = document.getElementById('seed') as HTMLSpanElement;
-const genToggle = document.getElementById('gen-toggle') as HTMLButtonElement;
 const importInput = document.getElementById('import-str') as HTMLInputElement;
 const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
 const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
 
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
-let useOriginal = true;
 let seed = 1;
 
 /** Render an already-decoded dungeon: (re)build renderer, level buttons, dino. */
@@ -64,9 +61,7 @@ function renderDungeon(dungeon: DungeonStruct, salt: number): void {
 
 /** Generate a fresh dungeon, run it through the codec, and render the decoded result. */
 function build(s: number): void {
-	const generated = useOriginal
-		? OriginalGenerator.generate({ seed: s, width: 24, height: 24, levels: 3 })
-		: DungeonGenerator.generate({ seed: s, levels: 2, roomsX: 5, roomsY: 5, width: 41, height: 41 });
+	const generated = OriginalGenerator.generate({ seed: s, width: 24, height: 24, levels: 3 });
 
 	const encoded = new DungeonCodec().encode(generated);
 	const decoder = new DungeonCodec();
@@ -115,11 +110,6 @@ async function main(): Promise<void> {
 
 	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
 	(document.getElementById('replay') as HTMLButtonElement).onclick = () => build(seed);
-	genToggle.onclick = () => {
-		useOriginal = !useOriginal;
-		genToggle.textContent = `Generator: ${useOriginal ? 'Original' : 'Simple'}`;
-		build(seed);
-	};
 	importBtn.onclick = () => importString(importInput.value);
 	importInput.onkeydown = e => {
 		if (e.key === 'Enter') importString(importInput.value);
