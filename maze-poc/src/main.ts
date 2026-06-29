@@ -33,6 +33,8 @@ const importInput = document.getElementById('import-str') as HTMLInputElement;
 const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
 const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
 const autoBtn = document.getElementById('autosolve') as HTMLButtonElement;
+const stairBtn = document.getElementById('stair-btn') as HTMLButtonElement;
+const stairImg = document.getElementById('stair-icon') as HTMLImageElement;
 
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
@@ -64,7 +66,8 @@ function applyMode(): void {
 	setAutoLabel();
 }
 
-/** Move the dinoz one cell when in manual mode; auto-traverse stairs stepped onto. */
+/** Move the dinoz one cell when in manual mode. Stairs are NOT auto-traversed —
+ * stepping onto one surfaces the stair button (see updateStairButton). */
 function tryMove(dx: number, dy: number): void {
 	if (autoSolve || !actor || !dungeon) return;
 	const nx = cursor.x + dx;
@@ -73,11 +76,36 @@ function tryMove(dx: number, dy: number): void {
 	if (!dungeon.levels[cursor.l].table[nx][ny]) return; // wall
 	cursor = { l: cursor.l, x: nx, y: ny };
 	actor.enqueue(cursor);
-	const to = stairs.get(stairKey(cursor.l, nx, ny));
-	if (to !== undefined) {
-		cursor = { l: to, x: nx, y: ny };
-		actor.enqueue(cursor);
-	}
+}
+
+/** Take the stair under the dinoz, if any, changing the displayed level. */
+function takeStair(): void {
+	if (!actor) return;
+	const here = actor.cell;
+	const to = stairs.get(stairKey(here.l, here.x, here.y));
+	if (to === undefined) return;
+	cursor = { l: to, x: here.x, y: here.y };
+	actor.enqueue(cursor);
+}
+
+// Show the stair button (top-right of the stage) only once the dinoz has settled
+// on a stair cell in manual mode. The button, not the step, performs the descent.
+let stairShownFor: string | null = null;
+function updateStairButton(): void {
+	if (autoSolve || !actor || actor.pending > 0) return hideStair();
+	const here = actor.cell;
+	const to = stairs.get(stairKey(here.l, here.x, here.y));
+	if (to === undefined) return hideStair();
+	const sk = stairKey(here.l, here.x, here.y);
+	if (sk === stairShownFor) return;
+	stairShownFor = sk;
+	stairImg.src = `${import.meta.env.BASE_URL}dungeon/gfx/${to > here.l ? 'item_stair_up' : 'item_stair_down'}.png`;
+	stairBtn.hidden = false;
+}
+function hideStair(): void {
+	if (stairShownFor === null) return;
+	stairShownFor = null;
+	stairBtn.hidden = true;
 }
 
 /** Render an already-decoded dungeon: (re)build renderer, level buttons, dino. */
@@ -173,19 +201,40 @@ async function main(): Promise<void> {
 		applyMode();
 	};
 
+	stairBtn.onclick = () => takeStair();
+
 	const ARROWS: Record<string, [number, number]> = {
 		ArrowUp: [0, -1],
 		ArrowDown: [0, 1],
 		ArrowLeft: [-1, 0],
 		ArrowRight: [1, 0]
 	};
+	// Drive movement from held keys ourselves (a per-frame loop) instead of the
+	// OS key-repeat, which inserts a ~500ms pause after the first press. We feed
+	// one cell at a time only once the previous move lands, so the dinoz walks
+	// continuously while held and stops within a cell on release.
+	const held: string[] = [];
 	window.addEventListener('keydown', e => {
 		const d = ARROWS[e.key];
 		// Don't hijack arrows while typing in the import box.
 		if (!d || document.activeElement === importInput) return;
 		e.preventDefault();
-		tryMove(d[0], d[1]);
+		if (!held.includes(e.key)) held.push(e.key);
 	});
+	window.addEventListener('keyup', e => {
+		const i = held.indexOf(e.key);
+		if (i >= 0) held.splice(i, 1);
+	});
+
+	const frame = (): void => {
+		if (!autoSolve && actor && held.length > 0 && actor.pending === 0) {
+			const d = ARROWS[held[held.length - 1]];
+			tryMove(d[0], d[1]);
+		}
+		updateStairButton();
+		requestAnimationFrame(frame);
+	};
+	requestAnimationFrame(frame);
 }
 
 void main();

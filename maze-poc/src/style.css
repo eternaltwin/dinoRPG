@@ -96,10 +96,31 @@ button:hover {
 
 .stage {
 	display: inline-block;
+	position: relative;
 	border: 1px solid #1b1e26;
 	border-radius: 8px;
 	overflow: hidden;
 	line-height: 0;
+}
+
+.stair-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px;
+	background: rgba(20, 22, 30, 0.85);
+	border: 1px solid #6b5fa8;
+	border-radius: 8px;
+}
+
+.stair-btn img {
+	width: 32px;
+	height: 32px;
+	image-rendering: pixelated;
 }
 
 .legend {
