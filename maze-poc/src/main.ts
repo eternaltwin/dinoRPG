@@ -3,7 +3,8 @@
  *
  * Pipeline:
  *   generate -> encode -> decode (proving the codec round-trips) -> render with
- *   Pixi -> drop a dinoz at the start and walk it to the exit.
+ *   Pixi using the real DinoRPG dungeon tileset -> drop a dinoz at the start and
+ *   walk it to the exit.
  */
 
 import './style.css';
@@ -12,6 +13,9 @@ import { DungeonCodec } from './dungeon/DungeonCodec';
 import { findPath } from './dungeon/pathfind';
 import { MazeRenderer } from './render/MazeRenderer';
 import { DinozActor } from './render/DinozActor';
+import { loadDungeonAssets } from './render/assets';
+import { allAssetNames, SKINS } from './render/skins';
+import type { Skin } from './render/skins';
 import type { DungeonStruct } from './dungeon/types';
 
 // A few real dino "codes" pulled from the dinorpg_animations debug page.
@@ -36,6 +40,9 @@ function build(seed: number): void {
 	const ok = decoder.decode(encoded);
 	const dungeon: DungeonStruct = decoder.d; // render the *decoded* struct on purpose
 
+	// A skin per level, picked from the seed so each maze looks different.
+	const skins: Skin[] = dungeon.levels.map((_, l) => SKINS[(seed + l) % SKINS.length]);
+
 	seedEl.textContent = String(seed);
 	sigEl.textContent = encoded.slice(0, encoded.indexOf(']]') + 2) + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
 	codeEl.textContent = encoded;
@@ -43,7 +50,7 @@ function build(seed: number): void {
 	// 2. (Re)build the renderer.
 	actor?.destroy();
 	renderer?.destroy();
-	renderer = new MazeRenderer(stage, dungeon, { cell: 16 });
+	renderer = new MazeRenderer(stage, dungeon, { cell: 24, skins });
 
 	// 3. Level switcher buttons.
 	levelsEl.replaceChildren();
@@ -66,8 +73,14 @@ function build(seed: number): void {
 	else actor.placeAt({ ...dungeon.start });
 }
 
-let seed = 1;
-build(seed);
+async function main(): Promise<void> {
+	await loadDungeonAssets(allAssetNames());
 
-(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
-(document.getElementById('replay') as HTMLButtonElement).onclick = () => build(seed);
+	let seed = 1;
+	build(seed);
+
+	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
+	(document.getElementById('replay') as HTMLButtonElement).onclick = () => build(seed);
+}
+
+void main();

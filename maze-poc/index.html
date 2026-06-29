@@ -10,8 +10,9 @@
 			<h1>DinoRPG — Maze POC</h1>
 			<p>
 				Dungeon generated &rarr; encoded &rarr; decoded with the ported
-				<code>DungeonCodec</code>, rendered with Pixi.js. The dinoz uses
-				<code>@eternaltwin/dinorpg_animations</code> and walks from the green start to the purple exit.
+				<code>DungeonCodec</code>, rendered with Pixi.js using the original DinoRPG dungeon tileset
+				(<code>gfx/dungeon</code>). Each level gets a different skin. The dinoz uses
+				<code>@eternaltwin/dinorpg_animations</code> and walks from the green ring (start) to the purple ring (exit).
 			</p>
 		</header>
 
@@ -25,15 +26,12 @@
 		<div id="stage" class="stage"></div>
 
 		<div class="legend">
-			<span><i class="sw start"></i>start</span>
-			<span><i class="sw exit"></i>exit</span>
-			<span><i class="sw monster"></i>monster door</span>
-			<span><i class="sw locked"></i>locked door</span>
-			<span><i class="sw up"></i>stairs up</span>
-			<span><i class="sw down"></i>stairs down</span>
-			<span><i class="sw key"></i>key</span>
-			<span><i class="sw gold"></i>gold</span>
-			<span><i class="sw heal"></i>heal</span>
+			<span><i class="sw start"></i>start (green ring)</span>
+			<span><i class="sw exit"></i>exit (purple ring, stairs)</span>
+			<span>💀 monster passage</span>
+			<span>🚪 locked door (needs key)</span>
+			<span>🔼 stairs up / 🔽 stairs down</span>
+			<span>🗝️ key · 💰 gold · 📦 heal chest</span>
 		</div>
 
 		<details class="codec">

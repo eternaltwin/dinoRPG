@@ -1,52 +1,48 @@
 /**
- * MazeRenderer — draws a decoded {@link DungeonStruct} with Pixi.js.
+ * MazeRenderer — draws a decoded {@link DungeonStruct} with Pixi.js using the
+ * real DinoRPG dungeon tileset (gfx/dungeon/gfx).
  *
- * One level is shown at a time. Walls/floors come from the level `table`;
- * doors, items, start and exit are drawn as coloured markers. A separate
- * `actorLayer` is exposed so the dinoz can be added above the maze.
+ * Per the archive's `View.hx`: each cell is a square tile; walkable cells get a
+ * ground tile, and wall edges are composited from front (N), back (S), side
+ * (W/E, mirrored) and corner (diagonal, mirrored) pieces of the level's skin.
+ * Items, doors and stairs are drawn as their item_ / interf_ sprites. The
+ * background is filled with the skin's fog colour.
+ *
+ * Call {@link loadDungeonAssets} (with {@link allAssetNames}) before
+ * constructing, so textures resolve synchronously.
  */
 
-import { Application, Container, Graphics, Text } from 'pixi.js';
+import { Application, Container, Graphics, Sprite, Text } from 'pixi.js';
 import { DungeonItem } from '../dungeon/types';
-import type { DungeonStruct, DungeonLevel } from '../dungeon/types';
+import type { DungeonStruct, DungeonLevel, DungeonDoor } from '../dungeon/types';
+import { SKINS } from './skins';
+import type { Skin } from './skins';
+import { gfx } from './assets';
 
 export interface RendererOptions {
 	cell?: number;
-	background?: number;
+	/** One skin per level (cycled if shorter than the level count). */
+	skins?: Skin[];
 }
-
-const COLORS = {
-	floor: 0x2b2f3a,
-	floorAlt: 0x262a33,
-	wall: 0x12141b,
-	grid: 0x1b1e26,
-	start: 0x4caf50,
-	exit: 0x9c27b0,
-	doorMonster: 0xe53935,
-	doorLocked: 0xffb300,
-	doorStairUp: 0x29b6f6,
-	doorStairDown: 0x1565c0,
-	itemKey: 0xffd54f,
-	itemGold: 0xffca28,
-	itemHeal: 0x66bb6a,
-	itemScenario: 0xab47bc
-};
 
 export class MazeRenderer {
 	readonly app: Application;
 	readonly cell: number;
 	readonly actorLayer: Container;
 	private readonly mapLayer: Container;
-	private d: DungeonStruct | null = null;
+	private d: DungeonStruct;
+	private skins: Skin[];
 	private level = 0;
 
 	constructor(parent: HTMLElement, d: DungeonStruct, opts: RendererOptions = {}) {
-		this.cell = opts.cell ?? 16;
+		this.cell = opts.cell ?? 24;
+		this.d = d;
+		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];
 		this.app = new Application({
 			width: d.width * this.cell,
 			height: d.height * this.cell,
-			background: opts.background ?? 0x0c0d12,
-			antialias: true
+			background: this.skinFor(0).fog,
+			antialias: false
 		});
 		parent.appendChild(this.app.view as HTMLCanvasElement);
 
@@ -55,15 +51,14 @@ export class MazeRenderer {
 		this.app.stage.addChild(this.mapLayer);
 		this.app.stage.addChild(this.actorLayer);
 
-		this.setDungeon(d);
+		this.showLevel(0);
 	}
 
 	get currentLevel(): number {
 		return this.level;
 	}
-
 	get levelCount(): number {
-		return this.d?.levels.length ?? 0;
+		return this.d.levels.length;
 	}
 
 	/** Pixel center of cell (x, y). */
@@ -71,92 +66,167 @@ export class MazeRenderer {
 		return { x: x * this.cell + this.cell / 2, y: y * this.cell + this.cell / 2 };
 	}
 
-	setDungeon(d: DungeonStruct): void {
+	skinFor(level: number): Skin {
+		return this.skins[level % this.skins.length];
+	}
+
+	setDungeon(d: DungeonStruct, skins?: Skin[]): void {
 		this.d = d;
+		if (skins && skins.length > 0) this.skins = skins;
 		this.app.renderer.resize(d.width * this.cell, d.height * this.cell);
 		this.showLevel(Math.min(this.level, d.levels.length - 1));
 	}
 
 	showLevel(l: number): void {
-		if (!this.d) return;
 		this.level = Math.max(0, Math.min(l, this.d.levels.length - 1));
+		const skin = this.skinFor(this.level);
+		this.app.renderer.background.color = skin.fog;
 		this.mapLayer.removeChildren();
-		this.drawTable(this.d.levels[this.level]);
-		this.drawMarkers(this.d, this.level);
+		this.drawLevel(this.d.levels[this.level], skin);
+		this.drawEntities(this.d, this.level);
+		this.drawLabel(this.level, skin);
 	}
 
-	private drawTable(level: DungeonLevel): void {
-		if (!this.d) return;
-		const g = new Graphics();
-		const c = this.cell;
-		for (let x = 0; x < this.d.width; x++) {
-			for (let y = 0; y < this.d.height; y++) {
-				const walkable = level.table[x]?.[y] ?? false;
-				g.beginFill(walkable ? ((x + y) & 1 ? COLORS.floor : COLORS.floorAlt) : COLORS.wall);
-				g.drawRect(x * c, y * c, c, c);
-				g.endFill();
+	// ── tiles ────────────────────────────────────────────────────────────────
+
+	private drawLevel(level: DungeonLevel, skin: Skin): void {
+		const t = level.table;
+		const w = this.d.width;
+		const h = this.d.height;
+		const wall = (x: number, y: number): boolean => x < 0 || y < 0 || x >= w || y >= h || !(t[x]?.[y] ?? false);
+
+		// Ground first, then wall edges on top.
+		for (let x = 0; x < w; x++) {
+			for (let y = 0; y < h; y++) {
+				if (wall(x, y)) continue;
+				const g = 1 + (this.hash(x, y) % skin.groundCount);
+				this.tile(`ground_${skin.ground}_${this.p2(g)}`, x, y);
 			}
 		}
-		this.mapLayer.addChild(g);
+		for (let x = 0; x < w; x++) {
+			for (let y = 0; y < h; y++) {
+				if (wall(x, y)) continue;
+				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
+				if (wall(x, y - 1)) this.tile(`front_${skin.name}_${this.p2(f)}`, x, y);
+				if (wall(x, y + 1)) this.tile(`back_${skin.name}_01`, x, y);
+				if (wall(x - 1, y)) this.tile(`side_${skin.name}_01`, x, y);
+				if (wall(x + 1, y)) this.tile(`side_${skin.name}_01`, x, y, true);
+				if (wall(x, y - 1) && wall(x - 1, y)) this.tile(`corner_${skin.name}_01`, x, y);
+				if (wall(x, y - 1) && wall(x + 1, y)) this.tile(`corner_${skin.name}_01`, x, y, true);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.tile(`corner_${skin.name}_01`, x, y, false, true);
+				if (wall(x, y + 1) && wall(x + 1, y)) this.tile(`corner_${skin.name}_01`, x, y, true, true);
+			}
+		}
 	}
 
-	private drawMarkers(d: DungeonStruct, l: number): void {
-		const g = new Graphics();
-		const r = this.cell * 0.32;
+	// ── doors / items / stairs / start / exit ─────────────────────────────────
+
+	private drawEntities(d: DungeonStruct, l: number): void {
+		const t = d.levels[l].table;
+		const floor = (x: number, y: number): boolean => t[x]?.[y] ?? false;
 
 		for (const room of d.levels[l].rooms) {
-			for (const door of room.doors) {
-				let color = COLORS.doorMonster;
-				if (door.key != null) color = COLORS.doorLocked;
-				else if (door.up === true) color = COLORS.doorStairUp;
-				else if (door.up === false) color = COLORS.doorStairDown;
-				const p = this.center(door.x, door.y);
-				g.beginFill(color);
-				g.drawRect(p.x - r, p.y - r, r * 2, r * 2);
-				g.endFill();
-			}
-			if (room.item) {
-				const p = this.center(room.item.x, room.item.y);
-				g.beginFill(this.itemColor(room.item.k));
-				g.drawCircle(p.x, p.y, r);
-				g.endFill();
-			}
+			for (const door of room.doors) this.drawDoor(door, floor);
+			if (room.item) this.drawItem(room.item.x, room.item.y, room.item.k);
 		}
 
-		if (d.start.l === l) this.drawFlag(g, d.start.x, d.start.y, COLORS.start);
-		if (d.exit.l === l) this.drawFlag(g, d.exit.x, d.exit.y, COLORS.exit);
-		this.mapLayer.addChild(g);
+		if (d.start.l === l) this.ring(d.start.x, d.start.y, 0x4caf50);
+		if (d.exit.l === l) {
+			this.sprite('item_stair_down', d.exit.x, d.exit.y, this.cell * 0.9);
+			this.ring(d.exit.x, d.exit.y, 0x9c27b0);
+		}
+	}
 
-		const label = new Text(`Level ${l + 1} / ${d.levels.length}`, {
+	private drawDoor(door: DungeonDoor, floor: (x: number, y: number) => boolean): void {
+		if (door.up === true) {
+			this.sprite('item_stair_up', door.x, door.y, this.cell * 0.9);
+			return;
+		}
+		if (door.up === false) {
+			this.sprite('item_stair_down', door.x, door.y, this.cell * 0.9);
+			return;
+		}
+		if (door.key != null) {
+			const vertical = floor(door.x - 1, door.y) && floor(door.x + 1, door.y);
+			this.sprite(vertical ? 'item_door_v_01' : 'item_door_h_01', door.x, door.y, this.cell);
+			return;
+		}
+		// plain passage guarded by a monster
+		this.sprite('item_skel', door.x, door.y, this.cell * 0.7);
+	}
+
+	private drawItem(x: number, y: number, k: DungeonItem): void {
+		switch (k) {
+			case DungeonItem.IKey:
+				this.sprite('item_key_01', x, y, this.cell * 0.7);
+				break;
+			case DungeonItem.IGold:
+				this.sprite('item_gold', x, y, this.cell * 0.8);
+				break;
+			case DungeonItem.IHeal:
+				this.sprite('item_chest', x, y, this.cell * 0.8);
+				break;
+			default:
+				this.sprite('item_scroll', x, y, this.cell * 0.7);
+				break;
+		}
+	}
+
+	// ── primitives ─────────────────────────────────────────────────────────────
+
+	/** A full-cell tile, optionally mirrored. */
+	private tile(name: string, cx: number, cy: number, flipX = false, flipY = false): void {
+		const sp = new Sprite(gfx(name));
+		sp.anchor.set(0.5);
+		const c = this.cell;
+		sp.position.set(cx * c + c / 2, cy * c + c / 2);
+		sp.scale.set((c / sp.texture.width) * (flipX ? -1 : 1), (c / sp.texture.height) * (flipY ? -1 : 1));
+		this.mapLayer.addChild(sp);
+	}
+
+	/** An aspect-preserving sprite that fits within `size`, centered on a cell. */
+	private sprite(name: string, cx: number, cy: number, size: number): void {
+		const sp = new Sprite(gfx(name));
+		sp.anchor.set(0.5);
+		const c = this.cell;
+		sp.position.set(cx * c + c / 2, cy * c + c / 2);
+		sp.scale.set(size / Math.max(sp.texture.width, sp.texture.height));
+		this.mapLayer.addChild(sp);
+	}
+
+	private ring(cx: number, cy: number, color: number): void {
+		const g = new Graphics();
+		const p = this.center(cx, cy);
+		const r = this.cell * 0.46;
+		g.lineStyle(2, color, 0.95);
+		g.beginFill(color, 0.18);
+		g.drawCircle(p.x, p.y, r);
+		g.endFill();
+		this.mapLayer.addChild(g);
+	}
+
+	private drawLabel(l: number, skin: Skin): void {
+		const label = new Text(`Level ${l + 1} / ${this.d.levels.length} — ${skin.name}`, {
 			fill: 0xffffff,
 			fontSize: 13,
-			fontFamily: 'monospace'
+			fontFamily: 'monospace',
+			dropShadow: true,
+			dropShadowDistance: 1,
+			dropShadowAlpha: 0.8
 		});
 		label.position.set(6, 6);
 		this.mapLayer.addChild(label);
 	}
 
-	private drawFlag(g: Graphics, x: number, y: number, color: number): void {
-		const p = this.center(x, y);
-		const s = this.cell * 0.42;
-		g.lineStyle(2, color, 1);
-		g.beginFill(color, 0.35);
-		g.drawCircle(p.x, p.y, s);
-		g.endFill();
-		g.lineStyle(0);
+	/** Stable per-cell pseudo-random index. */
+	private hash(x: number, y: number, salt = 0): number {
+		let v = (Math.imul(x + salt, 73856093) ^ Math.imul(y + salt, 19349663)) >>> 0;
+		v ^= v >>> 13;
+		return v >>> 0;
 	}
 
-	private itemColor(k: DungeonItem): number {
-		switch (k) {
-			case DungeonItem.IKey:
-				return COLORS.itemKey;
-			case DungeonItem.IGold:
-				return COLORS.itemGold;
-			case DungeonItem.IHeal:
-				return COLORS.itemHeal;
-			default:
-				return COLORS.itemScenario;
-		}
+	private p2(n: number): string {
+		return n < 10 ? `0${n}` : `${n}`;
 	}
 
 	destroy(): void {
