@@ -63,6 +63,32 @@ button:hover {
 	font-family: monospace;
 }
 
+.import-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+	flex-wrap: wrap;
+}
+
+.import-row input {
+	flex: 1 1 360px;
+	min-width: 240px;
+	background: #14161d;
+	color: #e6e6ea;
+	border: 1px solid #3a3f4d;
+	border-radius: 6px;
+	padding: 7px 10px;
+	font-size: 12px;
+	font-family: monospace;
+}
+
+.import-msg {
+	font-size: 12px;
+	font-family: monospace;
+	color: #a8acba;
+}
+
 .stage {
 	display: inline-block;
 	border: 1px solid #1b1e26;

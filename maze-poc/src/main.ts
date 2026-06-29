@@ -2,13 +2,16 @@
  * Maze POC entry point.
  *
  * Pipeline:
- *   generate -> encode -> decode (proving the codec round-trips) -> render with
- *   Pixi using the real DinoRPG dungeon tileset -> drop a dinoz at the start and
- *   walk it to the exit.
+ *   generate (original or simple generator) -> encode -> decode (proving the
+ *   codec round-trips) -> render with Pixi using the real DinoRPG dungeon
+ *   tileset -> walk a dinoz from the start to the exit.
+ *
+ * You can also paste an encoded string (from the panel below) to re-render it.
  */
 
 import './style.css';
 import { DungeonGenerator } from './dungeon/DungeonGenerator';
+import { OriginalGenerator } from './dungeon/original';
 import { DungeonCodec } from './dungeon/DungeonCodec';
 import { findPath } from './dungeon/pathfind';
 import { MazeRenderer } from './render/MazeRenderer';
@@ -26,33 +29,24 @@ const sigEl = document.getElementById('signature') as HTMLPreElement;
 const codeEl = document.getElementById('encoded') as HTMLPreElement;
 const levelsEl = document.getElementById('levels') as HTMLDivElement;
 const seedEl = document.getElementById('seed') as HTMLSpanElement;
+const genToggle = document.getElementById('gen-toggle') as HTMLButtonElement;
+const importInput = document.getElementById('import-str') as HTMLInputElement;
+const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
+const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
 
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
+let useOriginal = true;
+let seed = 1;
 
-function build(seed: number): void {
-	// 1. Generate a dungeon and run it through the codec round-trip.
-	const generated = DungeonGenerator.generate({ seed, levels: 2, roomsX: 5, roomsY: 5, width: 41, height: 41 });
-	const codec = new DungeonCodec();
-	const encoded = codec.encode(generated);
+/** Render an already-decoded dungeon: (re)build renderer, level buttons, dino. */
+function renderDungeon(dungeon: DungeonStruct, salt: number): void {
+	const skins: Skin[] = dungeon.levels.map((_, l) => SKINS[(salt + l) % SKINS.length]);
 
-	const decoder = new DungeonCodec();
-	const ok = decoder.decode(encoded);
-	const dungeon: DungeonStruct = decoder.d; // render the *decoded* struct on purpose
-
-	// A skin per level, picked from the seed so each maze looks different.
-	const skins: Skin[] = dungeon.levels.map((_, l) => SKINS[(seed + l) % SKINS.length]);
-
-	seedEl.textContent = String(seed);
-	sigEl.textContent = encoded.slice(0, encoded.indexOf(']]') + 2) + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
-	codeEl.textContent = encoded;
-
-	// 2. (Re)build the renderer.
 	actor?.destroy();
 	renderer?.destroy();
 	renderer = new MazeRenderer(stage, dungeon, { cell: 24, skins });
 
-	// 3. Level switcher buttons.
 	levelsEl.replaceChildren();
 	for (let l = 0; l < dungeon.levels.length; l++) {
 		const btn = document.createElement('button');
@@ -61,26 +55,75 @@ function build(seed: number): void {
 		levelsEl.appendChild(btn);
 	}
 
-	// 4. Spawn the dinoz and walk it from start to exit.
-	const code = DINO_CODES[seed % DINO_CODES.length];
-	actor = new DinozActor(renderer, {
-		code,
-		speed: 5,
-		onLevelChange: l => renderer?.showLevel(l)
-	});
+	const code = DINO_CODES[Math.abs(salt) % DINO_CODES.length];
+	actor = new DinozActor(renderer, { code, speed: 5, onLevelChange: l => renderer?.showLevel(l) });
 	const path = findPath(dungeon, { ...dungeon.start }, { ...dungeon.exit });
 	if (path) actor.walk(path);
 	else actor.placeAt({ ...dungeon.start });
 }
 
+/** Generate a fresh dungeon, run it through the codec, and render the decoded result. */
+function build(s: number): void {
+	const generated = useOriginal
+		? OriginalGenerator.generate({ seed: s, width: 24, height: 24, levels: 3 })
+		: DungeonGenerator.generate({ seed: s, levels: 2, roomsX: 5, roomsY: 5, width: 41, height: 41 });
+
+	const encoded = new DungeonCodec().encode(generated);
+	const decoder = new DungeonCodec();
+	const ok = decoder.decode(encoded);
+
+	seedEl.textContent = String(s);
+	sigEl.textContent = encoded.slice(0, encoded.indexOf(']]') + 2) + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
+	codeEl.textContent = encoded;
+	importMsg.textContent = '';
+	renderDungeon(decoder.d, s);
+}
+
+/** Decode a pasted string and render it. */
+function importString(raw: string): void {
+	const s = raw.trim();
+	if (s === '') {
+		importMsg.textContent = 'paste a string first';
+		return;
+	}
+	const decoder = new DungeonCodec();
+	let ok = false;
+	try {
+		ok = decoder.decode(s);
+	} catch {
+		ok = false;
+	}
+	if (!decoder.d || decoder.d.levels.length === 0) {
+		importMsg.textContent = '✗ could not decode (not a string from this codec?)';
+		return;
+	}
+	importMsg.textContent = ok ? '✓ loaded' : '⚠ loaded, but CRC mismatch';
+	seedEl.textContent = '—';
+	const sig = s.startsWith('[[') ? s.slice(0, s.indexOf(']]') + 2) : '(no signature)';
+	sigEl.textContent = sig + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
+	codeEl.textContent = s;
+	// derive a skin salt from the string so imports look stable
+	let salt = 0;
+	for (let i = 0; i < s.length; i++) salt = (salt * 31 + s.charCodeAt(i)) >>> 0;
+	renderDungeon(decoder.d, salt);
+}
+
 async function main(): Promise<void> {
 	await loadDungeonAssets(allAssetNames());
 
-	let seed = 1;
 	build(seed);
 
 	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
 	(document.getElementById('replay') as HTMLButtonElement).onclick = () => build(seed);
+	genToggle.onclick = () => {
+		useOriginal = !useOriginal;
+		genToggle.textContent = `Generator: ${useOriginal ? 'Original' : 'Simple'}`;
+		build(seed);
+	};
+	importBtn.onclick = () => importString(importInput.value);
+	importInput.onkeydown = e => {
+		if (e.key === 'Enter') importString(importInput.value);
+	};
 }
 
 void main();
