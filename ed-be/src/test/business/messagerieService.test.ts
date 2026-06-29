@@ -102,7 +102,11 @@ describe('messagerieService', () => {
 		expect(dao.changePinMessage).toHaveBeenCalledWith('c', null);
 	});
 	it('pinMesage throws when not a participant', async () => {
-		vi.mocked(dao.getConversation).mockResolvedValue({ id: 'c', participants: [{ player: { id: 'other' } }], messages: [] } as never);
+		vi.mocked(dao.getConversation).mockResolvedValue({
+			id: 'c',
+			participants: [{ player: { id: 'other' } }],
+			messages: []
+		} as never);
 		await expect(pinMesage(req({ thread: 'c' }, { messageId: '5' }))).rejects.toThrow('notInConversation');
 	});
 });

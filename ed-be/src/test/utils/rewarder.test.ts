@@ -71,13 +71,17 @@ describe('rewarder', () => {
 	});
 
 	it('throws when level missing for max experience', async () => {
-		await expect(rewarder([{ rewardType: RewardEnum.MAXEXPERIENCE } as never], [{ id: 1, level: 9999, status: [] }], 'p1')).rejects.toThrow(
-			"doesn't exist"
-		);
+		await expect(
+			rewarder([{ rewardType: RewardEnum.MAXEXPERIENCE } as never], [{ id: 1, level: 9999, status: [] }], 'p1')
+		).rejects.toThrow("doesn't exist");
 	});
 
 	it('adds a skill and unlocks double skills', async () => {
-		await rewarder([{ rewardType: RewardEnum.SKILL, value: skillList[Skill.COMPETENCE_DOUBLE].id } as never], team(), 'p1');
+		await rewarder(
+			[{ rewardType: RewardEnum.SKILL, value: skillList[Skill.COMPETENCE_DOUBLE].id } as never],
+			team(),
+			'p1'
+		);
 		expect(addSkillToDinoz).toHaveBeenCalled();
 		expect(unlockDoubleSkills).toHaveBeenCalledWith(1);
 	});
@@ -96,7 +100,9 @@ describe('rewarder', () => {
 	it('grants max item to a new and an existing item', async () => {
 		await rewarder([{ rewardType: RewardEnum.MAX_ITEM, value: 3 } as never], team(), 'p1');
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
-		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({ items: [{ itemId: 3, quantity: 2 }] } as never);
+		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
+			items: [{ itemId: 3, quantity: 2 }]
+		} as never);
 		await rewarder([{ rewardType: RewardEnum.MAX_ITEM, value: 3 } as never], team(), 'p1');
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
 	});
@@ -104,7 +110,9 @@ describe('rewarder', () => {
 	it('grants an item (new, increase, and decrease)', async () => {
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1');
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
-		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({ items: [{ itemId: 3, quantity: 1 }] } as never);
+		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
+			items: [{ itemId: 3, quantity: 1 }]
+		} as never);
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1');
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 1, reverse: true } as never], team(), 'p1');

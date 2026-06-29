@@ -92,12 +92,21 @@ describe('getLearnableAndUnlockableSkills', () => {
 		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow("doesn't belong");
 	});
 	it('throws when dinoz must be named', async () => {
-		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({ level: 20, player: { id: 'p1' }, canChangeName: true } as never);
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({
+			level: 20,
+			player: { id: 'p1' },
+			canChangeName: true
+		} as never);
 		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow('has to be named');
 	});
 	it('throws when race does not exist', async () => {
-		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({ level: 20, player: { id: 'p1' }, canChangeName: false, raceId: 9999 } as never);
-		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow("race");
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({
+			level: 20,
+			player: { id: 'p1' },
+			canChangeName: false,
+			raceId: 9999
+		} as never);
+		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow('race');
 	});
 });
 
@@ -138,13 +147,17 @@ describe('learnSkill', () => {
 	});
 
 	it('throws when not owned', async () => {
-		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz({ player: { id: 'x', discoveredSkills: [] } }) as never);
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(
+			levelUpDinoz({ player: { id: 'x', discoveredSkills: [] } }) as never
+		);
 		await expect(learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }))).rejects.toThrow("doesn't belong");
 	});
 
 	it('throws when the skill cannot be learnt', async () => {
 		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz() as never);
-		await expect(learnSkill(req({ id: '1' }, { skillIdList: [99999], tryNumber: '1' }))).rejects.toThrow("can't learn this");
+		await expect(learnSkill(req({ id: '1' }, { skillIdList: [99999], tryNumber: '1' }))).rejects.toThrow(
+			"can't learn this"
+		);
 	});
 });
 
@@ -192,8 +205,13 @@ describe('computeUSkillsForPlayer', () => {
 
 describe('reincarnate', () => {
 	const reincarnatable = (overrides = {}) => ({
-		id: 1, level: 45, display: 'd', seed: 's',
-		skills: [{ skillId: Skill.REINCARNATION }], status: [], items: [],
+		id: 1,
+		level: 45,
+		display: 'd',
+		seed: 's',
+		skills: [{ skillId: Skill.REINCARNATION }],
+		status: [],
+		items: [],
 		...overrides
 	});
 	it('reincarnates a qualifying dinoz', async () => {

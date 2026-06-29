@@ -42,7 +42,9 @@ describe('logService', () => {
 	});
 	it('getLogsByDate groups by day for a wide range', async () => {
 		const old = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-		vi.mocked(logDao.getLogListByDate).mockResolvedValue([{ createdAt: old, type: 'XPEarned', values: ['7'] }] as never);
+		vi.mocked(logDao.getLogListByDate).mockResolvedValue([
+			{ createdAt: old, type: 'XPEarned', values: ['7'] }
+		] as never);
 		const result = await getLogsByDate(req({ type: 'XPEarned', fromDate: old.toISOString() }));
 		expect(Object.values(result)[0]).toBe(7);
 	});

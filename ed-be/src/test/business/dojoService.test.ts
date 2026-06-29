@@ -84,7 +84,10 @@ const fightResult = (outcome = FightOutcome.AttackerWin) => ({
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1', name: 'Bob' } as never);
-	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ id: 'tt', phase: TournamentPhase.QUALIFICATION } as never);
+	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+		id: 'tt',
+		phase: TournamentPhase.QUALIFICATION
+	} as never);
 	// $transaction supports the callback form used by fightChallenge/skipOpponent
 	vi.mocked(prisma.$transaction).mockImplementation(async (arg: never) => {
 		if (typeof arg === 'function') {
@@ -137,9 +140,15 @@ describe('createMyTeam', () => {
 		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 99] }))).rejects.toThrow('dinozNotPlayer');
 	});
 	it('throws when a dinoz is too low level', async () => {
-		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
-			{ dinoz: [{ id: 1, level: 5 }, { id: 2, level: 20 }, { id: 3, level: 20 }, { id: 4, level: 20 }, { id: 5, level: 20 }] } as never
-		);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: [
+				{ id: 1, level: 5 },
+				{ id: 2, level: 20 },
+				{ id: 3, level: 20 },
+				{ id: 4, level: 20 },
+				{ id: 5, level: 20 }
+			]
+		} as never);
 		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dinozTooLowLevel');
 	});
 });
@@ -179,7 +188,9 @@ describe('fightFriend', () => {
 					dinoz: [{ id: 1, unavailableReason: null }]
 				}) as never
 		);
-		vi.mocked(getDinozForDojoFight).mockResolvedValue([{ id: 1, items: [], maxLife: 100, life: 50, playerId: 'p1' }] as never);
+		vi.mocked(getDinozForDojoFight).mockResolvedValue([
+			{ id: 1, items: [], maxLife: 100, life: 50, playerId: 'p1' }
+		] as never);
 		vi.mocked(calculateFightBetweenPlayers).mockReturnValue(fightResult() as never);
 		vi.mocked(playerDao.spendMoney).mockResolvedValue(true as never);
 		vi.mocked(getLatestTournament).mockResolvedValue({ id: 'tt' } as never);
@@ -200,9 +211,11 @@ describe('fightFriend', () => {
 		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('inexistantOpponent');
 	});
 	it('throws when not enough gold', async () => {
-		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValue(
-			{ money: 0, cooker: false, dinoz: [{ id: 1, unavailableReason: null }] } as never
-		);
+		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValue({
+			money: 0,
+			cooker: false,
+			dinoz: [{ id: 1, unavailableReason: null }]
+		} as never);
 		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('notEnoughGold');
 	});
 });
@@ -250,7 +263,9 @@ describe('fightChallenge', () => {
 				DojoChallengeHistory: []
 			}
 		} as never);
-		vi.mocked(getDinozForDojoFight).mockResolvedValue([{ id: 1, items: [], maxLife: 100, life: 50, skills: [], playerId: 'p1' }] as never);
+		vi.mocked(getDinozForDojoFight).mockResolvedValue([
+			{ id: 1, items: [], maxLife: 100, life: 50, skills: [], playerId: 'p1' }
+		] as never);
 		vi.mocked(calculateFightBetweenPlayers).mockReturnValue(fightResult() as never);
 		vi.mocked(archiveDao.archiveFight).mockResolvedValue({ id: 'arch', result: true } as never);
 		vi.mocked(getLatestTournament).mockResolvedValue({ id: 'tt' } as never);
@@ -269,7 +284,10 @@ describe('fightChallenge', () => {
 		await expect(fightChallenge(req({ myDinoz: 1, opponent: 2 }))).rejects.toThrow('inexistantDojo');
 	});
 	it('throws when not enough gold', async () => {
-		vi.mocked(playerDao.getDojoChallengePreparationRequest).mockResolvedValue({ money: 0, Dojo: { team: [], DojoOpponents: [] } } as never);
+		vi.mocked(playerDao.getDojoChallengePreparationRequest).mockResolvedValue({
+			money: 0,
+			Dojo: { team: [], DojoOpponents: [] }
+		} as never);
 		await expect(fightChallenge(req({ myDinoz: 1, opponent: 2 }))).rejects.toThrow('notEnoughGold');
 	});
 	it('throws when dinoz already fighted', async () => {
@@ -291,7 +309,10 @@ describe('skipOpponent', () => {
 				DojoOpponents: [{ dinozId: 2, fighted: true, achieved: false }]
 			}
 		} as never);
-		vi.mocked(playerDao.getDojoDataForRanking).mockResolvedValue({ reputation: 100, DojoChallengeHistory: [] } as never);
+		vi.mocked(playerDao.getDojoDataForRanking).mockResolvedValue({
+			reputation: 100,
+			DojoChallengeHistory: []
+		} as never);
 	});
 	it('skips an opponent', async () => {
 		await skipOpponent(req({ opponent: 2 }));

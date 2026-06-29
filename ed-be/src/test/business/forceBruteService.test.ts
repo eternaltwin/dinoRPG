@@ -85,14 +85,20 @@ describe('checkFBCreation', () => {
 describe('getCurrentTournament', () => {
 	it('returns qualif state when under 256 participants', async () => {
 		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({
-			id: 't1', date: new Date(), levelLimit: 20, participants: [{ level: 20 }]
+			id: 't1',
+			date: new Date(),
+			levelLimit: 20,
+			participants: [{ level: 20 }]
 		} as never);
 		const result = await getCurrentTournament(req({ id: 't1' }));
 		expect(result?.state).toBe('qualif');
 	});
 	it('returns fights state when 256+ participants', async () => {
 		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({
-			id: 't1', date: new Date(), levelLimit: 20, participants: Array.from({ length: 256 }, () => ({ level: 20 }))
+			id: 't1',
+			date: new Date(),
+			levelLimit: 20,
+			participants: Array.from({ length: 256 }, () => ({ level: 20 }))
 		} as never);
 		const result = await getCurrentTournament(req({ id: 't1' }));
 		expect(result?.state).toBe('fights');
@@ -126,22 +132,39 @@ describe('createTournamentDinoz', () => {
 		await expect(createTournamentDinoz(req({}, { name: '@@' }))).rejects.toThrow('OnlyLettersAndNumbers');
 	});
 	it('throws when the account is too young', async () => {
-		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({ createdDate: new Date(), ranking: { points: 100 } } as never);
-		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow('tooYoungAccount');
+		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
+			createdDate: new Date(),
+			ranking: { points: 100 }
+		} as never);
+		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow(
+			'tooYoungAccount'
+		);
 	});
 	it('throws when not enough points', async () => {
 		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
-			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000), ranking: { points: 1 }
+			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000),
+			ranking: { points: 1 }
 		} as never);
-		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
-		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow('notEnoughPoints');
+		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({
+			levelLimit: 20,
+			teamRace: '1',
+			id: 't1'
+		} as never);
+		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow(
+			'notEnoughPoints'
+		);
 	});
 
 	it('creates a tournament dinoz when all checks pass', async () => {
 		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
-			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000), ranking: { points: 100 }
+			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000),
+			ranking: { points: 100 }
 		} as never);
-		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
+		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({
+			levelLimit: 20,
+			teamRace: '1',
+			id: 't1'
+		} as never);
 		vi.mocked(prisma.gameDinoz.findFirst).mockResolvedValue(null as never);
 		vi.mocked(prisma.gameDinoz.count).mockResolvedValue(0 as never);
 		vi.mocked(prisma.gameDinoz.create).mockResolvedValue({ id: 9 } as never);
@@ -151,25 +174,47 @@ describe('createTournamentDinoz', () => {
 
 	it('throws when a dinoz was already created today', async () => {
 		vi.mocked(prisma.player.findUniqueOrThrow).mockResolvedValue({
-			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000), ranking: { points: 100 }
+			createdDate: new Date(Date.now() - 10 * 24 * 3600 * 1000),
+			ranking: { points: 100 }
 		} as never);
-		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({ levelLimit: 20, teamRace: '1', id: 't1' } as never);
+		vi.mocked(prisma.fBTournament.findFirstOrThrow).mockResolvedValue({
+			levelLimit: 20,
+			teamRace: '1',
+			id: 't1'
+		} as never);
 		vi.mocked(prisma.gameDinoz.findFirst).mockResolvedValue({ id: 1, createdDate: new Date() } as never);
-		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow('alreadyCreatedDinoz');
+		await expect(createTournamentDinoz(req({}, { name: 'Rex', tournamentId: 't1' }))).rejects.toThrow(
+			'alreadyCreatedDinoz'
+		);
 	});
 });
 
 describe('fight list handlers', () => {
 	it('getFBTournamentFights transforms and returns fights', async () => {
 		vi.mocked(prisma.fightArchive.findMany).mockResolvedValue([
-			{ id: 1, fighters: '[]', metadata: JSON.stringify({ phase: 'pools', poolNumber: 0 }), result: true, FBTournamentLeft: { id: 1 }, FBTournamentRight: { id: 2 }, leftPlayer: null, rightPlayer: null }
+			{
+				id: 1,
+				fighters: '[]',
+				metadata: JSON.stringify({ phase: 'pools', poolNumber: 0 }),
+				result: true,
+				FBTournamentLeft: { id: 1 },
+				FBTournamentRight: { id: 2 },
+				leftPlayer: null,
+				rightPlayer: null
+			}
 		] as never);
 		const result = await getFBTournamentFights(req({ id: 't1', pool: '0', phase: TournamentPhase.POOLS }));
 		expect(result).toEqual([]);
 	});
 	it('readAllFightFromEventPool views matching pool fights', async () => {
 		vi.mocked(prisma.fightArchive.findMany).mockResolvedValue([
-			{ id: 1, metadata: JSON.stringify({ phase: TournamentPhase.POOLS, poolNumber: 0 }), result: true, FBTournamentLeft: { id: 1 }, FBTournamentRight: { id: 2 } }
+			{
+				id: 1,
+				metadata: JSON.stringify({ phase: TournamentPhase.POOLS, poolNumber: 0 }),
+				result: true,
+				FBTournamentLeft: { id: 1 },
+				FBTournamentRight: { id: 2 }
+			}
 		] as never);
 		await readAllFightFromEventPool(req({ id: 't1', pool: '0', phase: TournamentPhase.POOLS }));
 		expect(viewFight).toHaveBeenCalled();
@@ -179,7 +224,10 @@ describe('fight list handlers', () => {
 describe('getFBTournamentOpponent', () => {
 	beforeEach(() => vi.mocked(ownsDinoz).mockResolvedValue(true as never));
 	it('returns a generated opponent', async () => {
-		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({ FBTournamentStep: 10, placeId: PlaceEnum.FORCEBRUT } as never);
+		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({
+			FBTournamentStep: 10,
+			placeId: PlaceEnum.FORCEBRUT
+		} as never);
 		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({ winnerId: 'w1' } as never);
 		vi.mocked(prisma.gameDinoz.findFirstOrThrow).mockResolvedValue({ display: 'd', level: 20, seed: 'seed' } as never);
 		const result = await getFBTournamentOpponent(req({ dinozId: '1' }));
@@ -195,7 +243,10 @@ describe('getFBTournamentOpponent', () => {
 		await expect(getFBTournamentOpponent(req({ dinozId: '1' }))).rejects.toThrow('right place');
 	});
 	it('throws when there is no opponent', async () => {
-		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({ FBTournamentStep: 10, placeId: PlaceEnum.FORCEBRUT } as never);
+		vi.mocked(prisma.dinoz.findFirst).mockResolvedValue({
+			FBTournamentStep: 10,
+			placeId: PlaceEnum.FORCEBRUT
+		} as never);
 		vi.mocked(prisma.fBTournament.findFirst).mockResolvedValue({ winnerId: null } as never);
 		await expect(getFBTournamentOpponent(req({ dinozId: '1' }))).rejects.toThrow('noOpponent');
 	});
