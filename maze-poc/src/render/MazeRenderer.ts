@@ -106,15 +106,24 @@ export class MazeRenderer {
 		for (let x = 0; x < w; x++) {
 			for (let y = 0; y < h; y++) {
 				if (wall(x, y)) continue;
+				const c = this.cell;
+				const L = x * c;
+				const T = y * c;
+				const R = L + c;
+				const B = T + c;
+				const CX = L + c / 2;
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
-				if (wall(x, y - 1)) this.tile(`front_${skin.name}_${this.p2(f)}`, x, y);
-				if (wall(x, y + 1)) this.tile(`back_${skin.name}_01`, x, y);
-				if (wall(x - 1, y)) this.tile(`side_${skin.name}_01`, x, y);
-				if (wall(x + 1, y)) this.tile(`side_${skin.name}_01`, x, y, true);
-				if (wall(x, y - 1) && wall(x - 1, y)) this.tile(`corner_${skin.name}_01`, x, y);
-				if (wall(x, y - 1) && wall(x + 1, y)) this.tile(`corner_${skin.name}_01`, x, y, true);
-				if (wall(x, y + 1) && wall(x - 1, y)) this.tile(`corner_${skin.name}_01`, x, y, false, true);
-				if (wall(x, y + 1) && wall(x + 1, y)) this.tile(`corner_${skin.name}_01`, x, y, true, true);
+				// Wall pieces sit on the cell edge at their native aspect (like
+				// View.hx), not stretched to fill the cell. front/back cap the
+				// N/S edges; side is a tall strip on W/E; corners fill diagonals.
+				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, CX, T, 0.5, 0);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, CX, B, 0.5, 1);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B, 0, 1);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B, 1, 1, true);
+				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 0);
+				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 0, true);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 1, false, true);
+				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 1, true, true);
 			}
 		}
 	}
@@ -181,6 +190,20 @@ export class MazeRenderer {
 		const c = this.cell;
 		sp.position.set(cx * c + c / 2, cy * c + c / 2);
 		sp.scale.set((c / sp.texture.width) * (flipX ? -1 : 1), (c / sp.texture.height) * (flipY ? -1 : 1));
+		this.mapLayer.addChild(sp);
+	}
+
+	/**
+	 * A wall-edge piece, drawn at its native aspect ratio (scaled by `cell / 40`,
+	 * the original tile unit) and pinned to a cell edge via `(ax, ay)` anchor.
+	 * Mirrors `View.hx`, where walls have real height and overhang the cell.
+	 */
+	private edge(name: string, px: number, py: number, ax: number, ay: number, flipX = false, flipY = false): void {
+		const sp = new Sprite(gfx(name));
+		sp.anchor.set(ax, ay);
+		const s = this.cell / 40;
+		sp.scale.set(s * (flipX ? -1 : 1), s * (flipY ? -1 : 1));
+		sp.position.set(px, py);
 		this.mapLayer.addChild(sp);
 	}
 
