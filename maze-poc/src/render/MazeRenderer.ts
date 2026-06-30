@@ -103,8 +103,10 @@ export class MazeRenderer {
 				this.tile(`ground_${skin.ground}_${this.p2(g)}`, x, y);
 			}
 		}
-		for (let x = 0; x < w; x++) {
-			for (let y = 0; y < h; y++) {
+		// Row by row (top to bottom) so lower walls draw over higher ones,
+		// giving the bottom edges a larger z-index and correct overhang.
+		for (let y = 0; y < h; y++) {
+			for (let x = 0; x < w; x++) {
 				if (wall(x, y)) continue;
 				const c = this.cell;
 				const L = x * c;
@@ -112,18 +114,17 @@ export class MazeRenderer {
 				const R = L + c;
 				const B = T + c;
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
-				// Faithful to View.hx: every wall piece is pinned to the cell's
-				// top-left origin at native aspect (scaled by cell/40) and extends
-				// down/right from there. front caps the N edge, side is a tall strip
-				// on W/E that overhangs downward, back sits on the S edge, corners
-				// fill the diagonals.
+				// Faithful to View.hx: front rises up off the N edge, back hangs
+				// down off the S edge, the side strips overhang downward and are
+				// anchored by their right edge on both W and E, corners fill the
+				// diagonals.
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, T, 0, 0);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, T, 1, 0);
 				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, T, 1, 0, true);
 				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0);
-				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 0, 1);
+				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1);
 				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true);
-				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 0, 0);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, B, 1, 0);
 				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, B, 1, 0, true);
 			}
 		}
