@@ -23,6 +23,8 @@ export interface RendererOptions {
 	cell?: number;
 	/** One skin per level (cycled if shorter than the level count). */
 	skins?: Skin[];
+	/** Visible canvas size (px). Defaults to the full map (no scrolling). */
+	view?: { w: number; h: number };
 }
 
 export class MazeRenderer {
@@ -30,6 +32,8 @@ export class MazeRenderer {
 	readonly cell: number;
 	readonly actorLayer: Container;
 	private readonly mapLayer: Container;
+	private readonly viewW: number;
+	private readonly viewH: number;
 	private d: DungeonStruct;
 	private skins: Skin[];
 	private level = 0;
@@ -38,9 +42,11 @@ export class MazeRenderer {
 		this.cell = opts.cell ?? 24;
 		this.d = d;
 		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];
+		this.viewW = opts.view?.w ?? d.width * this.cell;
+		this.viewH = opts.view?.h ?? d.height * this.cell;
 		this.app = new Application({
-			width: d.width * this.cell,
-			height: d.height * this.cell,
+			width: this.viewW,
+			height: this.viewH,
 			background: this.skinFor(0).fog,
 			antialias: false
 		});
@@ -64,6 +70,30 @@ export class MazeRenderer {
 	/** Pixel center of cell (x, y). */
 	center(x: number, y: number): { x: number; y: number } {
 		return { x: x * this.cell + this.cell / 2, y: y * this.cell + this.cell / 2 };
+	}
+
+	/**
+	 * Scroll the camera so world point (px, py) stays inside a centered dead-zone.
+	 * The target roams freely within that inner box; the camera only pans once it
+	 * would cross the edge — so the dino isn't glued to the center. Clamped to the
+	 * map bounds.
+	 */
+	focus(px: number, py: number): void {
+		const worldW = this.d.width * this.cell;
+		const worldH = this.d.height * this.cell;
+		const marginX = this.viewW * 0.35;
+		const marginY = this.viewH * 0.35;
+		let camX = -this.app.stage.position.x;
+		let camY = -this.app.stage.position.y;
+		const sx = px - camX;
+		const sy = py - camY;
+		if (sx < marginX) camX = px - marginX;
+		else if (sx > this.viewW - marginX) camX = px - (this.viewW - marginX);
+		if (sy < marginY) camY = py - marginY;
+		else if (sy > this.viewH - marginY) camY = py - (this.viewH - marginY);
+		camX = Math.max(0, Math.min(camX, Math.max(0, worldW - this.viewW)));
+		camY = Math.max(0, Math.min(camY, Math.max(0, worldH - this.viewH)));
+		this.app.stage.position.set(-camX, -camY);
 	}
 
 	skinFor(level: number): Skin {
