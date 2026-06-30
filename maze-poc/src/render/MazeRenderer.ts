@@ -145,12 +145,13 @@ export class MazeRenderer {
 				const B = T + c;
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
 				// Faithful to View.hx: front rises up off the N edge, back hangs
-				// down off the S edge, the side strips overhang downward and are
-				// anchored by their right edge on both W and E, corners fill the
-				// diagonals.
+				// down off the S edge, the side strips stand up from the cell floor
+				// (anchored by their bottom, right edge) on both W and E so their
+				// foot lands on the floor line rather than dangling below, corners
+				// fill the diagonals.
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, T, 1, 0);
-				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, T, 1, 0, true);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B, 1, 1);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B, 1, 1, true);
 				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0);
 				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1);
 				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true);
