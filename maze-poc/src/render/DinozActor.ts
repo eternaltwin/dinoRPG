@@ -55,6 +55,7 @@ export class DinozActor {
 		}
 		const p = this.renderer.center(cell.x, cell.y);
 		this.sprite.position.set(p.x, p.y + this.renderer.cell * 0.25);
+		this.renderer.focus(this.sprite.x, this.sprite.y);
 		this.pos = { ...cell };
 	}
 
@@ -136,6 +137,7 @@ export class DinozActor {
 		const b = this.renderer.center(to.x, to.y);
 		const yOff = this.renderer.cell * 0.25;
 		this.sprite.position.set(a.x + (b.x - a.x) * k, a.y + yOff + (b.y - a.y) * k);
+		this.renderer.focus(this.sprite.x, this.sprite.y);
 
 		if (this.t >= 1) {
 			this.pos = { l: to.l, x: to.x, y: to.y };

@@ -116,7 +116,8 @@ function renderDungeon(dungeonStruct: DungeonStruct, salt: number): void {
 	renderer?.destroy();
 	// cell 45 → the dino's 2-cell target equals its 90px nominal height, so it
 	// renders at scale 1 (native resolution) instead of being downsized.
-	renderer = new MazeRenderer(stage, dungeonStruct, { cell: 45, skins });
+	// 500×350 viewport: the map is larger, so the camera scrolls to follow the dino.
+	renderer = new MazeRenderer(stage, dungeonStruct, { cell: 45, skins, view: { w: 500, h: 350 } });
 
 	levelsEl.replaceChildren();
 	for (let l = 0; l < dungeonStruct.levels.length; l++) {
