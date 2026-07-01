@@ -2,13 +2,18 @@ import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
-import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 
 export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave'],
-		initialStep: true
+		initialStep: true,
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } },
+				{ [ConditionEnum.MINLEVEL]: 8 }
+			]
+		},
 	},
 	fight: {
 		stepName: 'fight',
@@ -35,7 +40,13 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave'],
-		initialStep: true
+		initialStep: true,
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } },
+				{ [ConditionEnum.MINLEVEL]: 8 }
+			]
+		},
 	},
 	fight: {
 		stepName: 'fight',
@@ -62,7 +73,13 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave', 'touch', 'grave'],
-		initialStep: true
+		initialStep: true,
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } },
+				{ [ConditionEnum.MINLEVEL]: 13 }
+			]
+		}
 	},
 	fight: {
 		stepName: 'fight',
