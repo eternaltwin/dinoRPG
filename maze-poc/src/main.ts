@@ -101,7 +101,7 @@ function updateStairButton(): void {
 	const sk = stairKey(here.l, here.x, here.y);
 	if (sk === stairShownFor) return;
 	stairShownFor = sk;
-	stairImg.src = `${import.meta.env.BASE_URL}dungeon/gfx/${to > here.l ? 'item_stair_up' : 'item_stair_down'}.png`;
+	stairImg.src = `${import.meta.env.BASE_URL}dungeon/gfx/${to > here.l ? 'interf_stair_up' : 'interf_stair_down'}.png`;
 	stairBtn.hidden = false;
 }
 function hideStair(): void {
