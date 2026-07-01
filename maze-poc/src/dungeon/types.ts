@@ -66,6 +66,13 @@ export interface DungeonStruct {
 	exit: { x: number; y: number; l: number };
 }
 
+/** A single grid cell: level `l`, column `x`, row `y`. */
+export interface Cell {
+	l: number;
+	x: number;
+	y: number;
+}
+
 // ── com/DungeonData.hx ───────────────────────────────────────────────────────
 
 /** `enum _DIcon` — icon shown on a dungeon cell. */

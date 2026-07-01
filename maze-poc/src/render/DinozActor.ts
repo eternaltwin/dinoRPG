@@ -3,14 +3,14 @@
  *
  * Wraps an `sdino` instance from `@eternaltwin/dinorpg_animations` (a Pixi
  * `Container`), positions it on the maze grid, and tweens it cell-by-cell along
- * a path produced by {@link findPath}. It flips to face its travel direction and
- * fires `onLevelChange` when it takes a staircase so the renderer can swap the
- * displayed level.
+ * a queue of adjacent cells pushed by the arrow-key controls. It flips to face
+ * its travel direction and fires `onLevelChange` when it takes a staircase so
+ * the renderer can swap the displayed level.
  */
 
 import { sdino } from '@eternaltwin/dinorpg_animations';
 import type { MazeRenderer } from './MazeRenderer';
-import type { Cell } from '../dungeon/pathfind';
+import type { Cell } from '../dungeon/types';
 
 export interface DinozActorOptions {
 	/** Dino "code" string. */
@@ -69,32 +69,16 @@ export class DinozActor {
 		return this.path.length - 1 - this.seg;
 	}
 
-	/** Drop any auto-walk path and hold at the current cell for manual control. */
-	takeControl(): void {
-		this.stop();
-		this.path = [{ ...this.pos }];
-		this.seg = 0;
-		this.t = 0;
-	}
-
 	/** Queue one adjacent cell to walk to (manual control); resumes the ticker. */
 	enqueue(cell: Cell): void {
 		this.path.push(cell);
+		// playAnim is idempotent while already walking (no frame reset), so it's
+		// safe to call per queued cell. ponytail: a brief 'stand' can slip in
+		// between cells since the feeder drains to idle before the next step;
+		// the fully smooth fix is the direction-based step model.
+		this.sprite.playAnim('walk');
 		this.renderer.app.ticker.remove(this.tick);
 		this.renderer.app.ticker.add(this.tick);
-	}
-
-	/** Start walking the given path. Restarts any walk in progress. */
-	walk(path: Cell[]): void {
-		this.path = path;
-		this.seg = 0;
-		this.t = 0;
-		if (path.length > 0) this.placeAt(path[0]);
-		this.renderer.app.ticker.remove(this.tick);
-		if (path.length > 1) {
-			this.sprite.playAnim('walk');
-			this.renderer.app.ticker.add(this.tick);
-		}
 	}
 
 	stop(): void {

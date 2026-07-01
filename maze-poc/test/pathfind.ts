@@ -1,24 +1,17 @@
 /**
- * Multi-level breadth-first pathfinding over a decoded {@link DungeonStruct}.
+ * Test-only reachability oracle.
  *
- * Movement is 4-directional across walkable `table` cells. Stair doors
- * (`up !== null`) link a cell to the same coordinate on the adjacent level,
- * so a path may span several levels.
+ * The app no longer contains a pathfinder — the dinoz is driven solely by the
+ * arrow keys. This BFS lives here purely so the generator tests can assert that
+ * every generated dungeon is solvable (start -> exit). Not shipped in the app.
  */
 
-import type { DungeonStruct } from './types';
+import type { DungeonStruct, Cell } from '../src/dungeon/types';
 
-export interface Cell {
-	l: number;
-	x: number;
-	y: number;
-}
-
-export const stairKey = (l: number, x: number, y: number) => `${l},${x},${y}`;
-const key = stairKey;
+const key = (l: number, x: number, y: number): string => `${l},${x},${y}`;
 
 /** Map every stair-door cell to the level it connects to. */
-export function buildStairs(d: DungeonStruct): Map<string, number> {
+function buildStairs(d: DungeonStruct): Map<string, number> {
 	const stairs = new Map<string, number>();
 	d.levels.forEach((level, l) => {
 		for (const room of level.rooms) {
