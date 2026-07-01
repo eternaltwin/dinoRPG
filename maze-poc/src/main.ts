@@ -33,6 +33,7 @@ const importInput = document.getElementById('import-str') as HTMLInputElement;
 const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
 const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
 const autoBtn = document.getElementById('autosolve') as HTMLButtonElement;
+const debugBtn = document.getElementById('debug') as HTMLButtonElement;
 const stairBtn = document.getElementById('stair-btn') as HTMLButtonElement;
 const stairImg = document.getElementById('stair-icon') as HTMLImageElement;
 
@@ -42,6 +43,7 @@ let seed = 1;
 
 // Manual control: when the auto solver is off, the arrow keys drive the dinoz.
 let autoSolve = true;
+let wallDebug = false;
 let dungeon: DungeonStruct | null = null;
 let stairs = new Map<string, number>();
 // Logical target cell — where the dinoz will end up once queued moves finish.
@@ -118,6 +120,7 @@ function renderDungeon(dungeonStruct: DungeonStruct, salt: number): void {
 	// renders at scale 1 (native resolution) instead of being downsized.
 	// 500×350 viewport: the map is larger, so the camera scrolls to follow the dino.
 	renderer = new MazeRenderer(stage, dungeonStruct, { cell: 45, skins, view: { w: 500, h: 350 } });
+	renderer.setDebug(wallDebug);
 
 	levelsEl.replaceChildren();
 	for (let l = 0; l < dungeonStruct.levels.length; l++) {
@@ -202,6 +205,12 @@ async function main(): Promise<void> {
 	autoBtn.onclick = () => {
 		autoSolve = !autoSolve;
 		applyMode();
+	};
+
+	debugBtn.onclick = () => {
+		wallDebug = !wallDebug;
+		debugBtn.textContent = wallDebug ? 'Wall debug: ON' : 'Wall debug: OFF';
+		renderer?.setDebug(wallDebug);
 	};
 
 	stairBtn.onclick = () => takeStair();
