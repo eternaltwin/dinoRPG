@@ -7,10 +7,10 @@
  * validates the covered surface.
  */
 
-import { Generator } from './Generator';
-import { Door, Group, Level, Room } from './Data';
-import { HxList } from './HxList';
-import type { LevelInfos } from './Data';
+import { Generator } from './Generator.js';
+import { Door, Group, Level, Room } from './Data.js';
+import { HxList } from './HxList.js';
+import type { LevelInfos } from './Data.js';
 
 export class Rooms extends Generator {
 	private surface: number;

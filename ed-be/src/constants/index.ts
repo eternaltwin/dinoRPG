@@ -3,6 +3,7 @@ export * from './temporaryStatus.js';
 export const apiRoutes = {
 	adminRoute: '/api/v1/admin',
 	dinozRoute: '/api/v1/dinoz',
+	dungeonRoute: '/api/v1/dungeon',
 	fightRoute: '/api/v1/fight',
 	ingredientRoute: '/api/v1/ingredients',
 	inventoryRoute: '/api/v1/inventory',

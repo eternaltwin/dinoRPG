@@ -2373,6 +2373,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eternaltwin/dinorpg-maze-poc@workspace:maze-poc":
+  version: 0.0.0-use.local
+  resolution: "@eternaltwin/dinorpg-maze-poc@workspace:maze-poc"
+  dependencies:
+    "@eternaltwin/dinorpg_animations": "npm:^1.0.9"
+    pixi.js: "npm:^7.4.3"
+    typescript: "npm:^5.7.2"
+    vite: "npm:^4.5.0"
+  languageName: unknown
+  linkType: soft
+
 "@eternaltwin/dinorpg-monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@eternaltwin/dinorpg-monorepo@workspace:."

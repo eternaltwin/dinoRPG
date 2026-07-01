@@ -734,6 +734,18 @@ exports.Prisma.ServerStateScalarFieldEnum = {
   nextCheck: 'nextCheck'
 };
 
+exports.Prisma.DungeonRunScalarFieldEnum = {
+  id: 'id',
+  cipher: 'cipher',
+  iv: 'iv',
+  tag: 'tag',
+  posX: 'posX',
+  posY: 'posY',
+  posL: 'posL',
+  revealed: 'revealed',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -993,7 +1005,8 @@ exports.Prisma.ModelName = {
   FBTournament: 'FBTournament',
   GameDinoz: 'GameDinoz',
   Events: 'Events',
-  ServerState: 'ServerState'
+  ServerState: 'ServerState',
+  DungeonRun: 'DungeonRun'
 };
 
 /**

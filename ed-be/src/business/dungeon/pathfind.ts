@@ -1,12 +1,18 @@
 /**
  * Test-only reachability oracle.
  *
- * The app no longer contains a pathfinder — the dinoz is driven solely by the
- * arrow keys. This BFS lives here purely so the generator tests can assert that
- * every generated dungeon is solvable (start -> exit). Not shipped in the app.
+ * The game no longer contains a pathfinder — the dinoz is driven solely by
+ * server-validated arrow-key moves. This BFS lives here purely so the generator
+ * tests can assert that every generated dungeon is solvable (start -> exit).
  */
 
-import type { DungeonStruct, Cell } from '../src/dungeon/types';
+import type { DungeonStruct } from './types.js';
+
+export interface Cell {
+	l: number;
+	x: number;
+	y: number;
+}
 
 const key = (l: number, x: number, y: number): string => `${l},${x},${y}`;
 

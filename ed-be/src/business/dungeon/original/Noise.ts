@@ -6,9 +6,9 @@
  * Driven by `inf.noiseAmount` / `inf.filtersPasses`.
  */
 
-import { Generator } from './Generator';
-import type { Level, Room } from './Data';
-import type { LevelInfos } from './Data';
+import { Generator } from './Generator.js';
+import type { Level, Room } from './Data.js';
+import type { LevelInfos } from './Data.js';
 
 export class Noise extends Generator {
 	private reach: boolean[][] = [];

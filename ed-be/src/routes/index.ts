@@ -2,6 +2,7 @@ import { Express } from 'express';
 import { Config } from '../config/config.js';
 import adminRoutes from './admin.routes.js';
 import dinozRoutes from './dinoz.routes.js';
+import dungeonRoutes from './dungeon.routes.js';
 import fightRoutes from './fight.routes.js';
 import ingredientRoutes from './ingredient.routes.js';
 import inventoryRoutes from './inventory.routes.js';
@@ -44,6 +45,7 @@ export default function initRoutes(app: Express, config: Config) {
 
 	app.use(adminRoutes);
 	app.use(dinozRoutes);
+	app.use(dungeonRoutes);
 	app.use(fightRoutes);
 	app.use(ingredientRoutes);
 	app.use(inventoryRoutes);

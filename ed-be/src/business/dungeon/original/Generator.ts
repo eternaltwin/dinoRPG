@@ -3,8 +3,8 @@
  * Provides the RNG helpers shared by Rooms / Noise / Gameplay.
  */
 
-import { Rand } from './Rand';
-import type { LevelInfos } from './Data';
+import { Rand } from './Rand.js';
+import type { LevelInfos } from './Data.js';
 
 export class Generator {
 	protected r!: Rand;

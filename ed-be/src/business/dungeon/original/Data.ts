@@ -6,8 +6,8 @@
  * enum so the result encodes with {@link DungeonCodec}.
  */
 
-import type { DungeonItem } from '../types';
-import { HxList } from './HxList';
+import type { DungeonItem } from '../types.js';
+import { HxList } from './HxList.js';
 
 export interface RoomItem {
 	x: number;

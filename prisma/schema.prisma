@@ -1153,3 +1153,17 @@ enum ClanEventType {
   war
   mana_war
 }
+
+model DungeonRun {
+  id        String   @id @default(cuid())
+  cipher    Bytes
+  iv        Bytes
+  tag       Bytes
+  posX      Int      @map("pos_x")
+  posY      Int      @map("pos_y")
+  posL      Int      @map("pos_l")
+  revealed  String   @default("[]")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@map("dungeon_run")
+}

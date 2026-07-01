@@ -9,12 +9,12 @@
  * unsolvable, …); we retry with derived seeds, exactly as the original retried.
  */
 
-import type { DungeonStruct, DungeonRoom, DungeonItemPlacement, DungeonItem } from '../types';
-import { LevelInfos, Level, Room } from './Data';
-import { Rooms } from './Rooms';
-import { Noise } from './Noise';
-import { Gameplay } from './Gameplay';
-import { Checker } from './Checker';
+import type { DungeonStruct, DungeonRoom, DungeonItemPlacement, DungeonItem } from '../types.js';
+import { LevelInfos, Level, Room } from './Data.js';
+import { Rooms } from './Rooms.js';
+import { Noise } from './Noise.js';
+import { Gameplay } from './Gameplay.js';
+import { Checker } from './Checker.js';
 
 export interface OriginalOptions {
 	width?: number;

@@ -9,9 +9,9 @@
  * `saveBits` / `nbits` mirrors the Haxe original 1:1.
  */
 
-import { BitCodec } from './BitCodec';
-import { DungeonItem } from './types';
-import type { DungeonStruct, DungeonLevel, DungeonRoom, DungeonDoor, DungeonItemPlacement } from './types';
+import { BitCodec } from './BitCodec.js';
+import { DungeonItem } from './types.js';
+import type { DungeonStruct, DungeonLevel, DungeonRoom, DungeonDoor, DungeonItemPlacement } from './types.js';
 
 export class DungeonCodec {
 	d!: DungeonStruct;

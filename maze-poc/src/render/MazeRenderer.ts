@@ -1,23 +1,33 @@
 /**
- * MazeRenderer — draws a decoded {@link DungeonStruct} with Pixi.js using the
+ * MazeRenderer — draws the *known* part of a dungeon with Pixi.js using the
  * real DinoRPG dungeon tileset (gfx/dungeon/gfx).
  *
- * Per the archive's `View.hx`: each cell is a square tile; walkable cells get a
- * ground tile, and wall edges are composited from front (N), back (S), side
- * (W/E, mirrored) and corner (diagonal, mirrored) pieces of the level's skin.
- * Items, doors and stairs are drawn as their item_ / interf_ sprites. The
- * background is filled with the skin's fog colour.
+ * Fog of war: the renderer never sees the layout. It accumulates the cells the
+ * backend ("pixy") reveals — {@link applyReveal} — and draws only those; every
+ * unknown cell stays the skin's fog colour. A cell is one of three states:
+ * known floor (ground tile), known wall (edge pieces on adjacent floor), or
+ * unknown (nothing drawn).
+ *
+ * Per the archive's `View.hx`: walkable cells get a ground tile, and wall edges
+ * are composited from front (N), back (S), side (W/E, mirrored) and corner
+ * (diagonal, mirrored) pieces of the level's skin, split over two planes so the
+ * dinoz is occluded by near walls.
  *
  * Call {@link loadDungeonAssets} (with {@link allAssetNames}) before
  * constructing, so textures resolve synchronously.
  */
 
 import { Application, Container, Graphics, Sprite, Text } from 'pixi.js';
-import { DungeonItem } from '../dungeon/types';
-import type { DungeonStruct, DungeonLevel, DungeonDoor } from '../dungeon/types';
+import type { RevealedCell } from '../dungeon/pixyClient';
 import { SKINS } from './skins';
 import type { Skin } from './skins';
 import { gfx } from './assets';
+
+export interface MazeDims {
+	width: number;
+	height: number;
+	levels: number;
+}
 
 export interface RendererOptions {
 	cell?: number;
@@ -39,17 +49,20 @@ export class MazeRenderer {
 	private readonly wallFrontLayer: Container;
 	private readonly viewW: number;
 	private readonly viewH: number;
-	private d: DungeonStruct;
+	private readonly dims: MazeDims;
+	/** Everything pixy has revealed so far, per level, keyed "x,y". */
+	private readonly known: Map<string, RevealedCell>[];
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
 
-	constructor(parent: HTMLElement, d: DungeonStruct, opts: RendererOptions = {}) {
+	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
-		this.d = d;
+		this.dims = dims;
+		this.known = Array.from({ length: dims.levels }, () => new Map<string, RevealedCell>());
 		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];
-		this.viewW = opts.view?.w ?? d.width * this.cell;
-		this.viewH = opts.view?.h ?? d.height * this.cell;
+		this.viewW = opts.view?.w ?? dims.width * this.cell;
+		this.viewH = opts.view?.h ?? dims.height * this.cell;
 		this.app = new Application({
 			width: this.viewW,
 			height: this.viewH,
@@ -71,7 +84,17 @@ export class MazeRenderer {
 		return this.level;
 	}
 	get levelCount(): number {
-		return this.d.levels.length;
+		return this.dims.levels;
+	}
+
+	/** Fold newly revealed cells into the known map; redraw if any are visible. */
+	applyReveal(cells: RevealedCell[]): void {
+		let dirty = false;
+		for (const c of cells) {
+			this.known[c.l]?.set(`${c.x},${c.y}`, c);
+			if (c.l === this.level) dirty = true;
+		}
+		if (dirty) this.showLevel(this.level);
 	}
 
 	/** Pixel center of cell (x, y). */
@@ -86,8 +109,8 @@ export class MazeRenderer {
 	 * map bounds.
 	 */
 	focus(px: number, py: number): void {
-		const worldW = this.d.width * this.cell;
-		const worldH = this.d.height * this.cell;
+		const worldW = this.dims.width * this.cell;
+		const worldH = this.dims.height * this.cell;
 		const marginX = this.viewW * 0.35;
 		const marginY = this.viewH * 0.35;
 		let camX = -this.app.stage.position.x;
@@ -113,44 +136,39 @@ export class MazeRenderer {
 		return this.skins[level % this.skins.length];
 	}
 
-	setDungeon(d: DungeonStruct, skins?: Skin[]): void {
-		this.d = d;
-		if (skins && skins.length > 0) this.skins = skins;
-		this.app.renderer.resize(d.width * this.cell, d.height * this.cell);
-		this.showLevel(Math.min(this.level, d.levels.length - 1));
-	}
-
 	showLevel(l: number): void {
-		this.level = Math.max(0, Math.min(l, this.d.levels.length - 1));
+		this.level = Math.max(0, Math.min(l, this.dims.levels - 1));
 		const skin = this.skinFor(this.level);
 		this.app.renderer.background.color = skin.fog;
 		this.mapLayer.removeChildren();
 		this.wallBackLayer.removeChildren();
 		this.wallFrontLayer.removeChildren();
-		this.drawLevel(this.d.levels[this.level], skin);
-		this.drawEntities(this.d, this.level);
+		this.drawLevel(skin);
+		this.drawEntities();
 		this.drawLabel(this.level, skin);
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
 
-	private drawLevel(level: DungeonLevel, skin: Skin): void {
-		const t = level.table;
-		const w = this.d.width;
-		const h = this.d.height;
-		const wall = (x: number, y: number): boolean => x < 0 || y < 0 || x >= w || y >= h || !(t[x]?.[y] ?? false);
+	private drawLevel(skin: Skin): void {
+		const known = this.known[this.level];
+		const w = this.dims.width;
+		const h = this.dims.height;
+		const at = (x: number, y: number): RevealedCell | undefined => known.get(`${x},${y}`);
+		const floor = (x: number, y: number): boolean => at(x, y)?.floor === true;
+		// Fog three-state: only a *known* wall (or the map border) grows wall
+		// pieces. An unknown neighbour draws nothing — it is still fog.
+		const wall = (x: number, y: number): boolean => x < 0 || y < 0 || x >= w || y >= h || at(x, y)?.floor === false;
 		// View.hx's only wall overhang: the corner offset SIZE+8 (a flat 8px past
 		// the 40px cell). Scaled to our cell, that is the single foot line the side
 		// strips and the south corners all rest on — nothing is ever stretched.
 		const OV = this.cell * (8 / 40);
 
 		// Ground first, then wall edges on top.
-		for (let x = 0; x < w; x++) {
-			for (let y = 0; y < h; y++) {
-				if (wall(x, y)) continue;
-				const g = 1 + (this.hash(x, y) % skin.groundCount);
-				this.tile(`ground_${skin.ground}_${this.p2(g)}`, x, y);
-			}
+		for (const c of known.values()) {
+			if (!c.floor) continue;
+			const g = 1 + (this.hash(c.x, c.y) % skin.groundCount);
+			this.tile(`ground_${skin.ground}_${this.p2(g)}`, c.x, c.y);
 		}
 		// Row by row (top to bottom) so lower cells' pieces draw over higher ones.
 		// Mirrors View.hx displayLevel(): every piece is placed at native scale,
@@ -158,7 +176,7 @@ export class MazeRenderer {
 		// and the S corners all resting their foot on the shared line B + OV.
 		for (let y = 0; y < h; y++) {
 			for (let x = 0; x < w; x++) {
-				if (wall(x, y)) continue;
+				if (!floor(x, y)) continue;
 				const c = this.cell;
 				const L = x * c;
 				const T = y * c;
@@ -180,55 +198,48 @@ export class MazeRenderer {
 		}
 	}
 
-	// ── doors / items / stairs / start / exit ─────────────────────────────────
+	// ── revealed entities (icons pixy sent along with the cells) ───────────────
 
-	private drawEntities(d: DungeonStruct, l: number): void {
-		const t = d.levels[l].table;
-		const floor = (x: number, y: number): boolean => t[x]?.[y] ?? false;
-
-		for (const room of d.levels[l].rooms) {
-			for (const door of room.doors) this.drawDoor(door, floor);
-			if (room.item) this.drawItem(room.item.x, room.item.y, room.item.k);
-		}
-
-		if (d.start.l === l) this.ring(d.start.x, d.start.y, 0x4caf50);
-		if (d.exit.l === l) {
-			this.sprite('item_stair_down', d.exit.x, d.exit.y, this.cell * 0.9);
-			this.ring(d.exit.x, d.exit.y, 0x9c27b0);
+	private drawEntities(): void {
+		for (const c of this.known[this.level].values()) {
+			if (!c.icon) continue;
+			this.drawIcon(c);
 		}
 	}
 
-	private drawDoor(door: DungeonDoor, floor: (x: number, y: number) => boolean): void {
-		if (door.up === true) {
-			this.sprite('item_stair_up', door.x, door.y, this.cell * 0.9);
-			return;
-		}
-		if (door.up === false) {
-			this.sprite('item_stair_down', door.x, door.y, this.cell * 0.9);
-			return;
-		}
-		if (door.key != null) {
-			const vertical = floor(door.x - 1, door.y) && floor(door.x + 1, door.y);
-			this.sprite(vertical ? 'item_door_v_01' : 'item_door_h_01', door.x, door.y, this.cell);
-			return;
-		}
-		// plain passage guarded by a monster
-		this.sprite('item_skel', door.x, door.y, this.cell * 0.7);
-	}
-
-	private drawItem(x: number, y: number, k: DungeonItem): void {
-		switch (k) {
-			case DungeonItem.IKey:
-				this.sprite('item_key_01', x, y, this.cell * 0.7);
+	private drawIcon(c: RevealedCell): void {
+		switch (c.icon) {
+			case 'start':
+				this.ring(c.x, c.y, 0x4caf50);
 				break;
-			case DungeonItem.IGold:
-				this.sprite('item_gold', x, y, this.cell * 0.8);
+			case 'exit':
+				this.sprite('item_stair_down', c.x, c.y, this.cell * 0.9);
+				this.ring(c.x, c.y, 0x9c27b0);
 				break;
-			case DungeonItem.IHeal:
-				this.sprite('item_chest', x, y, this.cell * 0.8);
+			case 'stair_up':
+				this.sprite('item_stair_up', c.x, c.y, this.cell * 0.9);
+				break;
+			case 'stair_down':
+				this.sprite('item_stair_down', c.x, c.y, this.cell * 0.9);
+				break;
+			case 'door_v':
+			case 'door_h':
+				this.sprite(c.icon === 'door_v' ? 'item_door_v_01' : 'item_door_h_01', c.x, c.y, this.cell);
+				break;
+			case 'monster':
+				this.sprite('item_skel', c.x, c.y, this.cell * 0.7);
+				break;
+			case 'key':
+				this.sprite('item_key_01', c.x, c.y, this.cell * 0.7);
+				break;
+			case 'gold':
+				this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
+				break;
+			case 'heal':
+				this.sprite('item_chest', c.x, c.y, this.cell * 0.8);
 				break;
 			default:
-				this.sprite('item_scroll', x, y, this.cell * 0.7);
+				this.sprite('item_scroll', c.x, c.y, this.cell * 0.7);
 				break;
 		}
 	}
@@ -287,8 +298,7 @@ export class MazeRenderer {
 		layer: Container
 	): void {
 		const side = name.split('_')[0];
-		const color =
-			side === 'front' ? 0xff4444 : side === 'side' ? 0x44ff44 : side === 'back' ? 0x4488ff : 0xffdd00;
+		const color = side === 'front' ? 0xff4444 : side === 'side' ? 0x44ff44 : side === 'back' ? 0x4488ff : 0xffdd00;
 		const w = tw * s;
 		const h = th * s;
 		const minX = px - (flipX ? 1 - ax : ax) * w;
@@ -326,7 +336,7 @@ export class MazeRenderer {
 	}
 
 	private drawLabel(l: number, skin: Skin): void {
-		const label = new Text(`Level ${l + 1} / ${this.d.levels.length} — ${skin.name}`, {
+		const label = new Text(`Level ${l + 1} / ${this.dims.levels} — ${skin.name}`, {
 			fill: 0xffffff,
 			fontSize: 13,
 			fontFamily: 'monospace',
