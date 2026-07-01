@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict';
 import { OriginalGenerator } from '../src/dungeon/original';
 import { DungeonCodec } from '../src/dungeon/DungeonCodec';
-import { findPath } from '../src/dungeon/pathfind';
+import { findPath } from './pathfind';
 import { DungeonItem } from '../src/dungeon/types';
 
 let passed = 0;

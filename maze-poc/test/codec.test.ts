@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 import { BitCodec } from '../src/dungeon/BitCodec';
 import { DungeonCodec } from '../src/dungeon/DungeonCodec';
 import { OriginalGenerator } from '../src/dungeon/original';
-import { findPath } from '../src/dungeon/pathfind';
+import { findPath } from './pathfind';
 import type { DungeonStruct } from '../src/dungeon/types';
 
 let passed = 0;
