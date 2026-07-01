@@ -37,6 +37,7 @@ export class MazeRenderer {
 	private d: DungeonStruct;
 	private skins: Skin[];
 	private level = 0;
+	private debug = false;
 
 	constructor(parent: HTMLElement, d: DungeonStruct, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -94,6 +95,12 @@ export class MazeRenderer {
 		camX = Math.max(0, Math.min(camX, Math.max(0, worldW - this.viewW)));
 		camY = Math.max(0, Math.min(camY, Math.max(0, worldH - this.viewH)));
 		this.app.stage.position.set(-camX, -camY);
+	}
+
+	/** Toggle wall-frame debug overlay: each edge piece gets a coloured box + side label. */
+	setDebug(on: boolean): void {
+		this.debug = on;
+		this.showLevel(this.level);
 	}
 
 	skinFor(level: number): Skin {
@@ -238,6 +245,38 @@ export class MazeRenderer {
 		sp.scale.set(s * (flipX ? -1 : 1), s * (flipY ? -1 : 1));
 		sp.position.set(px, py);
 		this.mapLayer.addChild(sp);
+		if (this.debug) this.outlineEdge(name, px, py, ax, ay, s, flipX, flipY, sp.texture.width, sp.texture.height);
+	}
+
+	/** Boxes an edge sprite and tags it with its side (front/side/back/corner). */
+	private outlineEdge(
+		name: string,
+		px: number,
+		py: number,
+		ax: number,
+		ay: number,
+		s: number,
+		flipX: boolean,
+		flipY: boolean,
+		tw: number,
+		th: number
+	): void {
+		const side = name.split('_')[0];
+		const color =
+			side === 'front' ? 0xff4444 : side === 'side' ? 0x44ff44 : side === 'back' ? 0x4488ff : 0xffdd00;
+		const w = tw * s;
+		const h = th * s;
+		const minX = px - (flipX ? 1 - ax : ax) * w;
+		const minY = py - (flipY ? 1 - ay : ay) * h;
+		const g = new Graphics();
+		g.lineStyle(1, color, 0.9);
+		g.beginFill(color, 0.12);
+		g.drawRect(minX, minY, w, h);
+		g.endFill();
+		this.mapLayer.addChild(g);
+		const label = new Text(side, { fill: color, fontSize: 9, fontFamily: 'monospace' });
+		label.position.set(minX + 1, minY + 1);
+		this.mapLayer.addChild(label);
 	}
 
 	/** An aspect-preserving sprite that fits within `size`, centered on a cell. */
