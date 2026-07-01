@@ -193,6 +193,7 @@ async function main(): Promise<void> {
 	await loadDungeonAssets(allAssetNames());
 
 	setAutoLabel();
+	debugBtn.textContent = wallDebug ? 'Wall debug: ON' : 'Wall debug: OFF';
 	build(seed);
 
 	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
