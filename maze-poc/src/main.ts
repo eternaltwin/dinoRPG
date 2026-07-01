@@ -42,8 +42,8 @@ let actor: DinozActor | null = null;
 let seed = 1;
 
 // Manual control: when the auto solver is off, the arrow keys drive the dinoz.
-let autoSolve = true;
-let wallDebug = false;
+let autoSolve = false;
+let wallDebug = true;
 let dungeon: DungeonStruct | null = null;
 let stairs = new Map<string, number>();
 // Logical target cell — where the dinoz will end up once queued moves finish.

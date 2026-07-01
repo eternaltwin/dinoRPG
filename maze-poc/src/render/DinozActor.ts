@@ -89,6 +89,7 @@ export class DinozActor {
 		this.path = path;
 		this.seg = 0;
 		this.t = 0;
+		this.sprite.playAnim('walk');
 		if (path.length > 0) this.placeAt(path[0]);
 		this.renderer.app.ticker.remove(this.tick);
 		if (path.length > 1) this.renderer.app.ticker.add(this.tick);

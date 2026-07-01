@@ -32,6 +32,11 @@ export class MazeRenderer {
 	readonly cell: number;
 	readonly actorLayer: Container;
 	private readonly mapLayer: Container;
+	// View.hx's two wall planes: north faces (front + N corners) sit behind the
+	// dinoz; the south/side faces (sides + back + S corners) sit in front of it,
+	// so the dinoz is occluded by near walls and walks over far ones.
+	private readonly wallBackLayer: Container;
+	private readonly wallFrontLayer: Container;
 	private readonly viewW: number;
 	private readonly viewH: number;
 	private d: DungeonStruct;
@@ -54,9 +59,10 @@ export class MazeRenderer {
 		parent.appendChild(this.app.view as HTMLCanvasElement);
 
 		this.mapLayer = new Container();
+		this.wallBackLayer = new Container();
 		this.actorLayer = new Container();
-		this.app.stage.addChild(this.mapLayer);
-		this.app.stage.addChild(this.actorLayer);
+		this.wallFrontLayer = new Container();
+		this.app.stage.addChild(this.mapLayer, this.wallBackLayer, this.actorLayer, this.wallFrontLayer);
 
 		this.showLevel(0);
 	}
@@ -119,6 +125,8 @@ export class MazeRenderer {
 		const skin = this.skinFor(this.level);
 		this.app.renderer.background.color = skin.fog;
 		this.mapLayer.removeChildren();
+		this.wallBackLayer.removeChildren();
+		this.wallFrontLayer.removeChildren();
 		this.drawLevel(this.d.levels[this.level], skin);
 		this.drawEntities(this.d, this.level);
 		this.drawLabel(this.level, skin);
@@ -158,14 +166,16 @@ export class MazeRenderer {
 				const B = T + c;
 				const F = B + OV; // shared foot line for sides + south corners
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
-				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, F, 1, 1);
-				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, F, 1, 1, true);
-				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0);
-				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1);
-				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true);
-				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, F, 1, 1);
-				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, F, 1, 1, true);
+				const back = this.wallBackLayer; // behind the dinoz (north faces)
+				const front = this.wallFrontLayer; // in front of the dinoz (near faces)
+				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1, false, false, back);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, F, 1, 1, false, false, front);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, F, 1, 1, true, false, front);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0, false, false, front);
+				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1, false, false, back);
+				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true, false, back);
+				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, F, 1, 1, false, false, front);
+				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, F, 1, 1, true, false, front);
 			}
 		}
 	}
@@ -240,14 +250,23 @@ export class MazeRenderer {
 	 * the original tile unit) and pinned to a cell edge via `(ax, ay)` anchor.
 	 * Mirrors `View.hx`, where walls have real height and overhang the cell.
 	 */
-	private edge(name: string, px: number, py: number, ax: number, ay: number, flipX = false, flipY = false): void {
+	private edge(
+		name: string,
+		px: number,
+		py: number,
+		ax: number,
+		ay: number,
+		flipX = false,
+		flipY = false,
+		layer: Container = this.mapLayer
+	): void {
 		const sp = new Sprite(gfx(name));
 		sp.anchor.set(ax, ay);
 		const s = this.cell / 40;
 		sp.scale.set(s * (flipX ? -1 : 1), s * (flipY ? -1 : 1));
 		sp.position.set(px, py);
-		this.mapLayer.addChild(sp);
-		if (this.debug) this.outlineEdge(name, px, py, ax, ay, s, flipX, flipY, sp.texture.width, sp.texture.height);
+		layer.addChild(sp);
+		if (this.debug) this.outlineEdge(name, px, py, ax, ay, s, flipX, flipY, sp.texture.width, sp.texture.height, layer);
 	}
 
 	/** Boxes an edge sprite and tags it with its side (front/side/back/corner). */
@@ -261,7 +280,8 @@ export class MazeRenderer {
 		flipX: boolean,
 		flipY: boolean,
 		tw: number,
-		th: number
+		th: number,
+		layer: Container
 	): void {
 		const side = name.split('_')[0];
 		const color =
@@ -275,10 +295,10 @@ export class MazeRenderer {
 		g.beginFill(color, 0.12);
 		g.drawRect(minX, minY, w, h);
 		g.endFill();
-		this.mapLayer.addChild(g);
+		layer.addChild(g);
 		const label = new Text(side, { fill: color, fontSize: 9, fontFamily: 'monospace' });
 		label.position.set(minX + 1, minY + 1);
-		this.mapLayer.addChild(label);
+		layer.addChild(label);
 	}
 
 	/** An aspect-preserving sprite that fits within `size`, centered on a cell. */
