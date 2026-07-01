@@ -155,12 +155,13 @@ export class MazeRenderer {
 				const B = T + c;
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
 				// Faithful to View.hx: front rises up off the N edge, back hangs
-				// down off the S edge, the side strips run down the W/E edge with
-				// their foot dropped to the corner's foot (B + cornerDrop) so the
-				// two superpose, corners fill the diagonals (drawn after, on top).
+				// down off the S edge, the side strips run down the W/E edge and are
+				// stretched down to the corner's foot (B + cornerDrop) so their bottom
+				// superposes the corner without leaving a gap at the top where they
+				// meet the wall above, corners fill the diagonals (drawn after, on top).
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B + cornerDrop, 1, 1);
-				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B + cornerDrop, 1, 1, true);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, B + cornerDrop, 1, 1, false, false, cornerDrop);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, B + cornerDrop, 1, 1, true, false, cornerDrop);
 				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0);
 				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1);
 				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true);
@@ -240,14 +241,26 @@ export class MazeRenderer {
 	 * the original tile unit) and pinned to a cell edge via `(ax, ay)` anchor.
 	 * Mirrors `View.hx`, where walls have real height and overhang the cell.
 	 */
-	private edge(name: string, px: number, py: number, ax: number, ay: number, flipX = false, flipY = false): void {
+	private edge(
+		name: string,
+		px: number,
+		py: number,
+		ax: number,
+		ay: number,
+		flipX = false,
+		flipY = false,
+		stretchY = 0
+	): void {
 		const sp = new Sprite(gfx(name));
 		sp.anchor.set(ax, ay);
 		const s = this.cell / 40;
-		sp.scale.set(s * (flipX ? -1 : 1), s * (flipY ? -1 : 1));
+		// stretchY grows the piece taller (in px) without moving its anchored edge,
+		// so a bottom-anchored side can reach the corner foot while its top holds.
+		const sy = s + stretchY / sp.texture.height;
+		sp.scale.set(s * (flipX ? -1 : 1), sy * (flipY ? -1 : 1));
 		sp.position.set(px, py);
 		this.mapLayer.addChild(sp);
-		if (this.debug) this.outlineEdge(name, px, py, ax, ay, s, flipX, flipY, sp.texture.width, sp.texture.height);
+		if (this.debug) this.outlineEdge(name, px, py, ax, ay, s, sy, flipX, flipY, sp.texture.width, sp.texture.height);
 	}
 
 	/** Boxes an edge sprite and tags it with its side (front/side/back/corner). */
@@ -257,7 +270,8 @@ export class MazeRenderer {
 		py: number,
 		ax: number,
 		ay: number,
-		s: number,
+		sx: number,
+		sy: number,
 		flipX: boolean,
 		flipY: boolean,
 		tw: number,
@@ -266,8 +280,8 @@ export class MazeRenderer {
 		const side = name.split('_')[0];
 		const color =
 			side === 'front' ? 0xff4444 : side === 'side' ? 0x44ff44 : side === 'back' ? 0x4488ff : 0xffdd00;
-		const w = tw * s;
-		const h = th * s;
+		const w = tw * sx;
+		const h = th * sy;
 		const minX = px - (flipX ? 1 - ax : ax) * w;
 		const minY = py - (flipY ? 1 - ay : ay) * h;
 		const g = new Graphics();
