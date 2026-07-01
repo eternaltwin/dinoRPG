@@ -1,16 +1,16 @@
 /**
- * DinozActor — a dinoz that walks a path through the maze.
+ * DinozActor — a dinoz that walks the maze cell by cell.
  *
  * Wraps an `sdino` instance from `@eternaltwin/dinorpg_animations` (a Pixi
- * `Container`), positions it on the maze grid, and tweens it cell-by-cell along
- * a queue of adjacent cells pushed by the arrow-key controls. It flips to face
- * its travel direction and fires `onLevelChange` when it takes a staircase so
- * the renderer can swap the displayed level.
+ * `Container`), positions it on the maze grid, and tweens it along the cells
+ * queued by {@link enqueue} — each one a server-validated move. It flips to
+ * face its travel direction and fires `onLevelChange` when it takes a
+ * staircase so the renderer can swap the displayed level.
  */
 
 import { sdino } from '@eternaltwin/dinorpg_animations';
 import type { MazeRenderer } from './MazeRenderer';
-import type { Cell } from '../dungeon/types';
+import type { Cell } from '../dungeon/pixyClient';
 
 export interface DinozActorOptions {
 	/** Dino "code" string. */
@@ -67,6 +67,14 @@ export class DinozActor {
 	/** Number of cells still queued ahead of the current position. */
 	get pending(): number {
 		return this.path.length - 1 - this.seg;
+	}
+
+	/** Hold at the current cell, ready for manual control. */
+	takeControl(): void {
+		this.stop();
+		this.path = [{ ...this.pos }];
+		this.seg = 0;
+		this.t = 0;
 	}
 
 	/** Queue one adjacent cell to walk to (manual control); resumes the ticker. */

@@ -9,25 +9,17 @@
 		<header>
 			<h1>DinoRPG — Maze POC</h1>
 			<p>
-				Dungeon generated &rarr; encoded &rarr; decoded with the ported
-				<code>DungeonCodec</code>, rendered with Pixi.js using the original DinoRPG dungeon tileset
-				(<code>gfx/dungeon</code>). Each level gets a different skin. The dinoz uses
-				<code>@eternaltwin/dinorpg_animations</code> and walks from the green ring (start) to the purple ring (exit).
+				Fog of war: the maze layout is generated and AES-encrypted on the backend (&laquo;&nbsp;pixy&nbsp;&raquo;) and
+				never sent to the browser. Every arrow-key step is validated server-side and reveals only the adjacent cells
+				&mdash; the maze cannot be solved without exploring it. Rendered with Pixi.js using the original DinoRPG
+				dungeon tileset (<code>gfx/dungeon</code>); the dinoz uses <code>@eternaltwin/dinorpg_animations</code>.
 			</p>
 		</header>
 
 		<div class="toolbar">
 			<button id="regen">New maze ▸</button>
-			<button id="replay">Replay walk ↻</button>
 			<button id="debug">Wall debug: OFF</button>
-			<div id="levels" class="levels"></div>
-			<span class="seed">seed: <span id="seed">1</span></span>
-		</div>
-
-		<div class="import-row">
-			<input id="import-str" type="text" placeholder="Paste an encoded string (from the panel below) and load it…" />
-			<button id="import-btn">Load string</button>
-			<span id="import-msg" class="import-msg"></span>
+			<span class="seed" id="status"></span>
 		</div>
 
 		<div id="stage" class="stage">
@@ -43,13 +35,8 @@
 			<span>🚪 locked door (needs key)</span>
 			<span>🔼 stairs up / 🔽 stairs down</span>
 			<span>🗝️ key · 💰 gold · 📦 heal chest</span>
+			<span>🌫️ unexplored = fog</span>
 		</div>
-
-		<details class="codec">
-			<summary>Encoded string</summary>
-			<pre id="signature"></pre>
-			<pre id="encoded"></pre>
-		</details>
 
 		<script type="module" src="/src/main.ts"></script>
 	</body>

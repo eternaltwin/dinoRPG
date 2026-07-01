@@ -328,6 +328,11 @@ export type Events = $Result.DefaultSelection<Prisma.$EventsPayload>
  * 
  */
 export type ServerState = $Result.DefaultSelection<Prisma.$ServerStatePayload>
+/**
+ * Model DungeonRun
+ * 
+ */
+export type DungeonRun = $Result.DefaultSelection<Prisma.$DungeonRunPayload>
 
 /**
  * Enums
@@ -1358,6 +1363,16 @@ export class PrismaClient<
     * ```
     */
   get serverState(): Prisma.ServerStateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dungeonRun`: Exposes CRUD operations for the **DungeonRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DungeonRuns
+    * const dungeonRuns = await prisma.dungeonRun.findMany()
+    * ```
+    */
+  get dungeonRun(): Prisma.DungeonRunDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1860,7 +1875,8 @@ export namespace Prisma {
     FBTournament: 'FBTournament',
     GameDinoz: 'GameDinoz',
     Events: 'Events',
-    ServerState: 'ServerState'
+    ServerState: 'ServerState',
+    DungeonRun: 'DungeonRun'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1879,7 +1895,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6545,6 +6561,80 @@ export namespace Prisma {
           }
         }
       }
+      DungeonRun: {
+        payload: Prisma.$DungeonRunPayload<ExtArgs>
+        fields: Prisma.DungeonRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DungeonRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DungeonRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          findFirst: {
+            args: Prisma.DungeonRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DungeonRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          findMany: {
+            args: Prisma.DungeonRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          create: {
+            args: Prisma.DungeonRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          createMany: {
+            args: Prisma.DungeonRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DungeonRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          delete: {
+            args: Prisma.DungeonRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          update: {
+            args: Prisma.DungeonRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.DungeonRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DungeonRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DungeonRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.DungeonRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          aggregate: {
+            args: Prisma.DungeonRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDungeonRun>
+          }
+          groupBy: {
+            args: Prisma.DungeonRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DungeonRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DungeonRunCountArgs<ExtArgs>
+            result: $Utils.Optional<DungeonRunCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6692,6 +6782,7 @@ export namespace Prisma {
     gameDinoz?: GameDinozOmit
     events?: EventsOmit
     serverState?: ServerStateOmit
+    dungeonRun?: DungeonRunOmit
   }
 
   /* Types for Logging */
@@ -83130,6 +83221,1104 @@ export namespace Prisma {
 
 
   /**
+   * Model DungeonRun
+   */
+
+  export type AggregateDungeonRun = {
+    _count: DungeonRunCountAggregateOutputType | null
+    _avg: DungeonRunAvgAggregateOutputType | null
+    _sum: DungeonRunSumAggregateOutputType | null
+    _min: DungeonRunMinAggregateOutputType | null
+    _max: DungeonRunMaxAggregateOutputType | null
+  }
+
+  export type DungeonRunAvgAggregateOutputType = {
+    posX: number | null
+    posY: number | null
+    posL: number | null
+  }
+
+  export type DungeonRunSumAggregateOutputType = {
+    posX: number | null
+    posY: number | null
+    posL: number | null
+  }
+
+  export type DungeonRunMinAggregateOutputType = {
+    id: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    revealed: string | null
+    createdAt: Date | null
+  }
+
+  export type DungeonRunMaxAggregateOutputType = {
+    id: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    revealed: string | null
+    createdAt: Date | null
+  }
+
+  export type DungeonRunCountAggregateOutputType = {
+    id: number
+    cipher: number
+    iv: number
+    tag: number
+    posX: number
+    posY: number
+    posL: number
+    revealed: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DungeonRunAvgAggregateInputType = {
+    posX?: true
+    posY?: true
+    posL?: true
+  }
+
+  export type DungeonRunSumAggregateInputType = {
+    posX?: true
+    posY?: true
+    posL?: true
+  }
+
+  export type DungeonRunMinAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    createdAt?: true
+  }
+
+  export type DungeonRunMaxAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    createdAt?: true
+  }
+
+  export type DungeonRunCountAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DungeonRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DungeonRun to aggregate.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DungeonRuns
+    **/
+    _count?: true | DungeonRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DungeonRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DungeonRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DungeonRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DungeonRunMaxAggregateInputType
+  }
+
+  export type GetDungeonRunAggregateType<T extends DungeonRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateDungeonRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDungeonRun[P]>
+      : GetScalarType<T[P], AggregateDungeonRun[P]>
+  }
+
+
+
+
+  export type DungeonRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithAggregationInput | DungeonRunOrderByWithAggregationInput[]
+    by: DungeonRunScalarFieldEnum[] | DungeonRunScalarFieldEnum
+    having?: DungeonRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DungeonRunCountAggregateInputType | true
+    _avg?: DungeonRunAvgAggregateInputType
+    _sum?: DungeonRunSumAggregateInputType
+    _min?: DungeonRunMinAggregateInputType
+    _max?: DungeonRunMaxAggregateInputType
+  }
+
+  export type DungeonRunGroupByOutputType = {
+    id: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    posX: number
+    posY: number
+    posL: number
+    revealed: string
+    createdAt: Date
+    _count: DungeonRunCountAggregateOutputType | null
+    _avg: DungeonRunAvgAggregateOutputType | null
+    _sum: DungeonRunSumAggregateOutputType | null
+    _min: DungeonRunMinAggregateOutputType | null
+    _max: DungeonRunMaxAggregateOutputType | null
+  }
+
+  type GetDungeonRunGroupByPayload<T extends DungeonRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DungeonRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DungeonRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DungeonRunGroupByOutputType[P]>
+            : GetScalarType<T[P], DungeonRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DungeonRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectScalar = {
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    createdAt?: boolean
+  }
+
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cipher" | "iv" | "tag" | "posX" | "posY" | "posL" | "revealed" | "createdAt", ExtArgs["result"]["dungeonRun"]>
+
+  export type $DungeonRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DungeonRun"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cipher: Uint8Array
+      iv: Uint8Array
+      tag: Uint8Array
+      posX: number
+      posY: number
+      posL: number
+      revealed: string
+      createdAt: Date
+    }, ExtArgs["result"]["dungeonRun"]>
+    composites: {}
+  }
+
+  type DungeonRunGetPayload<S extends boolean | null | undefined | DungeonRunDefaultArgs> = $Result.GetResult<Prisma.$DungeonRunPayload, S>
+
+  type DungeonRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DungeonRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DungeonRunCountAggregateInputType | true
+    }
+
+  export interface DungeonRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DungeonRun'], meta: { name: 'DungeonRun' } }
+    /**
+     * Find zero or one DungeonRun that matches the filter.
+     * @param {DungeonRunFindUniqueArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DungeonRunFindUniqueArgs>(args: SelectSubset<T, DungeonRunFindUniqueArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DungeonRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DungeonRunFindUniqueOrThrowArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DungeonRunFindUniqueOrThrowArgs>(args: SelectSubset<T, DungeonRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DungeonRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindFirstArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DungeonRunFindFirstArgs>(args?: SelectSubset<T, DungeonRunFindFirstArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DungeonRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindFirstOrThrowArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DungeonRunFindFirstOrThrowArgs>(args?: SelectSubset<T, DungeonRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DungeonRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DungeonRuns
+     * const dungeonRuns = await prisma.dungeonRun.findMany()
+     * 
+     * // Get first 10 DungeonRuns
+     * const dungeonRuns = await prisma.dungeonRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DungeonRunFindManyArgs>(args?: SelectSubset<T, DungeonRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DungeonRun.
+     * @param {DungeonRunCreateArgs} args - Arguments to create a DungeonRun.
+     * @example
+     * // Create one DungeonRun
+     * const DungeonRun = await prisma.dungeonRun.create({
+     *   data: {
+     *     // ... data to create a DungeonRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends DungeonRunCreateArgs>(args: SelectSubset<T, DungeonRunCreateArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DungeonRuns.
+     * @param {DungeonRunCreateManyArgs} args - Arguments to create many DungeonRuns.
+     * @example
+     * // Create many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DungeonRunCreateManyArgs>(args?: SelectSubset<T, DungeonRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DungeonRuns and returns the data saved in the database.
+     * @param {DungeonRunCreateManyAndReturnArgs} args - Arguments to create many DungeonRuns.
+     * @example
+     * // Create many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DungeonRuns and only return the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DungeonRunCreateManyAndReturnArgs>(args?: SelectSubset<T, DungeonRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DungeonRun.
+     * @param {DungeonRunDeleteArgs} args - Arguments to delete one DungeonRun.
+     * @example
+     * // Delete one DungeonRun
+     * const DungeonRun = await prisma.dungeonRun.delete({
+     *   where: {
+     *     // ... filter to delete one DungeonRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DungeonRunDeleteArgs>(args: SelectSubset<T, DungeonRunDeleteArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DungeonRun.
+     * @param {DungeonRunUpdateArgs} args - Arguments to update one DungeonRun.
+     * @example
+     * // Update one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DungeonRunUpdateArgs>(args: SelectSubset<T, DungeonRunUpdateArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DungeonRuns.
+     * @param {DungeonRunDeleteManyArgs} args - Arguments to filter DungeonRuns to delete.
+     * @example
+     * // Delete a few DungeonRuns
+     * const { count } = await prisma.dungeonRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DungeonRunDeleteManyArgs>(args?: SelectSubset<T, DungeonRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DungeonRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DungeonRunUpdateManyArgs>(args: SelectSubset<T, DungeonRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DungeonRuns and returns the data updated in the database.
+     * @param {DungeonRunUpdateManyAndReturnArgs} args - Arguments to update many DungeonRuns.
+     * @example
+     * // Update many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DungeonRuns and only return the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DungeonRunUpdateManyAndReturnArgs>(args: SelectSubset<T, DungeonRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DungeonRun.
+     * @param {DungeonRunUpsertArgs} args - Arguments to update or create a DungeonRun.
+     * @example
+     * // Update or create a DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.upsert({
+     *   create: {
+     *     // ... data to create a DungeonRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DungeonRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DungeonRunUpsertArgs>(args: SelectSubset<T, DungeonRunUpsertArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DungeonRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunCountArgs} args - Arguments to filter DungeonRuns to count.
+     * @example
+     * // Count the number of DungeonRuns
+     * const count = await prisma.dungeonRun.count({
+     *   where: {
+     *     // ... the filter for the DungeonRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends DungeonRunCountArgs>(
+      args?: Subset<T, DungeonRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DungeonRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DungeonRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DungeonRunAggregateArgs>(args: Subset<T, DungeonRunAggregateArgs>): Prisma.PrismaPromise<GetDungeonRunAggregateType<T>>
+
+    /**
+     * Group by DungeonRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DungeonRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DungeonRunGroupByArgs['orderBy'] }
+        : { orderBy?: DungeonRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DungeonRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDungeonRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DungeonRun model
+   */
+  readonly fields: DungeonRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DungeonRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DungeonRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DungeonRun model
+   */ 
+  interface DungeonRunFieldRefs {
+    readonly id: FieldRef<"DungeonRun", 'String'>
+    readonly cipher: FieldRef<"DungeonRun", 'Bytes'>
+    readonly iv: FieldRef<"DungeonRun", 'Bytes'>
+    readonly tag: FieldRef<"DungeonRun", 'Bytes'>
+    readonly posX: FieldRef<"DungeonRun", 'Int'>
+    readonly posY: FieldRef<"DungeonRun", 'Int'>
+    readonly posL: FieldRef<"DungeonRun", 'Int'>
+    readonly revealed: FieldRef<"DungeonRun", 'String'>
+    readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DungeonRun findUnique
+   */
+  export type DungeonRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findUniqueOrThrow
+   */
+  export type DungeonRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findFirst
+   */
+  export type DungeonRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DungeonRuns.
+     */
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findFirstOrThrow
+   */
+  export type DungeonRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DungeonRuns.
+     */
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findMany
+   */
+  export type DungeonRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter, which DungeonRuns to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun create
+   */
+  export type DungeonRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DungeonRun.
+     */
+    data: XOR<DungeonRunCreateInput, DungeonRunUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun createMany
+   */
+  export type DungeonRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DungeonRuns.
+     */
+    data: DungeonRunCreateManyInput | DungeonRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DungeonRun createManyAndReturn
+   */
+  export type DungeonRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many DungeonRuns.
+     */
+    data: DungeonRunCreateManyInput | DungeonRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DungeonRun update
+   */
+  export type DungeonRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DungeonRun.
+     */
+    data: XOR<DungeonRunUpdateInput, DungeonRunUncheckedUpdateInput>
+    /**
+     * Choose, which DungeonRun to update.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun updateMany
+   */
+  export type DungeonRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DungeonRuns.
+     */
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyInput>
+    /**
+     * Filter which DungeonRuns to update
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DungeonRun updateManyAndReturn
+   */
+  export type DungeonRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data used to update DungeonRuns.
+     */
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyInput>
+    /**
+     * Filter which DungeonRuns to update
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DungeonRun upsert
+   */
+  export type DungeonRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DungeonRun to update in case it exists.
+     */
+    where: DungeonRunWhereUniqueInput
+    /**
+     * In case the DungeonRun found by the `where` argument doesn't exist, create a new DungeonRun with this data.
+     */
+    create: XOR<DungeonRunCreateInput, DungeonRunUncheckedCreateInput>
+    /**
+     * In case the DungeonRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DungeonRunUpdateInput, DungeonRunUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun delete
+   */
+  export type DungeonRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Filter which DungeonRun to delete.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun deleteMany
+   */
+  export type DungeonRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DungeonRuns to delete
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DungeonRun without action
+   */
+  export type DungeonRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -83950,6 +85139,21 @@ export namespace Prisma {
   };
 
   export type ServerStateScalarFieldEnum = (typeof ServerStateScalarFieldEnum)[keyof typeof ServerStateScalarFieldEnum]
+
+
+  export const DungeonRunScalarFieldEnum: {
+    id: 'id',
+    cipher: 'cipher',
+    iv: 'iv',
+    tag: 'tag',
+    posX: 'posX',
+    posY: 'posY',
+    posL: 'posL',
+    revealed: 'revealed',
+    createdAt: 'createdAt'
+  };
+
+  export type DungeonRunScalarFieldEnum = (typeof DungeonRunScalarFieldEnum)[keyof typeof DungeonRunScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -88861,6 +90065,80 @@ export namespace Prisma {
     nextCheck?: DateTimeWithAggregatesFilter<"ServerState"> | Date | string
   }
 
+  export type DungeonRunWhereInput = {
+    AND?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    OR?: DungeonRunWhereInput[]
+    NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    id?: StringFilter<"DungeonRun"> | string
+    cipher?: BytesFilter<"DungeonRun"> | Uint8Array
+    iv?: BytesFilter<"DungeonRun"> | Uint8Array
+    tag?: BytesFilter<"DungeonRun"> | Uint8Array
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+  }
+
+  export type DungeonRunOrderByWithRelationInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DungeonRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    OR?: DungeonRunWhereInput[]
+    NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    cipher?: BytesFilter<"DungeonRun"> | Uint8Array
+    iv?: BytesFilter<"DungeonRun"> | Uint8Array
+    tag?: BytesFilter<"DungeonRun"> | Uint8Array
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+  }, "id">
+
+  export type DungeonRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    createdAt?: SortOrder
+    _count?: DungeonRunCountOrderByAggregateInput
+    _avg?: DungeonRunAvgOrderByAggregateInput
+    _max?: DungeonRunMaxOrderByAggregateInput
+    _min?: DungeonRunMinOrderByAggregateInput
+    _sum?: DungeonRunSumOrderByAggregateInput
+  }
+
+  export type DungeonRunScalarWhereWithAggregatesInput = {
+    AND?: DungeonRunScalarWhereWithAggregatesInput | DungeonRunScalarWhereWithAggregatesInput[]
+    OR?: DungeonRunScalarWhereWithAggregatesInput[]
+    NOT?: DungeonRunScalarWhereWithAggregatesInput | DungeonRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DungeonRun"> | string
+    cipher?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
+    iv?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
+    tag?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
+    posX?: IntWithAggregatesFilter<"DungeonRun"> | number
+    posY?: IntWithAggregatesFilter<"DungeonRun"> | number
+    posL?: IntWithAggregatesFilter<"DungeonRun"> | number
+    revealed?: StringWithAggregatesFilter<"DungeonRun"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -93326,6 +94604,90 @@ export namespace Prisma {
     nextCheck?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DungeonRunCreateInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+  }
+
+  export type DungeonRunUncheckedCreateInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+  }
+
+  export type DungeonRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DungeonRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DungeonRunCreateManyInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+  }
+
+  export type DungeonRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DungeonRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -97282,6 +98644,71 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumServerActionFilter<$PrismaModel>
     _max?: NestedEnumServerActionFilter<$PrismaModel>
+  }
+
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type DungeonRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DungeonRunAvgOrderByAggregateInput = {
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+  }
+
+  export type DungeonRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DungeonRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DungeonRunSumOrderByAggregateInput = {
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type DinozCreateNestedManyWithoutConcentrationInput = {
@@ -103151,6 +104578,10 @@ export namespace Prisma {
     set?: $Enums.ServerAction
   }
 
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Uint8Array
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -103734,6 +105165,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumServerActionFilter<$PrismaModel>
     _max?: NestedEnumServerActionFilter<$PrismaModel>
+  }
+
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type DinozCreateWithoutConcentrationInput = {

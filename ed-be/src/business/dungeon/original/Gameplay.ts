@@ -8,10 +8,10 @@
  * last "key" location becomes the exit.
  */
 
-import { Generator } from './Generator';
-import { DungeonItem } from '../types';
-import type { Level, Room } from './Data';
-import type { LevelInfos } from './Data';
+import { Generator } from './Generator.js';
+import { DungeonItem } from '../types.js';
+import type { Level, Room } from './Data.js';
+import type { LevelInfos } from './Data.js';
 
 class Branch {
 	id: number;

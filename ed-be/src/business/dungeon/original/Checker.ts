@@ -7,8 +7,8 @@
  * unreachable even once the exit is.
  */
 
-import { DungeonItem } from '../types';
-import type { LevelInfos, Room } from './Data';
+import { DungeonItem } from '../types.js';
+import type { LevelInfos, Room } from './Data.js';
 
 export class Checker {
 	private keys: boolean[] = [];

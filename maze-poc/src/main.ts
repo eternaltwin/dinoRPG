@@ -1,101 +1,80 @@
 /**
- * Maze POC entry point.
+ * Maze POC entry point — fog-of-war edition.
  *
- * Pipeline:
- *   generate (original or simple generator) -> encode -> decode (proving the
- *   codec round-trips) -> render with Pixi using the real DinoRPG dungeon
- *   tileset -> steer a dinoz around with the arrow keys.
+ * The maze layout lives encrypted on the backend ("pixy") and NEVER reaches the
+ * browser. Starting a run returns only the cells around the entrance; every
+ * arrow-key step is validated server-side and returns only the newly revealed
+ * cells. The maze can therefore only be solved by exploring it.
  *
- * You can also paste an encoded string (from the panel below) to re-render it.
+ * Requires the ed-be backend on port 8081 (see /api/v1/dungeon).
  */
 
 import './style.css';
-import { OriginalGenerator } from './dungeon/original';
-import { DungeonCodec } from './dungeon/DungeonCodec';
 import { MazeRenderer } from './render/MazeRenderer';
 import { DinozActor } from './render/DinozActor';
 import { loadDungeonAssets } from './render/assets';
 import { allAssetNames, SKINS } from './render/skins';
 import type { Skin } from './render/skins';
-import type { DungeonStruct, Cell } from './dungeon/types';
+import * as pixy from './dungeon/pixyClient';
+import type { Cell, RevealedCell } from './dungeon/pixyClient';
 
 // A few real dino "codes" pulled from the dinorpg_animations debug page.
 const DINO_CODES = ['09T1Yt9wqq4Rx000', '0A8uYQDU0FywV000', '199zX1Jn1zGXG000', '09vGg4LW1S9fn000'];
 
-const stairKey = (l: number, x: number, y: number): string => `${l},${x},${y}`;
-
-/** Map every stair-door cell to the level it connects to. */
-function buildStairs(d: DungeonStruct): Map<string, number> {
-	const stairs = new Map<string, number>();
-	d.levels.forEach((level, l) => {
-		for (const room of level.rooms) {
-			for (const door of room.doors) {
-				if (door.up === true && l + 1 < d.levels.length) stairs.set(stairKey(l, door.x, door.y), l + 1);
-				else if (door.up === false && l - 1 >= 0) stairs.set(stairKey(l, door.x, door.y), l - 1);
-			}
-		}
-	});
-	return stairs;
-}
-
 const stage = document.getElementById('stage') as HTMLDivElement;
-const sigEl = document.getElementById('signature') as HTMLPreElement;
-const codeEl = document.getElementById('encoded') as HTMLPreElement;
-const levelsEl = document.getElementById('levels') as HTMLDivElement;
-const seedEl = document.getElementById('seed') as HTMLSpanElement;
-const importInput = document.getElementById('import-str') as HTMLInputElement;
-const importBtn = document.getElementById('import-btn') as HTMLButtonElement;
-const importMsg = document.getElementById('import-msg') as HTMLSpanElement;
+const statusEl = document.getElementById('status') as HTMLSpanElement;
 const debugBtn = document.getElementById('debug') as HTMLButtonElement;
 const stairBtn = document.getElementById('stair-btn') as HTMLButtonElement;
 const stairImg = document.getElementById('stair-icon') as HTMLImageElement;
 
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
-let seed = 1;
-
-// The dinoz is driven solely by the arrow keys.
+let runId = '';
 let wallDebug = true;
-let dungeon: DungeonStruct | null = null;
-let stairs = new Map<string, number>();
-// Logical target cell — where the dinoz will end up once queued moves finish.
-// Driving moves off this (not the animated position) lets key presses buffer.
+// Entities pixy has revealed so far, keyed "l,x,y" — drives the stair button.
+const icons = new Map<string, string>();
+// Logical position = last server-confirmed cell. Moves are driven off this.
 let cursor: Cell = { l: 0, x: 0, y: 0 };
+// One in-flight move at a time; pixy is the authority, not the keyboard.
+let moving = false;
 
-/** Move the dinoz one cell. Stairs are NOT auto-traversed — stepping onto one
- * surfaces the stair button (see updateStairButton). */
-function tryMove(dx: number, dy: number): void {
-	if (!actor || !dungeon) return;
-	const nx = cursor.x + dx;
-	const ny = cursor.y + dy;
-	if (nx < 0 || ny < 0 || nx >= dungeon.width || ny >= dungeon.height) return;
-	if (!dungeon.levels[cursor.l].table[nx][ny]) return; // wall
-	cursor = { l: cursor.l, x: nx, y: ny };
-	actor.enqueue(cursor);
+const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
+
+function record(reveal: RevealedCell[]): void {
+	for (const c of reveal) if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+	renderer?.applyReveal(reveal);
 }
 
-/** Take the stair under the dinoz, if any, changing the displayed level. */
-function takeStair(): void {
-	if (!actor) return;
-	const here = actor.cell;
-	const to = stairs.get(stairKey(here.l, here.x, here.y));
-	if (to === undefined) return;
-	cursor = { l: to, x: here.x, y: here.y };
-	actor.enqueue(cursor);
+/** Ask pixy for one step; on approval, walk the dinoz and fold in the reveal. */
+function tryMove(dx: number, dy: number, dl = 0): void {
+	if (moving || !actor || runId === '') return;
+	moving = true;
+	pixy
+		.move(runId, dx, dy, dl)
+		.then(r => {
+			moving = false;
+			if (!r.ok) return; // wall / no stair: pixy said no, nothing was revealed
+			record(r.reveal);
+			cursor = { ...r.pos };
+			actor?.enqueue(cursor);
+		})
+		.catch(err => {
+			moving = false;
+			statusEl.textContent = `✗ ${err instanceof Error ? err.message : String(err)}`;
+		});
 }
 
 // Show the stair button (top-right of the stage) only once the dinoz has settled
-// on a stair cell. The button, not the step, performs the descent.
+// on a revealed stair cell. The button, not the step, performs the traversal.
 let stairShownFor: string | null = null;
 function updateStairButton(): void {
-	if (!actor || actor.pending > 0) return hideStair();
-	const here = actor.cell;
-	const to = stairs.get(stairKey(here.l, here.x, here.y));
-	if (to === undefined) return hideStair();
-	const sk = stairKey(here.l, here.x, here.y);
-	if (sk === stairShownFor) return;
-	stairShownFor = sk;
-	stairImg.src = `${import.meta.env.BASE_URL}dungeon/gfx/${to > here.l ? 'interf_stair_up' : 'interf_stair_down'}.png`;
+	if (!actor || moving || actor.pending > 0) return hideStair();
+	const k = iconKey(actor.cell);
+	const icon = icons.get(k);
+	if (icon !== 'stair_up' && icon !== 'stair_down' && icon !== 'exit') return hideStair();
+	if (k === stairShownFor) return;
+	stairShownFor = k;
+	stairImg.src = `${import.meta.env.BASE_URL}dungeon/gfx/${icon === 'stair_up' ? 'interf_stair_up' : 'interf_stair_down'}.png`;
 	stairBtn.hidden = false;
 }
 function hideStair(): void {
@@ -104,93 +83,53 @@ function hideStair(): void {
 	stairBtn.hidden = true;
 }
 
-/** Render an already-decoded dungeon: (re)build renderer, level buttons, dino. */
-function renderDungeon(dungeonStruct: DungeonStruct, salt: number): void {
-	const skins: Skin[] = dungeonStruct.levels.map((_, l) => SKINS[(salt + l) % SKINS.length]);
+/** Start a fresh run: pixy generates + encrypts; we get the entrance reveal only. */
+async function build(): Promise<void> {
+	statusEl.textContent = 'asking pixy for a dungeon…';
+	let run: pixy.StartRunResult;
+	try {
+		run = await pixy.startRun();
+	} catch (err) {
+		statusEl.textContent = `✗ pixy unreachable — is ed-be running on 8081? (${
+			err instanceof Error ? err.message : String(err)
+		})`;
+		return;
+	}
+	statusEl.textContent = `run ${run.runId.slice(0, 8)}… — explore!`;
 
 	actor?.destroy();
 	renderer?.destroy();
-	// cell 45 → the dino's 2-cell target equals its 90px nominal height, so it
-	// renders at scale 1 (native resolution) instead of being downsized.
-	// 500×350 viewport: the map is larger, so the camera scrolls to follow the dino.
-	renderer = new MazeRenderer(stage, dungeonStruct, { cell: 45, skins, view: { w: 500, h: 350 } });
+	icons.clear();
+	hideStair();
+
+	runId = run.runId;
+	const skins: Skin[] = Array.from({ length: run.levels }, (_, l) => SKINS[(run.skinSalt + l) % SKINS.length]);
+	// cell 45 → the dino renders at native resolution; 500×350 viewport scrolls.
+	renderer = new MazeRenderer(
+		stage,
+		{ width: run.width, height: run.height, levels: run.levels },
+		{ cell: 45, skins, view: { w: 500, h: 350 } }
+	);
 	renderer.setDebug(wallDebug);
 
-	levelsEl.replaceChildren();
-	for (let l = 0; l < dungeonStruct.levels.length; l++) {
-		const btn = document.createElement('button');
-		btn.textContent = `Level ${l + 1}`;
-		btn.onclick = () => renderer?.showLevel(l);
-		levelsEl.appendChild(btn);
-	}
-
-	const code = DINO_CODES[Math.abs(salt) % DINO_CODES.length];
-	actor = new DinozActor(renderer, { code, speed: 5, onLevelChange: l => renderer?.showLevel(l) });
-
-	dungeon = dungeonStruct;
-	stairs = buildStairs(dungeonStruct);
-	actor.placeAt({ ...dungeonStruct.start });
-	cursor = actor.cell;
-}
-
-/** Generate a fresh dungeon, run it through the codec, and render the decoded result. */
-function build(s: number): void {
-	const generated = OriginalGenerator.generate({ seed: s, width: 24, height: 24, levels: 3 });
-
-	const encoded = new DungeonCodec().encode(generated);
-	const decoder = new DungeonCodec();
-	const ok = decoder.decode(encoded);
-
-	seedEl.textContent = String(s);
-	sigEl.textContent = encoded.slice(0, encoded.indexOf(']]') + 2) + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
-	codeEl.textContent = encoded;
-	importMsg.textContent = '';
-	renderDungeon(decoder.d, s);
-}
-
-/** Decode a pasted string and render it. */
-function importString(raw: string): void {
-	const s = raw.trim();
-	if (s === '') {
-		importMsg.textContent = 'paste a string first';
-		return;
-	}
-	const decoder = new DungeonCodec();
-	let ok = false;
-	try {
-		ok = decoder.decode(s);
-	} catch {
-		ok = false;
-	}
-	if (!decoder.d || decoder.d.levels.length === 0) {
-		importMsg.textContent = '✗ could not decode (not a string from this codec?)';
-		return;
-	}
-	importMsg.textContent = ok
-		? '✓ loaded'
-		: '✓ loaded (CRC differs — expected for original-game strings, the maze is still exact)';
-	seedEl.textContent = '—';
-	const sig = s.startsWith('[[') ? s.slice(0, s.indexOf(']]') + 2) : '(no signature)';
-	sigEl.textContent = sig + (ok ? '  ✓ CRC ok' : '  ✗ CRC FAIL');
-	codeEl.textContent = s;
-	// derive a skin salt from the string so imports look stable
-	let salt = 0;
-	for (let i = 0; i < s.length; i++) salt = (salt * 31 + s.charCodeAt(i)) >>> 0;
-	renderDungeon(decoder.d, salt);
+	record(run.reveal);
+	actor = new DinozActor(renderer, {
+		code: DINO_CODES[run.skinSalt % DINO_CODES.length],
+		speed: 5,
+		onLevelChange: l => renderer?.showLevel(l)
+	});
+	actor.placeAt({ ...run.pos });
+	actor.takeControl();
+	cursor = { ...run.pos };
 }
 
 async function main(): Promise<void> {
 	await loadDungeonAssets(allAssetNames());
 
 	debugBtn.textContent = wallDebug ? 'Wall debug: ON' : 'Wall debug: OFF';
-	build(seed);
+	await build();
 
-	(document.getElementById('regen') as HTMLButtonElement).onclick = () => build(++seed);
-	(document.getElementById('replay') as HTMLButtonElement).onclick = () => build(seed);
-	importBtn.onclick = () => importString(importInput.value);
-	importInput.onkeydown = e => {
-		if (e.key === 'Enter') importString(importInput.value);
-	};
+	(document.getElementById('regen') as HTMLButtonElement).onclick = () => void build();
 
 	debugBtn.onclick = () => {
 		wallDebug = !wallDebug;
@@ -198,7 +137,11 @@ async function main(): Promise<void> {
 		renderer?.setDebug(wallDebug);
 	};
 
-	stairBtn.onclick = () => takeStair();
+	stairBtn.onclick = () => {
+		const icon = icons.get(iconKey(cursor));
+		if (icon === 'stair_up') tryMove(0, 0, 1);
+		else if (icon === 'stair_down' || icon === 'exit') tryMove(0, 0, -1);
+	};
 
 	const ARROWS: Record<string, [number, number]> = {
 		ArrowUp: [0, -1],
@@ -207,14 +150,13 @@ async function main(): Promise<void> {
 		ArrowRight: [1, 0]
 	};
 	// Drive movement from held keys ourselves (a per-frame loop) instead of the
-	// OS key-repeat, which inserts a ~500ms pause after the first press. We feed
-	// one cell at a time only once the previous move lands, so the dinoz walks
-	// continuously while held and stops within a cell on release.
+	// OS key-repeat, which inserts a ~500ms pause after the first press. One
+	// server round-trip at a time: the next step is requested only once the
+	// previous one is confirmed and walked.
 	const held: string[] = [];
 	window.addEventListener('keydown', e => {
 		const d = ARROWS[e.key];
-		// Don't hijack arrows while typing in the import box.
-		if (!d || document.activeElement === importInput) return;
+		if (!d) return;
 		e.preventDefault();
 		if (!held.includes(e.key)) held.push(e.key);
 	});
@@ -224,7 +166,7 @@ async function main(): Promise<void> {
 	});
 
 	const frame = (): void => {
-		if (actor && held.length > 0 && actor.pending === 0) {
+		if (actor && !moving && held.length > 0 && actor.pending === 0) {
 			const d = ARROWS[held[held.length - 1]];
 			tryMove(d[0], d[1]);
 		}

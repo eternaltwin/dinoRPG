@@ -2,13 +2,12 @@
 	"name": "@eternaltwin/dinorpg-maze-poc",
 	"private": true,
 	"version": "0.0.0",
-	"description": "POC: DinoRPG dungeon/maze generation + codec (ported from the Haxe archive) rendered with Pixi.js, dinoz animated via @eternaltwin/dinorpg_animations",
+	"description": "POC: DinoRPG dungeon/maze fog-of-war client — layout stays encrypted on the ed-be backend; rendered with Pixi.js, dinoz animated via @eternaltwin/dinorpg_animations",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc --noEmit && vite build",
-		"preview": "vite preview",
-		"test": "tsc -p tsconfig.node.json && node -e \"require('fs').writeFileSync('dist-test/package.json','{\\\"type\\\":\\\"commonjs\\\"}')\" && node dist-test/test/codec.test.js && node dist-test/test/original.test.js"
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"@eternaltwin/dinorpg_animations": "^1.0.9",
