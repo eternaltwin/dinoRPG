@@ -169,9 +169,9 @@ export class MazeRenderer {
 				const back = this.wallBackLayer; // behind the dinoz (north faces)
 				const front = this.wallFrontLayer; // in front of the dinoz (near faces)
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${this.p2(f)}`, L, T, 0, 1, false, false, back);
-				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, F, 1, 1, false, false, front);
-				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, F, 1, 1, true, false, front);
-				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B, 0, 0, false, false, front);
+				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, F - 9, 1, 1, false, false, front);
+				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, F - 9, 1, 1, true, false, front);
+				if (wall(x, y + 1)) this.edge(`back_${skin.name}_01`, L, B - 21, 0, 0, false, false, front);
 				if (wall(x, y - 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, T, 1, 1, false, false, back);
 				if (wall(x, y - 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, T, 1, 1, true, false, back);
 				if (wall(x, y + 1) && wall(x - 1, y)) this.edge(`corner_${skin.name}_01`, L, F, 1, 1, false, false, front);
