@@ -53,11 +53,7 @@ const commonPath: string = apiRoutes.npcRoute;
  */
 routes.put(
 	`${commonPath}/:dinozId/:npc`,
-	[
-		param('npc').exists().isString(),
-		param('dinozId').exists().toInt().isNumeric(),
-		body('step').exists().isString()
-	],
+	[param('npc').exists().isString(), param('dinozId').exists().toInt().isNumeric(), body('step').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

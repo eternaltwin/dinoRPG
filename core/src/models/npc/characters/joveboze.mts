@@ -47,7 +47,7 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	},
 	attack_win: {
 		stepName: 'attack_win',
-		nextStep: [],
+		nextStep: []
 	},
 	// Weird swamp quest
 	weirdSwamp: {

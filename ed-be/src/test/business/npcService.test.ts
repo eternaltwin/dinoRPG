@@ -157,7 +157,7 @@ describe('getNpcSpeech - guard clauses', () => {
 		(npcList as Record<string, unknown>).michel = { ...npc, condition: { [ConditionEnum.MINLEVEL]: 99 } };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
-		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('doesn\'t meet requirement to talk to');
+		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow("doesn't meet requirement to talk to");
 	});
 
 	it('throws when the dinoz is not on the same place as the NPC', async () => {
@@ -172,7 +172,7 @@ describe('getNpcSpeech - guard clauses', () => {
 		(npc.data.begin as Record<string, unknown>).condition = { [ConditionEnum.MINLEVEL]: 99 };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
-		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow('doesn\'t fulfill the conditions');
+		await expect(getNpcSpeech(req({ step: 'begin' }))).rejects.toThrow("doesn't fulfill the conditions");
 	});
 
 	it('throws when the requested step does not exist', async () => {
@@ -267,7 +267,7 @@ describe('getNpcSpeech - ongoing conversation', () => {
 
 	it('proceeds when the requested step is reachable', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
-		
+
 		const result = await getNpcSpeech(req({ step: 'end' }));
 
 		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'end');
@@ -275,7 +275,7 @@ describe('getNpcSpeech - ongoing conversation', () => {
 			name: 'michel',
 			speech: 'end',
 			playerChoice: [],
-			flashvars: "fv",
+			flashvars: 'fv',
 			rewards: {},
 			service: undefined
 		});
@@ -290,7 +290,7 @@ describe('getNpcSpeech - ongoing conversation', () => {
 
 	it('throws when the stored current step no longer exists', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'ghost' }]) as never);
-		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow("does not exist for NPC");
+		await expect(getNpcSpeech(req({ step: 'choice1' }))).rejects.toThrow('does not exist for NPC');
 	});
 
 	it('throws when the requested step condition is not fulfilled', async () => {
@@ -364,17 +364,17 @@ describe('getNpcSpeech - ongoing conversation', () => {
 	it('no existing current step throws if no valid initial step can be found', async () => {
 		(npc.data.begin as Record<string, unknown>).initialStep = false;
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow("No valid initial step found for NPC");;
+		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow('No valid initial step found for NPC');
 	});
 
 	it('throws if current step does not contain requested step', async () => {
-		mockGetNPC.mockResolvedValue(buildPlayer({}, [{npcId: NPC_ID, step: 'begin'}]) as never);
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
 		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('end is not available');
 	});
 
 	it('throws if current step condition is not met', async () => {
 		(npc.data.choice1 as Record<string, unknown>).condition = { [ConditionEnum.MINLEVEL]: 99 };
-		mockGetNPC.mockResolvedValue(buildPlayer({}, [{npcId: NPC_ID, step: 'choice1'}]) as never);
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
 		// NPC condition + reachability pass; only the step condition fails.
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
 		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('no longer meets condition');

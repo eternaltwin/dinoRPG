@@ -296,12 +296,8 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		placeId: PlaceEnum.PENTES_DE_BASALTE,
 		data: PTEROZ,
 		missions: undefined,
-		condition:
-		{
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } },
-				{ [ConditionEnum.MINLEVEL]: 8 }
-			]
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		flashvars: undefined
 	},
@@ -311,12 +307,8 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		placeId: PlaceEnum.ILE_WAIKIKI,
 		data: HIPPO,
 		missions: undefined,
-		condition:
-		{
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } },
-				{ [ConditionEnum.MINLEVEL]: 8 }
-			]
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		flashvars: undefined
 	},
@@ -327,10 +319,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		data: ROCKY,
 		missions: undefined,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } },
-				{ [ConditionEnum.MINLEVEL]: 13 }
-			]
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
 		},
 		flashvars: undefined
 	},

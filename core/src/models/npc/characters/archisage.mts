@@ -60,6 +60,6 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 	},
 	show_win: {
 		stepName: 'show_win',
-		nextStep: [],
+		nextStep: []
 	}
 };

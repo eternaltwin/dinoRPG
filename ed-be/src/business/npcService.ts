@@ -73,7 +73,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	let debugCurrentStep = dinozCurrentNpcStep === undefined ? 'undefined' : dinozCurrentNpcStep.step;
 
-	console.log(`Current step: ${debugCurrentStep}, next step chosen is: ${nextStepWanted} (${nextStepWantedData.stepName})`);
+	console.log(
+		`Current step: ${debugCurrentStep}, next step chosen is: ${nextStepWanted} (${nextStepWantedData.stepName})`
+	);
 
 	// The wanted step conditions must be met at all times.
 	if (!checkCondition(nextStepWantedData.condition, player, dinozId)) {
@@ -108,7 +110,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			// Update NPC entry.
 			await updateDinozStep(dinozId, npc.id, nextStepWantedData.stepName);
 		}
-		
+
 		// Note: initial steps cannot trigger fights, redirect or have rewards.
 
 		console.log(`Initial step processed`);
@@ -152,7 +154,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		});
 
 		console.log(`createDinozStep ran`);
-		
+
 		return {
 			name: npcName,
 			speech: initialStepData.stepName,
@@ -172,7 +174,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (!dinozCurrentStepData) {
 		throw new ExpectedError(`Dialog ${dinozCurrentNpcStep.step} does not exist for NPC ${npcName}.`);
 	}
-	
+
 	// The Dinoz need to still meet the condition of its current step.
 	if (!checkCondition(dinozCurrentStepData.condition, player, dinozId)) {
 		throw new ExpectedError(`Player no longer meets condition for this dialog.`);
@@ -180,8 +182,13 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	// Verify the wanted step is included in the possible next steps of the Dinoz current step.
 	console.log(`Step included: ${dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName)}`);
-	console.log(`Alias included: ${nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias)}`);
-	if (!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) && !(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias) )) {
+	console.log(
+		`Alias included: ${nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias)}`
+	);
+	if (
+		!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) &&
+		!(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias))
+	) {
 		throw new ExpectedError(`NPC ${npcName} dialog ${nextStepWanted} is not available for your Dinoz.`);
 	}
 
@@ -231,7 +238,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			fight: result
 		};
 	}
-	
+
 	if (nextStepWantedData.reward !== undefined) {
 		checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
 		speechRewards = await rewarder(nextStepWantedData.reward, player.dinoz, authed.id, false);
@@ -266,7 +273,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			{} as Partial<Record<Item, number>>
 		)
 	};
-
 }
 
 /**

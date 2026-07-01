@@ -9,11 +9,8 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight', 'leave'],
 		initialStep: true,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } },
-				{ [ConditionEnum.MINLEVEL]: 8 }
-			]
-		},
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		}
 	},
 	fight: {
 		stepName: 'fight',
@@ -33,7 +30,7 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	fight_win: {
 		stepName: 'fight_win',
 		nextStep: []
-	},
+	}
 };
 
 export const HIPPO: Readonly<Record<string, NpcData>> = {
@@ -42,11 +39,8 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight', 'leave'],
 		initialStep: true,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } },
-				{ [ConditionEnum.MINLEVEL]: 8 }
-			]
-		},
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		}
 	},
 	fight: {
 		stepName: 'fight',
@@ -66,7 +60,7 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	fight_win: {
 		stepName: 'fight_win',
 		nextStep: []
-	},
+	}
 };
 
 export const ROCKY: Readonly<Record<string, NpcData>> = {
@@ -75,10 +69,7 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight', 'leave', 'touch', 'grave'],
 		initialStep: true,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } },
-				{ [ConditionEnum.MINLEVEL]: 13 }
-			]
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
 		}
 	},
 	fight: {
@@ -90,7 +81,7 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.EPIC,
 				value: Reward.ROCKY
-			},
+			}
 		]
 	},
 	leave: {
