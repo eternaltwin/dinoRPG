@@ -372,6 +372,14 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('end is not available');
 	});
 
+	it('throws if current step condition is not met', async () => {
+		(npc.data.choice1 as Record<string, unknown>).condition = { [ConditionEnum.MINLEVEL]: 99 };
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{npcId: NPC_ID, step: 'choice1'}]) as never);
+		// NPC condition + reachability pass; only the step condition fails.
+		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
+		await expect(getNpcSpeech(req({ step: 'end' }))).rejects.toThrow('no longer meets condition');
+	});
+
 	it('throws when the player vanishes during the post-reward refresh', async () => {
 		// choiceReward carries a reward, so the player is re-fetched; a null refresh must be rejected
 		// while building the next player choices.

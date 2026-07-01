@@ -168,11 +168,17 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	// At this point the wanted step is not an initial step, its conditions are met and the Dinoz has history with that NPC.
 	// The NPC conditions and initial step conditions are assumed to be met by continuity and are not checked again here.
 
-	// Verify the wanted step is included in the possible next steps of the Dinoz current step.
 	let dinozCurrentStepData = Object.values(npc.data).find(npc => npc.stepName === dinozCurrentNpcStep.step);
 	if (!dinozCurrentStepData) {
 		throw new ExpectedError(`Dialog ${dinozCurrentNpcStep.step} does not exist for NPC ${npcName}.`);
 	}
+	
+	// The Dinoz need to still meet the condition of its current step.
+	if (!checkCondition(dinozCurrentStepData.condition, player, dinozId)) {
+		throw new ExpectedError(`Player no longer meets condition for this dialog.`);
+	}
+
+	// Verify the wanted step is included in the possible next steps of the Dinoz current step.
 	console.log(`Step included: ${dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName)}`);
 	console.log(`Alias included: ${nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias)}`);
 	if (!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) && !(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias) )) {
