@@ -1,5 +1,5 @@
 /**
- * OriginalGenerator — orchestrates the ported `gfx/dungeon/gen` pipeline
+ * OriginalGenerator — orchestrates the ported `dungeon/dungeon/gen` pipeline
  * (Rooms → Noise → Gameplay → Checker) and emits a {@link DungeonStruct},
  * mirroring `Main.loop` + `Main.codeRoom` from the archive.
  *

@@ -57,6 +57,14 @@ function iconAt(d: DungeonStruct, l: number, x: number, y: number): string | und
 	return undefined;
 }
 
+/** Rebuild the RevealedCells for already-revealed keys (resuming a run). */
+export function cellsForKeys(d: DungeonStruct, keys: string[]): RevealedCell[] {
+	return keys.map(k => {
+		const [l, x, y] = k.split(',').map(Number);
+		return { l, x, y, floor: d.levels[l].table[x]?.[y] ?? false, icon: iconAt(d, l, x, y) };
+	});
+}
+
 /** The candidate cells revealed by standing on (l,x,y): the cell + 4 neighbours. */
 export function revealAround(d: DungeonStruct, l: number, x: number, y: number): RevealedCell[] {
 	const out: RevealedCell[] = [];

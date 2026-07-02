@@ -1,5 +1,5 @@
 /**
- * Loads the dungeon tileset PNGs (copied from the archive's gfx/dungeon/gfx)
+ * Loads the dungeon tileset PNGs (copied from the archive's dungeon/dungeon/dungeon)
  * once, then hands out cached Pixi textures by bare tile name.
  */
 

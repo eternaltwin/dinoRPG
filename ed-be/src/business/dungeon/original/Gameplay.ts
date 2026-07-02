@@ -1,5 +1,5 @@
 /**
- * Gameplay — TypeScript port of `gfx/dungeon/gen/Gameplay.hx`.
+ * Gameplay — TypeScript port of `dungeon/dungeon/gen/Gameplay.hx`.
  *
  * Turns a connected room layout into a playable dungeon: picks a start, builds
  * a branch/metabranch tree, then iteratively pushes the player outward — placing

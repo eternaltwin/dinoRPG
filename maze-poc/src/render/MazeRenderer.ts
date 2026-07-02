@@ -1,6 +1,6 @@
 /**
  * MazeRenderer — draws the *known* part of a dungeon with Pixi.js using the
- * real DinoRPG dungeon tileset (gfx/dungeon/gfx).
+ * real DinoRPG dungeon tileset (dungeon/dungeon/dungeon).
  *
  * Fog of war: the renderer never sees the layout. It accumulates the cells the
  * backend ("pixy") reveals — {@link applyReveal} — and draws only those; every

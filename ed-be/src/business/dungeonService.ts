@@ -10,7 +10,7 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
-import { revealAround, cellKey } from './dungeon/reveal.js';
+import { revealAround, cellKey, cellsForKeys } from './dungeon/reveal.js';
 import type { RevealedCell } from './dungeon/reveal.js';
 import type { DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
@@ -62,6 +62,21 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	);
 	const d = codec.d;
 
+	// Resume: one run per player per dungeon — hand back the position and
+	// everything already revealed instead of violating the unique constraint.
+	const existing = await findRun(dungeonId, authed.id);
+	if (existing) {
+		return {
+			runId: existing.id,
+			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
+			width: d.width,
+			height: d.height,
+			levels: d.levels.length,
+			skinSalt: Math.floor(Math.random() * 1000),
+			reveal: cellsForKeys(d, JSON.parse(existing.revealed) as string[])
+		};
+	}
+
 	const revealed = new Set<string>();
 	const reveal = newReveals(revealAround(d, d.start.l, d.start.x, d.start.y), revealed);
 
@@ -101,9 +116,9 @@ function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number 
  */
 export async function move(req: Request): Promise<MoveResult> {
 	const authed = await auth(req);
-	const dx = +req.params.dx;
-	const dl = +req.params.dl;
-	const dy = +req.params.dy;
+	const dx = +req.body.dx;
+	const dl = +req.body.dl;
+	const dy = +req.body.dy;
 	const dungeonId = req.params.id;
 	const dungeon = await getDungeon(dungeonId);
 	if (!dungeon) {
