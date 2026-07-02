@@ -1,5 +1,5 @@
 /**
- * Rooms — TypeScript port of `gfx/dungeon/gen/Rooms.hx`.
+ * Rooms — TypeScript port of `dungeon/dungeon/gen/Rooms.hx`.
  *
  * Places random non-overlapping rectangular rooms (with 1-cell wall gaps),
  * connects touching rooms with doors, keeps a (mostly) spanning tree per

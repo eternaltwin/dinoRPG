@@ -1,5 +1,5 @@
 /**
- * Noise — TypeScript port of `gfx/dungeon/gen/Noise.hx`.
+ * Noise — TypeScript port of `dungeon/dungeon/gen/Noise.hx`.
  *
  * Carves organic, non-rectangular edges into each room while keeping all doors
  * mutually reachable, then optionally erodes thin spikes (`filtersPasses`).

@@ -7912,6 +7912,7 @@ __metadata:
     mitt: "npm:^3.0.1"
     pinia: "npm:^2.1.7"
     pinia-plugin-persistedstate: "npm:^3.2.0"
+    pixi.js: "npm:^7.4.3"
     prettier: "npm:^3.4.2"
     sass: "npm:^1.60.0"
     typescript: "npm:^5.7.2"

@@ -1,5 +1,5 @@
 /**
- * Checker — TypeScript port of `gfx/dungeon/gen/Checker.hx`.
+ * Checker — TypeScript port of `dungeon/dungeon/gen/Checker.hx`.
  *
  * Verifies the dungeon is solvable: starting from `start`, repeatedly flood the
  * reachable rooms, collecting any keys found; if that unlocks new doors, flood

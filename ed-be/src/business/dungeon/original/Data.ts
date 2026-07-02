@@ -1,5 +1,5 @@
 /**
- * Data — TypeScript port of `gfx/dungeon/gen/Data.hx`.
+ * Data — TypeScript port of `dungeon/dungeon/gen/Data.hx`.
  *
  * Room / Door / Group / Level / LevelInfos, used by the room generator and the
  * gameplay (lock-and-key) pass. `item.k` uses the shared {@link DungeonItem}

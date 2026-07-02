@@ -1,5 +1,5 @@
 /**
- * Generator — base class port of `gfx/dungeon/gen/Generator.hx`.
+ * Generator — base class port of `dungeon/dungeon/gen/Generator.hx`.
  * Provides the RNG helpers shared by Rooms / Noise / Gameplay.
  */
 

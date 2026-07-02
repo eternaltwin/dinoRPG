@@ -1,7 +1,7 @@
 /**
  * Dungeon skins — derived from the `SKINS` table in the archive's
- * `gfx/dungeon/View.hx`, restricted to the tilesets actually exported as PNGs
- * under `gfx/dungeon/gfx/`.
+ * `dungeon/dungeon/View.hx`, restricted to the tilesets actually exported as PNGs
+ * under `dungeon/dungeon/dungeon/`.
  *
  * Each skin pairs a wall theme (`name`, used for front/side/back/corner tiles)
  * with a ground theme and a fog background colour. Variant counts match the
