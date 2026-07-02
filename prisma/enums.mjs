@@ -174,6 +174,17 @@ export const ServerAction = {
   prospector: 'prospector'
 };
 
+export const DungeonType = {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
 export const $Enums = {
   UnavailableReason,
   NewsType,
@@ -188,5 +199,6 @@ export const $Enums = {
   NotificationSeverity,
   GameDinozUsage,
   EventType,
-  ServerAction
+  ServerAction,
+  DungeonType
 };

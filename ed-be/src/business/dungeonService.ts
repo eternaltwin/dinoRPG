@@ -8,13 +8,15 @@
  */
 
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { OriginalGenerator } from './dungeon/original/index.js';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
+import { Request } from 'express';
 import { revealAround, cellKey } from './dungeon/reveal.js';
 import type { RevealedCell } from './dungeon/reveal.js';
 import type { DungeonStruct } from './dungeon/types.js';
-import { seal, unseal } from '../utils/dungeonCrypto.js';
-import { createRun, findRun, updateRun } from '../dao/dungeonRunDao.js';
+import { unseal } from '../utils/dungeonCrypto.js';
+import { createRun, findRun, getDungeon, updateRun } from '../dao/dungeonRunDao.js';
+import translate from '../utils/server/translate.js';
+import { auth } from '../dao/playerDao.js';
 
 export interface StartRunResult {
 	runId: string;
@@ -46,18 +48,28 @@ function newReveals(candidates: RevealedCell[], revealed: Set<string>): Revealed
 	return out;
 }
 
-/** Generate, encrypt, store — return only the starting reveal. */
-export async function startRun(): Promise<StartRunResult> {
-	const d = OriginalGenerator.generate({ width: 24, height: 24, levels: 3 });
-	const encoded = new DungeonCodec().encode(d);
+export async function startRun(req: Request): Promise<StartRunResult> {
+	const authed = await auth(req);
+	const dungeonId = req.params.id;
+	const dungeon = await getDungeon(dungeonId);
+	if (!dungeon) {
+		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
+
+	const codec = new DungeonCodec();
+	codec.decode(
+		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
+	);
+	const d = codec.d;
 
 	const revealed = new Set<string>();
 	const reveal = newReveals(revealAround(d, d.start.l, d.start.x, d.start.y), revealed);
 
 	const run = await createRun(
-		seal(encoded),
 		{ posX: d.start.x, posY: d.start.y, posL: d.start.l },
-		JSON.stringify([...revealed])
+		JSON.stringify([...revealed]),
+		authed.id,
+		dungeonId
 	);
 
 	return {
@@ -87,12 +99,23 @@ function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number 
  * Validate one step (dx/dy ∈ {-1,0,1}, or dl !== 0 to take a stair under the
  * dinoz) against the decrypted layout; persist and return only the new reveals.
  */
-export async function move(runId: string, dx: number, dy: number, dl: number): Promise<MoveResult> {
-	const run = await findRun(runId);
+export async function move(req: Request): Promise<MoveResult> {
+	const authed = await auth(req);
+	const dx = +req.params.dx;
+	const dl = +req.params.dl;
+	const dy = +req.params.dy;
+	const dungeonId = req.params.id;
+	const dungeon = await getDungeon(dungeonId);
+	if (!dungeon) {
+		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
+	const run = await findRun(dungeonId, authed.id);
 	if (!run) throw new ExpectedError(`Unknown dungeon run.`);
 
 	const codec = new DungeonCodec();
-	codec.decode(unseal({ cipher: Buffer.from(run.cipher), iv: Buffer.from(run.iv), tag: Buffer.from(run.tag) }));
+	codec.decode(
+		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
+	);
 	const d = codec.d;
 
 	const cur = { l: run.posL, x: run.posX, y: run.posY };
@@ -116,7 +139,7 @@ export async function move(runId: string, dx: number, dy: number, dl: number): P
 
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
-	await updateRun(runId, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
+	await updateRun(run.id, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
 
 	return { ok: true, pos: next, reveal };
 }

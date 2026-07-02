@@ -26,14 +26,18 @@ const commonPath: string = apiRoutes.dungeonRoute;
  *       500:
  *         description: Error
  */
-routes.post(`${commonPath}`, async (_req: Request, res: Response) => {
-	try {
-		const response = await startRun();
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+routes.post(
+	`${commonPath}/:id/enter`,
+	[param('id').exists().isString().notEmpty()],
+	async (_req: Request, res: Response) => {
+		try {
+			const response = await startRun(_req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 /**
  * @openapi
@@ -86,7 +90,7 @@ routes.post(
 		}
 
 		try {
-			const response = await move(req.params.id, Number(req.body.dx), Number(req.body.dy), Number(req.body.dl));
+			const response = await move(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

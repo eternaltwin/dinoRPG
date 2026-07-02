@@ -333,6 +333,11 @@ export type ServerState = $Result.DefaultSelection<Prisma.$ServerStatePayload>
  * 
  */
 export type DungeonRun = $Result.DefaultSelection<Prisma.$DungeonRunPayload>
+/**
+ * Model Dungeon
+ * 
+ */
+export type Dungeon = $Result.DefaultSelection<Prisma.$DungeonPayload>
 
 /**
  * Enums
@@ -551,6 +556,20 @@ export const ClanEventType: {
 
 export type ClanEventType = (typeof ClanEventType)[keyof typeof ClanEventType]
 
+
+export const DungeonType: {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
+export type DungeonType = (typeof DungeonType)[keyof typeof DungeonType]
+
 }
 
 export type ServerAction = $Enums.ServerAction
@@ -608,6 +627,10 @@ export const EventType: typeof $Enums.EventType
 export type ClanEventType = $Enums.ClanEventType
 
 export const ClanEventType: typeof $Enums.ClanEventType
+
+export type DungeonType = $Enums.DungeonType
+
+export const DungeonType: typeof $Enums.DungeonType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1373,6 +1396,16 @@ export class PrismaClient<
     * ```
     */
   get dungeonRun(): Prisma.DungeonRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dungeon`: Exposes CRUD operations for the **Dungeon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dungeons
+    * const dungeons = await prisma.dungeon.findMany()
+    * ```
+    */
+  get dungeon(): Prisma.DungeonDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1876,7 +1909,8 @@ export namespace Prisma {
     GameDinoz: 'GameDinoz',
     Events: 'Events',
     ServerState: 'ServerState',
-    DungeonRun: 'DungeonRun'
+    DungeonRun: 'DungeonRun',
+    Dungeon: 'Dungeon'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1895,7 +1929,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6635,6 +6669,80 @@ export namespace Prisma {
           }
         }
       }
+      Dungeon: {
+        payload: Prisma.$DungeonPayload<ExtArgs>
+        fields: Prisma.DungeonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DungeonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DungeonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          findFirst: {
+            args: Prisma.DungeonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DungeonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          findMany: {
+            args: Prisma.DungeonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          create: {
+            args: Prisma.DungeonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          createMany: {
+            args: Prisma.DungeonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DungeonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          delete: {
+            args: Prisma.DungeonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          update: {
+            args: Prisma.DungeonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          deleteMany: {
+            args: Prisma.DungeonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DungeonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DungeonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          upsert: {
+            args: Prisma.DungeonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          aggregate: {
+            args: Prisma.DungeonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDungeon>
+          }
+          groupBy: {
+            args: Prisma.DungeonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DungeonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DungeonCountArgs<ExtArgs>
+            result: $Utils.Optional<DungeonCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6783,6 +6891,7 @@ export namespace Prisma {
     events?: EventsOmit
     serverState?: ServerStateOmit
     dungeonRun?: DungeonRunOmit
+    dungeon?: DungeonOmit
   }
 
   /* Types for Logging */
@@ -7269,6 +7378,7 @@ export namespace Prisma {
     pollVotes: number
     Events: number
     dinozBuilds: number
+    dungeonRuns: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7303,6 +7413,7 @@ export namespace Prisma {
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
     Events?: boolean | PlayerCountOutputTypeCountEventsArgs
     dinozBuilds?: boolean | PlayerCountOutputTypeCountDinozBuildsArgs
+    dungeonRuns?: boolean | PlayerCountOutputTypeCountDungeonRunsArgs
   }
 
   // Custom InputTypes
@@ -7531,6 +7642,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountDinozBuildsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozBuildWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountDungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
   }
 
 
@@ -8115,6 +8233,37 @@ export namespace Prisma {
    */
   export type GameDinozCountOutputTypeCountFightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightArchiveWhereInput
+  }
+
+
+  /**
+   * Count Type DungeonCountOutputType
+   */
+
+  export type DungeonCountOutputType = {
+    dungeonRuns: number
+  }
+
+  export type DungeonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dungeonRuns?: boolean | DungeonCountOutputTypeCountDungeonRunsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DungeonCountOutputType without action
+   */
+  export type DungeonCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonCountOutputType
+     */
+    select?: DungeonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DungeonCountOutputType without action
+   */
+  export type DungeonCountOutputTypeCountDungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
   }
 
 
@@ -27639,6 +27788,7 @@ export namespace Prisma {
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
+    dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -27791,6 +27941,7 @@ export namespace Prisma {
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
+    dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27843,6 +27994,7 @@ export namespace Prisma {
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
       Events: Prisma.$EventsPayload<ExtArgs>[]
       dinozBuilds: Prisma.$DinozBuildPayload<ExtArgs>[]
+      dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -28309,6 +28461,7 @@ export namespace Prisma {
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinozBuilds<T extends Player$dinozBuildsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozBuildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dungeonRuns<T extends Player$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -29649,6 +29802,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
+  }
+
+  /**
+   * Player.dungeonRuns
+   */
+  export type Player$dungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    cursor?: DungeonRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
   }
 
   /**
@@ -83246,38 +83423,35 @@ export namespace Prisma {
 
   export type DungeonRunMinAggregateOutputType = {
     id: string | null
-    cipher: Uint8Array | null
-    iv: Uint8Array | null
-    tag: Uint8Array | null
     posX: number | null
     posY: number | null
     posL: number | null
     revealed: string | null
     createdAt: Date | null
+    playerId: string | null
+    dungeonId: string | null
   }
 
   export type DungeonRunMaxAggregateOutputType = {
     id: string | null
-    cipher: Uint8Array | null
-    iv: Uint8Array | null
-    tag: Uint8Array | null
     posX: number | null
     posY: number | null
     posL: number | null
     revealed: string | null
     createdAt: Date | null
+    playerId: string | null
+    dungeonId: string | null
   }
 
   export type DungeonRunCountAggregateOutputType = {
     id: number
-    cipher: number
-    iv: number
-    tag: number
     posX: number
     posY: number
     posL: number
     revealed: number
     createdAt: number
+    playerId: number
+    dungeonId: number
     _all: number
   }
 
@@ -83296,38 +83470,35 @@ export namespace Prisma {
 
   export type DungeonRunMinAggregateInputType = {
     id?: true
-    cipher?: true
-    iv?: true
-    tag?: true
     posX?: true
     posY?: true
     posL?: true
     revealed?: true
     createdAt?: true
+    playerId?: true
+    dungeonId?: true
   }
 
   export type DungeonRunMaxAggregateInputType = {
     id?: true
-    cipher?: true
-    iv?: true
-    tag?: true
     posX?: true
     posY?: true
     posL?: true
     revealed?: true
     createdAt?: true
+    playerId?: true
+    dungeonId?: true
   }
 
   export type DungeonRunCountAggregateInputType = {
     id?: true
-    cipher?: true
-    iv?: true
-    tag?: true
     posX?: true
     posY?: true
     posL?: true
     revealed?: true
     createdAt?: true
+    playerId?: true
+    dungeonId?: true
     _all?: true
   }
 
@@ -83419,14 +83590,13 @@ export namespace Prisma {
 
   export type DungeonRunGroupByOutputType = {
     id: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
     posX: number
     posY: number
     posL: number
     revealed: string
     createdAt: Date
+    playerId: string
+    dungeonId: string
     _count: DungeonRunCountAggregateOutputType | null
     _avg: DungeonRunAvgAggregateOutputType | null
     _sum: DungeonRunSumAggregateOutputType | null
@@ -83450,67 +83620,83 @@ export namespace Prisma {
 
   export type DungeonRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    cipher?: boolean
-    iv?: boolean
-    tag?: boolean
     posX?: boolean
     posY?: boolean
     posL?: boolean
     revealed?: boolean
     createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    cipher?: boolean
-    iv?: boolean
-    tag?: boolean
     posX?: boolean
     posY?: boolean
     posL?: boolean
     revealed?: boolean
     createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    cipher?: boolean
-    iv?: boolean
-    tag?: boolean
     posX?: boolean
     posY?: boolean
     posL?: boolean
     revealed?: boolean
     createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectScalar = {
     id?: boolean
-    cipher?: boolean
-    iv?: boolean
-    tag?: boolean
     posX?: boolean
     posY?: boolean
     posL?: boolean
     revealed?: boolean
     createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
   }
 
-  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cipher" | "iv" | "tag" | "posX" | "posY" | "posL" | "revealed" | "createdAt", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "createdAt" | "playerId" | "dungeonId", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+  }
+  export type DungeonRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+  }
+  export type DungeonRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+  }
 
   export type $DungeonRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DungeonRun"
-    objects: {}
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      dungeon: Prisma.$DungeonPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      cipher: Uint8Array
-      iv: Uint8Array
-      tag: Uint8Array
       posX: number
       posY: number
       posL: number
       revealed: string
       createdAt: Date
+      playerId: string
+      dungeonId: string
     }, ExtArgs["result"]["dungeonRun"]>
     composites: {}
   }
@@ -83905,6 +84091,8 @@ export namespace Prisma {
    */
   export interface Prisma__DungeonRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dungeon<T extends DungeonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DungeonDefaultArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -83935,14 +84123,13 @@ export namespace Prisma {
    */ 
   interface DungeonRunFieldRefs {
     readonly id: FieldRef<"DungeonRun", 'String'>
-    readonly cipher: FieldRef<"DungeonRun", 'Bytes'>
-    readonly iv: FieldRef<"DungeonRun", 'Bytes'>
-    readonly tag: FieldRef<"DungeonRun", 'Bytes'>
     readonly posX: FieldRef<"DungeonRun", 'Int'>
     readonly posY: FieldRef<"DungeonRun", 'Int'>
     readonly posL: FieldRef<"DungeonRun", 'Int'>
     readonly revealed: FieldRef<"DungeonRun", 'String'>
     readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
+    readonly playerId: FieldRef<"DungeonRun", 'String'>
+    readonly dungeonId: FieldRef<"DungeonRun", 'String'>
   }
     
 
@@ -83959,6 +84146,10 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
     /**
      * Filter, which DungeonRun to fetch.
      */
@@ -83979,6 +84170,10 @@ export namespace Prisma {
      */
     omit?: DungeonRunOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
      * Filter, which DungeonRun to fetch.
      */
     where: DungeonRunWhereUniqueInput
@@ -83997,6 +84192,10 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
     /**
      * Filter, which DungeonRun to fetch.
      */
@@ -84047,6 +84246,10 @@ export namespace Prisma {
      */
     omit?: DungeonRunOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
      * Filter, which DungeonRun to fetch.
      */
     where?: DungeonRunWhereInput
@@ -84096,6 +84299,10 @@ export namespace Prisma {
      */
     omit?: DungeonRunOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
      * Filter, which DungeonRuns to fetch.
      */
     where?: DungeonRunWhereInput
@@ -84140,6 +84347,10 @@ export namespace Prisma {
      */
     omit?: DungeonRunOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
      * The data needed to create a DungeonRun.
      */
     data: XOR<DungeonRunCreateInput, DungeonRunUncheckedCreateInput>
@@ -84174,6 +84385,10 @@ export namespace Prisma {
      */
     data: DungeonRunCreateManyInput | DungeonRunCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -84188,6 +84403,10 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
     /**
      * The data needed to update a DungeonRun.
      */
@@ -84241,6 +84460,10 @@ export namespace Prisma {
      * Limit how many DungeonRuns to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -84255,6 +84478,10 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
     /**
      * The filter to search for the DungeonRun to update in case it exists.
      */
@@ -84282,6 +84509,10 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
     /**
      * Filter which DungeonRun to delete.
      */
@@ -84315,6 +84546,1089 @@ export namespace Prisma {
      * Omit specific fields from the DungeonRun
      */
     omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Dungeon
+   */
+
+  export type AggregateDungeon = {
+    _count: DungeonCountAggregateOutputType | null
+    _min: DungeonMinAggregateOutputType | null
+    _max: DungeonMaxAggregateOutputType | null
+  }
+
+  export type DungeonMinAggregateOutputType = {
+    id: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    type: $Enums.DungeonType | null
+  }
+
+  export type DungeonMaxAggregateOutputType = {
+    id: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    type: $Enums.DungeonType | null
+  }
+
+  export type DungeonCountAggregateOutputType = {
+    id: number
+    cipher: number
+    iv: number
+    tag: number
+    type: number
+    _all: number
+  }
+
+
+  export type DungeonMinAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+  }
+
+  export type DungeonMaxAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+  }
+
+  export type DungeonCountAggregateInputType = {
+    id?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+    _all?: true
+  }
+
+  export type DungeonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dungeon to aggregate.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dungeons
+    **/
+    _count?: true | DungeonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DungeonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DungeonMaxAggregateInputType
+  }
+
+  export type GetDungeonAggregateType<T extends DungeonAggregateArgs> = {
+        [P in keyof T & keyof AggregateDungeon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDungeon[P]>
+      : GetScalarType<T[P], AggregateDungeon[P]>
+  }
+
+
+
+
+  export type DungeonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonWhereInput
+    orderBy?: DungeonOrderByWithAggregationInput | DungeonOrderByWithAggregationInput[]
+    by: DungeonScalarFieldEnum[] | DungeonScalarFieldEnum
+    having?: DungeonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DungeonCountAggregateInputType | true
+    _min?: DungeonMinAggregateInputType
+    _max?: DungeonMaxAggregateInputType
+  }
+
+  export type DungeonGroupByOutputType = {
+    id: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    _count: DungeonCountAggregateOutputType | null
+    _min: DungeonMinAggregateOutputType | null
+    _max: DungeonMaxAggregateOutputType | null
+  }
+
+  type GetDungeonGroupByPayload<T extends DungeonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DungeonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DungeonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DungeonGroupByOutputType[P]>
+            : GetScalarType<T[P], DungeonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DungeonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+    dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
+    _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectScalar = {
+    id?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+  }
+
+  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cipher" | "iv" | "tag" | "type", ExtArgs["result"]["dungeon"]>
+  export type DungeonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
+    _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DungeonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DungeonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $DungeonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dungeon"
+    objects: {
+      dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cipher: Uint8Array
+      iv: Uint8Array
+      tag: Uint8Array
+      type: $Enums.DungeonType
+    }, ExtArgs["result"]["dungeon"]>
+    composites: {}
+  }
+
+  type DungeonGetPayload<S extends boolean | null | undefined | DungeonDefaultArgs> = $Result.GetResult<Prisma.$DungeonPayload, S>
+
+  type DungeonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DungeonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DungeonCountAggregateInputType | true
+    }
+
+  export interface DungeonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dungeon'], meta: { name: 'Dungeon' } }
+    /**
+     * Find zero or one Dungeon that matches the filter.
+     * @param {DungeonFindUniqueArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DungeonFindUniqueArgs>(args: SelectSubset<T, DungeonFindUniqueArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Dungeon that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DungeonFindUniqueOrThrowArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DungeonFindUniqueOrThrowArgs>(args: SelectSubset<T, DungeonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dungeon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindFirstArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DungeonFindFirstArgs>(args?: SelectSubset<T, DungeonFindFirstArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dungeon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindFirstOrThrowArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DungeonFindFirstOrThrowArgs>(args?: SelectSubset<T, DungeonFindFirstOrThrowArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Dungeons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dungeons
+     * const dungeons = await prisma.dungeon.findMany()
+     * 
+     * // Get first 10 Dungeons
+     * const dungeons = await prisma.dungeon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DungeonFindManyArgs>(args?: SelectSubset<T, DungeonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Dungeon.
+     * @param {DungeonCreateArgs} args - Arguments to create a Dungeon.
+     * @example
+     * // Create one Dungeon
+     * const Dungeon = await prisma.dungeon.create({
+     *   data: {
+     *     // ... data to create a Dungeon
+     *   }
+     * })
+     * 
+     */
+    create<T extends DungeonCreateArgs>(args: SelectSubset<T, DungeonCreateArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Dungeons.
+     * @param {DungeonCreateManyArgs} args - Arguments to create many Dungeons.
+     * @example
+     * // Create many Dungeons
+     * const dungeon = await prisma.dungeon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DungeonCreateManyArgs>(args?: SelectSubset<T, DungeonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dungeons and returns the data saved in the database.
+     * @param {DungeonCreateManyAndReturnArgs} args - Arguments to create many Dungeons.
+     * @example
+     * // Create many Dungeons
+     * const dungeon = await prisma.dungeon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dungeons and only return the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DungeonCreateManyAndReturnArgs>(args?: SelectSubset<T, DungeonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Dungeon.
+     * @param {DungeonDeleteArgs} args - Arguments to delete one Dungeon.
+     * @example
+     * // Delete one Dungeon
+     * const Dungeon = await prisma.dungeon.delete({
+     *   where: {
+     *     // ... filter to delete one Dungeon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DungeonDeleteArgs>(args: SelectSubset<T, DungeonDeleteArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Dungeon.
+     * @param {DungeonUpdateArgs} args - Arguments to update one Dungeon.
+     * @example
+     * // Update one Dungeon
+     * const dungeon = await prisma.dungeon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DungeonUpdateArgs>(args: SelectSubset<T, DungeonUpdateArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Dungeons.
+     * @param {DungeonDeleteManyArgs} args - Arguments to filter Dungeons to delete.
+     * @example
+     * // Delete a few Dungeons
+     * const { count } = await prisma.dungeon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DungeonDeleteManyArgs>(args?: SelectSubset<T, DungeonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dungeons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dungeons
+     * const dungeon = await prisma.dungeon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DungeonUpdateManyArgs>(args: SelectSubset<T, DungeonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dungeons and returns the data updated in the database.
+     * @param {DungeonUpdateManyAndReturnArgs} args - Arguments to update many Dungeons.
+     * @example
+     * // Update many Dungeons
+     * const dungeon = await prisma.dungeon.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Dungeons and only return the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DungeonUpdateManyAndReturnArgs>(args: SelectSubset<T, DungeonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Dungeon.
+     * @param {DungeonUpsertArgs} args - Arguments to update or create a Dungeon.
+     * @example
+     * // Update or create a Dungeon
+     * const dungeon = await prisma.dungeon.upsert({
+     *   create: {
+     *     // ... data to create a Dungeon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dungeon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DungeonUpsertArgs>(args: SelectSubset<T, DungeonUpsertArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Dungeons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonCountArgs} args - Arguments to filter Dungeons to count.
+     * @example
+     * // Count the number of Dungeons
+     * const count = await prisma.dungeon.count({
+     *   where: {
+     *     // ... the filter for the Dungeons we want to count
+     *   }
+     * })
+    **/
+    count<T extends DungeonCountArgs>(
+      args?: Subset<T, DungeonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DungeonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dungeon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DungeonAggregateArgs>(args: Subset<T, DungeonAggregateArgs>): Prisma.PrismaPromise<GetDungeonAggregateType<T>>
+
+    /**
+     * Group by Dungeon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DungeonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DungeonGroupByArgs['orderBy'] }
+        : { orderBy?: DungeonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DungeonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDungeonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dungeon model
+   */
+  readonly fields: DungeonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dungeon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DungeonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dungeonRuns<T extends Dungeon$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Dungeon$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dungeon model
+   */ 
+  interface DungeonFieldRefs {
+    readonly id: FieldRef<"Dungeon", 'String'>
+    readonly cipher: FieldRef<"Dungeon", 'Bytes'>
+    readonly iv: FieldRef<"Dungeon", 'Bytes'>
+    readonly tag: FieldRef<"Dungeon", 'Bytes'>
+    readonly type: FieldRef<"Dungeon", 'DungeonType'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dungeon findUnique
+   */
+  export type DungeonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findUniqueOrThrow
+   */
+  export type DungeonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findFirst
+   */
+  export type DungeonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dungeons.
+     */
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findFirstOrThrow
+   */
+  export type DungeonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dungeons.
+     */
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findMany
+   */
+  export type DungeonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeons to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon create
+   */
+  export type DungeonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dungeon.
+     */
+    data: XOR<DungeonCreateInput, DungeonUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon createMany
+   */
+  export type DungeonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dungeons.
+     */
+    data: DungeonCreateManyInput | DungeonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dungeon createManyAndReturn
+   */
+  export type DungeonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * The data used to create many Dungeons.
+     */
+    data: DungeonCreateManyInput | DungeonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dungeon update
+   */
+  export type DungeonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dungeon.
+     */
+    data: XOR<DungeonUpdateInput, DungeonUncheckedUpdateInput>
+    /**
+     * Choose, which Dungeon to update.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon updateMany
+   */
+  export type DungeonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dungeons.
+     */
+    data: XOR<DungeonUpdateManyMutationInput, DungeonUncheckedUpdateManyInput>
+    /**
+     * Filter which Dungeons to update
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon updateManyAndReturn
+   */
+  export type DungeonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * The data used to update Dungeons.
+     */
+    data: XOR<DungeonUpdateManyMutationInput, DungeonUncheckedUpdateManyInput>
+    /**
+     * Filter which Dungeons to update
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon upsert
+   */
+  export type DungeonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dungeon to update in case it exists.
+     */
+    where: DungeonWhereUniqueInput
+    /**
+     * In case the Dungeon found by the `where` argument doesn't exist, create a new Dungeon with this data.
+     */
+    create: XOR<DungeonCreateInput, DungeonUncheckedCreateInput>
+    /**
+     * In case the Dungeon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DungeonUpdateInput, DungeonUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon delete
+   */
+  export type DungeonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter which Dungeon to delete.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon deleteMany
+   */
+  export type DungeonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dungeons to delete
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon.dungeonRuns
+   */
+  export type Dungeon$dungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    cursor?: DungeonRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+  }
+
+  /**
+   * Dungeon without action
+   */
+  export type DungeonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
   }
 
 
@@ -85143,17 +86457,27 @@ export namespace Prisma {
 
   export const DungeonRunScalarFieldEnum: {
     id: 'id',
-    cipher: 'cipher',
-    iv: 'iv',
-    tag: 'tag',
     posX: 'posX',
     posY: 'posY',
     posL: 'posL',
     revealed: 'revealed',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    playerId: 'playerId',
+    dungeonId: 'dungeonId'
   };
 
   export type DungeonRunScalarFieldEnum = (typeof DungeonRunScalarFieldEnum)[keyof typeof DungeonRunScalarFieldEnum]
+
+
+  export const DungeonScalarFieldEnum: {
+    id: 'id',
+    cipher: 'cipher',
+    iv: 'iv',
+    tag: 'tag',
+    type: 'type'
+  };
+
+  export type DungeonScalarFieldEnum = (typeof DungeonScalarFieldEnum)[keyof typeof DungeonScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -85499,6 +86823,20 @@ export namespace Prisma {
    * Reference to a field of type 'ServerAction[]'
    */
   export type ListEnumServerActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServerAction[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DungeonType'
+   */
+  export type EnumDungeonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DungeonType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DungeonType[]'
+   */
+  export type ListEnumDungeonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DungeonType[]'>
     
   /**
    * Deep Input Types
@@ -86707,6 +88045,7 @@ export namespace Prisma {
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -86780,6 +88119,7 @@ export namespace Prisma {
     pollVotes?: PollVoteOrderByRelationAggregateInput
     Events?: EventsOrderByRelationAggregateInput
     dinozBuilds?: DinozBuildOrderByRelationAggregateInput
+    dungeonRuns?: DungeonRunOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -86856,6 +88196,7 @@ export namespace Prisma {
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
   }, "id" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -90070,53 +91411,56 @@ export namespace Prisma {
     OR?: DungeonRunWhereInput[]
     NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
     id?: StringFilter<"DungeonRun"> | string
-    cipher?: BytesFilter<"DungeonRun"> | Uint8Array
-    iv?: BytesFilter<"DungeonRun"> | Uint8Array
-    tag?: BytesFilter<"DungeonRun"> | Uint8Array
     posX?: IntFilter<"DungeonRun"> | number
     posY?: IntFilter<"DungeonRun"> | number
     posL?: IntFilter<"DungeonRun"> | number
     revealed?: StringFilter<"DungeonRun"> | string
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
   }
 
   export type DungeonRunOrderByWithRelationInput = {
     id?: SortOrder
-    cipher?: SortOrder
-    iv?: SortOrder
-    tag?: SortOrder
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
     createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+    dungeon?: DungeonOrderByWithRelationInput
   }
 
   export type DungeonRunWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    playerId_dungeonId?: DungeonRunPlayerIdDungeonIdCompoundUniqueInput
     AND?: DungeonRunWhereInput | DungeonRunWhereInput[]
     OR?: DungeonRunWhereInput[]
     NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
-    cipher?: BytesFilter<"DungeonRun"> | Uint8Array
-    iv?: BytesFilter<"DungeonRun"> | Uint8Array
-    tag?: BytesFilter<"DungeonRun"> | Uint8Array
     posX?: IntFilter<"DungeonRun"> | number
     posY?: IntFilter<"DungeonRun"> | number
     posL?: IntFilter<"DungeonRun"> | number
     revealed?: StringFilter<"DungeonRun"> | string
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
-  }, "id">
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
+  }, "id" | "playerId_dungeonId">
 
   export type DungeonRunOrderByWithAggregationInput = {
     id?: SortOrder
-    cipher?: SortOrder
-    iv?: SortOrder
-    tag?: SortOrder
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
     createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
     _count?: DungeonRunCountOrderByAggregateInput
     _avg?: DungeonRunAvgOrderByAggregateInput
     _max?: DungeonRunMaxOrderByAggregateInput
@@ -90129,14 +91473,68 @@ export namespace Prisma {
     OR?: DungeonRunScalarWhereWithAggregatesInput[]
     NOT?: DungeonRunScalarWhereWithAggregatesInput | DungeonRunScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"DungeonRun"> | string
-    cipher?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
-    iv?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
-    tag?: BytesWithAggregatesFilter<"DungeonRun"> | Uint8Array
     posX?: IntWithAggregatesFilter<"DungeonRun"> | number
     posY?: IntWithAggregatesFilter<"DungeonRun"> | number
     posL?: IntWithAggregatesFilter<"DungeonRun"> | number
     revealed?: StringWithAggregatesFilter<"DungeonRun"> | string
     createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
+    playerId?: UuidWithAggregatesFilter<"DungeonRun"> | string
+    dungeonId?: UuidWithAggregatesFilter<"DungeonRun"> | string
+  }
+
+  export type DungeonWhereInput = {
+    AND?: DungeonWhereInput | DungeonWhereInput[]
+    OR?: DungeonWhereInput[]
+    NOT?: DungeonWhereInput | DungeonWhereInput[]
+    id?: UuidFilter<"Dungeon"> | string
+    cipher?: BytesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
+    dungeonRuns?: DungeonRunListRelationFilter
+  }
+
+  export type DungeonOrderByWithRelationInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    dungeonRuns?: DungeonRunOrderByRelationAggregateInput
+  }
+
+  export type DungeonWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DungeonWhereInput | DungeonWhereInput[]
+    OR?: DungeonWhereInput[]
+    NOT?: DungeonWhereInput | DungeonWhereInput[]
+    cipher?: BytesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
+    dungeonRuns?: DungeonRunListRelationFilter
+  }, "id">
+
+  export type DungeonOrderByWithAggregationInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    _count?: DungeonCountOrderByAggregateInput
+    _max?: DungeonMaxOrderByAggregateInput
+    _min?: DungeonMinOrderByAggregateInput
+  }
+
+  export type DungeonScalarWhereWithAggregatesInput = {
+    AND?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
+    OR?: DungeonScalarWhereWithAggregatesInput[]
+    NOT?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Dungeon"> | string
+    cipher?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeWithAggregatesFilter<"Dungeon"> | $Enums.DungeonType
   }
 
   export type ConcentrationCreateInput = {
@@ -91292,6 +92690,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -91363,6 +92762,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -91434,6 +92834,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -91505,6 +92906,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -94606,69 +96008,61 @@ export namespace Prisma {
 
   export type DungeonRunCreateInput = {
     id?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
     posX: number
     posY: number
     posL: number
     revealed?: string
     createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
   }
 
   export type DungeonRunUncheckedCreateInput = {
     id?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
     posX: number
     posY: number
     posL: number
     revealed?: string
     createdAt?: Date | string
+    playerId: string
+    dungeonId: string
   }
 
   export type DungeonRunUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
     posX?: IntFieldUpdateOperationsInput | number
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
   }
 
   export type DungeonRunUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
     posX?: IntFieldUpdateOperationsInput | number
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
   }
 
   export type DungeonRunCreateManyInput = {
     id?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
     posX: number
     posY: number
     posL: number
     revealed?: string
     createdAt?: Date | string
+    playerId: string
+    dungeonId: string
   }
 
   export type DungeonRunUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
     posX?: IntFieldUpdateOperationsInput | number
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
@@ -94678,14 +96072,73 @@ export namespace Prisma {
 
   export type DungeonRunUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
     posX?: IntFieldUpdateOperationsInput | number
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DungeonCreateInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutDungeonInput
+  }
+
+  export type DungeonUncheckedCreateInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutDungeonInput
+  }
+
+  export type DungeonUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    dungeonRuns?: DungeonRunUpdateManyWithoutDungeonNestedInput
+  }
+
+  export type DungeonUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput
+  }
+
+  export type DungeonCreateManyInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+  }
+
+  export type DungeonUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+  }
+
+  export type DungeonUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -96125,6 +97578,12 @@ export namespace Prisma {
     none?: DinozBuildWhereInput
   }
 
+  export type DungeonRunListRelationFilter = {
+    every?: DungeonRunWhereInput
+    some?: DungeonRunWhereInput
+    none?: DungeonRunWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -96206,6 +97665,10 @@ export namespace Prisma {
   }
 
   export type DinozBuildOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DungeonRunOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -98646,23 +100109,25 @@ export namespace Prisma {
     _max?: NestedEnumServerActionFilter<$PrismaModel>
   }
 
-  export type BytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  export type DungeonScalarRelationFilter = {
+    is?: DungeonWhereInput
+    isNot?: DungeonWhereInput
+  }
+
+  export type DungeonRunPlayerIdDungeonIdCompoundUniqueInput = {
+    playerId: string
+    dungeonId: string
   }
 
   export type DungeonRunCountOrderByAggregateInput = {
     id?: SortOrder
-    cipher?: SortOrder
-    iv?: SortOrder
-    tag?: SortOrder
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
     createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
   }
 
   export type DungeonRunAvgOrderByAggregateInput = {
@@ -98673,32 +100138,68 @@ export namespace Prisma {
 
   export type DungeonRunMaxOrderByAggregateInput = {
     id?: SortOrder
-    cipher?: SortOrder
-    iv?: SortOrder
-    tag?: SortOrder
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
     createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
   }
 
   export type DungeonRunMinOrderByAggregateInput = {
     id?: SortOrder
-    cipher?: SortOrder
-    iv?: SortOrder
-    tag?: SortOrder
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
     createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
   }
 
   export type DungeonRunSumOrderByAggregateInput = {
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
+  }
+
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type EnumDungeonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeFilter<$PrismaModel> | $Enums.DungeonType
+  }
+
+  export type DungeonCountOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+  }
+
+  export type DungeonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+  }
+
+  export type DungeonMinOrderByAggregateInput = {
+    id?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
   }
 
   export type BytesWithAggregatesFilter<$PrismaModel = never> = {
@@ -98709,6 +100210,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type EnumDungeonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel> | $Enums.DungeonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDungeonTypeFilter<$PrismaModel>
+    _max?: NestedEnumDungeonTypeFilter<$PrismaModel>
   }
 
   export type DinozCreateNestedManyWithoutConcentrationInput = {
@@ -100413,6 +101924,13 @@ export namespace Prisma {
     connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
   }
 
+  export type DungeonRunCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -100658,6 +102176,13 @@ export namespace Prisma {
     connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
     createMany?: DinozBuildCreateManyPlayerInputEnvelope
     connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+  }
+
+  export type DungeonRunUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -101177,6 +102702,20 @@ export namespace Prisma {
     deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
   }
 
+  export type DungeonRunUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutPlayerInput | DungeonRunUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutPlayerInput | DungeonRunUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutPlayerInput | DungeonRunUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -101659,6 +103198,20 @@ export namespace Prisma {
     update?: DinozBuildUpdateWithWhereUniqueWithoutPlayerInput | DinozBuildUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: DinozBuildUpdateManyWithWhereWithoutPlayerInput | DinozBuildUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutPlayerInput | DungeonRunUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutPlayerInput | DungeonRunUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutPlayerInput | DungeonRunUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutIpsInput = {
@@ -104578,8 +106131,82 @@ export namespace Prisma {
     set?: $Enums.ServerAction
   }
 
+  export type PlayerCreateNestedOneWithoutDungeonRunsInput = {
+    create?: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDungeonRunsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DungeonCreateNestedOneWithoutDungeonRunsInput = {
+    create?: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DungeonCreateOrConnectWithoutDungeonRunsInput
+    connect?: DungeonWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput = {
+    create?: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDungeonRunsInput
+    upsert?: PlayerUpsertWithoutDungeonRunsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDungeonRunsInput, PlayerUpdateWithoutDungeonRunsInput>, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput = {
+    create?: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DungeonCreateOrConnectWithoutDungeonRunsInput
+    upsert?: DungeonUpsertWithoutDungeonRunsInput
+    connect?: DungeonWhereUniqueInput
+    update?: XOR<XOR<DungeonUpdateToOneWithWhereWithoutDungeonRunsInput, DungeonUpdateWithoutDungeonRunsInput>, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonRunCreateNestedManyWithoutDungeonInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
+  export type DungeonRunUncheckedCreateNestedManyWithoutDungeonInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
   export type BytesFieldUpdateOperationsInput = {
     set?: Uint8Array
+  }
+
+  export type EnumDungeonTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DungeonType
+  }
+
+  export type DungeonRunUpdateManyWithoutDungeonNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutDungeonInput | DungeonRunUpsertWithWhereUniqueWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutDungeonInput | DungeonRunUpdateWithWhereUniqueWithoutDungeonInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutDungeonInput | DungeonRunUpdateManyWithWhereWithoutDungeonInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutDungeonInput | DungeonRunUpsertWithWhereUniqueWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutDungeonInput | DungeonRunUpdateWithWhereUniqueWithoutDungeonInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutDungeonInput | DungeonRunUpdateManyWithWhereWithoutDungeonInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -105174,6 +106801,13 @@ export namespace Prisma {
     not?: NestedBytesFilter<$PrismaModel> | Uint8Array
   }
 
+  export type NestedEnumDungeonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeFilter<$PrismaModel> | $Enums.DungeonType
+  }
+
   export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
     in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
@@ -105182,6 +106816,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel> | $Enums.DungeonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDungeonTypeFilter<$PrismaModel>
+    _max?: NestedEnumDungeonTypeFilter<$PrismaModel>
   }
 
   export type DinozCreateWithoutConcentrationInput = {
@@ -105602,6 +107246,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -105672,6 +107317,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -106409,6 +108055,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -106479,6 +108126,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -108963,6 +110611,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozBuildsInput = {
@@ -109033,6 +110682,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozBuildsInput = {
@@ -109226,6 +110876,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozBuildsInput = {
@@ -109296,6 +110947,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutBuildInput = {
@@ -109796,6 +111448,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPollVotesInput = {
@@ -109866,6 +111519,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPollVotesInput = {
@@ -110006,6 +111660,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPollVotesInput = {
@@ -110076,6 +111731,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -111579,6 +113235,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DungeonRunCreateWithoutPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    dungeonId: string
+  }
+
+  export type DungeonRunCreateOrConnectWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DungeonRunCreateManyPlayerInputEnvelope = {
+    data: DungeonRunCreateManyPlayerInput | DungeonRunCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanUpsertWithoutPlayersInput = {
     update: XOR<ClanUpdateWithoutPlayersInput, ClanUncheckedUpdateWithoutPlayersInput>
     create: XOR<ClanCreateWithoutPlayersInput, ClanUncheckedCreateWithoutPlayersInput>
@@ -112588,6 +114274,36 @@ export namespace Prisma {
     name?: StringFilter<"DinozBuild"> | string
   }
 
+  export type DungeonRunUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    update: XOR<DungeonRunUpdateWithoutPlayerInput, DungeonRunUncheckedUpdateWithoutPlayerInput>
+    create: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DungeonRunUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    data: XOR<DungeonRunUpdateWithoutPlayerInput, DungeonRunUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type DungeonRunUpdateManyWithWhereWithoutPlayerInput = {
+    where: DungeonRunScalarWhereInput
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type DungeonRunScalarWhereInput = {
+    AND?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    OR?: DungeonRunScalarWhereInput[]
+    NOT?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    id?: StringFilter<"DungeonRun"> | string
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+  }
+
   export type PlayerCreateWithoutIpsInput = {
     customText?: string | null
     name: string
@@ -112656,6 +114372,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIpsInput = {
@@ -112726,6 +114443,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIpsInput = {
@@ -112812,6 +114530,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIpsInput = {
@@ -112882,6 +114601,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDojoInput = {
@@ -112952,6 +114672,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -113022,6 +114743,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -113209,6 +114931,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -113279,6 +115002,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -114054,6 +115778,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -114124,6 +115849,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -114210,6 +115936,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -114280,6 +116007,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -114350,6 +116078,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -114420,6 +116149,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -114506,6 +116236,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -114576,6 +116307,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -114646,6 +116378,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -114716,6 +116449,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -114802,6 +116536,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -114872,6 +116607,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -114942,6 +116678,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -115012,6 +116749,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -115098,6 +116836,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -115168,6 +116907,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -115238,6 +116978,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -115308,6 +117049,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -115394,6 +117136,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -115464,6 +117207,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -115534,6 +117278,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -115604,6 +117349,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -115690,6 +117436,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -115760,6 +117507,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -115830,6 +117578,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -115900,6 +117649,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -115986,6 +117736,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -116056,6 +117807,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -116126,6 +117878,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -116196,6 +117949,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -116282,6 +118036,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -116352,6 +118107,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -116512,6 +118268,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -116582,6 +118339,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -116702,6 +118460,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -116772,6 +118531,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -116944,6 +118704,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -117014,6 +118775,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -117254,6 +119016,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -117324,6 +119087,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -117539,6 +119303,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -117609,6 +119374,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -117803,6 +119569,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -117873,6 +119640,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -118153,6 +119921,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -118223,6 +119992,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -118309,6 +120079,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -118379,6 +120150,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -118551,6 +120323,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -118621,6 +120394,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -118815,6 +120589,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -118885,6 +120660,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCastleCreateWithoutClanInput = {
@@ -118979,6 +120755,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -119049,6 +120826,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -119363,6 +121141,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanInput = {
@@ -119433,6 +121212,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanInput = {
@@ -119619,6 +121399,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -119689,6 +121470,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -120451,6 +122233,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -120521,6 +122304,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -120661,6 +122445,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -120731,6 +122516,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanEventCreateWithoutClanWarsInput = {
@@ -121512,6 +123298,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -121582,6 +123369,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -121716,6 +123504,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -121786,6 +123575,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -121910,6 +123700,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -121980,6 +123771,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -122114,6 +123906,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -122184,6 +123977,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -122356,6 +124150,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -122426,6 +124221,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -122566,6 +124362,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -122636,6 +124433,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -122910,6 +124708,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -122980,6 +124779,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -123055,6 +124855,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -123125,6 +124926,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -123200,6 +125002,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -123270,6 +125073,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -123512,6 +125316,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -123582,6 +125387,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -123663,6 +125469,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -123733,6 +125540,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -123814,6 +125622,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -123884,6 +125693,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutTargetedCasesInput = {
@@ -124008,6 +125818,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -124078,6 +125889,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -124175,6 +125987,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -124245,6 +126058,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -124381,6 +126195,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -124451,6 +126266,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -124560,6 +126376,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -124630,6 +126447,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -124761,6 +126579,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -124831,6 +126650,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -124952,6 +126772,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -125022,6 +126843,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -125150,6 +126972,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -125220,6 +127043,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -125376,6 +127200,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -125446,6 +127271,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -125516,6 +127342,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -125586,6 +127413,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -125672,6 +127500,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -125742,6 +127571,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -125812,6 +127642,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -125882,6 +127713,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -125957,6 +127789,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeftFightArchivesInput = {
@@ -126027,6 +127860,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeftFightArchivesInput = {
@@ -126102,6 +127936,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRightFightArchivesInput = {
@@ -126172,6 +128007,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRightFightArchivesInput = {
@@ -126518,6 +128354,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -126588,6 +128425,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutLeftFightArchivesInput = {
@@ -126669,6 +128507,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeftFightArchivesInput = {
@@ -126739,6 +128578,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutRightFightArchivesInput = {
@@ -126820,6 +128660,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRightFightArchivesInput = {
@@ -126890,6 +128731,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -127297,6 +129139,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -127367,6 +129210,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -127506,6 +129350,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -127576,6 +129421,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -128303,6 +130149,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGameDinozInput = {
@@ -128373,6 +130220,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGameDinozInput = {
@@ -128698,6 +130546,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGameDinozInput = {
@@ -128768,6 +130617,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
@@ -128983,6 +130833,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutEventsInput = {
@@ -129053,6 +130904,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutEventsInput = {
@@ -129139,6 +130991,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutEventsInput = {
@@ -129209,6 +131062,397 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerCreateWithoutDungeonRunsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    clan?: ClanCreateNestedOneWithoutPlayersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutDungeonRunsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutDungeonRunsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonCreateWithoutDungeonRunsInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+  }
+
+  export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
+    id?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+  }
+
+  export type DungeonCreateOrConnectWithoutDungeonRunsInput = {
+    where: DungeonWhereUniqueInput
+    create: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+  }
+
+  export type PlayerUpsertWithoutDungeonRunsInput = {
+    update: XOR<PlayerUpdateWithoutDungeonRunsInput, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+    create: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutDungeonRunsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutDungeonRunsInput, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type PlayerUpdateWithoutDungeonRunsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneWithoutPlayersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutDungeonRunsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DungeonUpsertWithoutDungeonRunsInput = {
+    update: XOR<DungeonUpdateWithoutDungeonRunsInput, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+    create: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    where?: DungeonWhereInput
+  }
+
+  export type DungeonUpdateToOneWithWhereWithoutDungeonRunsInput = {
+    where?: DungeonWhereInput
+    data: XOR<DungeonUpdateWithoutDungeonRunsInput, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonUpdateWithoutDungeonRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+  }
+
+  export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+  }
+
+  export type DungeonRunCreateWithoutDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    playerId: string
+  }
+
+  export type DungeonRunCreateOrConnectWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput>
+  }
+
+  export type DungeonRunCreateManyDungeonInputEnvelope = {
+    data: DungeonRunCreateManyDungeonInput | DungeonRunCreateManyDungeonInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DungeonRunUpsertWithWhereUniqueWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    update: XOR<DungeonRunUpdateWithoutDungeonInput, DungeonRunUncheckedUpdateWithoutDungeonInput>
+    create: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput>
+  }
+
+  export type DungeonRunUpdateWithWhereUniqueWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    data: XOR<DungeonRunUpdateWithoutDungeonInput, DungeonRunUncheckedUpdateWithoutDungeonInput>
+  }
+
+  export type DungeonRunUpdateManyWithWhereWithoutDungeonInput = {
+    where: DungeonRunScalarWhereInput
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutDungeonInput>
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -130578,6 +132822,16 @@ export namespace Prisma {
     name: string
   }
 
+  export type DungeonRunCreateManyPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    dungeonId: string
+  }
+
   export type ClanHistoryUpdateWithoutAuthorInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
@@ -131573,6 +133827,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type DungeonRunUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DojoTeamCreateManyDojoInput = {
     id?: string
     dinozId: number
@@ -132148,6 +134432,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanInput = {
@@ -132218,6 +134503,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateManyWithoutClanInput = {
@@ -133574,6 +135860,46 @@ export namespace Prisma {
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonRunCreateManyDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    createdAt?: Date | string
+    playerId: string
+  }
+
+  export type DungeonRunUpdateWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
   }
 
 

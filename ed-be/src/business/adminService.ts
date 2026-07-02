@@ -49,6 +49,11 @@ import {
 import dayjs from 'dayjs';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import TournamentManager from '../utils/tournamentManager.js';
+import { OriginalGenerator } from './dungeon/original/index.js';
+import { DungeonCodec } from './dungeon/DungeonCodec.js';
+import { DungeonType } from '@drpg/prisma/enums';
+import { createDungeon } from '../dao/dungeonRunDao.js';
+import { seal } from '../utils/dungeonCrypto.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1137,4 +1142,27 @@ export async function getOngoingEvent(req: Request) {
 		}
 	});
 	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
+}
+
+export async function createSeededDungeon(req: Request) {
+	const seed = req.body.seed;
+	const width = req.body.width;
+	const height = req.body.height;
+	const levels = req.body.level;
+	const noise = req.body.noise;
+	const filters = req.body.filters;
+	const surface = req.body.surface;
+	const type = req.body.type ?? DungeonType.cavern;
+
+	const d = OriginalGenerator.generate({
+		width: width,
+		height: height,
+		levels: levels,
+		noise: noise,
+		filters: filters,
+		surface: surface,
+		seed: seed
+	});
+	const encoded = new DungeonCodec().encode(d);
+	await createDungeon(seal(encoded), type);
 }
