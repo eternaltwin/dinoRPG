@@ -65,7 +65,8 @@
 		"alreadyInDefense": "Dein Dinoz ist bereits Teil der Burgverteidigung.",
 		"sameClan": "Du kannst dem eigenen Klan keinen Krieg erklären.",
 		"castleAlreadyBuilt": "Die Burg deines Klans ist bereits errichtet.",
-		"notInDefense": "Dieser Dinoz ist nicht Teil der Burgverteidigung."
+		"notInDefense": "Dieser Dinoz ist nicht Teil der Burgverteidigung.",
+		"outdatedDefense": "Défense obsolète"
 	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
