@@ -2321,7 +2321,7 @@
 			"AuraHermetique": "El Dino obtiene el estado escudo (aumenta la armadura un 20%) durante un periodo largo",
 			"CrepusculeFlambloyant": "Ataca a todos los enemigos con un poder Fuego 6 + Rayo 6",
 			"AubeFeuillue": "Regenera a todos los Dinos del Grupo hasta Rayo 2 + Madera 2 en puntos de vida",
-			"Benediction": "Da el estatus Bendición a todos los Dinos del Grupo",
+			"Benediction": "Da el estatus **Bendecido** a todos los Dinos del grupo por una duración media.",
 			"ArchangeCorrosif": "Aumenta el elemento Fuego en 2 y el elemento Rayo en 1",
 			"ArchangeGenesif": "Aumenta el elemento Madera en 2 y el elemento Rayo en 1",
 			"Pretre": "Aumenta la velocidad de recuperación de puntos de vida de todos los Dinos durante el descanso",
