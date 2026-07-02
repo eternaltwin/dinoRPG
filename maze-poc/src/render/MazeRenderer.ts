@@ -273,7 +273,7 @@ export class MazeRenderer {
 	): void {
 		const sp = new Sprite(gfx(name));
 		if (name === 'front_egypt_06') {
-			py += 7
+			py += 7;
 		}
 		sp.anchor.set(ax, ay);
 		const s = this.cell / 40;

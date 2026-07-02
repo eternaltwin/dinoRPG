@@ -736,14 +736,21 @@ exports.Prisma.ServerStateScalarFieldEnum = {
 
 exports.Prisma.DungeonRunScalarFieldEnum = {
   id: 'id',
-  cipher: 'cipher',
-  iv: 'iv',
-  tag: 'tag',
   posX: 'posX',
   posY: 'posY',
   posL: 'posL',
   revealed: 'revealed',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  playerId: 'playerId',
+  dungeonId: 'dungeonId'
+};
+
+exports.Prisma.DungeonScalarFieldEnum = {
+  id: 'id',
+  cipher: 'cipher',
+  iv: 'iv',
+  tag: 'tag',
+  type: 'type'
 };
 
 exports.Prisma.SortOrder = {
@@ -942,6 +949,17 @@ exports.ServerAction = exports.$Enums.ServerAction = {
   prospector: 'prospector'
 };
 
+exports.DungeonType = exports.$Enums.DungeonType = {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -1006,7 +1024,8 @@ exports.Prisma.ModelName = {
   GameDinoz: 'GameDinoz',
   Events: 'Events',
   ServerState: 'ServerState',
-  DungeonRun: 'DungeonRun'
+  DungeonRun: 'DungeonRun',
+  Dungeon: 'Dungeon'
 };
 
 /**

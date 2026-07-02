@@ -332,6 +332,7 @@ model Player {
   pollVotes              PollVote[]
   Events                 Events[]
   dinozBuilds            DinozBuild[]
+  dungeonRuns            DungeonRun[]
 
   @@map("player")
 }
@@ -1154,16 +1155,44 @@ enum ClanEventType {
   mana_war
 }
 
+enum DungeonType {
+  cavern
+  crypt
+  egypt
+  forest
+  hell
+  ruin
+  sewer
+  stone
+}
+
 model DungeonRun {
   id        String   @id @default(cuid())
-  cipher    Bytes
-  iv        Bytes
-  tag       Bytes
   posX      Int      @map("pos_x")
   posY      Int      @map("pos_y")
   posL      Int      @map("pos_l")
   revealed  String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  playerId  String   @db.Uuid
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  dungeonId String   @db.Uuid
+  dungeon   Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
 
+  @@unique([playerId, dungeonId])
+  @@index([id])
+  @@index([playerId, dungeonId])
   @@map("dungeon_run")
+}
+
+model Dungeon {
+  id     String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  cipher Bytes
+  iv     Bytes
+  tag    Bytes
+  type   DungeonType
+
+  dungeonRuns DungeonRun[]
+
+  @@index([id])
+  @@map("dungeon")
 }

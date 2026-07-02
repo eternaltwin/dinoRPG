@@ -374,6 +374,30 @@ export namespace ServerAction {
 
 export type ServerAction = typeof ServerAction[keyof typeof ServerAction];
 
+export const DungeonType: {
+  readonly cavern: 'cavern';
+  readonly crypt: 'crypt';
+  readonly egypt: 'egypt';
+  readonly forest: 'forest';
+  readonly hell: 'hell';
+  readonly ruin: 'ruin';
+  readonly sewer: 'sewer';
+  readonly stone: 'stone'
+};
+
+export namespace DungeonType {
+  export type cavern = 'cavern';
+  export type crypt = 'crypt';
+  export type egypt = 'egypt';
+  export type forest = 'forest';
+  export type hell = 'hell';
+  export type ruin = 'ruin';
+  export type sewer = 'sewer';
+  export type stone = 'stone'
+}
+
+export type DungeonType = typeof DungeonType[keyof typeof DungeonType];
+
 export const $Enums: {
   readonly UnavailableReason: typeof UnavailableReason;
   readonly NewsType: typeof NewsType;
@@ -388,5 +412,6 @@ export const $Enums: {
   readonly NotificationSeverity: typeof NotificationSeverity;
   readonly GameDinozUsage: typeof GameDinozUsage;
   readonly EventType: typeof EventType;
-  readonly ServerAction: typeof ServerAction
+  readonly ServerAction: typeof ServerAction;
+  readonly DungeonType: typeof DungeonType
 };
