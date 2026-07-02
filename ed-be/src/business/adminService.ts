@@ -1145,6 +1145,17 @@ export async function getOngoingEvent(req: Request) {
 }
 
 export async function createSeededDungeon(req: Request) {
+	const type = req.body.type ?? DungeonType.cavern;
+
+	// Custom layout: an already-encoded dungeon string (e.g. original MT format), no generation.
+	const layout = req.body.layout;
+	if (layout) {
+		const codec = new DungeonCodec();
+		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
+		await createDungeon(seal(codec.encode()), type);
+		return;
+	}
+
 	const seed = req.body.seed;
 	const width = req.body.width;
 	const height = req.body.height;
@@ -1152,7 +1163,6 @@ export async function createSeededDungeon(req: Request) {
 	const noise = req.body.noise;
 	const filters = req.body.filters;
 	const surface = req.body.surface;
-	const type = req.body.type ?? DungeonType.cavern;
 
 	const d = OriginalGenerator.generate({
 		width: width,
