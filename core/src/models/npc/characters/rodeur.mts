@@ -122,6 +122,9 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	next_2: {
 		stepName: 'next_2',
 		nextStep: [],
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK },
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
