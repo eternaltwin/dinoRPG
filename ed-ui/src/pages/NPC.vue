@@ -78,7 +78,7 @@ export default defineComponent({
 				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
 					this.$toast.open({
 						message: this.$t('notification.reward', {
-							rewards: `${quantity} ${this.formatContent(`:item_${item}:`)}`
+							rewards: `${quantity} :item_${item}:`
 						}).toString(),
 						type: 'info'
 					});
