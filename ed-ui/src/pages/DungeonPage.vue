@@ -28,7 +28,7 @@ import { defineComponent } from 'vue';
 import { DungeonService } from '../services/index.js';
 import { ARROWS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
-import { allAssetNames, assetUrl, loadDungeonAssets } from '../utils/dungeon/dungeonAssets.js';
+import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { useDinozStore } from '../store';
@@ -144,6 +144,8 @@ export default defineComponent({
 			this.hideStair();
 
 			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
+			// Lazy-load only this run's tiles now that the server told us the skin.
+			await loadDungeonAssets(skins.flatMap(skinAssetNames));
 			// cell 45 → the dino renders at native resolution; 500×350 viewport scrolls.
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
@@ -165,7 +167,6 @@ export default defineComponent({
 	},
 	async mounted() {
 		dungeonId = this.$route.params.id as string;
-		await loadDungeonAssets(allAssetNames());
 		await this.build();
 
 		window.addEventListener('keydown', onKeyDown);
