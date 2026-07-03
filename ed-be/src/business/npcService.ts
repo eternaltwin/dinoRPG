@@ -23,6 +23,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
+	const originalNextStepWanted: string = nextStepWanted;
 
 	const authed = await auth(req);
 
@@ -89,7 +90,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		if (!nextStepWantedData) {
 			throw new ExpectedError(`Invalid redirect.`);
 		}
-		// if there is an error relating to redirect, it's here.
+		// If there is an error relating to redirect, it's here.
 		nextStepWanted = nextStepWantedData.stepName;
 	}
 
@@ -141,10 +142,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			throw new ExpectedError(`No valid initial step found for NPC ${npcName}.`);
 		}
 
-		// // Override with initial step data
-		// nextStepWantedData = initialStepData;
-		// nextStepWanted = initialStepData.stepName;
-
 		console.log(`Redirecting ${dinozId} to initial ${npc.id}'s step: ${initialStepData.stepName}`);
 
 		// Create NPC history
@@ -181,7 +178,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		`Alias included: ${nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias)}`
 	);
 	if (
+		// Check the step name but also the original name in case the next step is a redirect
 		!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) &&
+		!dinozCurrentStepData.nextStep.includes(originalNextStepWanted) &&
 		!(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias))
 	) {
 		throw new ExpectedError(`NPC ${npcName} dialog ${nextStepWanted} is not available for your Dinoz.`);

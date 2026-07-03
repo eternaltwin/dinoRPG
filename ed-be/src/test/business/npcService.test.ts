@@ -303,7 +303,18 @@ describe('getNpcSpeech - ongoing conversation', () => {
 	});
 
 	it('redirects when the requested step has a redirection set', async () => {
+		// Current step is 'begin' with possible next step 'choiceRedirect' that redirects to 'end'
 		(npc.data.begin.nextStep as string[]) = ['choiceRedirect'];
+		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'begin' }]) as never);
+
+		const result = await getNpcSpeech(req({ step: 'choiceRedirect' }));
+
+		expect(result.speech).toBe('end');
+		expect(mockUpdateStep).toHaveBeenCalledWith(DINOZ_ID, NPC_ID, 'end');
+	});
+
+	it('redirects when the requested step has a redirection set', async () => {
+		// Current step is 'choice1' with possible next step 'end'. 'choiceRedirect' is sent but it's ok because it redirects to 'end'.
 		mockGetNPC.mockResolvedValue(buildPlayer({}, [{ npcId: NPC_ID, step: 'choice1' }]) as never);
 
 		const result = await getNpcSpeech(req({ step: 'choiceRedirect' }));
@@ -349,7 +360,7 @@ describe('getNpcSpeech - ongoing conversation', () => {
 		expect(result.rewards).toEqual({});
 	});
 
-	it('no existing current step redirects to initial step if one valid exists', async () => {
+	it('if no existing current step then redirect to initial step if one valid exists', async () => {
 		// No existing current step. Ask for 'choiceReward'. Expect 'begin'.
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
 		const result = await getNpcSpeech(req({ step: 'choiceReward' }));
