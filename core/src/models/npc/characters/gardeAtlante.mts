@@ -30,6 +30,9 @@ export const GARDE_ATLANTE: Readonly<Record<string, NpcData>> = {
 	old: {
 		stepName: 'old',
 		nextStep: ['thanks'],
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
