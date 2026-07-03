@@ -2,8 +2,8 @@
  * Fog-of-war reveal policy — the server-only knowledge boundary.
  *
  * Given the decrypted {@link DungeonStruct} and the cell the dinoz just entered,
- * this computes the cells the player is now allowed to see: the entered cell plus
- * its four orthogonal neighbours (with their true walkability), and the icon of
+ * this computes the cells the player is now allowed to see: the 3×3 block around
+ * the entered cell (with their true walkability), and the icon of
  * any entity sitting on a revealed cell. The full layout never leaves the server;
  * only these cells are ever sent to the client.
  *
@@ -55,19 +55,14 @@ export function cellsForKeys(d: DungeonStruct, keys: string[]): RevealedCell[] {
 	});
 }
 
-/** The candidate cells revealed by standing on (l,x,y): the cell + 4 neighbours. */
+/** The candidate cells revealed by standing on (l,x,y): the 3×3 block, as View.hx updateFog(). */
 export function revealAround(d: DungeonStruct, l: number, x: number, y: number): RevealedCell[] {
 	const out: RevealedCell[] = [];
-	const at = [
-		[x, y],
-		[x + 1, y],
-		[x - 1, y],
-		[x, y + 1],
-		[x, y - 1]
-	];
-	for (const [cx, cy] of at) {
-		if (cx < 0 || cy < 0 || cx >= d.width || cy >= d.height) continue;
-		out.push({ l, x: cx, y: cy, floor: d.levels[l].table[cx]?.[cy] ?? false, icon: iconAt(d, l, cx, cy) });
+	for (let cx = x - 1; cx <= x + 1; cx++) {
+		for (let cy = y - 1; cy <= y + 1; cy++) {
+			if (cx < 0 || cy < 0 || cx >= d.width || cy >= d.height) continue;
+			out.push({ l, x: cx, y: cy, floor: d.levels[l].table[cx]?.[cy] ?? false, icon: iconAt(d, l, cx, cy) });
+		}
 	}
 	return out;
 }

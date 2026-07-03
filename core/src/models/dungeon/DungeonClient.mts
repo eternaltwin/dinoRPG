@@ -49,6 +49,13 @@ export interface Skin {
 	groundCount: number;
 	/** Background / fog colour (from View.hx). */
 	fog: number;
+	/**
+	 * Overground decoration layers (View.hx `over`): up to two overlay themes
+	 * (overground_<name>) painted over the ground where the perlin zones say so.
+	 */
+	over: [string | null, string | null];
+	/** Zone-noise density (View.hx PerlinType: PNormal | PDense | PFew). */
+	perlin: 'normal' | 'dense' | 'few';
 }
 
 export interface MazeDims {
@@ -76,15 +83,18 @@ export interface DinozActorOptions {
 
 // ── constants (from the archive's dungeon/dungeon/View.hx SKINS table) ─────
 
+// over/perlin come from the matching View.hx row (crypt, cavern, pyramid, forest,
+// hell, ruin, sewer, mine), with its over-names mapped onto our extracted sheets:
+// ruin→broken, square/ruinPurple→slab, dirt→stone, grassDark→grass.
 export const SKINS: Skin[] = [
-	{ name: 'cavern', ground: 'cavern', frontCount: 4, groundCount: 5, fog: 0x392429 },
-	{ name: 'crypt', ground: 'crypt', frontCount: 3, groundCount: 7, fog: 0x27191c },
-	{ name: 'egypt', ground: 'sand', frontCount: 6, groundCount: 6, fog: 0x433023 },
-	{ name: 'forest', ground: 'grass', frontCount: 1, groundCount: 6, fog: 0x30371e },
-	{ name: 'hell', ground: 'hell', frontCount: 4, groundCount: 5, fog: 0x330d0d },
-	{ name: 'ruin', ground: 'cavern', frontCount: 6, groundCount: 5, fog: 0x252730 },
-	{ name: 'sewer', ground: 'sewer', frontCount: 4, groundCount: 7, fog: 0x37321e },
-	{ name: 'stone', ground: 'crypt', frontCount: 2, groundCount: 7, fog: 0x352c20 }
+	{ name: 'cavern', ground: 'cavern', frontCount: 4, groundCount: 5, fog: 0x392429, over: ['broken', 'grass'], perlin: 'normal' },
+	{ name: 'crypt', ground: 'crypt', frontCount: 3, groundCount: 7, fog: 0x27191c, over: [null, 'slab'], perlin: 'normal' },
+	{ name: 'egypt', ground: 'sand', frontCount: 6, groundCount: 6, fog: 0x433023, over: ['stone', null], perlin: 'normal' },
+	{ name: 'forest', ground: 'grass', frontCount: 1, groundCount: 6, fog: 0x30371e, over: ['stone', 'grass'], perlin: 'dense' },
+	{ name: 'hell', ground: 'hell', frontCount: 4, groundCount: 5, fog: 0x330d0d, over: ['broken', 'creep'], perlin: 'normal' },
+	{ name: 'ruin', ground: 'cavern', frontCount: 6, groundCount: 5, fog: 0x252730, over: ['slab', 'grass'], perlin: 'normal' },
+	{ name: 'sewer', ground: 'sewer', frontCount: 4, groundCount: 7, fog: 0x37321e, over: ['creep', 'stone'], perlin: 'few' },
+	{ name: 'stone', ground: 'crypt', frontCount: 2, groundCount: 7, fog: 0x352c20, over: ['stone', null], perlin: 'dense' }
 ];
 
 /** Sprites shared by every skin (items, doors, stairs). */
