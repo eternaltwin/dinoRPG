@@ -4,6 +4,7 @@ import type { Response } from 'express';
 import { DISCORD } from '../../context.js';
 
 const sendError = (res: Response, error: unknown) => {
+	console.error(error);
 	if (!(error instanceof Error)) {
 		throw error;
 	}
