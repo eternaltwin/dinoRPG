@@ -32,6 +32,7 @@ import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/du
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { useDinozStore } from '../store';
+import {errorHandler} from "../utils";
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // Kept at module scope on purpose: the renderer, actor and Pixi objects must
@@ -43,6 +44,8 @@ let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
 // Entities the server has revealed so far, keyed "l,x,y" — drives the stair button.
 const icons = new Map<string, string>();
+// Cells the server already revealed as walls — don't ask it again about those.
+const walls = new Set<string>();
 // Logical position = last server-confirmed cell. Moves are driven off this.
 let cursor: Cell = { l: 0, x: 0, y: 0 };
 // One in-flight move at a time; the server is the authority, not the keyboard.
@@ -60,7 +63,10 @@ const held: string[] = [];
 const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
 function record(reveal: RevealedCell[]): void {
-	for (const c of reveal) if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+	for (const c of reveal) {
+		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+		if (!c.floor) walls.add(`${c.l},${c.x},${c.y}`);
+	}
 	renderer?.applyReveal(reveal);
 }
 
@@ -91,6 +97,8 @@ export default defineComponent({
 		/** Ask the server for one step; on approval, walk the dinoz and fold in the reveal. */
 		tryMove(dx: number, dy: number, dl = 0): void {
 			if (moving || !actor) return;
+			// Known wall (already revealed): the server would just say no — skip the round-trip.
+			if (dl === 0 && walls.has(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`)) return;
 			moving = true;
 			DungeonService.moveDinoz(dungeonId, dx, dy, dl)
 				.then(r => {
@@ -102,7 +110,7 @@ export default defineComponent({
 				})
 				.catch(err => {
 					moving = false;
-					this.status = `✗ ${err instanceof Error ? err.message : String(err)}`;
+					errorHandler.handle(err, this.$toast);
 				});
 		},
 		updateStairButton(): void {
@@ -135,12 +143,13 @@ export default defineComponent({
 			try {
 				run = await DungeonService.enterDungeon(dungeonId, currentDinoz.id);
 			} catch (err) {
-				this.status = `✗ ${err instanceof Error ? err.message : String(err)}`;
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 			this.status = `run ${run.runId.slice(0, 8)}… — explore!`;
 
 			icons.clear();
+			walls.clear();
 			this.hideStair();
 
 			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
@@ -191,6 +200,7 @@ export default defineComponent({
 		actor = null;
 		renderer = null;
 		icons.clear();
+		walls.clear();
 		held.length = 0;
 		moving = false;
 		stairShownFor = null;

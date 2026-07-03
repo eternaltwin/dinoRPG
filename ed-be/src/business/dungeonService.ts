@@ -115,11 +115,11 @@ export async function move(req: Request): Promise<MoveResult> {
 	const dl = +req.body.dl;
 	const dy = +req.body.dy;
 	const dungeonId = req.params.id;
-	const dungeon = await getDungeonById(dungeonId);
+	const dungeon = await getDungeonByName(dungeonId);
 	if (!dungeon) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
-	const run = await findRun(dungeonId, authed.id);
+	const run = await findRun(dungeon.id, authed.id);
 	if (!run) throw new ExpectedError(`Unknown dungeon run.`);
 
 	const codec = new DungeonCodec();
