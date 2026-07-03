@@ -1,4 +1,4 @@
-import { Application, Container, Graphics, Sprite, Text } from 'pixi.js';
+import { Application, BlurFilter, Container, Graphics, Sprite, Text } from 'pixi.js';
 import { SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { gfx, pad2 } from './dungeonAssets.js';
@@ -25,6 +25,14 @@ export class MazeRenderer {
 	// so the dinoz is occluded by near walls and walks over far ones.
 	private readonly wallBackLayer: Container;
 	private readonly wallFrontLayer: Container;
+	// Blurred fog plane over unknown cells, topmost — View.hx blurs its fog
+	// bitmap (BlurFilter 32px on 40px cells) so fog bleeds ~one cell over the
+	// revealed frontier instead of cutting hard at the cell edge.
+	private readonly fogLayer: Container;
+	// View.hx fx_reveal: a blurred fog-coloured square fading off each freshly
+	// revealed cell (addFadeFx — alpha = cos(cpt), cpt += 0.07/frame).
+	private readonly fxLayer: Container;
+	private readonly fx: { g: Graphics; cpt: number }[] = [];
 	private readonly viewW: number;
 	private readonly viewH: number;
 	private readonly dims: MazeDims;
@@ -33,6 +41,11 @@ export class MazeRenderer {
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
+	// Overground zone noise (View.hx initZones): purely decorative, so — like the
+	// original's Std.random(9999) seed — it's random per entry, not per run.
+	private readonly noiseSeed = (Math.random() * 0x7fffffff) | 0;
+	/** Cached zone id (0..2) per cell, one grid per level. */
+	private readonly zones = new Map<number, Uint8Array>();
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -53,7 +66,17 @@ export class MazeRenderer {
 		this.wallBackLayer = new Container();
 		this.actorLayer = new Container();
 		this.wallFrontLayer = new Container();
-		this.app.stage.addChild(this.mapLayer, this.wallBackLayer, this.actorLayer, this.wallFrontLayer);
+		this.fogLayer = new Container();
+		this.fxLayer = new Container();
+		this.app.stage.addChild(
+			this.mapLayer,
+			this.wallBackLayer,
+			this.actorLayer,
+			this.wallFrontLayer,
+			this.fogLayer,
+			this.fxLayer
+		);
+		this.app.ticker.add(this.updateFx, this);
 
 		this.showLevel(0);
 	}
@@ -69,8 +92,14 @@ export class MazeRenderer {
 	applyReveal(cells: RevealedCell[]): void {
 		let dirty = false;
 		for (const c of cells) {
-			this.known[c.l]?.set(`${c.x},${c.y}`, c);
-			if (c.l === this.level) dirty = true;
+			const level = this.known[c.l];
+			if (!level) continue;
+			const isNew = !level.has(`${c.x},${c.y}`);
+			level.set(`${c.x},${c.y}`, c);
+			if (c.l === this.level) {
+				dirty = true;
+				if (isNew) this.revealFx(c.x, c.y);
+			}
 		}
 		if (dirty) this.showLevel(this.level);
 	}
@@ -115,14 +144,18 @@ export class MazeRenderer {
 	}
 
 	showLevel(l: number): void {
-		this.level = Math.max(0, Math.min(l, this.dims.levels - 1));
+		const lv = Math.max(0, Math.min(l, this.dims.levels - 1));
+		if (lv !== this.level) this.clearFx(); // fades belong to the level they started on
+		this.level = lv;
 		const skin = this.skinFor(this.level);
 		this.app.renderer.background.color = skin.fog;
 		this.mapLayer.removeChildren();
 		this.wallBackLayer.removeChildren();
 		this.wallFrontLayer.removeChildren();
+		this.fogLayer.removeChildren();
 		this.drawLevel(skin);
 		this.drawEntities();
+		this.drawFog(skin);
 		this.drawLabel(this.level, skin);
 	}
 
@@ -142,11 +175,19 @@ export class MazeRenderer {
 		// strips and the south corners all rest on — nothing is ever stretched.
 		const OV = this.cell * (8 / 40);
 
-		// Ground first, then wall edges on top.
+		// Ground first, then overground decoration, then wall edges on top.
 		for (const c of known.values()) {
 			if (!c.floor) continue;
 			const g = 1 + (this.hash(c.x, c.y) % skin.groundCount);
 			this.tile(`ground_${skin.ground}_${pad2(g)}`, c.x, c.y);
+			for (const mid of [1, 2]) {
+				const over = skin.over[mid - 1];
+				if (!over) continue;
+				const val = this.overVal(mid, c.x, c.y);
+				// ponytail: skipped View.hx's GlowFilter(0x0,0.7,2,2) outline on the
+				// overground plane — needs pixi-filters; add if the overlays look flat.
+				if (val > 0) this.tile(`overground_${over}_${pad2(val)}`, c.x, c.y);
+			}
 		}
 		// Row by row (top to bottom) so lower cells' pieces draw over higher ones.
 		// Mirrors View.hx displayLevel(): every piece is placed at native scale,
@@ -174,6 +215,118 @@ export class MazeRenderer {
 				if (wall(x, y + 1) && wall(x + 1, y)) this.edge(`corner_${skin.name}_01`, R, F, 1, 1, true, false, front);
 			}
 		}
+	}
+
+	// ── overground decoration (View.hx getOverMap / initZones) ────────────────
+	//
+	// Two overlay themes per skin, painted over the ground by zone noise: a cell
+	// whose zone id reaches the layer's threshold gets the full tile (15); a cell
+	// bordering such a zone gets the matching edge piece, picked by a corner
+	// bitmask (8=NW 4=NE 2=SW 1=SE) built from its 8 neighbours.
+
+	/** Frame 1..15 of overlay `mid` for cell (x,y), or 0 for nothing. */
+	private overVal(mid: number, x: number, y: number): number {
+		const z = this.zoneIds(this.level);
+		const w = this.dims.width;
+		const h = this.dims.height;
+		const id = (cx: number, cy: number): number =>
+			z[Math.max(0, Math.min(cx, w - 1)) * h + Math.max(0, Math.min(cy, h - 1))];
+		if (id(x, y) >= mid) return 15;
+		let val = 0;
+		if (id(x - 1, y - 1) >= mid) val |= 8;
+		if (id(x, y - 1) >= mid) val |= 12;
+		if (id(x + 1, y - 1) >= mid) val |= 4;
+		if (id(x - 1, y) >= mid) val |= 10;
+		if (id(x + 1, y) >= mid) val |= 5;
+		if (id(x - 1, y + 1) >= mid) val |= 2;
+		if (id(x, y + 1) >= mid) val |= 3;
+		if (id(x + 1, y + 1) >= mid) val |= 1;
+		return val;
+	}
+
+	/**
+	 * Zone id (0..2) per cell for one level. View.hx thresholds Flash perlinNoise
+	 * into three bands; we bilerp a seeded value-noise lattice instead.
+	 * // ponytail: one octave where the original used up to four — same blobby
+	 * // zones, add octaves only if the patches look too round.
+	 */
+	private zoneIds(l: number): Uint8Array {
+		let z = this.zones.get(l);
+		if (z) return z;
+		const skin = this.skinFor(l);
+		const w = this.dims.width;
+		const h = this.dims.height;
+		const step = skin.perlin === 'dense' ? 5 : 7; // lattice period, cells (View.hx base 5/5 vs 7/7)
+		const lo = skin.perlin === 'few' ? 60 : 85;
+		const hi = skin.perlin === 'few' ? 75 : 115;
+		const lat = (ix: number, iy: number): number => {
+			let v = (Math.imul(ix, 374761393) ^ Math.imul(iy, 668265263) ^ this.noiseSeed ^ Math.imul(l + 1, 2246822519)) >>> 0;
+			v = Math.imul(v ^ (v >>> 13), 1274126177);
+			return ((v ^ (v >>> 16)) >>> 0) % 256;
+		};
+		z = new Uint8Array(w * h);
+		for (let x = 0; x < w; x++) {
+			for (let y = 0; y < h; y++) {
+				const ix = Math.floor(x / step);
+				const iy = Math.floor(y / step);
+				const tx = x / step - ix;
+				const ty = y / step - iy;
+				const u = tx * tx * (3 - 2 * tx);
+				const v = ty * ty * (3 - 2 * ty);
+				const a = lat(ix, iy);
+				const n = a + (lat(ix + 1, iy) - a) * u + (lat(ix, iy + 1) - a) * v + (a + lat(ix + 1, iy + 1) - lat(ix + 1, iy) - lat(ix, iy + 1)) * u * v;
+				z[x * h + y] = n < lo ? 2 : n < hi ? 1 : 0;
+			}
+		}
+		this.zones.set(l, z);
+		return z;
+	}
+
+	/**
+	 * Fog plane: one rect per unknown cell in the skin's fog colour, blurred as
+	 * in View.hx (32px on 40px cells). The background already IS the fog colour,
+	 * so only the outward bleed shows — fog softly overlaps ~one cell of the
+	 * revealed frontier.
+	 */
+	private drawFog(skin: Skin): void {
+		const known = this.known[this.level];
+		const g = new Graphics();
+		g.beginFill(skin.fog);
+		for (let y = 0; y < this.dims.height; y++)
+			for (let x = 0; x < this.dims.width; x++)
+				if (!known.has(`${x},${y}`)) g.drawRect(x * this.cell, y * this.cell, this.cell, this.cell);
+		g.endFill();
+		g.filters = [new BlurFilter(this.cell * (32 / 40))];
+		this.fogLayer.addChild(g);
+	}
+
+	/** View.hx's fx_reveal: blurred fog square over the cell, fading out. */
+	private revealFx(x: number, y: number): void {
+		const g = new Graphics();
+		g.beginFill(this.skinFor(this.level).fog);
+		g.drawRect(x * this.cell, y * this.cell, this.cell, this.cell);
+		g.endFill();
+		g.filters = [new BlurFilter(this.cell * (32 / 40))];
+		this.fxLayer.addChild(g);
+		this.fx.push({ g, cpt: 0 });
+	}
+
+	private updateFx(dt: number): void {
+		for (let i = this.fx.length - 1; i >= 0; i--) {
+			const f = this.fx[i];
+			f.cpt += 0.045 * dt; // View.hx: cpt += 0.07/frame at the swf's 40fps
+			f.g.alpha = Math.cos(f.cpt);
+			// ponytail: original kept fx until cpt >= π with negative (invisible) alpha; drop at π/2, same look.
+			if (f.cpt >= Math.PI / 2) {
+				f.g.destroy();
+				this.fx.splice(i, 1);
+			}
+		}
+	}
+
+	private clearFx(): void {
+		for (const f of this.fx) f.g.destroy();
+		this.fx.length = 0;
 	}
 
 	// ── revealed entities (icons the server sent along with the cells) ────────
@@ -323,7 +476,7 @@ export class MazeRenderer {
 			dropShadowAlpha: 0.8
 		});
 		label.position.set(6, 6);
-		this.mapLayer.addChild(label);
+		this.fogLayer.addChild(label);
 	}
 
 	/** Stable per-cell pseudo-random index. */
