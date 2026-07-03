@@ -15,9 +15,15 @@ export async function createRun(pos: RunPosition, revealed: string, playerId: st
 	});
 }
 
-export async function getDungeon(id: string) {
+export async function getDungeonById(id: string) {
 	return prisma.dungeon.findUnique({
 		where: { id: id }
+	});
+}
+
+export async function getDungeonByName(name: string) {
+	return prisma.dungeon.findFirst({
+		where: { name: name }
 	});
 }
 

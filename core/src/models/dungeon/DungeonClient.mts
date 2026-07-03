@@ -1,0 +1,109 @@
+/**
+ * FE/BE contract and client constants for the fog-of-war dungeon
+ * (ed-ui DungeonPage.vue ⇄ ed-be /dungeon routes).
+ */
+import { DungeonType } from '@drpg/prisma/enums';
+
+export interface Cell {
+	l: number;
+	x: number;
+	y: number;
+}
+
+/** One cell the server has allowed us to see. */
+export interface RevealedCell {
+	l: number;
+	x: number;
+	y: number;
+	/** true = walkable floor, false = wall. */
+	floor: boolean;
+	/** Entity token ('start' | 'exit' | 'stair_up' | 'stair_down' | 'door_v' | 'door_h' | 'monster' | 'key' | 'gold' | 'heal' | 'scroll'). */
+	icon?: string;
+}
+
+export interface StartRunResult {
+	runId: string;
+	pos: Cell;
+	width: number;
+	height: number;
+	levels: number;
+	skinSalt: number;
+	skin: DungeonType;
+	reveal: RevealedCell[];
+}
+
+export interface MoveResult {
+	ok: boolean;
+	pos: Cell;
+	reveal: RevealedCell[];
+}
+
+// ── rendering ──────────────────────────────────────────────────────────────
+
+export interface Skin {
+	/** Wall theme — front_/side_/back_/corner_<name>. */
+	name: string;
+	/** Ground theme — ground_<ground>. */
+	ground: string;
+	frontCount: number;
+	groundCount: number;
+	/** Background / fog colour (from View.hx). */
+	fog: number;
+}
+
+export interface MazeDims {
+	width: number;
+	height: number;
+	levels: number;
+}
+
+export interface RendererOptions {
+	cell?: number;
+	/** One skin per level (cycled if shorter than the level count). */
+	skins?: Skin[];
+	/** Visible canvas size (px). Defaults to the full map (no scrolling). */
+	view?: { w: number; h: number };
+}
+
+export interface DinozActorOptions {
+	/** Dino "code" string. */
+	code: string;
+	/** Cells traversed per second. */
+	speed?: number;
+	onLevelChange?: (level: number) => void;
+	onArrived?: () => void;
+}
+
+// ── constants (from the archive's dungeon/dungeon/View.hx SKINS table) ─────
+
+export const SKINS: Skin[] = [
+	{ name: 'cavern', ground: 'cavern', frontCount: 4, groundCount: 5, fog: 0x392429 },
+	{ name: 'crypt', ground: 'crypt', frontCount: 3, groundCount: 7, fog: 0x27191c },
+	{ name: 'egypt', ground: 'sand', frontCount: 6, groundCount: 6, fog: 0x433023 },
+	{ name: 'forest', ground: 'grass', frontCount: 1, groundCount: 6, fog: 0x30371e },
+	{ name: 'hell', ground: 'hell', frontCount: 4, groundCount: 5, fog: 0x330d0d },
+	{ name: 'ruin', ground: 'cavern', frontCount: 6, groundCount: 5, fog: 0x252730 },
+	{ name: 'sewer', ground: 'sewer', frontCount: 4, groundCount: 7, fog: 0x37321e },
+	{ name: 'stone', ground: 'crypt', frontCount: 2, groundCount: 7, fog: 0x352c20 }
+];
+
+/** Sprites shared by every skin (items, doors, stairs). */
+export const ITEM_ASSETS = [
+	'item_chest',
+	'item_gold',
+	'item_key_01',
+	'item_scroll',
+	'item_skel',
+	'item_door_h_01',
+	'item_door_v_01',
+	'item_stair_up',
+	'item_stair_down'
+];
+
+/** Arrow key → (dx, dy). */
+export const ARROWS: Record<string, [number, number]> = {
+	ArrowUp: [0, -1],
+	ArrowDown: [0, 1],
+	ArrowLeft: [-1, 0],
+	ArrowRight: [1, 0]
+};

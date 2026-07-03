@@ -257,7 +257,8 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_attack": "Attaquer le château adverse.",
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -293,7 +294,8 @@
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_attack": "Attaquer le château",
+			"dungeon_enter": "Entrer"
 		}
 	},
 	"button": {

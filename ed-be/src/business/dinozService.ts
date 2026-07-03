@@ -101,6 +101,8 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
+import { currentWar } from './clanWar.js';
+import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
 
 /**
  * @summary Get available action from dinoz
@@ -284,6 +286,17 @@ export async function getAvailableActions(
 			} else {
 				availableActions.push(actionList[Action.IRMAS]);
 			}
+		}
+	}
+
+	if (dinozPlace.dungeon) {
+		const dungeon = Object.values(DungeonList).find(dungeon => dungeon.placeStart === dinozPlace.placeId);
+		if (dungeon && checkCondition(dungeon.condition, player, dinoz.id)) {
+			availableActions.push({
+				name: actionList[Action.DUNGEON_ENTER].name,
+				imgName: actionList[Action.DUNGEON_ENTER].imgName,
+				prop: dungeon.name
+			});
 		}
 	}
 

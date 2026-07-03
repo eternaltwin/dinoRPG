@@ -26,11 +26,12 @@
  */
 import { defineComponent } from 'vue';
 import { DungeonService } from '../services/index.js';
-import { ARROWS, DINO_CODES, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import { ARROWS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import { allAssetNames, assetUrl, loadDungeonAssets } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
+import { useDinozStore } from '../store';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // Kept at module scope on purpose: the renderer, actor and Pixi objects must
@@ -127,8 +128,12 @@ export default defineComponent({
 		async build(): Promise<void> {
 			this.status = 'entering the dungeon…';
 			let run: StartRunResult;
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				return;
+			}
 			try {
-				run = await DungeonService.enterDungeon(dungeonId);
+				run = await DungeonService.enterDungeon(dungeonId, currentDinoz.id);
 			} catch (err) {
 				this.status = `✗ ${err instanceof Error ? err.message : String(err)}`;
 				return;
@@ -138,7 +143,7 @@ export default defineComponent({
 			icons.clear();
 			this.hideStair();
 
-			const skins: Skin[] = Array.from({ length: run.levels }, (_, l) => SKINS[(run.skinSalt + l) % SKINS.length]);
+			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
 			// cell 45 → the dino renders at native resolution; 500×350 viewport scrolls.
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
@@ -149,7 +154,7 @@ export default defineComponent({
 
 			record(run.reveal);
 			actor = new DinozActor(renderer, {
-				code: DINO_CODES[run.skinSalt % DINO_CODES.length],
+				code: currentDinoz.display,
 				speed: 5,
 				onLevelChange: l => renderer?.showLevel(l)
 			});
