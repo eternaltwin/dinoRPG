@@ -16,6 +16,9 @@ export class DinozActor {
 	private readonly sprite: sdino & { flip(n: number): void };
 	private readonly renderer: MazeRenderer;
 	private readonly speed: number;
+	// Followers (lead=false) tag along: they never move the camera or switch the
+	// displayed level, and hide while their cell is on a level not being shown.
+	private readonly lead: boolean;
 	private readonly onLevelChange?: (level: number) => void;
 	private readonly onArrived?: () => void;
 
@@ -29,6 +32,7 @@ export class DinozActor {
 	constructor(renderer: MazeRenderer, opts: DinozActorOptions) {
 		this.renderer = renderer;
 		this.speed = opts.speed ?? 4;
+		this.lead = opts.lead ?? true;
 		this.onLevelChange = opts.onLevelChange;
 		this.onArrived = opts.onArrived;
 
@@ -36,18 +40,20 @@ export class DinozActor {
 		// Scale the dino down to roughly two cells tall.
 		const target = renderer.cell * 2;
 		this.sprite.scale.set(target / 90);
+		this.sprite.zIndex = this.lead ? 1 : 0;
 		renderer.actorLayer.addChild(this.sprite);
 	}
 
 	placeAt(cell: Cell): void {
-		if (this.renderer.currentLevel !== cell.l) {
+		if (this.lead && this.renderer.currentLevel !== cell.l) {
 			this.renderer.showLevel(cell.l);
 			this.onLevelChange?.(cell.l);
 		}
 		const p = this.renderer.center(cell.x, cell.y);
 		this.sprite.position.set(p.x, p.y + this.renderer.cell * 0.25);
-		this.renderer.focus(this.sprite.x, this.sprite.y);
+		if (this.lead) this.renderer.focus(this.sprite.x, this.sprite.y);
 		this.pos = { ...cell };
+		this.sprite.visible = this.pos.l === this.renderer.currentLevel;
 	}
 
 	/** The cell the dinoz currently occupies. */
@@ -103,10 +109,11 @@ export class DinozActor {
 		}
 
 		// Make sure we are drawing the level this segment lives on.
-		if (this.renderer.currentLevel !== from.l) {
+		if (this.lead && this.renderer.currentLevel !== from.l) {
 			this.renderer.showLevel(from.l);
 			this.onLevelChange?.(from.l);
 		}
+		this.sprite.visible = from.l === this.renderer.currentLevel;
 
 		this.t += (delta / 60) * this.speed;
 		const k = Math.min(this.t, 1);
@@ -124,7 +131,7 @@ export class DinozActor {
 		const b = this.renderer.center(to.x, to.y);
 		const yOff = this.renderer.cell * 0.25;
 		this.sprite.position.set(a.x + (b.x - a.x) * k, a.y + yOff + (b.y - a.y) * k);
-		this.renderer.focus(this.sprite.x, this.sprite.y);
+		if (this.lead) this.renderer.focus(this.sprite.x, this.sprite.y);
 
 		if (this.t >= 1) {
 			this.pos = { l: to.l, x: to.x, y: to.y };
@@ -135,6 +142,11 @@ export class DinozActor {
 
 	destroy(): void {
 		this.stop();
+		// The sdino Animator registers a Ticker.shared listener it never detaches.
+		// Left playing, it throws on the destroyed parts every frame and that kills
+		// the shared ticker for every sdino still alive — they all stop animating.
+		// Freezing it first turns the leaked listener into a no-op.
+		(this.sprite as unknown as { playing: boolean }).playing = false;
 		this.sprite.destroy({ children: true });
 	}
 }

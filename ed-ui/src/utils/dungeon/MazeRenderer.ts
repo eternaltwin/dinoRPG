@@ -65,6 +65,7 @@ export class MazeRenderer {
 		this.mapLayer = new Container();
 		this.wallBackLayer = new Container();
 		this.actorLayer = new Container();
+		this.actorLayer.sortableChildren = true; // leader (zIndex 1) draws over followers
 		this.wallFrontLayer = new Container();
 		this.fogLayer = new Container();
 		this.fxLayer = new Container();
@@ -292,9 +293,27 @@ export class MazeRenderer {
 		const known = this.known[this.level];
 		const g = new Graphics();
 		g.beginFill(skin.fog);
+		const c = this.cell;
+		const isKnown = (x: number, y: number): boolean => known.has(`${x},${y}`);
 		for (let y = 0; y < this.dims.height; y++)
-			for (let x = 0; x < this.dims.width; x++)
-				if (!known.has(`${x},${y}`)) g.drawRect(x * this.cell, y * this.cell, this.cell, this.cell);
+			for (let x = 0; x < this.dims.width; x++) {
+				if (isKnown(x, y)) continue;
+				g.drawRect(x * c, y * c, c, c);
+				// Organic frontier: bulge hash-jittered circles into each revealed
+				// neighbour so the blurred edge reads as clouds, not a ruler line.
+				for (const [dx, dy] of [
+					[1, 0],
+					[-1, 0],
+					[0, 1],
+					[0, -1]
+				]) {
+					if (!isKnown(x + dx, y + dy)) continue;
+					const h = this.hash(x * 4 + dx, y * 4 + dy, 11);
+					const r = c * (0.35 + (h % 100) / 300); // 0.35..0.68 cell
+					const t = c * ((((h >> 7) % 100) / 100 - 0.5) * 0.8); // slide along the shared edge
+					g.drawCircle((x + 0.5 + dx * 0.5) * c + dy * t, (y + 0.5 + dy * 0.5) * c + dx * t, r);
+				}
+			}
 		g.endFill();
 		g.filters = [new BlurFilter(this.cell * (32 / 40))];
 		this.fogLayer.addChild(g);
