@@ -71,7 +71,6 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	},
 	fight: {
 		stepName: 'fight',
-		alias: 'grave',
 		nextStep: ['fight_win'],
 		fight: [bossList.ROCKY],
 		condition: {
