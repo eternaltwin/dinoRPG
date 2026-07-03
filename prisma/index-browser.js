@@ -740,6 +740,7 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   posY: 'posY',
   posL: 'posL',
   revealed: 'revealed',
+  monsters: 'monsters',
   createdAt: 'createdAt',
   playerId: 'playerId',
   dungeonId: 'dungeonId'

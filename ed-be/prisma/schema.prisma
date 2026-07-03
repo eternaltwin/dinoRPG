@@ -1172,6 +1172,8 @@ model DungeonRun {
   posY      Int      @map("pos_y")
   posL      Int      @map("pos_l")
   revealed  String   @default("[]")
+  // RunMonster[] — one entry per monster-guarded passage: cell, rolled team, defeated flag.
+  monsters  String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
