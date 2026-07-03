@@ -1,7 +1,8 @@
 /** Dungeon tileset loading (src/assets/dungeon). */
 
 import { Assets, Texture } from 'pixi.js';
-import { ITEM_ASSETS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import { ITEM_ASSETS } from '@drpg/core/models/dungeon/DungeonClient';
+import type { Skin } from '@drpg/core/models/dungeon/DungeonClient';
 
 const ASSET_URLS = import.meta.glob('../../assets/dungeon/*.png', { eager: true, as: 'url' }) as Record<string, string>;
 export const assetUrl = (name: string): string => ASSET_URLS[`../../assets/dungeon/${name}.png`] ?? '';
@@ -18,15 +19,13 @@ export const gfx = (name: string): Texture => textures.get(name) ?? Texture.WHIT
 
 export const pad2 = (n: number): string => (n < 10 ? `0${n}` : `${n}`);
 
-/** Every tile name the renderer can use, de-duplicated (for preloading). */
-export function allAssetNames(): string[] {
+/** Tile names one run needs: shared items + a single skin's tiles (for lazy preloading). */
+export function skinAssetNames(skin: Skin): string[] {
 	const set = new Set<string>(ITEM_ASSETS);
-	for (const skin of SKINS) {
-		set.add(`side_${skin.name}_01`);
-		set.add(`back_${skin.name}_01`);
-		set.add(`corner_${skin.name}_01`);
-		for (let i = 1; i <= skin.frontCount; i++) set.add(`front_${skin.name}_${pad2(i)}`);
-		for (let i = 1; i <= skin.groundCount; i++) set.add(`ground_${skin.ground}_${pad2(i)}`);
-	}
+	set.add(`side_${skin.name}_01`);
+	set.add(`back_${skin.name}_01`);
+	set.add(`corner_${skin.name}_01`);
+	for (let i = 1; i <= skin.frontCount; i++) set.add(`front_${skin.name}_${pad2(i)}`);
+	for (let i = 1; i <= skin.groundCount; i++) set.add(`ground_${skin.ground}_${pad2(i)}`);
 	return [...set];
 }
