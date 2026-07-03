@@ -139,7 +139,7 @@ export const ALIEN: Readonly<Record<string, NpcData>> = {
 	give: {
 		stepName: 'give',
 		nextStep: [],
-		condition:	{
+		condition: {
 			[Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PLUME }
 		},
 		reward: [

@@ -97,7 +97,10 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn4',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.CLONE_AQUEUX }, { [ConditionEnum.SKILL]: Skill.RESISTANCE_A_LA_MAGIE }]
+			[Operator.AND]: [
+				{ [ConditionEnum.SKILL]: Skill.CLONE_AQUEUX },
+				{ [ConditionEnum.SKILL]: Skill.RESISTANCE_A_LA_MAGIE }
+			]
 		},
 		redirect: 'dolearn'
 	},
@@ -121,7 +124,10 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn5bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.PAUME_EJECTABLE }, { [ConditionEnum.SKILL]: Skill.INSTINCT_SAUVAGE }]
+			[Operator.AND]: [
+				{ [ConditionEnum.SKILL]: Skill.PAUME_EJECTABLE },
+				{ [ConditionEnum.SKILL]: Skill.INSTINCT_SAUVAGE }
+			]
 		},
 		redirect: 'dolearn'
 	},

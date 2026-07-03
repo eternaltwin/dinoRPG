@@ -14,17 +14,13 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	moi: {
 		stepName: 'moi',
 		nextStep: ['perdu', 'chasse', 'deal', 'korgon', 'auto'],
-		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VMEM }
-		}
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VMEM } }
 	},
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.VENERABLE],
-		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE }
-		},
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE } },
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,

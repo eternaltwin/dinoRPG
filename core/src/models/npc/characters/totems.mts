@@ -37,7 +37,7 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave'],
-		initialStep: true,
+		initialStep: true
 	},
 	fight: {
 		stepName: 'fight',
