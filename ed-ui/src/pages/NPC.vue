@@ -41,6 +41,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozService, NPCService, PlayerService } from '../services';
 import { playerStore, sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'NPC',
@@ -48,6 +49,7 @@ export default defineComponent({
 		return {
 			npcName: undefined as string | undefined,
 			dinozId: +this.$route.params.id as number,
+			itemList: itemList,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
 			playerStore: playerStore(),
@@ -78,7 +80,7 @@ export default defineComponent({
 				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
 					this.$toast.open({
 						message: this.$t('notification.reward', {
-							rewards: `${quantity} :item_${item}:`
+							rewards: `${quantity} :item_${item}: ${this.$t(`item.name.${itemList[item].name}`)}`
 						}).toString(),
 						type: 'info'
 					});
