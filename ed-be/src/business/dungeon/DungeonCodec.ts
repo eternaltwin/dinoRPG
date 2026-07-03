@@ -15,6 +15,12 @@ import type { DungeonStruct, DungeonLevel, DungeonRoom, DungeonDoor, DungeonItem
 
 export class DungeonCodec {
 	d!: DungeonStruct;
+	/**
+	 * CRC verdict of the last {@link decode}. Advisory only: strings from the
+	 * historical live game used a different CRC variant than our BitCodec, so a
+	 * structurally valid import can legitimately carry a mismatching tail.
+	 */
+	crcOk = true;
 	private bc!: BitCodec;
 
 	/** Number of bits needed to represent the value `v` (>= 1). */
@@ -144,9 +150,10 @@ export class DungeonCodec {
 		return s;
 	}
 
-	/** Decode `s` into `this.d`. Returns `true` when the CRC checks out. */
+	/** Decode `s` into `this.d`. Returns `true` when the structure is valid; see {@link crcOk} for the CRC. */
 	decode(s: string): boolean {
 		s = this.removeSignature(s);
+		this.crcOk = false;
 		this.bc = new BitCodec(s);
 		const bc = this.bc;
 		const width = bc.read(8);
@@ -224,6 +231,7 @@ export class DungeonCodec {
 		this.d.exit.x = bc.read(xybits);
 		this.d.exit.y = bc.read(xybits);
 		this.d.exit.l = bc.read(8);
-		return bc.crcStr() === s.substr(s.length - 4, 4);
+		this.crcOk = bc.crcStr() === s.substr(s.length - 4, 4);
+		return !bc.hasError();
 	}
 }

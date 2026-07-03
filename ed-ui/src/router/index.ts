@@ -213,6 +213,11 @@ const router = createRouter({
 							component: () => import('../components/admin/EventCreation.vue')
 						},
 						{
+							path: 'dungeon',
+							name: 'DungeonEdit',
+							component: () => import('../components/admin/DungeonEdit.vue')
+						},
+						{
 							path: 'logs',
 							name: 'Logs',
 							component: () => import('../components/admin/LogsView.vue')

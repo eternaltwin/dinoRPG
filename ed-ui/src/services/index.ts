@@ -1,6 +1,7 @@
 export * from './AdminService.js';
 export * from './DinozService.js';
 export * from './DinozShopService.js';
+export * from './DungeonService.js';
 export * from './FightService.js';
 export * from './IngredientsService.js';
 export * from './InventoryService.js';

@@ -224,6 +224,25 @@ export const AdminService = {
 		const res = await http().get(`/admin/event`);
 		return res.data;
 	},
+	async createDungeon(form: {
+		type: string;
+		name: string;
+		layout?: string;
+		seed?: number;
+		width?: number;
+		height?: number;
+		level?: number;
+		noise?: number;
+		filters?: number;
+		surface?: number;
+	}): Promise<{ id: string; type: string }> {
+		const res = await http().post(`/admin/dungeon`, form);
+		return res.data;
+	},
+	async getDungeons(): Promise<{ id: string; type: string }[]> {
+		const res = await http().get(`/admin/dungeon`);
+		return res.data;
+	},
 	async searchClans(name: string) {
 		const res = await http().get(`/admin/clans/search/${name}`);
 		return res.data;
