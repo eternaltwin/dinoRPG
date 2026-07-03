@@ -7,15 +7,15 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave'],
-		initialStep: true,
-		condition: {
-			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
-		}
+		initialStep: true
 	},
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.PTEROZ],
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -38,14 +38,14 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave'],
 		initialStep: true,
-		condition: {
-			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
-		}
 	},
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.HIPPOCLAMP],
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -67,16 +67,16 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['fight', 'leave', 'touch', 'grave'],
-		initialStep: true,
-		condition: {
-			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
-		}
+		initialStep: true
 	},
 	fight: {
 		stepName: 'fight',
+		alias: 'grave',
 		nextStep: ['fight_win'],
 		fight: [bossList.ROCKY],
-		alias: 'grave',
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
