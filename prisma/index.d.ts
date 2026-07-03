@@ -83427,6 +83427,7 @@ export namespace Prisma {
     posY: number | null
     posL: number | null
     revealed: string | null
+    monsters: string | null
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
@@ -83438,6 +83439,7 @@ export namespace Prisma {
     posY: number | null
     posL: number | null
     revealed: string | null
+    monsters: string | null
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
@@ -83449,6 +83451,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed: number
+    monsters: number
     createdAt: number
     playerId: number
     dungeonId: number
@@ -83474,6 +83477,7 @@ export namespace Prisma {
     posY?: true
     posL?: true
     revealed?: true
+    monsters?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -83485,6 +83489,7 @@ export namespace Prisma {
     posY?: true
     posL?: true
     revealed?: true
+    monsters?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -83496,6 +83501,7 @@ export namespace Prisma {
     posY?: true
     posL?: true
     revealed?: true
+    monsters?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -83594,6 +83600,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed: string
+    monsters: string
     createdAt: Date
     playerId: string
     dungeonId: string
@@ -83624,6 +83631,7 @@ export namespace Prisma {
     posY?: boolean
     posL?: boolean
     revealed?: boolean
+    monsters?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -83637,6 +83645,7 @@ export namespace Prisma {
     posY?: boolean
     posL?: boolean
     revealed?: boolean
+    monsters?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -83650,6 +83659,7 @@ export namespace Prisma {
     posY?: boolean
     posL?: boolean
     revealed?: boolean
+    monsters?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -83663,12 +83673,13 @@ export namespace Prisma {
     posY?: boolean
     posL?: boolean
     revealed?: boolean
+    monsters?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
   }
 
-  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "createdAt" | "playerId" | "dungeonId", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "monsters" | "createdAt" | "playerId" | "dungeonId", ExtArgs["result"]["dungeonRun"]>
   export type DungeonRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
@@ -83694,6 +83705,7 @@ export namespace Prisma {
       posY: number
       posL: number
       revealed: string
+      monsters: string
       createdAt: Date
       playerId: string
       dungeonId: string
@@ -84127,6 +84139,7 @@ export namespace Prisma {
     readonly posY: FieldRef<"DungeonRun", 'Int'>
     readonly posL: FieldRef<"DungeonRun", 'Int'>
     readonly revealed: FieldRef<"DungeonRun", 'String'>
+    readonly monsters: FieldRef<"DungeonRun", 'String'>
     readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
     readonly playerId: FieldRef<"DungeonRun", 'String'>
     readonly dungeonId: FieldRef<"DungeonRun", 'String'>
@@ -86474,6 +86487,7 @@ export namespace Prisma {
     posY: 'posY',
     posL: 'posL',
     revealed: 'revealed',
+    monsters: 'monsters',
     createdAt: 'createdAt',
     playerId: 'playerId',
     dungeonId: 'dungeonId'
@@ -91429,6 +91443,7 @@ export namespace Prisma {
     posY?: IntFilter<"DungeonRun"> | number
     posL?: IntFilter<"DungeonRun"> | number
     revealed?: StringFilter<"DungeonRun"> | string
+    monsters?: StringFilter<"DungeonRun"> | string
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -91442,6 +91457,7 @@ export namespace Prisma {
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
+    monsters?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -91459,6 +91475,7 @@ export namespace Prisma {
     posY?: IntFilter<"DungeonRun"> | number
     posL?: IntFilter<"DungeonRun"> | number
     revealed?: StringFilter<"DungeonRun"> | string
+    monsters?: StringFilter<"DungeonRun"> | string
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -91472,6 +91489,7 @@ export namespace Prisma {
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
+    monsters?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -91491,6 +91509,7 @@ export namespace Prisma {
     posY?: IntWithAggregatesFilter<"DungeonRun"> | number
     posL?: IntWithAggregatesFilter<"DungeonRun"> | number
     revealed?: StringWithAggregatesFilter<"DungeonRun"> | string
+    monsters?: StringWithAggregatesFilter<"DungeonRun"> | string
     createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
     playerId?: UuidWithAggregatesFilter<"DungeonRun"> | string
     dungeonId?: UuidWithAggregatesFilter<"DungeonRun"> | string
@@ -96031,6 +96050,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
@@ -96042,6 +96062,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     playerId: string
     dungeonId: string
@@ -96053,6 +96074,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
@@ -96064,6 +96086,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
@@ -96075,6 +96098,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     playerId: string
     dungeonId: string
@@ -96086,6 +96110,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -96095,6 +96120,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
@@ -100151,6 +100177,7 @@ export namespace Prisma {
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
+    monsters?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -100168,6 +100195,7 @@ export namespace Prisma {
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
+    monsters?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -100179,6 +100207,7 @@ export namespace Prisma {
     posY?: SortOrder
     posL?: SortOrder
     revealed?: SortOrder
+    monsters?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -113270,6 +113299,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
   }
@@ -113280,6 +113310,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     dungeonId: string
   }
@@ -114328,6 +114359,7 @@ export namespace Prisma {
     posY?: IntFilter<"DungeonRun"> | number
     posL?: IntFilter<"DungeonRun"> | number
     revealed?: StringFilter<"DungeonRun"> | string
+    monsters?: StringFilter<"DungeonRun"> | string
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -131448,6 +131480,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
   }
@@ -131458,6 +131491,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     playerId: string
   }
@@ -132861,6 +132895,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     dungeonId: string
   }
@@ -133866,6 +133901,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
   }
@@ -133876,6 +133912,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
   }
@@ -133886,6 +133923,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
   }
@@ -135901,6 +135939,7 @@ export namespace Prisma {
     posY: number
     posL: number
     revealed?: string
+    monsters?: string
     createdAt?: Date | string
     playerId: string
   }
@@ -135911,6 +135950,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
   }
@@ -135921,6 +135961,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
   }
@@ -135931,6 +135972,7 @@ export namespace Prisma {
     posY?: IntFieldUpdateOperationsInput | number
     posL?: IntFieldUpdateOperationsInput | number
     revealed?: StringFieldUpdateOperationsInput | string
+    monsters?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
   }

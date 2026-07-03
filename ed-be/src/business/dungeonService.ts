@@ -14,7 +14,16 @@ import { revealAround, cellKey, cellsForKeys } from './dungeon/reveal.js';
 import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import type { DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
-import { createRun, findRun, getDungeonById, getDungeonByName, updateRun } from '../dao/dungeonRunDao.js';
+import {
+	createRun,
+	findRun,
+	getDungeonById,
+	getDungeonByName,
+	updateRun,
+	updateRunMonsters
+} from '../dao/dungeonRunDao.js';
+import { rollMonsters } from './dungeon/monsters.js';
+import type { RunMonster } from './dungeon/monsters.js';
 import translate from '../utils/server/translate.js';
 import { auth } from '../dao/playerDao.js';
 import { getDinozFicheLiteRequest } from '../dao/dinozDao.js';
@@ -30,6 +39,28 @@ function newReveals(candidates: RevealedCell[], revealed: Set<string>): Revealed
 		out.push(c);
 	}
 	return out;
+}
+
+/** Strip the 'monster' icon from cells whose pack was already beaten this run. */
+function hideDefeated(reveal: RevealedCell[], monsters: RunMonster[]): RevealedCell[] {
+	const dead = new Set(monsters.filter(m => m.defeated).map(m => cellKey(m.l, m.x, m.y)));
+	if (dead.size > 0)
+		for (const c of reveal) if (c.icon === 'monster' && dead.has(cellKey(c.l, c.x, c.y))) c.icon = undefined;
+	return reveal;
+}
+
+/** Flag the pack on cell (l,x,y) beaten; its icon stops appearing in reveals. */
+export async function markMonsterDefeated(
+	run: { id: string; monsters: string },
+	l: number,
+	x: number,
+	y: number
+): Promise<void> {
+	const monsters = JSON.parse(run.monsters) as RunMonster[];
+	const m = monsters.find(m => m.l === l && m.x === x && m.y === y);
+	if (!m || m.defeated) return;
+	m.defeated = true;
+	await updateRunMonsters(run.id, JSON.stringify(monsters));
 }
 
 export async function startRun(req: Request): Promise<StartRunResult> {
@@ -67,7 +98,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			levels: d.levels.length,
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
-			reveal: cellsForKeys(d, JSON.parse(existing.revealed) as string[])
+			reveal: hideDefeated(
+				cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+				JSON.parse(existing.monsters) as RunMonster[]
+			)
 		};
 	}
 
@@ -77,6 +111,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	const run = await createRun(
 		{ posX: d.start.x, posY: d.start.y, posL: d.start.l },
 		JSON.stringify([...revealed]),
+		JSON.stringify(rollMonsters(d, dungeonRef.monsters)),
 		authed.id,
 		dungeon.id
 	);
@@ -151,5 +186,5 @@ export async function move(req: Request): Promise<MoveResult> {
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
 	await updateRun(run.id, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
 
-	return { ok: true, pos: next, reveal };
+	return { ok: true, pos: next, reveal: hideDefeated(reveal, JSON.parse(run.monsters) as RunMonster[]) };
 }
