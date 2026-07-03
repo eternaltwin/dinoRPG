@@ -170,6 +170,13 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	},
 	star: {
 		stepName: 'star',
+		condition: {
+			// Initial step if the player is at step 6 of the alien scenario
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
+				{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+			]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
