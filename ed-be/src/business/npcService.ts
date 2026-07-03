@@ -175,11 +175,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ExpectedError(`Dialog ${dinozCurrentNpcStep.step} does not exist for NPC ${npcName}.`);
 	}
 
-	// The Dinoz need to still meet the condition of its current step.
-	if (!checkCondition(dinozCurrentStepData.condition, player, dinozId)) {
-		throw new ExpectedError(`Player no longer meets condition for this dialog.`);
-	}
-
 	// Verify the wanted step is included in the possible next steps of the Dinoz current step.
 	console.log(`Step included: ${dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName)}`);
 	console.log(
