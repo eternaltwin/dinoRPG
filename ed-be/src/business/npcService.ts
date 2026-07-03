@@ -22,7 +22,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
 	const npcName: string = req.params.npc;
-	let nextStepWanted: string | undefined = req.body.step;
+	const nextStepWanted: string | undefined = req.body.step;
 
 	const authed = await auth(req);
 
@@ -54,9 +54,11 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ExpectedError(`Dinoz ${dinozId} not in same location as NPC`);
 	}
 
-	let dinozCurrentNpcStep = dinozBase.npcs.find(n => n.npcId === npc.id);
-
+	// Get the next step data:
+	// - If no step was provided, it means it is an initial step (the start of a dialogue). Make sure there is a possible initial step.
+	// - If a step was provided, make sure it exists as a step or the alias of a step.
 	let nextStepWantedData: NpcData;
+	// To save the input argument or the found initial step.
 	let originalNextStepWanted: string;
 	if (nextStepWanted === undefined) {
 		// Find a valid initial step
@@ -72,7 +74,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		nextStepWantedData = initialSteps[0];
 		originalNextStepWanted = nextStepWantedData.stepName;
-		nextStepWanted = nextStepWantedData.stepName;
 	} else {
 		// Find step based on name or alias
 		let nextSteps = Object.values(npc.data).filter(
@@ -80,48 +81,45 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		);
 
 		if (nextSteps.length === 0) {
-			throw new ExpectedError(`No step ${nextStepWanted} found for the NPC ${npcName}`);
+			throw new ExpectedError(`No step (${nextStepWanted}) found for the NPC ${npcName}`);
 		}
 		if (nextSteps.length > 1) {
-			throw new ExpectedError(`Too many steps ${nextStepWanted} found for the NPC ${npcName}`);
+			throw new ExpectedError(`Too many steps (${nextStepWanted}) found for the NPC ${npcName}`);
 		}
 
 		nextStepWantedData = nextSteps[0];
 		originalNextStepWanted = nextStepWanted;
 	}
 
-	// if (!nextStepWantedData) {
-	// 	throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
-	// }
+	let dinozCurrentNpcStep = dinozBase.npcs.find(n => n.npcId === npc.id);
 
+	// Helpful temp logging
 	// If the wanted step came from an alias, use the real step name.
-	if (nextStepWantedData.alias && nextStepWanted === nextStepWantedData.alias) {
-		console.log(`Used alias ${nextStepWanted}`);
-		nextStepWanted = nextStepWantedData.stepName;
+	if (nextStepWantedData.alias && originalNextStepWanted === nextStepWantedData.alias) {
+		console.log(`Step ${originalNextStepWanted} is an alias for ${nextStepWantedData.stepName}`);
 	}
-
 	let debugCurrentStep = dinozCurrentNpcStep === undefined ? 'undefined' : dinozCurrentNpcStep.step;
-
 	console.log(
-		`Current step: ${debugCurrentStep}, next step chosen is: ${nextStepWanted} (${nextStepWantedData.stepName})`
+		`Current step: ${debugCurrentStep}, next step chosen is: ${originalNextStepWanted} (data: ${nextStepWantedData.stepName})`
 	);
 
-	// The wanted step conditions must be met at all times.
-	if (!checkCondition(nextStepWantedData.condition, player, dinozId)) {
-		throw new ExpectedError(`Dinoz doesn't fulfill the conditions.`);
+	// If there is a redirection, replace the next step data with it.
+	if (nextStepWantedData.redirect !== undefined) {
+		const redirectSteps = Object.values(npc.data).filter(npc => npc.stepName === nextStepWantedData.redirect);
+		if (redirectSteps.length === 0) {
+			throw new ExpectedError(`No redirection (${nextStepWantedData.redirect}) found for the NPC ${npcName}`);
+		}
+		if (redirectSteps.length > 1) {
+			throw new ExpectedError(`Too many redirections (${nextStepWantedData.redirect}) found for NPC ${npcName}`);
+		}
+
+		nextStepWantedData = redirectSteps[0];
+		console.log(`Step ${originalNextStepWanted} redirects to ${nextStepWantedData.stepName}`);
 	}
 
-	// If there is a redirection, replace data with it.
-	if (nextStepWantedData.redirect !== undefined) {
-		const nonNullNextStepWantedData = nextStepWantedData;
-		const redirectSteps = Object.values(npc.data).filter(npc => npc.stepName === nonNullNextStepWantedData.redirect);
-		if (redirectSteps.length === 0 || redirectSteps.length > 1) {
-			throw new ExpectedError(`Invalid redirect ${nextStepWantedData.redirect} for NPC ${npc.name}`);
-		}
-		// If there is an error relating to redirect, it's here.
-		nextStepWantedData = redirectSteps[0];
-		nextStepWanted = nextStepWantedData.stepName;
-
+	// The next step conditions must be met at all times.
+	if (!checkCondition(nextStepWantedData.condition, player, dinozId)) {
+		throw new ExpectedError(`Dinoz doesn't fulfill the conditions of this step.`);
 	}
 
 	if (nextStepWantedData.initialStep === true) {
@@ -180,8 +178,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			step: initialStepData.stepName
 		});
 
-		console.log(`createDinozStep ran`);
-
 		return {
 			name: npcName,
 			speech: initialStepData.stepName,
@@ -211,14 +207,11 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Check the step name but also the original name in case the next step is a redirect
 		!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) &&
 		!dinozCurrentStepData.nextStep.includes(originalNextStepWanted) &&
+		// Check the alias in case it's been used
 		!(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias))
 	) {
-		throw new ExpectedError(`NPC ${npcName} dialog ${nextStepWanted} is not available for your Dinoz.`);
+		throw new ExpectedError(`NPC ${npcName} dialog ${originalNextStepWanted} is not available for your Dinoz.`);
 	}
-
-	// Note: stop step not needed
-	// Handle stop step
-	// if (req.body.stop) return await handleStopStep(dinozId, npc, npcName);
 
 	let speechRewards: [Item, number][] = [];
 
