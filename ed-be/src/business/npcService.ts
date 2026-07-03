@@ -63,29 +63,36 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// SAFETY: player is not null and was checked above.
 		let initialSteps =  Object.values(npc.data).filter(data => data.initialStep && checkCondition(data.condition, player!, dinozId));
 
-		if (initialSteps.length === 0 || initialSteps.length > 1) {
-			throw new ExpectedError(`Invalid initial step for the NPC ${npcName}`);
+		if (initialSteps.length === 0) {
+			throw new ExpectedError(`No valid initial step found for the NPC ${npcName}`);
+		}
+		if (initialSteps.length > 1) {
+			throw new ExpectedError(`Too many initial steps found for the NPC ${npcName}`);
 		}
 
 		nextStepWantedData = initialSteps[0];
 		originalNextStepWanted = nextStepWantedData.stepName;
+		nextStepWanted = nextStepWantedData.stepName;
 	} else {
-		// Find step data based on name or alias
+		// Find step based on name or alias
 		let nextSteps = Object.values(npc.data).filter(
 			data => data.stepName === nextStepWanted || data.alias === nextStepWanted
 		);
 
-		if (nextSteps.length === 0 || nextSteps.length > 1) {
-			throw new ExpectedError(`Invalid step ${nextStepWanted} for the NPC ${npcName}`);
+		if (nextSteps.length === 0) {
+			throw new ExpectedError(`No step ${nextStepWanted} found for the NPC ${npcName}`);
+		}
+		if (nextSteps.length > 1) {
+			throw new ExpectedError(`Too many steps ${nextStepWanted} found for the NPC ${npcName}`);
 		}
 
 		nextStepWantedData = nextSteps[0];
 		originalNextStepWanted = nextStepWanted;
 	}
 
-	if (!nextStepWantedData) {
-		throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
-	}
+	// if (!nextStepWantedData) {
+	// 	throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
+	// }
 
 	// If the wanted step came from an alias, use the real step name.
 	if (nextStepWantedData.alias && nextStepWanted === nextStepWantedData.alias) {
@@ -112,7 +119,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			throw new ExpectedError(`Invalid redirect ${nextStepWantedData.redirect} for NPC ${npc.name}`);
 		}
 		// If there is an error relating to redirect, it's here.
+		nextStepWantedData = redirectSteps[0];
 		nextStepWanted = nextStepWantedData.stepName;
+
 	}
 
 	if (nextStepWantedData.initialStep === true) {

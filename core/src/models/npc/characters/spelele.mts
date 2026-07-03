@@ -37,11 +37,11 @@ export const SPELELE: Readonly<Record<string, NpcData>> = {
 		stepName: 'congel2',
 		nextStep: ['again', 'thanks']
 	},
-	again: {
-		stepName: 'again',
-		nextStep: [],
-		redirect: 'congel'
-	},
+	// again: {
+	// 	stepName: 'again',
+	// 	nextStep: [],
+	// 	redirect: 'congel'
+	// },
 	thanks: {
 		stepName: 'thanks',
 		nextStep: [],
