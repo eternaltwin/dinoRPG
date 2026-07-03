@@ -7,6 +7,7 @@ import { MissionID } from '../missions/missionList.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GroundEnum } from '../enums/GroundEnum.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
+import { Dungeon } from '../dungeon/DungeonList.mjs';
 
 /** Sticky Swamp - No movement on Thursday and Saturday. */
 export const SWAMP_FLOODED_DAYS = [4, 6];
@@ -30,6 +31,7 @@ export const placeList: Record<
 		bottom?: number;
 		itinerant?: boolean;
 		warPlace?: boolean;
+		dungeon?: Dungeon;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -169,7 +171,8 @@ export const placeList: Record<
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 's_graveyard',
-		top: 110
+		top: 110,
+		dungeon: Dungeon.KATATOMBS
 	},
 	[PlaceEnum.GO_TO_DINOPLAZA]: {
 		placeId: PlaceEnum.GO_TO_DINOPLAZA,

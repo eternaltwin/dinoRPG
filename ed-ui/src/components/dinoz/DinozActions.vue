@@ -627,6 +627,9 @@ export default defineComponent({
 					}
 					await this.refreshDinoz();
 					break;
+				case Action.DUNGEON_ENTER:
+					this.$router.push({ name: 'Dungeon', params: { id: action.prop } });
+					break;
 				default:
 					console.warn(`Unknown action: ${action.name}`);
 					break;

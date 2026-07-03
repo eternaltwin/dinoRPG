@@ -14,9 +14,11 @@ import { revealAround, cellKey, cellsForKeys } from './dungeon/reveal.js';
 import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import type { DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
-import { createRun, findRun, getDungeon, updateRun } from '../dao/dungeonRunDao.js';
+import { createRun, findRun, getDungeonById, getDungeonByName, updateRun } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
 import { auth } from '../dao/playerDao.js';
+import { getDinozFicheLiteRequest } from '../dao/dinozDao.js';
+import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
 
 /** Filter candidate reveals down to the not-yet-revealed ones and record them. */
 function newReveals(candidates: RevealedCell[], revealed: Set<string>): RevealedCell[] {
@@ -32,10 +34,19 @@ function newReveals(candidates: RevealedCell[], revealed: Set<string>): Revealed
 
 export async function startRun(req: Request): Promise<StartRunResult> {
 	const authed = await auth(req);
-	const dungeonId = req.params.id;
-	const dungeon = await getDungeon(dungeonId);
-	if (!dungeon) {
+	const dungeonName = req.params.id;
+	const dungeon = await getDungeonByName(dungeonName);
+	const dungeonRef = Object.values(DungeonList).find(d => d.name === dungeonName);
+	if (!dungeon || !dungeonRef) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
+	const dinozId = req.body.dinozId;
+	const dinoz = await getDinozFicheLiteRequest(dinozId);
+	if (!dinoz) {
+		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
+	if (dungeonRef.placeStart !== dinoz.placeId) {
+		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
 	const codec = new DungeonCodec();
@@ -46,7 +57,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 
 	// Resume: one run per player per dungeon — hand back the position and
 	// everything already revealed instead of violating the unique constraint.
-	const existing = await findRun(dungeonId, authed.id);
+	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
 		return {
 			runId: existing.id,
@@ -54,6 +65,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			width: d.width,
 			height: d.height,
 			levels: d.levels.length,
+			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
 			reveal: cellsForKeys(d, JSON.parse(existing.revealed) as string[])
 		};
@@ -66,7 +78,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		{ posX: d.start.x, posY: d.start.y, posL: d.start.l },
 		JSON.stringify([...revealed]),
 		authed.id,
-		dungeonId
+		dungeon.id
 	);
 
 	return {
@@ -75,6 +87,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		width: d.width,
 		height: d.height,
 		levels: d.levels.length,
+		skin: dungeon.type,
 		skinSalt: Math.floor(Math.random() * 1000),
 		reveal
 	};
@@ -102,7 +115,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	const dl = +req.body.dl;
 	const dy = +req.body.dy;
 	const dungeonId = req.params.id;
-	const dungeon = await getDungeon(dungeonId);
+	const dungeon = await getDungeonById(dungeonId);
 	if (!dungeon) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}

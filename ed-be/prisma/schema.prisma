@@ -1186,7 +1186,7 @@ model DungeonRun {
 
 model Dungeon {
   id     String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name   String      @unique @default(dbgenerated("uuid_generate_v4()"))
+  name   String      @unique @default("")
   cipher Bytes
   iv     Bytes
   tag    Bytes

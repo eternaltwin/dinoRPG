@@ -34,6 +34,7 @@ routes.post(
 			const response = await startRun(_req);
 			return res.status(200).send(response);
 		} catch (err) {
+			console.error(err);
 			sendError(res, err);
 		}
 	}
