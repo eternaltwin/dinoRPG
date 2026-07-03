@@ -42,7 +42,7 @@ const router = createRouter({
 					component: () => import('../pages/DinozPage.vue')
 				},
 				{
-					path: '/dino/:id/:npc/:step',
+					path: '/dino/:id/:npc',
 					name: 'NPC',
 					component: () => import('../pages/NPC.vue'),
 					props: route => ({

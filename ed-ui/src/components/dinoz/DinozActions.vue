@@ -255,8 +255,7 @@ export default defineComponent({
 						name: 'NPC',
 						params: {
 							id: this.$route.params.id.toString(),
-							npc: this.npcDisplayName(action.prop as number),
-							step: action.npcStep
+							npc: this.npcDisplayName(action.prop as number)
 						}
 					});
 					break;

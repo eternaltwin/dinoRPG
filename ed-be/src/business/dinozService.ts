@@ -377,17 +377,14 @@ export async function getAvailableActions(
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, player, dinoz.id)) {
-			// Add a NPC action for each initial step possible.
-			Object.values(npc.data).forEach(data => {
-				if (data.initialStep && checkCondition(data.condition, player, dinoz.id)) {
-					availableActions.push({
-						name: actionList[Action.NPC].name,
-						imgName: actionList[Action.NPC].imgName,
-						prop: npc.id,
-						npcStep: data.stepName
-					});
-				}
-			});
+			// Add a NPC action if there is at least one initial step possible.
+			if (Object.values(npc.data).some(data => data.initialStep && checkCondition(data.condition, player, dinoz.id))) {
+				availableActions.push({
+					name: actionList[Action.NPC].name,
+					imgName: actionList[Action.NPC].imgName,
+					prop: npc.id,
+				});
+			}
 		}
 	});
 

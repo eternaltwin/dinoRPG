@@ -22,8 +22,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
 	const npcName: string = req.params.npc;
-	let nextStepWanted: string = req.body.step;
-	const originalNextStepWanted: string = nextStepWanted;
+	let nextStepWanted: string | undefined = req.body.step;
 
 	const authed = await auth(req);
 
@@ -57,10 +56,32 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	let dinozCurrentNpcStep = dinozBase.npcs.find(n => n.npcId === npc.id);
 
-	// Find step data based on name or alias
-	let nextStepWantedData = Object.values(npc.data).find(
-		data => data.stepName === nextStepWanted || data.alias === nextStepWanted
-	);
+	let nextStepWantedData: NpcData;
+	let originalNextStepWanted: string;
+	if (nextStepWanted === undefined) {
+		// Find a valid initial step
+		// SAFETY: player is not null and was checked above.
+		let initialSteps =  Object.values(npc.data).filter(data => data.initialStep && checkCondition(data.condition, player!, dinozId));
+
+		if (initialSteps.length === 0 || initialSteps.length > 1) {
+			throw new ExpectedError(`Invalid initial step for the NPC ${npcName}`);
+		}
+
+		nextStepWantedData = initialSteps[0];
+		originalNextStepWanted = nextStepWantedData.stepName;
+	} else {
+		// Find step data based on name or alias
+		let nextSteps = Object.values(npc.data).filter(
+			data => data.stepName === nextStepWanted || data.alias === nextStepWanted
+		);
+
+		if (nextSteps.length === 0 || nextSteps.length > 1) {
+			throw new ExpectedError(`Invalid step ${nextStepWanted} for the NPC ${npcName}`);
+		}
+
+		nextStepWantedData = nextSteps[0];
+		originalNextStepWanted = nextStepWanted;
+	}
 
 	if (!nextStepWantedData) {
 		throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
@@ -86,9 +107,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	// If there is a redirection, replace data with it.
 	if (nextStepWantedData.redirect !== undefined) {
 		const nonNullNextStepWantedData = nextStepWantedData;
-		nextStepWantedData = Object.values(npc.data).find(npc => npc.stepName === nonNullNextStepWantedData.redirect);
-		if (!nextStepWantedData) {
-			throw new ExpectedError(`Invalid redirect.`);
+		const redirectSteps = Object.values(npc.data).filter(npc => npc.stepName === nonNullNextStepWantedData.redirect);
+		if (redirectSteps.length === 0 || redirectSteps.length > 1) {
+			throw new ExpectedError(`Invalid redirect ${nextStepWantedData.redirect} for NPC ${npc.name}`);
 		}
 		// If there is an error relating to redirect, it's here.
 		nextStepWanted = nextStepWantedData.stepName;
@@ -219,7 +240,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		// Update next step only upon victory
 		if (result.result) {
-			await updateDinozStep(dinozId, npc.id, nextStepWanted);
+			await updateDinozStep(dinozId, npc.id, nextStepWantedData.stepName);
 			if (nextStepWantedData.reward !== undefined) {
 				await rewarder(nextStepWantedData.reward, team, authed.id, true);
 			}
@@ -242,7 +263,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	// Finally save step
 	console.log(`Updating Dinoz step.`);
-	await updateDinozStep(dinozId, npc.id, nextStepWanted);
+	await updateDinozStep(dinozId, npc.id, nextStepWantedData.stepName);
 
 	const playerChoices = nextStepWantedData.nextStep.filter(possibility => {
 		const condition = Object.values(npc.data).find(data => data.stepName === possibility)?.condition;

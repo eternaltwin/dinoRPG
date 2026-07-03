@@ -42,7 +42,6 @@ export interface ActionFiche {
 	imgName: string;
 	confirm?: boolean;
 	prop?: number | string;
-	npcStep?: string;
 	special?: boolean;
 	forDinoz?: number;
 }

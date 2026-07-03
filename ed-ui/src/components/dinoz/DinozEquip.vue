@@ -27,7 +27,7 @@
 import { defineComponent } from 'vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils';
-import { InventoryService } from '../../services';
+import { DinozService, InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
 import { useDinozStore } from '../../store';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';

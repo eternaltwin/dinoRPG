@@ -47,7 +47,6 @@ export default defineComponent({
 	data() {
 		return {
 			npcName: undefined as string | undefined,
-			npcStep: undefined as string | undefined,
 			dinozId: +this.$route.params.id as number,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
@@ -134,7 +133,6 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		this.npcName = this.$route.params.npc as string;
-		this.npcStep = this.$route.params.step as string;
 		if (this.dialog) {
 			this.npcSpeech = {
 				name: this.npcName,
@@ -144,7 +142,7 @@ export default defineComponent({
 		} else {
 			const npc = useDinozStore().getCurrentDinoz.npcAwait;
 
-			let step = this.npcStep;
+			let step: string | undefined = undefined;
 
 			if (npc && npc.npcName === this.npcName) {
 				step = npc.npcSpeech;
