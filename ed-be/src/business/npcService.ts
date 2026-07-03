@@ -210,7 +210,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Check the alias in case it's been used
 		!(nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias))
 	) {
-		throw new ExpectedError(`NPC ${npcName} dialog ${originalNextStepWanted} is not available for your Dinoz.`);
+		throw new ExpectedError(`NPC (${npcName}) dialog (${originalNextStepWanted}) is not available for your Dinoz.`);
 	}
 
 	let speechRewards: [Item, number][] = [];
