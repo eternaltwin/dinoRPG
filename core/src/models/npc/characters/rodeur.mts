@@ -6,6 +6,7 @@ import { Reward } from '../../reward/RewardList.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const RODEUR: Readonly<Record<string, NpcData>> = {
+	// Dialog for rice mission
 	begin: {
 		stepName: 'begin',
 		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
@@ -21,7 +22,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	talk: {
 		stepName: 'talk',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF }
+			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ }
 		},
 		nextStep: ['go', 'yes']
 	},
@@ -32,7 +33,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	talk2: {
 		stepName: 'talk2',
 		condition: {
-			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF
+			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ
 		},
 		nextStep: []
 	},
@@ -54,6 +55,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 			}
 		]
 	},
+	// Dialog for second rice mission
 	begin_2: {
 		stepName: 'begin_2',
 		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
@@ -107,6 +109,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 			}
 		]
 	},
+	// Final dialog to get tik bracelet
 	begin_3: {
 		stepName: 'begin_3',
 		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
