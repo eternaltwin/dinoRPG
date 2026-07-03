@@ -42,6 +42,11 @@ import {errorHandler} from "../utils";
 let dungeonId = '';
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
+// The rest of the party (dinozStore leader/followers), conga-line style: each
+// confirmed leader move sends follower i to the cell the leader held i+1 moves
+// ago. `trail` is that history, newest first.
+const followers: DinozActor[] = [];
+const trail: Cell[] = [];
 // Entities the server has revealed so far, keyed "l,x,y" — drives the stair button.
 const icons = new Map<string, string>();
 // Cells the server already revealed as walls — don't ask it again about those.
@@ -107,11 +112,38 @@ export default defineComponent({
 					record(r.reveal);
 					cursor = { ...r.pos };
 					actor?.enqueue(cursor);
+					trail.unshift({ ...cursor });
+					if (trail.length > followers.length + 1) trail.pop();
+					// The first enqueue each follower gets is its own cell — a walk-in-place
+					// beat that staggers the line's start, as View.hx's delay = w*10 did.
+					followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
 				})
 				.catch(err => {
 					moving = false;
 					errorHandler.handle(err, this.$toast);
 				});
+		},
+		/**
+		 * Leader idle: send each follower the whole remaining trail in one go so it
+		 * walks a continuous path onto the leader's cell and stacks there. One
+		 * dispatch per stop — feeding cell-by-cell would drain each follower to
+		 * 'stand' between cells and eat the walk animation.
+		 */
+		catchUp(): void {
+			if (followers.some(f => f.pending > 0)) return;
+			const at = (c: Cell): boolean => c.l === cursor.l && c.x === cursor.x && c.y === cursor.y;
+			if (trail.every(at)) return; // everyone is stacked
+			followers.forEach((f, i) => {
+				// Follower i sits at trail[i+1]; retrace trail[i]‥trail[0] (= the leader).
+				let prev = f.cell;
+				for (let j = Math.min(i, trail.length - 1); j >= 0; j--) {
+					const t = trail[j];
+					if (t.l === prev.l && t.x === prev.x && t.y === prev.y) continue;
+					f.enqueue({ ...t });
+					prev = t;
+				}
+			});
+			for (let i = 0; i < trail.length; i++) trail[i] = { ...cursor };
 		},
 		updateStairButton(): void {
 			if (!actor || moving || actor.pending > 0) return this.hideStair();
@@ -172,6 +204,16 @@ export default defineComponent({
 			actor.placeAt({ ...run.pos });
 			actor.takeControl();
 			cursor = { ...run.pos };
+			trail.length = 0;
+			trail.push({ ...run.pos });
+			for (const d of useDinozStore()
+				.getDinozParty(currentDinoz.id)
+				.filter(p => p.id !== currentDinoz.id)) {
+				const f = new DinozActor(renderer, { code: d.display, speed: 5, lead: false });
+				f.placeAt({ ...run.pos });
+				f.takeControl();
+				followers.push(f);
+			}
 		}
 	},
 	async mounted() {
@@ -182,9 +224,13 @@ export default defineComponent({
 		window.addEventListener('keyup', onKeyUp);
 
 		const frame = (): void => {
-			if (actor && !moving && held.length > 0 && actor.pending === 0) {
-				const d = ARROWS[held[held.length - 1]];
-				this.tryMove(d[0], d[1]);
+			if (actor && !moving && actor.pending === 0) {
+				if (held.length > 0) {
+					const d = ARROWS[held[held.length - 1]];
+					this.tryMove(d[0], d[1]);
+				} else {
+					this.catchUp();
+				}
 			}
 			this.updateStairButton();
 			rafId = requestAnimationFrame(frame);
@@ -196,6 +242,9 @@ export default defineComponent({
 		window.removeEventListener('keydown', onKeyDown);
 		window.removeEventListener('keyup', onKeyUp);
 		actor?.destroy();
+		for (const f of followers) f.destroy();
+		followers.length = 0;
+		trail.length = 0;
 		renderer?.destroy();
 		actor = null;
 		renderer = null;

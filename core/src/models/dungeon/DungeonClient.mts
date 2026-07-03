@@ -77,6 +77,8 @@ export interface DinozActorOptions {
 	code: string;
 	/** Cells traversed per second. */
 	speed?: number;
+	/** false = follower: never drives the camera or the displayed level. Default true. */
+	lead?: boolean;
 	onLevelChange?: (level: number) => void;
 	onArrived?: () => void;
 }

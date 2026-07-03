@@ -162,12 +162,12 @@ export const placeList: Record<
 		placeId: PlaceEnum.CIMETIERE,
 		name: 'skull',
 		borderPlace: [1],
-		conditions: {
+		/*conditions: {
 			[Operator.OR]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
 				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] }
 			]
-		},
+		},*/
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 's_graveyard',
