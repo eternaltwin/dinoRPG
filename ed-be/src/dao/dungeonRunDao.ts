@@ -21,9 +21,9 @@ export async function getDungeon(id: string) {
 	});
 }
 
-export async function createDungeon(sealed: Sealed, type: DungeonType) {
+export async function createDungeon(sealed: Sealed, type: DungeonType, name: string) {
 	return prisma.dungeon.create({
-		data: { ...sealed, type }
+		data: { ...sealed, type, name }
 	});
 }
 

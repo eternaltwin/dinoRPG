@@ -1146,14 +1146,15 @@ export async function getOngoingEvent(req: Request) {
 
 export async function createSeededDungeon(req: Request) {
 	const type = req.body.type ?? DungeonType.cavern;
+	const name = req.body.name;
 
 	// Custom layout: an already-encoded dungeon string (e.g. original MT format), no generation.
 	const layout = req.body.layout;
 	if (layout) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
-		await createDungeon(seal(codec.encode()), type);
-		return;
+		const created = await createDungeon(seal(codec.encode()), type, name);
+		return { id: created.id, type: created.type };
 	}
 
 	const seed = req.body.seed;
@@ -1174,5 +1175,10 @@ export async function createSeededDungeon(req: Request) {
 		seed: seed
 	});
 	const encoded = new DungeonCodec().encode(d);
-	await createDungeon(seal(encoded), type);
+	const created = await createDungeon(seal(encoded), type, name);
+	return { id: created.id, type: created.type };
+}
+
+export async function listDungeons() {
+	return prisma.dungeon.findMany({ select: { id: true, type: true } });
 }

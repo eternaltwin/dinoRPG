@@ -84565,6 +84565,7 @@ export namespace Prisma {
 
   export type DungeonMinAggregateOutputType = {
     id: string | null
+    name: string | null
     cipher: Uint8Array | null
     iv: Uint8Array | null
     tag: Uint8Array | null
@@ -84573,6 +84574,7 @@ export namespace Prisma {
 
   export type DungeonMaxAggregateOutputType = {
     id: string | null
+    name: string | null
     cipher: Uint8Array | null
     iv: Uint8Array | null
     tag: Uint8Array | null
@@ -84581,6 +84583,7 @@ export namespace Prisma {
 
   export type DungeonCountAggregateOutputType = {
     id: number
+    name: number
     cipher: number
     iv: number
     tag: number
@@ -84591,6 +84594,7 @@ export namespace Prisma {
 
   export type DungeonMinAggregateInputType = {
     id?: true
+    name?: true
     cipher?: true
     iv?: true
     tag?: true
@@ -84599,6 +84603,7 @@ export namespace Prisma {
 
   export type DungeonMaxAggregateInputType = {
     id?: true
+    name?: true
     cipher?: true
     iv?: true
     tag?: true
@@ -84607,6 +84612,7 @@ export namespace Prisma {
 
   export type DungeonCountAggregateInputType = {
     id?: true
+    name?: true
     cipher?: true
     iv?: true
     tag?: true
@@ -84688,6 +84694,7 @@ export namespace Prisma {
 
   export type DungeonGroupByOutputType = {
     id: string
+    name: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -84713,6 +84720,7 @@ export namespace Prisma {
 
   export type DungeonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     cipher?: boolean
     iv?: boolean
     tag?: boolean
@@ -84723,6 +84731,7 @@ export namespace Prisma {
 
   export type DungeonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     cipher?: boolean
     iv?: boolean
     tag?: boolean
@@ -84731,6 +84740,7 @@ export namespace Prisma {
 
   export type DungeonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     cipher?: boolean
     iv?: boolean
     tag?: boolean
@@ -84739,13 +84749,14 @@ export namespace Prisma {
 
   export type DungeonSelectScalar = {
     id?: boolean
+    name?: boolean
     cipher?: boolean
     iv?: boolean
     tag?: boolean
     type?: boolean
   }
 
-  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cipher" | "iv" | "tag" | "type", ExtArgs["result"]["dungeon"]>
+  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type", ExtArgs["result"]["dungeon"]>
   export type DungeonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
     _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
@@ -84760,6 +84771,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      name: string
       cipher: Uint8Array
       iv: Uint8Array
       tag: Uint8Array
@@ -85189,6 +85201,7 @@ export namespace Prisma {
    */ 
   interface DungeonFieldRefs {
     readonly id: FieldRef<"Dungeon", 'String'>
+    readonly name: FieldRef<"Dungeon", 'String'>
     readonly cipher: FieldRef<"Dungeon", 'Bytes'>
     readonly iv: FieldRef<"Dungeon", 'Bytes'>
     readonly tag: FieldRef<"Dungeon", 'Bytes'>
@@ -86471,6 +86484,7 @@ export namespace Prisma {
 
   export const DungeonScalarFieldEnum: {
     id: 'id',
+    name: 'name',
     cipher: 'cipher',
     iv: 'iv',
     tag: 'tag',
@@ -91487,6 +91501,7 @@ export namespace Prisma {
     OR?: DungeonWhereInput[]
     NOT?: DungeonWhereInput | DungeonWhereInput[]
     id?: UuidFilter<"Dungeon"> | string
+    name?: StringFilter<"Dungeon"> | string
     cipher?: BytesFilter<"Dungeon"> | Uint8Array
     iv?: BytesFilter<"Dungeon"> | Uint8Array
     tag?: BytesFilter<"Dungeon"> | Uint8Array
@@ -91496,6 +91511,7 @@ export namespace Prisma {
 
   export type DungeonOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrder
     cipher?: SortOrder
     iv?: SortOrder
     tag?: SortOrder
@@ -91505,6 +91521,7 @@ export namespace Prisma {
 
   export type DungeonWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     AND?: DungeonWhereInput | DungeonWhereInput[]
     OR?: DungeonWhereInput[]
     NOT?: DungeonWhereInput | DungeonWhereInput[]
@@ -91513,10 +91530,11 @@ export namespace Prisma {
     tag?: BytesFilter<"Dungeon"> | Uint8Array
     type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
     dungeonRuns?: DungeonRunListRelationFilter
-  }, "id">
+  }, "id" | "name">
 
   export type DungeonOrderByWithAggregationInput = {
     id?: SortOrder
+    name?: SortOrder
     cipher?: SortOrder
     iv?: SortOrder
     tag?: SortOrder
@@ -91531,6 +91549,7 @@ export namespace Prisma {
     OR?: DungeonScalarWhereWithAggregatesInput[]
     NOT?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Dungeon"> | string
+    name?: StringWithAggregatesFilter<"Dungeon"> | string
     cipher?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
     iv?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
     tag?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
@@ -96083,6 +96102,7 @@ export namespace Prisma {
 
   export type DungeonCreateInput = {
     id?: string
+    name?: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -96092,6 +96112,7 @@ export namespace Prisma {
 
   export type DungeonUncheckedCreateInput = {
     id?: string
+    name?: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -96101,6 +96122,7 @@ export namespace Prisma {
 
   export type DungeonUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array
@@ -96110,6 +96132,7 @@ export namespace Prisma {
 
   export type DungeonUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array
@@ -96119,6 +96142,7 @@ export namespace Prisma {
 
   export type DungeonCreateManyInput = {
     id?: string
+    name?: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -96127,6 +96151,7 @@ export namespace Prisma {
 
   export type DungeonUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array
@@ -96135,6 +96160,7 @@ export namespace Prisma {
 
   export type DungeonUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array
@@ -100180,6 +100206,7 @@ export namespace Prisma {
 
   export type DungeonCountOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     cipher?: SortOrder
     iv?: SortOrder
     tag?: SortOrder
@@ -100188,6 +100215,7 @@ export namespace Prisma {
 
   export type DungeonMaxOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     cipher?: SortOrder
     iv?: SortOrder
     tag?: SortOrder
@@ -100196,6 +100224,7 @@ export namespace Prisma {
 
   export type DungeonMinOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     cipher?: SortOrder
     iv?: SortOrder
     tag?: SortOrder
@@ -131212,6 +131241,7 @@ export namespace Prisma {
 
   export type DungeonCreateWithoutDungeonRunsInput = {
     id?: string
+    name?: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -131220,6 +131250,7 @@ export namespace Prisma {
 
   export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
     id?: string
+    name?: string
     cipher: Uint8Array
     iv: Uint8Array
     tag: Uint8Array
@@ -131395,6 +131426,7 @@ export namespace Prisma {
 
   export type DungeonUpdateWithoutDungeonRunsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array
@@ -131403,6 +131435,7 @@ export namespace Prisma {
 
   export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     cipher?: BytesFieldUpdateOperationsInput | Uint8Array
     iv?: BytesFieldUpdateOperationsInput | Uint8Array
     tag?: BytesFieldUpdateOperationsInput | Uint8Array

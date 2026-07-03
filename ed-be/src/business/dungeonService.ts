@@ -11,30 +11,12 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
 import { revealAround, cellKey, cellsForKeys } from './dungeon/reveal.js';
-import type { RevealedCell } from './dungeon/reveal.js';
+import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import type { DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
 import { createRun, findRun, getDungeon, updateRun } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
 import { auth } from '../dao/playerDao.js';
-
-export interface StartRunResult {
-	runId: string;
-	pos: { l: number; x: number; y: number };
-	/** Grid dimensions + level count: canvas sizing only, no layout knowledge. */
-	width: number;
-	height: number;
-	levels: number;
-	/** Client-side skin salt (cosmetic only). */
-	skinSalt: number;
-	reveal: RevealedCell[];
-}
-
-export interface MoveResult {
-	ok: boolean;
-	pos: { l: number; x: number; y: number };
-	reveal: RevealedCell[];
-}
 
 /** Filter candidate reveals down to the not-yet-revealed ones and record them. */
 function newReveals(candidates: RevealedCell[], revealed: Set<string>): RevealedCell[] {

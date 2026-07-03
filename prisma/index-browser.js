@@ -747,6 +747,7 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
 
 exports.Prisma.DungeonScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   cipher: 'cipher',
   iv: 'iv',
   tag: 'tag',

@@ -13,17 +13,7 @@
 
 import { DungeonItem } from './types.js';
 import type { DungeonStruct } from './types.js';
-
-/** A single cell the client is permitted to know about. */
-export interface RevealedCell {
-	l: number;
-	x: number;
-	y: number;
-	/** true = walkable floor, false = wall. */
-	floor: boolean;
-	/** Semantic entity token the renderer maps to a sprite, if any. */
-	icon?: string;
-}
+import type { RevealedCell } from '@drpg/core/models/dungeon/DungeonClient';
 
 /** Cell key used for the run's "already revealed" set. */
 export const cellKey = (l: number, x: number, y: number): string => `${l},${x},${y}`;

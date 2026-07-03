@@ -11,6 +11,8 @@ import {
 	getJobs,
 	getMultiIps,
 	getOngoingEvent,
+	createSeededDungeon,
+	listDungeons,
 	givePlayerEpicReward,
 	getPlayerData,
 	getDinozDataFromPlayer,
@@ -837,6 +839,24 @@ routes.put(`${commonPath}/event/start`, checkRole([AdminRole.ADMIN]), async (req
 
 	try {
 		const response = await startClanWarEvent(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.post(`${commonPath}/dungeon`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await createSeededDungeon(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/dungeon`, checkRole([AdminRole.ADMIN]), async (_req: Request, res: Response) => {
+	try {
+		const response = await listDungeons();
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
