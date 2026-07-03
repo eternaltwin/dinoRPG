@@ -33,6 +33,7 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		stepName: 'attack',
 		nextStep: ['attack_win'],
 		fight: [bossList.RASCAPHANDRE],
+		condition: { [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
