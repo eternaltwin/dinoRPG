@@ -1026,9 +1026,9 @@
 				"stone_yes": "Ooooooohhhhh!!! Yes ... It's exactly what I thought ... Look! (he delicately cleans the stone) ... it's an Ashpouk Totem! It's very valuable ... take care of it!",
 				"noquestion": "Ah well, too bad, don't hesitate to come back from time to time to find out more about the world of Dinoland!",
 				"pac_start": "Ahh, very good question from a young and passionate student. It is a scroll where I compile my research on the Dinoz that surround us. Did you know they can learn different aptitudes and that each of those allows them to unlock more potential? Like a system with drawers within drawers. I decided it to call it a furniture of skills.&&Anyway, I've put my notes in there and it's coming in very handy. But I don't want someone to steal my research that's why I'm using special ink and paper of shamanic and scientific craft that allow only my own eyes to decipher what I write.",
-				"pac_go": "Are you crazy!?!?!?!?!?!&& &&Get the hell out of here and don't ever mention again this scroll to me!",
-				"pac_scroll": "Ah, well... Congratulations!... You created this marvel all by yourself too... I suppose you need help to figure out how to use it?&& && &&Come back when you will have more experience raising Dinoz.",
-				"pac_end": "Well well well. Here's the Scroll of Compiled Abilities.&& &&It's very easy to use, when your Dinoz have learned a skill a certain number of times, this skill will be visible in the skill tree. *Yes, I did end up going for tree instead of root...*"
+				"pac_go": "Are you crazy!?!?!?!?!?!&&Get the hell out of here and don't ever mention again this scroll to me!",
+				"pac_scroll": "Ah, well... Congratulations!... You created this marvel all by yourself too... I suppose you need help to figure out how to use it?&&Come back when you will have more experience raising Dinoz.",
+				"pac_end": "Well well well. Here's the Scroll of Compiled Abilities.&&It's very easy to use, when your Dinoz have learned a skill a certain number of times, this skill will be visible in the skill tree. *Yes, I did end up going for tree instead of furniture...*"
 			},
 			"playerChoice": {
 				"talk": "Professor Eugene",
@@ -1175,7 +1175,7 @@
 				"begin": "Hello, hello, what do you want from me, Master Tamer?",
 				"question": "Any questions? Mmmmmmm.... How about a little mission for your Dinoz instead? Some friends and I organize rallies all around Dinoland! You could take part, if you're interested.",
 				"nothing": "Really? Well then... Have a good trip!",
-				"quest2": "Come back when you have obtained the Korgon fins from Grumhel Forest. Then I'll able to fulfill your dearest wish.",
+				"quest2": "Come back when you have obtained the Korgon fins from Grumhel Forest. Then I'll be able to fulfill your dearest wish.",
 				"quest3": "A question? Mmmmm... I see that you got the Korgons fins. That means you should be able to survive... over there... maybe...",
 				"where": "Mmmm.... To go there, you will have to gather seven Dinoz. Not necessarily yours, no, they can also be Dinoz of your Clan members. Once there are enough Dinoz, I can send you there.",
 				"where2": "Mmm.... It is a place... I can't tell you more about. But know that you'll find a key, yes, THE key for the Blacksilva door. It will allow you to continue your adventure. That is, if you survive.",
@@ -1224,7 +1224,7 @@
 				"thanks": "Oh no! You're leaving already, that's a shame. You have to come back again, hopefully I'll see you soon.",
 				"nothing": "It seems your Dinoz already has a Bao Charm! Look, it still has some energy left. When it runs out I can recharge it for you.",
 				"no": "Oh really? Well it's your loss. *sulk*.",
-				"pac_scroll": "On this piece of charcoal!?! Yes of course but to what end?&& && && && &&*The root sparkles slightly with its two charms*",
+				"pac_scroll": "On this piece of charcoal!?! Yes of course but to what end?&& &&*The root sparkles slightly with its two charms*",
 				"pac_scroll2": "You should go see a plant expert, the fluophosphorescence is unusual."
 			},
 			"playerChoice": {
@@ -1320,9 +1320,9 @@
 				"merci": "See y'a, buddy... next one...",
 				"more": "Uhmm.... If your Dinoz agrees to fulfill a few missions for me, I'll entrust him with my Strategy Guide. It's very useful...",
 				"accept": "Deal...",
-				"pac_scroll": "Quisl... What?&&Ah you probably refer to all the fishes we usually send each other?",
-				"pac_scroll2": "Ah, that's right... The old man came to ask for a fire charm on a //figonicia root//. What a funny guy.&& &&Come back to see me with a root and I'll help you the same way.&& && && See ya!",
-				"pac_root": "Hmm... ? Already ?... Then... I'll do it for you...&& &&Waka wake he he and there you go!&& &&Unfortunately, the charm dried up the root, good luck to finding a use for it. There, I give it back to you, I already have an old one to use."
+				"pac_scroll": "Working together?&&Ah you probably refer to all the fishes we usually send each other?",
+				"pac_scroll2": "Ah, that's right... The old man came to ask for a fire charm on a //figonicia root//. What a funny guy.&&Some back to see me with a root and I'll help you the same way.&& See ya!",
+				"pac_root": "Hmm... ? Already ?... Then... I'll do it for you...&&//Waka wake he he!//&&And there you go!&&Unfortunately, the charm dried up the root, good luck to finding a use for it. There, I give it back to you, I already have an old one to use."
 			},
 			"playerChoice": {
 				"vener": "The Venerable...",
@@ -4715,7 +4715,7 @@
 			"noTeam": "You have not registered a team for this tournament."
 		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Accepted Dinoz races are **{races}**. They have already been filtered for you.",
-		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
+		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at **{poolsStart}**, get ready!&&The cash prize is currently **{cashPrice}** :gold:.",
 		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
 		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
