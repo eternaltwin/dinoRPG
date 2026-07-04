@@ -1026,9 +1026,9 @@
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
 				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacune de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroirs. J'ai décidé d'appeler ça un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheureusement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
-				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre que racine...*"
+				"pac_go": "Es-tu fou !?!?!?!?!?!&&File d'ici et ne t'avise plus de me parler de ce parchemin !",
+				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre au lieu de meuble...*"
 			},
 			"playerChoice": {
 				"talk": "Parler au Professeur Eugène",
@@ -1224,7 +1224,7 @@
 				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
 				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
 				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*.",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
+				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
 				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
 			},
 			"playerChoice": {
@@ -1321,8 +1321,8 @@
 				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
 				"accept": "Marché conclu...",
 				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tous ces poissons qu'on a l'habitude de s'envoyer ?",
-				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô !",
-				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rends ta racine, j'en avais déjà une vieille à utiliser."
+				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&&Aller, Tchôôôôô !",
+				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&&//Waka waka ouais ouais!//&&Et voilà !&&Bon par contre le charme a bien séché la racine, bon courage pour en faire quoi que ce soit. Tiens, je te rends ta racine, j'en avais déjà une vieille à utiliser."
 			},
 			"playerChoice": {
 				"vener": "Le Vénérable...",
