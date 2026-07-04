@@ -101,7 +101,6 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { currentWar } from './clanWar.js';
 
 /**
  * @summary Get available action from dinoz

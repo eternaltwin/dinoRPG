@@ -247,9 +247,6 @@ async function checkMission(req: Request) {
 	if (!dinoz) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
-	if (!dinoz) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
-	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
 
 	if (!dinozMission) {

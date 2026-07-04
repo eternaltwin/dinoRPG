@@ -69,7 +69,6 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 	reset: {
 		stepName: 'reset',
 		nextStep: [],
-		alias: 'forgot',
 		redirect: 'forgot'
 	},
 	next: {
@@ -91,13 +90,11 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 	question: {
 		stepName: 'question',
 		nextStep: [],
-		alias: 'forgot',
 		redirect: 'forgot'
 	},
 	maybe: {
 		stepName: 'maybe',
 		nextStep: [],
-		alias: 'forgot',
 		redirect: 'forgot'
 	},
 	accept: {
