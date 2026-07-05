@@ -310,8 +310,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId.toString());
-				const refreshDinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id);
+				const refreshDinoz = await AdminService.getDinozDataFromPlayer(this.dinozId);
 
 				if (!refreshDinoz) {
 					this.$toast.open({
@@ -377,7 +376,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		try {
-			this.dinoz = await AdminService.listOneDinozFromPlayer(this.dinozId);
+			this.dinoz = await AdminService.getDinozDataFromPlayer(this.dinozId);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 		}

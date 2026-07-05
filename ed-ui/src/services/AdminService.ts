@@ -1,14 +1,13 @@
 import { http } from '../utils/index.js';
-import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
+import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
-import { UnavailableReason } from '@drpg/prisma/enums';
+import { AdminRole, UnavailableReason } from '@drpg/prisma/enums';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
-import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
 
 export const AdminService = {
 	async getDashBoard(): Promise<boolean> {
@@ -50,7 +49,7 @@ export const AdminService = {
 		});
 		return res.data;
 	},
-	async getplayerInformation(id: string): Promise<PlayerTypeToSend> {
+	async getPlayerInformation(id: string): Promise<PlayerAdminFiche> {
 		const res = await http().get(`/admin/playerinfo/${id}`);
 		return res.data;
 	},
@@ -68,7 +67,7 @@ export const AdminService = {
 		teacher?: boolean | null,
 		messie?: boolean | null,
 		matelasseur?: boolean | null,
-		role?: 'admin' | 'player' | 'beta' | null
+		role?: AdminRole
 	): Promise<void> {
 		const res = await http().put(`/admin/player/${id}`, {
 			customText: customText,
@@ -87,11 +86,7 @@ export const AdminService = {
 		});
 		return res.data;
 	},
-	async listAllDinozFromPlayer(id: string): Promise<Array<DinozAdminFiche>> {
-		const res = await http().get(`/admin/playerdinoz/${id}`);
-		return res.data;
-	},
-	async listOneDinozFromPlayer(id: number): Promise<DinozAdminFiche> {
+	async getDinozDataFromPlayer(id: number): Promise<DinozAdminFiche> {
 		const res = await http().get(`/admin/dinoz/${id}`);
 		return res.data;
 	},

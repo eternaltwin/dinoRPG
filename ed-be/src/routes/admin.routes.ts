@@ -12,9 +12,8 @@ import {
 	getMultiIps,
 	getOngoingEvent,
 	givePlayerEpicReward,
-	listAllDinozFromPlayer,
-	listAllPlayerInformationForAdminDashboard,
-	listOneDinozFromPlayer,
+	getPlayerData,
+	getDinozDataFromPlayer,
 	listPlayerBehindIp,
 	modifyPlayerIngredients,
 	modifyPlayerItems,
@@ -241,24 +240,6 @@ routes.put(
 );
 
 routes.get(
-	`${commonPath}/playerdinoz/:id`,
-	param('id').exists().isString(),
-	checkRole([AdminRole.ADMIN]),
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			const response = await listAllDinozFromPlayer(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
-	}
-);
-
-routes.get(
 	`${commonPath}/dinoz/:id`,
 
 	param('id').exists().isNumeric(),
@@ -269,7 +250,7 @@ routes.get(
 		}
 
 		try {
-			const response = await listOneDinozFromPlayer(req);
+			const response = await getDinozDataFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
@@ -319,7 +300,7 @@ routes.get(
 		}
 
 		try {
-			const response = await listAllPlayerInformationForAdminDashboard(req);
+			const response = await getPlayerData(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
