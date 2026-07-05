@@ -802,6 +802,36 @@ export async function getDinozForLevelUp(dinozId: number) {
 	});
 }
 
+export async function getDinozInfoForAdmin(dinozId: number) {
+	return withSpan(getDinozInfoForAdmin.name, async () => {
+		const dinoz = await prisma.dinoz.findUnique({
+			where: { id: dinozId },
+			select: {
+				id: true,
+				maxLife: true,
+				raceId: true,
+				name: true,
+				display: true,
+				experience: true,
+				level: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				canChangeName: true,
+				unavailableReason: true,
+				items: { select: { itemId: true } },
+				skills: { select: { skillId: true } },
+				unlockableSkills: { select: { skillId: true } },
+				status: { select: { statusId: true } }
+			}
+		});
+
+		return dinoz;
+	});
+}
+
 export async function getEventDinozForLevelUp(dinozId: number) {
 	return withSpan(getEventDinozForLevelUp.name, async () => {
 		const dinoz = await prisma.gameDinoz.findUnique({

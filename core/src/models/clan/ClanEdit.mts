@@ -1,4 +1,4 @@
-import { AdminRoleFront } from '../enums/AdminRoleFront.mjs';
+import { AdminRole } from "@drpg/prisma/enums";
 
 export interface ClanPage {
 	id: number;
@@ -30,5 +30,5 @@ export interface ClanEdit {
 	}>;
 	pages: ClanPage[];
 	langs?: string[];
-	role?: AdminRoleFront;
+	role?: AdminRole;
 }
