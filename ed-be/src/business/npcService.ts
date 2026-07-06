@@ -14,7 +14,6 @@ import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
-import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Item } from '@drpg/core/models/item/ItemList';
 
@@ -93,16 +92,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	let dinozCurrentNpcStep = dinozBase.npcs.find(n => n.npcId === npc.id);
 
-	// Helpful temp logging
-	// If the wanted step came from an alias, use the real step name.
-	if (nextStepWantedData.alias && originalNextStepWanted === nextStepWantedData.alias) {
-		console.log(`Step ${originalNextStepWanted} is an alias for ${nextStepWantedData.stepName}`);
-	}
-	let debugCurrentStep = dinozCurrentNpcStep === undefined ? 'undefined' : dinozCurrentNpcStep.step;
-	console.log(
-		`Current step: ${debugCurrentStep}, next step chosen is: ${originalNextStepWanted} (data: ${nextStepWantedData.stepName})`
-	);
-
 	// If there is a redirection, replace the next step data with it.
 	if (nextStepWantedData.redirect !== undefined) {
 		const redirectSteps = Object.values(npc.data).filter(npc => npc.stepName === nextStepWantedData.redirect);
@@ -114,7 +103,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		nextStepWantedData = redirectSteps[0];
-		console.log(`Step ${originalNextStepWanted} redirects to ${nextStepWantedData.stepName}`);
 	}
 
 	// The next step conditions must be met at all times.
@@ -142,8 +130,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		// Note: initial steps cannot trigger fights, redirect or have rewards.
 
-		console.log(`Initial step processed`);
-
 		return {
 			name: npcName,
 			speech: nextStepWantedData.stepName,
@@ -156,39 +142,34 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// At this point the Dinoz has no history with that NPC and wants a non-initial step.
 		// This is an error case.
 
-		console.log(`Dinoz current step does not exist.`);
-
 		// Make sure it meets the NPC conditions and at least one initial step is found to redirect the Dinoz to it.
 		if (npc.condition && !checkCondition(npc.condition, player, dinozId)) {
 			throw new ExpectedError(`Dinoz ${dinozId} doesn't meet requirement to talk to ${npc.name}.`);
 		}
 
-		const initialStepData = Object.values(npc.data).find(
-			step => step.initialStep && player && checkCondition(step.condition, player, dinozId)
-		);
-		if (!initialStepData) {
-			throw new ExpectedError(`No valid initial step found for NPC ${npcName}.`);
+		let initialSteps =  Object.values(npc.data).filter(data => data.initialStep && checkCondition(data.condition, player!, dinozId));
+		if (initialSteps.length === 0) {
+			throw new ExpectedError(`No valid initial step found for the NPC ${npcName}`);
 		}
-
-		console.log(`Redirecting ${dinozId} to initial ${npc.id}'s step: ${initialStepData.stepName}`);
+		if (initialSteps.length > 1) {
+			throw new ExpectedError(`Too many initial steps found for the NPC ${npcName}`);
+		}
 
 		// Create NPC history
 		await createDinozStep(dinozId, {
 			npcId: npc.id,
-			step: initialStepData.stepName
+			step: initialSteps[0].stepName
 		});
 
 		return {
 			name: npcName,
-			speech: initialStepData.stepName,
+			speech: initialSteps[0].stepName,
 			// Return only the next steps that the Dinoz has access to.
-			playerChoice: initialStepData.nextStep.filter(
+			playerChoice: initialSteps[0].nextStep.filter(
 				step => player && checkCondition(npc.data[step].condition, player, dinozId)
 			)
 		};
 	}
-
-	console.log(`Processing chosen step.`);
 
 	// At this point the wanted step is not an initial step, its conditions are met and the Dinoz has history with that NPC.
 	// The NPC conditions and initial step conditions are assumed to be met by continuity and are not checked again here.
@@ -199,10 +180,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	// Verify the wanted step is included in the possible next steps of the Dinoz current step.
-	console.log(`Step included: ${dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName)}`);
-	console.log(
-		`Alias included: ${nextStepWantedData.alias !== undefined && dinozCurrentStepData.nextStep.includes(nextStepWantedData.alias)}`
-	);
 	if (
 		// Check the step name but also the original name in case the next step is a redirect
 		!dinozCurrentStepData.nextStep.includes(nextStepWantedData.stepName) &&
@@ -227,9 +204,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		const team = [dinozData];
-		if (!isAlive(dinozData)) {
-			throw new ExpectedError(translate('dead', authed));
-		}
 		const fightResult = calculateFightVsMonsters(team, playerData, dinozData.placeId, nextStepWantedData.fight);
 
 		const result = await rewardFightVsMonsters(
@@ -264,7 +238,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	// Finally save step
-	console.log(`Updating Dinoz step.`);
 	await updateDinozStep(dinozId, npc.id, nextStepWantedData.stepName);
 
 	const playerChoices = nextStepWantedData.nextStep.filter(possibility => {
@@ -304,7 +277,7 @@ const nextStepServices = (data: NpcData) => {
 
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {
 	// Send redirection request if there is one as a rewards
-	if (reward.find(r => r.rewardType === RewardEnum.REDIRECT)) {
+	if (reward.some(r => r.rewardType === RewardEnum.REDIRECT)) {
 		const dataReturn = reward.find(r => r.rewardType === RewardEnum.REDIRECT);
 		if (dataReturn?.rewardType === RewardEnum.REDIRECT) {
 			return {
