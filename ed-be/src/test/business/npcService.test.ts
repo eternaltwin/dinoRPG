@@ -185,7 +185,9 @@ describe('getNpcSpeech - defined input guards', () => {
 	it('throws when the requested step does not exist', async () => {
 		(npc.data.choice1 as Record<string, unknown>).nextStep = [];
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		await expect(getNpcSpeech(req({ step: 'thisStepDoesNotExist' }))).rejects.toThrow('No step (thisStepDoesNotExist) found');
+		await expect(getNpcSpeech(req({ step: 'thisStepDoesNotExist' }))).rejects.toThrow(
+			'No step (thisStepDoesNotExist) found'
+		);
 	});
 
 	it('throws when there are too many matching steps in NPC data', async () => {
@@ -204,7 +206,9 @@ describe('getNpcSpeech - redirect guards', () => {
 	it('throws when there is no step that match the redirection', async () => {
 		(npc.data.choiceRedirect as Record<string, unknown>).redirect = 'ThisStepDoesNotExist';
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
-		await expect(getNpcSpeech(req({ step: 'choiceRedirect' }))).rejects.toThrow('No redirection (ThisStepDoesNotExist) found');
+		await expect(getNpcSpeech(req({ step: 'choiceRedirect' }))).rejects.toThrow(
+			'No redirection (ThisStepDoesNotExist) found'
+		);
 	});
 
 	it('throws when there are too many steps that match the redirection', async () => {
@@ -456,7 +460,7 @@ describe('getNpcSpeech - no current step', () => {
 		(npcList as Record<string, unknown>).michel = { ...npc, condition: { [ConditionEnum.MINLEVEL]: 99 } };
 		mockGetNPC.mockResolvedValue(buildPlayer() as never);
 		mockCheckCondition.mockImplementation((condition: unknown) => condition === undefined);
-		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow('doesn\'t meet requirement to talk');
+		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow("doesn't meet requirement to talk");
 	});
 
 	it('redirect to initial step works if NPC condition is met', async () => {

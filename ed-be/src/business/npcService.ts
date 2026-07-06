@@ -62,7 +62,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (nextStepWanted === undefined) {
 		// Find a valid initial step
 		// SAFETY: player is not null and was checked above.
-		let initialSteps =  Object.values(npc.data).filter(data => data.initialStep && checkCondition(data.condition, player!, dinozId));
+		let initialSteps = Object.values(npc.data).filter(
+			data => data.initialStep && checkCondition(data.condition, player!, dinozId)
+		);
 
 		if (initialSteps.length === 0) {
 			throw new ExpectedError(`No valid initial step found for the NPC ${npcName}`);
@@ -147,7 +149,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			throw new ExpectedError(`Dinoz ${dinozId} doesn't meet requirement to talk to ${npc.name}.`);
 		}
 
-		let initialSteps =  Object.values(npc.data).filter(data => data.initialStep && checkCondition(data.condition, player!, dinozId));
+		let initialSteps = Object.values(npc.data).filter(
+			data => data.initialStep && checkCondition(data.condition, player!, dinozId)
+		);
 		if (initialSteps.length === 0) {
 			throw new ExpectedError(`No valid initial step found for the NPC ${npcName}`);
 		}

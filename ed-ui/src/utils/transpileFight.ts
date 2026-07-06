@@ -218,7 +218,8 @@ export function transpileFight(
 				break;
 			case 'prepare':
 				// Prepare all Dinoz that participate in the fight
-				let arrivalText: transpiled[] = [];
+				// eslint-disable-next-line no-case-declarations
+				const arrivalText: transpiled[] = [];
 				step.dinozList.forEach(d => {
 					myFighter = fighters.find(f => f.id === d.fid);
 					if (!myFighter) {

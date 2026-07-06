@@ -381,7 +381,7 @@ export async function getAvailableActions(
 				availableActions.push({
 					name: actionList[Action.NPC].name,
 					imgName: actionList[Action.NPC].imgName,
-					prop: npc.id,
+					prop: npc.id
 				});
 			}
 		}
