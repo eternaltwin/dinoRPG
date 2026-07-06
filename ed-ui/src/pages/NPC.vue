@@ -128,7 +128,6 @@ export default defineComponent({
 			}
 		},
 		async stop(): Promise<void> {
-			// await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
 			useDinozStore().clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}

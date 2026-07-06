@@ -99,10 +99,10 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'noingr',
 		nextStep: [],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH },
-				{ [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE },
-				{ [ConditionEnum.STATUS]: DinozStatusId.CORAIL }
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CORAIL } }
 			]
 		}
 	},
@@ -111,9 +111,9 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: ['potion'],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CORAIL } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH },
+				{ [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE },
+				{ [ConditionEnum.STATUS]: DinozStatusId.CORAIL }
 			]
 		},
 		reward: [
@@ -170,13 +170,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	},
 	star: {
 		stepName: 'star',
-		condition: {
-			// Initial step if the player is at step 6 of the alien scenario
-			[Operator.AND]: [
-				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
-				{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
-			]
-		},
+		condition: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,

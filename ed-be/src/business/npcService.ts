@@ -12,12 +12,19 @@ import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Item } from '@drpg/core/models/item/ItemList';
 
-// TODO explain core logic
+/**
+ * The requested step is either 'undefined' or a string. If undefined, it defaults to a valid initial step. Else, it tries to find the step.
+ *
+ * The core logic is that:
+ * - the step condition is checked all the time
+ * - the NPC condition is checked only for initial steps
+ * - for other steps, the requested step must be part of the possible next steps of the current step of the Dinoz
+ *   - If the Dinoz has no current step, it is redirected to an initial step if a valid one exists.
+ * */
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
 	const npcName: string = req.params.npc;
@@ -61,7 +68,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	let originalNextStepWanted: string;
 	if (nextStepWanted === undefined) {
 		// Find a valid initial step
-		// SAFETY: player is not null and was checked above.
+		// SAFETY: player is not null, see above check.
 		let initialSteps = Object.values(npc.data).filter(
 			data => data.initialStep && checkCondition(data.condition, player!, dinozId)
 		);
@@ -204,7 +211,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 		const dinozData = playerData.dinoz.find(d => d.id === dinozId);
 		if (!dinozData) {
-			throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+			throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 		}
 
 		const team = [dinozData];
@@ -246,7 +253,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	const playerChoices = nextStepWantedData.nextStep.filter(possibility => {
 		const condition = Object.values(npc.data).find(data => data.stepName === possibility)?.condition;
-		// If there is a condition non-met, replace it with enmpty string
+		// If there is a condition non-met, replace it with empty string
 		if (!player) {
 			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 		}

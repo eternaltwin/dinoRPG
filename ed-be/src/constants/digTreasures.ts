@@ -108,7 +108,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_BUOY } },
 				// Know about swamp monsters
 				{ [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN },
-				// Can use the power of the Zors glove
+				// Require the power of the Zors glove
 				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 				// Flooded day
 				{
@@ -146,7 +146,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_LANTERN } },
 				// Know about swamp monsters
 				{ [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN },
-				// Can use the power of the Zors glove
+				// Require the power of the Zors glove
 				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 				// Fog day
 				{

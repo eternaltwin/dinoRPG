@@ -66,7 +66,7 @@ export async function processFight(req: Request) {
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	// Marais Collant - No fight days

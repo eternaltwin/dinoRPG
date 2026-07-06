@@ -104,8 +104,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	water_fight: {
 		stepName: 'water_fight',
 		nextStep: ['water_win'],
-		fight: [bossList.ELEMENTAIRE_EAU],
 		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BUOY } },
+		fight: [bossList.ELEMENTAIRE_EAU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -120,8 +120,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	fire_fight: {
 		stepName: 'fire_fight',
 		nextStep: ['fire_win'],
-		fight: [bossList.ELEMENTAIRE_FEU],
 		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR } },
+		fight: [bossList.ELEMENTAIRE_FEU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -211,6 +211,9 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	pac_go: {
 		stepName: 'pac_go',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 0, '=']
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.SCENARIO,

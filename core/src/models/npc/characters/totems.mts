@@ -12,10 +12,10 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
-		fight: [bossList.PTEROZ],
 		condition: {
 			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
+		fight: [bossList.PTEROZ],
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -42,10 +42,10 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
-		fight: [bossList.HIPPOCLAMP],
 		condition: {
 			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
+		fight: [bossList.HIPPOCLAMP],
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -72,10 +72,10 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
-		fight: [bossList.ROCKY],
 		condition: {
 			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
 		},
+		fight: [bossList.ROCKY],
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,

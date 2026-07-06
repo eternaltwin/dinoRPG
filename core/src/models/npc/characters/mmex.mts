@@ -149,7 +149,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'already',
 		nextStep: [],
 		condition: {
-			[ConditionEnum.SKILL]: 61119
+			[ConditionEnum.SKILL]: Skill.COMPETENCE_DOUBLE
 		}
 	},
 	missions: {

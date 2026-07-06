@@ -3,6 +3,4 @@ export enum TemporaryStatus {
 	QWHY = 16,
 	QWOOD = 17,
 	QTAME = 18,
-	// To return from a fight, deprecated
-	FRETURN = 69
 }
