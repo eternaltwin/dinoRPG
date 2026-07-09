@@ -6,17 +6,15 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import seedrandom from 'seedrandom';
-import { randomUUID } from 'crypto';
-import translate from './server/translate.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { GLOBAL } from '../context.js';
-import { updateDinoz } from '../dao/dinozDao.js';
 import { Auth } from '../dao/playerDao.js';
+import translate from './server/translate.js';
+import seedrandom from 'seedrandom';
+import { randomUUID } from 'crypto';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
 	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
@@ -311,38 +309,6 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 		life: 1,
 		FBTournamentStep: 0
 	};
-};
-
-export const useRice = async (
-	dinoz: Pick<Dinoz, 'id' | 'level' | 'raceId'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[];
-		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
-	}
-) => {
-	const newDinozData: Prisma.DinozUpdateInput = {
-		name: '?',
-		experience: 0,
-		canChangeName: true
-	};
-
-	if (dinoz.level === 1) {
-		const dinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId);
-
-		if (!dinozRace) {
-			throw new ExpectedError(`Dinoz race ${dinoz.raceId} doesn't exist.`);
-		}
-
-		const learnableSkills = getLearnableSkills(dinoz);
-		const unlockableSkills = getUnlockableSkills(dinoz);
-		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
-
-		newDinozData.seed = randomUUID();
-		// Set next ups similarly to initialization and reincarnation
-		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
-		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
-	}
-	await updateDinoz(dinoz.id, newDinozData);
 };
 
 export const learnNextSphereSkill = (
