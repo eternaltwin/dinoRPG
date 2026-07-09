@@ -14,6 +14,7 @@ import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 import { backpackSlot } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
@@ -24,7 +25,8 @@ import {
 	DinozStatus,
 	LogType,
 	Player,
-	PlayerItem
+	PlayerItem,
+	Prisma
 } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
@@ -46,12 +48,13 @@ import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { initializeDinoz, learnNextSphereSkill, useRice } from '../utils/dinoz.js';
+import { getDinozUpChance, getLearnableSkills, getRandomUpElement, getUnlockableSkills, initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
-import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 import UnavailableReason = $Enums.UnavailableReason;
+import { randomUUID } from 'crypto';
+import { GLOBAL } from '../context.js';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -609,4 +612,37 @@ export const resurrect = (
 		id: dinoz.id,
 		life: dinoz.life
 	};
+};
+
+
+export const useRice = async (
+	dinoz: Pick<Dinoz, 'id' | 'level' | 'raceId'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
+	}
+) => {
+	const newDinozData: Prisma.DinozUpdateInput = {
+		name: '?',
+		experience: 0,
+		canChangeName: true
+	};
+
+	if (dinoz.level === 1) {
+		const dinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId);
+
+		if (!dinozRace) {
+			throw new ExpectedError(`Dinoz race ${dinoz.raceId} doesn't exist.`);
+		}
+
+		const learnableSkills = getLearnableSkills(dinoz);
+		const unlockableSkills = getUnlockableSkills(dinoz);
+		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
+
+		newDinozData.seed = randomUUID();
+		// Set next ups similarly to initialization and reincarnation
+		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
+		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
+	}
+	await updateDinoz(dinoz.id, newDinozData);
 };
