@@ -28,7 +28,7 @@ export async function getDinozFromDinozShop(req: Request) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
-	// If nothing is found, create 15 (?) dinoz to fill the shop
+	// If nothing is found, create N dinoz to fill the shop (based on game config)
 	if (playerData.dinozShop.length === 0) {
 		const dinozArray = [];
 		let randomRace: DinozRace;
@@ -45,14 +45,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			raceList[RaceEnum.PIGMOU]
 		];
 
-		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player = await getPlayerRewardsRequest(authed.id);
-
-		if (!player) {
-			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
-		}
-
-		player.rewards.forEach(playerReward => {
+		playerData.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === Reward.ROCKY) {
 				availableRaces.push(raceList[RaceEnum.ROCKY]);
 			}
@@ -62,7 +55,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			if (playerReward.rewardId === Reward.PTEROZ) {
 				availableRaces.push(raceList[RaceEnum.PTEROZ]);
 			}
-			if (playerReward.rewardId === Reward.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
+			if (playerReward.rewardId === Reward.QUETZU && playerData.quetzuBought < gameConfig.shop.buyableQuetzu) {
 				availableRaces.push(raceList[RaceEnum.QUETZU]);
 			}
 		});

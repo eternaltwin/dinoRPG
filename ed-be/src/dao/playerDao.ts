@@ -1007,6 +1007,7 @@ export async function getPlayerDinozShopRequest(playerId: string) {
 						display: true
 					}
 				},
+				quetzuBought: true,
 				rewards: true
 			}
 		});
