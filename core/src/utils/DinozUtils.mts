@@ -16,7 +16,6 @@ import {
 import { PlayerForConditionCheck } from '../constants.mjs';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
-import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
@@ -321,17 +320,13 @@ export const getMaxXp = (
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ) => {
-	const level = levelList.find(level => level.id === dinoz.level);
+	// Determine max level reachable by the Dinoz
+	let maxLevel = 50;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_1)) maxLevel += 10;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_2)) maxLevel += 10;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_3)) maxLevel += 10;
 
-	if (!level) {
-		throw new Error(`Level ${dinoz.level} doesn't exist.`);
-	}
-
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
-
-	return level.experience;
+	return dinoz.level >= maxLevel ? 0 : Math.floor(100 * Math.pow(1.075, dinoz.level - 1));
 };
 
 export const isAlive = (dinoz: Pick<Dinoz, 'life'>) => dinoz.life > 0;

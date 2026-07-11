@@ -70,12 +70,6 @@ describe('rewarder', () => {
 		expect(updateDinoz).toHaveBeenCalledWith(1, { experience: 100 });
 	});
 
-	it('throws when level missing for max experience', async () => {
-		await expect(
-			rewarder([{ rewardType: RewardEnum.MAXEXPERIENCE } as never], [{ id: 1, level: 9999, status: [] }], 'p1')
-		).rejects.toThrow("doesn't exist");
-	});
-
 	it('adds a skill and unlocks double skills', async () => {
 		await rewarder(
 			[{ rewardType: RewardEnum.SKILL, value: skillList[Skill.COMPETENCE_DOUBLE].id } as never],
