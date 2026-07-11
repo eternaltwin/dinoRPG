@@ -1,4 +1,3 @@
-import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
@@ -262,7 +261,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
-	result.newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience ?? 0;
+	result.newMaxExperience = getMaxXp(dinozSkills);
 
 	// Update stat
 	await setSpecificStat(StatTracking.LVL_UP, dinozSkills.player.id, 1);
@@ -323,11 +322,7 @@ function getDinozLearnableSkills(
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
-	const level = levelList.find(level => level.id === dinoz.level);
-	if (!level) {
-		throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
-	}
-	const maxExperience = level.experience;
+	const maxExperience = getMaxXp(dinoz);
 
 	if (dinoz.experience < maxExperience && !event) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't have enough experience`);
