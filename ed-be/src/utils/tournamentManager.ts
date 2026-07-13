@@ -468,9 +468,22 @@ class TournamentManager {
 
 		let index = 1;
 
+		/**
+		 * Cash price distribution:
+		 * 1st: 12% (total 12%)
+		 * 2nd: 10% (total 22%)
+		 * 3rd: 8% (total 30%)
+		 * 4th: 6% (total 36%)
+		 * 5-8th: 4% (total 52%)
+		 * 9-16th: 2% (total 68%)
+		 * 17-32th: 1% (total 84%)
+		 * 33-64th: 0.5% (total 100%)
+		 * */
+
 		const promises = [];
 		for (const playerId of players) {
 			if (index === 1) {
+				const cashPriceReward = Math.floor(tournament.cashPrice * 0.12);
 				//Zen medal
 				promises.push(
 					addRewardToPlayer({
@@ -483,8 +496,8 @@ class TournamentManager {
 				// Legendary box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_LEGENDARY, 1));
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.12)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
@@ -495,7 +508,7 @@ class TournamentManager {
 							},
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.12)
+								value: cashPriceReward
 							},
 							{
 								rewardType: RewardEnum.ITEM,
@@ -512,20 +525,28 @@ class TournamentManager {
 					)
 				);
 			} else if (index <= 4) {
+				let cashPriceReward;
+				if (index === 2) {
+					cashPriceReward = Math.floor(tournament.cashPrice * 0.1);
+				} else if (index === 3) {
+					cashPriceReward = Math.floor(tournament.cashPrice * 0.08);
+				} else {
+					cashPriceReward = Math.floor(tournament.cashPrice * 0.06);
+				}
 				// Dinoz egg (rare)
 				promises.push(increaseItemQuantity(playerId, Item.TOUFUFU_BABY, 1));
 				// Epic box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_EPIC, 1));
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.06)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
 						JSON.stringify([
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.06)
+								value: cashPriceReward
 							},
 							{
 								rewardType: RewardEnum.ITEM,
@@ -542,18 +563,19 @@ class TournamentManager {
 					)
 				);
 			} else if (index <= 8) {
+				const cashPriceReward = Math.floor(tournament.cashPrice * 0.04);
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0375)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
 						JSON.stringify([
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0375)
+								value: cashPriceReward
 							},
 							{
 								rewardType: RewardEnum.ITEM,
@@ -565,18 +587,19 @@ class TournamentManager {
 					)
 				);
 			} else if (index <= 16) {
+				const cashPriceReward = Math.floor(tournament.cashPrice * 0.02);
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.01875)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
 						JSON.stringify([
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.01875)
+								value: cashPriceReward
 							},
 							{
 								rewardType: RewardEnum.ITEM,
@@ -588,32 +611,34 @@ class TournamentManager {
 					)
 				);
 			} else if (index <= 32) {
+				const cashPriceReward = Math.floor(tournament.cashPrice * 0.01);
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0075)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
 						JSON.stringify([
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0075)
+								value: cashPriceReward
 							}
 						]),
 						NotificationSeverity.reward
 					)
 				);
 			} else {
+				const cashPriceReward = Math.floor(tournament.cashPrice * 0.005);
 				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0025)));
-				//Notification
+				promises.push(addMoney(playerId, cashPriceReward));
+				// Notification
 				promises.push(
 					createNotification(
 						playerId,
 						JSON.stringify([
 							{
 								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0025)
+								value: cashPriceReward
 							}
 						]),
 						NotificationSeverity.reward
