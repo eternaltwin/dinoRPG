@@ -36,7 +36,6 @@ import { Clan } from '@drpg/prisma';
 import { ModerationReason } from '@drpg/prisma/enums';
 import { ReportService } from '../../services/index.js';
 import DZButton from '../common/DZButton.vue';
-import { formatText } from '../../utils/formatText.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
@@ -65,14 +64,14 @@ export default defineComponent({
 		async reports(): Promise<void> {
 			if (!this.reportedArgument || !this.reportedReason) {
 				this.$toast.open({
-					message: formatText(this.$t('report.error')),
+					message: this.$t('report.error'),
 					type: 'info'
 				});
 				return;
 			}
 			if (!this.clan) {
 				this.$toast.open({
-					message: formatText('No clan found.'),
+					message: 'No clan found.',
 					type: 'info'
 				});
 				return;
@@ -84,7 +83,7 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			this.$toast.open({
-				message: formatText(this.$t('report.success')),
+				message: this.$t('report.success'),
 				type: 'info'
 			});
 			this.close();

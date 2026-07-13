@@ -422,7 +422,7 @@ export default defineComponent({
 					const clanWar = JSON.parse(notification.message);
 					return {
 						id: notification.id,
-						message: this.$t('notification.clanWar.' + clanWar.clanEvent, { targetClan: clanWar.targetClan }),
+						message: this.$t('notification.clanWar.' + clanWar.clanEvent, clanWar),
 						severity: notification.severity,
 						link: notification.link,
 						date: notification.date

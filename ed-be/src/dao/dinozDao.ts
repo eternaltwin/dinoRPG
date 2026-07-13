@@ -4,7 +4,7 @@ import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import { GLOBAL } from '../context.js';
-import { withSpan } from '../utils/tracing.js';
+import { withSpan } from '../utils/server/tracing.js';
 import { getActiveTeamsCached } from '../utils/tournament.cache.js';
 
 // Getters

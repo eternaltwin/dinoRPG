@@ -31,7 +31,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'uncommon',
 		teamSize: 4,
 		raceMinimum: 4,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.HIPPOCLAMP,
@@ -52,7 +51,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'common',
 		teamSize: 4,
 		raceMinimum: 3,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.GORILLOZ,
@@ -70,7 +68,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'fire',
 		teamSize: 3,
 		raceMinimum: 3,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.PIGMOU,
@@ -89,7 +86,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'water',
 		teamSize: 3,
 		raceMinimum: 3,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.SIRAIN,
@@ -109,7 +105,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'air',
 		teamSize: 3,
 		raceMinimum: 3,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.PLANAILLE,
@@ -130,7 +125,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'lightning',
 		teamSize: 3,
 		raceMinimum: 3,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.WANWAN,
@@ -150,7 +144,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		name: 'wood',
 		teamSize: 3,
 		raceMinimum: 2,
-		poison: true,
 		//levelLimit: 50,
 		teamRace: [
 			RaceEnum.GORILLOZ,
@@ -235,6 +228,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 	[formatName.ANTI_POISON]: {
 		name: 'anti_poison',
 		raceMinimum: 2,
+		poison: false,
 		teamRace: [
 			RaceEnum.GORILLOZ,
 			RaceEnum.WANWAN,
@@ -253,7 +247,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 	// 	name: 'demons',
 	// 	teamSize: 4,
 	// 	raceMinimum: 3,
-	// 	poison: true,
 	// 	//levelLimit: 50,
 	// 	teamRace: [
 	// 		RaceEnum.GORILLOZ_DEMON,

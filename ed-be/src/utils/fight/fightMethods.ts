@@ -48,7 +48,8 @@ import {
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
-	getMultiElementalAttack
+	getMultiElementalAttack,
+	powerOf
 } from './getDamage.js';
 import {
 	cloneDinoz,
@@ -278,6 +279,32 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 	}
 
 	return randomOpponent;
+};
+
+/**
+ * Announce a skill use
+ */
+const announceSkill = (fightData: DetailedFight, fighter: DetailedFighter, skillId: Skill) => {
+	const passiveKey = `${fighter.id}:${skillId}`;
+
+	// These skills should only be announced once per fight for the same fighter and skill combination
+	const passiveSkills = [Skill.AURA_PUANTE, Skill.SELF_CONTROL];
+	const isPassiveSkill = passiveSkills.includes(skillId);
+
+	if (fightData.passivesTracker[passiveKey] && isPassiveSkill) {
+		return;
+	}
+
+	fightData.steps.push({
+		action: 'skillAnnounce',
+		fid: fighter.id,
+		skill: skillId
+	});
+
+	// Mark this combination as announced
+	if (isPassiveSkill) {
+		fightData.passivesTracker[passiveKey] = true;
+	}
 };
 
 /**
@@ -946,7 +973,7 @@ const attackSingleOpponent = (
 		});
 	}
 
-	let hit_step = [fightData.steps];
+	const hit_step = [fightData.steps];
 	fightData.steps = [];
 	// Convert hit step into skill activation step and consolidate so defense & other pre-hit steps are properly
 	// before the skill activation step, and after-defense steps are properly after.
@@ -971,7 +998,7 @@ const attackAllOpponents = (
 
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
-	let hit_steps: FightStep[][] = [];
+	const hit_steps: FightStep[][] = [];
 	fightData.steps = [];
 
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
@@ -1218,8 +1245,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 	// If event is a skill
 	if ('id' in event) {
-		// Add skillAnnounce step, capture the index
-		fightData.steps.push({ action: 'skillAnnounce', fid: fighter.id, skill: event.id });
+		// Add announce step, capture the index
+		announceSkill(fightData, fighter, event.id);
 
 		switch (event.id) {
 			// AIR Vanilla
@@ -1283,7 +1310,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					throw new Error(`Fighter already has shielded status`);
 				}
 
-				addStatus(fightData, fighter, FightStatus.SHIELDED);
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.LONG);
 				break;
 			}
 			case Skill.BENEDICTION: {
@@ -1379,8 +1406,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				addSkillFx(fightData, fighter.id, event.id, [opponent.id]);
 
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
-					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					// Increase the opponent's time based on fighter's wood element
+					opponent.time += powerOf(fightData.rng, fighter, [[ElementType.WOOD, 2]]) * TIME_FACTOR;
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
@@ -1810,7 +1837,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor *= 1.05;
+				// Use condition checked prior and defined in ITEM details so the ITEM is not used if the fighter already has the status.
+				// Still check and throw an error just in case.
+				if (hasStatus(fighter, FightStatus.SHIELDED)) {
+					LOGGER.error('`Already has shielded status` in `activateEvent`.', {
+						fightData: fightData,
+						item: event
+					});
+					throw new Error(`Fighter already has shielded status`);
+				}
+
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.MEDIUM);
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -2195,13 +2232,7 @@ export const addStatus = (
 
 	// Negate if SELF_CONTROL
 	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) {
-		// Add announce step
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: fighter.id,
-			skill: Skill.SELF_CONTROL
-		});
-
+		announceSkill(fightData, fighter, Skill.SELF_CONTROL);
 		return false;
 	}
 
@@ -2375,11 +2406,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	};
 
 	// Add announce step
-	fightData.steps.push({
-		action: 'skillAnnounce',
-		fid: fighter.id,
-		skill: skill.id
-	});
+	announceSkill(fightData, fighter, skill.id);
 
 	switch (skill.id) {
 		// AIR
@@ -3808,11 +3835,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (random < 0.2) {
 				// Add skillActivate step
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: opponent.id,
-					skill: Skill.SHARIGNAN
-				});
+				announceSkill(fightData, opponent, Skill.SHARIGNAN);
 
 				// Add skill to opponent
 				opponent.skills.push({ ...skill });
@@ -3887,8 +3910,7 @@ const loseHpwithResilience = (fightData: DetailedFight, fighter: DetailedFighter
 // Have the figher lose the given number of damage
 const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
-	let hp_lost = damage;
-	const initial_hp = fighter.hp;
+	const hp_lost = damage;
 	fighter.hp -= damage;
 
 	fightData.steps.push({
@@ -4434,11 +4456,8 @@ const checkDefensiveEffects = (
 		// 6% chance
 		getRandomNumber(0, 100, fightData.rng) < 6
 	) {
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.FORME_VAPOREUSE
-		});
+		announceSkill(fightData, target, Skill.FORME_VAPOREUSE);
+
 		// Add INTANGIBLE
 		addStatus(fightData, target, FightStatus.INTANGIBLE, FightStatusLength.SHORT);
 	}
@@ -4450,11 +4469,8 @@ const checkDefensiveEffects = (
 		// 5 % chance
 		getRandomNumber(0, 100, fightData.rng) < 5
 	) {
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.CUIRASSE
-		});
+		announceSkill(fightData, target, Skill.CUIRASSE);
+
 		// Reduce damage by 5
 		damage = Math.max(damage - 5, 0);
 	}
@@ -4462,11 +4478,8 @@ const checkDefensiveEffects = (
 	// Check for mud wall
 	if (target.mudWall) {
 		// TODO announce skill only the first time it tanks damage
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id, // Different fighter id?
-			skill: Skill.MUR_DE_BOUE
-		});
+		announceSkill(fightData, target, Skill.MUR_DE_BOUE);
+
 		target.mudWall -= damage;
 
 		// If negative, the overflow damage goes through the mud wall
@@ -4495,11 +4508,7 @@ const checkDefensiveEffects = (
 		// 0 damage if skill
 		damage = 0;
 
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.M_RESISTANCE
-		});
+		announceSkill(fightData, target, Skill.M_RESISTANCE);
 	}
 
 	// M_PROTECTION
@@ -4675,11 +4684,7 @@ const checkAfterDefenseEffects = (
 		!hasStatus(attacker, FightStatus.POISONED) &&
 		hasSkill(target, Skill.AURA_PUANTE)
 	) {
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.AURA_PUANTE
-		});
+		announceSkill(fightData, target, Skill.AURA_PUANTE);
 		poison(fightData, attacker, target, Skill.AURA_PUANTE, FightStatusLength.MEDIUM);
 	}
 
@@ -4730,11 +4735,7 @@ const checkAfterDefenseEffects = (
 		// 1/5 chance
 		getRandomInteger(0, 4, fightData.rng) === 0
 	) {
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.M_CONTAMINATION
-		});
+		announceSkill(fightData, target, Skill.M_CONTAMINATION);
 		poison(fightData, attacker, target, Skill.M_CONTAMINATION, FightStatusLength.SHORT);
 	}
 
@@ -4883,11 +4884,8 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				fighter.canSurvive = false;
 
 				// Update history & heal
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: fighter.id,
-					skill: Skill.SURVIE
-				});
+				announceSkill(fightData, fighter, Skill.SURVIE);
+
 				fightData.steps.push({
 					action: 'skillActivate',
 					fid: fighter.id,

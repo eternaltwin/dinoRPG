@@ -5,6 +5,7 @@ import cors from 'cors';
 import 'reflect-metadata';
 import { scheduleEndedOffersExpiration, scheduleOffersExpiration } from './business/offerService.js';
 import { itinerantMerchant } from './cron/itinerantMerchant.js';
+import { scheduleProspector } from './cron/clanWarProspector.js';
 import { GLOBAL, ServerContext } from './context.js';
 import { readyCheck } from './middleware/readyCheck.js';
 import initRoutes from './routes/index.js';
@@ -88,6 +89,7 @@ export function main(cx: ServerContext) {
 	scheduleEndedOffersExpiration();
 	schedulePollExpiration();
 	scheduleWarExpiration();
+	scheduleProspector();
 	TournamentManager.resume(prisma);
 	resumeTournaments();
 

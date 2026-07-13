@@ -8,7 +8,6 @@ import { useToast } from 'vue-toast-notification';
 import { DinozBuildService } from '../../services/DinozBuildService';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
-import { formatText } from '../../utils/formatText';
 import DZSelect from '../common/DZSelect.vue';
 import SkillTree from '../dinoz/SkillTree.vue';
 import TitleHeader from '../utils/TitleHeader.vue';
@@ -35,7 +34,7 @@ const copyBuild = async () => {
 	try {
 		await DinozBuildService.copySharedBuild(buildId.value);
 		toast.open({
-			message: formatText(t(`toast.buildCopied`, { name: build.value?.name })),
+			message: t(`toast.buildCopied`, { name: build.value?.name }),
 			type: 'success'
 		});
 	} catch (error) {
@@ -49,7 +48,7 @@ onMounted(async () => {
 	// Redirect to last page if no PAC
 	if (!store.playerOptions.hasPAC) {
 		toast.open({
-			message: formatText(t(`toast.noPAC`)),
+			message: t(`toast.noPAC`),
 			type: 'error'
 		});
 		router.back();

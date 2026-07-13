@@ -21,7 +21,7 @@ import { DISCORD, LOGGER } from '../context.js';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import dayjs from 'dayjs';
 import { createNews } from '../dao/newsDao.js';
-import { translateTarget } from './translate.js';
+import { translateTarget } from './server/translate.js';
 import 'dayjs/locale/de.js';
 import 'dayjs/locale/fr.js';
 import 'dayjs/locale/es.js';

@@ -13,9 +13,9 @@ import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/p
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { decreaseIngredientQuantity, getIngredientsDataRequest } from '../dao/playerIngredientDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { Player } from '@drpg/prisma';
 
 /**
@@ -144,6 +144,15 @@ export async function buyItem(req: Request) {
 	if (theShop.type === ShopType.MAGICAL) {
 		await buyMagicItem(authed, playerShopData, itemReference, quantityBought, playerItemData);
 	} else if (theShop.type === ShopType.FILOU) {
+		const itemFromShop = shopList.FILOU.listItemsSold.find(i => i.id === itemId);
+		if (!itemFromShop) {
+			throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
+		}
+		const playerIngredient = await getIngredientsDataRequest(authed.id, itemId);
+		if (!playerIngredient || playerIngredient.quantity < itemFromShop.price * quantityBought) {
+			throw new ExpectedError(`You don't have enough for purchassing this quantity of coupons!`);
+		}
+		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
 		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList[Item.TREASURE_COUPON].itemId);
 		if (!playerTreasure) {
 			await insertItem(authed.id, { itemId: itemList[Item.TREASURE_COUPON].itemId, quantity: quantityBought });
@@ -162,12 +171,6 @@ export async function buyItem(req: Request) {
 
 		//Update stats
 		await setSpecificStat(StatTracking.S_BUYER, authed.id, quantityBought);
-
-		const itemFromShop = shopList.FILOU.listItemsSold.find(i => i.id === itemId);
-		if (!itemFromShop) {
-			throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
-		}
-		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
 		return {
 			itemId: itemList[Item.TREASURE_COUPON].itemId,
 			quantity: quantityBought,

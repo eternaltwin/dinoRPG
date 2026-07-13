@@ -4,7 +4,7 @@ import ForceBruteManager from '../utils/forcebruteManager.js';
 import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { $Enums, Prisma } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import dayjs from 'dayjs';
 import { getRandomUpElement } from '../utils/dinoz.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';

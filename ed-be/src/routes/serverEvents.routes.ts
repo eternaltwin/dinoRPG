@@ -5,7 +5,7 @@ import { body, header, validationResult } from 'express-validator';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import { GLOBAL } from '../context.js';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 

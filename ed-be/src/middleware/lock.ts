@@ -1,6 +1,6 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import type { Request, Response, NextFunction } from 'express';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const locks = new Map<string, NodeJS.Timeout>();
 

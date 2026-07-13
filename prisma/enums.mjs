@@ -170,7 +170,8 @@ export const ServerAction = {
   checkBans: 'checkBans',
   healRestingDinoz: 'healRestingDinoz',
   itinerantMerchant: 'itinerantMerchant',
-  midnightReset: 'midnightReset'
+  midnightReset: 'midnightReset',
+  prospector: 'prospector'
 };
 
 export const $Enums = {

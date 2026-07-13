@@ -18,7 +18,7 @@ import { createLog } from './logDao.js';
 import { increaseItemQuantity } from './playerItemDao.js';
 import { updateCompletion } from './rankingDao.js';
 import { setSpecificStat } from './trackingDao.js';
-import { withSpan } from '../utils/tracing.js';
+import { withSpan } from '../utils/server/tracing.js';
 
 export async function getTestUsers() {
 	return await prisma.player.findMany({
@@ -767,7 +767,8 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 				},
 				Dojo: {
 					select: {
-						id: true
+						id: true,
+						tournamentTeamId: true
 					}
 				}
 			}
@@ -1298,6 +1299,38 @@ export async function removeMoney(playerId: string, money: number) {
 	});
 }
 
+/**
+ * Remove money from a player only if he can afford it.
+ * @returns `true` if the money was withdrawn, `false` if the player does not have enough
+ */
+export async function spendMoney(playerId: string, money: number) {
+	return withSpan(spendMoney.name, async () => {
+		const updated = await prisma.player.updateMany({
+			where: {
+				id: playerId,
+				money: { gte: money }
+			},
+			data: {
+				money: {
+					decrement: money
+				}
+			}
+		});
+
+		if (updated.count === 0) {
+			return false;
+		}
+
+		const playerData = await prisma.player.findUniqueOrThrow({
+			where: { id: playerId },
+			select: { money: true }
+		});
+		await createLog(LogType.GoldLost, playerId, undefined, money.toString(), playerData.money.toString());
+
+		return true;
+	});
+}
+
 export async function removeDailyGridRewards(playerId: string, rewards: number) {
 	return withSpan(removeDailyGridRewards.name, async () => {
 		const playerData = await prisma.player.update({
@@ -1416,7 +1449,7 @@ export async function updateUsernameOnRelatedTables(playerId: string, newUsernam
 
 export async function getDojoFightPreparationRequest(playerId: string) {
 	return withSpan(getDojoFightPreparationRequest.name, async () => {
-		const player = await prisma.player.findUniqueOrThrow({
+		const player = await prisma.player.findUnique({
 			where: {
 				id: playerId
 			},

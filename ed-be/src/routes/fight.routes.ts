@@ -3,7 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import { processFight, replayFight } from '../business/fightService.js';
 import { apiRoutes } from '../constants/index.js';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

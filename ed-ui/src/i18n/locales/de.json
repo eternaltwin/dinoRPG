@@ -86,6 +86,7 @@
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
 			"archivedSiteId": "Historisierte Seite",
 			"shareArchivedData": "Twinoid-Statistiken teilen",
+			"displayedNotifications": "Anzahl der Benachrichtigungen, die gleichzeitig angezeigt werden",
 			"connectedPlayers": "Spieler Online",
 			"totalDinoz": "Gesamtzahl der Dinoz",
 			"totalPlayers": "Gesamtzahl der Spieler"
@@ -121,6 +122,8 @@
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
 		"clan_war": "Achtung! {attacker} hat soeben eure Burg angegriffen und {hpLost} :hp_castle: zugefügt!",
+		"clan_prospector_reward": "Der Gutachter hat eure Burg überprüft – euer Ansehen ist nun: {reputation}.",
+		"clan_prospector_penalty": "Der Gutachter hat eure Burg in Trümmern vorgefunden – euer Ansehen ist auf {reputation} gefallen.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
@@ -554,7 +557,7 @@
 			"surviving_ration": "Wenn dein Dinoz im Kampf eine schwere Verletzung erleidet, kann er mit dieser Überlebensration **zwischen 10 und 40 Lebenspunkte** wiederherstellen.",
 			"goblin_merguez": "Eine Spezialität des Großen Immerhitzus. Mit Vorsicht genießen!",
 			"pampleboum": "Diese schöne, leckere Frucht wartet nur auf einen ordentlichen Biss, um **bis zu 15 Lebenspunkte** wiederherzustellen.",
-			"sos_helmet": "Erhöht bei Benutzung die Rüstung deines Dinoz um 5%.",
+			"sos_helmet": "Verleiht den Status „Geschützt“ (20% Rüstung) für eine mittlere Dauer.",
 			"little_pepper": "Erhöht den nächsten Angriff deines Dinoz um 10.",
 			"zippo": "Dein Dinoz entzündet sich!",
 			"sos_flame": "Nichts geht über ein Notfallflämmchen, das einem im Kampf hilft.",
@@ -717,7 +720,7 @@
 			"corail": "Korallenminen",
 			"ilewkk": "Waïkiki-Insel",
 			"goport": "Zum Predigerhafen schwimmen",
-			"chbroc": "Zur Werkstatt von Toll Patsch gehen",
+			"chbroc": "Werkstatt von Toll Patsch",
 			"godnv": "Nach Dinoville zurückkehren",
 			"dplaza": "Dinoplaza",
 			"villa": "Villa",
@@ -2269,7 +2272,7 @@
 			"Sieste": "Der Dinoz schläft ein und stellt bis zu 20 Lebenspunkte wieder her.",
 			"Meteores": "Greift alle Feinde mit einer Feuerkraft von 10 an.",
 			"SelfControl": "Immunisiert den Dinoz gegen alle negativen Effekte und verringert seine Initiative um 3.",
-			"Brave": "Der Dinoz kann nicht mehr Teil einer Gruppe sein. Erhöht die maximalen Lebenspunkte um 50, das Feuerelement um 6 und die Geschwindigkeit des Dinoz um 15%.",
+			"Brave": "Der Dinoz kann nicht mehr Teil einer Gruppe sein. Erhöht das Feuerelement um 6 und die maximalen Lebenspunkte um 50. Verringert außerdem die Initiative **aller** anderen Kämpfer um einen Wert, der einer Feuerkraft von 2 entspricht.",
 			"Planificateur": "Ermöglicht es dem Dinoz, ein zusätzliches Feld freizulegen.",
 			"HeritageFaroe": "Erhöht die Stärke von Holz**angriffen** um 12 und die Rüstung um 10%.",
 			"PrintempsPrecoce": "Alle anderen Dinoz der Gruppe erhalten maximal so viele Lebenspunkte zurück wie der Dinoz Holzelementepunkte besitzt.",
@@ -2315,7 +2318,7 @@
 			"Regenerescence": "Erhöht beim Ausruhen die wiederhergestellten Lebenspunkte pro Stunde um 2.",
 			"PremiersSoins": "Ermöglicht es dem Dinoz, am Ende eines Kampfes einen Lebenspunkt wiederherzustellen, falls dieser Leben verlor",
 			"PureeSalvatrice": "Hebt alle negativen Effekte der Gruppe auf.",
-			"AuraHermetique": "Der Dinoz gibt sich selbst den Status „Geschützt“ (erhöht die Rüstung um 20%).",
+			"AuraHermetique": "Der Dinoz gibt sich selbst den Status „Geschützt“ (erhöht die Rüstung um 20%) für eine längere Dauer.",
 			"CrepusculeFlambloyant": "Greift alle Gegner mit einer Feuer- und Blitzkraft von 6 an.",
 			"AubeFeuillue": "Stellt Dinoz in der Gruppe bis zu Blitz 2 + Holz 2 Lebenspunkte wieder her.",
 			"Benediction": "Verleiht allen Dinoz in der Gruppe den Status „Gesegnet“.",
@@ -2606,7 +2609,8 @@
 		"clans": "Klane",
 		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
-		"stats": "Statistiken"
+		"stats": "Statistiken",
+		"wars": "Kriege"
 	},
 	"layout": {
 		"fx": "Status",
@@ -2625,7 +2629,8 @@
 		"attention": "Achtung",
 		"accept": "Ja",
 		"reject": "Nein",
-		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?"
+		"buildCastle": "Achtung: Der erste Burgbau wird die gesamte Klanschatzkammer aufbrauchen. Diesen Vorgang wirklich durchführen?",
+		"repairCastle": "Sobald sie repariert ist, kann die Burg wieder angegriffen werden. Bist du sicher, dass du fortfahren möchtest?"
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -4079,7 +4084,11 @@
 			"treasure": "Schatzkammer des Klans",
 			"event": "Ereignispunkte",
 			"war": "Kriegsansehen",
-			"castle": "Burg errichtet"
+			"castle": "Burg errichtet",
+			"warAttacker": "Angreifer",
+			"warDefender": "Verteidiger",
+			"warStart": "Anfangsdatum",
+			"warResult": "Ergebnis"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4116,6 +4125,12 @@
 			"clanEvent": "Ereignis-Rangliste",
 			"clanTreasure": "Schatzkammer-Rangliste",
 			"clanWar": "Kriegsrangliste"
+		},
+		"war": {
+			"forfeit": "Aufgegeben",
+			"ongoing": "Im Gange",
+			"castleDestroyed": "Burg zerstört",
+			"timeout": "Verteidigt"
 		}
 	},
 	"clan": {
@@ -4155,6 +4170,7 @@
 			"buildCastle": "Errichtet eure Burg",
 			"castleTooltip": "An diesem Ort befindet sich eure Burg",
 			"disclaimerCastle": "Eure Burg befindet sich bei **{place}** – verlagert zur Verteidigung eure Dinoz dorthin. Und ganz wichtig: Lasst eure Gegner nicht von diesem Aufenthaltsort wissen!",
+			"disclaimerProspector": "Der Gutachter wird zwischen {morning} und {evening} erwartet. Sein Besuch wird {next} stattfinden.",
 			"declareWar": "Diesen Klan angreifen",
 			"disclaimerAttack": "Diesen Klan anzugreifen würde euch {cost} :gold: kosten. Die Zutaten aus der Klanschatzkammer werden automatisch verbraucht, um diese Gebühr zu bezahlen.",
 			"attack": "Angriff",
@@ -4305,9 +4321,10 @@
 			"WAR_LOSED": "Ich habe eure Burg im Namen vom Klan {name} zerstört und somit den Krieg gegen euch gewonnen.",
 			"WAR_DEFENDED": "Wir haben die Angriffe des Klans {name} überstanden und somit diesen Verteidigungskrieg gewonnen.",
 			"WAR_FORFEIT": "Ich habe beschlossen, uns im Krieg gegen {name} geschlagen zu geben.",
-			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan {clan} gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
+			"WAR_PLAYER_ATTACKED": "Ich habe einen Angriff gegen den Klan „{clan}“ gestartet und der gegnerischen Burg {damage} Schaden zugefügt.",
 			"WAR_PLAYER_ATTACK": "Ich habe euch angegriffen und eurer Burg {damage} Schaden zugefügt.",
 			"WAR_WON": "Wir haben im Krieg gegen den Klan {name} gesiegt!",
+			"WAR_STOLEN": "Der Klan „{destroyedBy}“ hat die Burg von Klan „{defenderName}“ zerstört und den Sieg geraubt.",
 			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
@@ -4440,7 +4457,8 @@
 			"gainEnergy": "**{fighter}** hat Energie wiederhergestellt und hat jetzt **{energy}** Energie.",
 			"newTurn": " **{fighter}** ist dran!",
 			"statusTurn": "Statusüberprüfung bevor **{fighter}** dran ist.",
-			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus."
+			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus.",
+			"attackCastle": "**{fighter}** hat der Burg **{damages}** Schaden zugefügt."
 		},
 		"event": {
 			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
@@ -5285,13 +5303,14 @@
 		"message": "Du hast eine neue Nachricht erhalten.",
 		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen.",
 		"clanWar": {
-			"WAR_ATTACKED": "Der Klan {targetClan} hat uns den Krieg erklärt!",
-			"WAR_START": "Ich habe dem Klan {targetClan} den Krieg erklärt!",
-			"WAR_WON": "Wir haben im Krieg gegen den Klan {targetClan} gesiegt!",
-			"WAR_LOSED": "Der Klan {targetClan} hat unsere Burg zerstört.",
-			"WAR_FORFEIT": "Der Klan {targetClan} hat sich im Krieg geschlagen gegeben!",
-			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan {targetClan} zu zerstören.",
-			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan {targetClan} überstanden!"
+			"WAR_ATTACKED": "Der Klan „{targetClan}“ hat uns den Krieg erklärt!",
+			"WAR_START": "Ich habe dem Klan „{targetClan}“ den Krieg erklärt!",
+			"WAR_WON": "Wir haben im Krieg gegen den Klan „{targetClan}“ gesiegt!",
+			"WAR_LOSED": "Der Klan „{targetClan}“ hat unsere Burg zerstört.",
+			"WAR_FORFEIT": "Wir haben den Angriff auf den Klan „{targetClan}“ abgebrochen.",
+			"WAR_LOSE": "Es ist uns nicht gelungen, die Burg vom Klan „{targetClan}“ zu zerstören.",
+			"WAR_DEFENDED": "Wir haben die Angriffe vom Klan „{targetClan}“ überstanden!",
+			"WAR_STOLEN": "Der Klan „{destroyedBy}“ hat die Burg von Klan „{defenderName}“ zerstört und uns damit den Sieg geraubt."
 		}
 	},
 	"events": {

@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import { checkPlayerLB } from '../business/eternaltwinService.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

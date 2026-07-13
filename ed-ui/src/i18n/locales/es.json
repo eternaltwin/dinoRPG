@@ -86,6 +86,7 @@
 			"skipLevel": "Saltar la animación de subida de nivel",
 			"archivedSiteId": "Sitio web histórico",
 			"shareArchivedData": "Compartir sus estadísticas Twinoid",
+			"displayedNotifications": "Número de notificaciones mostradas simultáneamente",
 			"connectedPlayers": "Jugadores conectados",
 			"totalDinoz": "Número total de Dinos",
 			"totalPlayers": "Número total de jugadores"
@@ -121,6 +122,8 @@
 			"offerClaimed": "Has obtenido lo que ganaste"
 		},
 		"clan_war": "¡Alerta! {attacker} acaba de atacar tu castillo y le ha infligido {hpLost} :hp_castle:.",
+		"clan_prospector_reward": "El Prospector ha podido inspeccionar tu castillo; tu reputación ha aumentado a {reputation}.",
+		"clan_prospector_penalty": "El Prospector ha encontrado tu castillo en ruinas; tu reputación ha bajado a {reputation}.",
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"heal": "Tu Dino ha recuperado {value} :hp:.",
 		"gold": "Recibiste {value} :gold:.",
@@ -554,7 +557,7 @@
 			"surviving_ration": "En caso de heridas graves, recuperarás *entre 10 y 40 puntos de vida* durante un combate.",
 			"goblin_merguez": "La especialidad de la región del Gran Señor-Todo-Quema. A consumir con mucha moderación.",
 			"pampleboum": "¡Un fruto bello y apetitoso capaz de darte 15 puntos de vida con un solo mordisco!",
-			"sos_helmet": "Aumenta la armadura de tu Dino en 5% cuando se utiliza.",
+			"sos_helmet": "Otorga el estado escudo (20% de armadura) durante un periodo medio.",
 			"little_pepper": "Aumenta en 10 puntos el próximo asalto de tu Dino.",
 			"zippo": "¡Tu Dino quema!",
 			"sos_flame": "Nada mejor que una Flamacha de Socorro para ayudarte durante un combate.",
@@ -599,7 +602,7 @@
 			"enchanted_steroid": "Protege a su portador contra todas las pérdidas de resistencia.",
 			"curse_locker": "Bloquea al azar a un adversario en su elemento más débil durante 3 ciclos.",
 			"fear_factor": "Un Dino que tenga la habilidad Bravo y que lleve este objeto, podrá agruparse con otros Dinos con su misma afinidad de elementos.",
-			"life_stealer": "Cuando el dino cae por debajo de 20 pv, roba 30 pv de un oponente al azar y se los añade para sí mismo.",
+			"life_stealer": "Cuando el Dino cae por debajo de 20 pv, roba 30 pv de un oponente al azar y se los añade para sí mismo.",
 			"fire_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"wood_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"water_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
@@ -717,7 +720,7 @@
 			"corail": "Minas de Coral",
 			"ilewkk": "Isla Waïkiki",
 			"goport": "Nadar hasta el Puerto de Santa Moría",
-			"chbroc": "Ir al Taller de Broc",
+			"chbroc": "Taller de Broc",
 			"godnv": "¿Volver a Dinovilla?",
 			"dplaza": "Dinoplaza",
 			"villa": "Villa",
@@ -956,7 +959,7 @@
 			"soufflet": "Los Vispers son Dinos extraordinarios, después de su periodo lárvico, alcanzan su verdadera forma en la edad adulta y son capaces de volar. Oriundos de Nimbao, no fueron conocidos hasta que la isla fue descubierta. Su espíritu guerrero es temible.",
 			"toufufu": "Los Tufufus descienden del Wistiti. Son muy escurridizos y complicados de atrapar. Además, parece que alguien les ha enseñado kung-fu...",
 			"triceragnon": "Provenientes de las tierras de Thorgnole, los Tricerithumps son Dinos muy apreciados por los Maestros de Dinoland. Su naturaleza combativa los hace difíciles de controlar.",
-			"wanwan": "En el pasado fueron los mejores amigos del hombre, pero tras una lenta evolución, ahora los Wanwan han vuelto al estado salvaje. Son dinos muy vivaces, capaces de realizar ataques muy rápidos con sus afilados dientes. El pelaje de los Wanwan es conductor de electricidad, lo que les permite almacenar rayos y descargarlos a voluntad."
+			"wanwan": "Antaño fueron los mejores amigos del hombre, pero tras una lenta evolución, ahora los Wanwan han vuelto al estado salvaje. Son Dinos muy vivaces, capaces de realizar ataques muy rápidos con sus afilados dientes. El pelaje de los Wanwan es conductor de electricidad, lo que les permite almacenar la electricidad para usarla en sus ataques."
 		}
 	},
 	"npc": {
@@ -1862,7 +1865,7 @@
 			"merchant": {
 				"name": "Mercader ambulante",
 				"description": "El Mercader Ambulante se pasea por todo Dinoland y compra *Ingredientes* a los maestros de Dinos. Ofrece precios muy interesantes...",
-				"dimanche": "El comerciante ambulante se ha tomado el día libre, tendrás que esperar hasta mañana para poder volver a vender tus ingredientes. Por supuesto, el comerciante ambulante se habrá mudado a una ubicación diferente, por lo que tendrás que encontrarlo antes de poder vender tus ingredientes."
+				"dimanche": "El Mercader Ambulante se ha tomado el día libre. Tendrás que esperar hasta mañana para poder volver a vender tus ingredientes. Claro que, para mañana, el Mercader Ambulante se habrá desplazado a una ubicación diferente, por lo que tendrás que encontrarlo antes de poder vender tus ingredientes."
 			},
 			"filou": {
 				"name": "Hombre Sospechoso",
@@ -2269,7 +2272,7 @@
 			"Sieste": "El Dino gana hasta 20 puntos de vida y se duerme",
 			"Meteores": "Ataca a todos los enemigos con un poder de Fuego 10",
 			"SelfControl": "Evita todos los estatus negativos y disminuye la iniciativa del Dino en 3",
-			"Brave": "El Dino no podrá formar parte de un Grupo. Aumenta el elemento Fuego en 6, el máximo de puntos de vida en 50 y la velocidad del Dino en 15%",
+			"Brave": "El Dino no podrá formar parte de un Grupo. Aumenta el elemento Fuego en 6 y el máximo de puntos de vida en 50. También reduce la iniciativa de **todos los otros** combatientes con un poder de Fuego de 2.",
 			"Planificateur": "Permite al Dino excavar una casilla adicional",
 			"HeritageFaroe": "Aumenta la potencia de los **asaltos** de Madera en 12 y la armadura en 10%",
 			"PrintempsPrecoce": "Todos los otros Dinos del Grupo ganan hasta tantos puntos de vida como el elemento Madera del Dino que lo lanza",
@@ -2315,10 +2318,10 @@
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
 			"PremiersSoins": "Permite al Dino recuperar un punto de vida al final de un combate si pierde vida",
 			"PureeSalvatrice": "Anula todos los estatus negativos del Grupo",
-			"AuraHermetique": "El Dino obtiene el estado de escudo (aumenta la armadura en 20%)",
+			"AuraHermetique": "El Dino obtiene el estado escudo (aumenta la armadura un 20%) durante un periodo largo",
 			"CrepusculeFlambloyant": "Ataca a todos los enemigos con un poder Fuego 6 + Rayo 6",
 			"AubeFeuillue": "Regenera a todos los Dinos del Grupo hasta Rayo 2 + Madera 2 en puntos de vida",
-			"Benediction": "Da el estatus Bendición a todos los Dinos del Grupo",
+			"Benediction": "Da el estatus **Bendecido** a todos los Dinos del grupo por una duración media.",
 			"ArchangeCorrosif": "Aumenta el elemento Fuego en 2 y el elemento Rayo en 1",
 			"ArchangeGenesif": "Aumenta el elemento Madera en 2 y el elemento Rayo en 1",
 			"Pretre": "Aumenta la velocidad de recuperación de puntos de vida de todos los Dinos durante el descanso",
@@ -2574,8 +2577,8 @@
 			"39": "Esta rama llena de flores te ha sido entregada por el Guardián de la Jungla para mostrarte su gratitud. Gracias a esta rama, ¡ahora puedes acceder a la Tienda de Frutas!",
 			"55": "Este trozo de hielo está tan frío que parece que nunca podrá descongelarse...",
 			"50": "Tu Dino avanza en su evolución, ¡ahora puede llegar hasta el nivel 60!",
-			"51": "Tu dino sigue evolucionando, ¡ahora puede alcanzar el nivel 70!",
-			"52": "Tu dino sigue evolucionando, ¡ahora puede alcanzar el nivel 80!",
+			"51": "Tu Dino sigue evolucionando, ¡ahora puede alcanzar el nivel 70!",
+			"52": "Tu Dino sigue evolucionando, ¡ahora puede alcanzar el nivel 80!",
 			"62": "¡Esta maldición impide a tu Dino ganar experiencia en combate!",
 			"66": "Gracias a esta herramienta muy útil, ¡tu Dino podrá capturar Monstruos que irán a ayudarle en los combates!",
 			"35": "Esta Medalla de Bronce recompensa a tu Dino por haber llegado al 10° puesto del Torneo de Fuerzabruta.",
@@ -2606,7 +2609,8 @@
 		"clans": "Clanes",
 		"completion": "Completado",
 		"pantheon": "Panteón",
-		"stats": "Estadísticas"
+		"stats": "Estadísticas",
+		"wars": "Guerras"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -2625,7 +2629,8 @@
 		"attention": "Atención",
 		"accept": "Sí",
 		"reject": "No",
-		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?"
+		"buildCastle": "Atención. Construir tu castillo por primera vez te costará todo el tesoro de tu clan. ¿Estás seguro de que deseas continuar?",
+		"repairCastle": "Una vez reparado, tu castillo podrá volver a ser atacado. ¿Estás seguro de que deseas continuar?"
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -4079,7 +4084,11 @@
 			"treasure": "Tesoro del Clan",
 			"event": "Puntos del evento",
 			"war": "Reputación de guerra",
-			"castle": "Castillo construido"
+			"castle": "Castillo construido",
+			"warAttacker": "Atacante",
+			"warDefender": "Defensor",
+			"warStart": "Fecha de inicio",
+			"warResult": "Resultado"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4116,6 +4125,12 @@
 			"clanEvent": "Clasificación del evento",
 			"clanTreasure": "Clasificación del tesoro",
 			"clanWar": "Clasificación de la Guerra"
+		},
+		"war": {
+			"forfeit": "Abandonada",
+			"ongoing": "En curso",
+			"castleDestroyed": "Castillo destruido",
+			"timeout": "Defendido"
 		}
 	},
 	"clan": {
@@ -4155,6 +4170,7 @@
 			"buildCastle": "Construir tu castillo",
 			"castleTooltip": "Localización del castillo",
 			"disclaimerCastle": "Tu castillo se encuentra en **{place}**. Lleva allí a tus Dinos para defenderlo, ¡pero sobre todo no reveles su posición a tus enemigos!",
+			"disclaimerProspector": "El Prospector pasará entre {morning} y {evening}. Su próxima visita será el {next}.",
 			"declareWar": "Declarar la guerra a este clan",
 			"disclaimerAttack": "Atacar a este clan tendrá un costo de {cost} :gold:. Los ingredientes del tesoro de tu clan serán consumidos automáticamente para pagar este impuesto.",
 			"attack": "Ataque",
@@ -4308,6 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "He atacado al clan {clan} e infligí {damage} de daño al castillo enemigo.",
 			"WAR_PLAYER_ATTACK": "Les he atacado e infligí {damage} de daño a tu castillo.",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {name}!",
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y robó la guerra.",
 			"UNKNOWN": "Evento desconocido."
 		}
 	},
@@ -4440,7 +4457,8 @@
 			"gainEnergy": "**{fighter}** recupera energía y ahora tiene **{energy}** energía.",
 			"newTurn": "Es el turno de **{fighter}**.",
 			"statusTurn": "Verificación de estados antes del turno de **{fighter}**",
-			"tired": "**{fighter}** está cansado y pierde su turno."
+			"tired": "**{fighter}** está cansado y pierde su turno.",
+			"attackCastle": "**{fighter}** infligió **{damages}** de daño al castillo."
 		},
 		"event": {
 			"christmas_ticket": "Parece que este monstruo tenía un ticket de Navidad consigo. ¡Qué suerte!"
@@ -5204,7 +5222,7 @@
 			"customText": "Descripción inapropiada",
 			"avatar": "Avatar inapropiado",
 			"accountName": "Nombre de jugador inapropiado",
-			"dinozName": "Nombre de dino inapropiado",
+			"dinozName": "Nombre de Dino inapropiado",
 			"multi": "Este jugador utiliza varias cuentas",
 			"other": "Otro",
 			"clanBanner": "Banner ofensivo",
@@ -5289,9 +5307,10 @@
 			"WAR_START": "¡He declarado la guerra contra el clan {targetClan}!",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {targetClan}!",
 			"WAR_LOSED": "El clan {targetClan} destruyó nuestro castillo.",
-			"WAR_FORFEIT": "¡El clan {targetClan} se ha rendido!",
+			"WAR_FORFEIT": "Abandonamos la guerra contra {targetClan}.",
 			"WAR_LOSE": "No logramos destruir el castillo del clan {targetClan}.",
-			"WAR_DEFENDED": "¡Resistimos los ataques del clan {targetClan}!"
+			"WAR_DEFENDED": "¡Resistimos los ataques del clan {targetClan}!",
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y nos robó la guerra."
 		}
 	},
 	"events": {

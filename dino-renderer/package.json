@@ -17,7 +17,7 @@
 		"typecheck": "yarn tsc --noEmit"
 	},
 	"dependencies": {
-		"@eternaltwin/dinorpg_animations": "^1.0.8",
+		"@eternaltwin/dinorpg_animations": "^1.0.9",
 		"finalhandler": "^1.2.0",
 		"puppeteer": "^22.0.0",
 		"serve-static": "^1.15.0"

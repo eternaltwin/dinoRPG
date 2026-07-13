@@ -99,7 +99,6 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { formatText } from '../../utils/formatText.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import DZSelect from './DZSelect.vue';
 
@@ -194,7 +193,7 @@ export default defineComponent({
 						}
 
 						this.$toast.open({
-							message: formatText(message),
+							message: message,
 							type: 'info'
 						});
 					}

@@ -122,6 +122,8 @@
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"clan_war": "Alerte ! {attacker} vient d'attaquer votre château et lui a infligé {hpLost} :hp_castle:.",
+		"clan_prospector_reward": "Le Prospecteur a pu inspecter votre château — votre réputation est maintenant de {reputation}.",
+		"clan_prospector_penalty": "Le Prospecteur a trouvé votre château en ruines — votre réputation est tombée à {reputation}.",
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
@@ -555,7 +557,7 @@
 			"surviving_ration": "En cas de blessures graves, la ration de survie peut vous rendre **entre 10 et 40 points de vie** lors d'un combat.",
 			"goblin_merguez": "La spécialité du Grand-Tout-Chaud. À consommer avec beaucoup de modération !",
 			"pampleboum": "Ce beau fruit appétissant n'attend qu'un grand coup de dent pour vous rendre 15 points de vie.",
-			"sos_helmet": "Augmente l'armure de votre Dinoz de 5% quand il est utilisé.",
+			"sos_helmet": "Donne le statut **Bouclier** pour une durée moyenne.",
 			"little_pepper": "Augmente de 10 points le prochain assaut de votre Dinoz.",
 			"zippo": "Votre Dinoz s'enflamme !",
 			"sos_flame": "Rien de tel qu'une Flammèche de Secours pour venir vous aider pendant un combat.",
@@ -1024,9 +1026,9 @@
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
 				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacune de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroirs. J'ai décidé d'appeler ça un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheureusement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
-				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre que racine...*"
+				"pac_go": "Es-tu fou !?!?!?!?!?!&&File d'ici et ne t'avise plus de me parler de ce parchemin !",
+				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre au lieu de meuble...*"
 			},
 			"playerChoice": {
 				"talk": "Parler au Professeur Eugène",
@@ -1173,7 +1175,7 @@
 				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Éleveur ?",
 				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on organise des rallyes tout autour de Dinoland !",
 				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
-				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrais alors répondre à ton vœu le plus cher.",
+				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrai alors répondre à ton vœu le plus cher.",
 				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. Cela veut dire que tu devrais être capable de survivre... là-bas... peut-être...",
 				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi être des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
 				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sache que tu y trouveras une clé, oui, LA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis bien entendu.",
@@ -1222,7 +1224,7 @@
 				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
 				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
 				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*.",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
+				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
 				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
 			},
 			"playerChoice": {
@@ -1319,8 +1321,8 @@
 				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
 				"accept": "Marché conclu...",
 				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tous ces poissons qu'on a l'habitude de s'envoyer ?",
-				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô !",
-				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rends ta racine, j'en avais déjà une vieille à utiliser."
+				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&&Aller, Tchôôôôô !",
+				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&&//Waka waka ouais ouais!//&&Et voilà !&&Bon par contre le charme a bien séché la racine, bon courage pour en faire quoi que ce soit. Tiens, je te rends ta racine, j'en avais déjà une vieille à utiliser."
 			},
 			"playerChoice": {
 				"vener": "Le Vénérable...",
@@ -2205,7 +2207,7 @@
 			"Carapace": "Augmente l'armure de 5%",
 			"Sauvagerie": "Augmente la puissance des **assauts** de Bois de 5",
 			"Endurance": "Augmente la défense Bois de 2",
-			"Vignes": "Diminue l'initiative d'un ennemi au sol de 15",
+			"Vignes": "Diminue l'initiative d'un ennemi au sol avec un pouvoir Bois de 2",
 			"RenfortsKorgon": "Appelle un korgon pour aider à combattre",
 			"Sympathique": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
 			"Croissance": "Augmente la puissance de tous les **assauts** de 1 et augmente le maximum de points de vie de 20",
@@ -2264,13 +2266,13 @@
 			"BouleDeFeu": "Attaque un ennemi avec un pouvoir de Feu 7",
 			"Combustion": "Tous les ennemis perdent des points de vie égaux à leur élément Bois (soumis équilibrage)",
 			"ChasseurDeDragon": "Permet au Dinoz de chasser des animaux très rares et dangereux dans certains lieux",
-			"Torche": "Le Dinoz s'enflamme et perd 1 PV par tour. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
+			"Torche": "Le Dinoz commence le combat avec le status Enflammé et perd 1 PV par cycle. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
 			"AuraIncandescente": "Augmente l'élément Feu de 2",
 			"Vengeance": "Augmente les chances de contre-attaque de 5%",
 			"Sieste": "Le Dinoz regagne jusqu'à 20 points de vie et s'endort",
 			"Meteores": "Attaque tous les ennemis avec un pouvoir de Feu 10",
-			"SelfControl": "Immunise le Dinoz contre tous les effets négatifs et diminue son initiative de 3",
-			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6, le maximum de vie de 50 et la vitesse de 15%",
+			"SelfControl": "Immunise le Dinoz contre tous les statuts négatifs et diminue son initiative de 3",
+			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6 et le maximum de vie de 50. Diminue également l'initiative de **tous** les autres combattants avec un pouvoir Feu de 2.",
 			"Planificateur": "Permet au Dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des **assauts** Bois de 12 et l'armure de 10%",
 			"PrintempsPrecoce": "Tous les autres combattants alliés regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
@@ -2292,7 +2294,7 @@
 			"DoucheEcossaise": "Attaque tous les ennemis avec un pouvoir Eau de 2",
 			"ZeroAbsolu": "Augmente la défense contre le Feu de 25",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne, il ne peut plus agir mais son armure augmente de 50%",
-			"Acupuncture": "Confère le statut soin (soigne 1 PV par cycle), les assaillants en mêlée subissent 1 point de dégât.",
+			"Acupuncture": "Confère le statut **Régénération**, les assaillants en mêlée subissent 1 point de dégât.",
 			"Sapeur": "Augmente la probabilité d'utilisation des équipements de 50%",
 			"RayonKaarSher": "Attaque tous les ennemis avec un pouvoir Eau de 7",
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
@@ -2316,10 +2318,10 @@
 			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos",
 			"PremiersSoins": "Permet au Dinoz de récupérer un point de vie à la fin du combat s'il a perdu de la vie",
 			"PureeSalvatrice": "Annule tous les effets négatifs du groupe",
-			"AuraHermetique": "Le Dinoz se donne le statut bouclier (augmente l'armure de 20%)",
+			"AuraHermetique": "Le Dinoz se donne le statut **Bouclier** pour une durée longue",
 			"CrepusculeFlambloyant": "Attaque tous les ennemis avec un pouvoir Feu 6 + Foudre 6",
 			"AubeFeuillue": "Régénère les PV de tous les Dinoz du groupe jusqu'à Foudre 2 + Bois 2",
-			"Benediction": "Donne le statut béni (augmente la puissance de tous les assauts de 3) à tous les Dinoz du groupe pour une durée moyenne.",
+			"Benediction": "Donne le statut **Béni** à tous les Dinoz du groupe pour une durée moyenne.",
 			"ArchangeCorrosif": "Augmente l'élément Feu de 2 et l'élément Foudre de 1",
 			"ArchangeGenesif": "Augmente l'élément Bois de 2 et l'élément Foudre de 1",
 			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz (non cumulable)",
@@ -2355,7 +2357,7 @@
 			"MeditationSolitaire": "Augmente la défense Air de 3, diminue la vitesse des attaques Air de 50%",
 			"MeditationTranscendantale": "Augmente la défense Air de 6, diminue la vitesse des attaques Air de 50%",
 			"SouffleDeVie": "Le Dinoz est immunisé au poison et aux malédictions",
-			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible pour une durée infinie",
+			"FormeEtherale": "Le Dinoz apparaît avec le statut Intangible pour une durée infinie",
 			"Brasero": "Attaque tous les ennemis avec un pouvoir Feu de 3",
 			"Detonation": "Le Dinoz perd 5 PV et gagne 15 d'initiative",
 			"CoeurDuPhenix": "Augmente le nombre de PV récupérés lors du repos de 15%",
@@ -2414,7 +2416,7 @@
 			"Bleu": "Augmente la puissance de tous les **assauts** de 20 lorsque le Dinoz est aux Îles Atlantéinées",
 			"MueAcqueuse": "Augmente la défense contre la Foudre de 20",
 			"CarapaceBlindee": "Augmente l'armure de 50%, réduit la vitesse de 20%",
-			"DieteChromatique": "Inflige le statut mono-élément à un ennemi (verrouille son élément actuel)",
+			"DieteChromatique": "Donne le statut Verrouillé à un ennemi (verrouille son élément actuel)",
 			"EffluveAphrodisiaque": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
 			"Nemo": "Le Dinoz peut pêcher dans une case supplémentaire",
 			"Cleptomane": "Empêche un des Dinoz adverses d'utiliser des objets non magiques pendant le combat. Se lance au début du combat.",
@@ -2714,7 +2716,7 @@
 		"header": "Liste des Missions",
 		"headers": {
 			"title": "Titre",
-			"status": "Statut"
+			"status": "Statut | Statuts"
 		},
 		"xp": "points d'expérience",
 		"gold": "pièces",
@@ -4127,7 +4129,7 @@
 		"war": {
 			"forfeit": "Forfait",
 			"ongoing": "En cours",
-			"castleDestroyed": "Chateau détruit",
+			"castleDestroyed": "Château détruit",
 			"timeout": "Défendu"
 		}
 	},
@@ -4168,6 +4170,7 @@
 			"buildCastle": "Construire votre château",
 			"castleTooltip": "Lieu où se situe votre château",
 			"disclaimerCastle": "Votre château se trouve à **{place}**, amenez y vos Dinoz pour le défendre mais surtout ne divulguez pas sa position à vos ennemis !",
+			"disclaimerProspector": "Le Prospecteur passera entre {morning} et {evening}. Sa prochaine visite sera le {next}.",
 			"declareWar": "Attaquer ce clan",
 			"disclaimerAttack": "Attaquer ce clan aura un coût de {cost} :gold:. Des ingrédients de votre trésor de clan seront automatiquement consommés pour payer cette taxe.",
 			"attack": "Attaque",
@@ -4321,7 +4324,7 @@
 			"WAR_PLAYER_ATTACKED": "J'ai mené une attaque contre {clan} et ai infligé {damage} dégats au chateau adverse.",
 			"WAR_PLAYER_ATTACK": "Je vous ai attaqué et ai infligé {damage} dégâts à votre château.",
 			"WAR_WON": "Nous avons gagné la guerre contre {name} !",
-			"WAR_TIMEOUT": "{name} n'a pas réussi à détruire votre château dans le temps imparti.",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et a volé la victoire.",
 			"UNKNOWN": "Événement inconnu."
 		}
 	},
@@ -4406,21 +4409,21 @@
 			"swampmf2": "Brumoz"
 		},
 		"status": {
-			"asleep": "endormi",
-			"slowed": "ralenti",
-			"petrified": "pétrifié",
-			"poisoned": "empoisonné",
-			"burned": "brûlé",
-			"locked": "verrouillé",
-			"dazzled": "ébloui",
-			"stunned": "étourdi",
-			"torched": "torche",
-			"intangible": "intangible",
-			"flying": "vol",
-			"quickened": "rapidité",
-			"shielded": "bouclier",
-			"blessed": "béni",
-			"healing": "soigné"
+			"asleep": "Endormi",
+			"slowed": "Ralenti",
+			"petrified": "Pétrifié",
+			"poisoned": "Empoisonné",
+			"burned": "Brûlé",
+			"locked": "Verrouillé",
+			"dazzled": "Ébloui",
+			"stunned": "Étourdi",
+			"torched": "Enflammé",
+			"intangible": "Intangible",
+			"flying": "Vol",
+			"quickened": "Accéléré",
+			"shielded": "Bouclier",
+			"blessed": "Béni",
+			"healing": "Régénération"
 		},
 		"step": {
 			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
@@ -4631,9 +4634,9 @@
 		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {
-		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au Dinoz {dinoz} ({dinozId})",
+		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
 		"AdminUpdateDinoz": "**Admin ({playerId})** a mis à jour {stat} à {value} du Dinoz {dinoz} ({dinozId})",
-		"AdminRemoveStatus": "**Admin ({playerId})** a enlevé le status {status} au Dinoz {dinoz} ({dinozId})",
+		"AdminRemoveStatus": "**Admin ({playerId})** a enlevé le statut {status} au Dinoz {dinoz} ({dinozId})",
 		"AdminAddSkill": "**Admin ({playerId})** a ajouté la compétence {skill} au Dinoz {dinoz} ({dinozId})",
 		"AdminRemoveSkill": "**Admin ({playerId})** a enlevé la compétence {skill} au Dinoz {dinoz} ({dinozId})",
 		"AdminAddUnlockableSkill": "**Admin ({playerId})** a ajouté la compétence débloquable {skill} au Dinoz {dinoz} ({dinozId})",
@@ -4708,11 +4711,11 @@
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
-			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
+			"cashPrice": ":gold: La cagnotte pour ce tournoi est de **{cashPrice}** :gold: !!",
 			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&La cagnotte est actuellement à **{cashPrice}** :gold:.",
 		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
 		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
@@ -5304,9 +5307,10 @@
 			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",
 			"WAR_WON": "Nous avons gagné la guerre contre {targetClan} !",
 			"WAR_LOSED": "Le clan {targetClan} a détruit notre château.",
-			"WAR_FORFEIT": "Le clan {targetClan} a déclaré forfait !",
+			"WAR_FORFEIT": "Nous avons abandonné l'attaque contre {targetClan}.",
 			"WAR_LOSE": "Nous n'avons pas réussi à détruire le château de {targetClan}.",
-			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !"
+			"WAR_DEFENDED": "Nous avons résisté aux assauts du clan {targetClan} !",
+			"WAR_STOLEN": "Le clan {destroyedBy} a détruit le château du clan {defenderName} et nous a volé la guerre."
 		}
 	},
 	"events": {

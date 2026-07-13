@@ -52,7 +52,6 @@ import DZButton from '../common/DZButton.vue';
 import DZInput from '../../components/common/DZInput.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
-import { formatText } from '../../utils/formatText.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import TournamentDisplay from './TournamentDisplay.vue';
 
@@ -85,7 +84,7 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			if (!this.currentTournament) {
-				this.$toast.open({ message: formatText(this.$t(`toast.noFBTournament`)), type: 'error' });
+				this.$toast.open({ message: this.$t(`toast.noFBTournament`), type: 'error' });
 				this.$router.push({
 					name: 'News'
 				});

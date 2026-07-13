@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { param, body, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 import {
 	createMyTeam,
 	fightChallenge,
@@ -22,6 +22,7 @@ import {
 	tournamentsHistory,
 	getDojoTournamentFights
 } from '../business/tournamentService.js';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 
 const routes: Router = Router();
 
@@ -76,7 +77,7 @@ routes.put(
 			.isArray()
 			.notEmpty()
 			.custom(value => allValuesAreNumber(value)),
-		body('rightId').exists()
+		body('rightId').exists().isUUID()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -92,7 +93,7 @@ routes.put(
 	}
 );
 
-routes.get(`${commonPath}/share/:id`, [param('id').exists()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/share/:id`, [param('id').exists().isUUID()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -107,7 +108,7 @@ routes.get(`${commonPath}/share/:id`, [param('id').exists()], async (req: Reques
 
 routes.get(
 	`${commonPath}/history/:page`,
-	[param('page').exists().toInt().isNumeric()],
+	[param('page').exists().isInt({ min: 1 }).toInt()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -171,7 +172,11 @@ routes.get(`${commonPath}/tournament`, async (req: Request, res: Response) => {
 
 routes.get(
 	`${commonPath}/tournament/:phase/:id/:pool`,
-	[param('phase').exists(), param('id').exists().isUUID(), param('pool').exists().toInt()],
+	[
+		param('phase').exists().isIn(Object.values(TournamentPhase)),
+		param('id').exists().isUUID(),
+		param('pool').exists().toInt()
+	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -188,7 +193,11 @@ routes.get(
 
 routes.patch(
 	`${commonPath}/tournament/:phase/:id/:pool`,
-	[param('phase').exists(), param('id').exists().isUUID(), param('pool').exists().toInt()],
+	[
+		param('phase').exists().isIn(Object.values(TournamentPhase)),
+		param('id').exists().isUUID(),
+		param('pool').exists().toInt()
+	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -203,18 +212,22 @@ routes.patch(
 	}
 );
 
-routes.get(`${commonPath}/tournaments/:page`, [param('page').exists().toInt()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/tournaments/:page`,
+	[param('page').exists().isInt({ min: 1 }).toInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await tournamentsHistory(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await tournamentsHistory(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 routes.put(
 	`${commonPath}/tournament`,

@@ -62,7 +62,11 @@
 		"castleFullLife": "Tu castillo ya tiene la cantidad máxima de :hp_castle:.",
 		"repairStackFull": "No puedes añadir más reparaciones.",
 		"notEnoughIngredientsForRepair": "No tienes suficientes ingredientes para esta reparación.",
-		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo."
+		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo.",
+		"sameClan": "No puedes declarar la guerra a tu propio clan.",
+		"castleAlreadyBuilt": "El castillo de tu clan ya está construido.",
+		"notInDefense": "Este Dino no forma parte de la defensa del castillo.",
+		"outdatedDefense": "Defensa desactualizada"
 	},
 	"error": {
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
@@ -232,6 +236,11 @@
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",
 		"notFightedOpponent": "Adversario ya derrotado",
+		"qualificationOver": "La fase de clasificación ha finalizado.",
+		"dinozTooLowLevel": "Un Dino no tiene el nivel requerido (10 como mínimo).",
+		"dinozTooHighLevel": "Un Dino supera el nivel máximo permitido.",
+		"wrongRace": "Una raza de tu equipo no está permitida en este torneo.",
+		"alreadyRegistered": "Ya tienes un equipo inscripto en este torneo.",
 		"teamSize": "Los equipos deben estar compuestos por {{nb}} Dinos con al menos {{races}} razas distintas.",
 		"teamSize_singleRace": "Los equipos están formados por {{nb}} miembros.",
 		"raceLimit": "Las razas permitidas para participar son {{races}}.",

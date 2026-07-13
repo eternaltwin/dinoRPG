@@ -38,7 +38,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { LOGGER } from '../context.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { createLog } from '../dao/logDao.js';
 import gameConfig from '../config/game.config.js';
 import { createNotification } from '../dao/notificationDao.js';

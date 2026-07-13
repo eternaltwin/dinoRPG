@@ -33,7 +33,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { auth } from '../dao/playerDao.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { decreaseItemQuantity, getPlayerItems } from '../dao/playerItemDao.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 export async function getMissionsList(req: Request) {

@@ -50,7 +50,7 @@ import { auth, getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
-import { checkAnnounce } from '../utils/announcer.js';
+import { checkAnnounce } from '../utils/server/announcer.js';
 import {
 	getDinozUpChance,
 	getLearnableSkills,
@@ -60,7 +60,7 @@ import {
 } from '../utils/dinoz.js';
 import { applySkillToDinoz, applyUSkillEffect, computeUSkillEffects, fromBase62 } from '../utils/index.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 

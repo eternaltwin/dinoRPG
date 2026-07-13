@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { validationResult } from 'express-validator';
 import { getAllIngredientsData } from '../business/ingredientService.js';
 import { apiRoutes } from '../constants/index.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

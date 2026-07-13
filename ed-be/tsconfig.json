@@ -6,7 +6,7 @@
 		"outDir": "dist"
 	},
 	"include": ["./src/**/*.ts"],
-	"exclude": [],
+	"exclude": ["./src/test/**"],
 	"references": [
 		{
 			"path": "../core"

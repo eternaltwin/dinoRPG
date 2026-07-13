@@ -4,7 +4,7 @@ import { getDinozFromDinozShop } from '../business/dinozShopService.js';
 import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
 import { apiRoutes } from '../constants/index.js';
 import { getIngredientsFromItinerantShop, sellIngredient } from '../business/itinerantShopService.js';
-import sendError from '../utils/sendErrors.js';
+import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 

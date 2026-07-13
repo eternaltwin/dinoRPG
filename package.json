@@ -1,7 +1,7 @@
 {
 	"name": "@eternaltwin/dinorpg-monorepo",
 	"private": true,
-	"version": "0.18.4",
+	"version": "0.18.6",
 	"licenses": [
 		{
 			"type": "AGPL-3.0-or-later",
@@ -50,8 +50,9 @@
 		"build:gitlab": "yarn run build:render && yarn run build:back && yarn run build:front",
 		"build": "yarn run build:render && yarn run build:back && yarn run build:front",
 		"build-debug": "yarn run build:back && yarn run build:front",
+		"build:core": "cd core && yarn run build",
 		"etwin": "cd Eternaltwin && yarn run eternaltwin db sync",
-		"test:ci": "cd ed-be && yarn run test:ci",
+		"test:ci": "yarn build:core && cd ed-be && yarn run test:ci",
 		"coverage": "cd ed-be && yarn run coverage",
 		"lint:test": "cd ed-ui && yarn lint:test",
 		"lint:fix": "cd ed-ui && yarn lint:fix",

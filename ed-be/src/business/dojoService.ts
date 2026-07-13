@@ -18,25 +18,18 @@ import {
 	DOJO_REPUTATION_WIN
 } from '@drpg/core/utils/dojoConstants';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Dojo, NotificationSeverity } from '@drpg/prisma';
+import { Dojo, NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
-import {
-	archiveChallenge,
-	archiveFight,
-	getAllArchivedFightRequest,
-	getArchivedFightRequest,
-	viewFight
-} from '../dao/archiveDao.js';
+import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest, viewFight } from '../dao/archiveDao.js';
 import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
 import {
 	addOpponent,
 	cleanCurrentOpponentTeam,
 	createMyDojo,
-	createMyTeamDao,
 	getMyDojoDao,
 	getMyTeamDao,
 	incrementDailyReset,
-	setFightedOpponent
+	replaceMyTeamDao
 } from '../dao/dojoDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import {
@@ -45,14 +38,13 @@ import {
 	getDojoDataForRanking,
 	getDojoFightPreparationRequest,
 	getPlayerDinozInformationForTeam,
-	increaseCashPrice,
-	removeMoney
+	spendMoney
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
+import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
@@ -75,7 +67,7 @@ export async function getDojo(req: Request) {
 
 export async function createMyTeam(req: Request) {
 	const authed = await auth(req);
-	const teamIds = req.body.team as number[];
+	const teamIds = [...new Set(req.body.team as number[])];
 
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 
@@ -105,9 +97,9 @@ export async function createMyTeam(req: Request) {
 	/*if (team.some(d => d.level < 10)) {
 		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
 	}*/
-	await createOpponentTeam(team, myDojo);
+	const opponentIds = await pickOpponentIds(team, myDojo.playerId);
 
-	return await createMyTeamDao(teamIds, myDojo.id);
+	return await replaceMyTeamDao(teamIds, opponentIds, myDojo.id);
 }
 
 export async function getMyTeam(req: Request) {
@@ -143,31 +135,26 @@ export async function getMyTeam(req: Request) {
 }
 
 export async function fightFriend(req: Request): Promise<{ fight: DojoFightResume; stats: FullFightStats }> {
-	const left = req.body.left as number[];
-	const right = req.body.right as number[];
+	const left = [...new Set(req.body.left as number[])];
+	const right = [...new Set(req.body.right as number[])];
 	const rightId = req.body.rightId as string;
 	const fightCost = (left.length + right.length) * DOJO_FIGHT_FRIENDS_DINOZ_COST;
 
 	const authed = await auth(req);
 	const leftPlayer = await getDojoFightPreparationRequest(authed.id);
-	if (!left.every(id => leftPlayer.dinoz.map(d => d.id).includes(id))) {
+	if (!leftPlayer || !left.every(id => availableDinozIds(leftPlayer.dinoz).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 	const rightPlayer = await getDojoFightPreparationRequest(rightId);
-	if (!right.every(id => rightPlayer.dinoz.map(d => d.id).includes(id))) {
+	if (!rightPlayer) {
+		throw new ExpectedError(translate('dojo.inexistantOpponent', authed));
+	}
+	if (!right.every(id => availableDinozIds(rightPlayer.dinoz).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 
 	if (leftPlayer.money < fightCost) {
 		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
-	}
-
-	// Pay the fees
-	await removeMoney(authed.id, fightCost);
-	// Add the fees to the tournament cash price if one is ongoing
-	const tournament = await getLatestTournament();
-	if (tournament) {
-		await incrementCashPrice(tournament.id, fightCost);
 	}
 
 	const rightTeam = await getDinozForDojoFight(right);
@@ -195,6 +182,16 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 		rightPlayer.cooker,
 		PlaceEnum.DOJO
 	);
+
+	// Pay the fees once the fight is computed, so a failure before this point costs nothing
+	if (!(await spendMoney(authed.id, fightCost))) {
+		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
+	}
+	// Add the fees to the tournament cash price if one is ongoing
+	const tournament = await getLatestTournament();
+	if (tournament) {
+		await incrementCashPrice(tournament.id, fightCost);
+	}
 
 	const fightArchive = await archiveFight(
 		fightResult,
@@ -369,45 +366,6 @@ export async function fightChallenge(
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && victory;
 
-	const promises = [];
-
-	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
-		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TREASURE_COUPON,
-						quantity: 1
-					}
-				]),
-				NotificationSeverity.reward
-			)
-		);
-		promises.push(incrementDailyReset(player.Dojo.id));
-	}
-
-	if (challengeWon && player.Dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
-		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TREASURE_COUPON,
-						quantity: 1
-					}
-				]),
-				NotificationSeverity.reward
-			)
-		);
-	}
-
-	await Promise.all(promises);
-
 	const newChallenge = generateRandomChallenge();
 	await prisma.$transaction(async tx => {
 		const dojo = await tx.dojo.findUniqueOrThrow({
@@ -415,9 +373,11 @@ export async function fightChallenge(
 			include: { DojoChallengeHistory: true }
 		});
 
-		await tx.player.update({
+		// Atomic charge: fails if the money dropped below the cost since the initial check
+		const charged = await tx.player.updateMany({
 			where: {
-				id: authed.id
+				id: authed.id,
+				money: { gte: DOJO_FIGHT_COST }
 			},
 			data: {
 				money: {
@@ -425,6 +385,9 @@ export async function fightChallenge(
 				}
 			}
 		});
+		if (charged.count === 0) {
+			throw new ExpectedError(translate('dojo.notEnoughGold', authed));
+		}
 		await tx.tournament.update({
 			where: {
 				id: tournament.id
@@ -488,6 +451,46 @@ export async function fightChallenge(
 		});
 	});
 
+	// Grant the rewards only once the fight has been paid and recorded
+	const promises = [];
+
+	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
+		promises.push(incrementDailyReset(player.Dojo.id));
+	}
+
+	if (challengeWon && player.Dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
+	}
+
+	await Promise.all(promises);
+
 	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory };
 }
 
@@ -510,7 +513,8 @@ export async function skipOpponent(req: Request) {
 		throw new ExpectedError(translate('dojo.notEnoughGold', authed));
 	}
 
-	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
+	const myDojo = player.Dojo;
+	const opponent = myDojo.DojoOpponents.find(d => d.dinozId === opponentId);
 	if (!opponent) {
 		throw new ExpectedError(translate('dojo.inexistantOpponent', authed));
 	}
@@ -519,22 +523,62 @@ export async function skipOpponent(req: Request) {
 		throw new ExpectedError(translate('dojo.notFightedOpponent', authed));
 	}
 
+	if (opponent.achieved) {
+		throw new ExpectedError(translate('dojo.alreadyFighted', authed));
+	}
+
 	const ranking = await getDojoDataForRanking(authed.id);
 	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length;
 	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 
-	const promises = [];
-	promises.push(removeMoney(authed.id, DOJO_FIGHT_COST));
-	promises.push(increaseCashPrice(tournament.id, DOJO_FIGHT_COST));
-	promises.push(setFightedOpponent(opponentId, player.Dojo.id, true));
-	promises.push(
-		archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id)
-	);
-	promises.push(updateDojoPoints(authed.id, Math.round(worth * ranking.reputation)));
-	await Promise.all(promises);
+	await prisma.$transaction(async tx => {
+		// Atomic charge: fails if the money dropped below the cost since the initial check
+		const charged = await tx.player.updateMany({
+			where: {
+				id: authed.id,
+				money: { gte: DOJO_FIGHT_COST }
+			},
+			data: {
+				money: { decrement: DOJO_FIGHT_COST }
+			}
+		});
+		if (charged.count === 0) {
+			throw new ExpectedError(translate('dojo.notEnoughGold', authed));
+		}
+		await tx.tournament.update({
+			where: { id: tournament.id },
+			data: { cashPrice: { increment: DOJO_FIGHT_COST } }
+		});
+		await tx.dojoOpponents.update({
+			where: {
+				dojoId_dinozId: {
+					dinozId: opponentId,
+					dojoId: myDojo.id
+				}
+			},
+			data: {
+				fighted: true,
+				achieved: true
+			}
+		});
+		await tx.dojoChallengeHistory.create({
+			data: {
+				myDinozId: 0, // A skip involves none of the player's dinoz
+				opponentId,
+				challenge: JSON.stringify(myDojo.activeChallenge),
+				victory: false,
+				achieved: false,
+				dojo: { connect: { id: myDojo.id } }
+			}
+		});
+		await tx.ranking.update({
+			where: { playerId: authed.id },
+			data: { dojo: Math.round(worth * ranking.reputation) }
+		});
+	});
 
 	// If skip generate new batch of opponent
-	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
+	if (myDojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
 		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
 
 		await createNotification(
@@ -548,17 +592,16 @@ export async function skipOpponent(req: Request) {
 			]),
 			NotificationSeverity.reward
 		);
-		await incrementDailyReset(player.Dojo.id);
+		await incrementDailyReset(myDojo.id);
 	}
 }
 
-async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
+async function pickOpponentIds(team: { id: number; level: number }[], playerId: string): Promise<number[]> {
 	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
 	const opponentIds = [];
 	const parsedId = opponentLevels.map(o => o.id);
 	for (const dinoz of opponentLevels) {
-		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, myDojo.playerId);
-		console.log(`ennemi = ${ennemi}`);
+		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, playerId);
 		if (ennemi === null) {
 			// Incomplete opponent teams won't be created
 			return [];
@@ -568,10 +611,29 @@ async function createOpponentTeam(team: { id: number; level: number }[], myDojo:
 		opponentIds.push(ennemi.id);
 	}
 
+	return opponentIds;
+}
+
+async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
+	const opponentIds = await pickOpponentIds(team, myDojo.playerId);
+
 	const opponents = [];
 	for (const opponentId of opponentIds) {
 		opponents.push(await addOpponent(opponentId, myDojo.id));
 	}
 
 	return opponents;
+}
+
+const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
+	UnavailableReason.frozen,
+	UnavailableReason.sacrificed,
+	UnavailableReason.selling,
+	UnavailableReason.unfreezing
+];
+
+function availableDinozIds(dinoz: { id: number; unavailableReason: UnavailableReason | null }[]): number[] {
+	return dinoz
+		.filter(d => !d.unavailableReason || !FIGHT_BLOCKING_REASONS.includes(d.unavailableReason))
+		.map(d => d.id);
 }

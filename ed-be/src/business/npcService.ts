@@ -12,7 +12,7 @@ import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import translate from '../utils/translate.js';
+import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
@@ -219,20 +219,6 @@ const nextStepServices = (data: NpcData) => {
 		?.filter(r => 'service' in r)
 		.map(r => ('service' in r ? r.service : []))
 		.reduce((acc, curr) => (curr ? acc?.concat(curr) : acc), []);
-};
-
-/**
- * Get item rewards after the NPC talk
- */
-const getSpeechItemRewards = (data: NpcData) => {
-	return data.reward?.reduce(
-		(acc, curr) => {
-			if (curr.rewardType !== RewardEnum.ITEM) return acc;
-			acc[curr.value as Item] = (acc[curr.value as Item] ?? 0) + curr.quantity;
-			return acc;
-		},
-		{} as Partial<Record<Item, number>>
-	);
 };
 
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {

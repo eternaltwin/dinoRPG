@@ -14,7 +14,7 @@ import { Dinoz, DinozStatus, LogType, NotificationSeverity, PantheonMotif } from
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
 import { upsertQuest } from '../dao/questsDao.js';
-import { checkAnnounce } from './announcer.js';
+import { checkAnnounce } from './server/announcer.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
