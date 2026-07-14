@@ -34,7 +34,9 @@ function iconAt(d: DungeonStruct, l: number, x: number, y: number): string | und
 		if (room.item && room.item.x === x && room.item.y === y) {
 			switch (room.item.k) {
 				case DungeonItem.IKey:
-					return 'key';
+					// Key index rides along ('key_3') so the client can pick a skin and
+					// the server can strip keys this player already picked up.
+					return `key_${room.item.v}`;
 				case DungeonItem.IGold:
 					return 'gold';
 				case DungeonItem.IHeal:

@@ -138,8 +138,9 @@ export class Gameplay extends Generator {
 			while (this.expandDoors()) {
 				/* loop */
 			}
-			// lock doors
-			const nexts = this.closeDoors(doorCount);
+			// lock doors (one unique key per door; extras were dropped by closeDoors)
+			const { nexts, last } = this.closeDoors(doorCount);
+			doorCount = Math.max(doorCount, last);
 
 			// no more rooms to explore -> the last key is actually the exit
 			if (nexts.length === 0) {
@@ -255,20 +256,64 @@ export class Gameplay extends Generator {
 		return found;
 	}
 
-	private closeDoors(id: number): Room[] {
+	/**
+	 * Lock every door on the reachable frontier — 1:1 lock-and-key: each door
+	 * gets its own key id. The wave's pre-placed key (`id`) opens the first
+	 * door; every extra door drops a fresh key in a distant reachable room.
+	 * Returns the frontier rooms and the highest key id used.
+	 */
+	private closeDoors(id: number): { nexts: Room[]; last: number } {
 		const nexts: Room[] = [];
+		let next = id;
 		for (const l of this.inf.levels)
 			for (const r of l.rooms) {
 				if (r.tmp === 0) continue;
 				for (const d of r.doors) {
 					const r2 = d.other(r);
-					if (r2.tmp === 0) {
-						d.status = id;
-						nexts.push(r2);
+					if (r2.tmp !== 0) continue;
+					// Re-locking a door from an earlier wave (the original overwrote
+					// statuses too): retire its old key so the 1:1 pairing survives
+					// the reassignment below. Skipping it instead would let a wave
+					// lock nothing and change nothing — an infinite generation loop.
+					if (d.status !== 0) this.removeKeyItem(d.status);
+					// ponytail: DungeonCodec stores key ids in 6 bits, and an extra key
+					// needs a reachable room without an item — either limit hit, the
+					// door falls back to a monster passage (status 0), still solvable.
+					if (next > 63) {
+						d.status = 0;
+					} else if (next === id) {
+						d.status = next++;
+					} else {
+						const kr = this.emptyVisitedRoom();
+						if (kr == null) d.status = 0;
+						else {
+							const pos = this.distantPos(kr);
+							kr.item = { x: pos.x, y: pos.y, k: DungeonItem.IKey, v: next };
+							d.status = next++;
+						}
 					}
+					nexts.push(r2);
 				}
 			}
-		return nexts;
+		return { nexts, last: next - 1 };
+	}
+
+	/** Remove the key item with index `v` (its door is being re-locked with a new key). */
+	private removeKeyItem(v: number): void {
+		for (const l of this.inf.levels)
+			for (const r of l.rooms)
+				if (r.item?.k === DungeonItem.IKey && r.item.v === v) {
+					r.item = null;
+					return;
+				}
+	}
+
+	/** The most distant reachable room that can still hold an item (extra keys). */
+	private emptyVisitedRoom(): Room | null {
+		let best: Room | null = null;
+		for (const l of this.inf.levels)
+			for (const r of l.rooms) if (r.tmp !== 0 && r.item == null && (best == null || r.dist > best.dist)) best = r;
+		return best;
 	}
 
 	private buildBranches(): void {

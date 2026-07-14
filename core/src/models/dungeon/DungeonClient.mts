@@ -3,7 +3,7 @@
  * (ed-ui DungeonPage.vue ⇄ ed-be /dungeon routes).
  */
 import { DungeonType } from '@drpg/prisma/enums';
-import {FightResult} from "../fight/FightResult.mjs";
+import { FightResult } from '../fight/FightResult.mjs';
 
 export interface Cell {
 	l: number;
@@ -18,7 +18,10 @@ export interface RevealedCell {
 	y: number;
 	/** true = walkable floor, false = wall. */
 	floor: boolean;
-	/** Entity token ('start' | 'exit' | 'stair_up' | 'stair_down' | 'door_v' | 'door_h' | 'monster' | 'key' | 'gold' | 'heal' | 'scroll'). */
+	/**
+	 * Entity token ('start' | 'exit' | 'stair_up' | 'stair_down' | 'door_v' | 'door_h' |
+	 * 'door_v_open' | 'door_h_open' | 'monster' | 'key_<n>' | 'gold' | 'heal' | 'scroll').
+	 */
 	icon?: string;
 	/** smonster gfx name of the team's first monster — only set on 'monster' cells whose team is still alive. */
 	monster?: string;
@@ -167,15 +170,20 @@ export const SKINS: Skin[] = [
 	}
 ];
 
+/** Number of item_key_NN sprite variants — key skins cycle through these. */
+export const KEY_SKIN_COUNT = 8;
+
 /** Sprites shared by every skin (items, doors, stairs). */
 export const ITEM_ASSETS = [
 	'item_chest',
 	'item_gold',
-	'item_key_01',
+	...Array.from({ length: KEY_SKIN_COUNT }, (_, i) => `item_key_0${i + 1}`),
 	'item_scroll',
 	'item_skel',
 	'item_door_h_01',
 	'item_door_v_01',
+	'item_door_h_open',
+	'item_door_v_open',
 	'item_stair_up',
 	'item_stair_down'
 ];

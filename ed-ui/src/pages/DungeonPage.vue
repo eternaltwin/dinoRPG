@@ -31,7 +31,7 @@ import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models
 import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
-import {sessionStore, useDinozStore} from '../store';
+import { sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
 
 // ── page state & control loop ─────────────────────────────────────────────────
@@ -69,7 +69,9 @@ const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
 function record(reveal: RevealedCell[]): void {
 	for (const c of reveal) {
+		// Re-sent cells can lose their icon (key picked up, monster beaten).
 		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+		else icons.delete(`${c.l},${c.x},${c.y}`);
 		if (!c.floor) walls.add(`${c.l},${c.x},${c.y}`);
 	}
 	renderer?.applyReveal(reveal);
@@ -111,7 +113,7 @@ export default defineComponent({
 			if (dl === 0 && walls.has(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`)) return;
 			moving = true;
 			try {
-				const move = await DungeonService.moveDinoz(dungeonId, dx, dy, dl, currentDinoz.id)
+				const move = await DungeonService.moveDinoz(dungeonId, dx, dy, dl, currentDinoz.id);
 				moving = false;
 				if (!move.ok) return; // wall / no stair: the server said no, nothing was revealed
 				if (move.fight) {
@@ -133,7 +135,7 @@ export default defineComponent({
 			} catch (err) {
 				moving = false;
 				errorHandler.handle(err, this.$toast);
-			};
+			}
 		},
 		/**
 		 * Leader idle: send each follower the whole remaining trail in one go so it

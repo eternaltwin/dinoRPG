@@ -1,7 +1,7 @@
 import { Application, BlurFilter, Container, Graphics, Sprite, Text } from 'pixi.js';
 // @ts-expect-error smonster is missing from the package's sdino.d.ts typings.
 import { smonster } from '@eternaltwin/dinorpg_animations';
-import { SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import { KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { gfx, pad2 } from './dungeonAssets.js';
 
@@ -378,6 +378,12 @@ export class MazeRenderer {
 	}
 
 	private drawIcon(c: RevealedCell): void {
+		// 'key_<n>': skins cycle so every key in a maze looks distinct.
+		if (c.icon?.startsWith('key_')) {
+			const v = Number(c.icon.slice(4));
+			this.sprite(`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`, c.x, c.y, this.cell * 0.7);
+			return;
+		}
 		switch (c.icon) {
 			case 'start':
 				this.ring(c.x, c.y, 0x4caf50);
@@ -394,14 +400,15 @@ export class MazeRenderer {
 				break;
 			case 'door_v':
 			case 'door_h':
-				this.sprite(c.icon === 'door_v' ? 'item_door_v_01' : 'item_door_h_01', c.x, c.y, this.cell);
+				this.sprite(`item_${c.icon}_01`, c.x, c.y, this.cell);
+				break;
+			case 'door_v_open':
+			case 'door_h_open':
+				this.sprite(`item_${c.icon}`, c.x, c.y, this.cell);
 				break;
 			case 'monster':
 				if (c.monster) this.monsterAt(c);
 				else this.sprite('item_skel', c.x, c.y, this.cell * 0.7);
-				break;
-			case 'key':
-				this.sprite('item_key_01', c.x, c.y, this.cell * 0.7);
 				break;
 			case 'gold':
 				this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
