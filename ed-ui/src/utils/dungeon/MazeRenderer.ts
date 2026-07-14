@@ -6,7 +6,7 @@ import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/m
 import { gfx, pad2 } from './dungeonAssets.js';
 
 /** The slice of smonster (a Pixi Container) we use — the published typings omit it. */
-type SMonster = Container & { collider: { width: number; height: number } };
+type SMonster = Container & { collider: { width: number; height: number }; playing: boolean };
 
 /**
  * MazeRenderer — draws only the cells the server has revealed.
@@ -107,7 +107,7 @@ export class MazeRenderer {
 				// Team defeated since last reveal: retire its animated sprite.
 				const stale = this.monsterSprites.get(`${c.l},${c.x},${c.y}`);
 				if (stale) {
-					stale.destroy();
+					this.retireMonster(stale);
 					this.monsterSprites.delete(`${c.l},${c.x},${c.y}`);
 				}
 			}
@@ -540,7 +540,21 @@ export class MazeRenderer {
 		return v >>> 0;
 	}
 
+	/**
+	 * The smonster Animator registers a Ticker.shared listener it never detaches
+	 * (same leak as sdino — see DinozActor.destroy). Freeze before destroying so
+	 * the leaked listener no-ops instead of hitting null transforms every frame.
+	 */
+	private retireMonster(m: SMonster): void {
+		m.playing = false;
+		m.destroy({ children: true });
+	}
+
 	destroy(): void {
+		// Sprites on other levels are detached from the stage, so app.destroy
+		// would miss them — retire every cached sprite explicitly.
+		for (const m of this.monsterSprites.values()) this.retireMonster(m);
+		this.monsterSprites.clear();
 		this.app.destroy(true, { children: true });
 	}
 }
