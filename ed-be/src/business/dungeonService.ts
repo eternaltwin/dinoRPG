@@ -29,6 +29,10 @@ import {
 	updateMultipleDinoz
 } from '../dao/dinozDao.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
+import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import { isAlive } from '@drpg/core/utils/DinozUtils';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
@@ -89,13 +93,27 @@ function lockedDoorAt(d: DungeonStruct, l: number, x: number, y: number): Dungeo
 	return null;
 }
 
-/** The key index lying on (l,x,y), if any. */
-function keyIndexAt(d: DungeonStruct, l: number, x: number, y: number): number | null {
+/** The index (`v`) of the item of kind `k` lying on (l,x,y), if any. */
+function itemIndexAt(d: DungeonStruct, k: DungeonItem, l: number, x: number, y: number): number | null {
 	for (const room of d.levels[l].rooms) {
 		const it = room.item;
-		if (it && it.k === DungeonItem.IKey && it.x === x && it.y === y) return it.v;
+		if (it && it.k === k && it.x === x && it.y === y) return it.v;
 	}
 	return null;
+}
+
+/**
+ * Resolve 'scenario_<v>' tokens against the dungeon's scenario list: strip the
+ * ones this player already read, give the others their XML icon (chest default).
+ */
+function decorateScenarios(reveal: RevealedCell[], scenarios: DungeonScenario[], read: number[]): RevealedCell[] {
+	const done = new Set(read);
+	for (const c of reveal) {
+		if (!c.icon?.startsWith('scenario_')) continue;
+		const v = Number(c.icon.slice(9));
+		c.icon = done.has(v) ? undefined : (scenarios[v]?.icon ?? 'chest');
+	}
+	return reveal;
 }
 
 /** Flag the team on cell (l,x,y) beaten for this run; its icon stops appearing in reveals. */
@@ -151,14 +169,18 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			levels: d.levels.length,
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
-			reveal: decorateDoors(
-				decorateMonsters(
-					cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
-					JSON.parse(dungeon.monsters) as MonsterTeam[],
-					JSON.parse(existing.defeated) as string[]
+			reveal: decorateScenarios(
+				decorateDoors(
+					decorateMonsters(
+						cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+						JSON.parse(dungeon.monsters) as MonsterTeam[],
+						JSON.parse(existing.defeated) as string[]
+					),
+					JSON.parse(existing.opened) as string[],
+					JSON.parse(existing.keys) as number[]
 				),
-				JSON.parse(existing.opened) as string[],
-				JSON.parse(existing.keys) as number[]
+				dungeonRef.scenarios,
+				JSON.parse(existing.scenarios) as number[]
 			)
 		};
 	}
@@ -181,7 +203,11 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		levels: d.levels.length,
 		skin: dungeon.type,
 		skinSalt: Math.floor(Math.random() * 1000),
-		reveal: decorateMonsters(reveal, JSON.parse(dungeon.monsters) as MonsterTeam[], [])
+		reveal: decorateScenarios(
+			decorateMonsters(reveal, JSON.parse(dungeon.monsters) as MonsterTeam[], []),
+			dungeonRef.scenarios,
+			[]
+		)
 	};
 }
 
@@ -251,8 +277,21 @@ export async function move(req: Request): Promise<MoveResult> {
 	}
 
 	// Walking over an uncollected key picks it up.
-	const keyIdx = keyIndexAt(d, next.l, next.x, next.y);
+	const keyIdx = itemIndexAt(d, DungeonItem.IKey, next.l, next.x, next.y);
 	if (keyIdx != null && !keys.includes(keyIdx)) keys.push(keyIdx);
+
+	// First visit of a scenario spot: grant its obj/collec and hand the text over.
+	const dungeonRef = Object.values(DungeonList).find(x => x.name === dungeon.name);
+	const read = JSON.parse(run.scenarios) as number[];
+	let scenario: MoveResult['scenario'];
+	const sIdx = itemIndexAt(d, DungeonItem.IScenario, next.l, next.x, next.y);
+	const sc = sIdx != null && !read.includes(sIdx) ? dungeonRef?.scenarios[sIdx] : undefined;
+	if (sc && sIdx != null) {
+		read.push(sIdx);
+		if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
+		if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
+		scenario = { text: `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
+	}
 
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
@@ -323,13 +362,19 @@ export async function move(req: Request): Promise<MoveResult> {
 		{ posX: next.x, posY: next.y, posL: next.l },
 		JSON.stringify([...revealed]),
 		JSON.stringify(keys),
-		JSON.stringify(opened)
+		JSON.stringify(opened),
+		JSON.stringify(read)
 	);
 
 	return {
 		ok: true,
 		pos: next,
-		reveal: decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys),
-		fight: result
+		reveal: decorateScenarios(
+			decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys),
+			dungeonRef?.scenarios ?? [],
+			read
+		),
+		fight: result,
+		scenario
 	};
 }

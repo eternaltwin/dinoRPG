@@ -5276,6 +5276,14 @@
 		"participantsConv": "Participants",
 		"blockSender": "Bloquer l'expéditeur"
 	},
+	"dungeon": {
+		"katatombs": {
+			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
+			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
+			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
+			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes..."
+		}
+	},
 	"scenario": {
 		"star": "L'être étrange",
 		"pac": "Parchemin étrange",

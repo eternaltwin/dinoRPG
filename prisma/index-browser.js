@@ -743,6 +743,7 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   defeated: 'defeated',
   keys: 'keys',
   opened: 'opened',
+  scenarios: 'scenarios',
   createdAt: 'createdAt',
   playerId: 'playerId',
   dungeonId: 'dungeonId'

@@ -1179,6 +1179,8 @@ model DungeonRun {
   keys      String   @default("[]")
   // Cell keys ("l,x,y") of the doors this player has unlocked.
   opened    String   @default("[]")
+  // Scenario indices (IScenario item.v) this player has read / been granted.
+  scenarios String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)

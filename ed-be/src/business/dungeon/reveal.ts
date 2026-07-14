@@ -42,7 +42,9 @@ function iconAt(d: DungeonStruct, l: number, x: number, y: number): string | und
 				case DungeonItem.IHeal:
 					return 'heal';
 				default:
-					return 'scroll';
+					// IScenario: index rides along; the service resolves the real icon
+					// from DungeonList and strips scenarios already read.
+					return `scenario_${room.item.v}`;
 			}
 		}
 	}
