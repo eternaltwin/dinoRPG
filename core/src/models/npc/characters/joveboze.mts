@@ -4,10 +4,12 @@ import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
 export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
+	// Rasca quest
 	begin: {
 		stepName: 'begin',
 		nextStep: ['trad', 'sry'],
 		initialStep: true,
+		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
 		condition: { [ConditionEnum.STATUS]: DinozStatusId.JVBZ }
 	},
 	trad: {
@@ -25,11 +27,12 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	back: {
 		stepName: 'back',
 		nextStep: [],
-		target: 'attack'
+		redirect: 'attack'
 	},
 	attack: {
 		stepName: 'attack',
 		nextStep: ['attack_win'],
+		condition: { [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
 		fight: [bossList.RASCAPHANDRE],
 		reward: [
 			{
@@ -40,45 +43,23 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.JVBZ,
 				reverse: true
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			}
 		]
 	},
 	attack_win: {
 		stepName: 'attack_win',
-		nextStep: [],
-		initialStep: true, // So it can show up after the fight.
-		// To avoid potential conflict with other fight returns
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: DinozStatusId.FRETURN },
-				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY }
-			]
-		},
-		reward: [
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN,
-				reverse: true
-			}
-		]
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	},
+	// Weird swamp quest
 	weirdSwamp: {
 		stepName: 'weirdSwamp',
 		nextStep: ['trad', 'swampTreasure'],
 		initialStep: true,
-		// Necessary to avoid having multiple initial steps possible at once
+		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
-				{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } }
 			]
 		}

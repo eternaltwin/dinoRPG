@@ -17,9 +17,5 @@ export const PAPYJOE: Readonly<Record<string, NpcData>> = {
 				service: [ServiceEnum.MISSIONS]
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

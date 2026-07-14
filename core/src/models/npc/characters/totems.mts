@@ -1,8 +1,7 @@
-import { RewardEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
-import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 
 export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -13,15 +12,14 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		},
 		fight: [bossList.PTEROZ],
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
 				value: Reward.PTEROZ
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -31,17 +29,6 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 	},
 	fight_win: {
 		stepName: 'fight_win',
-		reward: [
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN,
-				reverse: true
-			}
-		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };
@@ -55,15 +42,14 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
+		},
 		fight: [bossList.HIPPOCLAMP],
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
 				value: Reward.HIPPO
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -73,17 +59,6 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 	},
 	fight_win: {
 		stepName: 'fight_win',
-		reward: [
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN,
-				reverse: true
-			}
-		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };
@@ -97,16 +72,14 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
+		condition: {
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
+		},
 		fight: [bossList.ROCKY],
-		alias: 'grave',
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
 				value: Reward.ROCKY
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -121,21 +94,10 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 	grave: {
 		stepName: 'grave',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	fight_win: {
 		stepName: 'fight_win',
-		reward: [
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN,
-				reverse: true
-			}
-		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

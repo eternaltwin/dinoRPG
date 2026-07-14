@@ -226,6 +226,7 @@ export const epicList = {
 		224: 'clover',
 		996: 'card',
 		997: 'pac',
+		998: 'tik',
 		999: 'import'
 	},
 	id: {
@@ -455,6 +456,7 @@ export const epicList = {
 		clover: 224,
 		card: 996,
 		pac: 997,
+		tik: 998,
 		import: 999
 	}
 };

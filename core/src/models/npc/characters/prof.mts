@@ -104,15 +104,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	water_fight: {
 		stepName: 'water_fight',
 		nextStep: ['water_win'],
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BUOY } },
 		fight: [bossList.ELEMENTAIRE_EAU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.BUOY
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			},
 			{
 				rewardType: RewardEnum.REDIRECT,
@@ -123,15 +120,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	fire_fight: {
 		stepName: 'fire_fight',
 		nextStep: ['fire_win'],
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR } },
 		fight: [bossList.ELEMENTAIRE_FEU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.CLIMBING_GEAR
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			},
 			{
 				rewardType: RewardEnum.REDIRECT,
@@ -193,7 +187,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	stone_no: {
 		stepName: 'stone_no',
-		target: 'question',
+		redirect: 'question',
 		nextStep: ['menu']
 	},
 	noquestion: {
@@ -202,17 +196,11 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	fire_win: {
 		stepName: 'fire_win',
-		nextStep: [],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-		}
+		nextStep: []
 	},
 	water_win: {
 		stepName: 'water_win',
-		nextStep: [],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-		}
+		nextStep: []
 	},
 	pac_start: {
 		stepName: 'pac_start',
@@ -223,6 +211,9 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	pac_go: {
 		stepName: 'pac_go',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 0, '=']
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.SCENARIO,
@@ -266,10 +257,6 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 				step: 13
 			}
 		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

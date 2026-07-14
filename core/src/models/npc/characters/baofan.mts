@@ -50,6 +50,9 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	},
 	pac_scroll2: {
 		stepName: 'pac_scroll2',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 3, '=']
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.SCENARIO,
@@ -65,10 +68,6 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	},
 	no: {
 		stepName: 'no',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };
