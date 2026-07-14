@@ -10,23 +10,21 @@ export enum Dungeon {
 	KATATOMBS = 'katatombs'
 }
 
-export type DungeonItem =
-	| {
-			type: 'item';
-			itemId: Item;
-			quantity: number;
-			text: string;
-	  }
-	| {
-			type: 'reward';
-			rewardId: Reward;
-			text: string;
-	  }
-	| {
-			type: 'fake';
-			icon: string;
-			text: string;
-	  };
+/**
+ * One `<scenario>` of the archive's dungeons.xml, in generation order — the
+ * maze's IScenario item `v` indexes this array. Attributes map 1:1:
+ * `obj`/`count` grant an item, `collec` grants a reward, `icon` is the map
+ * icon (a chest when omitted, as obj scenarios in the XML), `micon` the popup
+ * icon, and the XML body text lives in i18n under `dungeon.<dungeon>.<text>`.
+ */
+export type DungeonScenario = {
+	obj?: Item;
+	count?: number;
+	collec?: Reward;
+	icon?: 'scroll' | 'chest';
+	micon?: string;
+	text: string;
+};
 
 export type DungeonDetails = {
 	skin: DungeonType;
@@ -35,7 +33,7 @@ export type DungeonDetails = {
 	placeEnd: PlaceEnum;
 	monsters: Monster[];
 	condition: Condition;
-	items: DungeonItem[];
+	scenarios: DungeonScenario[];
 };
 
 export const DungeonList: Readonly<Record<Dungeon, DungeonDetails>> = {
@@ -57,29 +55,12 @@ export const DungeonList: Readonly<Record<Dungeon, DungeonDetails>> = {
 		condition: {
 			[ConditionEnum.ACTIVE]: true
 		},
-		items: [
-			{
-				type: 'fake',
-				icon: 'scroll',
-				text: 'misc'
-			},
-			{
-				type: 'item',
-				itemId: Item.GOLDEN_NAPODINO,
-				quantity: 1,
-				text: 'napo'
-			},
-			{
-				type: 'item',
-				itemId: Item.POTION_IRMA,
-				quantity: 3,
-				text: 'potion'
-			},
-			{
-				type: 'reward',
-				rewardId: Reward.DEMON,
-				text: 'demon'
-			}
+		// dungeons.xml <d id="katak"> <stage skin="sewer"> scenarios, in order.
+		scenarios: [
+			{ icon: 'scroll', micon: 'misc', text: 'misc' },
+			{ obj: Item.GOLDEN_NAPODINO, text: 'napo' },
+			{ obj: Item.POTION_IRMA, count: 3, text: 'potion' },
+			{ collec: Reward.DEMON, icon: 'scroll', micon: 'misc', text: 'demon' }
 		]
 	}
 };

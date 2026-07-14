@@ -124,6 +124,9 @@ export default defineComponent({
 						params: { dinozId: this.$route.params.id.toString() }
 					});
 				}
+				if (move.scenario) {
+					this.$toast.open({ message: this.$t(move.scenario.text), type: 'info', duration: 8000 });
+				}
 				record(move.reveal);
 				cursor = { ...move.pos };
 				actor?.enqueue(cursor);

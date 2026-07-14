@@ -20,7 +20,7 @@ export interface RevealedCell {
 	floor: boolean;
 	/**
 	 * Entity token ('start' | 'exit' | 'stair_up' | 'stair_down' | 'door_v' | 'door_h' |
-	 * 'door_v_open' | 'door_h_open' | 'monster' | 'key_<n>' | 'gold' | 'heal' | 'scroll').
+	 * 'door_v_open' | 'door_h_open' | 'monster' | 'key_<n>' | 'gold' | 'heal' | 'scroll' | 'chest').
 	 */
 	icon?: string;
 	/** smonster gfx name of the team's first monster — only set on 'monster' cells whose team is still alive. */
@@ -43,6 +43,8 @@ export interface MoveResult {
 	pos: Cell;
 	reveal: RevealedCell[];
 	fight?: FightResult;
+	/** Scenario reached on this step: i18n key of its text + popup icon (XML micon). */
+	scenario?: { text: string; micon?: string };
 }
 
 // ── rendering ──────────────────────────────────────────────────────────────
