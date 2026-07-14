@@ -54,6 +54,8 @@ import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { DungeonType } from '@drpg/prisma/enums';
 import { createDungeon } from '../dao/dungeonRunDao.js';
 import { seal } from '../utils/dungeonCrypto.js';
+import { rollMonsters } from './dungeon/monsters.js';
+import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1147,13 +1149,17 @@ export async function getOngoingEvent(req: Request) {
 export async function createSeededDungeon(req: Request) {
 	const type = req.body.type ?? DungeonType.cavern;
 	const name = req.body.name;
+	// Approximate total level of each monster team; pool comes from DungeonList.
+	const monsterLevel = req.body.monsterLevel ?? 1;
+	const pool = Object.values(DungeonList).find(x => x.name === name)?.monsters ?? [];
 
 	// Custom layout: an already-encoded dungeon string (e.g. original MT format), no generation.
 	const layout = req.body.layout;
 	if (layout) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
-		const created = await createDungeon(seal(codec.encode()), type, name);
+		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
+		const created = await createDungeon(seal(codec.encode()), type, name, monsterLevel, monsters);
 		return { id: created.id, type: created.type };
 	}
 
@@ -1175,7 +1181,8 @@ export async function createSeededDungeon(req: Request) {
 		seed: seed
 	});
 	const encoded = new DungeonCodec().encode(d);
-	const created = await createDungeon(seal(encoded), type, name);
+	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
+	const created = await createDungeon(seal(encoded), type, name, monsterLevel, monsters);
 	return { id: created.id, type: created.type };
 }
 

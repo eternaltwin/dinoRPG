@@ -1172,8 +1172,8 @@ model DungeonRun {
   posY      Int      @map("pos_y")
   posL      Int      @map("pos_l")
   revealed  String   @default("[]")
-  // RunMonster[] — one entry per monster-guarded passage: cell, rolled team, defeated flag.
-  monsters  String   @default("[]")
+  // Cell keys ("l,x,y") of the monster teams this player has beaten.
+  defeated  String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
@@ -1193,6 +1193,10 @@ model Dungeon {
   iv     Bytes
   tag    Bytes
   type   DungeonType
+  // Approximate total level of each monster team in this maze.
+  level  Int         @default(1)
+  // MonsterTeam[] — rolled once at creation, identical for every player: cell + composition per monster-guarded passage.
+  monsters String    @default("[]")
 
   dungeonRuns DungeonRun[]
 
