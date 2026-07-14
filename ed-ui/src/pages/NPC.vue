@@ -41,6 +41,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozService, NPCService, PlayerService } from '../services';
 import { playerStore, sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'NPC',
@@ -48,9 +49,9 @@ export default defineComponent({
 		return {
 			npcName: undefined as string | undefined,
 			dinozId: +this.$route.params.id as number,
+			itemList: itemList,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-
 			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
@@ -79,7 +80,7 @@ export default defineComponent({
 				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
 					this.$toast.open({
 						message: this.$t('notification.reward', {
-							rewards: `${quantity} ${this.formatContent(`:item_${item}:`)}`
+							rewards: `${quantity} :item_${item}: ${this.$t(`item.name.${itemList[item].name}`)}`
 						}).toString(),
 						type: 'info'
 					});
@@ -127,7 +128,6 @@ export default defineComponent({
 			}
 		},
 		async stop(): Promise<void> {
-			await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
 			useDinozStore().clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}
@@ -143,7 +143,7 @@ export default defineComponent({
 		} else {
 			const npc = useDinozStore().getCurrentDinoz.npcAwait;
 
-			let step = 'begin';
+			let step: string | undefined = undefined;
 
 			if (npc && npc.npcName === this.npcName) {
 				step = npc.npcSpeech;

@@ -5,9 +5,5 @@ export const BAOBABE: Readonly<Record<string, NpcData>> = {
 		stepName: 'begin',
 		nextStep: [],
 		initialStep: true
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

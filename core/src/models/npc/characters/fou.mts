@@ -55,10 +55,6 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.LANTERN
-			},
-			{
-				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -71,10 +67,6 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 	},
 	fight_win: {
 		stepName: 'fight_win',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

@@ -86,7 +86,7 @@ export async function updateMission(req: Request) {
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const npc = Object.values(npcList).find(npc => npc.missions?.find(mission => mission.missionId === missionId));
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
@@ -245,10 +245,7 @@ async function checkMission(req: Request) {
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
-	}
-	if (!dinoz) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
 

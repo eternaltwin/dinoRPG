@@ -56,8 +56,7 @@ routes.put(
 	[
 		param('npc').exists().isString(),
 		param('dinozId').exists().toInt().isNumeric(),
-		body('step').exists().isString(),
-		body('stop').optional({ nullable: true }).exists().toBoolean().isBoolean()
+		body('step').optional({ nullable: true }).exists().isString()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

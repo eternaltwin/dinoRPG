@@ -42,7 +42,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'no',
 		nextStep: [],
 		alias: 'nothing',
-		target: 'nothing'
+		redirect: 'nothing'
 	},
 	quest2: {
 		stepName: 'quest2',
@@ -99,10 +99,10 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'noingr',
 		nextStep: [],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH },
-				{ [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE },
-				{ [ConditionEnum.STATUS]: DinozStatusId.CORAIL }
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CORAIL } }
 			]
 		}
 	},
@@ -111,9 +111,9 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: ['potion'],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CORAIL } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH },
+				{ [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE },
+				{ [ConditionEnum.STATUS]: DinozStatusId.CORAIL }
 			]
 		},
 		reward: [
@@ -170,6 +170,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	},
 	star: {
 		stepName: 'star',
+		condition: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
@@ -182,10 +183,6 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 				step: 7
 			}
 		],
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };

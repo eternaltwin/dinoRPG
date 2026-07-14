@@ -190,9 +190,5 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 				step: 11
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };
