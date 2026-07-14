@@ -1175,6 +1175,10 @@ model DungeonRun {
   revealed  String   @default("[]")
   // Cell keys ("l,x,y") of the monster teams this player has beaten.
   defeated  String   @default("[]")
+  // Key indices (door.key / item.v in the sealed layout) this player has picked up.
+  keys      String   @default("[]")
+  // Cell keys ("l,x,y") of the doors this player has unlocked.
+  opened    String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)

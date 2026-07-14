@@ -37,10 +37,10 @@ export async function findRun(dungeonId: string, playerId: string) {
 	return prisma.dungeonRun.findUnique({ where: { playerId_dungeonId: { playerId, dungeonId } } });
 }
 
-export async function updateRun(id: string, pos: RunPosition, revealed: string) {
+export async function updateRun(id: string, pos: RunPosition, revealed: string, keys: string, opened: string) {
 	return prisma.dungeonRun.update({
 		where: { id },
-		data: { ...pos, revealed }
+		data: { ...pos, revealed, keys, opened }
 	});
 }
 

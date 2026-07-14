@@ -12,7 +12,8 @@ import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
 import { cellKey, cellsForKeys, revealAround } from './dungeon/reveal.js';
 import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
-import type { DungeonStruct } from './dungeon/types.js';
+import { DungeonItem } from './dungeon/types.js';
+import type { DungeonDoor, DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
 import { createRun, findRun, getDungeonByName, updateRun, updateRunDefeated } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
@@ -65,6 +66,36 @@ function decorateMonsters(reveal: RevealedCell[], teams: MonsterTeam[], defeated
 		}
 	}
 	return reveal;
+}
+
+/** Swap opened doors to their open skin and hide keys this player already holds. */
+function decorateDoors(reveal: RevealedCell[], opened: string[], keys: number[]): RevealedCell[] {
+	const open = new Set(opened);
+	const owned = new Set(keys);
+	for (const c of reveal) {
+		if (c.icon === 'door_v' || c.icon === 'door_h') {
+			if (open.has(cellKey(c.l, c.x, c.y))) c.icon += '_open';
+		} else if (c.icon?.startsWith('key_') && owned.has(Number(c.icon.slice(4)))) {
+			c.icon = undefined;
+		}
+	}
+	return reveal;
+}
+
+/** The locked door sitting on (l,x,y), if any. */
+function lockedDoorAt(d: DungeonStruct, l: number, x: number, y: number): DungeonDoor | null {
+	for (const room of d.levels[l].rooms)
+		for (const door of room.doors) if (door.x === x && door.y === y && door.key != null) return door;
+	return null;
+}
+
+/** The key index lying on (l,x,y), if any. */
+function keyIndexAt(d: DungeonStruct, l: number, x: number, y: number): number | null {
+	for (const room of d.levels[l].rooms) {
+		const it = room.item;
+		if (it && it.k === DungeonItem.IKey && it.x === x && it.y === y) return it.v;
+	}
+	return null;
 }
 
 /** Flag the team on cell (l,x,y) beaten for this run; its icon stops appearing in reveals. */
@@ -120,10 +151,14 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			levels: d.levels.length,
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
-			reveal: decorateMonsters(
-				cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
-				JSON.parse(dungeon.monsters) as MonsterTeam[],
-				JSON.parse(existing.defeated) as string[]
+			reveal: decorateDoors(
+				decorateMonsters(
+					cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+					JSON.parse(dungeon.monsters) as MonsterTeam[],
+					JSON.parse(existing.defeated) as string[]
+				),
+				JSON.parse(existing.opened) as string[],
+				JSON.parse(existing.keys) as number[]
 			)
 		};
 	}
@@ -205,6 +240,20 @@ export async function move(req: Request): Promise<MoveResult> {
 		return { ok: false, pos: cur, reveal: [] };
 	}
 
+	const keys = JSON.parse(run.keys) as number[];
+	const opened = JSON.parse(run.opened) as string[];
+
+	const door = lockedDoorAt(d, next.l, next.x, next.y);
+	if (door && !opened.includes(cellKey(next.l, next.x, next.y))) {
+		// Locked door: without its one matching key the step is refused like a wall.
+		if (!keys.includes(door.key as number)) return { ok: false, pos: cur, reveal: [] };
+		opened.push(cellKey(next.l, next.x, next.y));
+	}
+
+	// Walking over an uncollected key picks it up.
+	const keyIdx = keyIndexAt(d, next.l, next.x, next.y);
+	if (keyIdx != null && !keys.includes(keyIdx)) keys.push(keyIdx);
+
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
 	const monsters = JSON.parse(dungeon.monsters) as MonsterTeam[];
@@ -261,14 +310,26 @@ export async function move(req: Request): Promise<MoveResult> {
 
 		if (result.result) {
 			await markMonsterDefeated(run, next.l, next.x, next.y);
+			defeated.add(cellKey(next.l, next.x, next.y));
 		}
 	}
-	await updateRun(run.id, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
+	// Re-send the entered cell even if already revealed, so a door opening, a key
+	// pickup or a won fight shows up immediately instead of on the next resume.
+	const entered = cellKey(next.l, next.x, next.y);
+	if (!reveal.some(c => cellKey(c.l, c.x, c.y) === entered)) reveal.push(...cellsForKeys(d, [entered]));
+
+	await updateRun(
+		run.id,
+		{ posX: next.x, posY: next.y, posL: next.l },
+		JSON.stringify([...revealed]),
+		JSON.stringify(keys),
+		JSON.stringify(opened)
+	);
 
 	return {
 		ok: true,
 		pos: next,
-		reveal: decorateMonsters(reveal, monsters, JSON.parse(run.defeated) as string[]),
+		reveal: decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys),
 		fight: result
 	};
 }
