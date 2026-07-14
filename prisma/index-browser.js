@@ -789,7 +789,8 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon'
 };
 
 exports.NewsType = exports.$Enums.NewsType = {

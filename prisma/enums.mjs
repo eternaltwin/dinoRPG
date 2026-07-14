@@ -10,7 +10,8 @@ export const UnavailableReason = {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon'
 };
 
 export const NewsType = {

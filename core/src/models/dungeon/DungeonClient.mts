@@ -3,6 +3,7 @@
  * (ed-ui DungeonPage.vue ⇄ ed-be /dungeon routes).
  */
 import { DungeonType } from '@drpg/prisma/enums';
+import {FightResult} from "../fight/FightResult.mjs";
 
 export interface Cell {
 	l: number;
@@ -38,6 +39,7 @@ export interface MoveResult {
 	ok: boolean;
 	pos: Cell;
 	reveal: RevealedCell[];
+	fight?: FightResult;
 }
 
 // ── rendering ──────────────────────────────────────────────────────────────

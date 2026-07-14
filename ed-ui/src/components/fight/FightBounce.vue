@@ -100,7 +100,8 @@ export default defineComponent({
 			displayFightHistory: false,
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
-			npcName: undefined as string | undefined
+			npcName: undefined as string | undefined,
+			dungeonName:  undefined as string | undefined
 		};
 	},
 	methods: {
@@ -110,6 +111,8 @@ export default defineComponent({
 					name: 'NPC',
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
+			} if (this.dungeonName && this.fight.result) {
+				this.$router.push({ name: 'Dungeon', params: { id: this.dungeonName } });
 			} else {
 				useDinozStore().clearNpc(this.dinozId);
 				this.$router.push({ name: 'DinozPage', params: { id: this.dinozId.toString() } });
@@ -132,10 +135,12 @@ export default defineComponent({
 	},
 	mounted() {
 		useDinozStore().setCurrentDinozId(this.dinozId);
-		if (this.fight.result) {
-			const npc = useDinozStore().getCurrentDinoz.npcAwait;
+		const currentDinoz = useDinozStore().getCurrentDinoz;
+		if (this.fight.result && currentDinoz) {
+			const npc = currentDinoz.npcAwait;
 			this.npcSpeech = npc?.npcSpeech;
 			this.npcName = npc?.npcName;
+			this.dungeonName = currentDinoz.dungeonName;
 		} else {
 			useDinozStore().clearNpc(this.dinozId);
 		}
