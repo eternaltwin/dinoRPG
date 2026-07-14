@@ -32,7 +32,7 @@ import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/du
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { useDinozStore } from '../store';
-import {errorHandler} from "../utils";
+import { errorHandler } from '../utils';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // Kept at module scope on purpose: the renderer, actor and Pixi objects must
