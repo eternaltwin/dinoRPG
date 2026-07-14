@@ -9,15 +9,9 @@ export interface RunPosition {
 }
 
 /** Persist a freshly sealed dungeon run and return its id (the capability token). */
-export async function createRun(
-	pos: RunPosition,
-	revealed: string,
-	monsters: string,
-	playerId: string,
-	dungeonId: string
-) {
+export async function createRun(pos: RunPosition, revealed: string, playerId: string, dungeonId: string) {
 	return prisma.dungeonRun.create({
-		data: { ...pos, revealed, monsters, playerId, dungeonId }
+		data: { ...pos, revealed, playerId, dungeonId }
 	});
 }
 
@@ -33,9 +27,9 @@ export async function getDungeonByName(name: string) {
 	});
 }
 
-export async function createDungeon(sealed: Sealed, type: DungeonType, name: string) {
+export async function createDungeon(sealed: Sealed, type: DungeonType, name: string, level: number, monsters: string) {
 	return prisma.dungeon.create({
-		data: { ...sealed, type, name }
+		data: { ...sealed, type, name, level, monsters }
 	});
 }
 
@@ -50,9 +44,9 @@ export async function updateRun(id: string, pos: RunPosition, revealed: string) 
 	});
 }
 
-export async function updateRunMonsters(id: string, monsters: string) {
+export async function updateRunDefeated(id: string, defeated: string) {
 	return prisma.dungeonRun.update({
 		where: { id },
-		data: { monsters }
+		data: { defeated }
 	});
 }

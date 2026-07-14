@@ -44,6 +44,10 @@
 				<input type="text" v-model="form.name" />
 			</div>
 			<div>
+				<label>Monster level</label>
+				<input type="number" v-model.number="form.monsterLevel" min="1" max="200" />
+			</div>
+			<div>
 				<label>Width</label>
 				<input type="number" v-model.number="form.width" min="8" max="256" />
 			</div>
@@ -89,6 +93,7 @@ export default defineComponent({
 			form: {
 				type: DungeonType.cavern as string,
 				name: '',
+				monsterLevel: 1,
 				layout: '',
 				seed: undefined as number | undefined,
 				width: 24,
@@ -110,10 +115,11 @@ export default defineComponent({
 				const layout = this.form.layout.trim();
 				const created = await AdminService.createDungeon(
 					layout !== ''
-						? { type: this.form.type, layout, name: this.form.name }
+						? { type: this.form.type, layout, name: this.form.name, monsterLevel: this.form.monsterLevel }
 						: {
 								type: this.form.type,
 								name: this.form.name,
+								monsterLevel: this.form.monsterLevel,
 								// an emptied number input is '' — omit it so the backend picks a random seed
 								seed: typeof this.form.seed === 'number' ? this.form.seed : undefined,
 								width: this.form.width,

@@ -740,7 +740,7 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   posY: 'posY',
   posL: 'posL',
   revealed: 'revealed',
-  monsters: 'monsters',
+  defeated: 'defeated',
   createdAt: 'createdAt',
   playerId: 'playerId',
   dungeonId: 'dungeonId'
@@ -752,7 +752,9 @@ exports.Prisma.DungeonScalarFieldEnum = {
   cipher: 'cipher',
   iv: 'iv',
   tag: 'tag',
-  type: 'type'
+  type: 'type',
+  level: 'level',
+  monsters: 'monsters'
 };
 
 exports.Prisma.SortOrder = {
