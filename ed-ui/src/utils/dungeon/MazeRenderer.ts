@@ -1,7 +1,12 @@
 import { Application, BlurFilter, Container, Graphics, Sprite, Text } from 'pixi.js';
+// @ts-expect-error smonster is missing from the package's sdino.d.ts typings.
+import { smonster } from '@eternaltwin/dinorpg_animations';
 import { SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { gfx, pad2 } from './dungeonAssets.js';
+
+/** The slice of smonster (a Pixi Container) we use — the published typings omit it. */
+type SMonster = Container & { collider: { width: number; height: number } };
 
 /**
  * MazeRenderer — draws only the cells the server has revealed.
@@ -46,6 +51,8 @@ export class MazeRenderer {
 	private readonly noiseSeed = (Math.random() * 0x7fffffff) | 0;
 	/** Cached zone id (0..2) per cell, one grid per level. */
 	private readonly zones = new Map<number, Uint8Array>();
+	/** Animated monster sprites, keyed "l,x,y" — created once, re-attached on each level redraw. */
+	private readonly monsterSprites = new Map<string, SMonster>();
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -96,6 +103,14 @@ export class MazeRenderer {
 			const level = this.known[c.l];
 			if (!level) continue;
 			const isNew = !level.has(`${c.x},${c.y}`);
+			if (!c.monster) {
+				// Team defeated since last reveal: retire its animated sprite.
+				const stale = this.monsterSprites.get(`${c.l},${c.x},${c.y}`);
+				if (stale) {
+					stale.destroy();
+					this.monsterSprites.delete(`${c.l},${c.x},${c.y}`);
+				}
+			}
 			level.set(`${c.x},${c.y}`, c);
 			if (c.l === this.level) {
 				dirty = true;
@@ -261,7 +276,8 @@ export class MazeRenderer {
 		const lo = skin.perlin === 'few' ? 60 : 85;
 		const hi = skin.perlin === 'few' ? 75 : 115;
 		const lat = (ix: number, iy: number): number => {
-			let v = (Math.imul(ix, 374761393) ^ Math.imul(iy, 668265263) ^ this.noiseSeed ^ Math.imul(l + 1, 2246822519)) >>> 0;
+			let v =
+				(Math.imul(ix, 374761393) ^ Math.imul(iy, 668265263) ^ this.noiseSeed ^ Math.imul(l + 1, 2246822519)) >>> 0;
 			v = Math.imul(v ^ (v >>> 13), 1274126177);
 			return ((v ^ (v >>> 16)) >>> 0) % 256;
 		};
@@ -275,7 +291,11 @@ export class MazeRenderer {
 				const u = tx * tx * (3 - 2 * tx);
 				const v = ty * ty * (3 - 2 * ty);
 				const a = lat(ix, iy);
-				const n = a + (lat(ix + 1, iy) - a) * u + (lat(ix, iy + 1) - a) * v + (a + lat(ix + 1, iy + 1) - lat(ix + 1, iy) - lat(ix, iy + 1)) * u * v;
+				const n =
+					a +
+					(lat(ix + 1, iy) - a) * u +
+					(lat(ix, iy + 1) - a) * v +
+					(a + lat(ix + 1, iy + 1) - lat(ix + 1, iy) - lat(ix, iy + 1)) * u * v;
 				z[x * h + y] = n < lo ? 2 : n < hi ? 1 : 0;
 			}
 		}
@@ -377,7 +397,8 @@ export class MazeRenderer {
 				this.sprite(c.icon === 'door_v' ? 'item_door_v_01' : 'item_door_h_01', c.x, c.y, this.cell);
 				break;
 			case 'monster':
-				this.sprite('item_skel', c.x, c.y, this.cell * 0.7);
+				if (c.monster) this.monsterAt(c);
+				else this.sprite('item_skel', c.x, c.y, this.cell * 0.7);
 				break;
 			case 'key':
 				this.sprite('item_key_01', c.x, c.y, this.cell * 0.7);
@@ -392,6 +413,20 @@ export class MazeRenderer {
 				this.sprite('item_scroll', c.x, c.y, this.cell * 0.7);
 				break;
 		}
+	}
+
+	/** The team's first monster, standing (animated) on its cell. */
+	private monsterAt(c: RevealedCell): void {
+		const key = `${c.l},${c.x},${c.y}`;
+		let m = this.monsterSprites.get(key);
+		if (!m) {
+			m = new smonster({ type: c.monster, pflag: true }) as SMonster;
+			m.scale.set((this.cell * 1.2) / m.collider.height);
+			this.monsterSprites.set(key, m);
+		}
+		const p = this.center(c.x, c.y);
+		m.position.set(p.x, p.y + this.cell * 0.25);
+		this.mapLayer.addChild(m);
 	}
 
 	// ── primitives ─────────────────────────────────────────────────────────────

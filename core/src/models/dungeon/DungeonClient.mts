@@ -19,6 +19,8 @@ export interface RevealedCell {
 	floor: boolean;
 	/** Entity token ('start' | 'exit' | 'stair_up' | 'stair_down' | 'door_v' | 'door_h' | 'monster' | 'key' | 'gold' | 'heal' | 'scroll'). */
 	icon?: string;
+	/** smonster gfx name of the team's first monster — only set on 'monster' cells whose team is still alive. */
+	monster?: string;
 }
 
 export interface StartRunResult {
@@ -89,14 +91,78 @@ export interface DinozActorOptions {
 // hell, ruin, sewer, mine), with its over-names mapped onto our extracted sheets:
 // ruin→broken, square/ruinPurple→slab, dirt→stone, grassDark→grass.
 export const SKINS: Skin[] = [
-	{ name: 'cavern', ground: 'cavern', frontCount: 4, groundCount: 5, fog: 0x392429, over: ['broken', 'grass'], perlin: 'normal' },
-	{ name: 'crypt', ground: 'crypt', frontCount: 3, groundCount: 7, fog: 0x27191c, over: [null, 'slab'], perlin: 'normal' },
-	{ name: 'egypt', ground: 'sand', frontCount: 6, groundCount: 6, fog: 0x433023, over: ['stone', null], perlin: 'normal' },
-	{ name: 'forest', ground: 'grass', frontCount: 1, groundCount: 6, fog: 0x30371e, over: ['stone', 'grass'], perlin: 'dense' },
-	{ name: 'hell', ground: 'hell', frontCount: 4, groundCount: 5, fog: 0x330d0d, over: ['broken', 'creep'], perlin: 'normal' },
-	{ name: 'ruin', ground: 'cavern', frontCount: 6, groundCount: 5, fog: 0x252730, over: ['slab', 'grass'], perlin: 'normal' },
-	{ name: 'sewer', ground: 'sewer', frontCount: 4, groundCount: 7, fog: 0x37321e, over: ['creep', 'stone'], perlin: 'few' },
-	{ name: 'stone', ground: 'crypt', frontCount: 2, groundCount: 7, fog: 0x352c20, over: ['stone', null], perlin: 'dense' }
+	{
+		name: 'cavern',
+		ground: 'cavern',
+		frontCount: 4,
+		groundCount: 5,
+		fog: 0x392429,
+		over: ['broken', 'grass'],
+		perlin: 'normal'
+	},
+	{
+		name: 'crypt',
+		ground: 'crypt',
+		frontCount: 3,
+		groundCount: 7,
+		fog: 0x27191c,
+		over: [null, 'slab'],
+		perlin: 'normal'
+	},
+	{
+		name: 'egypt',
+		ground: 'sand',
+		frontCount: 6,
+		groundCount: 6,
+		fog: 0x433023,
+		over: ['stone', null],
+		perlin: 'normal'
+	},
+	{
+		name: 'forest',
+		ground: 'grass',
+		frontCount: 1,
+		groundCount: 6,
+		fog: 0x30371e,
+		over: ['stone', 'grass'],
+		perlin: 'dense'
+	},
+	{
+		name: 'hell',
+		ground: 'hell',
+		frontCount: 4,
+		groundCount: 5,
+		fog: 0x330d0d,
+		over: ['broken', 'creep'],
+		perlin: 'normal'
+	},
+	{
+		name: 'ruin',
+		ground: 'cavern',
+		frontCount: 6,
+		groundCount: 5,
+		fog: 0x252730,
+		over: ['slab', 'grass'],
+		perlin: 'normal'
+	},
+	{
+		name: 'sewer',
+		ground: 'sewer',
+		frontCount: 4,
+		groundCount: 7,
+		fog: 0x37321e,
+		over: ['creep', 'stone'],
+		perlin: 'few'
+	},
+	{
+		name: 'stone',
+		ground: 'crypt',
+		frontCount: 2,
+		groundCount: 7,
+		fog: 0x352c20,
+		over: ['stone', null],
+		perlin: 'dense'
+	}
 ];
 
 /** Sprites shared by every skin (items, doors, stairs). */

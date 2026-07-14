@@ -24,6 +24,8 @@ import {
 } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
 import { auth } from '../dao/playerDao.js';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import type { MonsterTeam } from './dungeon/monsters.js';
 import { getDinozFicheLiteRequest } from '../dao/dinozDao.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
 
@@ -39,11 +41,23 @@ function newReveals(candidates: RevealedCell[], revealed: Set<string>): Revealed
 	return out;
 }
 
-/** Strip the 'monster' icon from cells whose team this player already beat. */
-function hideDefeated(reveal: RevealedCell[], defeated: string[]): RevealedCell[] {
+/**
+ * Strip the 'monster' icon from cells whose team this player already beat, and
+ * tag the still-alive ones with the gfx name of their team's first monster.
+ */
+function decorateMonsters(reveal: RevealedCell[], teams: MonsterTeam[], defeated: string[]): RevealedCell[] {
 	const dead = new Set(defeated);
-	if (dead.size > 0)
-		for (const c of reveal) if (c.icon === 'monster' && dead.has(cellKey(c.l, c.x, c.y))) c.icon = undefined;
+	const first = new Map(teams.map(t => [cellKey(t.l, t.x, t.y), t.monsters[0]]));
+	for (const c of reveal) {
+		if (c.icon !== 'monster') continue;
+		const k = cellKey(c.l, c.x, c.y);
+		if (dead.has(k)) {
+			c.icon = undefined;
+		} else {
+			const m = first.get(k);
+			if (m) c.monster = monsterList[m].display ?? monsterList[m].name;
+		}
+	}
 	return reveal;
 }
 
@@ -96,8 +110,9 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			levels: d.levels.length,
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
-			reveal: hideDefeated(
+			reveal: decorateMonsters(
 				cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+				JSON.parse(dungeon.monsters) as MonsterTeam[],
 				JSON.parse(existing.defeated) as string[]
 			)
 		};
@@ -121,7 +136,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		levels: d.levels.length,
 		skin: dungeon.type,
 		skinSalt: Math.floor(Math.random() * 1000),
-		reveal
+		reveal: decorateMonsters(reveal, JSON.parse(dungeon.monsters) as MonsterTeam[], [])
 	};
 }
 
@@ -183,5 +198,13 @@ export async function move(req: Request): Promise<MoveResult> {
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
 	await updateRun(run.id, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
 
-	return { ok: true, pos: next, reveal: hideDefeated(reveal, JSON.parse(run.defeated) as string[]) };
+	return {
+		ok: true,
+		pos: next,
+		reveal: decorateMonsters(
+			reveal,
+			JSON.parse(dungeon.monsters) as MonsterTeam[],
+			JSON.parse(run.defeated) as string[]
+		)
+	};
 }
