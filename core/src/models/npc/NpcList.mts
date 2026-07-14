@@ -172,14 +172,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		id: 15,
 		placeId: PlaceEnum.COLLINES_HANTEES,
 		data: FOU,
-		condition: {
-			[Operator.OR]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.LANTERN } },
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
-			]
-		},
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.LANTERN } },
 		missions: undefined,
 		flashvars: undefined
 	},
@@ -198,20 +191,13 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
 			[Operator.OR]: [
-				{
-					[Operator.AND]: [
-						{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
-						{
-							[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-						}
-					]
-				},
+				// Rasca quest
 				{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
-				// Sticky swamp bosses hidden quest
+				// Sticky swamp quest
 				{
 					[Operator.AND]: [
 						{ [ConditionEnum.STATUS]: DinozStatusId.WEIRD_SWAMP_SEEN },
-						{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
+						{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
 						{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MONSTERS_KNOWN } }
 					]
 				}
@@ -225,14 +211,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		name: NpcName.archis,
 		id: 18,
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
-		condition: {
-			[Operator.OR]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE } },
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
-			]
-		},
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE } },
 		data: ARCHISAGE,
 		missions: undefined,
 		flashvars: undefined
@@ -318,17 +297,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		data: PTEROZ,
 		missions: undefined,
 		condition: {
-			[Operator.OR]: [
-				{
-					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } },
-						{ [ConditionEnum.MINLEVEL]: 8 }
-					]
-				},
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
-			]
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		flashvars: undefined
 	},
@@ -339,17 +308,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		data: HIPPO,
 		missions: undefined,
 		condition: {
-			[Operator.OR]: [
-				{
-					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } },
-						{ [ConditionEnum.MINLEVEL]: 8 }
-					]
-				},
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
-			]
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		flashvars: undefined
 	},
@@ -360,17 +319,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		data: ROCKY,
 		missions: undefined,
 		condition: {
-			[Operator.OR]: [
-				{
-					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } },
-						{ [ConditionEnum.MINLEVEL]: 13 }
-					]
-				},
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
-			]
+			[Operator.AND]: [{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } }, { [ConditionEnum.MINLEVEL]: 13 }]
 		},
 		flashvars: undefined
 	},

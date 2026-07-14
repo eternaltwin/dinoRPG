@@ -143,9 +143,5 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 			}
 		],
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

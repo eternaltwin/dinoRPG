@@ -26,9 +26,5 @@ export const PADAMOINE: Readonly<Record<string, NpcData>> = {
 			}
 		],
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

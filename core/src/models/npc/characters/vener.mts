@@ -14,17 +14,13 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	moi: {
 		stepName: 'moi',
 		nextStep: ['perdu', 'chasse', 'deal', 'korgon', 'auto'],
-		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VMEM }
-		}
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VMEM } }
 	},
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
 		fight: [bossList.VENERABLE],
-		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE }
-		},
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE } },
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
@@ -47,22 +43,22 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	perdu: {
 		stepName: 'perdu',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	chasse: {
 		stepName: 'chasse',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	deal: {
 		stepName: 'deal',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	auto: {
 		stepName: 'auto',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	korgon: {
 		stepName: 'korgon',
@@ -71,7 +67,7 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	next0: {
 		stepName: 'next0',
 		nextStep: [],
-		target: 'fight'
+		redirect: 'fight'
 	},
 	next1: {
 		stepName: 'next1',
@@ -86,7 +82,7 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	next2: {
 		stepName: 'next2',
 		nextStep: [],
-		target: 'question'
+		redirect: 'question'
 	},
 	question: {
 		stepName: 'question',
@@ -122,10 +118,6 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	},
 	bye: {
 		stepName: 'bye',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
 		nextStep: []
 	}
 };
