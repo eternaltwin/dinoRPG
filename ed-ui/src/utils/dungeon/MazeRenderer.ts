@@ -421,7 +421,7 @@ export class MazeRenderer {
 		let m = this.monsterSprites.get(key);
 		if (!m) {
 			m = new smonster({ type: c.monster, pflag: true }) as SMonster;
-			m.scale.set((this.cell * 1.2) / m.collider.height);
+			m.scale.set((this.cell * 2) / 90);
 			this.monsterSprites.set(key, m);
 		}
 		const p = this.center(c.x, c.y);

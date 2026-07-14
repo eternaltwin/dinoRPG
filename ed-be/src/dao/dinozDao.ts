@@ -1148,6 +1148,7 @@ export async function getFollowingDinoz(dinozId: number) {
 			},
 			select: {
 				id: true,
+				placeId: true,
 				followers: { select: { id: true } },
 				leaderId: true
 			}

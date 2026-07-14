@@ -31,7 +31,7 @@ import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models
 import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
-import { useDinozStore } from '../store';
+import {sessionStore, useDinozStore} from '../store';
 import { errorHandler } from '../utils';
 
 // ── page state & control loop ─────────────────────────────────────────────────
@@ -91,7 +91,8 @@ export default defineComponent({
 		return {
 			status: '',
 			wallDebug: false,
-			stairIcon: '' as string
+			stairIcon: '' as string,
+			sessionStore: sessionStore()
 		};
 	},
 	methods: {
@@ -100,28 +101,39 @@ export default defineComponent({
 			renderer?.setDebug(this.wallDebug);
 		},
 		/** Ask the server for one step; on approval, walk the dinoz and fold in the reveal. */
-		tryMove(dx: number, dy: number, dl = 0): void {
+		async tryMove(dx: number, dy: number, dl = 0): Promise<void> {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				return;
+			}
 			if (moving || !actor) return;
 			// Known wall (already revealed): the server would just say no — skip the round-trip.
 			if (dl === 0 && walls.has(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`)) return;
 			moving = true;
-			DungeonService.moveDinoz(dungeonId, dx, dy, dl)
-				.then(r => {
-					moving = false;
-					if (!r.ok) return; // wall / no stair: the server said no, nothing was revealed
-					record(r.reveal);
-					cursor = { ...r.pos };
-					actor?.enqueue(cursor);
-					trail.unshift({ ...cursor });
-					if (trail.length > followers.length + 1) trail.pop();
-					// The first enqueue each follower gets is its own cell — a walk-in-place
-					// beat that staggers the line's start, as View.hx's delay = w*10 did.
-					followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
-				})
-				.catch(err => {
-					moving = false;
-					errorHandler.handle(err, this.$toast);
-				});
+			try {
+				const move = await DungeonService.moveDinoz(dungeonId, dx, dy, dl, currentDinoz.id)
+				moving = false;
+				if (!move.ok) return; // wall / no stair: the server said no, nothing was revealed
+				if (move.fight) {
+					this.sessionStore.setFightResult(move.fight);
+
+					this.$router.push({
+						name: 'Fight',
+						params: { dinozId: this.$route.params.id.toString() }
+					});
+				}
+				record(move.reveal);
+				cursor = { ...move.pos };
+				actor?.enqueue(cursor);
+				trail.unshift({ ...cursor });
+				if (trail.length > followers.length + 1) trail.pop();
+				// The first enqueue each follower gets is its own cell — a walk-in-place
+				// beat that staggers the line's start, as View.hx's delay = w*10 did.
+				followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
+			} catch (err) {
+				moving = false;
+				errorHandler.handle(err, this.$toast);
+			};
 		},
 		/**
 		 * Leader idle: send each follower the whole remaining trail in one go so it

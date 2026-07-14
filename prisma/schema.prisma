@@ -1004,6 +1004,7 @@ enum UnavailableReason {
   unfreezing
   defending
   restingAttack
+  dungeon
 }
 
 enum Lang {

@@ -10,7 +10,13 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FighterRecap, FightOutcome, FightProcessResult, FightReplay } from '@drpg/core/models/fight/FightResult';
+import {
+	FighterRecap,
+	FightOutcome,
+	FightProcessResult,
+	FightReplay,
+	FightResult
+} from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -306,7 +312,7 @@ export async function rewardFightVsMonsters(
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
 	player: Pick<Player, 'id' | 'teacher' | 'autoReequipItems'> & { items: { itemId: number; quantity: number }[] }
-) {
+): Promise<FightResult> {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
 	}

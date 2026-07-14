@@ -110,6 +110,12 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		dinozList.value.splice(dinozToUpdate, 1, dinoz);
 	};
 
+	const setDungeonName = (dinozId: number, dungeonName: string): void => {
+		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+		dinozToUpdate.dungeonName = dungeonName;
+	}
+
 	const setCurrentDinozId = (dinozId: number): void => {
 		currentDinozId.value = dinozId;
 	};
@@ -190,6 +196,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		setDinozList,
 		setDinoz,
 		setCurrentDinozId,
+		setDungeonName,
 		setDinozSkillState,
 		setNpc,
 		clearNpc,

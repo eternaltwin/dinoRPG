@@ -10,24 +10,30 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
-import { revealAround, cellKey, cellsForKeys } from './dungeon/reveal.js';
+import { cellKey, cellsForKeys, revealAround } from './dungeon/reveal.js';
 import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import type { DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
-import {
-	createRun,
-	findRun,
-	getDungeonById,
-	getDungeonByName,
-	updateRun,
-	updateRunDefeated
-} from '../dao/dungeonRunDao.js';
+import { createRun, findRun, getDungeonByName, updateRun, updateRunDefeated } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
 import { auth } from '../dao/playerDao.js';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import type { MonsterTeam } from './dungeon/monsters.js';
-import { getDinozFicheLiteRequest } from '../dao/dinozDao.js';
+import {
+	getDinozFicheLiteRequest,
+	getDinozFightDataRequest,
+	getFollowingDinoz,
+	getLeaderWithFollowers,
+	updateDinoz,
+	updateMultipleDinoz
+} from '../dao/dinozDao.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
+import { UnavailableReason } from '@drpg/prisma/enums';
+import { isAlive } from '@drpg/core/utils/DinozUtils';
+import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 /** Filter candidate reveals down to the not-yet-revealed ones and record them. */
 function newReveals(candidates: RevealedCell[], revealed: Set<string>): RevealedCell[] {
@@ -84,13 +90,17 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
 	const dinozId = req.body.dinozId;
-	const dinoz = await getDinozFicheLiteRequest(dinozId);
+	const dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
 	if (dungeonRef.placeStart !== dinoz.placeId) {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
+
+	const team = [dinoz.id, ...dinoz.followers.map(d => d.id)];
+
+	await updateMultipleDinoz(team, { unavailableReason: UnavailableReason.dungeon });
 
 	const codec = new DungeonCodec();
 	codec.decode(
@@ -162,6 +172,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	const dl = +req.body.dl;
 	const dy = +req.body.dy;
 	const dungeonId = req.params.id;
+	const dinozId = +req.body.dinozId;
 	const dungeon = await getDungeonByName(dungeonId);
 	if (!dungeon) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
@@ -196,15 +207,68 @@ export async function move(req: Request): Promise<MoveResult> {
 
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
 	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
+	const monsters = JSON.parse(dungeon.monsters) as MonsterTeam[];
+	const foundMonsters = monsters.find(m => {
+		if (m.l === next?.l && m.y === next?.y && m.x === next.x) {
+			return true;
+		}
+	});
+	const defeated = new Set(JSON.parse(run.defeated) as string[]);
+	let result: FightResult | undefined = undefined;
+	if (foundMonsters && !defeated.has(cellKey(foundMonsters.l, foundMonsters.x, foundMonsters.y))) {
+		const player = await getDinozFightDataRequest(dinozId, authed.id);
+		if (!player) {
+			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		}
+		const dinozData = player.dinoz.find(d => d.id === dinozId);
+		if (!dinozData) {
+			throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		}
+		if (dinozData.unavailableReason !== UnavailableReason.dungeon) {
+			throw new ExpectedError(`Dinoz is not able to fight in the dungeon.`);
+		}
+		let team = player.dinoz;
+
+		// Go through followers and make those that are unavailable leave the group.
+		const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== UnavailableReason.dungeon);
+
+		if (unavailableFollowers.length > 0) {
+			for (const d of unavailableFollowers) {
+				await updateDinoz(d.id, { leader: { disconnect: true } });
+			}
+			team = team.filter(d => d.life > 0 && d.unavailableReason === null);
+		}
+
+		if (dinozData.concentration) {
+			throw new ExpectedError(translate(`concentration`, authed));
+		}
+
+		if (team.some(d => !d.fight)) {
+			throw new ExpectedError(translate(`missingIrma`, authed));
+		}
+
+		if (!isAlive(dinozData)) {
+			throw new ExpectedError(translate(`dead`, authed));
+		}
+
+		const monsters = [] as MonsterFiche[];
+		for (const monster of foundMonsters.monsters) {
+			monsters.push(monsterList[monster]);
+		}
+
+		const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsters);
+		result = await rewardFightVsMonsters(team, monsters, fightResult, PlaceEnum.CIMETIERE, player);
+
+		if (result.result) {
+			await markMonsterDefeated(run, next.l, next.x, next.y);
+		}
+	}
 	await updateRun(run.id, { posX: next.x, posY: next.y, posL: next.l }, JSON.stringify([...revealed]));
 
 	return {
 		ok: true,
 		pos: next,
-		reveal: decorateMonsters(
-			reveal,
-			JSON.parse(dungeon.monsters) as MonsterTeam[],
-			JSON.parse(run.defeated) as string[]
-		)
+		reveal: decorateMonsters(reveal, monsters, JSON.parse(run.defeated) as string[]),
+		fight: result
 	};
 }

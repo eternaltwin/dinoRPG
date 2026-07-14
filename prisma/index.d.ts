@@ -369,7 +369,8 @@ export const UnavailableReason: {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon'
 };
 
 export type UnavailableReason = (typeof UnavailableReason)[keyof typeof UnavailableReason]

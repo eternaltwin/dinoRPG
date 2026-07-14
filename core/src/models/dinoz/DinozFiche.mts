@@ -53,6 +53,7 @@ export interface DinozFiche {
 		npcName: string;
 	};
 	build?: DinozBuild;
+	dungeonName?: string;
 }
 
 // This is the model to use to communicate with the admin panel
