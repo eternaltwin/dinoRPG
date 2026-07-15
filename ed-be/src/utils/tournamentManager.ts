@@ -505,12 +505,14 @@ class TournamentManager {
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.TOUFUFU_BABY_RARE,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						},
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.BOX_LEGENDARY,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						}
 					];
 				} else if (round >= 4) {
@@ -534,12 +536,14 @@ class TournamentManager {
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.TOUFUFU_BABY,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						},
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.BOX_EPIC,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						}
 					];
 				} else if (round === 3) {
@@ -552,7 +556,8 @@ class TournamentManager {
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.BOX_RARE,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						}
 					];
 				} else if (round === 2) {
@@ -565,7 +570,8 @@ class TournamentManager {
 						{
 							rewardType: RewardEnum.ITEM,
 							value: Item.BOX_RARE,
-							quantity: 1
+							quantity: 1,
+							notify: false
 						}
 					];
 				} else if (round === 1) {
