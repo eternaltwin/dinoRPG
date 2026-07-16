@@ -403,19 +403,6 @@ export const possessStatus = (
 	return dinoz.status.some(status => status.statusId === statusId);
 };
 
-export const canWinXP = (
-	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-	}
-) => {
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.CURSED)) return false;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_3)) return true;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_2) && dinoz.level < 70) return true;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_1) && dinoz.level < 60) return true;
-	if (dinoz.level < 50) return true;
-	else return false;
-};
-
 export const calculateXPBonus = (
 	dinoz: Pick<Dinoz, 'id'> & {
 		skills: Pick<DinozSkill, 'skillId'>[];
