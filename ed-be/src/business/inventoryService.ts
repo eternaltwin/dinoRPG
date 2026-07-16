@@ -48,7 +48,7 @@ import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { getDinozUpChance, getLearnableSkills, getRandomUpElement, getUnlockableSkills, initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import { generateDinozDisplay, getDinozUpChance, getLearnableSkills, getRandomUpElement, getUnlockableSkills, initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
@@ -421,23 +421,6 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
 	return race;
-}
-
-export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
-	// Generate display:
-	// - the first 2 chars are the race's chars
-	// - the next 11 chars are random between '0' and 'z'
-	// - the next (14th) is the provided color palette
-	// - the next (15th) is the provided 1st rare visual attribute
-	// - the last one (16h) is the provided 2nd rare visual attribute
-	let randomDisplay = race.swfLetter;
-
-	for (let i = 0; i < 11; i++) {
-		randomDisplay += getRandomLetter('z');
-	}
-
-	randomDisplay += palette + rare_1 + rare_2;
-	return randomDisplay;
 }
 
 async function useSpecialItem(

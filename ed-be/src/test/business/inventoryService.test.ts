@@ -41,15 +41,14 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 import { updateDinozCount } from '../../dao/rankingDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
+import { decreaseItemQuantity } from '../../dao/playerItemDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../../dao/dinozItemDao.js';
 import { boxOpening } from '../../utils/boxesLogic.js';
-import { learnNextSphereSkill } from '../../utils/dinoz.js';
+import { generateDinozDisplay, learnNextSphereSkill } from '../../utils/dinoz.js';
 import {
 	getItemMaxQuantity,
 	getAllItemsData,
 	useItem,
-	generateDinozDisplay,
 	equipItem,
 	heal,
 	resurrect
