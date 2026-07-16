@@ -143,7 +143,7 @@ export interface SkillDetails {
 	activatable: boolean;
 	state?: boolean;
 	tree?: SkillTreeType;
-	unlockedFrom?: Skill[];
+	unlockedFrom: Skill[];
 	raceId?: RaceEnum[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
