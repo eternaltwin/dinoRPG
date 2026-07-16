@@ -5,10 +5,11 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
+import { auth, getPlayerDinozShopRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
-import { getRandomArrayElement, getRandomLetter } from '../utils/index.js';
+import { getRandomArrayElement } from '../utils/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { generateDinozDisplay } from '../utils/dinoz.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -16,7 +17,6 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
  * @param req
  * @return Array<DinozShopFiche>
  */
-
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
 	const authed = await auth(req);
@@ -66,15 +66,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			randomRace = getRandomArrayElement(availableRaces);
 
 			// Make a random display
-			// First 2 digits are the race specific letters
-			randomDisplay = randomRace.swfLetter;
-
-			// For the next 11 digits, randomly generate them between '0' and 'z'
-			for (let i = 0; i < 11; i++) {
-				randomDisplay += getRandomLetter('z');
-			}
-			// Set the last 3 digits (for rare color palette, rare trait 1 & 2) to '0'
-			randomDisplay += '000';
+			randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
 
 			const dinoz: Prisma.PlayerDinozShopCreateManyInput = {
 				playerId: playerData.id,
