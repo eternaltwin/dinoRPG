@@ -293,7 +293,8 @@
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_attack": "Attaquer le château",
+			"demon_shop": "Boutique Démoniaque"
 		}
 	},
 	"button": {
@@ -1798,6 +1799,9 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Boutique Démoniaque"
+		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
 			"help": "Bienvenue dans l'Enclos des Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
@@ -2657,6 +2661,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
+		"demon": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
