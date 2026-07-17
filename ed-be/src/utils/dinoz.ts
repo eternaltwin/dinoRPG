@@ -43,20 +43,20 @@ export const getLearnableSkills = (
 		learnableSkills = learnableSkills.filter(skill => skill.element.some(element => element === elementWanted));
 	}
 
-	// First filter : Keep all skills from same tree (Vanilla or Ether)
-	// Second filter : Keep all skills that are learnable or already learned
-	// Third filter : Remove all skills that dinoz already knows
-	// Fourth filter : Remove all unlockables skills
-	// Fifth filter : Remove all spherical skills (not learnable here)
-	// Sixth filtre : Remove race skills (ex : fly from Pteroz)
 	return learnableSkills
+		// First filter : Keep all skills from same tree (Vanilla or Ether)
 		.filter(skill => skill.tree === treeType)
+		// Second filter : Keep all skills that are learnable or already learned
 		.filter(skill =>
 			skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
 		)
+		// Third filter : Remove all skills that dinoz already knows
 		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.id))
+		// Fourth filter : Remove all unlockables skills
 		.filter(skill => !dinoz.unlockableSkills.some(dinozSkill => dinozSkill.skillId === skill.id))
+		// Fifth filter : Remove all spherical skills (not learnable here)
 		.filter(skill => !skill.isSphereSkill)
+		// Sixth filtre : Remove race skills (ex : fly from Pteroz)
 		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
 		.map(skill => {
 			return {
@@ -67,9 +67,40 @@ export const getLearnableSkills = (
 		});
 };
 
+
 /**
- * Return all skills that a dinoz can unlock (every elements).
- * If the param "elementWanted" is present, return unlockable skills from one specific element.
+ * @summary Return the unlockable skills for a given Dinoz if it were to learn a new skill.
+ * @param dinoz Relevant data of the Dinoz to level up.
+ * @param skillId Skill to look up.
+ * @returns List of skills that can be unlocked.
+ */
+export const getNewUnlockableSkills = (
+	dinoz: Pick<Dinoz, 'raceId'> & {
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkill, 'skillId'>[];
+	},
+	newSkill: Skill
+) => {
+	return Object.values(skillList)
+		// First filter : get skills that require the new skill to be unlocked
+		.filter(skill => skill.unlockedFrom?.some(s => s === newSkill))
+		// Second filter : Keep only skills that dinoz can learn with that new skill or its already learned skills
+		.filter(skill =>
+			skill.unlockedFrom?.every(
+				skillId =>
+					newSkill === skillId || dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId)
+			)
+		)
+		// Third filter : Remove race skills (ex : shell from Winks)
+		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
+		.map(skill => {
+			return skill.id;
+		});
+}
+
+/**
+ * Return all skills that a dinoz can unlock (all elements).
+ * If the param "elementWanted" is present, return unlockable skills from that one specific element.
  */
 export const getUnlockableSkills = (
 	dinoz: {
@@ -345,7 +376,6 @@ export const learnNextSphereSkill = (
 
 	return sphereSkillToLearn?.id; // SAFETY: sphereSkillToLearn is not undefined
 };
-
 
 export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: string, rare_2: string) => {
 	// Generate display:
