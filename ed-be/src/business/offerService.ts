@@ -55,7 +55,11 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 
 	const player = await getDinozPlaces(authed.id);
 
-	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+	if (!player) {
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+	}
+
+	if (!player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
 		throw new ExpectedError(translate('noDinozAtMarket'));
 	}
 
