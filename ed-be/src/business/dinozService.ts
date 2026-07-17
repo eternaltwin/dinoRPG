@@ -376,8 +376,8 @@ export async function getAvailableActions(
 
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
-			name: actionList[Action.ITINERANTSHOP].name,
-			imgName: actionList[Action.ITINERANTSHOP].imgName,
+			name: actionList[Action.ITINERANT_SHOP].name,
+			imgName: actionList[Action.ITINERANT_SHOP].imgName,
 			prop: itinerantShop.shopId
 		});
 	}
@@ -440,11 +440,20 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
+	// Freeze at gorges
 	if (
 		dinoz.placeId === PlaceEnum.GORGES_PROFONDES &&
 		dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
+	}
+
+	// Demon shop at cemetary
+	if (
+		dinoz.placeId === PlaceEnum.CIMETIERE &&
+		player.rewards.some(r => r.rewardId === Reward.DEMON)
+	) {
+		availableActions.push(actionList[Action.DEMON_SHOP]);
 	}
 
 	return availableActions;
