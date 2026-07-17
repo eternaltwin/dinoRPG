@@ -6,6 +6,8 @@
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { playerStore } from '../store/index.js';
+import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
+import { DemonShopService } from '../services/DemonShopService.js';
 // import DZInput from '../components/common/DZInput.vue';
 
 export default defineComponent({
@@ -16,13 +18,15 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			demonShop: {} as demonShopFiche
 		};
 	},
 	methods: {},
-	async mounted(): Promise<void> {}
+	async mounted(): Promise<void> {
+		this.demonShop = await DemonShopService.getDemonDinozShop();
+	}
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

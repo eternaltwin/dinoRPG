@@ -15,6 +15,7 @@ export const apiRoutes = {
 	playerRoute: '/api/v1/player',
 	rankingRoutes: '/api/v1/ranking',
 	shopRoutes: '/api/v1/shop',
+	demonShopRoutes: '/api/v1/demon',
 	offerRoutes: '/api/v1/offer',
 	serverEventsRoute: '/api/v1/server-events',
 	testingRoute: '/api/v1/testing',

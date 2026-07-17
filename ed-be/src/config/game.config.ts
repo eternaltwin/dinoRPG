@@ -12,6 +12,9 @@ const gameConfig: GameConfig = {
 			dinozNumber: 10,
 			buyableQuetzu: 6
 		},
+		demonShop: {
+			dinozNumber: 15
+		},
 		general: {
 			initialMoney: 1000000,
 			dailyGridRewards: 10
@@ -27,6 +30,9 @@ const gameConfig: GameConfig = {
 		shop: {
 			dinozNumber: 30,
 			buyableQuetzu: 6
+		},
+		demonShop: {
+			dinozNumber: 15
 		},
 		general: {
 			initialMoney: 200000,
@@ -46,6 +52,9 @@ interface GameConfig {
 		shop: {
 			dinozNumber: number;
 			buyableQuetzu: number;
+		};
+		demonShop: {
+			dinozNumber: number;
 		};
 		general: {
 			initialMoney: number;
