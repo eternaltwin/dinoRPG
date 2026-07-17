@@ -543,8 +543,8 @@ export async function reincarnate(req: Request) {
 	await removeAllSkillFromDinoz(dinoz.id);
 
 	const promises = [];
-	if (race.skillId && race.skillId.length > 0) {
-		for (const skill of race.skillId) {
+	if (race.skills && race.skills.length > 0) {
+		for (const skill of race.skills) {
 			promises.push(addSkillToDinoz(dinoz.id, skill));
 		}
 	}
