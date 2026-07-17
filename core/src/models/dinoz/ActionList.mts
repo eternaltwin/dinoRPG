@@ -7,7 +7,8 @@ export enum Action {
 	CHANGE_LEADER = 'change_leader',
 	DISBAND = 'disband',
 	SHOP = 'shop',
-	ITINERANTSHOP = 'itinerant_shop',
+	DEMON_SHOP = 'demon_shop',
+	ITINERANT_SHOP = 'itinerant_shop',
 	LEVEL_UP = 'levelup',
 	NPC = 'npc',
 	RESURRECT = 'resurrect',
@@ -72,8 +73,12 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		name: Action.SHOP,
 		imgName: 'act_shop'
 	},
-	[Action.ITINERANTSHOP]: {
-		name: Action.ITINERANTSHOP,
+	[Action.DEMON_SHOP]: {
+		name: Action.DEMON_SHOP,
+		imgName: 'act_demon_shop'
+	},
+	[Action.ITINERANT_SHOP]: {
+		name: Action.ITINERANT_SHOP,
 		imgName: 'act_shop'
 	},
 	[Action.LEVEL_UP]: {

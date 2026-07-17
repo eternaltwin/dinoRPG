@@ -244,7 +244,12 @@ export default defineComponent({
 						params: { name: shopNameList[action.prop as number] }
 					});
 					break;
-				case Action.ITINERANTSHOP:
+				case Action.DEMON_SHOP:
+					this.$router.push({
+						name: 'DemonShopPage'
+					});
+					break;
+				case Action.ITINERANT_SHOP:
 					this.$router.push({
 						name: 'ItinerantMerchantPage',
 						params: { itinerantId: action.prop }
