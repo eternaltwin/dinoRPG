@@ -1051,7 +1051,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../ed-be/.env"
   },
   "relativePath": "../ed-be/prisma",
   "clientVersion": "6.5.0",
@@ -1060,7 +1061,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

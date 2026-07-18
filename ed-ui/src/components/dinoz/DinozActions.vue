@@ -628,7 +628,7 @@ export default defineComponent({
 					await this.refreshDinoz();
 					break;
 				case Action.DUNGEON_ENTER:
-					useDinozStore().setDungeonName(+this.$route.params.id, action.prop as string)
+					useDinozStore().setDungeonName(+this.$route.params.id, action.prop as string);
 					this.$router.push({ name: 'Dungeon', params: { id: action.prop } });
 					break;
 				default:

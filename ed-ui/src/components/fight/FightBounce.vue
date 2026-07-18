@@ -101,7 +101,7 @@ export default defineComponent({
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined,
-			dungeonName:  undefined as string | undefined
+			dungeonName: undefined as string | undefined
 		};
 	},
 	methods: {
@@ -111,7 +111,8 @@ export default defineComponent({
 					name: 'NPC',
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
-			} if (this.dungeonName && this.fight.result) {
+			}
+			if (this.dungeonName && this.fight.result) {
 				this.$router.push({ name: 'Dungeon', params: { id: this.dungeonName } });
 			} else {
 				useDinozStore().clearNpc(this.dinozId);
