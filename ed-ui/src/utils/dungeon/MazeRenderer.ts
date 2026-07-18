@@ -53,6 +53,8 @@ export class MazeRenderer {
 	private readonly zones = new Map<number, Uint8Array>();
 	/** Animated monster sprites, keyed "l,x,y" — created once, re-attached on each level redraw. */
 	private readonly monsterSprites = new Map<string, SMonster>();
+	/** The message box (View.hx winMsg), if one is open. */
+	private msgBox: Container | null = null;
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -366,6 +368,81 @@ export class MazeRenderer {
 	private clearFx(): void {
 		for (const f of this.fx) f.g.destroy();
 		this.fx.length = 0;
+	}
+
+	// ── message box (View.hx message()) ───────────────────────────────────────
+
+	get messageOpen(): boolean {
+		return this.msgBox != null;
+	}
+
+	closeMessage(): void {
+		this.msgBox?.destroy({ children: true });
+		this.msgBox = null;
+	}
+
+	/**
+	 * View.hx message(): a panel framed with the msgbox_* tiles — solid 0x4d1e10
+	 * fill, 23px top/bottom strips, 41px left/right strips, 77px corners drawn
+	 * over them — centered in the view, with an optional item icon riding the top
+	 * border. A click dismisses it; the page blocks movement while one is open.
+	 */
+	showMessage(text: string, icon?: string): void {
+		this.closeMessage();
+		const pad = 8;
+		const w = 320;
+		// ponytail: Pixi wordWrap instead of the original's manual hyphenation loop
+		// that re-narrowed the box for orphan last lines — same box, simpler text.
+		const label = new Text(text, {
+			fill: 0xf5deb0,
+			fontSize: text.length <= 100 ? 20 : 13,
+			fontFamily: 'Verdana, sans-serif',
+			wordWrap: true,
+			wordWrapWidth: w - pad * 2
+		});
+		const h = Math.max(50, label.height + pad * 2.5);
+		const x = (this.viewW - w) / 2;
+		const y = (this.viewH - h) / 2;
+		const box = new Container();
+		// The stage scrolls the world; undo its offset so the box is view-fixed
+		// (the camera cannot move while it is open — movement is blocked).
+		box.position.set(-this.app.stage.position.x, -this.app.stage.position.y);
+		const g = new Graphics();
+		g.beginFill(0x4d1e10);
+		g.drawRect(x, y, w, h);
+		g.endFill();
+		box.addChild(g);
+		const part = (name: string, px: number, py: number, ax = 0, ay = 0): void => {
+			const sp = new Sprite(gfx(name));
+			sp.anchor.set(ax, ay);
+			sp.position.set(px, py);
+			box.addChild(sp);
+		};
+		for (let i = 1; i < Math.floor(w / 23); i++) {
+			part('msgbox_top', x + i * 23, y);
+			part('msgbox_bottom', x + i * 23, y + h, 0, 1);
+		}
+		for (let i = 1; i < Math.floor(h / 41); i++) {
+			part('msgbox_left', x, y + i * 41);
+			part('msgbox_right', x + w, y + i * 41, 1, 0);
+		}
+		part('msgbox_topleft', x, y);
+		part('msgbox_topright', x + w, y, 1, 0);
+		part('msgbox_bottomleft', x, y + h, 0, 1);
+		part('msgbox_bottomright', x + w, y + h, 1, 1);
+		if (icon) {
+			const sp = new Sprite(gfx(icon));
+			sp.anchor.set(0.5);
+			sp.position.set(x + w / 2, y - 5);
+			box.addChild(sp);
+		}
+		label.position.set(x + pad, y + pad);
+		box.addChild(label);
+		box.eventMode = 'static';
+		box.cursor = 'pointer';
+		box.on('pointerdown', () => this.closeMessage());
+		this.app.stage.addChild(box);
+		this.msgBox = box;
 	}
 
 	// ── revealed entities (icons the server sent along with the cells) ────────

@@ -26,9 +26,9 @@
  */
 import { defineComponent } from 'vue';
 import { DungeonService } from '../services/index.js';
-import { ARROWS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import { ARROWS, KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
-import { assetUrl, loadDungeonAssets, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
+import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { sessionStore, useDinozStore } from '../store';
@@ -115,7 +115,13 @@ export default defineComponent({
 			try {
 				const move = await DungeonService.moveDinoz(dungeonId, dx, dy, dl, currentDinoz.id);
 				moving = false;
-				if (!move.ok) return; // wall / no stair: the server said no, nothing was revealed
+				if (!move.ok) {
+					// A still-closed door refused us: no key for it yet.
+					const blocked = icons.get(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`);
+					if (dl === 0 && (blocked === 'door_v' || blocked === 'door_h'))
+						renderer?.showMessage(this.$t('dungeon.msg.locked'));
+					return; // wall / no stair: the server said no, nothing was revealed
+				}
 				if (move.fight) {
 					this.sessionStore.setFightResult(move.fight);
 
@@ -124,10 +130,19 @@ export default defineComponent({
 						params: { dinozId: this.$route.params.id.toString() }
 					});
 				}
-				if (move.scenario) {
-					this.$toast.open({ message: this.$t(move.scenario.text), type: 'info', duration: 8000 });
-				}
+				// What the entered cell held BEFORE this step's re-reveal clears it —
+				// that difference is the pickup/opening to announce.
+				const entered = icons.get(iconKey(move.pos));
 				record(move.reveal);
+				if (entered === 'door_v' || entered === 'door_h') {
+					renderer?.showMessage(this.$t('dungeon.msg.opened'), `item_${entered}_open`);
+				} else if (entered?.startsWith('key_')) {
+					const v = Number(entered.slice(4));
+					renderer?.showMessage(this.$t('dungeon.msg.key'), `item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`);
+				}
+				if (move.scenario) {
+					renderer?.showMessage(this.$t(move.scenario.text), entered === 'scroll' ? 'item_scroll' : 'item_chest');
+				}
 				cursor = { ...move.pos };
 				actor?.enqueue(cursor);
 				trail.unshift({ ...cursor });
@@ -241,7 +256,8 @@ export default defineComponent({
 		window.addEventListener('keyup', onKeyUp);
 
 		const frame = (): void => {
-			if (actor && !moving && actor.pending === 0) {
+			// View.hx froze scroll & moves while winMsg was up — same rule here.
+			if (actor && !moving && actor.pending === 0 && !renderer?.messageOpen) {
 				if (held.length > 0) {
 					const d = ARROWS[held[held.length - 1]];
 					this.tryMove(d[0], d[1]);

@@ -5282,6 +5282,11 @@
 			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
 			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes..."
+		},
+		"msg": {
+			"locked": "Cette porte est verrouillée. Il vous faut trouver la clé correspondante !",
+			"opened": "Vous déverrouillez la porte : elle s'ouvre dans un grincement sinistre...",
+			"key": "Vous trouvez une clé ! Elle doit bien ouvrir une porte quelque part..."
 		}
 	},
 	"scenario": {
