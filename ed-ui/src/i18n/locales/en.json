@@ -5280,6 +5280,11 @@
 			"napo": "You open a chest seemingly abandoned for hundreds of years. It is empty but, intrigued, you discover a false bottom concealing a well-hidden Golden Napodino!",
 			"potion": "You find 3 Irma Potions in a small chest — that's always something!",
 			"demon": "You find the Demon Scroll. It reveals the location of a strange Dinoz shop, called the Demonic Shop, somewhere on the surface of the Twilight Cemetery. But first you will have to get out of the Katatombs..."
+		},
+		"msg": {
+			"locked": "This door is locked. You need to find the matching key!",
+			"opened": "You unlock the door: it swings open with a sinister creak...",
+			"key": "You found a key! It must open some door, somewhere..."
 		}
 	},
 	"scenario": {

@@ -29,5 +29,7 @@ export function skinAssetNames(skin: Skin): string[] {
 	for (let i = 1; i <= skin.groundCount; i++) set.add(`ground_${skin.ground}_${pad2(i)}`);
 	// overground_<name>_NN: NN = corner-coverage bitmask 1..15 (8=NW 4=NE 2=SW 1=SE).
 	for (const over of skin.over) if (over) for (let i = 1; i <= 15; i++) set.add(`overground_${over}_${pad2(i)}`);
+	for (const p of ['top', 'bottom', 'left', 'right', 'topleft', 'topright', 'bottomleft', 'bottomright'])
+		set.add(`msgbox_${p}`);
 	return [...set];
 }
