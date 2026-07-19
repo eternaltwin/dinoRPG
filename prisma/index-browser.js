@@ -757,7 +757,8 @@ exports.Prisma.DungeonScalarFieldEnum = {
   tag: 'tag',
   type: 'type',
   level: 'level',
-  monsters: 'monsters'
+  monsters: 'monsters',
+  scenarios: 'scenarios'
 };
 
 exports.Prisma.SortOrder = {

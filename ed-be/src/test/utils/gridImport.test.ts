@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { structFromGrid } from '../../business/dungeon/gridImport.js';
+import { checkScenarios, structFromGrid } from '../../business/dungeon/gridImport.js';
+import { Item } from '@drpg/core/models/item/ItemList';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from '../../business/dungeon/DungeonCodec.js';
 import type { DungeonGrid } from '@drpg/core/models/dungeon/DungeonEditor';
 
@@ -97,5 +99,25 @@ describe('structFromGrid', () => {
 		g.levels[0].doors = [{ x: 5, y: 5, up: null, key: null }];
 		g.levels[0].items = [{ x: 5, y: 5, k: 1, v: 10 }];
 		expect(() => structFromGrid(g)).toThrow(/overlaps/);
+	});
+});
+
+describe('checkScenarios', () => {
+	it('keeps valid entries and trims the text', () => {
+		expect(
+			checkScenarios([
+				{ text: ' Un coffre ! ', icon: 'chest', obj: Item.POTION_IRMA, count: 3 },
+				{ text: 'Un parchemin', icon: 'scroll', collec: Reward.DEMON }
+			])
+		).toEqual([
+			{ text: 'Un coffre !', icon: 'chest', obj: Item.POTION_IRMA, count: 3, collec: undefined },
+			{ text: 'Un parchemin', icon: 'scroll', obj: undefined, count: undefined, collec: Reward.DEMON }
+		]);
+	});
+
+	it('rejects an empty text, an unknown item and a bad icon', () => {
+		expect(() => checkScenarios([{ text: '  ' }])).toThrow(/needs a text/);
+		expect(() => checkScenarios([{ text: 'ok', obj: 999999 }])).toThrow(/unknown item/);
+		expect(() => checkScenarios([{ text: 'ok', icon: 'skel' }])).toThrow(/icon/);
 	});
 });

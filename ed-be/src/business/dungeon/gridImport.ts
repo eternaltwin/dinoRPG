@@ -13,6 +13,9 @@
 
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import type { DungeonGrid, DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
+import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from './DungeonCodec.js';
 import type { DungeonDoor, DungeonLevel, DungeonRoom, DungeonStruct } from './types.js';
 
@@ -27,6 +30,23 @@ function checkInt(v: unknown, min: number, max: number, what: string): number {
 		fail(`${what} must be an integer in [${min}, ${max}], got ${JSON.stringify(v)}`);
 	}
 	return v;
+}
+
+/**
+ * Validate the builder's scenario list (what each chest/scroll item shows and
+ * grants) into storable DungeonScenario[]. Texts are raw, not i18n keys.
+ */
+export function checkScenarios(raw: unknown): DungeonScenario[] {
+	if (raw == null) return [];
+	if (!Array.isArray(raw) || raw.length > 64) fail('scenarios must be an array of at most 64 entries');
+	return raw.map((s, i) => {
+		if (typeof s?.text !== 'string' || s.text.trim() === '') fail(`scenario ${i} needs a text`);
+		if (s.icon != null && s.icon !== 'scroll' && s.icon !== 'chest') fail(`scenario ${i} icon must be scroll or chest`);
+		if (s.obj != null && !(s.obj in itemList)) fail(`scenario ${i} grants an unknown item`);
+		if (s.count != null) checkInt(s.count, 1, 999, `scenario ${i} count`);
+		if (s.collec != null && !(s.collec in rewardList)) fail(`scenario ${i} grants an unknown reward`);
+		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec };
+	});
 }
 
 export function structFromGrid(g: DungeonGrid): DungeonStruct {

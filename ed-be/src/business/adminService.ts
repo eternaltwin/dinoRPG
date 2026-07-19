@@ -56,7 +56,9 @@ import { createDungeon } from '../dao/dungeonRunDao.js';
 import { seal } from '../utils/dungeonCrypto.js';
 import { rollMonsters } from './dungeon/monsters.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
-import { structFromGrid } from './dungeon/gridImport.js';
+import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
+import { DungeonItem } from './dungeon/types.js';
+import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 
 /**
@@ -1163,11 +1165,17 @@ export async function createSeededDungeon(req: Request) {
 		const encoded = new DungeonCodec().encode(d);
 		// BitCodec.write does not mask overflowing values — round-trip before sealing.
 		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
+		// Every chest/scroll (IScenario item) must point at one of the dungeon's scenario entries.
+		const scenarios = checkScenarios(req.body.scenarios);
+		for (const lvl of grid.levels as DungeonGridLevel[])
+			for (const it of lvl.items)
+				if (it.k === DungeonItem.IScenario && it.v >= scenarios.length)
+					throw new ExpectedError(`Invalid dungeon grid: scenario item v=${it.v} has no scenario entry`);
 		const bodyPool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
 			(m: string): m is Monster => m in monsterList
 		);
 		const monsters = JSON.stringify(rollMonsters(d, bodyPool.length ? bodyPool : pool, monsterLevel));
-		const created = await createDungeon(seal(encoded), type, name, monsterLevel, monsters);
+		const created = await createDungeon(seal(encoded), type, name, monsterLevel, monsters, JSON.stringify(scenarios));
 		return { id: created.id, type: created.type };
 	}
 
@@ -1205,5 +1213,5 @@ export async function createSeededDungeon(req: Request) {
 }
 
 export async function listDungeons() {
-	return prisma.dungeon.findMany({ select: { id: true, type: true } });
+	return prisma.dungeon.findMany({ select: { id: true, name: true, type: true } });
 }

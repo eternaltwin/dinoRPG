@@ -27,9 +27,16 @@ export async function getDungeonByName(name: string) {
 	});
 }
 
-export async function createDungeon(sealed: Sealed, type: DungeonType, name: string, level: number, monsters: string) {
+export async function createDungeon(
+	sealed: Sealed,
+	type: DungeonType,
+	name: string,
+	level: number,
+	monsters: string,
+	scenarios = '[]'
+) {
 	return prisma.dungeon.create({
-		data: { ...sealed, type, name, level, monsters }
+		data: { ...sealed, type, name, level, monsters, scenarios }
 	});
 }
 
