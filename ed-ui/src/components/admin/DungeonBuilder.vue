@@ -25,6 +25,31 @@
 		</fieldset>
 
 		<fieldset>
+			<legend>Scenarios (a Scenario item with value N triggers entry #N: popup text + optional grants)</legend>
+			<div v-for="(sc, i) in scenarios" :key="i" class="row scenario">
+				<b>#{{ i }}</b>
+				<select v-model="sc.icon">
+					<option value="chest">chest</option>
+					<option value="scroll">scroll</option>
+				</select>
+				<select v-model="sc.obj">
+					<option :value="null">no item</option>
+					<option v-for="(it, id) in itemList" :key="id" :value="Number(id)">{{ it.name }}</option>
+				</select>
+				<input type="number" v-model.number="sc.count" min="1" max="999" class="short" title="item count" />
+				<select v-model="sc.collec">
+					<option :value="null">no collection</option>
+					<option v-for="(r, id) in rewardList" :key="id" :value="Number(id)">{{ r.name }}</option>
+				</select>
+				<input type="text" v-model="sc.text" placeholder="Popup text" class="text" />
+				<button type="button" @click="scenarios.splice(i, 1)">✕</button>
+			</div>
+			<button type="button" @click="scenarios.push({ text: '', icon: 'chest', obj: null, count: 1, collec: null })">
+				+ scenario
+			</button>
+		</fieldset>
+
+		<fieldset>
 			<legend>Grid</legend>
 			<div class="row">
 				<label>Width</label>
@@ -88,15 +113,16 @@
 
 	<DZTable>
 		<tr>
-			<th class="items-header">ID</th>
+			<th class="items-header">Name</th>
 			<th class="items-header">Type</th>
 			<th class="items-header">Play</th>
 		</tr>
 		<tr v-for="dungeon in dungeons" :key="dungeon.id">
-			<td>{{ dungeon.id }}</td>
+			<td>{{ dungeon.name }}</td>
 			<td>{{ dungeon.type }}</td>
 			<td>
-				<RouterLink :to="`/dungeon/${dungeon.id}`">Enter</RouterLink>
+				<!-- startRun looks dungeons up by name, so the play route carries the name. -->
+				<RouterLink :to="`/dungeon/${dungeon.name}`">Enter</RouterLink>
 			</td>
 		</tr>
 	</DZTable>
@@ -108,10 +134,13 @@ import { AdminService } from '../../services';
 import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 import type { DungeonGridDoor, DungeonGridItem } from '@drpg/core/models/dungeon/DungeonEditor';
 import DZTable from '../common/DZTable.vue';
 
 type EditorLevel = { floor: boolean[][]; doors: DungeonGridDoor[]; items: DungeonGridItem[] }; // floor[y][x]
+type ScenarioRow = { text: string; icon: 'chest' | 'scroll'; obj: number | null; count: number; collec: number | null };
 
 const ITEM_GLYPHS = ['K', 'G', 'H', 'S'];
 
@@ -122,6 +151,8 @@ export default defineComponent({
 		return {
 			DungeonType,
 			monsterList,
+			itemList,
+			rewardList,
 			monsterNames: Object.keys(monsterList),
 			tools: [
 				{ id: 'floor', label: 'Floor' },
@@ -147,9 +178,10 @@ export default defineComponent({
 			itemValue: 0,
 			start: null as { x: number; y: number; l: number } | null,
 			exit: null as { x: number; y: number; l: number } | null,
+			scenarios: [] as ScenarioRow[],
 			painting: false,
 			stopPaint: null as (() => void) | null,
-			dungeons: [] as { id: string; type: string }[]
+			dungeons: [] as { id: string; name: string; type: string }[]
 		};
 	},
 	computed: {
@@ -295,6 +327,13 @@ export default defineComponent({
 					name: this.form.name,
 					monsterLevel: this.form.monsterLevel,
 					pool: this.form.pool,
+					scenarios: this.scenarios.map(s => ({
+						text: s.text,
+						icon: s.icon,
+						obj: s.obj ?? undefined,
+						count: s.obj != null ? s.count : undefined,
+						collec: s.collec ?? undefined
+					})),
 					grid: {
 						width: this.levels[0].floor[0].length,
 						height: this.levels[0].floor.length,
@@ -426,6 +465,10 @@ form {
 	}
 	.short {
 		width: 60px;
+	}
+	.scenario .text {
+		flex: 1;
+		min-width: 200px;
 	}
 	.hint {
 		color: #710;

@@ -1204,6 +1204,8 @@ model Dungeon {
   level    Int         @default(1)
   // MonsterTeam[] — rolled once at creation, identical for every player: cell + composition per monster-guarded passage.
   monsters String      @default("[]")
+  // DungeonScenario[] with raw popup text, for hand-built dungeons; '[]' = use the DungeonList entry (i18n text).
+  scenarios String     @default("[]")
 
   dungeonRuns DungeonRun[]
 

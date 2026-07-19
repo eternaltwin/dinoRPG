@@ -247,6 +247,7 @@ export const AdminService = {
 		name: string;
 		monsterLevel: number;
 		pool: string[];
+		scenarios: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
 		grid: DungeonGrid;
 	}): Promise<{ id: string; type: string }> {
 		const res = await http().post(`/admin/dungeon`, body);

@@ -84635,6 +84635,7 @@ export namespace Prisma {
     type: $Enums.DungeonType | null
     level: number | null
     monsters: string | null
+    scenarios: string | null
   }
 
   export type DungeonMaxAggregateOutputType = {
@@ -84646,6 +84647,7 @@ export namespace Prisma {
     type: $Enums.DungeonType | null
     level: number | null
     monsters: string | null
+    scenarios: string | null
   }
 
   export type DungeonCountAggregateOutputType = {
@@ -84657,6 +84659,7 @@ export namespace Prisma {
     type: number
     level: number
     monsters: number
+    scenarios: number
     _all: number
   }
 
@@ -84678,6 +84681,7 @@ export namespace Prisma {
     type?: true
     level?: true
     monsters?: true
+    scenarios?: true
   }
 
   export type DungeonMaxAggregateInputType = {
@@ -84689,6 +84693,7 @@ export namespace Prisma {
     type?: true
     level?: true
     monsters?: true
+    scenarios?: true
   }
 
   export type DungeonCountAggregateInputType = {
@@ -84700,6 +84705,7 @@ export namespace Prisma {
     type?: true
     level?: true
     monsters?: true
+    scenarios?: true
     _all?: true
   }
 
@@ -84798,6 +84804,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level: number
     monsters: string
+    scenarios: string
     _count: DungeonCountAggregateOutputType | null
     _avg: DungeonAvgAggregateOutputType | null
     _sum: DungeonSumAggregateOutputType | null
@@ -84828,6 +84835,7 @@ export namespace Prisma {
     type?: boolean
     level?: boolean
     monsters?: boolean
+    scenarios?: boolean
     dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
     _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dungeon"]>
@@ -84841,6 +84849,7 @@ export namespace Prisma {
     type?: boolean
     level?: boolean
     monsters?: boolean
+    scenarios?: boolean
   }, ExtArgs["result"]["dungeon"]>
 
   export type DungeonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -84852,6 +84861,7 @@ export namespace Prisma {
     type?: boolean
     level?: boolean
     monsters?: boolean
+    scenarios?: boolean
   }, ExtArgs["result"]["dungeon"]>
 
   export type DungeonSelectScalar = {
@@ -84863,9 +84873,10 @@ export namespace Prisma {
     type?: boolean
     level?: boolean
     monsters?: boolean
+    scenarios?: boolean
   }
 
-  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type" | "level" | "monsters", ExtArgs["result"]["dungeon"]>
+  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type" | "level" | "monsters" | "scenarios", ExtArgs["result"]["dungeon"]>
   export type DungeonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
     _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
@@ -84887,6 +84898,7 @@ export namespace Prisma {
       type: $Enums.DungeonType
       level: number
       monsters: string
+      scenarios: string
     }, ExtArgs["result"]["dungeon"]>
     composites: {}
   }
@@ -85319,6 +85331,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Dungeon", 'DungeonType'>
     readonly level: FieldRef<"Dungeon", 'Int'>
     readonly monsters: FieldRef<"Dungeon", 'String'>
+    readonly scenarios: FieldRef<"Dungeon", 'String'>
   }
     
 
@@ -86607,7 +86620,8 @@ export namespace Prisma {
     tag: 'tag',
     type: 'type',
     level: 'level',
-    monsters: 'monsters'
+    monsters: 'monsters',
+    scenarios: 'scenarios'
   };
 
   export type DungeonScalarFieldEnum = (typeof DungeonScalarFieldEnum)[keyof typeof DungeonScalarFieldEnum]
@@ -91647,6 +91661,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
+    scenarios?: StringFilter<"Dungeon"> | string
     dungeonRuns?: DungeonRunListRelationFilter
   }
 
@@ -91659,6 +91674,7 @@ export namespace Prisma {
     type?: SortOrder
     level?: SortOrder
     monsters?: SortOrder
+    scenarios?: SortOrder
     dungeonRuns?: DungeonRunOrderByRelationAggregateInput
   }
 
@@ -91674,6 +91690,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
+    scenarios?: StringFilter<"Dungeon"> | string
     dungeonRuns?: DungeonRunListRelationFilter
   }, "id" | "name">
 
@@ -91686,6 +91703,7 @@ export namespace Prisma {
     type?: SortOrder
     level?: SortOrder
     monsters?: SortOrder
+    scenarios?: SortOrder
     _count?: DungeonCountOrderByAggregateInput
     _avg?: DungeonAvgOrderByAggregateInput
     _max?: DungeonMaxOrderByAggregateInput
@@ -91705,6 +91723,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeWithAggregatesFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntWithAggregatesFilter<"Dungeon"> | number
     monsters?: StringWithAggregatesFilter<"Dungeon"> | string
+    scenarios?: StringWithAggregatesFilter<"Dungeon"> | string
   }
 
   export type ConcentrationCreateInput = {
@@ -96288,6 +96307,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level?: number
     monsters?: string
+    scenarios?: string
     dungeonRuns?: DungeonRunCreateNestedManyWithoutDungeonInput
   }
 
@@ -96300,6 +96320,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level?: number
     monsters?: string
+    scenarios?: string
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutDungeonInput
   }
 
@@ -96312,6 +96333,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
     dungeonRuns?: DungeonRunUpdateManyWithoutDungeonNestedInput
   }
 
@@ -96324,6 +96346,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput
   }
 
@@ -96336,6 +96359,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level?: number
     monsters?: string
+    scenarios?: string
   }
 
   export type DungeonUpdateManyMutationInput = {
@@ -96347,6 +96371,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
   }
 
   export type DungeonUncheckedUpdateManyInput = {
@@ -96358,6 +96383,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -100418,6 +100444,7 @@ export namespace Prisma {
     type?: SortOrder
     level?: SortOrder
     monsters?: SortOrder
+    scenarios?: SortOrder
   }
 
   export type DungeonAvgOrderByAggregateInput = {
@@ -100433,6 +100460,7 @@ export namespace Prisma {
     type?: SortOrder
     level?: SortOrder
     monsters?: SortOrder
+    scenarios?: SortOrder
   }
 
   export type DungeonMinOrderByAggregateInput = {
@@ -100444,6 +100472,7 @@ export namespace Prisma {
     type?: SortOrder
     level?: SortOrder
     monsters?: SortOrder
+    scenarios?: SortOrder
   }
 
   export type DungeonSumOrderByAggregateInput = {
@@ -131479,6 +131508,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level?: number
     monsters?: string
+    scenarios?: string
   }
 
   export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
@@ -131490,6 +131520,7 @@ export namespace Prisma {
     type: $Enums.DungeonType
     level?: number
     monsters?: string
+    scenarios?: string
   }
 
   export type DungeonCreateOrConnectWithoutDungeonRunsInput = {
@@ -131668,6 +131699,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
   }
 
   export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
@@ -131679,6 +131711,7 @@ export namespace Prisma {
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
   }
 
   export type DungeonRunCreateWithoutDungeonInput = {
