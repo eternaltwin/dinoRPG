@@ -46,9 +46,9 @@ export class MazeRenderer {
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
-	// Overground zone noise (View.hx initZones): purely decorative, so — like the
-	// original's Std.random(9999) seed — it's random per entry, not per run.
-	private readonly noiseSeed = (Math.random() * 0x7fffffff) | 0;
+	// Overground zone noise (View.hx initZones). Seeded from opts so the caller
+	// can key it to the dungeon id and keep decoration stable across refreshes.
+	private readonly noiseSeed: number;
 	/** Cached zone id (0..2) per cell, one grid per level. */
 	private readonly zones = new Map<number, Uint8Array>();
 	/** Animated monster sprites, keyed "l,x,y" — created once, re-attached on each level redraw. */
@@ -58,6 +58,7 @@ export class MazeRenderer {
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
+		this.noiseSeed = opts.noiseSeed ?? (Math.random() * 0x7fffffff) | 0;
 		this.dims = dims;
 		this.known = Array.from({ length: dims.levels }, () => new Map<string, RevealedCell>());
 		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];

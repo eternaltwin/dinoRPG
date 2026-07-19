@@ -40,6 +40,12 @@ import { errorHandler } from '../utils';
 // mounted at most once at a time. All of it is reset in mounted/beforeUnmount.
 
 let dungeonId = '';
+/** djb2 of the dungeon id — seeds anything that must stay stable across refreshes. */
+function dungeonHash(): number {
+	let h = 5381;
+	for (const ch of dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
+	return h;
+}
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
 // The rest of the party (dinozStore leader/followers), conga-line style: each
@@ -105,9 +111,7 @@ export default defineComponent({
 		doorName(keyId: number): string {
 			// ponytail: djb2(dungeonId) offset + keyId keeps names distinct per dungeon
 			// (up to the 20 in fr.json dungeon.doorNames — keep that length in sync).
-			let h = 5381;
-			for (const ch of dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
-			return this.$t(`dungeon.doorNames.${(((h + keyId) % 20) + 20) % 20}`);
+			return this.$t(`dungeon.doorNames.${(((dungeonHash() + keyId) % 20) + 20) % 20}`);
 		},
 		toggleDebug(): void {
 			this.wallDebug = !this.wallDebug;
@@ -240,7 +244,7 @@ export default defineComponent({
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
 				{ width: run.width, height: run.height, levels: run.levels },
-				{ cell: 45, skins, view: { w: 500, h: 350 } }
+				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: dungeonHash() }
 			);
 			renderer.setDebug(this.wallDebug);
 
