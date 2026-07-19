@@ -25,6 +25,8 @@ export interface RevealedCell {
 	icon?: string;
 	/** smonster gfx name of the team's first monster — only set on 'monster' cells whose team is still alive. */
 	monster?: string;
+	/** Key id of the locked door on this cell — pairs the door with its key so the client can name both. */
+	key?: number;
 }
 
 export interface StartRunResult {

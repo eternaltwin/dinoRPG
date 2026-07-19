@@ -49,6 +49,8 @@ const followers: DinozActor[] = [];
 const trail: Cell[] = [];
 // Entities the server has revealed so far, keyed "l,x,y" — drives the stair button.
 const icons = new Map<string, string>();
+// Locked-door cells → key id, so door and key can share a flavor name.
+const doorKeys = new Map<string, number>();
 // Cells the server already revealed as walls — don't ask it again about those.
 const walls = new Set<string>();
 // Logical position = last server-confirmed cell. Moves are driven off this.
@@ -72,6 +74,7 @@ function record(reveal: RevealedCell[]): void {
 		// Re-sent cells can lose their icon (key picked up, monster beaten).
 		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
 		else icons.delete(`${c.l},${c.x},${c.y}`);
+		if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
 		if (!c.floor) walls.add(`${c.l},${c.x},${c.y}`);
 	}
 	renderer?.applyReveal(reveal);
@@ -98,6 +101,14 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		/** Flavor name shared by a door and its key, seeded by dungeonId + key id. */
+		doorName(keyId: number): string {
+			// ponytail: djb2(dungeonId) offset + keyId keeps names distinct per dungeon
+			// (up to the 20 in fr.json dungeon.doorNames — keep that length in sync).
+			let h = 5381;
+			for (const ch of dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
+			return this.$t(`dungeon.doorNames.${(((h + keyId) % 20) + 20) % 20}`);
+		},
 		toggleDebug(): void {
 			this.wallDebug = !this.wallDebug;
 			renderer?.setDebug(this.wallDebug);
@@ -117,9 +128,10 @@ export default defineComponent({
 				moving = false;
 				if (!move.ok) {
 					// A still-closed door refused us: no key for it yet.
-					const blocked = icons.get(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`);
+					const at = `${cursor.l},${cursor.x + dx},${cursor.y + dy}`;
+					const blocked = icons.get(at);
 					if (dl === 0 && (blocked === 'door_v' || blocked === 'door_h'))
-						renderer?.showMessage(this.$t('dungeon.msg.locked'));
+						renderer?.showMessage(this.$t('dungeon.msg.locked', { name: this.doorName(doorKeys.get(at) ?? 0) }));
 					return; // wall / no stair: the server said no, nothing was revealed
 				}
 				if (move.fight) {
@@ -135,10 +147,14 @@ export default defineComponent({
 				const entered = icons.get(iconKey(move.pos));
 				record(move.reveal);
 				if (entered === 'door_v' || entered === 'door_h') {
-					renderer?.showMessage(this.$t('dungeon.msg.opened'), `item_${entered}_open`);
+					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
+					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_${entered}_open`);
 				} else if (entered?.startsWith('key_')) {
 					const v = Number(entered.slice(4));
-					renderer?.showMessage(this.$t('dungeon.msg.key'), `item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`);
+					renderer?.showMessage(
+						this.$t('dungeon.msg.key', { name: this.doorName(v) }),
+						`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`
+					);
 				}
 				if (move.scenario) {
 					renderer?.showMessage(this.$t(move.scenario.text), entered === 'scroll' ? 'item_scroll' : 'item_chest');
@@ -213,6 +229,7 @@ export default defineComponent({
 			this.status = `run ${run.runId.slice(0, 8)}… — explore!`;
 
 			icons.clear();
+			doorKeys.clear();
 			walls.clear();
 			this.hideStair();
 
@@ -282,6 +299,7 @@ export default defineComponent({
 		actor = null;
 		renderer = null;
 		icons.clear();
+		doorKeys.clear();
 		walls.clear();
 		held.length = 0;
 		moving = false;

@@ -5284,10 +5284,32 @@
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes..."
 		},
 		"msg": {
-			"locked": "Cette porte est verrouillée. Il vous faut trouver la clé correspondante !",
-			"opened": "Vous déverrouillez la porte : elle s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez une clé ! Elle doit bien ouvrir une porte quelque part..."
-		}
+			"locked": "La porte « {name} » est verrouillée. Il vous faut trouver la clé du même nom !",
+			"opened": "La clé « {name} » tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
+			"key": "Vous trouvez la clé « {name} » ! Elle doit bien ouvrir une porte du même nom, quelque part..."
+		},
+		"doorNames": [
+			"Sphinx des Katatombes",
+			"Crocs du Démon",
+			"Cimetière du Crépuscule",
+			"Mandragore",
+			"Gardien Déchu",
+			"Âmes Errantes",
+			"Napodino d'Or",
+			"Vieil Ossuaire",
+			"Grand Tout Puissant",
+			"Kabuki Oublié",
+			"Smog Éternel",
+			"Korgon de Jais",
+			"Larmes d'Irma",
+			"Caushemesh",
+			"Forêt Grumeleuse",
+			"Feu Follet",
+			"Griffes du Cyclope",
+			"Écailles de l'Hydre",
+			"Marais Collant",
+			"Lune Rousse"
+		]
 	},
 	"scenario": {
 		"star": "L'être étrange",

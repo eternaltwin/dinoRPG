@@ -51,11 +51,18 @@ function iconAt(d: DungeonStruct, l: number, x: number, y: number): string | und
 	return undefined;
 }
 
+/** Key id of the locked door sitting on (l,x,y), if any — lets the client name the door/key pair. */
+function doorKeyAt(d: DungeonStruct, l: number, x: number, y: number): number | undefined {
+	for (const room of d.levels[l].rooms)
+		for (const door of room.doors) if (door.x === x && door.y === y && door.key != null) return door.key;
+	return undefined;
+}
+
 /** Rebuild the RevealedCells for already-revealed keys (resuming a run). */
 export function cellsForKeys(d: DungeonStruct, keys: string[]): RevealedCell[] {
 	return keys.map(k => {
 		const [l, x, y] = k.split(',').map(Number);
-		return { l, x, y, floor: d.levels[l].table[x]?.[y] ?? false, icon: iconAt(d, l, x, y) };
+		return { l, x, y, floor: d.levels[l].table[x]?.[y] ?? false, icon: iconAt(d, l, x, y), key: doorKeyAt(d, l, x, y) };
 	});
 }
 
@@ -65,7 +72,14 @@ export function revealAround(d: DungeonStruct, l: number, x: number, y: number):
 	for (let cx = x - 1; cx <= x + 1; cx++) {
 		for (let cy = y - 1; cy <= y + 1; cy++) {
 			if (cx < 0 || cy < 0 || cx >= d.width || cy >= d.height) continue;
-			out.push({ l, x: cx, y: cy, floor: d.levels[l].table[cx]?.[cy] ?? false, icon: iconAt(d, l, cx, cy) });
+			out.push({
+				l,
+				x: cx,
+				y: cy,
+				floor: d.levels[l].table[cx]?.[cy] ?? false,
+				icon: iconAt(d, l, cx, cy),
+				key: doorKeyAt(d, l, cx, cy)
+			});
 		}
 	}
 	return out;
