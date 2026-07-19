@@ -8,6 +8,8 @@ import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
+import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
+import { DungeonGrid } from '@drpg/core/models/dungeon/DungeonEditor';
 
 export const AdminService = {
 	async getDashBoard(): Promise<boolean> {
@@ -238,6 +240,16 @@ export const AdminService = {
 		surface?: number;
 	}): Promise<{ id: string; type: string }> {
 		const res = await http().post(`/admin/dungeon`, form);
+		return res.data;
+	},
+	async createDungeonFromGrid(body: {
+		type: string;
+		name: string;
+		monsterLevel: number;
+		pool: string[];
+		grid: DungeonGrid;
+	}): Promise<{ id: string; type: string }> {
+		const res = await http().post(`/admin/dungeon`, body);
 		return res.data;
 	},
 	async getDungeons(): Promise<{ id: string; type: string }[]> {

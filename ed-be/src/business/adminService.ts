@@ -56,6 +56,8 @@ import { createDungeon } from '../dao/dungeonRunDao.js';
 import { seal } from '../utils/dungeonCrypto.js';
 import { rollMonsters } from './dungeon/monsters.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
+import { structFromGrid } from './dungeon/gridImport.js';
+import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1152,6 +1154,22 @@ export async function createSeededDungeon(req: Request) {
 	// Approximate total level of each monster team; pool comes from DungeonList.
 	const monsterLevel = req.body.monsterLevel ?? 1;
 	const pool = Object.values(DungeonList).find(x => x.name === name)?.monsters ?? [];
+
+	// Hand-drawn grid from the admin dungeon builder; body.pool overrides the
+	// DungeonList lookup so arbitrary-named dungeons can still have monsters.
+	const grid = req.body.grid;
+	if (grid) {
+		const d = structFromGrid(grid);
+		const encoded = new DungeonCodec().encode(d);
+		// BitCodec.write does not mask overflowing values — round-trip before sealing.
+		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
+		const bodyPool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
+			(m: string): m is Monster => m in monsterList
+		);
+		const monsters = JSON.stringify(rollMonsters(d, bodyPool.length ? bodyPool : pool, monsterLevel));
+		const created = await createDungeon(seal(encoded), type, name, monsterLevel, monsters);
+		return { id: created.id, type: created.type };
+	}
 
 	// Custom layout: an already-encoded dungeon string (e.g. original MT format), no generation.
 	const layout = req.body.layout;

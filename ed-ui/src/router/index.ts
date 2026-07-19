@@ -218,6 +218,11 @@ const router = createRouter({
 							component: () => import('../components/admin/DungeonEdit.vue')
 						},
 						{
+							path: 'dungeon-builder',
+							name: 'DungeonBuilder',
+							component: () => import('../components/admin/DungeonBuilder.vue')
+						},
+						{
 							path: 'logs',
 							name: 'Logs',
 							component: () => import('../components/admin/LogsView.vue')
