@@ -81,6 +81,8 @@ export interface RendererOptions {
 	skins?: Skin[];
 	/** Visible canvas size (px). Defaults to the full map (no scrolling). */
 	view?: { w: number; h: number };
+	/** Seed for the decorative overground noise; defaults to random per entry. */
+	noiseSeed?: number;
 }
 
 export interface DinozActorOptions {
