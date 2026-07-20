@@ -111,8 +111,8 @@ export default defineComponent({
 					name: 'NPC',
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
-			}
-			if (this.dungeonName && this.fight.result) {
+			} else if (this.dungeonName && this.fight.result) {
+				useDinozStore().refreshDinozFiche(this.dinozId)
 				this.$router.push({ name: 'Dungeon', params: { id: this.dungeonName } });
 			} else {
 				useDinozStore().clearNpc(this.dinozId);

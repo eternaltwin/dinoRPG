@@ -5,7 +5,7 @@
 			<span class="status">{{ status }}</span>
 		</div>
 		<div ref="stageEl" class="stage">
-			<button v-show="stairIcon !== ''" class="stair-btn" title="Take these stairs" @click="takeStair">
+			<button v-show="stairIcon !== ''" class="btn" title="Take these stairs" @click="takeStair">
 				<img :src="stairIcon" alt="stairs" />
 			</button>
 		</div>
@@ -120,7 +120,7 @@ export default defineComponent({
 		/** Ask the server for one step; on approval, walk the dinoz and fold in the reveal. */
 		async tryMove(dx: number, dy: number, dl = 0): Promise<void> {
 			const currentDinoz = useDinozStore().getCurrentDinoz;
-			if (!currentDinoz) {
+			if (!currentDinoz || !currentDinoz.fight) {
 				return;
 			}
 			if (moving || !actor) return;
@@ -198,6 +198,13 @@ export default defineComponent({
 			for (let i = 0; i < trail.length; i++) trail[i] = { ...cursor };
 		},
 		updateStairButton(): void {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				return;
+			}
+			if (!currentDinoz.fight) {
+				this.stairIcon = assetUrl('interf_irma');
+			}
 			if (!actor || moving || actor.pending > 0) return this.hideStair();
 			const k = iconKey(actor.cell);
 			const icon = icons.get(k);
@@ -354,7 +361,7 @@ export default defineComponent({
 	line-height: 0;
 }
 
-.stair-btn {
+.btn {
 	position: absolute;
 	top: 8px;
 	right: 8px;
@@ -367,10 +374,11 @@ export default defineComponent({
 	border: 1px solid #6b5fa8;
 	border-radius: 8px;
 	cursor: pointer;
+	width: 40px;
+	height: 40px;
 
 	img {
-		width: 32px;
-		height: 32px;
+
 		image-rendering: pixelated;
 	}
 }
