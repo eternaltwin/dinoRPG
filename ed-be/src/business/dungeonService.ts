@@ -364,6 +364,7 @@ export async function move(req: Request): Promise<MoveResult> {
 			await markMonsterDefeated(run, next.l, next.x, next.y);
 			defeated.add(cellKey(next.l, next.x, next.y));
 		}
+		await updateMultipleDinoz(team.map(d => d.id), {fight: false})
 	}
 	// Re-send the entered cell even if already revealed, so a door opening, a key
 	// pickup or a won fight shows up immediately instead of on the next resume.
