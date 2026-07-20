@@ -376,9 +376,16 @@ export default defineComponent({
 	cursor: pointer;
 	width: 40px;
 	height: 40px;
+	// View.hx: arrows.filters = [ new GlowFilter(0x0, 0.5, 10, 10, 1, 2) ]
+	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+
+	// View.hx: onRollOver -> gotoAndStop(2); no hover-frame asset here, so highlight instead
+	&:hover {
+		background: rgba(35, 30, 55, 0.9);
+		border-color: #8f7fd6;
+	}
 
 	img {
-
 		image-rendering: pixelated;
 	}
 }
