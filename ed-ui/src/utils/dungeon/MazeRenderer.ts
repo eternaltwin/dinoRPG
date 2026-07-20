@@ -492,6 +492,8 @@ export class MazeRenderer {
 				this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
 				break;
 			case 'heal':
+				this.sprite('item_heal', c.x, c.y, this.cell * 0.8);
+				break;
 			case 'chest':
 				this.sprite('item_chest', c.x, c.y, this.cell * 0.8);
 				break;
