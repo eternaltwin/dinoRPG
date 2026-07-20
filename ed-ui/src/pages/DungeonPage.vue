@@ -5,6 +5,15 @@
 			<span class="status">{{ status }}</span>
 		</div>
 		<div ref="stageEl" class="stage">
+			<!-- View.hx: arrows attached at (5,5), one move(dx,dy,0) callback per direction -->
+			<div class="dpad">
+				<button class="btn up" title="Move up" @click="tryMove(0, -1)"><img :src="arrowIcon" alt="up" /></button>
+				<button class="btn left" title="Move left" @click="tryMove(-1, 0)"><img :src="arrowIcon" alt="left" /></button>
+				<button class="btn right" title="Move right" @click="tryMove(1, 0)">
+					<img :src="arrowIcon" alt="right" />
+				</button>
+				<button class="btn down" title="Move down" @click="tryMove(0, 1)"><img :src="arrowIcon" alt="down" /></button>
+			</div>
 			<button v-show="stairIcon !== ''" class="btn" title="Take these stairs" @click="takeStair">
 				<img :src="stairIcon" alt="stairs" />
 			</button>
@@ -103,6 +112,7 @@ export default defineComponent({
 			status: '',
 			wallDebug: false,
 			stairIcon: '' as string,
+			arrowIcon: assetUrl('interf_arrow'),
 			sessionStore: sessionStore()
 		};
 	},
@@ -359,6 +369,49 @@ export default defineComponent({
 	border-radius: 8px;
 	overflow: hidden;
 	line-height: 0;
+}
+
+// View.hx: arrows attached at (5,5) — top-left of the stage
+.dpad {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	z-index: 1;
+	width: 92px;
+	height: 92px;
+
+	.btn {
+		position: absolute;
+		top: auto;
+		right: auto;
+	}
+
+	// interf_arrow.png points right; rotate it per direction instead of shipping 4 assets
+	.up {
+		top: 0;
+		left: 26px;
+		img {
+			transform: rotate(-90deg);
+		}
+	}
+	.down {
+		top: 52px;
+		left: 26px;
+		img {
+			transform: rotate(90deg);
+		}
+	}
+	.left {
+		top: 26px;
+		left: 0;
+		img {
+			transform: rotate(180deg);
+		}
+	}
+	.right {
+		top: 26px;
+		left: 52px;
+	}
 }
 
 .btn {
