@@ -182,6 +182,7 @@ export const KEY_SKIN_COUNT = 8;
 /** Sprites shared by every skin (items, doors, stairs). */
 export const ITEM_ASSETS = [
 	'item_chest',
+	'item_heal',
 	'item_gold',
 	...Array.from({ length: KEY_SKIN_COUNT }, (_, i) => `item_key_0${i + 1}`),
 	'item_scroll',
