@@ -384,6 +384,11 @@ export default defineComponent({
 		position: absolute;
 		top: auto;
 		right: auto;
+		background: transparent;
+
+		&:hover {
+			background: transparent;
+		}
 	}
 
 	// interf_arrow.png points right; rotate it per direction instead of shipping 4 assets
