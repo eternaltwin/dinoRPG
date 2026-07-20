@@ -385,9 +385,11 @@ export default defineComponent({
 		top: auto;
 		right: auto;
 		background: transparent;
+		border: none;
 
 		&:hover {
 			background: transparent;
+			border: none;
 		}
 	}
 
