@@ -428,6 +428,7 @@ class TournamentManager {
 		const lastRound = new Map<string, number>();
 		allTournamentFights.forEach(match => {
 			const metadata = JSON.parse(match.metadata as string) as MetaData;
+			// Byes in the left or right of the fight would be treated as null
 			const leftDojoId = match.tournamentTeamLeft?.dojoId ?? null;
 			const rightDojoId = match.tournamentTeamRight?.dojoId ?? null;
 			if (match.result) {
