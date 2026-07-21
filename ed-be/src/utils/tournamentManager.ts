@@ -591,7 +591,9 @@ class TournamentManager {
 						}
 					];
 				} else {
-					throw new Error(`Round ${round} of tournament ${this.tournamentId} has not been rewarded`);
+					LOGGER.error(
+						`Tournament ${this.tournamentId} (round ${round}): Player ${dojo.player.id} has not been rewarded`
+					);
 				}
 				promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
 				promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, false));
