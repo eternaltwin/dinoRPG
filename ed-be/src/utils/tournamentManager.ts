@@ -464,6 +464,7 @@ class TournamentManager {
 		 * 33-64th: 0.5% (total 100%)
 		 * */
 
+		let numRewardedPlayers = 0;
 		const promises = [];
 		for (const [dojoId, round] of lastRound) {
 			const dojo = await prisma.dojo.findUnique({
@@ -595,8 +596,11 @@ class TournamentManager {
 						`Tournament ${this.tournamentId} (round ${round}): Player ${dojo.player.id} has not been rewarded`
 					);
 				}
-				promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
-				promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, false));
+				if (rewards.length > 0) {
+					numRewardedPlayers += 1;
+					promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
+					promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, false));
+				}
 			}
 		}
 
@@ -607,7 +611,7 @@ class TournamentManager {
 			LOGGER.error('Cannot find next time for a tournament');
 			throw new Error('Cannot find next time for a tournament');
 		}
-		LOGGER.log(`Rewarded ${lastRound.size} players. initializeTournament is planned for ${nextTournament.time}`);
+		LOGGER.log(`Rewarded ${numRewardedPlayers} players. initializeTournament is planned for ${nextTournament.time}`);
 		await prisma.tournament.update({
 			where: {
 				id: this.tournamentId
