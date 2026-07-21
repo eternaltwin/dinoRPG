@@ -1306,7 +1306,11 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 		}
 		if (currentState.round === 7) {
 			// Tournament is over, reward
-			await this.rewardTournament(prisma);
+			try {
+				await this.rewardTournament(prisma);
+			} catch (error) {
+				LOGGER.error('Error while rewarding tournament', error);
+			}
 			return;
 		}
 
