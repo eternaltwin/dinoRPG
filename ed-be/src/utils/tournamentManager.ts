@@ -14,15 +14,11 @@ import {
 	TournamentSchedule,
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
-import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
-import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { addMoney } from '../dao/playerDao.js';
-import { DISCORD, LOGGER } from '../context.js';
+import { LOGGER } from '../context.js';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import dayjs from 'dayjs';
-import { createNews } from '../dao/newsDao.js';
 import { translateTarget } from './server/translate.js';
 import 'dayjs/locale/de.js';
 import 'dayjs/locale/fr.js';
@@ -31,18 +27,19 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { $Enums, ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
+import { ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
-import NewsType = $Enums.NewsType;
+import { Lang, NewsType } from '@drpg/prisma';
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReason } from '@drpg/prisma';
 import { nextMonday } from './date.js';
+import { createTranslatedNews } from '../business/newsService.js';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -653,86 +650,34 @@ class TournamentManager {
 		});
 		const total = await prisma.tournament.count();
 
-		const frTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
-			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'fr', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'fr', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
-			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const esTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
-			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'es', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'es', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
-			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const enTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
-			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'en', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'en', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
-			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const deTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
-			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'de', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'de', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
-			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit }),
-			number: romanize(total)
-		};
-
-		const news = await createNews({
-			title: newTournament.id,
-			// image: req.file?.buffer,
-			type: NewsType.tid_start,
-			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
-			englishTitle: translateTarget('dojo.newsTitle', 'en'),
-			spanishTitle: translateTarget('dojo.newsTitle', 'es'),
-			germanTitle: translateTarget('dojo.newsTitle', 'de'),
-			frenchText: translateTarget('dojo.newsCorpus', 'fr', frTrad),
-			englishText: translateTarget('dojo.newsCorpus', 'en', enTrad),
-			spanishText: translateTarget('dojo.newsCorpus', 'es', esTrad),
-			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
-		});
-		if (news.frenchTitle && news.frenchText) {
-			DISCORD.sendNewsNotification(news.frenchTitle, news.frenchText, undefined);
-		} else {
-			LOGGER.error(`Tournament News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
+		const newsParams = {} as Record<Lang, Record<string, unknown>>;
+		for (const lang of Object.values(Lang)) {
+			newsParams[lang] = {
+				type: translateTarget(`tournament.${tournamentFormat.name}`, lang),
+				endQualif: dayjs(endQualif).locale(lang).format('ddd DD MMMM HH:mm'),
+				rule1: translateTarget('dojo.teamSize', lang, {
+					nb: teamSize,
+					races: raceMinimum,
+					context: raceMinimum === 1 ? 'singleRace' : undefined
+				}),
+				rule2: translateTarget('dojo.raceLimit', lang, {
+					races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, lang))
+				}),
+				rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', lang),
+				rule4: translateTarget('dojo.levelLimit', lang, { level: levelLimit }),
+				number: romanize(total)
+			};
 		}
 
+		await createTranslatedNews(
+			newTournament.id,
+			NewsType.tid_start,
+			'dojo.newsTitle',
+			{} as Record<Lang, Record<string, unknown>>,
+			'dojo.newsCorpus',
+			newsParams,
+			true
+		);
 		const tournamentManager = new TournamentManager(newTournament.id, newTournamentStartDate);
 		scheduleJob(`tournament_${newTournament.id}`, endQualif, () => tournamentManager.generateNextRound(prisma));
 		LOGGER.log(`initializeTournament is over. GenerateNextRound for 1st round is planned for ${endQualif}.`);
