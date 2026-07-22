@@ -769,6 +769,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			where: { id: dinozId },
 			select: {
 				id: true,
+				placeId: true,
 				maxLife: true,
 				raceId: true,
 				name: true,
@@ -792,6 +793,36 @@ export async function getDinozForLevelUp(dinozId: number) {
 						ranking: { select: { points: true, average: true, dinozCount: true } }
 					}
 				},
+				items: { select: { itemId: true } },
+				skills: { select: { skillId: true } },
+				unlockableSkills: { select: { skillId: true } },
+				status: { select: { statusId: true } }
+			}
+		});
+
+		return dinoz;
+	});
+}
+
+export async function getDinozInfoForAdmin(dinozId: number) {
+	return withSpan(getDinozInfoForAdmin.name, async () => {
+		const dinoz = await prisma.dinoz.findUnique({
+			where: { id: dinozId },
+			select: {
+				id: true,
+				maxLife: true,
+				raceId: true,
+				name: true,
+				display: true,
+				experience: true,
+				level: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				canChangeName: true,
+				unavailableReason: true,
 				items: { select: { itemId: true } },
 				skills: { select: { skillId: true } },
 				unlockableSkills: { select: { skillId: true } },

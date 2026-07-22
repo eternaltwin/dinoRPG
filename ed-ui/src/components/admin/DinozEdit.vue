@@ -18,9 +18,18 @@
 				</div>
 			</div>
 			<div>
-				<label class="title" for="dinozLocation">PlaceID :</label>
-				<input id="dinozLocation" type="text" v-model="dinoz.placeId" disabled />
-				<input type="number" min="1" v-model="dinozField.placeId" />
+				<label class="title" for="dinozLocation">Place :</label>
+				<input
+					id="dinozLocation"
+					type="text"
+					:value="$t(`place.name.${placeList[dinoz.placeId]?.name}`) + ` (${dinoz.placeId})`"
+					disabled
+				/>
+				<select v-model.number="dinozField.placeId">
+					<option v-for="(place, id) in placeList" :key="id" :value="id">
+						{{ $t(`place.name.${place.name}`) + ` (${id})` }}
+					</option>
+				</select>
 			</div>
 			<div>
 				<label class="title" for="dinozLevel">Level :</label>
@@ -236,6 +245,7 @@ import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { UnavailableReason } from '@drpg/prisma/enums';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -248,6 +258,7 @@ export default defineComponent({
 				unlockableSkillList: []
 			} as DinozEdit,
 			dinoz: {} as DinozAdminFiche,
+			placeList: placeList,
 			statusList: statusList,
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
@@ -310,8 +321,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId.toString());
-				const refreshDinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id);
+				const refreshDinoz = await AdminService.getDinozDataFromPlayer(this.dinozId);
 
 				if (!refreshDinoz) {
 					this.$toast.open({
@@ -377,7 +387,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		try {
-			this.dinoz = await AdminService.listOneDinozFromPlayer(this.dinozId);
+			this.dinoz = await AdminService.getDinozDataFromPlayer(this.dinozId);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 		}

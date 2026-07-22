@@ -81,9 +81,5 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 	nothing: {
 		stepName: 'nothing',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

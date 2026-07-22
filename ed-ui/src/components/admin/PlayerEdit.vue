@@ -392,7 +392,9 @@
 			<legend>Dinoz</legend>
 			<label class="title" for="dinozSelect">Dinoz: </label>
 			<select id="dinozSelect" v-model="selectedDinozId">
-				<option v-for="dinoz in dinozList" :key="dinoz.id" :value="dinoz.id">{{ dinoz.name }} ({{ dinoz.id }})</option>
+				<option v-for="dinoz in player.dinoz" :key="dinoz.id" :value="dinoz.id">
+					{{ dinoz.name }} ({{ dinoz.id }})
+				</option>
 			</select>
 			<DZButton @click="editDinoz">Edit</DZButton>
 		</fieldset>
@@ -411,9 +413,8 @@ import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
-import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
+import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerTypeToSend';
 import DZSelect from '../common/DZSelect.vue';
-import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { AdminRole } from '@drpg/prisma/enums';
 
 interface PlayerSearch {
@@ -461,15 +462,13 @@ export default defineComponent({
 			itemNameList: itemNameList,
 			ingredientNameList: ingredientNameList,
 			ScenarioDetails,
-			// TODO: Fix this type, I have no idea what it's supposed to be
-			player: {} as PlayerTypeToSend,
+			player: {} as PlayerAdminFiche,
 			banReasons,
 			banActions,
 			searchedPlayerId: '',
 			searchValue: undefined as string | undefined,
 			playerList: [] as Array<PlayerSearch>,
 			displayErrorMessage: false as boolean,
-			dinozList: {} as Array<DinozAdminFiche>,
 			awaitingSearch: false as boolean,
 			selectedDinozId: undefined as number | undefined
 		};
@@ -499,10 +498,7 @@ export default defineComponent({
 			this.$router.push({ path: this.$route.path, query: { id: this.searchedPlayerId } });
 
 			try {
-				[this.player, this.dinozList] = await Promise.all([
-					AdminService.getplayerInformation(this.searchedPlayerId),
-					AdminService.listAllDinozFromPlayer(this.searchedPlayerId)
-				]);
+				this.player = await AdminService.getPlayerInformation(this.searchedPlayerId);
 				this.sortItemsById();
 				this.sortIngredientsById();
 				this.playerFields.epicOperation = 'add';
@@ -613,7 +609,7 @@ export default defineComponent({
 			}
 
 			// Reload player info
-			this.player = await AdminService.getplayerInformation(this.player.id);
+			this.player = await AdminService.getPlayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
 
@@ -677,7 +673,7 @@ export default defineComponent({
 						this.banFields.comment,
 						this.banFields.dinozId
 					);
-					this.player = await AdminService.getplayerInformation(this.player.id);
+					this.player = await AdminService.getPlayerInformation(this.player.id);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -687,7 +683,7 @@ export default defineComponent({
 		async cancelBan() {
 			try {
 				await AdminService.cancelBan(this.player.id);
-				this.player = await AdminService.getplayerInformation(this.player.id);
+				this.player = await AdminService.getPlayerInformation(this.player.id);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -702,7 +698,7 @@ export default defineComponent({
 					this.player.banCase.comment,
 					this.player.banCase.dinozId
 				);
-				this.player = await AdminService.getplayerInformation(this.player.id);
+				this.player = await AdminService.getPlayerInformation(this.player.id);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -712,10 +708,7 @@ export default defineComponent({
 	async mounted() {
 		if (this.id) {
 			try {
-				[this.player, this.dinozList] = await Promise.all([
-					AdminService.getplayerInformation(this.id),
-					AdminService.listAllDinozFromPlayer(this.id)
-				]);
+				this.player = await AdminService.getPlayerInformation(this.id);
 				this.sortItemsById();
 				this.sortIngredientsById();
 				this.playerFields.epicOperation = 'add';

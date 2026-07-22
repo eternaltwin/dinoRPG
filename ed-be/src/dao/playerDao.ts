@@ -777,8 +777,8 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 	});
 }
 
-export async function getAllInformationFromPlayer(playerId: string) {
-	return withSpan(getAllInformationFromPlayer.name, async () => {
+export async function getPlayerInfoForAdmin(playerId: string) {
+	return withSpan(getPlayerInfoForAdmin.name, async () => {
 		const player = await prisma.player.findUnique({
 			where: {
 				id: playerId
@@ -788,7 +788,13 @@ export async function getAllInformationFromPlayer(playerId: string) {
 				items: true,
 				ingredients: true,
 				rewards: true,
-				quests: true
+				quests: true,
+				dinoz: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
 			}
 		});
 

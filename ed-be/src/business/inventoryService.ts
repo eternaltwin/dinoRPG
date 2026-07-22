@@ -113,7 +113,7 @@ export async function useItem(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const dinoz = await getDinozFicheItemRequest(dinozId);
 	if (!dinoz || !dinoz.player) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const itemId = +req.params.itemId;
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
@@ -488,7 +488,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 	const authed = await auth(req);
 	const dinoz = await getDinozEquipItemRequest(dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (dinoz.unavailableReason && dinoz.unavailableReason === UnavailableReason.selling) {

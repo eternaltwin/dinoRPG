@@ -101,7 +101,6 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { currentWar } from './clanWar.js';
 
 /**
  * @summary Get available action from dinoz
@@ -373,15 +372,17 @@ export async function getAvailableActions(
 	}
 
 	// Hack to remove FRETURN so dinoz can still be redirected to NPC but cannot talk to them explicitly
-	dinoz.status = dinoz.status.filter(s => s.statusId !== DinozStatusId.FRETURN);
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, player, dinoz.id)) {
-			availableActions.push({
-				name: actionList[Action.NPC].name,
-				imgName: actionList[Action.NPC].imgName,
-				prop: npc.id
-			});
+			// Add a NPC action if there is at least one initial step possible.
+			if (Object.values(npc.data).some(data => data.initialStep && checkCondition(data.condition, player, dinoz.id))) {
+				availableActions.push({
+					name: actionList[Action.NPC].name,
+					imgName: actionList[Action.NPC].imgName,
+					prop: npc.id
+				});
+			}
 		}
 	});
 
@@ -1182,9 +1183,9 @@ export async function gatherWithDinoz(req: Request) {
 
 	switch (gatherPlace.type) {
 		case GatherType.CUEILLE1:
+		case GatherType.CUEILLE2:
 		case GatherType.CUEILLE3:
 		case GatherType.CUEILLE4:
-		case GatherType.CUEILLE2:
 			await setSpecificStat(StatTracking.CUEILLE, player.id, 1);
 			break;
 		case GatherType.ENERGY1:

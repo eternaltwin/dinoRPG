@@ -253,7 +253,10 @@ export default defineComponent({
 					useDinozStore().clearNpc(+this.$route.params.id);
 					this.$router.push({
 						name: 'NPC',
-						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
+						params: {
+							id: this.$route.params.id.toString(),
+							npc: this.npcDisplayName(action.prop as number)
+						}
 					});
 					break;
 				case Action.FIGHT: {
@@ -605,7 +608,7 @@ export default defineComponent({
 					await this.refreshDinoz();
 					break;
 				default:
-					console.log(action.name);
+					console.warn(`Unknown action: ${action.name}`);
 					break;
 			}
 		},

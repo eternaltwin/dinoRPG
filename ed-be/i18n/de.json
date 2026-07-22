@@ -66,7 +66,7 @@
 		"sameClan": "Du kannst dem eigenen Klan keinen Krieg erklären.",
 		"castleAlreadyBuilt": "Die Burg deines Klans ist bereits errichtet.",
 		"notInDefense": "Dieser Dinoz ist nicht Teil der Burgverteidigung.",
-		"outdatedDefense": "Défense obsolète"
+		"outdatedDefense": "Verteidigung veraltet"
 	},
 	"error": {
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
@@ -248,7 +248,7 @@
 		"poison": "Vergiftung ist eingeschaltet",
 		"nopoison": "Vergiftung ist ausgeschaltet",
 		"newsTitle": "Neues Inter-Dojo Turnier",
-		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox und 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 3,75% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 1,875% des Preisgeldes.\n- Für diejenigen, die nur einen Sieg errungen haben, jeweils 0,75% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,25% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die die Meilensteine von 500, 750, 1000, 1200, 1300 und 1400 Punkten erreicht haben, Belohnungen erhalten werden!\n\nWir wünschen allen ein gutes Turnier!"
+		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die die Meilensteine von 500, 750, 1000, 1200, 1300 und 1400 Punkten erreicht haben, Belohnungen erhalten werden!\n\nWir wünschen allen ein gutes Turnier!"
 	},
 	"race": {
 		"1": "Möffe",

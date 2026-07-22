@@ -63,9 +63,5 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 	thanks: {
 		stepName: 'thanks',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

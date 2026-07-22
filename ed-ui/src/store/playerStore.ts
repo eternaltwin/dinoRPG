@@ -2,14 +2,13 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { Notification } from '@drpg/core/models/notifications/notification';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
+import { DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS } from '@drpg/core/constants';
+import { NotificationSeverity, AdminRole } from '@drpg/prisma/enums';
 import { defineStore } from 'pinia';
 import { PlayerService } from '../services';
-import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 import { useDinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
-import { NotificationSeverity } from '@drpg/prisma/enums';
 import { clanStore } from './clanStore';
-import { DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS } from '@drpg/core/constants';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -27,7 +26,7 @@ export const playerStore = defineStore('playerStore', {
 			shareArchivedData: false,
 			displayedNotifications: DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS
 		},
-		role: AdminRoleFront.PLAYER,
+		role: AdminRole.PLAYER,
 		priest: false,
 		shopkeeper: false,
 		sortOption: 'default',
@@ -65,7 +64,7 @@ export const playerStore = defineStore('playerStore', {
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;
 		},
-		setRole(role: AdminRoleFront): void {
+		setRole(role: AdminRole): void {
 			this.role = role;
 		},
 		setPriest(priest: boolean): void {
@@ -109,7 +108,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerId(commonData.id);
 			this.setPlayerName(commonData.name);
 			this.setPlayerOptions(commonData.playerOptions);
-			this.setRole(commonData.role as AdminRoleFront);
+			this.setRole(commonData.role as AdminRole);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
 			useDinozStore().setDinozList(commonData.dinoz);
 			clanStore().setClanEvent(commonData.clanEvent);
