@@ -13,10 +13,10 @@
 					<img :src="arrowIcon" alt="right" />
 				</button>
 				<button class="btn down" title="Move down" @click="tryMove(0, 1)"><img :src="arrowIcon" alt="down" /></button>
+				<button v-if="needIrma || buttonIcon !== ''" class="btn center" title="action" @click="action()">
+					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
+				</button>
 			</div>
-			<button v-show="stairIcon !== ''" class="btn" title="Take these stairs" @click="takeStair">
-				<img :src="stairIcon" alt="stairs" />
-			</button>
 		</div>
 	</div>
 </template>
@@ -34,7 +34,7 @@
  * (src/assets/dungeon); the dinoz is animated via @eternaltwin/dinorpg_animations.
  */
 import { defineComponent } from 'vue';
-import { DungeonService } from '../services/index.js';
+import { DinozService, DungeonService } from '../services/index.js';
 import { ARROWS, KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
@@ -42,6 +42,7 @@ import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // Kept at module scope on purpose: the renderer, actor and Pixi objects must
@@ -111,10 +112,23 @@ export default defineComponent({
 		return {
 			status: '',
 			wallDebug: false,
-			stairIcon: '' as string,
+			buttonIcon: '' as string,
 			arrowIcon: assetUrl('interf_arrow'),
 			sessionStore: sessionStore()
 		};
+	},
+	computed: {
+		actionImg(): string {
+			if (this.needIrma) {
+				return 'irma';
+			} else {
+				const icon = icons.get(iconKey(cursor));
+				return icon ?? '';
+			}
+		},
+		needIrma(): boolean {
+			return !(useDinozStore().getCurrentDinoz?.fight ?? false);
+		}
 	},
 	methods: {
 		/** Flavor name shared by a door and its key, seeded by dungeonId + key id. */
@@ -150,10 +164,9 @@ export default defineComponent({
 				}
 				if (move.fight) {
 					this.sessionStore.setFightResult(move.fight);
-
 					this.$router.push({
 						name: 'Fight',
-						params: { dinozId: this.$route.params.id.toString() }
+						params: { dinozId: currentDinoz.id.toString() }
 					});
 				}
 				// What the entered cell held BEFORE this step's re-reveal clears it —
@@ -207,31 +220,51 @@ export default defineComponent({
 			});
 			for (let i = 0; i < trail.length; i++) trail[i] = { ...cursor };
 		},
-		updateStairButton(): void {
+		updateButton(): void {
 			const currentDinoz = useDinozStore().getCurrentDinoz;
 			if (!currentDinoz) {
 				return;
 			}
-			if (!currentDinoz.fight) {
-				this.stairIcon = assetUrl('interf_irma');
-			}
-			if (!actor || moving || actor.pending > 0) return this.hideStair();
+			if (!actor || moving || actor.pending > 0) return this.hideButton();
 			const k = iconKey(actor.cell);
 			const icon = icons.get(k);
-			if (icon !== 'stair_up' && icon !== 'stair_down' && icon !== 'exit') return this.hideStair();
+			if (!icon) return this.hideButton();
 			if (k === stairShownFor) return;
 			stairShownFor = k;
-			this.stairIcon = assetUrl(icon === 'stair_up' ? 'interf_stair_up' : 'interf_stair_down');
+			if (icon === 'stair_down' || icon === 'stair_up') {
+				this.buttonIcon = icon;
+			} else {
+				this.buttonIcon = '';
+			}
 		},
-		hideStair(): void {
+		hideButton(): void {
 			if (stairShownFor === null) return;
 			stairShownFor = null;
-			this.stairIcon = '';
+			this.buttonIcon = '';
 		},
-		takeStair(): void {
+		async action(): Promise<void> {
+			if (this.needIrma) {
+				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz || currentDinoz.fight) {
+					return;
+				}
+				try {
+					const toast = await DinozService.useIrma(currentDinoz.id);
+					if (toast.category === ItemEffect.ACTION && toast.value > 0) {
+						const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
+						this.$toast.open({
+							message: message,
+							type: 'info'
+						});
+					}
+					await useDinozStore().refreshDinozFiche(currentDinoz.id);
+				} catch (e) {
+					errorHandler.handle(e, this.$toast);
+				}
+			}
 			const icon = icons.get(iconKey(cursor));
-			if (icon === 'stair_up') this.tryMove(0, 0, 1);
-			else if (icon === 'stair_down' || icon === 'exit') this.tryMove(0, 0, -1);
+			if (icon === 'stair_up') await this.tryMove(0, 0, 1);
+			else if (icon === 'stair_down' || icon === 'exit') await this.tryMove(0, 0, -1);
 		},
 		/** Enter the dungeon: the server decrypts the layout; we get the reveals only. */
 		async build(): Promise<void> {
@@ -252,7 +285,7 @@ export default defineComponent({
 			icons.clear();
 			doorKeys.clear();
 			walls.clear();
-			this.hideStair();
+			this.hideButton();
 
 			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
 			// Lazy-load only this run's tiles now that the server told us the skin.
@@ -303,7 +336,7 @@ export default defineComponent({
 					this.catchUp();
 				}
 			}
-			this.updateStairButton();
+			this.updateButton();
 			rafId = requestAnimationFrame(frame);
 		};
 		rafId = requestAnimationFrame(frame);
@@ -389,6 +422,7 @@ export default defineComponent({
 
 		&:hover {
 			background: transparent;
+			filter: drop-shadow(0 0 2px #ffec4f) drop-shadow(0 0 6px #fff44f) drop-shadow(0 0 12px rgba(255, 244, 79, 0.6));
 			border: none;
 		}
 	}
@@ -418,6 +452,14 @@ export default defineComponent({
 	.right {
 		top: 26px;
 		left: 52px;
+	}
+	.center {
+		top: 26px;
+		left: 26px;
+		img {
+			width: 22px;
+			height: auto;
+		}
 	}
 }
 
