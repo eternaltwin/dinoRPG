@@ -105,14 +105,14 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		returnToDinoz() {
+		async returnToDinoz() {
 			if (this.npcSpeech && this.fight.result) {
 				this.$router.push({
 					name: 'NPC',
 					params: { id: this.dinozId.toString(), npc: this.npcName }
 				});
 			} else if (this.dungeonName && this.fight.result) {
-				useDinozStore().refreshDinozFiche(this.dinozId)
+				await useDinozStore().refreshDinozFiche(this.dinozId);
 				this.$router.push({ name: 'Dungeon', params: { id: this.dungeonName } });
 			} else {
 				useDinozStore().clearNpc(this.dinozId);
