@@ -16,6 +16,7 @@ table {
 	a:hover {
 		background-color: #9a4029;
 	}
+
 	&#layout {
 		border-collapse: collapse;
 		border-spacing: 0px;
@@ -88,16 +89,10 @@ a {
 		background-repeat: no-repeat;
 		border-radius: 0px;
 	}
-
-	&.bSmall {
-		width: 80px;
-		padding-top: 5px;
-		padding-right: 5px;
-		background-image: url('../assets/design/button_small.webp');
-	}
 }
 
 span {
+
 	&.tix,
 	&.money {
 		color: #58321d;
@@ -236,10 +231,12 @@ strong {
 	&::-webkit-scrollbar {
 		width: 7px;
 	}
+
 	&::-webkit-scrollbar-thumb {
 		background-color: #fce3bb;
 		border-radius: 4px;
 	}
+
 	scrollbar-width: thin;
 	scrollbar-color: #fce3bb #9a4029;
 }
@@ -256,6 +253,7 @@ strong {
 	background-position-x: left, right, center, left, right, center, left, right, center;
 	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
 	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+
 	h3 {
 		display: flex;
 		justify-content: center;
@@ -268,6 +266,7 @@ strong {
 		text-align: center;
 		color: #ffee92;
 		text-shadow: 1px 1px 1px #383522;
+
 		img {
 			height: 7px;
 			width: 7px;
@@ -297,20 +296,24 @@ strong {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
 	button {
 		background-color: transparent;
 		margin: 0 10px;
 		padding: 5px 10px;
 		border: none;
 		cursor: pointer;
+
 		&:disabled {
 			cursor: not-allowed;
 		}
+
 		.left,
 		.right {
 			height: auto;
 			width: 10px;
 		}
+
 		.right {
 			transform: rotate(180deg);
 		}

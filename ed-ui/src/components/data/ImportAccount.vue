@@ -8,9 +8,9 @@
 				{{ $t(`import.disclaimer3`) }} <br /><br />
 			</span>
 			<div class="buttonLand">
-				<p class="smallbutton" @click="selectImport('fr')">Français</p>
-				<p class="smallbutton" @click="selectImport('en')">English</p>
-				<p class="smallbutton" @click="selectImport('es')">Español</p>
+				<DZButton @click="selectImport('fr')">Français</DZButton>
+				<DZButton @click="selectImport('en')">English</DZButton>
+				<DZButton @click="selectImport('es')">Español</DZButton>
 			</div>
 		</div>
 	</div>
@@ -21,10 +21,14 @@ import { defineComponent } from 'vue';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { useDinozStore } from '../../store/index.js';
+import DZButton from '../../components/common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ImportAccount',
 	emits: ['closePopin'],
+	components: {
+		DZButton
+	},
 	methods: {
 		closePopin(): void {
 			this.$emit('closePopin');
@@ -121,26 +125,5 @@ export default defineComponent({
 	margin-bottom: auto;
 	align-items: center;
 	margin-bottom: 5px;
-}
-.smallbutton {
-	background-image: url('../../assets/design/button_small.webp');
-	padding-top: 4px;
-	font-size: 9pt;
-	line-height: 7pt;
-	width: 80px;
-	padding-top: 5px;
-	padding-right: 5px;
-	color: white;
-	font-weight: normal;
-	font-variant: small-caps;
-	text-align: center;
-	height: 24px;
-	margin-top: 3px;
-	margin-bottom: 2px;
-	padding-left: 10px;
-	cursor: pointer;
-	&:hover {
-		background-image: url('../../assets/design/button_small_hover.webp');
-	}
 }
 </style>

@@ -110,12 +110,12 @@ import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
-import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
-import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
 import { Tippy } from 'vue-tippy';
 import { formatDate } from '../../utils/formatDateTime';
+import DZButton from '../common/DZButton.vue';
+import DZUser from '../common/DZUser.vue';
 import DZSelect from '../common/DZSelect.vue';
 import DZCheckbox from '../common/DZCheckbox.vue';
 import DZInput from '../common/DZInput.vue';
@@ -402,25 +402,6 @@ export default defineComponent({
 			margin-bottom: 0;
 			width: 100%;
 		}
-	}
-}
-.smallbutton {
-	background-image: url('../../assets/design/button_small.webp');
-	font-size: 9pt;
-	line-height: 7pt;
-	width: 80px;
-	padding-top: 5px;
-	padding-right: 5px;
-	color: white;
-	font-weight: normal;
-	font-variant: small-caps;
-	height: 24px;
-	margin-top: 3px;
-	margin-bottom: 2px;
-	padding-left: 10px;
-	cursor: pointer;
-	&:hover {
-		background-image: url('../../assets/design/button_small_hover.webp');
 	}
 }
 .tinybutton {
