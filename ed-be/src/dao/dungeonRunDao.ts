@@ -50,11 +50,12 @@ export async function updateRun(
 	revealed: string,
 	keys: string,
 	opened: string,
-	scenarios: string
+	scenarios: string,
+	gold: string
 ) {
 	return prisma.dungeonRun.update({
 		where: { id },
-		data: { ...pos, revealed, keys, opened, scenarios }
+		data: { ...pos, revealed, keys, opened, scenarios, gold }
 	});
 }
 

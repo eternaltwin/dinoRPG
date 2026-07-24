@@ -47,6 +47,8 @@ export interface MoveResult {
 	fight?: FightResult;
 	/** Scenario reached on this step: i18n key of its text + popup icon (XML micon). */
 	scenario?: { text: string; micon?: string };
+	/** Gold collected on this step, if the entered cell held an uncollected pile. */
+	gold?: number;
 }
 
 // ── rendering ──────────────────────────────────────────────────────────────

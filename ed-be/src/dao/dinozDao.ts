@@ -519,7 +519,8 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				},
 				status: { select: { statusId: true } },
 				skills: { select: { skillId: true } },
-				unlockableSkills: { select: { skillId: true } }
+				unlockableSkills: { select: { skillId: true } },
+				unavailableReason: true
 			}
 		});
 
@@ -1180,7 +1181,8 @@ export async function getIrmaUsageInfo(dinozId: number) {
 				remaining: true,
 				fight: true,
 				gather: true,
-				followers: { select: { id: true, remaining: true, fight: true, gather: true } },
+				unavailableReason: true,
+				followers: { select: { id: true, remaining: true, fight: true, unavailableReason: true, gather: true } },
 				player: {
 					select: {
 						id: true,

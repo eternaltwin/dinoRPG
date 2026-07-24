@@ -115,6 +115,9 @@ export async function useItem(req: Request) {
 	if (!dinoz || !dinoz.player) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
 	const itemId = +req.params.itemId;
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
 

@@ -1,9 +1,5 @@
 <template>
 	<div class="dungeon-page">
-		<div class="toolbar">
-			<button @click="toggleDebug">Wall debug: {{ wallDebug ? 'ON' : 'OFF' }}</button>
-			<span class="status">{{ status }}</span>
-		</div>
 		<div ref="stageEl" class="stage">
 			<!-- View.hx: arrows attached at (5,5), one move(dx,dy,0) callback per direction -->
 			<div class="dpad">
@@ -17,6 +13,9 @@
 					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
 				</button>
 			</div>
+		</div>
+		<div class="toolbar">
+			<button @click="toggleDebug">Wall debug: {{ wallDebug ? 'ON' : 'OFF' }}</button>
 		</div>
 	</div>
 </template>
@@ -110,7 +109,6 @@ export default defineComponent({
 	name: 'DungeonPage',
 	data() {
 		return {
-			status: '',
 			wallDebug: false,
 			buttonIcon: '' as string,
 			arrowIcon: assetUrl('interf_arrow'),
@@ -186,6 +184,9 @@ export default defineComponent({
 				if (move.scenario) {
 					renderer?.showMessage(this.$t(move.scenario.text), entered === 'scroll' ? 'item_scroll' : 'item_chest');
 				}
+				if (move.gold) {
+					renderer?.showMessage(this.$t('dungeon.msg.gold', { value: move.gold }), 'item_gold');
+				}
 				cursor = { ...move.pos };
 				actor?.enqueue(cursor);
 				trail.unshift({ ...cursor });
@@ -231,7 +232,7 @@ export default defineComponent({
 			if (!icon) return this.hideButton();
 			if (k === stairShownFor) return;
 			stairShownFor = k;
-			if (icon === 'stair_down' || icon === 'stair_up') {
+			if (icon === 'stair_down' || icon === 'stair_up' || icon === 'start' || icon === 'exit') {
 				this.buttonIcon = icon;
 			} else {
 				this.buttonIcon = '';
@@ -243,9 +244,12 @@ export default defineComponent({
 			this.buttonIcon = '';
 		},
 		async action(): Promise<void> {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				return;
+			}
 			if (this.needIrma) {
-				const currentDinoz = useDinozStore().getCurrentDinoz;
-				if (!currentDinoz || currentDinoz.fight) {
+				if (currentDinoz.fight) {
 					return;
 				}
 				try {
@@ -264,11 +268,23 @@ export default defineComponent({
 			}
 			const icon = icons.get(iconKey(cursor));
 			if (icon === 'stair_up') await this.tryMove(0, 0, 1);
-			else if (icon === 'stair_down' || icon === 'exit') await this.tryMove(0, 0, -1);
+			else if (icon === 'stair_down') await this.tryMove(0, 0, -1);
+			else if (icon === 'start' || icon === 'exit') {
+				try {
+					await DungeonService.exitDungeon(dungeonId, currentDinoz.id);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+				await useDinozStore().refreshDinozFiche(currentDinoz.id);
+				this.$router.push({
+					name: 'DinozPage',
+					params: { id: currentDinoz.id.toString() }
+				});
+			}
 		},
 		/** Enter the dungeon: the server decrypts the layout; we get the reveals only. */
 		async build(): Promise<void> {
-			this.status = 'entering the dungeon…';
 			let run: StartRunResult;
 			const currentDinoz = useDinozStore().getCurrentDinoz;
 			if (!currentDinoz) {
@@ -280,7 +296,6 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-			this.status = `run ${run.runId.slice(0, 8)}… — explore!`;
 
 			icons.clear();
 			doorKeys.clear();
@@ -387,12 +402,6 @@ export default defineComponent({
 			background: #353a47;
 		}
 	}
-}
-
-.status {
-	color: #7e8395;
-	font-size: 12px;
-	font-family: monospace;
 }
 
 .stage {

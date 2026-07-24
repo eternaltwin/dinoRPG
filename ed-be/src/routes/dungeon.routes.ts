@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { startRun, move } from '../business/dungeonService.js';
+import { startRun, exitRun, move } from '../business/dungeonService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
 
@@ -35,6 +35,34 @@ routes.post(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err);
+			sendError(res, err);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/dungeon/{id}/exit:
+ *   post:
+ *     summary: Leave a dungeon run from its start or exit cell. Clears the dinoz's unavailableReason.
+ *     tags:
+ *       - Dungeon
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       500:
+ *         description: Error
+ */
+routes.post(
+	`${commonPath}/:id/exit`,
+	[param('id').exists().isString().notEmpty()],
+	async (req: Request, res: Response) => {
+		try {
+			const response = await exitRun(req);
+			return res.status(200).send(response);
+		} catch (err) {
 			sendError(res, err);
 		}
 	}

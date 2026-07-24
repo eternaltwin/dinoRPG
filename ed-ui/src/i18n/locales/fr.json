@@ -5286,7 +5286,8 @@
 		"msg": {
 			"locked": "La porte « {name} » est verrouillée. Il vous faut trouver la clé du même nom !",
 			"opened": "La clé « {name} » tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez la clé « {name} » ! Elle doit bien ouvrir une porte du même nom, quelque part..."
+			"key": "Vous trouvez la clé « {name} » ! Elle doit bien ouvrir une porte du même nom, quelque part...",
+			"gold": "Vous trouvez {value} pièces d'or !"
 		},
 		"doorNames": [
 			"Sphinx des Katatombes",

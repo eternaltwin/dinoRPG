@@ -15,9 +15,16 @@ import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models
 import { DungeonItem } from './dungeon/types.js';
 import type { DungeonDoor, DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
-import { createRun, findRun, getDungeonByName, updateRun, updateRunDefeated } from '../dao/dungeonRunDao.js';
+import {
+	createRun,
+	findRun,
+	getDungeonById,
+	getDungeonByName,
+	updateRun,
+	updateRunDefeated
+} from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
-import { auth } from '../dao/playerDao.js';
+import { addMoney, auth } from '../dao/playerDao.js';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import type { MonsterTeam } from './dungeon/monsters.js';
 import {
@@ -39,6 +46,9 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+
+/** Gold granted per dungeon level for each collected pile. */
+const GOLD_PER_LEVEL = 100;
 
 /** Filter candidate reveals down to the not-yet-revealed ones and record them. */
 function newReveals(candidates: RevealedCell[], revealed: Set<string>): RevealedCell[] {
@@ -82,6 +92,15 @@ function decorateDoors(reveal: RevealedCell[], opened: string[], keys: number[])
 		} else if (c.icon?.startsWith('key_') && owned.has(Number(c.icon.slice(4)))) {
 			c.icon = undefined;
 		}
+	}
+	return reveal;
+}
+
+/** Strip the 'gold' icon from cells whose pile this player already collected. */
+function decorateGold(reveal: RevealedCell[], collected: string[]): RevealedCell[] {
+	const done = new Set(collected);
+	for (const c of reveal) {
+		if (c.icon === 'gold' && done.has(cellKey(c.l, c.x, c.y))) c.icon = undefined;
 	}
 	return reveal;
 }
@@ -143,10 +162,13 @@ export async function markMonsterDefeated(
 export async function startRun(req: Request): Promise<StartRunResult> {
 	const authed = await auth(req);
 	const dungeonName = req.params.id;
-	const dungeon = await getDungeonByName(dungeonName);
+	let dungeon = await getDungeonByName(dungeonName);
 	const dungeonRef = Object.values(DungeonList).find(d => d.name === dungeonName);
 	if (!dungeon) {
-		throw new ExpectedError(translate('dungeon.inexistent', authed));
+		dungeon = await getDungeonById(dungeonName);
+		if (!dungeon) {
+			throw new ExpectedError(translate('dungeon.inexistent', authed));
+		}
 	}
 	const dinozId = req.body.dinozId;
 	const dinoz = await getFollowingDinoz(dinozId);
@@ -182,14 +204,17 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
 			reveal: decorateScenarios(
-				decorateDoors(
-					decorateMonsters(
-						cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
-						JSON.parse(dungeon.monsters) as MonsterTeam[],
-						JSON.parse(existing.defeated) as string[]
+				decorateGold(
+					decorateDoors(
+						decorateMonsters(
+							cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+							JSON.parse(dungeon.monsters) as MonsterTeam[],
+							JSON.parse(existing.defeated) as string[]
+						),
+						JSON.parse(existing.opened) as string[],
+						JSON.parse(existing.keys) as number[]
 					),
-					JSON.parse(existing.opened) as string[],
-					JSON.parse(existing.keys) as number[]
+					JSON.parse(existing.gold) as string[]
 				),
 				scenariosFor(dungeon).list,
 				JSON.parse(existing.scenarios) as number[]
@@ -223,6 +248,44 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	};
 }
 
+export async function exitRun(req: Request) {
+	const authed = await auth(req);
+	const dungeonName = req.params.id;
+	let dungeon = await getDungeonByName(dungeonName);
+	if (!dungeon) {
+		dungeon = await getDungeonById(dungeonName);
+		if (!dungeon) {
+			throw new ExpectedError(translate('dungeon.inexistent', authed));
+		}
+	}
+	const dinozId = req.body.dinozId;
+	const dinoz = await getFollowingDinoz(dinozId);
+	if (!dinoz) {
+		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
+
+	const run = await findRun(dungeon.id, authed.id);
+	if (!run) {
+		throw new ExpectedError(translate('dungeon.noRun', authed));
+	}
+
+	const codec = new DungeonCodec();
+	codec.decode(
+		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
+	);
+	const d = codec.d;
+
+	const atStart = run.posL === d.start.l && run.posX === d.start.x && run.posY === d.start.y;
+	const atExit = run.posL === d.exit.l && run.posX === d.exit.x && run.posY === d.exit.y;
+	if (!atStart && !atExit) {
+		throw new ExpectedError(translate('dungeon.notAtExit', authed));
+	}
+
+	const team = [dinoz.id, ...dinoz.followers.map(d => d.id)];
+
+	await updateMultipleDinoz(team, { unavailableReason: null });
+}
+
 /** Stair lookup: is there a stair door at (l,x,y), and where does it lead? */
 function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number | undefined {
 	for (const room of d.levels[l].rooms) {
@@ -246,9 +309,12 @@ export async function move(req: Request): Promise<MoveResult> {
 	const dy = +req.body.dy;
 	const dungeonId = req.params.id;
 	const dinozId = +req.body.dinozId;
-	const dungeon = await getDungeonByName(dungeonId);
+	let dungeon = await getDungeonByName(dungeonId);
 	if (!dungeon) {
-		throw new ExpectedError(translate('dungeon.inexistent', authed));
+		dungeon = await getDungeonById(dungeonId);
+		if (!dungeon) {
+			throw new ExpectedError(translate('dungeon.inexistent', authed));
+		}
 	}
 	const run = await findRun(dungeon.id, authed.id);
 	if (!run) throw new ExpectedError(`Unknown dungeon run.`);
@@ -304,6 +370,16 @@ export async function move(req: Request): Promise<MoveResult> {
 		if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
 		// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
 		scenario = { text: scenarios.i18n ? `dungeon.${dungeon.name}.${sc.text}` : sc.text, micon: sc.micon };
+	}
+
+	// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.
+	const goldCollected = new Set<string>(JSON.parse(run.gold) as string[]);
+	let goldReward: number | undefined;
+	const goldHere = itemIndexAt(d, DungeonItem.IGold, next.l, next.x, next.y) != null;
+	if (goldHere && !goldCollected.has(cellKey(next.l, next.x, next.y))) {
+		goldCollected.add(cellKey(next.l, next.x, next.y));
+		goldReward = dungeon.level * GOLD_PER_LEVEL;
+		await addMoney(authed.id, goldReward);
 	}
 
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
@@ -380,18 +456,20 @@ export async function move(req: Request): Promise<MoveResult> {
 		JSON.stringify([...revealed]),
 		JSON.stringify(keys),
 		JSON.stringify(opened),
-		JSON.stringify(read)
+		JSON.stringify(read),
+		JSON.stringify([...goldCollected])
 	);
 
 	return {
 		ok: true,
 		pos: next,
 		reveal: decorateScenarios(
-			decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys),
+			decorateGold(decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys), [...goldCollected]),
 			scenarios.list,
 			read
 		),
 		fight: result,
-		scenario
+		scenario,
+		gold: goldReward
 	};
 }
