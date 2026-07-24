@@ -291,12 +291,24 @@ export async function getAvailableActions(
 
 	if (dinozPlace.dungeon) {
 		const dungeon = Object.values(DungeonList).find(dungeon => dungeon.placeStart === dinozPlace.placeId);
-		if (dungeon && checkCondition(dungeon.condition, player, dinoz.id)) {
-			availableActions.push({
-				name: actionList[Action.DUNGEON_ENTER].name,
-				imgName: actionList[Action.DUNGEON_ENTER].imgName,
-				prop: dungeon.name
-			});
+		if (dungeon) {
+			if (checkCondition(dungeon.condition, player, dinoz.id)) {
+				availableActions.push({
+					name: actionList[Action.DUNGEON_ENTER].name,
+					imgName: actionList[Action.DUNGEON_ENTER].imgName,
+					prop: dungeon.name
+				});
+			}
+			// Dungeon ongoing
+			if (dinoz.unavailableReason === UnavailableReason.dungeon) {
+				return [
+					{
+						name: actionList[Action.DUNGEON_ENTER].name,
+						imgName: actionList[Action.DUNGEON_ENTER].imgName,
+						prop: dungeon.name
+					}
+				];
+			}
 		}
 	}
 
@@ -1428,6 +1440,11 @@ export async function useIrma(req: Request) {
 
 	if (!dinoz || !dinoz.player) {
 		throw new ExpectedError('No dinoz found');
+	}
+
+	console.log(dinoz);
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 
 	const team = [dinoz, ...dinoz.followers];

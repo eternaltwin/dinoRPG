@@ -1181,6 +1181,8 @@ model DungeonRun {
   opened    String   @default("[]")
   // Scenario indices (IScenario item.v) this player has read / been granted.
   scenarios String   @default("[]")
+  // Cell keys ("l,x,y") of the gold piles this player has collected.
+  gold      String   @default("[]")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)

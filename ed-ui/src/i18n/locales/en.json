@@ -5284,7 +5284,8 @@
 		"msg": {
 			"locked": "The \"{name}\" door is locked. You need to find the key of the same name!",
 			"opened": "The \"{name}\" key turns in the lock: the door swings open with a sinister creak...",
-			"key": "You found the \"{name}\" key! It must open a door of the same name, somewhere..."
+			"key": "You found the \"{name}\" key! It must open a door of the same name, somewhere...",
+			"gold": "You find {value} gold!"
 		}
 	},
 	"scenario": {
