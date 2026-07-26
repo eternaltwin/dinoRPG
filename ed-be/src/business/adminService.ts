@@ -9,14 +9,7 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import {
-	addMoney,
-	auth,
-	getPlayerInfoForAdmin,
-	getEternalTwinId,
-	removeMoney,
-	setPlayer
-} from '../dao/playerDao.js';
+import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../dao/playerItemDao.js';

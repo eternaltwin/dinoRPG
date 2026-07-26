@@ -747,7 +747,8 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   gold: 'gold',
   createdAt: 'createdAt',
   playerId: 'playerId',
-  dungeonId: 'dungeonId'
+  dungeonId: 'dungeonId',
+  leaderId: 'leaderId'
 };
 
 exports.Prisma.DungeonScalarFieldEnum = {

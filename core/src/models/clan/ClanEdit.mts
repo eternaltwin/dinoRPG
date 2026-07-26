@@ -1,4 +1,4 @@
-import { AdminRole } from "@drpg/prisma/enums";
+import { AdminRole } from '@drpg/prisma/enums';
 
 export interface ClanPage {
 	id: number;

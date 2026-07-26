@@ -52,6 +52,7 @@ model Dinoz {
   buildId            String?                @db.Uuid
   build              DinozBuild?            @relation(fields: [buildId], references: [id], onDelete: SetNull)
   catches            DinozCatch[]
+  dungeonRuns        DungeonRun[]
   logs               Log[]
   Moderation         Moderation[]
   offers             Offer[]
@@ -1188,6 +1189,13 @@ model DungeonRun {
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   dungeonId String   @db.Uuid
   dungeon   Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
+  // The dinoz that opened this run — only it can move/resume/exit it. Its
+  // current followers (Dinoz.leaderId) ARE the rest of the team: no separate
+  // roster to desync, since a dead/pulled dinoz is disconnected immediately.
+  // Optional: the run outlives its leader (SetNull) — deleting the dinoz
+  // shouldn't wipe out the run's progress.
+  leaderId  Int?
+  leader    Dinoz?   @relation(fields: [leaderId], references: [id], onDelete: SetNull)
 
   @@unique([playerId, dungeonId])
   @@index([id])
@@ -1196,18 +1204,18 @@ model DungeonRun {
 }
 
 model Dungeon {
-  id       String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String      @unique @default("")
-  cipher   Bytes
-  iv       Bytes
-  tag      Bytes
-  type     DungeonType
+  id        String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String      @unique @default("")
+  cipher    Bytes
+  iv        Bytes
+  tag       Bytes
+  type      DungeonType
   // Approximate total level of each monster team in this maze.
-  level    Int         @default(1)
+  level     Int         @default(1)
   // MonsterTeam[] — rolled once at creation, identical for every player: cell + composition per monster-guarded passage.
-  monsters String      @default("[]")
+  monsters  String      @default("[]")
   // DungeonScenario[] with raw popup text, for hand-built dungeons; '[]' = use the DungeonList entry (i18n text).
-  scenarios String     @default("[]")
+  scenarios String      @default("[]")
 
   dungeonRuns DungeonRun[]
 

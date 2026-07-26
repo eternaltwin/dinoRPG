@@ -9,9 +9,15 @@ export interface RunPosition {
 }
 
 /** Persist a freshly sealed dungeon run and return its id (the capability token). */
-export async function createRun(pos: RunPosition, revealed: string, playerId: string, dungeonId: string) {
+export async function createRun(
+	pos: RunPosition,
+	revealed: string,
+	playerId: string,
+	dungeonId: string,
+	leaderId: number
+) {
 	return prisma.dungeonRun.create({
-		data: { ...pos, revealed, playerId, dungeonId }
+		data: { ...pos, revealed, playerId, dungeonId, leaderId }
 	});
 }
 
