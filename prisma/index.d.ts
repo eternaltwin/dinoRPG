@@ -7019,6 +7019,7 @@ export namespace Prisma {
 
   export type DinozCountOutputType = {
     catches: number
+    dungeonRuns: number
     logs: number
     Moderation: number
     offers: number
@@ -7038,6 +7039,7 @@ export namespace Prisma {
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     catches?: boolean | DinozCountOutputTypeCountCatchesArgs
+    dungeonRuns?: boolean | DinozCountOutputTypeCountDungeonRunsArgs
     logs?: boolean | DinozCountOutputTypeCountLogsArgs
     Moderation?: boolean | DinozCountOutputTypeCountModerationArgs
     offers?: boolean | DinozCountOutputTypeCountOffersArgs
@@ -7071,6 +7073,13 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountCatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozCatchWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountDungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
   }
 
   /**
@@ -9818,6 +9827,7 @@ export namespace Prisma {
     castle?: boolean | Dinoz$castleArgs<ExtArgs>
     build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    dungeonRuns?: boolean | Dinoz$dungeonRunsArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
@@ -9956,6 +9966,7 @@ export namespace Prisma {
     castle?: boolean | Dinoz$castleArgs<ExtArgs>
     build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    dungeonRuns?: boolean | Dinoz$dungeonRunsArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
@@ -9997,6 +10008,7 @@ export namespace Prisma {
       castle: Prisma.$ClanCastlePayload<ExtArgs> | null
       build: Prisma.$DinozBuildPayload<ExtArgs> | null
       catches: Prisma.$DinozCatchPayload<ExtArgs>[]
+      dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
       Moderation: Prisma.$ModerationPayload<ExtArgs>[]
       offers: Prisma.$OfferPayload<ExtArgs>[]
@@ -10445,6 +10457,7 @@ export namespace Prisma {
     castle<T extends Dinoz$castleArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$castleArgs<ExtArgs>>): Prisma__ClanCastleClient<$Result.GetResult<Prisma.$ClanCastlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     build<T extends Dinoz$buildArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$buildArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dungeonRuns<T extends Dinoz$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Moderation<T extends Dinoz$ModerationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$ModerationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     offers<T extends Dinoz$offersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10987,6 +11000,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.dungeonRuns
+   */
+  export type Dinoz$dungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    cursor?: DungeonRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
   }
 
   /**
@@ -83414,12 +83451,14 @@ export namespace Prisma {
     posX: number | null
     posY: number | null
     posL: number | null
+    leaderId: number | null
   }
 
   export type DungeonRunSumAggregateOutputType = {
     posX: number | null
     posY: number | null
     posL: number | null
+    leaderId: number | null
   }
 
   export type DungeonRunMinAggregateOutputType = {
@@ -83436,6 +83475,7 @@ export namespace Prisma {
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
+    leaderId: number | null
   }
 
   export type DungeonRunMaxAggregateOutputType = {
@@ -83452,6 +83492,7 @@ export namespace Prisma {
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
+    leaderId: number | null
   }
 
   export type DungeonRunCountAggregateOutputType = {
@@ -83468,6 +83509,7 @@ export namespace Prisma {
     createdAt: number
     playerId: number
     dungeonId: number
+    leaderId: number
     _all: number
   }
 
@@ -83476,12 +83518,14 @@ export namespace Prisma {
     posX?: true
     posY?: true
     posL?: true
+    leaderId?: true
   }
 
   export type DungeonRunSumAggregateInputType = {
     posX?: true
     posY?: true
     posL?: true
+    leaderId?: true
   }
 
   export type DungeonRunMinAggregateInputType = {
@@ -83498,6 +83542,7 @@ export namespace Prisma {
     createdAt?: true
     playerId?: true
     dungeonId?: true
+    leaderId?: true
   }
 
   export type DungeonRunMaxAggregateInputType = {
@@ -83514,6 +83559,7 @@ export namespace Prisma {
     createdAt?: true
     playerId?: true
     dungeonId?: true
+    leaderId?: true
   }
 
   export type DungeonRunCountAggregateInputType = {
@@ -83530,6 +83576,7 @@ export namespace Prisma {
     createdAt?: true
     playerId?: true
     dungeonId?: true
+    leaderId?: true
     _all?: true
   }
 
@@ -83633,6 +83680,7 @@ export namespace Prisma {
     createdAt: Date
     playerId: string
     dungeonId: string
+    leaderId: number | null
     _count: DungeonRunCountAggregateOutputType | null
     _avg: DungeonRunAvgAggregateOutputType | null
     _sum: DungeonRunSumAggregateOutputType | null
@@ -83668,8 +83716,10 @@ export namespace Prisma {
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
+    leaderId?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -83686,8 +83736,10 @@ export namespace Prisma {
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
+    leaderId?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -83704,8 +83756,10 @@ export namespace Prisma {
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
+    leaderId?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }, ExtArgs["result"]["dungeonRun"]>
 
   export type DungeonRunSelectScalar = {
@@ -83722,20 +83776,24 @@ export namespace Prisma {
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
+    leaderId?: boolean
   }
 
-  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "defeated" | "keys" | "opened" | "scenarios" | "gold" | "createdAt" | "playerId" | "dungeonId", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "defeated" | "keys" | "opened" | "scenarios" | "gold" | "createdAt" | "playerId" | "dungeonId" | "leaderId", ExtArgs["result"]["dungeonRun"]>
   export type DungeonRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }
   export type DungeonRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }
   export type DungeonRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
   }
 
   export type $DungeonRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -83743,6 +83801,7 @@ export namespace Prisma {
     objects: {
       player: Prisma.$PlayerPayload<ExtArgs>
       dungeon: Prisma.$DungeonPayload<ExtArgs>
+      leader: Prisma.$DinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -83758,6 +83817,7 @@ export namespace Prisma {
       createdAt: Date
       playerId: string
       dungeonId: string
+      leaderId: number | null
     }, ExtArgs["result"]["dungeonRun"]>
     composites: {}
   }
@@ -84154,6 +84214,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     dungeon<T extends DungeonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DungeonDefaultArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    leader<T extends DungeonRun$leaderArgs<ExtArgs> = {}>(args?: Subset<T, DungeonRun$leaderArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -84196,6 +84257,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
     readonly playerId: FieldRef<"DungeonRun", 'String'>
     readonly dungeonId: FieldRef<"DungeonRun", 'String'>
+    readonly leaderId: FieldRef<"DungeonRun", 'Int'>
   }
     
 
@@ -84598,6 +84660,25 @@ export namespace Prisma {
      * Limit how many DungeonRuns to delete.
      */
     limit?: number
+  }
+
+  /**
+   * DungeonRun.leader
+   */
+  export type DungeonRun$leaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
   }
 
   /**
@@ -86620,7 +86701,8 @@ export namespace Prisma {
     gold: 'gold',
     createdAt: 'createdAt',
     playerId: 'playerId',
-    dungeonId: 'dungeonId'
+    dungeonId: 'dungeonId',
+    leaderId: 'leaderId'
   };
 
   export type DungeonRunScalarFieldEnum = (typeof DungeonRunScalarFieldEnum)[keyof typeof DungeonRunScalarFieldEnum]
@@ -87079,6 +87161,7 @@ export namespace Prisma {
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
     build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
     offers?: OfferListRelationFilter
@@ -87134,6 +87217,7 @@ export namespace Prisma {
     castle?: ClanCastleOrderByWithRelationInput
     build?: DinozBuildOrderByWithRelationInput
     catches?: DinozCatchOrderByRelationAggregateInput
+    dungeonRuns?: DungeonRunOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
     Moderation?: ModerationOrderByRelationAggregateInput
     offers?: OfferOrderByRelationAggregateInput
@@ -87192,6 +87276,7 @@ export namespace Prisma {
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
     build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
     offers?: OfferListRelationFilter
@@ -91584,8 +91669,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
+    leaderId?: IntNullableFilter<"DungeonRun"> | number | null
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DungeonRunOrderByWithRelationInput = {
@@ -91602,8 +91689,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
+    leaderId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
     dungeon?: DungeonOrderByWithRelationInput
+    leader?: DinozOrderByWithRelationInput
   }
 
   export type DungeonRunWhereUniqueInput = Prisma.AtLeast<{
@@ -91624,8 +91713,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
+    leaderId?: IntNullableFilter<"DungeonRun"> | number | null
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id" | "playerId_dungeonId">
 
   export type DungeonRunOrderByWithAggregationInput = {
@@ -91642,6 +91733,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
+    leaderId?: SortOrderInput | SortOrder
     _count?: DungeonRunCountOrderByAggregateInput
     _avg?: DungeonRunAvgOrderByAggregateInput
     _max?: DungeonRunMaxOrderByAggregateInput
@@ -91666,6 +91758,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
     playerId?: UuidWithAggregatesFilter<"DungeonRun"> | string
     dungeonId?: UuidWithAggregatesFilter<"DungeonRun"> | string
+    leaderId?: IntNullableWithAggregatesFilter<"DungeonRun"> | number | null
   }
 
   export type DungeonWhereInput = {
@@ -91804,6 +91897,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -91857,6 +91951,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -91903,6 +91998,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -91956,6 +92052,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -96228,6 +96325,7 @@ export namespace Prisma {
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunsInput
   }
 
   export type DungeonRunUncheckedCreateInput = {
@@ -96244,6 +96342,7 @@ export namespace Prisma {
     createdAt?: Date | string
     playerId: string
     dungeonId: string
+    leaderId?: number | null
   }
 
   export type DungeonRunUpdateInput = {
@@ -96260,6 +96359,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunsNestedInput
   }
 
   export type DungeonRunUncheckedUpdateInput = {
@@ -96276,6 +96376,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DungeonRunCreateManyInput = {
@@ -96292,6 +96393,7 @@ export namespace Prisma {
     createdAt?: Date | string
     playerId: string
     dungeonId: string
+    leaderId?: number | null
   }
 
   export type DungeonRunUpdateManyMutationInput = {
@@ -96322,6 +96424,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DungeonCreateInput = {
@@ -96558,6 +96661,12 @@ export namespace Prisma {
     none?: DinozCatchWhereInput
   }
 
+  export type DungeonRunListRelationFilter = {
+    every?: DungeonRunWhereInput
+    some?: DungeonRunWhereInput
+    none?: DungeonRunWhereInput
+  }
+
   export type LogListRelationFilter = {
     every?: LogWhereInput
     some?: LogWhereInput
@@ -96663,6 +96772,10 @@ export namespace Prisma {
   }
 
   export type DinozCatchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DungeonRunOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -97849,12 +97962,6 @@ export namespace Prisma {
     none?: DinozBuildWhereInput
   }
 
-  export type DungeonRunListRelationFilter = {
-    every?: DungeonRunWhereInput
-    some?: DungeonRunWhereInput
-    none?: DungeonRunWhereInput
-  }
-
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -97936,10 +98043,6 @@ export namespace Prisma {
   }
 
   export type DinozBuildOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type DungeonRunOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -100404,12 +100507,14 @@ export namespace Prisma {
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
+    leaderId?: SortOrder
   }
 
   export type DungeonRunAvgOrderByAggregateInput = {
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
+    leaderId?: SortOrder
   }
 
   export type DungeonRunMaxOrderByAggregateInput = {
@@ -100426,6 +100531,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
+    leaderId?: SortOrder
   }
 
   export type DungeonRunMinOrderByAggregateInput = {
@@ -100442,12 +100548,14 @@ export namespace Prisma {
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
+    leaderId?: SortOrder
   }
 
   export type DungeonRunSumOrderByAggregateInput = {
     posX?: SortOrder
     posY?: SortOrder
     posL?: SortOrder
+    leaderId?: SortOrder
   }
 
   export type BytesFilter<$PrismaModel = never> = {
@@ -100597,6 +100705,13 @@ export namespace Prisma {
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
   }
 
+  export type DungeonRunCreateNestedManyWithoutLeaderInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput> | DungeonRunCreateWithoutLeaderInput[] | DungeonRunUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput | DungeonRunCreateOrConnectWithoutLeaderInput[]
+    createMany?: DungeonRunCreateManyLeaderInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
   export type LogCreateNestedManyWithoutDinozInput = {
     create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
@@ -100724,6 +100839,13 @@ export namespace Prisma {
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
     createMany?: DinozCatchCreateManyDinozInputEnvelope
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+  }
+
+  export type DungeonRunUncheckedCreateNestedManyWithoutLeaderInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput> | DungeonRunCreateWithoutLeaderInput[] | DungeonRunUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput | DungeonRunCreateOrConnectWithoutLeaderInput[]
+    createMany?: DungeonRunCreateManyLeaderInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
   }
 
   export type LogUncheckedCreateNestedManyWithoutDinozInput = {
@@ -100886,6 +101008,20 @@ export namespace Prisma {
     update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
+  export type DungeonRunUpdateManyWithoutLeaderNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput> | DungeonRunCreateWithoutLeaderInput[] | DungeonRunUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput | DungeonRunCreateOrConnectWithoutLeaderInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutLeaderInput | DungeonRunUpsertWithWhereUniqueWithoutLeaderInput[]
+    createMany?: DungeonRunCreateManyLeaderInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutLeaderInput | DungeonRunUpdateWithWhereUniqueWithoutLeaderInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutLeaderInput | DungeonRunUpdateManyWithWhereWithoutLeaderInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
   export type LogUpdateManyWithoutDinozNestedInput = {
@@ -101141,6 +101277,20 @@ export namespace Prisma {
     update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput> | DungeonRunCreateWithoutLeaderInput[] | DungeonRunUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput | DungeonRunCreateOrConnectWithoutLeaderInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutLeaderInput | DungeonRunUpsertWithWhereUniqueWithoutLeaderInput[]
+    createMany?: DungeonRunCreateManyLeaderInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutLeaderInput | DungeonRunUpdateWithWhereUniqueWithoutLeaderInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutLeaderInput | DungeonRunUpdateManyWithWhereWithoutLeaderInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
   export type LogUncheckedUpdateManyWithoutDinozNestedInput = {
@@ -106449,6 +106599,12 @@ export namespace Prisma {
     connect?: DungeonWhereUniqueInput
   }
 
+  export type DinozCreateNestedOneWithoutDungeonRunsInput = {
+    create?: XOR<DinozCreateWithoutDungeonRunsInput, DinozUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDungeonRunsInput
+    connect?: DinozWhereUniqueInput
+  }
+
   export type PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput = {
     create?: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutDungeonRunsInput
@@ -106463,6 +106619,16 @@ export namespace Prisma {
     upsert?: DungeonUpsertWithoutDungeonRunsInput
     connect?: DungeonWhereUniqueInput
     update?: XOR<XOR<DungeonUpdateToOneWithWhereWithoutDungeonRunsInput, DungeonUpdateWithoutDungeonRunsInput>, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DinozUpdateOneWithoutDungeonRunsNestedInput = {
+    create?: XOR<DinozCreateWithoutDungeonRunsInput, DinozUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDungeonRunsInput
+    upsert?: DinozUpsertWithoutDungeonRunsInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutDungeonRunsInput, DinozUpdateWithoutDungeonRunsInput>, DinozUncheckedUpdateWithoutDungeonRunsInput>
   }
 
   export type DungeonRunCreateNestedManyWithoutDungeonInput = {
@@ -107163,6 +107329,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107214,6 +107381,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -107357,6 +107525,48 @@ export namespace Prisma {
 
   export type DinozCatchCreateManyDinozInputEnvelope = {
     data: DinozCatchCreateManyDinozInput | DinozCatchCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DungeonRunCreateWithoutLeaderInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutLeaderInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    createdAt?: Date | string
+    playerId: string
+    dungeonId: string
+  }
+
+  export type DungeonRunCreateOrConnectWithoutLeaderInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+  }
+
+  export type DungeonRunCreateManyLeaderInputEnvelope = {
+    data: DungeonRunCreateManyLeaderInput | DungeonRunCreateManyLeaderInput[]
     skipDuplicates?: boolean
   }
 
@@ -107673,6 +107883,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107725,6 +107936,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -107775,6 +107987,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107826,6 +108039,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -108161,6 +108375,42 @@ export namespace Prisma {
     monsterId?: StringFilter<"DinozCatch"> | string
   }
 
+  export type DungeonRunUpsertWithWhereUniqueWithoutLeaderInput = {
+    where: DungeonRunWhereUniqueInput
+    update: XOR<DungeonRunUpdateWithoutLeaderInput, DungeonRunUncheckedUpdateWithoutLeaderInput>
+    create: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+  }
+
+  export type DungeonRunUpdateWithWhereUniqueWithoutLeaderInput = {
+    where: DungeonRunWhereUniqueInput
+    data: XOR<DungeonRunUpdateWithoutLeaderInput, DungeonRunUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type DungeonRunUpdateManyWithWhereWithoutLeaderInput = {
+    where: DungeonRunScalarWhereInput
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutLeaderInput>
+  }
+
+  export type DungeonRunScalarWhereInput = {
+    AND?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    OR?: DungeonRunScalarWhereInput[]
+    NOT?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    id?: StringFilter<"DungeonRun"> | string
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    defeated?: StringFilter<"DungeonRun"> | string
+    keys?: StringFilter<"DungeonRun"> | string
+    opened?: StringFilter<"DungeonRun"> | string
+    scenarios?: StringFilter<"DungeonRun"> | string
+    gold?: StringFilter<"DungeonRun"> | string
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    leaderId?: IntNullableFilter<"DungeonRun"> | number | null
+  }
+
   export type LogUpsertWithWhereUniqueWithoutDinozInput = {
     where: LogWhereUniqueInput
     update: XOR<LogUpdateWithoutDinozInput, LogUncheckedUpdateWithoutDinozInput>
@@ -108494,6 +108744,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -108546,6 +108797,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -108870,6 +109122,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -108922,6 +109175,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -109067,6 +109321,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -109119,6 +109374,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -109250,6 +109506,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -109302,6 +109559,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -109445,6 +109703,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -109497,6 +109756,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -109636,6 +109896,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -109688,6 +109949,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -109749,6 +110011,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -109801,6 +110064,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -109846,6 +110110,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -109898,6 +110163,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -110023,6 +110289,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -110075,6 +110342,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -110190,6 +110458,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -110242,6 +110511,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -110367,6 +110637,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -110419,6 +110690,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -110534,6 +110806,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -110586,6 +110859,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -110711,6 +110985,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -110763,6 +111038,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -111024,6 +111300,7 @@ export namespace Prisma {
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -111076,6 +111353,7 @@ export namespace Prisma {
     seed?: string
     playerId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -112155,6 +112433,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -112207,6 +112486,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -112268,6 +112548,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -112320,6 +112601,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -112896,6 +113178,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -112947,6 +113230,7 @@ export namespace Prisma {
     seed?: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -113554,6 +113838,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunsInput
   }
 
   export type DungeonRunUncheckedCreateWithoutPlayerInput = {
@@ -113569,6 +113854,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     dungeonId: string
+    leaderId?: number | null
   }
 
   export type DungeonRunCreateOrConnectWithoutPlayerInput = {
@@ -114606,25 +114892,6 @@ export namespace Prisma {
     data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutPlayerInput>
   }
 
-  export type DungeonRunScalarWhereInput = {
-    AND?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
-    OR?: DungeonRunScalarWhereInput[]
-    NOT?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
-    id?: StringFilter<"DungeonRun"> | string
-    posX?: IntFilter<"DungeonRun"> | number
-    posY?: IntFilter<"DungeonRun"> | number
-    posL?: IntFilter<"DungeonRun"> | number
-    revealed?: StringFilter<"DungeonRun"> | string
-    defeated?: StringFilter<"DungeonRun"> | string
-    keys?: StringFilter<"DungeonRun"> | string
-    opened?: StringFilter<"DungeonRun"> | string
-    scenarios?: StringFilter<"DungeonRun"> | string
-    gold?: StringFilter<"DungeonRun"> | string
-    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
-    playerId?: UuidFilter<"DungeonRun"> | string
-    dungeonId?: UuidFilter<"DungeonRun"> | string
-  }
-
   export type PlayerCreateWithoutIpsInput = {
     customText?: string | null
     name: string
@@ -115477,6 +115744,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -115529,6 +115797,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -115625,6 +115894,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -115677,6 +115947,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -115751,6 +116022,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -115803,6 +116075,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -115899,6 +116172,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -115951,6 +116225,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -118884,6 +119159,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -118936,6 +119212,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -119190,6 +119467,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -119242,6 +119520,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -119483,6 +119762,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -119535,6 +119815,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -119743,6 +120024,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -119795,6 +120077,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -119992,6 +120275,7 @@ export namespace Prisma {
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -120044,6 +120328,7 @@ export namespace Prisma {
     seed?: string
     playerId: string
     buildId?: string | null
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -120105,6 +120390,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -120157,6 +120443,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -120503,6 +120790,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -120555,6 +120843,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -120763,6 +121052,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -120815,6 +121105,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -122176,6 +122467,7 @@ export namespace Prisma {
     seed?: string
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -122228,6 +122520,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -124888,6 +125181,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -124940,6 +125234,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -125490,6 +125785,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -125542,6 +125838,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -129917,6 +130214,7 @@ export namespace Prisma {
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -129969,6 +130267,7 @@ export namespace Prisma {
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -131560,6 +131859,110 @@ export namespace Prisma {
     create: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
   }
 
+  export type DinozCreateWithoutDungeonRunsInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    castle?: ClanCastleCreateNestedOneWithoutDefenderInput
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutDungeonRunsInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    castleId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    playerId: string
+    buildId?: string | null
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutDungeonRunsInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutDungeonRunsInput, DinozUncheckedCreateWithoutDungeonRunsInput>
+  }
+
   export type PlayerUpsertWithoutDungeonRunsInput = {
     update: XOR<PlayerUpdateWithoutDungeonRunsInput, PlayerUncheckedUpdateWithoutDungeonRunsInput>
     create: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
@@ -131746,6 +132149,116 @@ export namespace Prisma {
     scenarios?: StringFieldUpdateOperationsInput | string
   }
 
+  export type DinozUpsertWithoutDungeonRunsInput = {
+    update: XOR<DinozUpdateWithoutDungeonRunsInput, DinozUncheckedUpdateWithoutDungeonRunsInput>
+    create: XOR<DinozCreateWithoutDungeonRunsInput, DinozUncheckedCreateWithoutDungeonRunsInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutDungeonRunsInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutDungeonRunsInput, DinozUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DinozUpdateWithoutDungeonRunsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutDungeonRunsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    castleId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
   export type DungeonRunCreateWithoutDungeonInput = {
     id?: string
     posX: number
@@ -131759,6 +132272,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunsInput
   }
 
   export type DungeonRunUncheckedCreateWithoutDungeonInput = {
@@ -131774,6 +132288,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     playerId: string
+    leaderId?: number | null
   }
 
   export type DungeonRunCreateOrConnectWithoutDungeonInput = {
@@ -131864,6 +132379,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -131915,6 +132431,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -131969,6 +132486,22 @@ export namespace Prisma {
     id?: number
     hp: number
     monsterId: string
+  }
+
+  export type DungeonRunCreateManyLeaderInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    createdAt?: Date | string
+    playerId: string
+    dungeonId: string
   }
 
   export type LogCreateManyDinozInput = {
@@ -132117,6 +132650,54 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DungeonRunUpdateWithoutLeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutLeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutLeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
   }
 
   export type LogUpdateWithoutDinozInput = {
@@ -132273,6 +132854,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -132324,6 +132906,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -132649,6 +133232,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -132701,6 +133285,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -133182,6 +133767,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     dungeonId: string
+    leaderId?: number | null
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -133595,6 +134181,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -133646,6 +134233,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -134192,6 +134780,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunsNestedInput
   }
 
   export type DungeonRunUncheckedUpdateWithoutPlayerInput = {
@@ -134207,6 +134796,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DungeonRunUncheckedUpdateManyWithoutPlayerInput = {
@@ -134222,6 +134812,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DojoTeamCreateManyDojoInput = {
@@ -135045,6 +135636,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -135097,6 +135689,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -135534,6 +136127,7 @@ export namespace Prisma {
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -135586,6 +136180,7 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -136242,6 +136837,7 @@ export namespace Prisma {
     gold?: string
     createdAt?: Date | string
     playerId: string
+    leaderId?: number | null
   }
 
   export type DungeonRunUpdateWithoutDungeonInput = {
@@ -136257,6 +136853,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunsNestedInput
   }
 
   export type DungeonRunUncheckedUpdateWithoutDungeonInput = {
@@ -136272,6 +136869,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DungeonRunUncheckedUpdateManyWithoutDungeonInput = {
@@ -136287,6 +136885,7 @@ export namespace Prisma {
     gold?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

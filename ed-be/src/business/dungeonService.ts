@@ -145,6 +145,21 @@ function scenariosFor(dungeon: { name: string; scenarios: string }): { list: Dun
 	return { list: Object.values(DungeonList).find(x => x.name === dungeon.name)?.scenarios ?? [], i18n: true };
 }
 
+/**
+ * A dinoz that died (or was pulled away, e.g. by an admin action) mid-run leaves
+ * the party for good. Dead dinoz also get their unavailableReason cleared —
+ * dying is how they leave the dungeon. No roster to update: the leader's live
+ * followers (Dinoz.leaderId) ARE the rest of the team.
+ */
+async function dropFromTeam(dinozIds: number[], clearUnavailable: boolean): Promise<void> {
+	for (const id of dinozIds) {
+		await updateDinoz(
+			id,
+			clearUnavailable ? { leader: { disconnect: true }, unavailableReason: null } : { leader: { disconnect: true } }
+		);
+	}
+}
+
 /** Flag the team on cell (l,x,y) beaten for this run; its icon stops appearing in reveals. */
 export async function markMonsterDefeated(
 	run: { id: string; defeated: string },
@@ -181,10 +196,6 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
-	const team = [dinoz.id, ...dinoz.followers.map(d => d.id)];
-
-	await updateMultipleDinoz(team, { unavailableReason: UnavailableReason.dungeon });
-
 	const codec = new DungeonCodec();
 	codec.decode(
 		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
@@ -195,6 +206,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// everything already revealed instead of violating the unique constraint.
 	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
+		// Only the dinoz that opened this run may resume it — no swapping leaders mid-run.
+		if (existing.leaderId !== dinoz.id) {
+			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
+		}
 		return {
 			runId: existing.id,
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
@@ -222,6 +237,16 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		};
 	}
 
+	const team = [dinoz, ...dinoz.followers];
+	if (team.some(t => t.unavailableReason != null)) {
+		// A team member is already busy elsewhere (another dungeon run included) — refuse entry.
+		throw new ExpectedError(translate('dungeon.teamBusy', authed));
+	}
+	await updateMultipleDinoz(
+		team.map(t => t.id),
+		{ unavailableReason: UnavailableReason.dungeon }
+	);
+
 	const revealed = new Set<string>();
 	const reveal = newReveals(revealAround(d, d.start.l, d.start.x, d.start.y), revealed);
 
@@ -229,7 +254,8 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		{ posX: d.start.x, posY: d.start.y, posL: d.start.l },
 		JSON.stringify([...revealed]),
 		authed.id,
-		dungeon.id
+		dungeon.id,
+		dinoz.id
 	);
 
 	return {
@@ -268,6 +294,9 @@ export async function exitRun(req: Request) {
 	if (!run) {
 		throw new ExpectedError(translate('dungeon.noRun', authed));
 	}
+	if (run.leaderId !== dinoz.id) {
+		throw new ExpectedError(translate('dungeon.wrongTeam', authed));
+	}
 
 	const codec = new DungeonCodec();
 	codec.decode(
@@ -281,8 +310,9 @@ export async function exitRun(req: Request) {
 		throw new ExpectedError(translate('dungeon.notAtExit', authed));
 	}
 
-	const team = [dinoz.id, ...dinoz.followers.map(d => d.id)];
-
+	// A dead/pulled-away follower already left (dropFromTeam, in move()) and no
+	// longer shows up here — the leader's live followers are the whole team.
+	const team = [dinoz.id, ...dinoz.followers.map(f => f.id)];
 	await updateMultipleDinoz(team, { unavailableReason: null });
 }
 
@@ -406,15 +436,22 @@ export async function move(req: Request): Promise<MoveResult> {
 		}
 		let team = player.dinoz;
 
-		// Go through followers and make those that are unavailable leave the group.
-		const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== UnavailableReason.dungeon);
-
-		if (unavailableFollowers.length > 0) {
-			for (const d of unavailableFollowers) {
-				await updateDinoz(d.id, { leader: { disconnect: true } });
-			}
-			team = team.filter(d => d.life > 0 && d.unavailableReason === null);
-		}
+		// A dinoz already dead (from an earlier fight this run) or pulled away by
+		// something else leaves the party — and, if dead, the dungeon itself —
+		// before it can be dragged into another fight.
+		const dead = team.filter(d => d.life <= 0);
+		const pulledAway = team.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
+		if (dead.length > 0)
+			await dropFromTeam(
+				dead.map(d => d.id),
+				true
+			);
+		if (pulledAway.length > 0)
+			await dropFromTeam(
+				pulledAway.map(d => d.id),
+				false
+			);
+		team = team.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
 
 		if (dinozData.concentration) {
 			throw new ExpectedError(translate(`concentration`, authed));
@@ -435,6 +472,20 @@ export async function move(req: Request): Promise<MoveResult> {
 
 		const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsters);
 		result = await rewardFightVsMonsters(team, monsters, fightResult, PlaceEnum.CIMETIERE, player);
+
+		// Same test rewardFightVsMonsters uses to log a Death: hpLost against the
+		// life it fetched the team with, before its own decrement lands.
+		const diedInFight = team.filter(d => {
+			const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
+			return attacker != null && attacker.hpLost >= d.life;
+		});
+		if (diedInFight.length > 0) {
+			await dropFromTeam(
+				diedInFight.map(d => d.id),
+				true
+			);
+			team = team.filter(d => !diedInFight.some(dead => dead.id === d.id));
+		}
 
 		if (result.result) {
 			await markMonsterDefeated(run, next.l, next.x, next.y);

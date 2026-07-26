@@ -89,20 +89,24 @@ export const discoverBox = (
 		// If the box was not empty, get the entry from the grid
 		if (boxValue !== 0) {
 			let value = gridInformation.items[boxValue];
-			if (!value) throw new Error(`Item entry ID ${boxValue} not found in gridInformation ${gridInformation.type} items`);
+			if (!value)
+				throw new Error(`Item entry ID ${boxValue} not found in gridInformation ${gridInformation.type} items`);
 
 			// Select at random from the possibilities of that entry (don't roll the random if only one entry)
-			let ingredientOrItemId = value.ingredientOrItemId[value.ingredientOrItemId.length > 1 ? Math.floor(Math.random() * value.ingredientOrItemId.length) : 0];
+			let ingredientOrItemId =
+				value.ingredientOrItemId[
+					value.ingredientOrItemId.length > 1 ? Math.floor(Math.random() * value.ingredientOrItemId.length) : 0
+				];
 
 			if (checkCondition(value.condition, player, player.dinoz[0].id))
-			if (value.type === 'item') {
-				const item = itemList[ingredientOrItemId as Item];
-				rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
-			} else {
-				const ingredient = ingredientList[ingredientOrItemId as Ingredient];
-				ingredient.name = ingredient.name.toLowerCase();
-				rewards.ingredients.push(ingredient);
-			}
+				if (value.type === 'item') {
+					const item = itemList[ingredientOrItemId as Item];
+					rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
+				} else {
+					const ingredient = ingredientList[ingredientOrItemId as Ingredient];
+					ingredient.name = ingredient.name.toLowerCase();
+					rewards.ingredients.push(ingredient);
+				}
 		}
 	}
 
