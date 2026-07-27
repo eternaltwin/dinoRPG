@@ -287,6 +287,7 @@ model Player {
   dailyGridRewards       Int                @default(0)
   skipFight              Boolean            @default(false)
   skipLevel              Boolean            @default(false)
+  autoReequipItems       Boolean            @default(false)
   shareArchivedData      Boolean            @default(false)
   archivedSiteId         Int?
   displayedNotifications Int                @default(3)
