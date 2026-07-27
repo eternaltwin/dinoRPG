@@ -301,13 +301,17 @@ export async function getAvailableActions(
 			}
 			// Dungeon ongoing
 			if (dinoz.unavailableReason === UnavailableReason.dungeon) {
-				return [
-					{
-						name: actionList[Action.DUNGEON_ENTER].name,
-						imgName: actionList[Action.DUNGEON_ENTER].imgName,
-						prop: dungeon.name
-					}
-				];
+				if (!dinoz.leaderId) {
+					return [
+						{
+							name: actionList[Action.DUNGEON_ENTER].name,
+							imgName: actionList[Action.DUNGEON_ENTER].imgName,
+							prop: dungeon.name
+						}
+					];
+				} else {
+					return [];
+				}
 			}
 		}
 	}
@@ -1442,8 +1446,8 @@ export async function useIrma(req: Request) {
 		throw new ExpectedError('No dinoz found');
 	}
 
-	console.log(dinoz);
-	if (dinoz.unavailableReason) {
+	if (dinoz.unavailableReason && dinoz.unavailableReason !== UnavailableReason.dungeon) {
+		console.log(dinoz.unavailableReason);
 		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 

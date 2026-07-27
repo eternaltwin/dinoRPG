@@ -17,6 +17,8 @@ import type { DungeonDoor, DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
 import {
 	createRun,
+	dinozEnterRun,
+	dinozExitRun,
 	findRun,
 	getDungeonById,
 	getDungeonByName,
@@ -196,6 +198,17 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
+	const team = [dinoz, ...dinoz.followers];
+	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
+		// A team member is already busy elsewhere, refuse entry.
+		throw new ExpectedError(translate('dungeon.teamBusy', authed));
+	}
+
+	await updateMultipleDinoz(
+		team.map(t => t.id),
+		{ unavailableReason: UnavailableReason.dungeon }
+	);
+
 	const codec = new DungeonCodec();
 	codec.decode(
 		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
@@ -206,10 +219,11 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// everything already revealed instead of violating the unique constraint.
 	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
-		// Only the dinoz that opened this run may resume it — no swapping leaders mid-run.
-		if (existing.leaderId !== dinoz.id) {
+		// Only one team at a time in the dungeon
+		if (existing.leaderId) {
 			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 		}
+		await dinozEnterRun(existing.id, dinoz.id);
 		return {
 			runId: existing.id,
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
@@ -236,16 +250,6 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			)
 		};
 	}
-
-	const team = [dinoz, ...dinoz.followers];
-	if (team.some(t => t.unavailableReason != null)) {
-		// A team member is already busy elsewhere (another dungeon run included) — refuse entry.
-		throw new ExpectedError(translate('dungeon.teamBusy', authed));
-	}
-	await updateMultipleDinoz(
-		team.map(t => t.id),
-		{ unavailableReason: UnavailableReason.dungeon }
-	);
 
 	const revealed = new Set<string>();
 	const reveal = newReveals(revealAround(d, d.start.l, d.start.x, d.start.y), revealed);
@@ -314,6 +318,7 @@ export async function exitRun(req: Request) {
 	// longer shows up here — the leader's live followers are the whole team.
 	const team = [dinoz.id, ...dinoz.followers.map(f => f.id)];
 	await updateMultipleDinoz(team, { unavailableReason: null });
+	await dinozExitRun(run.id, dinoz.id);
 }
 
 /** Stair lookup: is there a stair door at (l,x,y), and where does it lead? */

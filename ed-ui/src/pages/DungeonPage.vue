@@ -294,6 +294,7 @@ export default defineComponent({
 				run = await DungeonService.enterDungeon(dungeonId, currentDinoz.id);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
+				this.$router.go(-1);
 				return;
 			}
 
