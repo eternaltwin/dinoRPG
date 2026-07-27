@@ -65,6 +65,20 @@ export async function updateRun(
 	});
 }
 
+export async function dinozEnterRun(id: string, dinozId: number) {
+	return prisma.dungeonRun.update({
+		where: { id },
+		data: { leaderId: dinozId }
+	});
+}
+
+export async function dinozExitRun(id: string, dinozId: number) {
+	return prisma.dungeonRun.update({
+		where: { id },
+		data: { leaderId: null }
+	});
+}
+
 export async function updateRunDefeated(id: string, defeated: string) {
 	return prisma.dungeonRun.update({
 		where: { id },
