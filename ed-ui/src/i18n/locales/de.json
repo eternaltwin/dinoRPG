@@ -127,7 +127,7 @@
 		"clan_prospector_penalty": "Der Gutachter hat eure Burg in Trümmern vorgefunden – euer Ansehen ist auf {reputation} gefallen.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"autoReequipSuccess": "Automatisch aufgefüllt: {items}",
-		"autoReequipMissing": "Folgende Gegenstände konnten nicht aufgefüllt werden: {items}",
+		"autoReequipMissing": "Es fehlen zum Auffüllen folgende Gegenstände: {items}",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Dein Dinoz hat die Fähigkeit „{value}“ erlernt.",
