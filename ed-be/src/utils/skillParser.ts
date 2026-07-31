@@ -1,14 +1,12 @@
 import { SkillDetails, PassiveEffects, EffectDescriptor } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
-import { Dinoz, GameDinozUsage, Player } from '@drpg/prisma';
+import { Dinoz, Player } from '@drpg/prisma';
 import { Skill, uSkillsToPlayerFieldMap } from '@drpg/core/models/dinoz/SkillList';
-import { MathOperator } from '@drpg/core/models/enums/Parser';
 import { operatorProcess } from '@drpg/core/utils/helper';
 
 function applySkillToDinoz(
 	effects: PassiveEffects,
-	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
-	event?: GameDinozUsage
+	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>
 ) {
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {

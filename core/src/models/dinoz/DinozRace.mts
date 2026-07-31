@@ -5,8 +5,6 @@ import { Skill } from './SkillList.mjs';
 export interface DinozRace {
 	raceId: RaceEnum;
 	demon?: {
-		// Price in demon tickets
-		price: number;
 		// Condition to unlock demon variant
 		condition?: Condition;
 	};
@@ -20,7 +18,7 @@ export interface DinozRace {
 	// Chances are in x out of 20
 	// e.g. 5 means 5 chances of out 20 to get that element, i.e 25 %
 	upChance: UpChance;
-	// Price in regular tamer shop
+	// Price in regular tamer or demon shop
 	price: number;
 	swfLetter: string;
 	// Race specific skills

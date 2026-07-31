@@ -48,7 +48,16 @@ import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { generateDinozDisplay, getDinozUpChance, getLearnableSkills, getRandomUpElement, getUnlockableSkills, initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import {
+	checkMaxActiveDinoz,
+	generateDinozDisplay,
+	getDinozUpChance,
+	getLearnableSkills,
+	getRandomUpElement,
+	getUnlockableSkills,
+	initializeDinoz,
+	learnNextSphereSkill
+} from '../utils/dinoz.js';
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
@@ -256,21 +265,8 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	}
 	let race = item.effect.race;
 
-	//Check if player can hatch dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
-
-	const player = dinozActive[0].player;
-
-	if (!player) {
-		throw new ExpectedError(`Player missing`);
-	}
-
-	if (dinozActive.length > 0) {
-		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
-		if (dinozActive.length >= maxDinoz) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-	}
+	// Check if player can hatch dinoz
+	checkMaxActiveDinoz(authed);
 
 	let randomDisplay = '0';
 
@@ -593,7 +589,6 @@ export const resurrect = (
 		life: dinoz.life
 	};
 };
-
 
 export const useRice = async (
 	dinoz: Pick<Dinoz, 'id' | 'level' | 'raceId'> & {

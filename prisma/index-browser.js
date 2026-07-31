@@ -155,6 +155,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   remaining: 'remaining',
   FBTournamentStep: 'FBTournamentStep',
   unavailableReason: 'unavailableReason',
+  unavailableUntil: 'unavailableUntil',
   seed: 'seed',
   playerId: 'playerId',
   buildId: 'buildId'
@@ -360,6 +361,33 @@ exports.Prisma.PlayerDinozShopScalarFieldEnum = {
   raceId: 'raceId',
   display: 'display',
   playerId: 'playerId'
+};
+
+exports.Prisma.PlayerDemonShopScalarFieldEnum = {
+  id: 'id',
+  raceId: 'raceId',
+  display: 'display',
+  nextUpElementId: 'nextUpElementId',
+  nextUpAltElementId: 'nextUpAltElementId',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  seed: 'seed',
+  playerId: 'playerId'
+};
+
+exports.Prisma.DemonSkillScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DemonSkillUnlockableScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
 };
 
 exports.Prisma.PlayerGatherScalarFieldEnum = {
@@ -766,7 +794,8 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  unsacrificing: 'unsacrificing'
 };
 
 exports.NewsType = exports.$Enums.NewsType = {
@@ -955,6 +984,9 @@ exports.Prisma.ModelName = {
   DojoChallengeHistory: 'DojoChallengeHistory',
   UsernameHistory: 'UsernameHistory',
   PlayerDinozShop: 'PlayerDinozShop',
+  PlayerDemonShop: 'PlayerDemonShop',
+  DemonSkill: 'DemonSkill',
+  DemonSkillUnlockable: 'DemonSkillUnlockable',
   PlayerGather: 'PlayerGather',
   PlayerIngredient: 'PlayerIngredient',
   PlayerItem: 'PlayerItem',

@@ -30,7 +30,6 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	[RaceEnum.MOUEFFE_DEMON]: {
 		raceId: RaceEnum.MOUEFFE_DEMON,
 		demon: {
-			price: 600,
 			condition: {
 				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
 			}
@@ -111,9 +110,7 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	},
 	[RaceEnum.WINKS_DEMON]: {
 		raceId: RaceEnum.WINKS_DEMON,
-		demon: {
-			price: 700
-		},
+		demon: {},
 		name: 'winks_demon',
 		nbrFire: 0,
 		nbrWood: 0,
@@ -152,10 +149,9 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	[RaceEnum.PLANAILLE_DEMON]: {
 		raceId: RaceEnum.PLANAILLE_DEMON,
 		demon: {
-			price: 700,
 			condition: {
 				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
-			},
+			}
 		},
 		name: 'planaille_demon',
 		nbrFire: 0,
@@ -303,9 +299,7 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	},
 	[RaceEnum.GORILLOZ_DEMON]: {
 		raceId: RaceEnum.GORILLOZ_DEMON,
-		demon: {
-			price: 700,
-		},
+		demon: {},
 		name: 'gorilloz_demon',
 		nbrFire: 0,
 		nbrWood: 2,
@@ -343,9 +337,7 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	},
 	[RaceEnum.WANWAN_DEMON]: {
 		raceId: RaceEnum.WANWAN_DEMON,
-		demon: {
-			price: 900,
-		},
+		demon: {},
 		name: 'wanwan_demon',
 		nbrFire: 0,
 		nbrWood: 1,
@@ -423,7 +415,6 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 	[RaceEnum.KABUKI_DEMON]: {
 		raceId: RaceEnum.KABUKI_DEMON,
 		demon: {
-			price: 800,
 			condition: {
 				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
 			}

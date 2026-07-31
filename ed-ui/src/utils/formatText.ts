@@ -45,6 +45,8 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_xp')}" alt="xp">`;
 			case 'irma':
 				return `<img class="text-icon" src="${mixin.methods.getImgURL('item', 'item_irma')}" alt="irma">`;
+			case 'demon_tk':
+				return `<img class="text-icon" src="${mixin.methods.getImgURL('icons', 'small_demon_tk')}" alt="demon ticket">`;
 			default: {
 				if (key.startsWith('item_')) {
 					const itemId = +key.substring(5) as Item;
@@ -111,7 +113,8 @@ export function formatText(text: string): string {
 				'hp_castle',
 				'pv',
 				'xp',
-				'irma'
+				'irma',
+				'demon_tk'
 			];
 			if (validKeys.includes(iconKey) || iconKey.startsWith('item_') || iconKey.startsWith('status_')) {
 				return helpers.computeImageHtml(iconKey);

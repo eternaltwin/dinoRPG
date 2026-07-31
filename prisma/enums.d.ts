@@ -10,7 +10,8 @@ export const UnavailableReason: {
   readonly resting: 'resting';
   readonly unfreezing: 'unfreezing';
   readonly defending: 'defending';
-  readonly restingAttack: 'restingAttack'
+  readonly restingAttack: 'restingAttack';
+  readonly unsacrificing: 'unsacrificing'
 };
 
 export namespace UnavailableReason {
@@ -21,7 +22,8 @@ export namespace UnavailableReason {
   export type resting = 'resting';
   export type unfreezing = 'unfreezing';
   export type defending = 'defending';
-  export type restingAttack = 'restingAttack'
+  export type restingAttack = 'restingAttack';
+  export type unsacrificing = 'unsacrificing'
 }
 
 export type UnavailableReason = typeof UnavailableReason[keyof typeof UnavailableReason];

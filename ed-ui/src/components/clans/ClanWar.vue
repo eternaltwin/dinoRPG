@@ -204,18 +204,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZTable from '../common/DZTable.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
 import { ClanService } from '../../services';
 import { errorHandler, utils } from '../../utils';
 import { clanStore } from '../../store/clanStore';
-import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Fight } from '@eternaltwin/dinorpg_animations';
 import { DinoAction, EntranceEffect, transpiled } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
 import { playerStore } from '../../store';
 import { AttackStatus, Castle, Defender, treasureIngredient } from '@drpg/core/models/clan/clan';
-import DZTable from '../common/DZTable.vue';
-import DinozMini from '../dinoz/DinozMini.vue';
 import { VueDraggable } from 'vue-draggable-plus';
 import {
 	PROSPECTOR_EVENING_WINDOW,
