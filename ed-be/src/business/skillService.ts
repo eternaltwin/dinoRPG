@@ -223,17 +223,16 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		// First filter : get skills that required skill send in body to be learn
 		// Second filter : Keep only skills that dinoz can learn (dinoz have every unlock condition)
 		// Third filter : Remove race skills (ex : shell from Winks)
-		const newUnlockableSkills = getNewUnlockableSkills(dinozSkills, skill.id)
-			.map(skillId => {
-				if (event) {
-					return {
-						skillId,
-						gameDinozId: dinozId
-					};
-				} else {
-					return { skillId, dinozId };
-				}
-			});
+		const newUnlockableSkills = getNewUnlockableSkills(dinozSkills, skill.id).map(skillId => {
+			if (event) {
+				return {
+					skillId,
+					gameDinozId: dinozId
+				};
+			} else {
+				return { skillId, dinozId };
+			}
+		});
 
 		// Add skill to dinoz in order to have same data than database.
 		dinozSkills.skills.push({

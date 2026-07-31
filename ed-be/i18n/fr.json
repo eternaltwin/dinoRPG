@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 	"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
-	"tooMuchDinoz": "Vous avez déjà atteint le maximum de Dinoz actifs.",
 	"tooMuchIngredient": "Vous avez un ingrédient risquant de dépasser la limite maximum.",
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
 	"equipedItems": "Vous ne pouvez pas vendre un Dinoz avec des objets équipés.",
@@ -69,8 +68,16 @@
 		"outdatedDefense": "Défense obsolète"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+		"dinozNotAtCemetary": "Votre Dinoz ne se trouve pas au cimetière.",
+		"dinozAlreadySacrificed": "Votre Dinoz est déjà sacrifié.",
+		"dinozAlreadyBeingResurrected": "Votre Dinoz est déjà en train d'être ressuscité.",
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {

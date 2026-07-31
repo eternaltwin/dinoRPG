@@ -258,7 +258,8 @@
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
 			"war_attack": "Attaquer le château adverse.",
-			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !"
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -314,7 +315,8 @@
 		"close": "Fermer",
 		"search": "Rechercher",
 		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"noResults": "Aucun résultat",
+		"details": "Détails"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -1802,7 +1804,18 @@
 	},
 	"shop": {
 		"demon": {
-			"name": "Boutique Démoniaque"
+			"name": "Boutique Démoniaque",
+			"help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** des Dinoz en échanges de **Tickets Démons** :demon_tk:, achetez des Dinoz démons grâce à ces tickets ou ressusciter des Dinoz sacrifiés !",
+			"sacrifice_help": "Vous pouvez sacrifier vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié ne compte plus pour le compte.",
+			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
+			"unsacrifice_help": "Vous pouvez racheter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"level": "Niv. {level}",
+			"sacrifice": "Sacrifier",
+			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrifice",
+			"buy_title": "Achat",
+			"unsacrifice_title": "Résurrection",
+			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures."
 		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
@@ -4639,7 +4652,8 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {

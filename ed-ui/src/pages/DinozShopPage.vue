@@ -61,26 +61,25 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
+import DZButton from '../components/common/DZButton.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import Elements from '../components/data/Elements.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DinozShopService, DinozService } from '../services/index.js';
-import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
+import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { playerStore, useDinozStore } from '../store/index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
 			playerStore: playerStore(),
-			utils: utils,
+			utils,
 			dinozList: [] as Array<DinozShopFicheLite>,
-			raceList: raceList,
+			raceList,
 			skillList
 		};
 	},
@@ -101,29 +100,28 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res) {
-				let dinozCreated: DinozFiche;
 				try {
-					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
+					const dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
 					await this.$refreshGold();
+
+					const dinozStore = useDinozStore().getDinozList;
+
+					dinozStore.push(dinozCreated);
+
+					// Update dinoz list
+					useDinozStore().setDinozList(dinozStore);
+
+					// Go to dinoz page
+					await this.$router.push({
+						name: 'DinozPage',
+						params: {
+							id: dinozCreated.id
+						}
+					});
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-
-				const dinozStore = useDinozStore().getDinozList;
-
-				dinozStore.push(dinozCreated);
-
-				// Update dinoz list
-				useDinozStore().setDinozList(dinozStore);
-
-				// Go to dinoz page
-				await this.$router.push({
-					name: 'DinozPage',
-					params: {
-						id: dinozCreated.id
-					}
-				});
 			}
 		}
 	},
@@ -177,16 +175,6 @@ export default defineComponent({
 	background-position: 2px 0px;
 	background-repeat: no-repeat;
 
-	.price {
-		position: absolute;
-		margin-left: 225px;
-	}
-
-	.swf {
-		position: absolute;
-		margin-top: -70px;
-	}
-
 	.infos {
 		margin-top: 5px;
 		left: -20px;
@@ -214,8 +202,6 @@ export default defineComponent({
 	}
 
 	.price {
-		//position: absolute;
-		//margin-left: 225px;
 		padding-left: 5px;
 		width: 90px;
 		height: 18px;
@@ -261,11 +247,16 @@ export default defineComponent({
 	font-size: 10pt;
 	background-color: #9a4029;
 	border-radius: 10px;
+	display: flex;
+	align-items: center;
 
 	.money1 {
 		color: #ffee92;
 		font-weight: bold;
 		font-size: 9pt;
+		gap: 4px;
+		display: flex;
+		align-items: center;
 	}
 }
 .dinoImg {

@@ -52,6 +52,7 @@ export const toDinozFiche = (
 			| 'name'
 			| 'display'
 			| 'unavailableReason'
+			| 'unavailableUntil'
 			| 'level'
 			| 'leaderId'
 			| 'life'
@@ -93,6 +94,7 @@ export const toDinozFiche = (
 		name: dinoz.name,
 		display: dinoz.display,
 		unavailableReason: dinoz.unavailableReason,
+		unavailableUntil: dinoz.unavailableUntil,
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,
@@ -505,7 +507,7 @@ export const getDemonShopPrice = (level: number) => {
 	// It is `1.10625 * (1 - 1.079^N) / (1 - 1.079)`
 	// It comes from the sum of N number for a geometric serie: Sn = a * (1 - r^n) / (1 - r)
 	const a = 1.10625;
-	const r = 1.079
+	const r = 1.079;
 
-	return Math.floor(a * (1 - Math.pow(r, level)) / (1 - r));
+	return Math.floor((a * (1 - Math.pow(r, level))) / (1 - r));
 };

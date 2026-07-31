@@ -2,7 +2,12 @@ import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
-import { buyDemonDinoz, getDinozFromDemonShop, resurectDinoz, sacrificeDinoz } from '../business/demonShopService.js';
+import {
+	buyDemonDinoz,
+	getDinozFromDemonShop,
+	unsacrificeDinoz,
+	sacrificeDinoz
+} from '../business/demonShopService.js';
 
 const routes: Router = Router();
 
@@ -31,8 +36,8 @@ routes.get(`${commonPath}/`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const listItems = await getDinozFromDemonShop(req);
-		res.status(200).send(listItems);
+		const shop = await getDinozFromDemonShop(req);
+		res.status(200).send(shop);
 	} catch (err) {
 		sendError(res, err);
 	}
@@ -55,25 +60,28 @@ routes.get(`${commonPath}/`, async (req: Request, res: Response) => {
  *       500:
  *         description: Error
  */
-routes.post(`${commonPath}/sacrifice/:dinozId`, [param('dinozId').exists().isInt()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.post(
+	`${commonPath}/sacrifice/:dinozId`,
+	[param('dinozId').exists().isInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const listItems = await sacrificeDinoz(req);
-		res.status(200).send(listItems);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const tickets = await sacrificeDinoz(req);
+			res.status(200).json(tickets);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
-
+);
 
 /**
  * @openapi
- * /api/v1/demon/resurect/:dinozId:
+ * /api/v1/demon/unsacrifice/:dinozId:
  *   post:
- *     summary: Resurect a Dinoz provided the player has enough tickets.
+ *     summary: Unsacrifice a Dinoz provided the player has enough tickets.
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -86,18 +94,22 @@ routes.post(`${commonPath}/sacrifice/:dinozId`, [param('dinozId').exists().isInt
  *       500:
  *         description: Error
  */
-routes.post(`${commonPath}/resurect/:dinozId`, [param('dinozId').exists().isInt()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.post(
+	`${commonPath}/unsacrifice/:dinozId`,
+	[param('dinozId').exists().isInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const listItems = await resurectDinoz(req);
-		res.status(200).send(listItems);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			await unsacrificeDinoz(req);
+			res.sendStatus(200);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 /**
  * @openapi
@@ -122,8 +134,8 @@ routes.post(`${commonPath}/buy/:id`, [param('id').exists().isInt()], async (req:
 	}
 
 	try {
-		const listItems = await buyDemonDinoz(req);
-		res.status(200).send(listItems);
+		const dinoz = await buyDemonDinoz(req);
+		res.status(200).send(dinoz);
 	} catch (err) {
 		sendError(res, err);
 	}
