@@ -14,7 +14,7 @@ const checkBans = () => {
 			for (const player of bannedPlayers) {
 				// This should not happen but Typescript is not happy.
 				if (!player.banCase) {
-					console.error(`Could not find ban case for ${player.name} (${player.id})`);
+					LOGGER.error(`Could not find ban case for ${player.name} (${player.id})`);
 					continue;
 				}
 
@@ -24,7 +24,7 @@ const checkBans = () => {
 				}
 
 				if (!player.banCase.banEndDate) {
-					console.error(`Banned case for ${player.name} (${player.id}) missing end date`);
+					LOGGER.error(`Banned case for ${player.name} (${player.id}) missing end date`);
 					continue;
 				}
 

@@ -1,4 +1,4 @@
-import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Prisma } from '@drpg/prisma';
+import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Player, Prisma } from '@drpg/prisma';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozRace, UpChance } from '@drpg/core/models/dinoz/DinozRace';
 import { GatherData } from '@drpg/core/models/gather/gatherData';
@@ -15,7 +15,12 @@ import { Auth } from '../dao/playerDao.js';
 import translate from './server/translate.js';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
-import { getRandomLetter } from './index.js';
+import weightedRandom from './fight/weightedRandom.js';
+import { applySkillToDinoz, fromBase62, getRandomLetter } from './index.js';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
+import { getActiveDinoz } from '../dao/dinozDao.js';
+import gameConfig from '../config/game.config.js';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
 	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
@@ -43,30 +48,31 @@ export const getLearnableSkills = (
 		learnableSkills = learnableSkills.filter(skill => skill.element.some(element => element === elementWanted));
 	}
 
-	return learnableSkills
-		// First filter : Keep all skills from same tree (Vanilla or Ether)
-		.filter(skill => skill.tree === treeType)
-		// Second filter : Keep all skills that are learnable or already learned
-		.filter(skill =>
-			skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
-		)
-		// Third filter : Remove all skills that dinoz already knows
-		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.id))
-		// Fourth filter : Remove all unlockables skills
-		.filter(skill => !dinoz.unlockableSkills.some(dinozSkill => dinozSkill.skillId === skill.id))
-		// Fifth filter : Remove all spherical skills (not learnable here)
-		.filter(skill => !skill.isSphereSkill)
-		// Sixth filtre : Remove race skills (ex : fly from Pteroz)
-		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
-		.map(skill => {
-			return {
-				skillId: skill.id,
-				type: skill.type,
-				element: skill.element
-			};
-		});
+	return (
+		learnableSkills
+			// First filter : Keep all skills from same tree (Vanilla or Ether)
+			.filter(skill => skill.tree === treeType)
+			// Second filter : Keep all skills that are learnable or already learned
+			.filter(skill =>
+				skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
+			)
+			// Third filter : Remove all skills that dinoz already knows
+			.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.id))
+			// Fourth filter : Remove all unlockables skills
+			.filter(skill => !dinoz.unlockableSkills.some(dinozSkill => dinozSkill.skillId === skill.id))
+			// Fifth filter : Remove all spherical skills (not learnable here)
+			.filter(skill => !skill.isSphereSkill)
+			// Sixth filtre : Remove race skills (ex : fly from Pteroz)
+			.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
+			.map(skill => {
+				return {
+					skillId: skill.id,
+					type: skill.type,
+					element: skill.element
+				};
+			})
+	);
 };
-
 
 /**
  * @summary Return the unlockable skills for a given Dinoz if it were to learn a new skill.
@@ -81,22 +87,23 @@ export const getNewUnlockableSkills = (
 	},
 	newSkill: Skill
 ) => {
-	return Object.values(skillList)
-		// First filter : get skills that require the new skill to be unlocked
-		.filter(skill => skill.unlockedFrom?.some(s => s === newSkill))
-		// Second filter : Keep only skills that dinoz can learn with that new skill or its already learned skills
-		.filter(skill =>
-			skill.unlockedFrom?.every(
-				skillId =>
-					newSkill === skillId || dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId)
+	return (
+		Object.values(skillList)
+			// First filter : get skills that require the new skill to be unlocked
+			.filter(skill => skill.unlockedFrom?.some(s => s === newSkill))
+			// Second filter : Keep only skills that dinoz can learn with that new skill or its already learned skills
+			.filter(skill =>
+				skill.unlockedFrom?.every(
+					skillId => newSkill === skillId || dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId)
+				)
 			)
-		)
-		// Third filter : Remove race skills (ex : shell from Winks)
-		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
-		.map(skill => {
-			return skill.id;
-		});
-}
+			// Third filter : Remove race skills (ex : shell from Winks)
+			.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
+			.map(skill => {
+				return skill.id;
+			})
+	);
+};
 
 /**
  * Return all skills that a dinoz can unlock (all elements).
@@ -377,6 +384,118 @@ export const learnNextSphereSkill = (
 	return sphereSkillToLearn?.id; // SAFETY: sphereSkillToLearn is not undefined
 };
 
+/**
+ * @summary Randomly level a Dinoz N times. Levels are picked up based on element affinity of the Dinoz.
+ * @param dinoz Data of the Dinoz to level up, this data is mutated directly.
+ * @param targetLevel The expected level to bring the Dinoz to.
+ * @returns None, it mutates the dinoz data directly.
+ */
+export const randomlyLevelUpDinoz = (
+	dinoz: Pick<
+		Dinoz,
+		| 'id'
+		| 'display'
+		| 'level'
+		| 'raceId'
+		| 'nbrUpAir'
+		| 'nbrUpFire'
+		| 'nbrUpLightning'
+		| 'nbrUpWater'
+		| 'nbrUpWood'
+		| 'nextUpElementId'
+		| 'nextUpAltElementId'
+		| 'seed'
+	> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
+	},
+	targetLevel: number
+) => {
+	if (targetLevel <= 1) return;
+
+	const dinozRace = raceList[dinoz.raceId as RaceEnum];
+
+	while (dinoz.level < targetLevel) {
+		// For each iteration, select either a skill to learn or to unlock skills randomly.
+		// Each learnable skill's weight is 1. Unlocking skills weight is based on its length divided by 2.
+		// Note: algorithm to select a Demon Dinoz skills has not been found in MT's source code. This is an attempt to recreate it. Completely made up.
+
+		dinoz.level++;
+
+		const element = dinoz.nextUpElementId as ElementType;
+		const currentLearnableSkills = getLearnableSkills(dinoz, element).map(s => s.skillId);
+		const currentUnlockableSkills = getUnlockableSkills(dinoz, element).map(s => s.skillId);
+
+		switch (element) {
+			case ElementType.FIRE:
+				dinoz.nbrUpFire++;
+				break;
+			case ElementType.WOOD:
+				dinoz.nbrUpWood++;
+				break;
+			case ElementType.WATER:
+				dinoz.nbrUpWater++;
+				break;
+			case ElementType.LIGHTNING:
+				dinoz.nbrUpLightning++;
+				break;
+			case ElementType.AIR:
+				dinoz.nbrUpAir++;
+				break;
+			default:
+				break;
+		}
+
+		if (currentLearnableSkills.length === 0 && currentUnlockableSkills.length === 0) {
+			// If nothing to unlock, throw.
+			throw new ExpectedError(
+				`Dinoz is level ${dinoz.level} and out of skills to learn, ${targetLevel - dinoz.level} iterations left`
+			);
+		}
+
+		let odds = currentLearnableSkills.map(s => {
+			return { skillId: s as number, odds: 1 };
+		});
+
+		// Add odds of unlocking skills except for last iteration (unless there is no skill to learn)
+		if (dinoz.level < targetLevel || currentLearnableSkills.length === 0) {
+			// Key is '-1' for unlocking given all skill IDs are > 0
+			odds.push({ skillId: -1, odds: currentUnlockableSkills.length / 2 });
+		}
+
+		let result = weightedRandom(odds);
+
+		if (result.skillId === -1) {
+			// Unlock only skills from the chosen element
+			dinoz.unlockableSkills = dinoz.unlockableSkills.filter(s => !currentUnlockableSkills.includes(s.skillId));
+		} else {
+			// Learn new skill
+			dinoz.unlockableSkills.push(
+				...getNewUnlockableSkills(dinoz, result.skillId).map(skillId => {
+					return { skillId, dinozId: dinoz.id };
+				})
+			);
+			dinoz.skills.push({
+				skillId: result.skillId
+			});
+		}
+
+		let growthLetter = fromBase62(dinoz.display[1]) % 10;
+		if (dinoz.level < 10 && dinoz.display[1] !== 'A') {
+			growthLetter++;
+			dinoz.display = dinoz.display[0] + growthLetter + dinoz.display.substring(2, dinoz.display.length);
+		}
+
+		// Determine Dinoz next ups based on its new skills
+		const newLearnableSkills = getLearnableSkills(dinoz);
+		const newUnlockableSkills = getUnlockableSkills(dinoz);
+		const upChance = getDinozUpChance(newLearnableSkills, newUnlockableSkills, dinozRace);
+		dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level);
+		dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
+	}
+};
+
 export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: string, rare_2: string) => {
 	// Generate display:
 	// - the first 2 chars come from the race swf letters
@@ -394,3 +513,28 @@ export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: s
 	randomDisplay += palette + rare_1 + rare_2;
 	return randomDisplay;
 };
+
+/**
+ * @summary Checks if a player has reached the maximum number of active Dinoz it can have. Throws if it did.
+ * @param playerId ID of the player.
+ * @param targetLevel The expected level to bring the Dinoz to.
+ */
+export async function checkMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
+	const dinozActive = await getActiveDinoz(authed.id);
+
+	if (dinozActive.length > 0) {
+		const player = dinozActive[0].player;
+
+		if (!player) {
+			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+		}
+
+		const maxDinoz =
+			gameConfig.dinoz.maxQuantity +
+			(player.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
+			(player.messie ? gameConfig.dinoz.leaderMessieBonus : 0);
+		if (dinozActive.length >= maxDinoz) {
+			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+		}
+	}
+}

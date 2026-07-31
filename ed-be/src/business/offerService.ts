@@ -560,11 +560,11 @@ export async function checkRefund(
 	if (dinoz) {
 		const maxDinoz =
 			gameConfig.dinoz.maxQuantity +
-			(refund.leader ? 3 : 0) +
-			(refund.messie ? 3 : 0) +
+			(refund.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
+			(refund.messie ? gameConfig.dinoz.leaderMessieBonus : 0) +
 			(dinoz.playerId === playerId ? 1 : 0);
 		if (refund._count.dinoz + 1 > maxDinoz) {
-			return 'tooMuchDinoz';
+			return 'tooManyActiveDinoz';
 		}
 	}
 

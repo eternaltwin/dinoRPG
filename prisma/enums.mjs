@@ -11,7 +11,8 @@ export const UnavailableReason = {
   unfreezing: 'unfreezing',
   defending: 'defending',
   restingAttack: 'restingAttack',
-  dungeon: 'dungeon'
+  dungeon: 'dungeon',
+  unsacrificing: 'unsacrificing'
 };
 
 export const NewsType = {

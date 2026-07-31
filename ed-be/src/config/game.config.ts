@@ -5,7 +5,7 @@ const gameConfig: GameConfig = {
 		dinoz: {
 			maxLevel: 50,
 			maxQuantity: 18,
-			leaderBonus: 3,
+			leaderMessieBonus: 3,
 			initialMaxLevel: 50
 		},
 		shop: {
@@ -13,7 +13,7 @@ const gameConfig: GameConfig = {
 			buyableQuetzu: 6
 		},
 		demonShop: {
-			dinozNumber: 15
+			dinozNumber: 5
 		},
 		general: {
 			initialMoney: 1000000,
@@ -24,7 +24,7 @@ const gameConfig: GameConfig = {
 		dinoz: {
 			maxLevel: 50,
 			maxQuantity: 18,
-			leaderBonus: 3,
+			leaderMessieBonus: 3,
 			initialMaxLevel: 50
 		},
 		shop: {
@@ -32,7 +32,7 @@ const gameConfig: GameConfig = {
 			buyableQuetzu: 6
 		},
 		demonShop: {
-			dinozNumber: 15
+			dinozNumber: 5
 		},
 		general: {
 			initialMoney: 200000,
@@ -46,7 +46,7 @@ interface GameConfig {
 		dinoz: {
 			maxLevel: number;
 			maxQuantity: number;
-			leaderBonus: number;
+			leaderMessieBonus: number;
 			initialMaxLevel: number;
 		};
 		shop: {

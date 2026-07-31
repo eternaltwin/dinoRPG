@@ -98,6 +98,8 @@ export async function getPlayersSumRanking(page: number) {
 	});
 }
 
+// Increment player points by the provided value.
+// If the value is negative, this effectively decrements the player's points.
 export async function updatePoints(playerId: string, points: number) {
 	const ranking = await prisma.ranking.findUnique({
 		where: {

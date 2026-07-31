@@ -54,6 +54,7 @@ import {
 	checkRestDinoz,
 	createDinoz,
 	getActiveDinoz,
+	getAllUnavailableUntil,
 	getAvailableDinozToFollow,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
@@ -93,7 +94,12 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
-import { getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from '../utils/dinoz.js';
+import {
+	checkMaxActiveDinoz,
+	getNumberOfGatheringTries,
+	initializeDinoz,
+	sanitizeGatherBoxes
+} from '../utils/dinoz.js';
 import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -101,8 +107,10 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { currentWar } from './clanWar.js';
 import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
+import { LOGGER } from '../context.js';
+import { scheduleJob } from 'node-schedule';
+import { finishDinozUnsacrifice } from './demonShopService.js';
 
 /**
  * @summary Get available action from dinoz
@@ -131,14 +139,15 @@ export async function getAvailableActions(
 	player: PlayerForConditionCheck
 ) {
 	const availableActions: ActionFiche[] = [];
+	const noActionsReasons: UnavailableReason[] = [
+		UnavailableReason.unfreezing,
+		UnavailableReason.restingAttack,
+		UnavailableReason.unsacrificing
+	];
 
 	const dinozPlace = actualPlace(dinoz);
 
-	if (dinoz.unavailableReason === UnavailableReason.unfreezing) {
-		return [];
-	}
-
-	if (dinoz.unavailableReason === UnavailableReason.restingAttack) {
+	if (dinoz.unavailableReason && noActionsReasons.includes(dinoz.unavailableReason)) {
 		return [];
 	}
 
@@ -449,10 +458,7 @@ export async function getAvailableActions(
 	}
 
 	// Demon shop at cemetary
-	if (
-		dinoz.placeId === PlaceEnum.CIMETIERE &&
-		player.rewards.some(r => r.rewardId === Reward.DEMON)
-	) {
+	if (dinoz.placeId === PlaceEnum.CIMETIERE && player.rewards.some(r => r.rewardId === Reward.DEMON)) {
 		availableActions.push(actionList[Action.DEMON_SHOP]);
 	}
 
@@ -527,20 +533,7 @@ export async function buyDinoz(req: Request) {
 	const dinozId = +req.params.id;
 
 	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
-
-	if (dinozActive.length > 0) {
-		const player = dinozActive[0].player;
-
-		if (!player) {
-			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-		}
-
-		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
-		if (dinozActive.length >= maxDinoz) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-	}
+	checkMaxActiveDinoz(authed);
 
 	// Get dinoz details thanks to his ID
 	const dinozShopData = await getDinozShopDetailsRequest(dinozId);
@@ -1553,23 +1546,9 @@ export async function unfrozeDinoz(req: Request) {
 		throw new ExpectedError('Dinoz is not frozen');
 	}
 
-	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
+	// Check if player can unfreeze the dinoz
+	checkMaxActiveDinoz(authed);
 
-	if (dinozActive.length > 0) {
-		const player = dinozActive[0].player;
-
-		if (!player) {
-			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-		}
-
-		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-	}
 	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.unfreezing
 	});
@@ -1600,4 +1579,43 @@ export async function restDinoz(req: Request) {
 	}
 
 	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });
+}
+
+export async function scheduleDinozEndOfUnavailability() {
+	// Get all Dinoz with a date set for unavailableUntil
+	const unavailableDinoz = await getAllUnavailableUntil();
+
+	const promises = [];
+	unavailableDinoz.forEach(d => {
+		// Should not happen, if it does, just clear the field
+		if (d.unavailableReason === null) {
+			LOGGER.error(`Dinoz ${d.id} has unavailableUntil set but no unavailable reason`);
+			promises.push(
+				updateDinoz(d.id, {
+					unavailableUntil: null
+				})
+			);
+		}
+
+		// If expired, just clear. No specific behavior per unavailable reason expected for now.
+		// SAFETY: should *not* be null per DAO.
+		if (d.unavailableUntil! <= new Date()) {
+			promises.push(
+				updateDinoz(d.id, {
+					unavailableReason: null,
+					unavailableUntil: null
+				})
+			);
+		}
+
+		// Handle only the specific unavailable reasons that have an end date.
+		switch (d.unavailableReason) {
+			case UnavailableReason.unsacrificing:
+				scheduleJob(`unsacrifice_${d.id}`, d.unavailableUntil!, () => finishDinozUnsacrifice(d.id));
+				break;
+			default:
+				// Nothing to do by default
+				break;
+		}
+	});
 }

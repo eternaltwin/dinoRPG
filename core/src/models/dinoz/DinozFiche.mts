@@ -18,6 +18,7 @@ export interface DinozFiche {
 	name: string;
 	display: string;
 	unavailableReason: UnavailableReason | null;
+	unavailableUntil: Date | null;
 	level: number;
 	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;

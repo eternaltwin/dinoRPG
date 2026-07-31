@@ -30,6 +30,7 @@ import { resumeTournaments } from './business/forceBruteService.js';
 import { scheduleAtStart } from './business/scheduleService.js';
 import { schedulePollExpiration } from './business/newsService.js';
 import { scheduleWarExpiration } from './business/clanWar.js';
+import { scheduleDinozEndOfUnavailability } from './business/dinozService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -85,6 +86,7 @@ export function main(cx: ServerContext) {
 	itinerantMerchant().start();
 	checkBans().start();
 
+	scheduleDinozEndOfUnavailability();
 	scheduleOffersExpiration();
 	scheduleEndedOffersExpiration();
 	schedulePollExpiration();

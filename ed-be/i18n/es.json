@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
 	"maxQuantityInventory": "Ya tienes lo máximo permitido de este objeto en tu inventario",
 	"cannotClaim": "Actualmente no puedes recibir lo que ganaste.",
-	"tooMuchDinoz": "Ya has alcanzado el máximo de Dinos activos.",
 	"tooMuchIngredient": "Tienes un ingrediente que podría superar el límite máximo.",
 	"tooMuchItem": "Tienes un objeto que podría superar el límite máximo.",
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
