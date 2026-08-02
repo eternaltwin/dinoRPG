@@ -118,6 +118,8 @@ export const LogType: {
   readonly Fight: 'Fight';
   readonly Death: 'Death';
   readonly Revive: 'Revive';
+  readonly Sacrifice: 'Sacrifice';
+  readonly Unsacrifice: 'Unsacrifice';
   readonly MissionStep: 'MissionStep';
   readonly MissionFinished: 'MissionFinished';
   readonly MissionCanceled: 'MissionCanceled';
@@ -177,6 +179,8 @@ export namespace LogType {
   export type Fight = 'Fight';
   export type Death = 'Death';
   export type Revive = 'Revive';
+  export type Sacrifice = 'Sacrifice';
+  export type Unsacrifice = 'Unsacrifice';
   export type MissionStep = 'MissionStep';
   export type MissionFinished = 'MissionFinished';
   export type MissionCanceled = 'MissionCanceled';

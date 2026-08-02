@@ -1241,23 +1241,8 @@ export async function getAllResting() {
 				skills: true
 			}
 		});
-		// TODO that does take into account skills that increase maximum rest
+		// TODO that does *NOT* take into account skills that increase maximum rest
 		return list.filter(d => d.life < Math.round(d.maxLife / 2));
-	});
-}
-
-export async function getAllUnsacrificing() {
-	return withSpan(getAllResting.name, async () => {
-		const list = await prisma.dinoz.findMany({
-			where: {
-				unavailableReason: UnavailableReason.unsacrificing
-			},
-			select: {
-				id: true,
-				unavailableUntil: true
-			}
-		});
-		return list;
 	});
 }
 
