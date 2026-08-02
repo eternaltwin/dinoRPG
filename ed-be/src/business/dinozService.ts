@@ -93,12 +93,7 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
-import {
-	checkMaxActiveDinoz,
-	getNumberOfGatheringTries,
-	initializeDinoz,
-	sanitizeGatherBoxes
-} from '../utils/dinoz.js';
+import { isAtMaxActiveDinoz, getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from '../utils/dinoz.js';
 import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -504,7 +499,9 @@ export async function buyDinoz(req: Request) {
 	const dinozId = +req.params.id;
 
 	// Check if player can buy more dinoz
-	checkMaxActiveDinoz(authed);
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	}
 
 	// Get dinoz details thanks to his ID
 	const dinozShopData = await getDinozShopDetailsRequest(dinozId);
@@ -1513,7 +1510,9 @@ export async function unfrozeDinoz(req: Request) {
 	}
 
 	// Check if player can unfreeze the dinoz
-	checkMaxActiveDinoz(authed);
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	}
 
 	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.unfreezing

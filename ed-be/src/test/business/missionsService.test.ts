@@ -187,7 +187,7 @@ describe('getMissionsList', () => {
 
 	it('throws when the player does not exist', async () => {
 		mockGetMissionsInfo.mockResolvedValue(null);
-		await expect(getMissionsList(req())).rejects.toThrow("doesn't exist");
+		await expect(getMissionsList(req())).rejects.toThrow('playerNotFound');
 	});
 });
 

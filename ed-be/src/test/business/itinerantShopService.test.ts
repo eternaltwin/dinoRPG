@@ -80,7 +80,7 @@ describe('sellIngredient', () => {
 	it('throws when player has no ingredients data', async () => {
 		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue(null as never);
 		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 1 }] }))).rejects.toThrow(
-			"doesn't exist"
+			'playerNotFound'
 		);
 	});
 });
