@@ -29,7 +29,7 @@ export async function checkLB(req: Request) {
 	const authed = await auth(req);
 	const player = await getLBResponseInformation(authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	let LBDone = player.labruteDone;

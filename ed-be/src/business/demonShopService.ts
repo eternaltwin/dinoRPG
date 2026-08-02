@@ -57,7 +57,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	const player = await getPlayerDemonShopRequest(authed.id);
 
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	if (!player.rewards.some(r => r.rewardId === Reward.DEMON)) {
@@ -281,7 +281,7 @@ export async function buyDemonDinoz(req: Request) {
 	const player = await getPlayerDemonShopRequest(authed.id);
 
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	// Check the player can get a new Dinoz.
