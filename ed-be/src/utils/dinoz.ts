@@ -16,7 +16,7 @@ import translate from './server/translate.js';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
 import weightedRandom from './fight/weightedRandom.js';
-import { applySkillToDinoz, fromBase62, getRandomLetter } from './index.js';
+import { fromBase62, getRandomLetter } from './index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { getActiveDinoz } from '../dao/dinozDao.js';
@@ -518,8 +518,9 @@ export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: s
  * @summary Checks if a player has reached the maximum number of active Dinoz it can have. Throws if it did.
  * @param playerId ID of the player.
  * @param targetLevel The expected level to bring the Dinoz to.
+ * @returns boolean: true if at max, false if not.
  */
-export async function checkMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
+export async function isAtMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
 	const dinozActive = await getActiveDinoz(authed.id);
 
 	if (dinozActive.length > 0) {
@@ -534,7 +535,11 @@ export async function checkMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
 			(player.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
 			(player.messie ? gameConfig.dinoz.leaderMessieBonus : 0);
 		if (dinozActive.length >= maxDinoz) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+			return true;
+		} else {
+			return false;
 		}
+	} else {
+		return false;
 	}
 }

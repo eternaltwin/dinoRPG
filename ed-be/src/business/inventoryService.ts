@@ -49,7 +49,7 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
 import {
-	checkMaxActiveDinoz,
+	isAtMaxActiveDinoz,
 	generateDinozDisplay,
 	getDinozUpChance,
 	getLearnableSkills,
@@ -269,7 +269,9 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	let race = item.effect.race;
 
 	// Check if player can hatch dinoz
-	checkMaxActiveDinoz(authed);
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	}
 
 	let randomDisplay = '0';
 

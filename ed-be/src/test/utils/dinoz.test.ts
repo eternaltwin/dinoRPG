@@ -19,13 +19,13 @@ vi.mock('../../context.js', () => ({
 	GLOBAL: { config: { salt: 'test-salt' } }
 }));
 vi.mock('../../dao/dinozDao.js', () => ({
-	updateDinoz: vi.fn()
+	updateDinoz: vi.fn(),
+	getActiveDinoz: vi.fn()
 }));
 vi.mock('../../utils/server/translate.js', () => ({
 	default: vi.fn((key: string) => key)
 }));
 
-import { updateDinoz } from '../../dao/dinozDao.js';
 import {
 	getTreeType,
 	getLearnableSkills,
@@ -36,18 +36,16 @@ import {
 	getNumberOfGatheringTries,
 	initializeDinoz,
 	reincarnateDinoz,
-	useRice,
 	learnNextSphereSkill,
-	sanitizeGatherBoxes
+	sanitizeGatherBoxes,
+	isAtMaxActiveDinoz
 } from '../../utils/dinoz.js';
-
-const mockUpdateDinoz = vi.mocked(updateDinoz);
+import { getActiveDinoz } from '../../dao/dinozDao.js';
 
 // A race whose up-chance is entirely on fire, so every random element draw is deterministic
 // (always FIRE) regardless of the seed/salt that feeds seedrandom.
 const fireOnlyRace: DinozRace = {
 	raceId: raceList[1].raceId,
-	isDemon: false,
 	name: 'test',
 	nbrFire: 2,
 	nbrWood: 0,
@@ -271,43 +269,6 @@ describe('reincarnateDinoz', () => {
 	});
 });
 
-describe('useRice', () => {
-	const freshDinoz = (level: number, raceId: number) => ({
-		id: 'dinoz-1',
-		level,
-		raceId,
-		status: [] as { statusId: number }[],
-		skills: [] as { skillId: number }[],
-		unlockableSkills: [] as { skillId: number }[]
-	});
-
-	it('only resets name and experience for a dinoz above level 1', async () => {
-		await useRice(freshDinoz(2, raceList[1].raceId));
-		expect(mockUpdateDinoz).toHaveBeenCalledWith('dinoz-1', {
-			name: '?',
-			experience: 0,
-			canChangeName: true
-		});
-	});
-
-	it('rerolls the seed and next-up elements for a level 1 dinoz', async () => {
-		await useRice(freshDinoz(1, raceList[1].raceId));
-		const update = mockUpdateDinoz.mock.calls[0][1];
-		expect(update.name).toBe('?');
-		expect(update.experience).toBe(0);
-		expect(typeof update.seed).toBe('string');
-		expect(update.nextUpElementId).toBeGreaterThanOrEqual(1);
-		expect(update.nextUpElementId).toBeLessThanOrEqual(5);
-		expect(update.nextUpAltElementId).toBeGreaterThanOrEqual(1);
-		expect(update.nextUpAltElementId).toBeLessThanOrEqual(5);
-	});
-
-	it('throws when a level 1 dinoz references an unknown race', async () => {
-		await expect(useRice(freshDinoz(1, -1))).rejects.toThrow(ExpectedError);
-		expect(mockUpdateDinoz).not.toHaveBeenCalled();
-	});
-});
-
 describe('sanitizeGatherBoxes', () => {
 	it('returns the in-bounds coordinates as [row, col] tuples', () => {
 		expect(
@@ -348,5 +309,111 @@ describe('sanitizeGatherBoxes', () => {
 
 	it('rejects non-numeric coordinates', () => {
 		expect(() => sanitizeGatherBoxes([['1', 2] as unknown as number[]], 5)).toThrow(ExpectedError);
+	});
+});
+
+const mockGetActiveDinoz = vi.mocked(getActiveDinoz);
+const authed = { id: 'player-1', lang: 'en' } as const;
+const regularPlayer = { id: 'player-1', leader: false, messie: false };
+const leaderPlayer = { id: 'player-1', leader: true, messie: false };
+const messiePlayer = { id: 'player-1', leader: false, messie: true };
+const bothBonusPlayer = { id: 'player-1', leader: true, messie: true };
+
+type ActiveDinoz = Awaited<ReturnType<typeof getActiveDinoz>>[number];
+function makeDinozList(count: number, player: ActiveDinoz['player'] | null): ActiveDinoz[] {
+	return Array.from({ length: count }, () => ({
+		unavailableReason: null,
+		// Cast to satisfy TS while still letting us test the null-guard branch.
+		player: player as ActiveDinoz['player']
+	}));
+}
+
+describe('isAtMaxActiveDinoz', () => {
+	beforeEach(() => {
+		mockGetActiveDinoz.mockReset();
+	});
+
+	it('calls getActiveDinoz with the authed player id', async () => {
+		mockGetActiveDinoz.mockResolvedValue([]);
+		await isAtMaxActiveDinoz(authed);
+		expect(mockGetActiveDinoz).toHaveBeenCalledWith(authed.id);
+	});
+
+	it('no active dinoz, returns false', async () => {
+		mockGetActiveDinoz.mockResolvedValue([]);
+		expect(await isAtMaxActiveDinoz(authed)).toBe(false);
+	});
+
+	it('throws an error when player data is missing on the first dinoz', async () => {
+		mockGetActiveDinoz.mockResolvedValue(makeDinozList(1, null));
+		await expect(isAtMaxActiveDinoz(authed)).rejects.toBeInstanceOf(ExpectedError);
+	});
+
+	describe('regular player (no leader, no messie) — cap 18', () => {
+		it('returns false when below the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(17, regularPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(false);
+		});
+
+		it('returns true when exactly at the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(18, regularPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+
+		it('returns true when above the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(19, regularPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+	});
+
+	describe('leader player (+3 leader bonus) — cap 21', () => {
+		it('returns false when below the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(20, leaderPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(false);
+		});
+
+		it('returns true when exactly at the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(21, leaderPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+
+		it('returns true when above the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(22, leaderPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+	});
+
+	describe('messie player (+3 messie bonus) — cap 21', () => {
+		it('returns false when below the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(20, messiePlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(false);
+		});
+
+		it('returns true when exactly at the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(21, messiePlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+
+		it('returns true when above at the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(22, messiePlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+	});
+
+	describe('leader + messie player (both bonuses) — cap 24', () => {
+		it('returns false when below the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(23, bothBonusPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(false);
+		});
+
+		it('returns true when exactly at the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(24, bothBonusPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
+
+		it('returns true when above the cap', async () => {
+			mockGetActiveDinoz.mockResolvedValue(makeDinozList(25, bothBonusPlayer));
+			expect(await isAtMaxActiveDinoz(authed)).toBe(true);
+		});
 	});
 });
