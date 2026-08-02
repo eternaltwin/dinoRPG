@@ -4687,6 +4687,8 @@
 		"HPLost": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a perdu **{hpLost} :pv:**.",
 		"Death": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** est mort.",
 		"Revive": "**{player} ({playerId})** a ressuscité son Dinoz **{dinoz} ({dinozId})**.",
+		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** a avancé la mission **{mission}** à **l'étape {step}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** a annulé la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",

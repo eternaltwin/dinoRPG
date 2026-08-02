@@ -53,7 +53,6 @@ import {
 	checkFrozenDinoz,
 	checkRestDinoz,
 	createDinoz,
-	getActiveDinoz,
 	getAllUnavailableUntil,
 	getAvailableDinozToFollow,
 	getCanDinozChangeName,
