@@ -91,7 +91,7 @@ export async function sellIngredient(req: Request) {
 
 	// Throw an exception if the player doesn't exist
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	// Lock negative quantities

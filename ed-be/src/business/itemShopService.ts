@@ -91,7 +91,7 @@ export async function buyItem(req: Request) {
 	const playerShopData = await getPlayerShopOneItemDataRequest(authed.id, itemId);
 
 	if (!playerShopData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	// Extract item data from player
 	const playerItemData = playerShopData.items.find(item => item.itemId === itemId);
