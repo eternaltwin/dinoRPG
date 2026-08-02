@@ -53,7 +53,7 @@ describe('checkPlayerLB', () => {
 describe('checkLB', () => {
 	it('throws when player missing', async () => {
 		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue(null as never);
-		await expect(checkLB(req())).rejects.toThrow("doesn't exist");
+		await expect(checkLB(req())).rejects.toThrow('playerNotFound');
 	});
 	it('throws when already claimed', async () => {
 		vi.mocked(playerDao.getLBResponseInformation).mockResolvedValue({

@@ -84,11 +84,15 @@ vi.mock('@drpg/core/utils/GatherUtils', () => ({
 	initializeGatherGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 }),
 	saveGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 })
 }));
-vi.mock('../../utils/dinoz.js', () => ({
-	getNumberOfGatheringTries: vi.fn().mockReturnValue(3),
-	initializeDinoz: vi.fn().mockReturnValue({ name: 'new' }),
-	sanitizeGatherBoxes: vi.fn().mockReturnValue([0])
-}));
+vi.mock('../../utils/dinoz.js', async importOriginal => {
+	const actual = await importOriginal();
+	return {
+		...actual,
+		getNumberOfGatheringTries: vi.fn().mockReturnValue(3),
+		initializeDinoz: vi.fn().mockReturnValue({ name: 'new' }),
+		sanitizeGatherBoxes: vi.fn().mockReturnValue([0])
+	};
+});
 vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 	const actual = (await orig()) as Record<string, unknown>;
 	return {

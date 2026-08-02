@@ -7,7 +7,7 @@ import { auth, ownsDinoz } from '../dao/playerDao.js';
 import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
-import { checkMaxActiveDinoz, generateDinozDisplay, getRandomUpElement, randomlyLevelUpDinoz } from '../utils/dinoz.js';
+import { isAtMaxActiveDinoz, generateDinozDisplay, getRandomUpElement, randomlyLevelUpDinoz } from '../utils/dinoz.js';
 import {
 	getDinozDataForUnsacrificeRequest,
 	getDinozDataForSacrificeRequest,
@@ -21,12 +21,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import translate from '../utils/server/translate.js';
 import { DinozSkill, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { getDemonShopPrice, toDinozFiche } from '@drpg/core/utils/DinozUtils';
-import {
-	createDinoz,
-	getDinozFicheRequest,
-	getDinozUnavailableReason,
-	updateDinoz
-} from '../dao/dinozDao.js';
+import { createDinoz, getDinozFicheRequest, getDinozUnavailableReason, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -284,7 +279,9 @@ export async function buyDemonDinoz(req: Request) {
 	}
 
 	// Check the player can get a new Dinoz.
-	checkMaxActiveDinoz(authed);
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	}
 
 	if (!player.rewards.some(r => r.rewardId === Reward.DEMON)) {
 		throw new ExpectedError(translate('error.noShopAccess', authed));
@@ -485,7 +482,9 @@ export async function unsacrificeDinoz(req: Request) {
 	}
 
 	// Check the player can unsacrifice Dinoz.
-	checkMaxActiveDinoz(authed);
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	}
 
 	const cost = getDemonShopPrice(dinoz.level);
 	const demonTickets = dinoz.player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;

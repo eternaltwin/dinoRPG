@@ -214,7 +214,7 @@ describe('fightMonstersAtPlace', () => {
 describe('processFight', () => {
 	it('throws when player not found', async () => {
 		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(null as never);
-		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow("doesn't exist");
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('playerNotFound');
 	});
 	it('runs a fight when conditions are met', async () => {
 		const dinoz = {

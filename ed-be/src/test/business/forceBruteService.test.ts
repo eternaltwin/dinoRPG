@@ -14,7 +14,7 @@ vi.mock('../../dao/dinozDao.js', () => ({ updateDinoz: vi.fn() }));
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn() }));
 vi.mock('../../dao/dinozItemDao.js', () => ({ removeItemFromDinoz: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
-vi.mock('../../utils/dinoz.js', () => ({ getRandomUpElement: vi.fn() }));
+vi.mock('../../utils/dinoz.js', () => ({ getRandomUpElement: vi.fn(), generateDinozDisplay: vi.fn() }));
 vi.mock('../../utils/randomEnum.js', () => ({ getRandomEnumValue: vi.fn() }));
 vi.mock('../../business/inventoryService.js', () => ({ generateDinozDisplay: vi.fn().mockReturnValue('d') }));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
@@ -48,6 +48,7 @@ import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { viewFight } from '../../dao/archiveDao.js';
 import { ownsDinoz } from '../../dao/playerDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { generateDinozDisplay } from '../../utils/dinoz.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 

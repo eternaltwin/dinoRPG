@@ -90,7 +90,7 @@ describe('buyItem', () => {
 	});
 	it('throws when player missing', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(null as never);
-		await expect(buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '1' }))).rejects.toThrow("doesn't exist");
+		await expect(buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '1' }))).rejects.toThrow('playerNotFound');
 	});
 	it('throws when shop missing', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);
