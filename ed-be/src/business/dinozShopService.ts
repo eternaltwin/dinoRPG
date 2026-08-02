@@ -10,6 +10,7 @@ import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getRandomArrayElement } from '../utils/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { generateDinozDisplay } from '../utils/dinoz.js';
+import translate from '../utils/server/translate.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -25,7 +26,7 @@ export async function getDinozFromDinozShop(req: Request) {
 	const playerData = await getPlayerDinozShopRequest(authed.id);
 
 	if (!playerData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	// If nothing is found, create N dinoz to fill the shop (based on game config)

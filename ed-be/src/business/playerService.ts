@@ -43,7 +43,7 @@ export async function getCommonData(req: Request) {
 	const authed = await auth(req);
 	const playerCommonData = await getCommonDataRequest(authed.id);
 	if (!playerCommonData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	const dinoz = playerCommonData.dinoz.map(d => {
@@ -181,7 +181,7 @@ export async function setCustomText(req: Request) {
 
 	const playerProfile = await getPlayerRewardsRequest(authed.id);
 	if (!playerProfile) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === Reward.PLUME)) {

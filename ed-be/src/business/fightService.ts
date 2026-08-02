@@ -69,7 +69,7 @@ export async function processFight(req: Request) {
 	// Get Dinoz info
 	const player = await getDinozFightDataRequest(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {

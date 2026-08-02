@@ -56,7 +56,7 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 	const player = await getDinozPlaces(authed.id);
 
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	if (!player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
@@ -196,7 +196,7 @@ export async function createOffer(req: Request) {
 	const availableItems = await getPlayerItems(authed.id);
 	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {

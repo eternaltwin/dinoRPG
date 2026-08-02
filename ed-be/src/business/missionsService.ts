@@ -42,7 +42,7 @@ export async function getMissionsList(req: Request) {
 	const authed = await auth(req);
 	const player = await getDinozMissionsInfo(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
