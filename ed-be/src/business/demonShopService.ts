@@ -523,8 +523,6 @@ export async function unsacrificeDinoz(req: Request) {
 export async function finishDinozUnsacrifice(dinozId: number) {
 	const dinoz = await getDinozUnavailableReason(dinozId);
 
-	console.log(`${dinozId} is coming back to life!`);
-
 	if (!dinoz) {
 		LOGGER.error(`Dinoz ${dinozId} not found for unsacrificing finish.`);
 		return;

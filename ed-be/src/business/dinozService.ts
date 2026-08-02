@@ -1562,23 +1562,29 @@ export async function scheduleDinozEndOfUnavailability() {
 					unavailableUntil: null
 				})
 			);
+			return;
+		}
+
+		if (d.unavailableUntil === null) {
+			LOGGER.error(`Dinoz ${d.id} has no unavailableUntil set, this is highly unexpected.`);
+			return;
 		}
 
 		// If expired, just clear. No specific behavior per unavailable reason expected for now.
-		// SAFETY: should *not* be null per DAO.
-		if (d.unavailableUntil! <= new Date()) {
+		if (d.unavailableUntil <= new Date()) {
 			promises.push(
 				updateDinoz(d.id, {
 					unavailableReason: null,
 					unavailableUntil: null
 				})
 			);
+			return;
 		}
 
-		// Handle only the specific unavailable reasons that have an end date.
+		// Else (valid unavailable reason with unexpired unavailable date) handle some specific unavailable reasons that are expected to have an end date.
 		switch (d.unavailableReason) {
 			case UnavailableReason.unsacrificing:
-				scheduleJob(`unsacrifice_${d.id}`, d.unavailableUntil!, () => finishDinozUnsacrifice(d.id));
+				scheduleJob(`unsacrifice_${d.id}`, d.unavailableUntil, () => finishDinozUnsacrifice(d.id));
 				break;
 			default:
 				// Nothing to do by default
