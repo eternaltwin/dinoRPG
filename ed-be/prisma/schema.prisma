@@ -1107,6 +1107,8 @@ enum LogType {
   Fight
   Death
   Revive
+  Sacrifice
+  Unsacrifice
   MissionStep
   MissionFinished
   MissionCanceled

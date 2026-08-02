@@ -59,6 +59,8 @@ export const LogType = {
   Fight: 'Fight',
   Death: 'Death',
   Revive: 'Revive',
+  Sacrifice: 'Sacrifice',
+  Unsacrifice: 'Unsacrifice',
   MissionStep: 'MissionStep',
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',

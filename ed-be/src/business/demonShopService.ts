@@ -19,12 +19,10 @@ import {
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import translate from '../utils/server/translate.js';
-import { DinozSkill, Prisma, UnavailableReason } from '@drpg/prisma';
+import { DinozSkill, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { getDemonShopPrice, toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import {
 	createDinoz,
-	getActiveDinoz,
-	getAllUnsacrificing,
 	getDinozFicheRequest,
 	getDinozUnavailableReason,
 	updateDinoz
@@ -43,6 +41,7 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { prisma } from '../prisma.js';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { createLog } from '../dao/logDao.js';
 
 /**
  * @summary Get all dinoz data from demon dinoz shop
@@ -448,6 +447,8 @@ export async function sacrificeDinoz(req: Request) {
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking
 	promises.push(updatePoints(dinoz.player.id, -dinoz.level));
+	// Add log
+	promises.push(createLog(LogType.Sacrifice, dinoz.player.id, dinoz.id, demonTickets));
 	await Promise.all(promises);
 
 	return demonTickets;
@@ -510,6 +511,8 @@ export async function unsacrificeDinoz(req: Request) {
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking
 	promises.push(updatePoints(dinoz.player.id, dinoz.level));
+	// Add log
+	promises.push(createLog(LogType.Unsacrifice, dinoz.player.id, dinoz.id, cost));
 	await Promise.all(promises);
 
 	// Schedule job
