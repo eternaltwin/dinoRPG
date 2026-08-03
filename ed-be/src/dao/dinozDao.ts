@@ -431,7 +431,8 @@ export async function getDinozPlaces(playerId: string) {
 				dinoz: {
 					select: {
 						id: true,
-						placeId: true
+						placeId: true,
+						unavailableReason: true
 					}
 				}
 			}
