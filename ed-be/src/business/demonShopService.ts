@@ -7,7 +7,14 @@ import { auth, ownsDinoz } from '../dao/playerDao.js';
 import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
-import { isAtMaxActiveDinoz, generateDinozDisplay, getRandomUpElement, randomlyLevelUpDinoz, getDemonShopPrice } from '../utils/dinoz.js';
+import {
+	isAtMaxActiveDinoz,
+	generateDinozDisplay,
+	getRandomUpElement,
+	randomlyLevelUpDinoz,
+	getDemonShopPrice,
+	hasAnyActiveDinozAt
+} from '../utils/dinoz.js';
 import {
 	getDinozDataForUnsacrificeRequest,
 	getDinozDataForSacrificeRequest,
@@ -79,11 +86,9 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		})
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
-	// REVIEW: should this check be enforced? It's "annoying" to enforce for the other endpoints...
-	// It means the shop will be accessible from anywhere once the reward is owned.
-	// if (dinozAtCemetary.length === 0) {
-	// 	throw new ExpectedError(translate('noDinozAtCemetary', authed));
-	// }
+	if (dinozAtCemetary.length === 0) {
+		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+	}
 
 	const sacrificedDinoz: demonDinozFiche[] = player.dinoz
 		.filter(d => d.unavailableReason === UnavailableReason.sacrificed)
@@ -114,7 +119,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		const totalDinoz = Math.round(gameConfig.demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
 
 		// If the shop does not have the matching create N dinoz to fill the shop (based on game config)
-		if (player.demonShop.length  === 0 || player.demonShop.length < totalDinoz) {
+		if (player.demonShop.length === 0 || player.demonShop.length < totalDinoz) {
 			const dinozArray = [];
 			let randomRace: DinozRace;
 			let randomDisplay: string;
@@ -277,6 +282,16 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
+	const dinozAtCemetary = player.dinoz.filter(
+		d =>
+			d.placeId === PlaceEnum.CIMETIERE &&
+			(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+	);
+
+	if (dinozAtCemetary.length === 0) {
+		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+	}
+
 	// Check the player can get a new Dinoz.
 	if (await isAtMaxActiveDinoz(authed)) {
 		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
@@ -386,6 +401,10 @@ export async function sacrificeDinoz(req: Request) {
 		throw new ExpectedError(translate('notYourDinoz', authed));
 	}
 
+	if (await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE)) {
+		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+	}
+
 	// Retrieve player with dinoz shop info
 	const dinoz = await getDinozDataForSacrificeRequest(dinozId);
 
@@ -462,6 +481,10 @@ export async function unsacrificeDinoz(req: Request) {
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError(translate('notYourDinoz', authed));
+	}
+
+	if (await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE)) {
+		throw new ExpectedError(translate('noDinozAtCemetary', authed));
 	}
 
 	// Retrieve player with dinoz shop info

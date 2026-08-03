@@ -1,4 +1,4 @@
-import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Player, Prisma } from '@drpg/prisma';
+import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Player, Prisma, UnavailableReason } from '@drpg/prisma';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozRace, UpChance } from '@drpg/core/models/dinoz/DinozRace';
 import { GatherData } from '@drpg/core/models/gather/gatherData';
@@ -19,7 +19,7 @@ import weightedRandom from './fight/weightedRandom.js';
 import { fromBase62, getRandomLetter } from './index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
-import { getActiveDinoz } from '../dao/dinozDao.js';
+import { getActiveDinoz, getDinozPlaces } from '../dao/dinozDao.js';
 import gameConfig from '../config/game.config.js';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
@@ -539,6 +539,30 @@ export async function isAtMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
 		} else {
 			return false;
 		}
+	} else {
+		return false;
+	}
+}
+
+/**
+ * @summary Checks if a player has any *active* Dinoz at the given location.
+ * @param playerId ID of the player.
+ * @param locationId The location ID to check for.
+ * @returns boolean: true if at least one, false if none..
+ */
+export async function hasAnyActiveDinozAt(authed: Pick<Player, 'id' | 'lang'>, placeId: PlaceEnum) {
+	const player = await getDinozPlaces(authed.id);
+
+	if (!player) {
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+	}
+
+	const dinozAtLocation = player.dinoz.filter(
+		d => d.placeId === placeId && (d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+	);
+
+	if (dinozAtLocation.length > 0) {
+		return true;
 	} else {
 		return false;
 	}
