@@ -501,13 +501,3 @@ export const calculatePvExp = (
 
 	return Math.round(totalMonsterXp * xpFactor * XP_MULTIPLICATOR);
 };
-
-export const getDemonShopPrice = (level: number) => {
-	// The formula is not in MT's code. It was determined through manual regression, trial and error.
-	// It is `1.10625 * (1 - 1.079^N) / (1 - 1.079)`
-	// It comes from the sum of N number for a geometric serie: Sn = a * (1 - r^n) / (1 - r)
-	const a = 1.10625;
-	const r = 1.079;
-
-	return Math.floor((a * (1 - Math.pow(r, level))) / (1 - r));
-};

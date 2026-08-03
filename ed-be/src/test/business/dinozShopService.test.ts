@@ -7,8 +7,7 @@ import { makeRequest } from '../helpers/req.js';
 // auth check and the shop query in one place.
 vi.mock('../../dao/playerDao.js', () => ({
 	auth: vi.fn(),
-	getPlayerDinozShopRequest: vi.fn(),
-	getPlayerRewardsRequest: vi.fn()
+	getPlayerDinozShopRequest: vi.fn()
 }));
 vi.mock('../../dao/playerDinozShopDao.js', () => ({
 	createMultipleDinoz: vi.fn()
