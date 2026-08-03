@@ -7,7 +7,7 @@ import { auth, ownsDinoz } from '../dao/playerDao.js';
 import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
-import { isAtMaxActiveDinoz, generateDinozDisplay, getRandomUpElement, randomlyLevelUpDinoz } from '../utils/dinoz.js';
+import { isAtMaxActiveDinoz, generateDinozDisplay, getRandomUpElement, randomlyLevelUpDinoz, getDemonShopPrice } from '../utils/dinoz.js';
 import {
 	getDinozDataForUnsacrificeRequest,
 	getDinozDataForSacrificeRequest,
@@ -20,21 +20,18 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import translate from '../utils/server/translate.js';
 import { DinozSkill, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
-import { getDemonShopPrice, toDinozFiche } from '@drpg/core/utils/DinozUtils';
+import { toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { createDinoz, getDinozFicheRequest, getDinozUnavailableReason, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { scheduleJob } from 'node-schedule';
 import { GLOBAL, LOGGER } from '../context.js';
 import { UNSACRIFICE_DURATION, UNSACRIFICE_DURATION_DEBUG } from '@drpg/core/constants';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { randomUUID } from 'crypto';
 import { computeUSkillsForPlayer } from './skillService.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
-import { prisma } from '../prisma.js';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
 
@@ -82,7 +79,8 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		})
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
-	// REVIEW: should this check be removed? It's annoying to enforce for the other endpoints.
+	// REVIEW: should this check be enforced? It's "annoying" to enforce for the other endpoints...
+	// It means the shop will be accessible from anywhere once the reward is owned.
 	// if (dinozAtCemetary.length === 0) {
 	// 	throw new ExpectedError(translate('noDinozAtCemetary', authed));
 	// }
@@ -106,152 +104,153 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		})
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
-	const hasBelius = player.rewards.some(r => r.rewardId === Reward.BELIUS);
-
-	// Expected number of Dinoz is based on game config plus some extra for the Belius reward.
-	const totalDinoz = Math.round(gameConfig.demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
-
-	// TODO the player needs at least 30 demon tickets to see the Demon dinoz
-
-	// If the shop does not have the matching create N dinoz to fill the shop (based on game config)
+	// Minimum 30 Demon tickets to see the list of demon dinoz.
+	const demonTickets = player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
 	let listDinozShop: demonDinozFiche[] = [];
 
-	if (player.demonShop.length !== totalDinoz) {
-		const dinozArray = [];
-		let randomRace: DinozRace;
-		let randomDisplay: string;
-		const availableRaces: DinozRace[] = Object.values(raceList).filter(
-			r => r.demon && checkCondition(r.demon.condition, player, dinozAtCemetary[0].id)
-		);
+	if (demonTickets >= 30) {
+		// Expected number of Dinoz is based on game config plus some extra for the Belius reward.
+		const hasBelius = player.rewards.some(r => r.rewardId === Reward.BELIUS);
+		const totalDinoz = Math.round(gameConfig.demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
 
-		// Make x Dinoz object to fill shop
-		for (let i = 0; i < totalDinoz; i++) {
-			// Set a random race to the dinoz
-			randomRace = getRandomArrayElement(availableRaces);
+		// If the shop does not have the matching create N dinoz to fill the shop (based on game config)
+		if (player.demonShop.length  === 0 || player.demonShop.length < totalDinoz) {
+			const dinozArray = [];
+			let randomRace: DinozRace;
+			let randomDisplay: string;
+			const availableRaces: DinozRace[] = Object.values(raceList).filter(
+				r => r.demon && checkCondition(r.demon.condition, player, dinozAtCemetary[0].id)
+			);
 
-			// Make a random display
-			randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
+			// Make x Dinoz object to fill shop
+			for (let i = 0; i < totalDinoz; i++) {
+				// Set a random race to the dinoz
+				randomRace = getRandomArrayElement(availableRaces);
 
-			const seed = randomUUID();
-			// Build Dinoz so it can be used to auto level up.
-			const dinoz = {
-				playerId: player.id,
-				id: i, // Temp value
-				display: randomDisplay,
-				level: 1,
-				price: randomRace.price,
-				raceId: randomRace.raceId,
-				maxLife: 100,
-				nbrUpFire: randomRace.nbrFire,
-				nbrUpWood: randomRace.nbrWood,
-				nbrUpWater: randomRace.nbrWater,
-				nbrUpLightning: randomRace.nbrLightning,
-				nbrUpAir: randomRace.nbrAir,
-				nextUpElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt),
-				nextUpAltElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt + 'pdc'),
-				seed,
-				status: [],
-				skills: [] as DinozSkill[],
-				unlockableSkills: [] as DinozSkill[]
-			};
-			if (randomRace.skills) {
-				randomRace.skills.forEach(s => {
-					dinoz.skills.push({
-						id: s,
-						dinozId: dinoz.id,
-						gameDinozId: null,
-						skillId: s,
-						state: true
+				// Make a random display
+				randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
+
+				const seed = randomUUID();
+				// Build Dinoz so it can be used to auto level up.
+				const dinoz = {
+					playerId: player.id,
+					id: i, // Temp value
+					display: randomDisplay,
+					level: 1,
+					price: randomRace.price,
+					raceId: randomRace.raceId,
+					maxLife: 100,
+					nbrUpFire: randomRace.nbrFire,
+					nbrUpWood: randomRace.nbrWood,
+					nbrUpWater: randomRace.nbrWater,
+					nbrUpLightning: randomRace.nbrLightning,
+					nbrUpAir: randomRace.nbrAir,
+					nextUpElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt),
+					nextUpAltElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt + 'pdc'),
+					seed,
+					status: [],
+					skills: [] as DinozSkill[],
+					unlockableSkills: [] as DinozSkill[]
+				};
+				if (randomRace.skills) {
+					randomRace.skills.forEach(s => {
+						dinoz.skills.push({
+							id: s,
+							dinozId: dinoz.id,
+							gameDinozId: null,
+							skillId: s,
+							state: true
+						});
 					});
-				});
-			}
-			randomlyLevelUpDinoz(dinoz, 10);
-			dinozArray.push(dinoz);
-		}
-
-		const createCommand: Prisma.PlayerDemonShopCreateManyInput[] = dinozArray.map(d => {
-			return {
-				playerId: d.playerId,
-				display: d.display,
-				raceId: d.raceId,
-				seed: d.seed,
-				nextUpElementId: d.nextUpElementId,
-				nextUpAltElementId: d.nextUpAltElementId,
-				nbrUpFire: d.nbrUpFire,
-				nbrUpWood: d.nbrUpWood,
-				nbrUpWater: d.nbrUpWater,
-				nbrUpLightning: d.nbrUpLightning,
-				nbrUpAir: d.nbrUpAir,
-				skills: {
-					create: d.skills.map(s => {
-						return { skillId: s.skillId };
-					})
-				},
-				unlockableSkills: {
-					create: d.unlockableSkills.map(s => {
-						return { skillId: s.skillId };
-					})
 				}
-			};
-		});
-		// Create the Dinoz
-		await createMultipleDemonDinoz(createCommand);
-		// Format the created Dinoz properly for the response
-		listDinozShop = (await getDinozFromDemonShopRequest(player.id))
-			.map(d => {
-				const race = raceList[d.raceId as RaceEnum];
-				const dinoz = {
-					id: d.id,
-					level: 10,
-					maxLife: 100,
+				randomlyLevelUpDinoz(dinoz, 10);
+				dinozArray.push(dinoz);
+			}
+
+			const createCommand: Prisma.PlayerDemonShopCreateManyInput[] = dinozArray.map(d => {
+				return {
+					playerId: d.playerId,
 					display: d.display,
 					raceId: d.raceId,
+					seed: d.seed,
+					nextUpElementId: d.nextUpElementId,
+					nextUpAltElementId: d.nextUpAltElementId,
 					nbrUpFire: d.nbrUpFire,
 					nbrUpWood: d.nbrUpWood,
 					nbrUpWater: d.nbrUpWater,
 					nbrUpLightning: d.nbrUpLightning,
 					nbrUpAir: d.nbrUpAir,
-					skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
-					price: race.price
-				};
-				// Apply passive skills so the elements show the proper values.
-				dinoz.skills.forEach(s => {
-					const skillData = skillList[s as Skill];
-					if (skillData.effects) {
-						applySkillToDinoz(skillData.effects, dinoz);
+					skills: {
+						create: d.skills.map(s => {
+							return { skillId: s.skillId };
+						})
+					},
+					unlockableSkills: {
+						create: d.unlockableSkills.map(s => {
+							return { skillId: s.skillId };
+						})
 					}
-				});
-				return dinoz;
-			})
-			.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
-	} else {
-		listDinozShop = player.demonShop
-			.map(d => {
-				const race = raceList[d.raceId as RaceEnum];
-				const dinoz = {
-					id: d.id,
-					level: 10,
-					maxLife: 100,
-					display: d.display,
-					raceId: d.raceId,
-					nbrUpFire: d.nbrUpFire,
-					nbrUpWood: d.nbrUpWood,
-					nbrUpWater: d.nbrUpWater,
-					nbrUpLightning: d.nbrUpLightning,
-					nbrUpAir: d.nbrUpAir,
-					skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
-					price: race.price
 				};
-				// Apply passive skills so the elements show the proper values.
-				dinoz.skills.forEach(s => {
-					const skillData = skillList[s as Skill];
-					if (skillData.effects) {
-						applySkillToDinoz(skillData.effects, dinoz);
-					}
-				});
-				return dinoz;
-			})
-			.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
+			});
+			// Create the Dinoz
+			await createMultipleDemonDinoz(createCommand);
+			// Format the created Dinoz properly for the response
+			listDinozShop = (await getDinozFromDemonShopRequest(player.id))
+				.map(d => {
+					const race = raceList[d.raceId as RaceEnum];
+					const dinoz = {
+						id: d.id,
+						level: 10,
+						maxLife: 100,
+						display: d.display,
+						raceId: d.raceId,
+						nbrUpFire: d.nbrUpFire,
+						nbrUpWood: d.nbrUpWood,
+						nbrUpWater: d.nbrUpWater,
+						nbrUpLightning: d.nbrUpLightning,
+						nbrUpAir: d.nbrUpAir,
+						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
+						price: race.price
+					};
+					// Apply passive skills so the elements show the proper values.
+					dinoz.skills.forEach(s => {
+						const skillData = skillList[s as Skill];
+						if (skillData.effects) {
+							applySkillToDinoz(skillData.effects, dinoz);
+						}
+					});
+					return dinoz;
+				})
+				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
+		} else {
+			listDinozShop = player.demonShop
+				.map(d => {
+					const race = raceList[d.raceId as RaceEnum];
+					const dinoz = {
+						id: d.id,
+						level: 10,
+						maxLife: 100,
+						display: d.display,
+						raceId: d.raceId,
+						nbrUpFire: d.nbrUpFire,
+						nbrUpWood: d.nbrUpWood,
+						nbrUpWater: d.nbrUpWater,
+						nbrUpLightning: d.nbrUpLightning,
+						nbrUpAir: d.nbrUpAir,
+						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
+						price: race.price
+					};
+					// Apply passive skills so the elements show the proper values.
+					dinoz.skills.forEach(s => {
+						const skillData = skillList[s as Skill];
+						if (skillData.effects) {
+							applySkillToDinoz(skillData.effects, dinoz);
+						}
+					});
+					return dinoz;
+				})
+				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
+		}
 	}
 
 	return {
