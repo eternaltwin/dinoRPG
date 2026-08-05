@@ -2620,7 +2620,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Common Box
 	[Item.BOX_COMMON]: {
-		name: BoxType.COMMON,
+		name: BoxType.COMMON.toLowerCase(),
 		itemId: 993,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2637,7 +2637,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Box
 	[Item.BOX_RARE]: {
-		name: BoxType.RARE,
+		name: BoxType.RARE.toLowerCase(),
 		itemId: 994,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2654,7 +2654,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Epic Box
 	[Item.BOX_EPIC]: {
-		name: BoxType.EPIC,
+		name: BoxType.EPIC.toLowerCase(),
 		itemId: 995,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2671,7 +2671,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Legendary Box
 	[Item.BOX_LEGENDARY]: {
-		name: BoxType.LEGENDARY,
+		name: BoxType.LEGENDARY.toLowerCase(),
 		itemId: 996,
 		canBeEquipped: false,
 		canBeUsedNow: true,
