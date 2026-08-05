@@ -4,7 +4,6 @@ import type { Response } from 'express';
 import { DISCORD } from '../../context.js';
 
 const sendError = (res: Response, error: unknown) => {
-	console.error(error);
 	if (!(error instanceof Error)) {
 		throw error;
 	}
@@ -38,6 +37,7 @@ const sendError = (res: Response, error: unknown) => {
 
 	if (!(error instanceof ExpectedError)) {
 		try {
+			console.error(error);
 			DISCORD.sendError(error, res);
 		} catch (discordError) {
 			console.error(discordError);
