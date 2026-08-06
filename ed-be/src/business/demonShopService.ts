@@ -3,7 +3,7 @@ import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { demonDinozFiche, demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
-import { auth, ownsDinoz } from '../dao/playerDao.js';
+import { auth } from '../dao/playerDao.js';
 import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
@@ -282,13 +282,13 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	const dinozAtCemetary = player.dinoz.filter(
+	const hasActiveDinozAtCemetary = player.dinoz.some(
 		d =>
 			d.placeId === PlaceEnum.CIMETIERE &&
 			(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
 	);
 
-	if (dinozAtCemetary.length === 0) {
+	if (!hasActiveDinozAtCemetary) {
 		throw new ExpectedError(translate('noDinozAtCemetary', authed));
 	}
 
@@ -330,16 +330,15 @@ export async function buyDemonDinoz(req: Request) {
 	promises.push(updateDinozCount(authed.id, 1));
 	// Delete shop for player
 	promises.push(deleteDinozInDemonShopRequest(player.id));
-	// Create Dinoz
+	await Promise.all(promises);
+
+	// Create Dinoz separately
 	dinoz.skills.forEach(s => {
 		const skillData = skillList[s.skillId as Skill];
 		if (skillData.effects) {
 			applySkillToDinoz(skillData.effects, dinoz);
 		}
 	});
-	await Promise.all(promises);
-
-	// Create Dinoz separately
 	const dinozCreateCommand: Prisma.DinozCreateInput = {
 		name: '?',
 		unavailableReason: null,
@@ -396,15 +395,6 @@ export async function sacrificeDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.dinozId;
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError(translate('notYourDinoz', authed));
-	}
-
-	if (await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE)) {
-		throw new ExpectedError(translate('noDinozAtCemetary', authed));
-	}
-
 	// Retrieve player with dinoz shop info
 	const dinoz = await getDinozDataForSacrificeRequest(dinozId);
 
@@ -413,20 +403,21 @@ export async function sacrificeDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	if (dinoz.player.id != authed.id) {
+	if (dinoz.player.id !== authed.id) {
 		throw new ExpectedError(translate('error.notYourDinoz', authed));
 	}
 
-	if (dinoz.placeId != PlaceEnum.CIMETIERE) {
-		throw new ExpectedError(translate('error.dinozNotAtCemetary', authed));
+	// Checking that the Dinoz to sacrifice is not at the cemetary is enough, no need to check for any Dinoz being there.
+	if (dinoz.placeId !== PlaceEnum.CIMETIERE) {
+		throw new ExpectedError(translate('error.dinozWrongLocation', authed));
 	}
 
 	if (!dinoz.player.rewards.some(r => r.rewardId === Reward.DEMON)) {
 		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.sacrificed) {
-		throw new ExpectedError(translate('error.dinozAlreadySacrificed', authed));
+	if (dinoz.unavailableReason !== null && dinoz.unavailableReason !== UnavailableReason.resting) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	if (dinoz.items.length > 0) {
@@ -439,7 +430,6 @@ export async function sacrificeDinoz(req: Request) {
 	const demonTickets = getDemonShopPrice(dinoz.level);
 
 	// Cannot exceed max number of tickets (even if the cap is really high)
-
 	if (playerTickets + demonTickets > itemList[Item.DEMON_TICKET].maxQuantity) {
 		throw new ExpectedError(translate('error.tooManyItems', authed));
 	}
@@ -453,7 +443,7 @@ export async function sacrificeDinoz(req: Request) {
 		})
 	);
 	// Update demon tickets of player
-	if (dinoz.player.items.find(i => i.itemId === Item.DEMON_TICKET)) {
+	if (dinoz.player.items.some(i => i.itemId === Item.DEMON_TICKET)) {
 		promises.push(increaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, demonTickets));
 	} else {
 		promises.push(insertItem(dinoz.player.id, { itemId: Item.DEMON_TICKET, quantity: demonTickets }));
@@ -462,6 +452,8 @@ export async function sacrificeDinoz(req: Request) {
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking
 	promises.push(updatePoints(dinoz.player.id, -dinoz.level));
+	// Update player Dinoz count
+	promises.push(updateDinozCount(authed.id, -1));
 	// Add log
 	promises.push(createLog(LogType.Sacrifice, dinoz.player.id, dinoz.id, demonTickets));
 	await Promise.all(promises);
@@ -478,13 +470,14 @@ export async function unsacrificeDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.dinozId;
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError(translate('notYourDinoz', authed));
+	// Check if the player has any active Dinoz at the cemetary
+	if (!(await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE))) {
+		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
 	}
 
-	if (await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE)) {
-		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+	// Check the player can unsacrifice Dinoz.
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 	}
 
 	// Retrieve player with dinoz shop info
@@ -495,17 +488,16 @@ export async function unsacrificeDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	if (dinoz.player.id != authed.id) {
+	if (dinoz.player.id !== authed.id) {
 		throw new ExpectedError(translate('error.notYourDinoz', authed));
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.unsacrificing) {
-		throw new ExpectedError(translate('error.dinozAlreadyBeingUnsacrificed', authed));
+	if (!dinoz.player.rewards.some(r => r.rewardId === Reward.DEMON)) {
+		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	// Check the player can unsacrifice Dinoz.
-	if (await isAtMaxActiveDinoz(authed)) {
-		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
+	if (dinoz.unavailableReason !== UnavailableReason.sacrificed) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	const cost = getDemonShopPrice(dinoz.level);
@@ -532,6 +524,8 @@ export async function unsacrificeDinoz(req: Request) {
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking
 	promises.push(updatePoints(dinoz.player.id, dinoz.level));
+	// Update player Dinoz count
+	promises.push(updateDinozCount(authed.id, 1));
 	// Add log
 	promises.push(createLog(LogType.Unsacrifice, dinoz.player.id, dinoz.id, cost));
 	await Promise.all(promises);

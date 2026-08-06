@@ -71,10 +71,8 @@
 		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
 		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"dinozNotAtCemetary": "Votre Dinoz ne se trouve pas au cimetière.",
-		"dinozAlreadySacrificed": "Votre Dinoz est déjà sacrifié.",
-		"dinozAlreadyBeingResurrected": "Votre Dinoz est déjà en train d'être ressuscité.",
 		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
 		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
 		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
 		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."

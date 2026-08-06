@@ -548,7 +548,7 @@ export async function isAtMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
  * @summary Checks if a player has any *active* Dinoz at the given location.
  * @param playerId ID of the player.
  * @param locationId The location ID to check for.
- * @returns boolean: true if at least one, false if none..
+ * @returns boolean: true if at least one, false if none.
  */
 export async function hasAnyActiveDinozAt(authed: Pick<Player, 'id' | 'lang'>, placeId: PlaceEnum) {
 	const player = await getDinozPlaces(authed.id);
