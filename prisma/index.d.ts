@@ -117959,6 +117959,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    autoReequipItems?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
@@ -118030,6 +118031,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    autoReequipItems?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
@@ -118165,6 +118167,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
@@ -118236,6 +118239,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
