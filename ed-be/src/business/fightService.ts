@@ -365,7 +365,7 @@ export async function rewardFightVsMonsters(
 			xp += monsterXp;
 		}
 
-		xp = calculatePvExp(xp, d.level, gameConfig().dinoz.maxLevel, gameConfig().dinoz.initialMaxLevel);
+		xp = calculatePvExp(xp, d.level, gameConfig().dinoz.maxLevel, gameConfig().dinoz.maxLevel);
 
 		xp = calculateXPBonus(d, xp, player);
 		const max = getMaxXp(d, gameConfig());
@@ -378,6 +378,9 @@ export async function rewardFightVsMonsters(
 			levelup = true;
 		}
 		totalWinXP += xp;
+
+		// Don't show level up if Dinoz is at max level.
+		if (d.level === gameConfig().dinoz.maxLevel) levelup = false;
 
 		const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
 		if (!attacker) {
