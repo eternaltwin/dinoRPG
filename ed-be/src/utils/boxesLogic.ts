@@ -1,10 +1,10 @@
 import { getBoxHandlerInformations } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import gameConfig from '../config/game.config.js';
 import { Item, itemList, itemToBoxType } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { boxProbabilities } from '@drpg/core/models/item/itemProbability';
 import weightedRandom from './fight/weightedRandom.js';
+import { gameConfig } from './gameConfig.js';
 
 /**
  * Calculate a player completion, an approximate score of its progress in the game and its content
@@ -43,10 +43,10 @@ export async function calculatePlayerCompletion(playerId: string) {
 		rewards: 10
 	};
 	const completion =
-		(((dinozCount / gameConfig.dinoz.maxQuantity) * coefficients.dinoz +
+		(((dinozCount / gameConfig().dinoz.maxQuantity) * coefficients.dinoz +
 			(universalCount / AVAILABLE_UNIVERSAL) * coefficients.universal +
-			(missionTotal / (AVAILABLE_MISSIONS * gameConfig.dinoz.maxQuantity)) * coefficients.missions +
-			(dinozLevelTotal / (gameConfig.dinoz.maxLevel * gameConfig.dinoz.maxQuantity)) * coefficients.level +
+			(missionTotal / (AVAILABLE_MISSIONS * gameConfig().dinoz.maxQuantity)) * coefficients.missions +
+			(dinozLevelTotal / (gameConfig().dinoz.maxLevel * gameConfig().dinoz.maxQuantity)) * coefficients.level +
 			(totalRewards / AVAILABLE_REWARDS) * coefficients.rewards) /
 			(coefficients.dinoz +
 				coefficients.universal +

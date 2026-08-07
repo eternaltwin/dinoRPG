@@ -25,7 +25,6 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
-import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -52,6 +51,7 @@ import { getPlayerEventProgression, increasePlayerEventProgression } from '../da
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { getArchivedFightRequest } from '../dao/archiveDao.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Process a fight
@@ -348,7 +348,7 @@ export async function rewardFightVsMonsters(
 
 		/** Restrict the use of low level dinoz in order to make easy money **/
 		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
+		if (d.experience >= getMaxXp(d, gameConfig()) && d.level < gameConfig().dinoz.maxLevel) gfact = 0.1;
 		/** Dinoz with malediction not generating gold **/
 		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 			gfact = 0.0;
@@ -365,10 +365,10 @@ export async function rewardFightVsMonsters(
 			xp += monsterXp;
 		}
 
-		xp = calculatePvExp(xp, d.level, gameConfig.dinoz.maxLevel, gameConfig.dinoz.initialMaxLevel);
+		xp = calculatePvExp(xp, d.level, gameConfig().dinoz.maxLevel, gameConfig().dinoz.initialMaxLevel);
 
 		xp = calculateXPBonus(d, xp, player);
-		const max = getMaxXp(d);
+		const max = getMaxXp(d, gameConfig());
 		if (d.experience >= max) {
 			// No xp if the dinoz was already at max
 			levelup = true;

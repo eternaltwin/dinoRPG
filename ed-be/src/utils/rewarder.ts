@@ -21,6 +21,7 @@ import { getItemMaxQuantity } from '../business/inventoryService.js';
 import { translateTarget } from '../utils/server/translate.js';
 import { Lang } from '@drpg/prisma';
 import { getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { gameConfig } from './gameConfig.js';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -54,7 +55,7 @@ export async function rewarder(
 					await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
 					break;
 				case RewardEnum.MAXEXPERIENCE:
-					const maxExp = getMaxXp(dinoz);
+					const maxExp = getMaxXp(dinoz, gameConfig());
 					await updateDinoz(dinoz.id, { experience: maxExp });
 					break;
 				case RewardEnum.SKILL:

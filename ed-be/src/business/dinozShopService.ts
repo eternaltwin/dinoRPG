@@ -4,13 +4,13 @@ import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
-import { auth, getPlayerDinozShopRequest } from '../dao/playerDao.js';
+import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getRandomArrayElement } from '../utils/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { generateDinozDisplay } from '../utils/dinoz.js';
 import translate from '../utils/server/translate.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -55,13 +55,13 @@ export async function getDinozFromDinozShop(req: Request) {
 			if (playerReward.rewardId === Reward.PTEROZ) {
 				availableRaces.push(raceList[RaceEnum.PTEROZ]);
 			}
-			if (playerReward.rewardId === Reward.QUETZU && playerData.quetzuBought < gameConfig.shop.buyableQuetzu) {
+			if (playerReward.rewardId === Reward.QUETZU && playerData.quetzuBought < gameConfig().shop.buyableQuetzu) {
 				availableRaces.push(raceList[RaceEnum.QUETZU]);
 			}
 		});
 
 		// Make x Dinoz object to fill shop
-		for (let i = 0; i < gameConfig.shop.dinozNumber; i++) {
+		for (let i = 0; i < gameConfig().shop.dinozNumber; i++) {
 			// Set a random race to the dinoz
 			randomRace = getRandomArrayElement(availableRaces);
 

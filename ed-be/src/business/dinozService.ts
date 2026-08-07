@@ -47,7 +47,6 @@ import type { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, LogType, UnavailableReason } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { TemporaryStatus } from '../constants/index.js';
 import {
@@ -100,6 +99,7 @@ import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
@@ -113,7 +113,7 @@ import { finishDinozUnsacrifice } from './demonShopService.js';
 async function canLevelUpNow(
 	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & { status: Pick<DinozStatus, 'statusId'>[] }
 ) {
-	if (!canLevelUp(dinoz, gameConfig)) {
+	if (!canLevelUp(dinoz, gameConfig())) {
 		return false;
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
@@ -501,7 +501,7 @@ export async function getDinozFiche(req: Request) {
 
 	const isInTournament = await isDinozInTournament(dinozId);
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, isInTournament ? currentTournament : null);
+	const ret = toDinozFiche(playerData, dinozId, isInTournament ? currentTournament : null, gameConfig());
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return ret;
@@ -602,7 +602,7 @@ export async function buyDinoz(req: Request) {
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
 
-	return toDinozFiche(newDinoz, dinozCreated.id, null);
+	return toDinozFiche(newDinoz, dinozCreated.id, null, gameConfig());
 }
 
 /**
@@ -1338,7 +1338,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id, null));
+	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id, null, gameConfig()));
 	if (leader.followers.length >= max) {
 		throw new ExpectedError(translate('maxFollowers', authed));
 	}
