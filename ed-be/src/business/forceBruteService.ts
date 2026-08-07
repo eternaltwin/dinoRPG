@@ -682,6 +682,9 @@ export async function fightFBTournamentOpponent(req: Request) {
 			// Else, allow xp overflow (should happen only once) and raise levelup flag
 			levelup = true;
 		}
+
+		// Don't show level up if Dinoz is at max level.
+		if (dinoz.level === gameConfig().dinoz.maxLevel) levelup = false;
 	}
 
 	await updateDinoz(dinoz.id, {

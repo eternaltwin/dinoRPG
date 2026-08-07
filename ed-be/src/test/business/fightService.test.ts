@@ -9,9 +9,6 @@ vi.mock('../../context.js', () => ({
 	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
 	GLOBAL: { config: {} }
 }));
-vi.mock('../../config/game.config.js', () => ({
-	default: { dinoz: { maxLevel: 60, initialMaxLevel: 40, maxQuantity: 5 }, general: {} }
-}));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozFightDataRequest: vi.fn(), updateDinoz: vi.fn() }));
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn(), removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
