@@ -20,7 +20,10 @@
 						<div class="life" :style="{ width: `${(dinoz.life / dinoz.maxLife) * 100}%` }" />
 					</div>
 					<div class="experience-full">
-						<div class="experience" :style="{ width: `${(dinoz.experience / getMaxXp(dinoz)) * 100}%` }" />
+						<div
+							class="experience"
+							:style="{ width: `${(dinoz.experience / getMaxXp(dinoz, gameConfig())) * 100}%` }"
+						/>
 					</div>
 
 					<template #content>
@@ -63,6 +66,7 @@ import { DinozService } from '../services/DinozService.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { statusList } from '../constants/status.js';
 import { errorHandler } from '../utils/index.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import Elements from '../components/data/Elements.vue';
 import DinozMini from '../components/dinoz/DinozMini.vue';
@@ -82,7 +86,8 @@ export default defineComponent({
 			playerStore: playerStore(),
 			dinozList: [] as ManagePageData,
 			statusList,
-			getMaxXp
+			getMaxXp,
+			gameConfig
 		};
 	},
 	methods: {

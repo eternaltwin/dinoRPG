@@ -33,6 +33,7 @@ import { ETUser } from '@drpg/core/models/player/ETUser';
 import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
 import { GLOBAL } from '../context.js';
 import { eventState } from './clanWar.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Get data from player on login
@@ -48,7 +49,7 @@ export async function getCommonData(req: Request) {
 	}
 
 	const dinoz = playerCommonData.dinoz.map(d => {
-		return { ...toDinozFiche(playerCommonData, d.id, null) };
+		return { ...toDinozFiche(playerCommonData, d.id, null, gameConfig()) };
 	});
 	for (const d of dinoz) {
 		d.actions = await getAvailableActions(d, playerCommonData);
@@ -235,7 +236,7 @@ export async function getDinozList(req: Request) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
-	return dinozActive.map(dinoz => toDinozFicheLite(dinoz));
+	return dinozActive.map(dinoz => toDinozFicheLite(dinoz, gameConfig()));
 }
 
 /**

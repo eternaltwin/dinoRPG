@@ -39,6 +39,7 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -671,7 +672,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		await addMoney(authed.id, gold);
 		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
 		xp = calculateXPBonus(dinoz, xp, dinoz.player);
-		const max = getMaxXp(dinoz);
+		const max = getMaxXp(dinoz, gameConfig());
 
 		if (dinoz.experience >= max) {
 			// No xp if the dinoz was already at max
