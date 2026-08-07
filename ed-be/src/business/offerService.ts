@@ -40,12 +40,12 @@ import { LOGGER } from '../context.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import { createLog } from '../dao/logDao.js';
-import gameConfig from '../config/game.config.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
 import { computeUSkillsForPlayer } from './skillService.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
 import dayjs from 'dayjs';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * Get the list of current offers
@@ -559,9 +559,9 @@ export async function checkRefund(
 
 	if (dinoz) {
 		const maxDinoz =
-			gameConfig.dinoz.maxQuantity +
-			(refund.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
-			(refund.messie ? gameConfig.dinoz.leaderMessieBonus : 0) +
+			gameConfig().dinoz.maxQuantity +
+			(refund.leader ? gameConfig().dinoz.leaderMessieBonus : 0) +
+			(refund.messie ? gameConfig().dinoz.leaderMessieBonus : 0) +
 			(dinoz.playerId === playerId ? 1 : 0);
 		if (refund._count.dinoz + 1 > maxDinoz) {
 			return 'tooManyActiveDinoz';

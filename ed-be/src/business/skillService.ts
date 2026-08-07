@@ -22,7 +22,6 @@ import {
 	Player
 } from '@drpg/prisma';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { GLOBAL } from '../context.js';
 import {
 	getAllDinozFromAccount,
@@ -63,6 +62,7 @@ import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -261,7 +261,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
-	result.newMaxExperience = getMaxXp(dinozSkills);
+	result.newMaxExperience = getMaxXp(dinozSkills, gameConfig());
 
 	// Update stat
 	await setSpecificStat(StatTracking.LVL_UP, dinozSkills.player.id, 1);
@@ -318,11 +318,11 @@ function getDinozLearnableSkills(
 	tryNumber: number,
 	event?: GameDinozUsage
 ) {
-	if (dinoz.level === gameConfig.dinoz.maxLevel) {
+	if (dinoz.level === gameConfig().dinoz.maxLevel) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
-	const maxExperience = getMaxXp(dinoz);
+	const maxExperience = getMaxXp(dinoz, gameConfig());
 
 	if (dinoz.experience < maxExperience && !event) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't have enough experience`);
@@ -390,7 +390,7 @@ function getNewDinozDataFromLevelUp(
 	},
 	dinozRace: DinozRace
 ) {
-	const maxXp = getMaxXp(dinozSkills);
+	const maxXp = getMaxXp(dinozSkills, gameConfig());
 	const allLearnableSkills = getLearnableSkills(dinozSkills);
 
 	const allUnlockableSkills = getUnlockableSkills(dinozSkills);
