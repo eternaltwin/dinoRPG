@@ -66,6 +66,7 @@ export async function getCommonData(req: Request) {
 			hasPAC: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PAC),
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel,
+			autoReequipItems: playerCommonData.autoReequipItems,
 			archivedSiteId: playerCommonData.archivedSiteId,
 			shareArchivedData: playerCommonData.shareArchivedData,
 			displayedNotifications: playerCommonData.displayedNotifications
@@ -317,6 +318,9 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'skipFight') {
 		await setPlayer(authed.id, { skipFight: req.body.setting });
+	}
+	if (req.params.setting === 'autoReequipItems') {
+		await setPlayer(authed.id, { autoReequipItems: req.body.setting });
 	}
 	if (req.params.setting === 'archivedSiteId') {
 		await setPlayer(authed.id, { archivedSiteId: req.body.setting });

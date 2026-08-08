@@ -49,8 +49,11 @@ import {
 	getNewsIllustration,
 	getNewsCreatedDate,
 	selectPollOption,
-	toggleLikeNews
+	toggleLikeNews,
+	createTranslatedNews
 } from '../../business/newsService.js';
+import { Lang, NewsType } from '@drpg/prisma';
+import { DISCORD } from '../../context.js';
 
 const req = (params = {}, body = {}, file?: unknown) => makeRequest({ params, body, file } as never);
 
@@ -68,6 +71,38 @@ describe('postNews', () => {
 		);
 		expect(newsDao.createNews).toHaveBeenCalled();
 		expect(result).toEqual({ id: 1 });
+	});
+});
+
+describe('createTranslatedNews', () => {
+	it('creates translated news and sends a discord notification', async () => {
+		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1, frenchTitle: 'test', frenchText: 'test' } as never);
+		await createTranslatedNews(
+			't',
+			NewsType.announce,
+			'newsTitle',
+			{ [Lang.fr]: {} } as Record<Lang, Record<string, unknown>>,
+			'newsCorpus',
+			{ [Lang.es]: {} } as Record<Lang, Record<string, unknown>>,
+			false
+		);
+		expect(newsDao.createNews).toHaveBeenCalled();
+		expect(DISCORD.sendNewsNotification).not.toHaveBeenCalled();
+	});
+	it('creates translated news without a discord notification', async () => {
+		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1, frenchTitle: 'test', frenchText: 'test' } as never);
+		console.log(`Log on test`);
+		await createTranslatedNews(
+			't',
+			NewsType.announce,
+			'newsTitle',
+			{} as Record<Lang, Record<string, unknown>>,
+			'newsCorpus',
+			{} as Record<Lang, Record<string, unknown>>,
+			true
+		);
+		expect(newsDao.createNews).toHaveBeenCalled();
+		expect(DISCORD.sendNewsNotification).toHaveBeenCalled();
 	});
 });
 
