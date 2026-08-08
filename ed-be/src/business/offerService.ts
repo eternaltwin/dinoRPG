@@ -616,10 +616,10 @@ export async function checkRefund(
 		});
 
 	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
-		return 'tooMuchIngredient';
+		return 'tooManyIngredients';
 	}
 	if (itemWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
-		return 'tooMuchItem';
+		return 'tooManyItems';
 	}
 	return true;
 }
