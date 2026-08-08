@@ -1,7 +1,7 @@
 import { getBoxHandlerInformations } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import gameConfig from '../config/game.config.js';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList, itemToBoxType } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { boxProbabilities } from '@drpg/core/models/item/itemProbability';
 import weightedRandom from './fight/weightedRandom.js';
@@ -86,8 +86,8 @@ export function selectBox(completion: number) {
 }
 
 export function boxOpening(box: ItemFiche) {
-	const myBox = Object.values(itemList).find(i => i.itemId === box.itemId);
-	const myProba = boxProbabilities.find(b => b.boxType === myBox?.name);
+	const boxType = itemToBoxType[box.itemId];
+	const myProba = boxProbabilities.find(b => b.boxType === boxType);
 	if (!myProba) {
 		throw new ExpectedError(`Special item ${box.itemId} is not implemented`);
 	}

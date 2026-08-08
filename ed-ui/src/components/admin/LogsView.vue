@@ -20,7 +20,6 @@
 <script lang="ts">
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { defineComponent } from 'vue';
@@ -101,13 +100,13 @@ const getLogPropsForTranslation = (
 	switch (log.type) {
 		case 'ItemUsed':
 			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
+				item: $t(`item.name.${itemList[+log.values[0]].name}`),
 				quantity: log.values[1]
 			};
 			break;
 		case 'ItemBought':
 			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
+				item: $t(`item.name.${itemList[+log.values[0]].name}`),
 				quantity: log.values[1],
 				total: log.values[2]
 			};

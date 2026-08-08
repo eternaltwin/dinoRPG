@@ -44,7 +44,7 @@ import { OfferService } from '../../services/OfferService.js';
 import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import OfferLine from './OfferLine.vue';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { playerStore } from '../../store/index.js';
 import DZSelect from '../common/DZSelect.vue';
@@ -76,7 +76,7 @@ export default defineComponent({
 					endDate: new Date(offer.endDate),
 					items: offer.items.map(item => ({
 						...item,
-						name: (item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]) ?? ''
+						name: (item.isIngredient ? ingredientNameList[item.itemId] : itemList[item.itemId]?.name) ?? ''
 					}))
 				}))
 				.sort((a, b) => b.endDate.getTime() - a.endDate.getTime()); // Sort by endDate (descending)

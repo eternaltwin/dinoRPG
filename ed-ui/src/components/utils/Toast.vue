@@ -12,7 +12,6 @@
 <script lang="ts">
 import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'Toast',
@@ -23,8 +22,7 @@ export default defineComponent({
 			params: {} as Record<string, unknown>,
 			type: undefined as string | undefined,
 			value: undefined as undefined | string,
-			effect: undefined as undefined | string,
-			itemNameList: itemNameList
+			effect: undefined as undefined | string
 		};
 	},
 	mounted(): void {
