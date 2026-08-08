@@ -165,6 +165,13 @@ export enum Item {
 	UNDEFINED = 999
 }
 
+export const itemToBoxType: Readonly<Partial<Record<Item, BoxType>>> = {
+	[Item.BOX_COMMON]: BoxType.COMMON,
+	[Item.BOX_RARE]: BoxType.RARE,
+	[Item.BOX_EPIC]: BoxType.EPIC,
+	[Item.BOX_LEGENDARY]: BoxType.LEGENDARY
+};
+
 // Note:
 // Price is for the players' market.
 export const itemList: Readonly<Record<Item, ItemFiche>> = {
