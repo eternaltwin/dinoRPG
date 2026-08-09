@@ -93,9 +93,10 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
-	if (!canLevelUp) {
-		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
+	// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+	const levelUpForbidden = tournament && dinozTournament && dinozSkills.level >= tournament.levelLimit;
+	if (levelUpForbidden) {
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed));
 	}
 
 	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
@@ -159,10 +160,11 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 		const dinozTournament = await isDinozInTournament(dinozId);
 
-		canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
+		// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+		canLevelUp = !(tournament && dinozTournament && dinozSkills.level >= tournament.levelLimit);
 	}
 	if (!canLevelUp) {
-		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed));
 	}
 
 	if (dinozSkills.canChangeName) {

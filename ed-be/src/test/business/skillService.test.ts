@@ -159,6 +159,13 @@ describe('learnSkill', () => {
 			"can't learn this"
 		);
 	});
+
+	it('throws when dinoz cannot level up in tournament', async () => {
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ levelLimit: 5 } as never);
+		vi.mocked(dinozDao.isDinozInTournament).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue({ level: 20, player: { id: 'p1' } } as never);
+		await expect(getLearnableAndUnlockableSkills(req({ id: '1', tryNumber: '1' }))).rejects.toThrow('dinozCannotLvlUp');
+	});
 });
 
 describe('unlockDoubleSkills', () => {

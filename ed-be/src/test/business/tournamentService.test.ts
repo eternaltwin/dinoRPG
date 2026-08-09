@@ -18,6 +18,7 @@ vi.mock('../../dao/tournamentDao.js', () => ({ getLatestTournament: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../utils/tournamentManager.js', () => ({ default: { getCurrentTournamentState: vi.fn() } }));
 vi.mock('../../utils/fight/weightedRandom.js', () => ({ default: vi.fn() }));
+vi.mock('../../utils/tournament.cache.js', () => ({ invalidateTournamentCache: vi.fn() }));
 
 import { prisma } from '../../prisma.js';
 import * as playerDao from '../../dao/playerDao.js';
@@ -36,6 +37,7 @@ import {
 	tournamentsHistory,
 	getNewLevelLimits
 } from '../../business/tournamentService.js';
+import { invalidateTournamentCache } from '../../utils/tournament.cache.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -71,6 +73,7 @@ describe('createTournamentTeam', () => {
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
 		await createTournamentTeam(req({}, { team: [1, 2] }));
 		expect(prisma.tournamentTeam.create).toHaveBeenCalled();
+		expect(invalidateTournamentCache).toHaveBeenCalled();
 	});
 
 	it('throws when not in qualification phase', async () => {
@@ -140,6 +143,7 @@ describe('deleteTournamentTeam', () => {
 		vi.mocked(prisma.dojo.findUnique).mockResolvedValue({ tournamentTeamId: 7 } as never);
 		await deleteTournamentTeam(req());
 		expect(prisma.tournamentTeam.delete).toHaveBeenCalledWith({ where: { id: 7 } });
+		expect(invalidateTournamentCache).toHaveBeenCalled();
 	});
 	it('throws when no team', async () => {
 		vi.mocked(prisma.dojo.findUnique).mockResolvedValue({ tournamentTeamId: null } as never);

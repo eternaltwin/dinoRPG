@@ -118,7 +118,9 @@ async function canLevelUpNow(
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinoz.id);
-	return !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
+	// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+	const levelUpForbidden = tournament && dinozTournament && dinoz.level >= tournament.levelLimit;
+	return !levelUpForbidden;
 }
 
 /**
