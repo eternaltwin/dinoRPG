@@ -225,14 +225,7 @@ export async function getDinozPlace(dinozId: number) {
 export async function isDinozInTournament(dinozId: number) {
 	return withSpan(isDinozInTournament.name, async () => {
 		let tournament = await getActiveTeamsCached(prisma);
-		if (!tournament) {
-			const testTournament = await TournamentManager.getActiveTeams(prisma);
-			if (!testTournament) {
-				return false;
-			} else {
-				tournament = testTournament;
-			}
-		}
+		if (!tournament) return false;
 
 		const dinoz = await prisma.dinoz.findUnique({
 			where: { id: dinozId },
