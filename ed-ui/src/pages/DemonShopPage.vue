@@ -17,14 +17,14 @@
 			v-for="(dinoz, index) in demonShop.dinoz"
 			:key="dinoz.id"
 		>
-			<DZShop :dinoz="dinoz" sacrifice currency="demon" @action="confirmSacrifice" />
+			<DZShop :dinoz="dinoz" sacrifice currency="demon" details="elementsOnly" @action="confirmSacrifice" />
 		</div>
 
 		<div class="titleContent">
 			<h3>{{ $t('shop.demon.buy_title') }}</h3>
 		</div>
 		<div class="demon_sheets" :id="'demon_sheet_' + index" v-for="(dinoz, index) in demonShop.shop" :key="dinoz.id">
-			<DZShop :dinoz="dinoz" currency="demon" details @action="confirmPurchase(dinoz.id)" />
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmPurchase(dinoz.id)" />
 		</div>
 
 		<div class="titleContent">
@@ -37,7 +37,7 @@
 			v-for="(dinoz, index) in demonShop.sacrificed"
 			:key="dinoz.id"
 		>
-			<DZShop :dinoz="dinoz" currency="demon" details @action="confirmUnsacrifice(dinoz.id)" />	
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id)" />
 		</div>
 	</div>
 </template>
@@ -50,12 +50,13 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DemonShopService } from '../services/DemonShopService.js';
 import { playerStore, useDinozStore } from '../store/index.js';
 import { errorHandler, utils } from '../utils/index.js';
-import { demonDinozFiche, demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
+import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 export default defineComponent({
 	name: 'DemonShopPage',
@@ -85,7 +86,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		async confirmSacrifice(sacrifice: demonDinozFiche): Promise<void> {
+		async confirmSacrifice(sacrifice: DinozShopFiche): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: this.$t('popup.attention'),
@@ -166,7 +167,7 @@ export default defineComponent({
 				}
 			}
 		},
-		toggleDetails(dinoz: demonDinozFiche) {
+		toggleDetails(dinoz: DinozShopFiche) {
 			if (this.openDetails.has(dinoz.id)) {
 				this.openDetails.delete(dinoz.id);
 			} else {

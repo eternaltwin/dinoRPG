@@ -13,7 +13,7 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { LogType, UnavailableReason } from '@drpg/prisma';
 
-import { auth, ownsDinoz } from '../../dao/playerDao.js';
+import { auth } from '../../dao/playerDao.js';
 import {
 	createMultipleDemonDinoz,
 	deleteDinozInDemonShopRequest,

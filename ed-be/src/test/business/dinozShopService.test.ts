@@ -59,8 +59,8 @@ describe('getDinozFromDinozShop', () => {
 		const result = await getDinozFromDinozShop(makeRequest());
 
 		expect(result).toEqual([
-			{ id: '1', race: 2, display: 'aaa' },
-			{ id: '3', race: 5, display: 'ccc' }
+			{ id: 1, race: 2, display: 'aaa' },
+			{ id: 3, race: 5, display: 'ccc' }
 		]);
 		expect(mockAuth).toHaveBeenCalledOnce();
 	});

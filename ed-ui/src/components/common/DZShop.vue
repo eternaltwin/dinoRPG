@@ -35,7 +35,7 @@
 						`sacrifice` only controls the action button label — it is independent of `details`.
 					-->
 					<Elements
-						v-if="!details"
+						v-if="details === 'classic' || details === 'elementsOnly'"
 						:fire="dinoz.nbrUpFire"
 						:wood="dinoz.nbrUpWood"
 						:water="dinoz.nbrUpWater"
@@ -43,17 +43,29 @@
 						:air="dinoz.nbrUpAir"
 						style="margin-top: -5px"
 					/>
-					<DZButton v-if="details" size="small" @click="toggleDetails">
+					<DZButton v-if="details === 'advanced'" size="small" @click="toggleDetails">
 						{{ $t('button.details') }}
 					</DZButton>
 					<DZButton @click="$emit('action', dinoz)">
 						{{ sacrifice ? $t('shop.demon.sacrifice') : $t('button.chose') }}
 					</DZButton>
 				</div>
+				<template v-if="details === 'classic'">
+					<Tippy theme="normal" tag="div" class="skill" v-for="skill in dinoz.skills" :key="skill">
+						<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
+						{{ $t(`skill.name.${skillList[skill].name}`) }}
+						<template #content>
+							<h1>
+								{{ $t(`skill.name.${skillList[skill].name}`) }}
+							</h1>
+							<p v-html="formatContent($t(`skill.description.${skillList[skill].name}`))" />
+						</template>
+					</Tippy>
+				</template>
 			</div>
 		</div>
 
-		<DZDisclaimer v-if="details && isDetailsOpen" round class="dinoz_details">
+		<DZDisclaimer v-if="details === 'advanced' && isDetailsOpen" round class="dinoz_details">
 			<div class="element_row">
 				<Elements
 					:fire="dinoz.nbrUpFire"
@@ -110,16 +122,16 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import type { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import type { demonDinozFiche } from '@drpg/core/models/shop/demonShopFiche';
 import { utils } from '../../utils/index.js';
+import type { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 /*
  * Usage:
  *
- * sacrifice_sheet   →  <DZShop :dinoz="dinoz" sacrifice @action="confirmSacrifice" />
- * demon_sheet       →  <DZShop :dinoz="dinoz" details @action="d => confirmPurchase(d.id)" />
- * unsacrifice_sheet →  <DZShop :dinoz="dinoz" details @action="d => confirmUnsacrifice(d.id)" />
- * gold currency     →  <DZShop :dinoz="dinoz" currency="gold" details @action="onAction" />
+ * classic shop      →  <DZShop :dinoz="dinoz" currency="gold" @action="confirmSacrifice" />  
+ * sacrifice_sheet   →  <DZShop :dinoz="dinoz" sacrifice currency="demon" details="elementsOnly" @action="confirmSacrifice" />
+ * demon_sheet       →  <DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="d => confirmPurchase(d.id)" />
+ * unsacrifice_sheet →  <DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="d => confirmUnsacrifice(d.id)" />
  */
 export default defineComponent({
 	name: 'DZShop',
@@ -132,7 +144,7 @@ export default defineComponent({
 	},
 	props: {
 		dinoz: {
-			type: Object as PropType<demonDinozFiche>,
+			type: Object as PropType<DinozShopFiche>,
 			required: true
 		},
 		// Which currency icon to display next to the price.
@@ -140,12 +152,15 @@ export default defineComponent({
 			type: String as PropType<'gold' | 'demon'>,
 			default: 'gold'
 		},
-		// Show a collapsible skills panel with a toggle button.
+		// Chose the amount of details and format:
+		// - "classic" puts skills and elements in the same tight place, good for 1 or 2 skills.
+		// - "advanced" puts skills and elements in a separate spot accessible with a 'details' button.
+		// - "elementsOnly" is like classic except it does not show skills.
 		details: {
-			type: Boolean,
-			default: false
+			type: String as PropType<'classic' | 'advanced' | 'elementsOnly'>,
+			default: 'classic'
 		},
-		// Use the "sacrifier" label on the action button instead of "acheter".
+		// Use the "sacrifice" label on the action button instead of "buy".
 		sacrifice: {
 			type: Boolean,
 			default: false
@@ -182,7 +197,7 @@ export default defineComponent({
 		width: 100%;
 		max-width: 100%;
 		align-items: center;
- 
+
 		.dinoz_card {
 			width: 100%;
 			max-height: none;
@@ -217,11 +232,11 @@ export default defineComponent({
 		}
 	}
 }
- 
+
 .dinoz_card_wrapper {
 	max-width: 510px;
 }
- 
+
 .dinoz_card {
 	display: flex;
 	align-items: flex-start;
@@ -231,22 +246,22 @@ export default defineComponent({
 	width: fit-content;
 	background-image: url('../../assets/design/shop_dinoz_bg.webp');
 	background-repeat: no-repeat;
- 
+
 	.details,
 	.infos {
 		margin-top: 5px;
 		left: -20px;
 		position: relative;
- 
+
 		.desc,
 		.race {
 			margin-bottom: 1px;
- 
+
 			strong {
 				color: white;
 			}
 		}
- 
+
 		.desc,
 		.race,
 		.skill {
@@ -261,7 +276,7 @@ export default defineComponent({
 		}
 	}
 }
- 
+
 .dinoz_details {
 	flex-direction: column;
 	height: fit-content;
@@ -276,25 +291,25 @@ export default defineComponent({
 	position: relative;
 	z-index: 0;
 }
- 
+
 .loading-wrapper {
 	width: 190px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
- 
+
 .dinoImg {
 	bottom: 70px;
 	position: relative;
 	left: -20px;
 }
- 
+
 .desc_row {
 	display: flex;
 	gap: 10px;
 }
- 
+
 .button_row,
 .element_row {
 	width: 100%;
@@ -303,7 +318,7 @@ export default defineComponent({
 	align-items: center;
 	justify-content: space-between;
 }
- 
+
 .price {
 	padding-left: 5px;
 	width: 90px;
@@ -313,7 +328,7 @@ export default defineComponent({
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
- 
+
 	.money {
 		color: #ffee92;
 		font-weight: bold;
@@ -323,7 +338,7 @@ export default defineComponent({
 		align-items: center;
 	}
 }
- 
+
 table {
 	width: 90%;
 	margin-bottom: 10px;
@@ -332,10 +347,10 @@ table {
 	border-collapse: separate;
 	border-spacing: 1px;
 	align-self: center;
- 
+
 	tr {
 		display: table-row;
- 
+
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -353,38 +368,38 @@ table {
 			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
- 
+
 			&.name {
 				width: 100%;
 			}
- 
+
 			&.type {
 				width: 1%;
 				white-space: nowrap;
 			}
- 
+
 			&.state {
 				max-width: 38px;
 			}
 		}
- 
+
 		td {
 			font-size: 9pt;
 			padding: 1px 5px 1px 0;
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
- 
+
 			&.name {
 				background-image: url('../../assets/background/table_cell.webp');
 				background-position: 0px 0px;
 				padding-left: 15px;
 				max-width: 222px;
- 
+
 				p {
 					padding-top: 4px;
 				}
- 
+
 				img {
 					float: left;
 					position: relative;
@@ -392,7 +407,7 @@ table {
 					vertical-align: bottom;
 				}
 			}
- 
+
 			&.type {
 				font-weight: bold;
 				text-align: center;
@@ -401,13 +416,13 @@ table {
 				background-position: -10px 0px;
 				max-width: 4px;
 			}
- 
+
 			&.state {
 				vertical-align: top;
 				max-width: 40px;
 				background-image: url('../../assets/background/table_cell.webp');
 				background-position: -10px 0px;
- 
+
 				img {
 					float: left;
 					position: relative;
@@ -418,11 +433,11 @@ table {
 			}
 		}
 	}
- 
+
 	.disabled {
 		td {
 			opacity: 0.4;
- 
+
 			&.state {
 				background-color: red;
 				background-image: none;

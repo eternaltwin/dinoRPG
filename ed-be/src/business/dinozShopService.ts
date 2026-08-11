@@ -18,7 +18,6 @@ import translate from '../utils/server/translate.js';
  * @param req
  * @return Array<DinozShopFiche>
  */
-// TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
 	const authed = await auth(req);
 
@@ -96,12 +95,12 @@ export async function getDinozFromDinozShop(req: Request) {
 		const listDinozShop = playerData.dinozShop
 			.map(dinozShop => {
 				return {
-					id: dinozShop.id.toString(),
+					id: dinozShop.id,
 					race: dinozShop.raceId,
 					display: dinozShop.display
 				};
 			})
-			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
+			.sort((dinoz1, dinoz2) => dinoz1.id - dinoz2.id);
 
 		return listDinozShop;
 	}
