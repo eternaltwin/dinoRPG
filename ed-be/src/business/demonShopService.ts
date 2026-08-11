@@ -2,7 +2,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { demonDinozFiche, demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
+import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
 import { auth } from '../dao/playerDao.js';
 import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
@@ -41,12 +41,13 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 /**
  * @summary Get all dinoz data from demon dinoz shop
  * @description If no dinoz is found, then fill the shop with X new dinoz -> X is defined is config file
  * @param req DinozID at the shop
- * @return Array<DinozShopFiche>
+ * @return Array<demonShopFiche>
  */
 export async function getDinozFromDemonShop(req: Request): Promise<demonShopFiche> {
 	const authed = await auth(req);
@@ -63,7 +64,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	}
 
 	// Player must have a Dinoz at the cemetary
-	const dinozAtCemetary: demonDinozFiche[] = player.dinoz
+	const dinozAtCemetary: DinozShopFiche[] = player.dinoz
 		.filter(
 			d =>
 				d.placeId === PlaceEnum.CIMETIERE &&
@@ -90,7 +91,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		throw new ExpectedError(translate('noDinozAtCemetary', authed));
 	}
 
-	const sacrificedDinoz: demonDinozFiche[] = player.dinoz
+	const sacrificedDinoz: DinozShopFiche[] = player.dinoz
 		.filter(d => d.unavailableReason === UnavailableReason.sacrificed)
 		.map(d => {
 			return {
@@ -111,7 +112,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 
 	// Minimum 30 Demon tickets to see the list of demon dinoz.
 	const demonTickets = player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
-	let listDinozShop: demonDinozFiche[] = [];
+	let listDinozShop: DinozShopFiche[] = [];
 
 	if (demonTickets >= 30) {
 		// Expected number of Dinoz is based on game config plus some extra for the Belius reward.
