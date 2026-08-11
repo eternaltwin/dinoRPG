@@ -128,7 +128,7 @@ import type { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 /*
  * Usage:
  *
- * classic shop      →  <DZShop :dinoz="dinoz" currency="gold" @action="confirmSacrifice" />  
+ * classic shop      →  <DZShop :dinoz="dinoz" currency="gold" @action="confirmSacrifice" />
  * sacrifice_sheet   →  <DZShop :dinoz="dinoz" sacrifice currency="demon" details="elementsOnly" @action="confirmSacrifice" />
  * demon_sheet       →  <DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="d => confirmPurchase(d.id)" />
  * unsacrifice_sheet →  <DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="d => confirmUnsacrifice(d.id)" />

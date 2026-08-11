@@ -220,7 +220,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
 		// Only one team at a time in the dungeon
-		if (existing.leaderId) {
+		if (existing.leaderId && existing.leaderId !== dinoz.id) {
 			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 		}
 		await dinozEnterRun(existing.id, dinoz.id);
