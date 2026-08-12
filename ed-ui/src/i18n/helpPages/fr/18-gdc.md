@@ -4,6 +4,8 @@ icon:
   name: small_attack
 ---
 
+![point d'interrogation](@icons/small_question) Cette page n'est pas à jour avec le nouveau fonctionnement de la guerre des clans.
+
 Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :
 
 # Le Trésor du Clan
