@@ -13,3 +13,5 @@ Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou pl
 Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce **Guide du Jeu** en cliquant sur le bouton ![point d'interrogation](@icons/small_question) dans le Menu de droite.
 
 Pour découvrir la suite du **Guide**, merci de cliquer sur le bouton ![page suivante](@icons/small_page_down) ci-dessous.
+
+Certaines sections de ce guide ne sont pas finies et sont en cours de mise à jour.
