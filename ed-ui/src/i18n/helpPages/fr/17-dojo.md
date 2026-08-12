@@ -4,6 +4,8 @@ icon:
   name: small_dojo
 ---
 
+![point d'interrogation](@icons/small_question) Cette page n'est pas à jour avec le nouveau fonctionnement du dojo.
+
 Les **Dojos** sont des lieux où vous pouvez entraîner vos Dinoz les uns contre les autres, en combat singulier.
 
 ![](@icons/act_train) Vous pouvez y faire **affronter** vos Dinoz entre eux, mais aussi affronter ceux des membres de votre clan.",

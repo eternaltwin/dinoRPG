@@ -4,6 +4,8 @@ icon:
   name: small_attack
 ---
 
+![point d'interrogation](@icons/small_question) Le Championnant des Clans n'est pas encore implémenté. La description ci-dessous décrit son fonctionnement d'origine.
+
 Les **Clans** peuvent aussi s'affronter les uns aux autres lors du Championnat des Clans ! En voici les principes et les règles.
 
 # Le Championnat
