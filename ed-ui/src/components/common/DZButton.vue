@@ -47,7 +47,7 @@ export default defineComponent({
 	cursor: pointer;
 	text-decoration: none;
 
-	&.small {
+	&.tiny {
 		padding: 2px 4x;
 		color: #ffee92;
 		font-size: 7.5pt;
@@ -67,6 +67,23 @@ export default defineComponent({
 			background-color: #b0dd00;
 		}
 	}
+
+	&.small {
+		border-color: #c5482c;
+		border-style: double;
+		background-clip: padding-box;
+		background-color: #c5482c;
+		color: #ffee92;
+		padding: 2px 4px;
+		line-height: 7pt;
+		min-height: 28px;
+
+		&:hover {
+			background-color: #ffee92;
+			color: #c5482c;
+		}
+	}
+
 
 	&.normal {
 		line-height: 7pt;
