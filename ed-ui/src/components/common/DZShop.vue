@@ -43,7 +43,7 @@
 						:air="dinoz.nbrUpAir"
 						style="margin-top: -5px"
 					/>
-					<DZButton v-if="details === 'advanced'" size="small" @click="toggleDetails">
+					<DZButton v-if="details === 'advanced'" size="tiny" @click="toggleDetails">
 						{{ $t('button.details') }}
 					</DZButton>
 					<DZButton @click="$emit('action', dinoz)">
