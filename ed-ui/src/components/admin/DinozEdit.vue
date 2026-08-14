@@ -132,21 +132,9 @@
 							</option>
 						</template>
 					</select>
-					<input
-						class="radio"
-						type="radio"
-						value="add"
-						name="addStatus"
-						v-model="statusOperation"
-					/>
+					<input class="radio" type="radio" value="add" name="addStatus" v-model="statusOperation" />
 					<label class="radio">add</label>
-					<input
-						class="radio"
-						type="radio"
-						value="remove"
-						name="removeStatus"
-						v-model="statusOperation"
-					/>
+					<input class="radio" type="radio" value="remove" name="removeStatus" v-model="statusOperation" />
 					<label class="radio">remove</label>
 				</div>
 			</div>
@@ -170,21 +158,9 @@
 						</option>
 					</template>
 				</select>
-				<input
-					class="radio"
-					type="radio"
-					value="add"
-					name="addSkill"
-					v-model="skillOperation"
-				/>
+				<input class="radio" type="radio" value="add" name="addSkill" v-model="skillOperation" />
 				<label class="radio">add</label>
-				<input
-					class="radio"
-					type="radio"
-					value="remove"
-					name="removeSkill"
-					v-model="skillOperation"
-				/>
+				<input class="radio" type="radio" value="remove" name="removeSkill" v-model="skillOperation" />
 				<label class="radio">remove</label>
 			</div>
 		</fieldset>
@@ -207,13 +183,7 @@
 						</option>
 					</template>
 				</select>
-				<input
-					class="radio"
-					type="radio"
-					value="add"
-					name="addUnlockableSkill"
-					v-model="unlockableSkillOperation"
-				/>
+				<input class="radio" type="radio" value="add" name="addUnlockableSkill" v-model="unlockableSkillOperation" />
 				<label class="radio">add</label>
 				<input
 					class="radio"
@@ -296,9 +266,7 @@ export default defineComponent({
 			if (this.dinoz.unavailableReason === null) {
 				return Object.values(UnavailableReason);
 			} else {
-				return  Object.values(UnavailableReason).filter(
-					reason => reason === this.dinoz.unavailableReason
-				);
+				return Object.values(UnavailableReason).filter(reason => reason === this.dinoz.unavailableReason);
 			}
 		}
 	},
@@ -367,7 +335,7 @@ export default defineComponent({
 			this.dinozField.skillList = [];
 			this.dinozField.statusList = [];
 			this.unavailableReasonOperation = '';
-		},
+		}
 	},
 	async mounted() {
 		try {
