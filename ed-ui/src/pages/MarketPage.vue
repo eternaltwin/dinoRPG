@@ -50,7 +50,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-
 			tab: 0
 		};
 	},
