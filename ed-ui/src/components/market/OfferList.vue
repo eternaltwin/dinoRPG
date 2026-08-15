@@ -2,7 +2,7 @@
 	<DZDisclaimer help content="market.disclaimer" />
 	<div class="header df aic jcsb center">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
-		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow df aic g4 p2-4">
+		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
 			<span>{{ treasuryNotes }}</span>
 			<img :src="getImgURL('icons', 'ticket', true)" :alt="$t('item.name.treasure_coupon')" />
 			<template #content>
@@ -158,6 +158,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .treasury-notes {
 	color: #fce3bc;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 4px;
 }
 select {
 	background-color: #bc683c;

@@ -1,16 +1,36 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.demonShop')" :header="formatContent($t(`shop.demon.name`))" />
-	<DZDisclaimer help round :content="$t('shop.demon.help')" />
-	<!-- TODO1 Rework so the player picks between the sacrifice view, the buy view and the resurrect view. -->
-	<!-- TODO1 only show the buy & help views if the player has Dinoz in those categories -->
-	<DZDisclaimer help round :content="$t('shop.demon.sacrifice_help')" />
-	<DZDisclaimer help round :content="$t('shop.demon.buy_help')" />
-	<DZDisclaimer help round :content="$t('shop.demon.unsacrifice_help')" />
+	<div class="tabPanel">
+		<ul class="tabs">
+			<li :class="tab === 0 ? 'active' : ''">
+				<a href="#" @click="changeTab(0)">{{ $t('shop.demon.sacrifice_title') }}</a>
+			</li>
+			<li :class="{ active: tab === 1, disabled: isShopEmpty }">
+				<a href="#" @click.prevent="!isShopEmpty && changeTab(1)">
+					{{ $t('shop.demon.buy_title') }}
+				</a>
+			</li>
+			<li :class="{ active: tab === 2, disabled: isSacrificedEmpty }">
+				<a href="#" @click.prevent="!isSacrificedEmpty && changeTab(2)">
+					{{ $t('shop.demon.unsacrifice_title') }}
+				</a>
+			</li>
+		</ul>
+	</div>
 
-	<div class="shop_view">
-		<div class="titleContent">
-			<h3>{{ $t('shop.demon.sacrifice_title') }}</h3>
-		</div>
+	<DZDisclaimer v-if="tab === 0" help :content="$t('shop.demon.sacrifice_help')" />
+	<DZDisclaimer v-if="tab === 1" help :content="$t('shop.demon.buy_help')" />
+	<DZDisclaimer v-if="tab === 2" help :content="$t('shop.demon.unsacrifice_help')" />
+
+	<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
+		<span>{{ demonTickets }}</span>
+		<img :src="getImgURL('icons', 'small_demon_tk')" :alt="$t('item.name.demon_ticket')" />
+		<template #content>
+			{{ $t('shop.demon.yourDemonTickets') }}
+		</template>
+	</Tippy>
+
+	<div v-if="tab === 0" class="shop_view">
 		<div
 			class="sacrifice_sheets"
 			:id="'sacrifice_sheet_' + index"
@@ -19,25 +39,23 @@
 		>
 			<DZShop :dinoz="dinoz" sacrifice currency="demon" details="elementsOnly" @action="confirmSacrifice" />
 		</div>
+	</div>
 
-		<div class="titleContent">
-			<h3>{{ $t('shop.demon.buy_title') }}</h3>
-		</div>
+	<div v-if="tab === 1" class="shop_view">
 		<div class="demon_sheets" :id="'demon_sheet_' + index" v-for="(dinoz, index) in demonShop.shop" :key="dinoz.id">
 			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmPurchase(dinoz.id)" />
 		</div>
+	</div>
 
-		<div class="titleContent">
-			<h3>{{ $t('shop.demon.unsacrifice_title') }}</h3>
-		</div>
-
+	<!-- TODO paginate sacrificed Dinoz to avoid pulling 100s in a single query -->
+	<div v-if="tab === 2" class="shop_view">
 		<div
 			class="unsacrifice_sheets"
 			:id="'unsacrifice_sheet_' + index"
 			v-for="(dinoz, index) in demonShop.sacrificed"
 			:key="dinoz.id"
 		>
-			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id)" />
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id, dinoz.price)" />
 		</div>
 	</div>
 </template>
@@ -48,6 +66,7 @@ import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZShop from '../components/common/DZShop.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DemonShopService } from '../services/DemonShopService.js';
+import { InventoryService } from '../services/InventoryService.js';
 import { playerStore, useDinozStore } from '../store/index.js';
 import { errorHandler, utils } from '../utils/index.js';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
@@ -57,6 +76,7 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { Item } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'DemonShopPage',
@@ -73,14 +93,31 @@ export default defineComponent({
 			skillList,
 			ElementType,
 			demonShop: {} as demonShopFiche,
-			openDetails: new Map() as Map<number, SkillDetails[]>
+			openDetails: new Map() as Map<number, SkillDetails[]>,
+			tab: 0 as number,
+			demonTickets: 0
 		};
 	},
+	computed: {
+		isShopEmpty(): boolean {
+			return !this.demonShop.shop?.length;
+		},
+		isSacrificedEmpty(): boolean {
+			return !this.demonShop.sacrificed?.length;
+		}
+	},
 	methods: {
+		changeTab(tab: number) {
+			this.tab = tab;
+		},
 		async refresh(): Promise<void> {
 			try {
 				this.demonShop = await DemonShopService.getDemonDinozShop();
 				this.openDetails = new Map();
+				// Get player's treasury notes
+				const items = await InventoryService.getAllItemsData();
+				const demonTicketItem = items.find(i => i.id === Item.DEMON_TICKET);
+				this.demonTickets = demonTicketItem ? demonTicketItem.quantity : 0;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -112,6 +149,11 @@ export default defineComponent({
 				// Update store to show the dinoz as buy back
 				this.demonShop.dinoz = this.demonShop.dinoz.filter(d => d.id !== sacrifice.id);
 				this.demonShop.sacrificed.push(sacrifice);
+				const oldValue = this.demonTickets;
+				this.demonTickets += sacrifice.price;
+				if (oldValue < 30 && this.demonTickets >= 30) {
+					await this.refresh();
+				}
 			}
 		},
 		async confirmPurchase(id: number): Promise<void> {
@@ -161,6 +203,14 @@ export default defineComponent({
 						message: this.$t('shop.demon.unsacrifice_toast'),
 						type: 'info'
 					});
+
+					// Go to dinoz page
+					await this.$router.push({
+						name: 'DinozPage',
+						params: {
+							id
+						}
+					});
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -197,11 +247,62 @@ export default defineComponent({
 		max-width: 95%;
 	}
 }
+.treasury-notes {
+	color: #fce3bc;
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 4px;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.tabPanel {
+	position: relative;
+	color: white;
+	width: 100%;
+	top: 6px;
+
+	.tabs {
+		padding-top: 4px;
+		background-color: transparent;
+		text-shadow: 1px 1px 0px #9a4029;
+		border-bottom: 3px solid #bc683c;
+
+		:hover {
+			color: white;
+		}
+
+		li.active {
+			margin-top: 1px;
+			text-shadow: 1px 1px 0px #9a4029;
+			a {
+				background-color: #d69e68;
+				line-height: 16pt;
+				color: white;
+				border-left-color: #ffe7aa;
+				border-top-color: #ffe7aa;
+				border-bottom: 1px solid #d69e68;
+			}
+		}
+		li.disabled {
+			a {
+				opacity: 0.45;
+				cursor: not-allowed;
+				pointer-events: none; // belt-and-suspenders alongside the @click guard
+			}
+		}
+	}
+}
+
 .shop_view {
 	display: flex;
-	gap: 30px;
+	gap: 40px;
 	flex-direction: column;
 	align-self: center;
+	align-items: center;
 }
 .titleContent {
 	height: fit-content;
