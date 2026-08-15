@@ -84,7 +84,6 @@ export default defineComponent({
 		}
 	}
 
-
 	&.normal {
 		line-height: 7pt;
 		min-width: 95px;
