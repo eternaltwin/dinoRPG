@@ -1805,17 +1805,17 @@
 	"shop": {
 		"demon": {
 			"name": "Boutique Démoniaque",
-			"help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** des Dinoz en échanges de **Tickets Démons** :demon_tk:, achetez des Dinoz démons grâce à ces tickets ou ressusciter des Dinoz sacrifiés !",
-			"sacrifice_help": "Vous pouvez sacrifier vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié ne compte plus pour le compte.",
+			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
 			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
-			"unsacrifice_help": "Vous pouvez racheter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
 			"level": "Niv. {level}",
 			"sacrifice": "Sacrifier",
 			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
 			"sacrifice_title": "Sacrifice",
-			"buy_title": "Achat",
+			"buy_title": "Invocation",
 			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures."
+			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"yourDemonTickets": "Vos Tickets Démons"
 		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
