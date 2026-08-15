@@ -300,17 +300,18 @@ export const initializeDinoz = (
 	};
 };
 
-export const reincarnateDinoz = (race: DinozRace, display: string, seed: string): Prisma.DinozUpdateInput => {
+export const reincarnateDinoz = (race: DinozRace, display: string, seed: string, isDemon: boolean): Prisma.DinozUpdateInput => {
 	const fullDisplay = [...display];
-	fullDisplay[1] = '0';
+	fullDisplay[1] = isDemon ? 'A' : '0';
 
 	let fire = 0;
 	let water = 0;
 	let wood = 0;
 	let lightning = 0;
 	let air = 0;
+	const reincarnation_salt = "abcde";
 	for (let i = 0; i < 5; i++) {
-		const element = getRandomUpElement(race.upChance); // Seed is purposefully different so gained elements cannot be predicted
+		const element = getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + reincarnation_salt[i]); // Seed is purposefully different than for level ups so gained elements cannot be predicted
 		switch (element) {
 			case 1:
 				fire++;
@@ -421,8 +422,6 @@ export const randomlyLevelUpDinoz = (
 		// Each learnable skill's weight is 1. Unlocking skills weight is based on its length divided by 2.
 		// Note: algorithm to select a Demon Dinoz skills has not been found in MT's source code. This is an attempt to recreate it. Completely made up.
 
-		dinoz.level++;
-
 		const element = dinoz.nextUpElementId as ElementType;
 		const currentLearnableSkills = getLearnableSkills(dinoz, element).map(s => s.skillId);
 		const currentUnlockableSkills = getUnlockableSkills(dinoz, element).map(s => s.skillId);
@@ -459,7 +458,7 @@ export const randomlyLevelUpDinoz = (
 		});
 
 		// Add odds of unlocking skills except for last iteration (unless there is no skill to learn)
-		if (dinoz.level < targetLevel || currentLearnableSkills.length === 0) {
+		if (dinoz.level < targetLevel - 1 || currentLearnableSkills.length === 0) {
 			// Key is '-1' for unlocking given all skill IDs are > 0
 			odds.push({ skillId: -1, odds: currentUnlockableSkills.length / 2 });
 		}
@@ -493,6 +492,7 @@ export const randomlyLevelUpDinoz = (
 		const upChance = getDinozUpChance(newLearnableSkills, newUnlockableSkills, dinozRace);
 		dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level);
 		dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
+		dinoz.level++;
 	}
 };
 
