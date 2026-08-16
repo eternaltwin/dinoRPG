@@ -36,7 +36,8 @@ export enum Action {
 	WAR_DEFEND = 'war_defend',
 	WAR_REMOVE = 'war_remove',
 	WAR_ATTACK = 'war_attack',
-	DUNGEON_ENTER = 'dungeon_enter'
+	DUNGEON_ENTER = 'dungeon_enter',
+	DUNGEON = 'dungeon'
 }
 
 export interface ActionFiche {
@@ -196,6 +197,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DUNGEON_ENTER]: {
 		name: Action.DUNGEON_ENTER,
+		imgName: 'act_train'
+	},
+	[Action.DUNGEON]: {
+		name: Action.DUNGEON,
 		imgName: 'act_train'
 	}
 };

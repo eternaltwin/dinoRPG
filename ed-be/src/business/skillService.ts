@@ -550,7 +550,7 @@ export async function reincarnate(req: Request) {
 	promises.push(removeAllStatusFromDinoz(dinoz.id));
 	promises.push(removeAllMissionsFromDinoz(dinoz.id));
 	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
-	promises.push(updatePoints(authed.id, 1-dinoz.level)); // Remove N-1 points
+	promises.push(updatePoints(authed.id, 1 - dinoz.level)); // Remove N-1 points
 	promises.push(computeUSkillsForPlayer(authed.id));
 	await Promise.all(promises);
 

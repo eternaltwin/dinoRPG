@@ -259,6 +259,7 @@
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
 			"war_attack": "Attaquer le château adverse.",
 			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"dungeon": "Voir l'évolution de l'exploration actuelle...",
 			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
@@ -297,6 +298,7 @@
 			"war_remove": "Retirer de la défense",
 			"war_attack": "Attaquer le château",
 			"dungeon_enter": "Entrer",
+			"dungeon": "Accéder au Plan",
 			"demon_shop": "Boutique Démoniaque"
 		}
 	},
@@ -4654,7 +4656,8 @@
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
-		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
@@ -5298,6 +5301,11 @@
 		"blockSender": "Bloquer l'expéditeur"
 	},
 	"dungeon": {
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Etage {floor}",
+		"name": {
+			"katatombs": "les Katatombes"
+		},
 		"katatombs": {
 			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
 			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
@@ -5305,32 +5313,33 @@
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes..."
 		},
 		"msg": {
-			"locked": "La porte « {name} » est verrouillée. Il vous faut trouver la clé du même nom !",
-			"opened": "La clé « {name} » tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez la clé « {name} » ! Elle doit bien ouvrir une porte du même nom, quelque part...",
+			"locked": "La porte des {name} est verrouillée.",
+			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
+			"key": "Vous trouvez la clé des {name} !",
 			"gold": "Vous trouvez {value} pièces d'or !"
 		},
-		"doorNames": [
-			"Sphinx des Katatombes",
-			"Crocs du Démon",
-			"Cimetière du Crépuscule",
-			"Mandragore",
-			"Gardien Déchu",
-			"Âmes Errantes",
-			"Napodino d'Or",
-			"Vieil Ossuaire",
-			"Grand Tout Puissant",
-			"Kabuki Oublié",
-			"Smog Éternel",
-			"Korgon de Jais",
-			"Larmes d'Irma",
-			"Caushemesh",
-			"Forêt Grumeleuse",
-			"Feu Follet",
-			"Griffes du Cyclope",
-			"Écailles de l'Hydre",
-			"Marais Collant",
-			"Lune Rousse"
+		"doorNames_prefix": [
+			"Arbres ",
+			"Dragons ",
+			"Calamars ",
+			"Gobelins ",
+			"Kabukis ",
+			"Roméos ",
+			"Magiciens ",
+			"Anges ",
+			"Démons "
+		],
+		"doorNames_sufix": [
+			"Magiques",
+			"Morts",
+			"Vivants",
+			"Noirs",
+			"Enchantés",
+			"Enchanteurs",
+			"Rouges",
+			"en Plastique",
+			"en Mousse",
+			"Etincelants"
 		]
 	},
 	"scenario": {

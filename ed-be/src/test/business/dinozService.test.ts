@@ -545,9 +545,40 @@ describe('management & group endpoints', () => {
 		} as never);
 		await expect(followDinoz(req({ id: '1', targetId: '1' }))).rejects.toThrow('Cannot follow itself');
 	});
+	it('followDinoz throws when the dinoz is busy elsewhere', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest)
+			.mockResolvedValueOnce({
+				dinoz: [
+					{
+						id: 1,
+						canChangeName: false,
+						leaderId: null,
+						unavailableReason: 'dungeon',
+						followers: [],
+						skills: [],
+						placeId: 1
+					}
+				]
+			} as never)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 2, canChangeName: false, followers: [], skills: [], placeId: 1 }]
+			} as never);
+		await expect(followDinoz(req({ id: '1', targetId: '2' }))).rejects.toThrow('UnavailableReason.dungeon');
+	});
+	it('followDinoz throws when the leader is busy elsewhere', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }]
+			} as never)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 2, canChangeName: false, unavailableReason: 'dungeon', followers: [], skills: [], placeId: 1 }]
+			} as never);
+		await expect(followDinoz(req({ id: '1', targetId: '2' }))).rejects.toThrow('UnavailableReason.dungeon');
+	});
 
 	it('unfollowDinoz disconnects the leader', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getFollowingDinoz).mockResolvedValue({ unavailableReason: null } as never);
 		await unfollowDinoz(req({ id: '1' }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { leader: { disconnect: true } });
 	});
@@ -555,12 +586,26 @@ describe('management & group endpoints', () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(false as never);
 		await expect(unfollowDinoz(req({ id: '1' }))).rejects.toThrow('does not own');
 	});
+	it('unfollowDinoz throws when the dinoz is busy elsewhere', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getFollowingDinoz).mockResolvedValue({ unavailableReason: 'dungeon' } as never);
+		await expect(unfollowDinoz(req({ id: '1' }))).rejects.toThrow('UnavailableReason.dungeon');
+	});
 
 	it('changeLeaderDinoz promotes a follower', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		vi.mocked(dinozDao.getLeaderWithFollowers).mockResolvedValue({ id: 5, followers: [{ id: 1 }] } as never);
 		await changeLeaderDinoz(req({ id: '1' }));
 		expect(prisma.dinoz.updateMany).toHaveBeenCalled();
+	});
+	it('changeLeaderDinoz throws when the current leader is busy elsewhere', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getLeaderWithFollowers).mockResolvedValue({
+			id: 5,
+			unavailableReason: 'dungeon',
+			followers: [{ id: 1 }]
+		} as never);
+		await expect(changeLeaderDinoz(req({ id: '1' }))).rejects.toThrow('UnavailableReason.dungeon');
 	});
 
 	it('disband releases followers', async () => {

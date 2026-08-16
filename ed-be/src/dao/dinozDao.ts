@@ -1166,6 +1166,7 @@ export async function getLeaderWithFollowers(dinozId: number) {
 			where: { followers: { some: { id: dinozId } } },
 			select: {
 				id: true,
+				unavailableReason: true,
 				followers: { select: { id: true, skills: true } },
 				skills: true
 			}

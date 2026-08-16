@@ -108,7 +108,10 @@ describe('dungeonService — fog-of-war boundary', () => {
 		const wallDir = dirs.find(([dx, dy]) => !(t[d.start.x + dx]?.[d.start.y + dy] ?? false));
 		expect(wallDir).toBeDefined();
 		const r = await move(
-			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, dx: wallDir![0], dy: wallDir![1], dl: 0 } })
+			makeRequest({
+				params: { id: 'unit-test-dungeon' },
+				body: { dinozId: 1, dx: wallDir![0], dy: wallDir![1], dl: 0 }
+			})
 		);
 		expect(r.ok).toBe(false);
 		expect(r.reveal).toEqual([]);

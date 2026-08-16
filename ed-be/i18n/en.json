@@ -336,7 +336,8 @@
 		"sacrificed": "Your Dinoz is sacrificed",
 		"selling": "Your Dinoz is in auction",
 		"superdom": "Your Dinoz is at the Superdom",
-		"resting": "Your Dinoz is resting"
+		"resting": "Your Dinoz is resting",
+		"dungeon": "Your Dinoz is visiting a dungeon."
 	},
 	"fb_tournament": {
 		"noOpponent": "There is no one to fight at the moment"
