@@ -1,4 +1,6 @@
 import { Application, BlurFilter, Container, Graphics, Sprite, Text } from 'pixi.js';
+import { GlowFilter } from '@pixi/filter-glow';
+import { DropShadowFilter } from '@pixi/filter-drop-shadow';
 // @ts-expect-error smonster is missing from the package's sdino.d.ts typings.
 import { smonster } from '@eternaltwin/dinorpg_animations';
 import { KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
@@ -24,12 +26,19 @@ export class MazeRenderer {
 	readonly app: Application;
 	readonly cell: number;
 	readonly actorLayer: Container;
+	// Ground + overground tiles only (View.hx's groundBitmap raster) — kept apart
+	// from mapLayer's icons/monsters so the ground-only filter stack below doesn't
+	// touch them, matching View.hx which never filters its item/monster clips.
+	private readonly groundLayer: Container;
 	private readonly mapLayer: Container;
 	// View.hx's two wall planes: north faces (front + N corners) sit behind the
 	// dinoz; the south/side faces (sides + back + S corners) sit in front of it,
 	// so the dinoz is occluded by near walls and walks over far ones.
 	private readonly wallBackLayer: Container;
 	private readonly wallFrontLayer: Container;
+	// Per-skin atmosphere wash (View.hx skin.mask) — a flat fog-tinted rect over
+	// the whole level, above the map but below the fog-of-war unknown-cell fog.
+	private readonly maskLayer: Container;
 	// Blurred fog plane over unknown cells, topmost — View.hx blurs its fog
 	// bitmap (BlurFilter 32px on 40px cells) so fog bleeds ~one cell over the
 	// revealed frontier instead of cutting hard at the cell edge.
@@ -55,6 +64,10 @@ export class MazeRenderer {
 	private readonly monsterSprites = new Map<string, SMonster>();
 	/** The message box (View.hx winMsg), if one is open. */
 	private msgBox: Container | null = null;
+	// View.hx updateScroll's eased camera position (View.hx view.dx/dy), world px.
+	// NaN until the first focus() call, which snaps instead of easing in from (0,0).
+	private camX = NaN;
+	private camY = NaN;
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -72,21 +85,50 @@ export class MazeRenderer {
 		});
 		parent.appendChild(this.app.view as HTMLCanvasElement);
 
+		this.groundLayer = new Container();
 		this.mapLayer = new Container();
 		this.wallBackLayer = new Container();
 		this.actorLayer = new Container();
 		this.actorLayer.sortableChildren = true; // leader (zIndex 1) draws over followers
 		this.wallFrontLayer = new Container();
+		this.maskLayer = new Container();
 		this.fogLayer = new Container();
 		this.fxLayer = new Container();
 		this.app.stage.addChild(
+			this.groundLayer,
 			this.mapLayer,
 			this.wallBackLayer,
 			this.actorLayer,
 			this.wallFrontLayer,
+			this.maskLayer,
 			this.fogLayer,
 			this.fxLayer
 		);
+		// View.hx's post-processing on the merged ground+overground raster: an inner
+		// drop shadow plus a dark inner glow (ambient occlusion) and a muted outer
+		// glow (ambient tint). Never touches walls/icons/monsters, same as the original.
+		// ponytail: @pixi/filter-drop-shadow has no inner/knockout mode like Flash's —
+		// approximated as a regular outer shadow; swap for a custom shader if it reads flat.
+		const s = this.cell / 40;
+		this.groundLayer.filters = [
+			new DropShadowFilter({ offset: { x: 15 * s, y: 0 }, color: 0x000000, alpha: 0.3, blur: 3 * s, quality: 2 }),
+			new GlowFilter({
+				distance: 64 * s,
+				innerStrength: 2,
+				outerStrength: 0,
+				color: 0x000000,
+				alpha: 0.35,
+				quality: 0.2
+			}),
+			new GlowFilter({
+				distance: 64 * s,
+				outerStrength: 2,
+				innerStrength: 0,
+				color: 0x72525b,
+				alpha: 0.6,
+				quality: 0.2
+			})
+		];
 		this.app.ticker.add(this.updateFx, this);
 
 		this.showLevel(0);
@@ -99,8 +141,14 @@ export class MazeRenderer {
 		return this.dims.levels;
 	}
 
-	/** Fold newly revealed cells into the known map; redraw if any are visible. */
-	applyReveal(cells: RevealedCell[]): void {
+	/**
+	 * Fold newly revealed cells into the known map; redraw if any are visible.
+	 * `origin` is the player's cell at reveal time (View.hx posX/posY at the point
+	 * updateFog() runs, i.e. *after* the move) — orients each reveal's fade-fx away
+	 * from the player, per View.hx's `atan2(posY-py, posX-px)`. Omit it to skip
+	 * the rotation (fx still fades, just axis-aligned).
+	 */
+	applyReveal(cells: RevealedCell[], origin?: { x: number; y: number }): void {
 		let dirty = false;
 		for (const c of cells) {
 			const level = this.known[c.l];
@@ -117,7 +165,7 @@ export class MazeRenderer {
 			level.set(`${c.x},${c.y}`, c);
 			if (c.l === this.level) {
 				dirty = true;
-				if (isNew) this.revealFx(c.x, c.y);
+				if (isNew) this.revealFx(c.x, c.y, origin);
 			}
 		}
 		if (dirty) this.showLevel(this.level);
@@ -129,27 +177,23 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * Scroll the camera so world point (px, py) stays inside a centered dead-zone.
-	 * The target roams freely within that inner box; the camera only pans once it
-	 * would cross the edge — so the dino isn't glued to the center. Clamped to the
-	 * map bounds.
+	 * Scroll the camera to keep world point (px, py) centered, easing 10%/frame
+	 * toward that target every call — View.hx's `updateScroll()` (`view.dx +=
+	 * (target - view.dx) * 0.1`, every frame, no dead zone). Snaps instead of
+	 * easing in on the very first call, so entering a level doesn't fly the
+	 * camera in from a corner. Clamped to the map bounds (View.hx doesn't clamp,
+	 * but its fixed-size stage never needed to).
 	 */
 	focus(px: number, py: number): void {
 		const worldW = this.dims.width * this.cell;
 		const worldH = this.dims.height * this.cell;
-		const marginX = this.viewW * 0.35;
-		const marginY = this.viewH * 0.35;
-		let camX = -this.app.stage.position.x;
-		let camY = -this.app.stage.position.y;
-		const sx = px - camX;
-		const sy = py - camY;
-		if (sx < marginX) camX = px - marginX;
-		else if (sx > this.viewW - marginX) camX = px - (this.viewW - marginX);
-		if (sy < marginY) camY = py - marginY;
-		else if (sy > this.viewH - marginY) camY = py - (this.viewH - marginY);
-		camX = Math.max(0, Math.min(camX, Math.max(0, worldW - this.viewW)));
-		camY = Math.max(0, Math.min(camY, Math.max(0, worldH - this.viewH)));
-		this.app.stage.position.set(-camX, -camY);
+		const clampX = (v: number): number => Math.max(0, Math.min(v, Math.max(0, worldW - this.viewW)));
+		const clampY = (v: number): number => Math.max(0, Math.min(v, Math.max(0, worldH - this.viewH)));
+		const targetX = clampX(px - this.viewW / 2);
+		const targetY = clampY(py - this.viewH / 2);
+		this.camX = Number.isNaN(this.camX) ? targetX : this.camX + (targetX - this.camX) * 0.1;
+		this.camY = Number.isNaN(this.camY) ? targetY : this.camY + (targetY - this.camY) * 0.1;
+		this.app.stage.position.set(-this.camX, -this.camY);
 	}
 
 	/** Toggle wall-frame debug overlay: each edge piece gets a coloured box + side label. */
@@ -168,12 +212,15 @@ export class MazeRenderer {
 		this.level = lv;
 		const skin = this.skinFor(this.level);
 		this.app.renderer.background.color = skin.fog;
+		this.groundLayer.removeChildren();
 		this.mapLayer.removeChildren();
 		this.wallBackLayer.removeChildren();
 		this.wallFrontLayer.removeChildren();
+		this.maskLayer.removeChildren();
 		this.fogLayer.removeChildren();
 		this.drawLevel(skin);
 		this.drawEntities();
+		this.drawMask(skin);
 		this.drawFog(skin);
 	}
 
@@ -306,6 +353,28 @@ export class MazeRenderer {
 	}
 
 	/**
+	 * View.hx skin.mask: a skin.fog-tinted wash over the whole level, strength
+	 * scaled by skin.mask (0 = none, e.g. forest; 100 = strongest, e.g. crypt).
+	 * Screen-space-fixed in the original (attached to the root, not the scrolling
+	 * level clip); a full-world rect of a flat colour looks identical either way.
+	 * ponytail: View.hx's `mask` is a library graphic we don't have (likely a
+	 * soft vignette, not a flat fill) — `_alpha = skin.mask` (0-100) was its clip
+	 * alpha, not a fill alpha, so using skin.mask/100 directly on an opaque rect
+	 * painted solid fog colour over the whole ground at mask=100. Capped instead
+	 * to a max ~18% tint so it reads as atmosphere; raise MASK_MAX if a real
+	 * vignette asset replaces this flat rect.
+	 */
+	private drawMask(skin: Skin): void {
+		if (skin.mask <= 0) return;
+		const MASK_MAX = 0.18;
+		const g = new Graphics();
+		g.beginFill(skin.fog, (skin.mask / 100) * MASK_MAX);
+		g.drawRect(0, 0, this.dims.width * this.cell, this.dims.height * this.cell);
+		g.endFill();
+		this.maskLayer.addChild(g);
+	}
+
+	/**
 	 * Fog plane: one rect per unknown cell in the skin's fog colour, blurred as
 	 * in View.hx (32px on 40px cells). The background already IS the fog colour,
 	 * so only the outward bleed shows — fog softly overlaps ~one cell of the
@@ -341,12 +410,18 @@ export class MazeRenderer {
 		this.fogLayer.addChild(g);
 	}
 
-	/** View.hx's fx_reveal: blurred fog square over the cell, fading out. */
-	private revealFx(x: number, y: number): void {
+	/**
+	 * View.hx's fx_reveal: blurred fog square over the cell, fading out, oriented
+	 * away from `origin` (the player's cell) — `atan2(posY-py, posX-px)`.
+	 */
+	private revealFx(x: number, y: number, origin?: { x: number; y: number }): void {
 		const g = new Graphics();
 		g.beginFill(this.skinFor(this.level).fog);
-		g.drawRect(x * this.cell, y * this.cell, this.cell, this.cell);
+		g.drawRect(-this.cell / 2, -this.cell / 2, this.cell, this.cell);
 		g.endFill();
+		const p = this.center(x, y);
+		g.position.set(p.x, p.y);
+		if (origin) g.rotation = Math.atan2(origin.y - y, origin.x - x);
 		g.filters = [new BlurFilter(this.cell * (32 / 40))];
 		this.fxLayer.addChild(g);
 		this.fx.push({ g, cpt: 0 });
@@ -438,6 +513,10 @@ export class MazeRenderer {
 		}
 		label.position.set(x + pad, y + pad);
 		box.addChild(label);
+		// View.hx: GlowFilter(0x0,0.7,32,32,2,2) — soft dark halo around the dialog.
+		box.filters = [
+			new GlowFilter({ distance: 32, outerStrength: 2, innerStrength: 0, color: 0x000000, alpha: 0.7, quality: 0.2 })
+		];
 		box.eventMode = 'static';
 		box.cursor = 'pointer';
 		box.on('pointerdown', () => this.closeMessage());
@@ -517,14 +596,14 @@ export class MazeRenderer {
 
 	// ── primitives ─────────────────────────────────────────────────────────────
 
-	/** A full-cell tile, optionally mirrored. */
+	/** A full-cell ground/overground tile, optionally mirrored. */
 	private tile(name: string, cx: number, cy: number, flipX = false, flipY = false): void {
 		const sp = new Sprite(gfx(name));
 		sp.anchor.set(0.5);
 		const c = this.cell;
 		sp.position.set(cx * c + c / 2, cy * c + c / 2);
 		sp.scale.set((c / sp.texture.width) * (flipX ? -1 : 1), (c / sp.texture.height) * (flipY ? -1 : 1));
-		this.mapLayer.addChild(sp);
+		this.groundLayer.addChild(sp);
 	}
 
 	/**
