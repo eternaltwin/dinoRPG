@@ -90,7 +90,10 @@ const held: string[] = [];
 
 const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
-function record(reveal: RevealedCell[]): void {
+// `origin` is the player's cell as of this reveal (View.hx posX/posY at
+// updateFog() time, i.e. after the move already landed) — orients each
+// reveal's fade-fx away from the player. See MazeRenderer#applyReveal.
+function record(reveal: RevealedCell[], origin?: Cell): void {
 	for (const c of reveal) {
 		// Re-sent cells can lose their icon (key picked up, monster beaten).
 		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
@@ -98,7 +101,7 @@ function record(reveal: RevealedCell[]): void {
 		if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
 		if (!c.floor) walls.add(`${c.l},${c.x},${c.y}`);
 	}
-	renderer?.applyReveal(reveal);
+	renderer?.applyReveal(reveal, origin);
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -193,7 +196,7 @@ export default defineComponent({
 				// What the entered cell held BEFORE this step's re-reveal clears it —
 				// that difference is the pickup/opening to announce.
 				const entered = icons.get(iconKey(move.pos));
-				record(move.reveal);
+				record(move.reveal, move.pos);
 				if (entered === 'door_v' || entered === 'door_h') {
 					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
 					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_${entered}_open`);
@@ -338,7 +341,7 @@ export default defineComponent({
 			);
 			renderer.setDebug(this.wallDebug);
 
-			record(run.reveal);
+			record(run.reveal, run.pos);
 			actor = new DinozActor(renderer, {
 				code: currentDinoz.display,
 				speed: 5,

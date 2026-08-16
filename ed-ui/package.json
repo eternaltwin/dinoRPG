@@ -19,6 +19,8 @@
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@eternaltwin/dinorpg_animations": "^1.0.9",
+    "@pixi/filter-drop-shadow": "^5.2.0",
+    "@pixi/filter-glow": "^5.2.1",
     "@vueuse/core": "^14.2.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",

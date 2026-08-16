@@ -7887,6 +7887,8 @@ __metadata:
     "@ckeditor/ckeditor5-vue": "npm:^7.3.0"
     "@drpg/core": "workspace:^"
     "@eternaltwin/dinorpg_animations": "npm:^1.0.9"
+    "@pixi/filter-drop-shadow": "npm:^5.2.0"
+    "@pixi/filter-glow": "npm:^5.2.1"
     "@types/upng-js": "npm:^2"
     "@types/url-join": "npm:^4.0.3"
     "@types/vue-i18n": "npm:^7.0.0"

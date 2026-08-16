@@ -69,6 +69,11 @@ export interface Skin {
 	over: [string | null, string | null];
 	/** Zone-noise density (View.hx PerlinType: PNormal | PDense | PFew). */
 	perlin: 'normal' | 'dense' | 'few';
+	/**
+	 * Atmosphere wash strength, 0-100 (View.hx skin.mask): a flat fog-coloured
+	 * overlay across the whole level, independent of the fog-of-war unknown-cell fog.
+	 */
+	mask: number;
 }
 
 export interface MazeDims {
@@ -111,7 +116,8 @@ export const SKINS: Skin[] = [
 		groundCount: 5,
 		fog: 0x392429,
 		over: ['broken', 'grass'],
-		perlin: 'normal'
+		perlin: 'normal',
+		mask: 100 // View.hx "cavern"
 	},
 	{
 		name: 'crypt',
@@ -120,7 +126,8 @@ export const SKINS: Skin[] = [
 		groundCount: 7,
 		fog: 0x27191c,
 		over: [null, 'slab'],
-		perlin: 'normal'
+		perlin: 'normal',
+		mask: 100 // View.hx "crypt"
 	},
 	{
 		name: 'egypt',
@@ -129,7 +136,8 @@ export const SKINS: Skin[] = [
 		groundCount: 6,
 		fog: 0x433023,
 		over: ['stone', null],
-		perlin: 'normal'
+		perlin: 'normal',
+		mask: 60 // View.hx "pyramid"
 	},
 	{
 		name: 'forest',
@@ -138,7 +146,8 @@ export const SKINS: Skin[] = [
 		groundCount: 6,
 		fog: 0x30371e,
 		over: ['stone', 'grass'],
-		perlin: 'dense'
+		perlin: 'dense',
+		mask: 0 // View.hx "forest"
 	},
 	{
 		name: 'hell',
@@ -147,7 +156,8 @@ export const SKINS: Skin[] = [
 		groundCount: 5,
 		fog: 0x330d0d,
 		over: ['broken', 'creep'],
-		perlin: 'normal'
+		perlin: 'normal',
+		mask: 100 // View.hx "hell"
 	},
 	{
 		name: 'ruin',
@@ -156,7 +166,8 @@ export const SKINS: Skin[] = [
 		groundCount: 5,
 		fog: 0x252730,
 		over: ['slab', 'grass'],
-		perlin: 'normal'
+		perlin: 'normal',
+		mask: 100 // View.hx "ruin"
 	},
 	{
 		name: 'sewer',
@@ -165,7 +176,8 @@ export const SKINS: Skin[] = [
 		groundCount: 7,
 		fog: 0x37321e,
 		over: ['creep', 'stone'],
-		perlin: 'few'
+		perlin: 'few',
+		mask: 70 // View.hx "sewer"
 	},
 	{
 		name: 'stone',
@@ -174,7 +186,8 @@ export const SKINS: Skin[] = [
 		groundCount: 7,
 		fog: 0x352c20,
 		over: ['stone', null],
-		perlin: 'dense'
+		perlin: 'dense',
+		mask: 100 // View.hx "tomb3" (closest ruin/crypt combo)
 	}
 ];
 
