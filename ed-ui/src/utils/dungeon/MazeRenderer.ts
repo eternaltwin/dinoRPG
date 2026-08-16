@@ -175,7 +175,6 @@ export class MazeRenderer {
 		this.drawLevel(skin);
 		this.drawEntities();
 		this.drawFog(skin);
-		this.drawLabel(this.level, skin);
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
@@ -464,11 +463,10 @@ export class MazeRenderer {
 		}
 		switch (c.icon) {
 			case 'start':
-				this.ring(c.x, c.y, 0x4caf50);
+				this.sprite('item_stair_down', c.x, c.y, this.cell * 1.2);
 				break;
 			case 'exit':
-				this.sprite('item_stair_down', c.x, c.y, this.cell * 0.9);
-				this.ring(c.x, c.y, 0x9c27b0);
+				this.sprite('item_stair_up', c.x, c.y, this.cell * 1.2);
 				break;
 			case 'stair_up':
 				this.sprite('item_stair_up', c.x, c.y, this.cell * 0.9);
@@ -478,15 +476,15 @@ export class MazeRenderer {
 				break;
 			case 'door_v':
 			case 'door_h':
-				this.sprite(`item_${c.icon}_01`, c.x, c.y, this.cell);
+				this.sprite(`item_${c.icon}_01`, c.x, c.y, this.cell * 1.3);
 				break;
 			case 'door_v_open':
 			case 'door_h_open':
-				this.sprite(`item_${c.icon}`, c.x, c.y, this.cell);
+				this.sprite(`item_${c.icon}`, c.x, c.y, this.cell * 1.3);
 				break;
 			case 'monster':
 				if (c.monster) this.monsterAt(c);
-				else this.sprite('item_skel', c.x, c.y, this.cell * 0.7);
+				else this.sprite('item_skel', c.x, c.y, this.cell * 0.8);
 				break;
 			case 'gold':
 				this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
@@ -595,30 +593,6 @@ export class MazeRenderer {
 		sp.position.set(cx * c + c / 2, cy * c + c / 2);
 		sp.scale.set(size / Math.max(sp.texture.width, sp.texture.height));
 		this.mapLayer.addChild(sp);
-	}
-
-	private ring(cx: number, cy: number, color: number): void {
-		const g = new Graphics();
-		const p = this.center(cx, cy);
-		const r = this.cell * 0.46;
-		g.lineStyle(2, color, 0.95);
-		g.beginFill(color, 0.18);
-		g.drawCircle(p.x, p.y, r);
-		g.endFill();
-		this.mapLayer.addChild(g);
-	}
-
-	private drawLabel(l: number, skin: Skin): void {
-		const label = new Text(`Level ${l + 1} / ${this.dims.levels} — ${skin.name}`, {
-			fill: 0xffffff,
-			fontSize: 13,
-			fontFamily: 'monospace',
-			dropShadow: true,
-			dropShadowDistance: 1,
-			dropShadowAlpha: 0.8
-		});
-		label.position.set(6, 6);
-		this.fogLayer.addChild(label);
 	}
 
 	/** Stable per-cell pseudo-random index. */

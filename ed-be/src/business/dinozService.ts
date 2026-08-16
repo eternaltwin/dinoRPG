@@ -307,8 +307,8 @@ export async function getAvailableActions(
 				if (!dinoz.leaderId) {
 					return [
 						{
-							name: actionList[Action.DUNGEON_ENTER].name,
-							imgName: actionList[Action.DUNGEON_ENTER].imgName,
+							name: actionList[Action.DUNGEON].name,
+							imgName: actionList[Action.DUNGEON].imgName,
 							prop: dungeon.name
 						}
 					];
@@ -1320,6 +1320,13 @@ export async function followDinoz(req: Request) {
 		throw new ExpectedError('No dinoz found');
 	}
 
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+	if (leader.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${leader.unavailableReason}`, authed));
+	}
+
 	if (dinoz.canChangeName || leader.canChangeName) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
@@ -1363,6 +1370,14 @@ export async function unfollowDinoz(req: Request) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 
+	const dinoz = await getFollowingDinoz(dinozId);
+	if (!dinoz) {
+		throw new ExpectedError('No dinoz found');
+	}
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { disconnect: true } });
 }
@@ -1384,6 +1399,10 @@ export async function changeLeaderDinoz(req: Request) {
 
 	if (!currentLeader) {
 		throw new ExpectedError('No leader found for this dinoz');
+	}
+
+	if (currentLeader.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${currentLeader.unavailableReason}`, authed));
 	}
 
 	// Retrieve the follower who will become the new leader directly from currentLeader.followers
@@ -1424,6 +1443,10 @@ export async function disband(req: Request) {
 		throw new ExpectedError('No dinoz found');
 	}
 
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+
 	for (const d of dinoz.followers) {
 		await updateDinoz(d.id, { leader: { disconnect: true } });
 	}
@@ -1445,7 +1468,6 @@ export async function useIrma(req: Request) {
 	}
 
 	if (dinoz.unavailableReason && dinoz.unavailableReason !== UnavailableReason.dungeon) {
-		console.log(dinoz.unavailableReason);
 		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 

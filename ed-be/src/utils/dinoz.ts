@@ -300,7 +300,12 @@ export const initializeDinoz = (
 	};
 };
 
-export const reincarnateDinoz = (race: DinozRace, display: string, seed: string, isDemon: boolean): Prisma.DinozUpdateInput => {
+export const reincarnateDinoz = (
+	race: DinozRace,
+	display: string,
+	seed: string,
+	isDemon: boolean
+): Prisma.DinozUpdateInput => {
 	const fullDisplay = [...display];
 	fullDisplay[1] = isDemon ? 'A' : '0';
 
@@ -309,7 +314,7 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string,
 	let wood = 0;
 	let lightning = 0;
 	let air = 0;
-	const reincarnation_salt = "abcde";
+	const reincarnation_salt = 'abcde';
 	for (let i = 0; i < 5; i++) {
 		const element = getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + reincarnation_salt[i]); // Seed is purposefully different than for level ups so gained elements cannot be predicted
 		switch (element) {

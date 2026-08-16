@@ -1,18 +1,29 @@
 <template>
+	<DZDisclaimer
+		round
+		help
+		:content="$t('dungeon.disclaimer', { dinoz: currentDinoz?.name, dungeonName: $t(`dungeon.name.${dungeonId}`) })"
+	/>
 	<div class="dungeon-page">
 		<div ref="stageEl" class="stage">
-			<!-- View.hx: arrows attached at (5,5), one move(dx,dy,0) callback per direction -->
 			<div class="dpad">
-				<button class="btn up" title="Move up" @click="tryMove(0, -1)"><img :src="arrowIcon" alt="up" /></button>
-				<button class="btn left" title="Move left" @click="tryMove(-1, 0)"><img :src="arrowIcon" alt="left" /></button>
-				<button class="btn right" title="Move right" @click="tryMove(1, 0)">
+				<button v-if="!needIrma" class="btn up" title="Move up" @click="tryMove(0, -1)">
+					<img :src="arrowIcon" alt="up" />
+				</button>
+				<button v-if="!needIrma" class="btn left" title="Move left" @click="tryMove(-1, 0)">
+					<img :src="arrowIcon" alt="left" />
+				</button>
+				<button v-if="!needIrma" class="btn right" title="Move right" @click="tryMove(1, 0)">
 					<img :src="arrowIcon" alt="right" />
 				</button>
-				<button class="btn down" title="Move down" @click="tryMove(0, 1)"><img :src="arrowIcon" alt="down" /></button>
+				<button v-if="!needIrma" class="btn down" title="Move down" @click="tryMove(0, 1)">
+					<img :src="arrowIcon" alt="down" />
+				</button>
 				<button v-if="needIrma || buttonIcon !== ''" class="btn center" title="action" @click="action()">
 					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
 				</button>
 			</div>
+			<span class="floor">{{ $t(`dungeon.floor`, { floor: currentLevel }) }}</span>
 		</div>
 		<div class="toolbar">
 			<button @click="toggleDebug">Wall debug: {{ wallDebug ? 'ON' : 'OFF' }}</button>
@@ -42,19 +53,14 @@ import { DinozActor } from '../utils/dungeon/DinozActor.js';
 import { sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // Kept at module scope on purpose: the renderer, actor and Pixi objects must
 // stay out of Vue's reactivity (deep proxies wreck Pixi), and the page is
 // mounted at most once at a time. All of it is reset in mounted/beforeUnmount.
 
-let dungeonId = '';
 /** djb2 of the dungeon id — seeds anything that must stay stable across refreshes. */
-function dungeonHash(): number {
-	let h = 5381;
-	for (const ch of dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
-	return h;
-}
 let renderer: MazeRenderer | null = null;
 let actor: DinozActor | null = null;
 // The rest of the party (dinozStore leader/followers), conga-line style: each
@@ -107,12 +113,14 @@ function onKeyUp(e: KeyboardEvent): void {
 
 export default defineComponent({
 	name: 'DungeonPage',
+	components: { DZDisclaimer },
 	data() {
 		return {
 			wallDebug: false,
 			buttonIcon: '' as string,
 			arrowIcon: assetUrl('interf_arrow'),
-			sessionStore: sessionStore()
+			sessionStore: sessionStore(),
+			currentLevel: 0
 		};
 	},
 	computed: {
@@ -126,14 +134,29 @@ export default defineComponent({
 		},
 		needIrma(): boolean {
 			return !(useDinozStore().getCurrentDinoz?.fight ?? false);
+		},
+		currentDinoz() {
+			return useDinozStore().getCurrentDinoz;
+		},
+		dungeonId(): string {
+			return this.$route.params.id as string;
 		}
 	},
 	methods: {
+		dungeonHash(): number {
+			let h = 5381;
+			for (const ch of this.dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
+			return h;
+		},
 		/** Flavor name shared by a door and its key, seeded by dungeonId + key id. */
 		doorName(keyId: number): string {
-			// ponytail: djb2(dungeonId) offset + keyId keeps names distinct per dungeon
-			// (up to the 20 in fr.json dungeon.doorNames — keep that length in sync).
-			return this.$t(`dungeon.doorNames.${(((dungeonHash() + keyId) % 20) + 20) % 20}`);
+			// ponytail: djb2(dungeonId) offset + keyId picks a prefix and a sufix
+			// (9 and 10 entries in fr.json dungeon.doorNames_prefix/_sufix — keep
+			// those lengths in sync) and glues them into one flavor name.
+			const seed = this.dungeonHash() + keyId;
+			const prefix = this.$t(`dungeon.doorNames_prefix.${((seed % 9) + 9) % 9}`);
+			const sufix = this.$t(`dungeon.doorNames_sufix.${((seed % 10) + 10) % 10}`);
+			return `${prefix}${sufix}`;
 		},
 		toggleDebug(): void {
 			this.wallDebug = !this.wallDebug;
@@ -150,7 +173,7 @@ export default defineComponent({
 			if (dl === 0 && walls.has(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`)) return;
 			moving = true;
 			try {
-				const move = await DungeonService.moveDinoz(dungeonId, dx, dy, dl, currentDinoz.id);
+				const move = await DungeonService.moveDinoz(this.dungeonId, dx, dy, dl, currentDinoz.id);
 				moving = false;
 				if (!move.ok) {
 					// A still-closed door refused us: no key for it yet.
@@ -271,7 +294,7 @@ export default defineComponent({
 			else if (icon === 'stair_down') await this.tryMove(0, 0, -1);
 			else if (icon === 'start' || icon === 'exit') {
 				try {
-					await DungeonService.exitDungeon(dungeonId, currentDinoz.id);
+					await DungeonService.exitDungeon(this.dungeonId, currentDinoz.id);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -291,7 +314,8 @@ export default defineComponent({
 				return;
 			}
 			try {
-				run = await DungeonService.enterDungeon(dungeonId, currentDinoz.id);
+				run = await DungeonService.enterDungeon(this.dungeonId, currentDinoz.id);
+				this.currentLevel = -run.pos.l - 1;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				this.$router.go(-1);
@@ -310,7 +334,7 @@ export default defineComponent({
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
 				{ width: run.width, height: run.height, levels: run.levels },
-				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: dungeonHash() }
+				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: this.dungeonHash() }
 			);
 			renderer.setDebug(this.wallDebug);
 
@@ -336,7 +360,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		dungeonId = this.$route.params.id as string;
 		await this.build();
 
 		window.addEventListener('keydown', onKeyDown);
@@ -471,6 +494,12 @@ export default defineComponent({
 			height: auto;
 		}
 	}
+}
+
+.floor {
+	position: absolute;
+	bottom: 12px;
+	left: 8px;
 }
 
 .btn {

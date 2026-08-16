@@ -41,6 +41,12 @@
 				help
 			/>
 			<DZDisclaimer
+				v-if="dinoz.unavailableReason === UnavailableReason.dungeon"
+				:content="$t('hud.dungeon')"
+				help
+				round
+			/>
+			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
@@ -664,6 +670,7 @@ export default defineComponent({
 					await this.refreshDinoz();
 					break;
 				case Action.DUNGEON_ENTER:
+				case Action.DUNGEON:
 					useDinozStore().setDungeonName(+this.$route.params.id, action.prop as string);
 					this.$router.push({ name: 'Dungeon', params: { id: action.prop } });
 					break;
