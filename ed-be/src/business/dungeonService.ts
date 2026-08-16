@@ -199,7 +199,12 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	}
 
 	const team = [dinoz, ...dinoz.followers];
-	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
+	// Resume: one run per player per dungeon — look this up before the busy
+	// check so a dungeon-busy dinoz is only let through when it's actually
+	// resuming its own run, not stolen into a new one.
+	const existing = await findRun(dungeon.id, authed.id);
+	const resumable = existing != null && (existing.leaderId == null || existing.leaderId === dinoz.id);
+	if (team.some(t => t.unavailableReason && !(resumable && t.unavailableReason === UnavailableReason.dungeon))) {
 		// A team member is already busy elsewhere, refuse entry.
 		throw new ExpectedError(translate('dungeon.teamBusy', authed));
 	}
@@ -215,9 +220,8 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	);
 	const d = codec.d;
 
-	// Resume: one run per player per dungeon — hand back the position and
-	// everything already revealed instead of violating the unique constraint.
-	const existing = await findRun(dungeon.id, authed.id);
+	// hand back the position and everything already revealed instead of
+	// violating the unique constraint.
 	if (existing) {
 		// Only one team at a time in the dungeon
 		if (existing.leaderId && existing.leaderId !== dinoz.id) {
