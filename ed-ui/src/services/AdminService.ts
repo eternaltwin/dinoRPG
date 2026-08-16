@@ -231,6 +231,7 @@ export const AdminService = {
 		name: string;
 		layout?: string;
 		monsterLevel?: number;
+		pool?: string[];
 		seed?: number;
 		width?: number;
 		height?: number;

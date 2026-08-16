@@ -48,6 +48,12 @@
 				<input type="number" v-model.number="form.monsterLevel" min="1" max="200" />
 			</div>
 			<div>
+				<label>Monster pool (ctrl-click to multi-select; empty = DungeonList lookup by name)</label>
+				<select multiple size="8" v-model="form.pool">
+					<option v-for="m in monsterNames" :key="m" :value="m">{{ m }} (lvl {{ monsterList[m].level }})</option>
+				</select>
+			</div>
+			<div>
 				<label>Width</label>
 				<input type="number" v-model.number="form.width" min="8" max="256" />
 			</div>
@@ -82,6 +88,7 @@ import { defineComponent } from 'vue';
 import { AdminService } from '../../services';
 import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import DZTable from '../common/DZTable.vue';
 
 export default defineComponent({
@@ -90,10 +97,13 @@ export default defineComponent({
 	data() {
 		return {
 			DungeonType: DungeonType,
+			monsterList,
+			monsterNames: Object.keys(monsterList),
 			form: {
 				type: DungeonType.cavern as string,
 				name: '',
 				monsterLevel: 1,
+				pool: [] as string[],
 				layout: '',
 				seed: undefined as number | undefined,
 				width: 24,
@@ -115,11 +125,18 @@ export default defineComponent({
 				const layout = this.form.layout.trim();
 				const created = await AdminService.createDungeon(
 					layout !== ''
-						? { type: this.form.type, layout, name: this.form.name, monsterLevel: this.form.monsterLevel }
+						? {
+								type: this.form.type,
+								layout,
+								name: this.form.name,
+								monsterLevel: this.form.monsterLevel,
+								pool: this.form.pool
+							}
 						: {
 								type: this.form.type,
 								name: this.form.name,
 								monsterLevel: this.form.monsterLevel,
+								pool: this.form.pool,
 								// an emptied number input is '' — omit it so the backend picks a random seed
 								seed: typeof this.form.seed === 'number' ? this.form.seed : undefined,
 								width: this.form.width,

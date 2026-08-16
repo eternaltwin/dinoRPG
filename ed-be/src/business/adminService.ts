@@ -1148,10 +1148,13 @@ export async function createSeededDungeon(req: Request) {
 	const name = req.body.name;
 	// Approximate total level of each monster team; pool comes from DungeonList.
 	const monsterLevel = req.body.monsterLevel ?? 1;
-	const pool = Object.values(DungeonList).find(x => x.name === name)?.monsters ?? [];
+	// body.pool (admin-picked monsters) overrides the DungeonList lookup by name,
+	// so arbitrary-named / generated dungeons can still have a chosen monster set.
+	const bodyPool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
+		(m: string): m is Monster => m in monsterList
+	);
+	const pool = bodyPool.length ? bodyPool : (Object.values(DungeonList).find(x => x.name === name)?.monsters ?? []);
 
-	// Hand-drawn grid from the admin dungeon builder; body.pool overrides the
-	// DungeonList lookup so arbitrary-named dungeons can still have monsters.
 	const grid = req.body.grid;
 	if (grid) {
 		const d = structFromGrid(grid);
@@ -1164,10 +1167,7 @@ export async function createSeededDungeon(req: Request) {
 			for (const it of lvl.items)
 				if (it.k === DungeonItem.IScenario && it.v >= scenarios.length)
 					throw new ExpectedError(`Invalid dungeon grid: scenario item v=${it.v} has no scenario entry`);
-		const bodyPool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
-			(m: string): m is Monster => m in monsterList
-		);
-		const monsters = JSON.stringify(rollMonsters(d, bodyPool.length ? bodyPool : pool, monsterLevel));
+		const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 		const created = await createDungeon(seal(encoded), type, name, monsterLevel, monsters, JSON.stringify(scenarios));
 		return { id: created.id, type: created.type };
 	}
