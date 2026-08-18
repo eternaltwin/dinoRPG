@@ -117,6 +117,9 @@ function onKeyUp(e: KeyboardEvent): void {
 export default defineComponent({
 	name: 'DungeonPage',
 	components: { DZDisclaimer },
+	props: {
+		dinozId: { type: Number, required: true }
+	},
 	data() {
 		return {
 			wallDebug: false,
@@ -136,10 +139,10 @@ export default defineComponent({
 			}
 		},
 		needIrma(): boolean {
-			return !(useDinozStore().getCurrentDinoz?.fight ?? false);
+			return !(useDinozStore().getDinoz(this.dinozId)?.fight ?? false);
 		},
 		currentDinoz() {
-			return useDinozStore().getCurrentDinoz;
+			return useDinozStore().getDinoz(this.dinozId);
 		},
 		dungeonId(): string {
 			return this.$route.params.id as string;
@@ -167,7 +170,7 @@ export default defineComponent({
 		},
 		/** Ask the server for one step; on approval, walk the dinoz and fold in the reveal. */
 		async tryMove(dx: number, dy: number, dl = 0): Promise<void> {
-			const currentDinoz = useDinozStore().getCurrentDinoz;
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (!currentDinoz || !currentDinoz.fight) {
 				return;
 			}
@@ -248,7 +251,7 @@ export default defineComponent({
 			for (let i = 0; i < trail.length; i++) trail[i] = { ...cursor };
 		},
 		updateButton(): void {
-			const currentDinoz = useDinozStore().getCurrentDinoz;
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (!currentDinoz) {
 				return;
 			}
@@ -270,7 +273,7 @@ export default defineComponent({
 			this.buttonIcon = '';
 		},
 		async action(): Promise<void> {
-			const currentDinoz = useDinozStore().getCurrentDinoz;
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (!currentDinoz) {
 				return;
 			}
@@ -312,7 +315,7 @@ export default defineComponent({
 		/** Enter the dungeon: the server decrypts the layout; we get the reveals only. */
 		async build(): Promise<void> {
 			let run: StartRunResult;
-			const currentDinoz = useDinozStore().getCurrentDinoz;
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (!currentDinoz) {
 				return;
 			}

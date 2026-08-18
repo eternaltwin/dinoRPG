@@ -23,7 +23,8 @@ const router = createRouter({
 				{
 					path: '/dungeon/:id',
 					name: 'Dungeon',
-					component: () => import('../pages/DungeonPage.vue')
+					component: () => import('../pages/DungeonPage.vue'),
+					props: route => ({ dinozId: Number(route.query.dinozId) })
 				},
 				{
 					path: '/forum',
