@@ -319,6 +319,7 @@ export default defineComponent({
 			if (!currentDinoz) {
 				return;
 			}
+			useDinozStore().setCurrentDinozId(this.dinozId);
 			try {
 				run = await DungeonService.enterDungeon(this.dungeonId, currentDinoz.id);
 				this.currentLevel = -run.pos.l - 1;
