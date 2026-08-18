@@ -136,6 +136,18 @@ import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
+function formatCountdown(remainingMs: number): string {
+	const safeSeconds = Math.max(0, Math.floor(remainingMs / 1000));
+	const h = Math.floor(safeSeconds / 3600)
+		.toString()
+		.padStart(2, '0');
+	const m = Math.floor((safeSeconds % 3600) / 60)
+		.toString()
+		.padStart(2, '0');
+	const s = (safeSeconds % 60).toString().padStart(2, '0');
+	return `${h}:${m}:${s}`;
+}
+
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
@@ -156,7 +168,7 @@ export default defineComponent({
 			timeUntilAvailable: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
-			mission: useDinozStore().getDinoz(+this.$route.params.id.toString())?.missionHUD,
+			mission: useDinozStore().getDinoz(+this.$route.params.id)?.missionHUD,
 			attackCountdown: 0 as number
 		};
 	},
@@ -177,41 +189,13 @@ export default defineComponent({
 	methods: {
 		computeTimeUntilMidnight() {
 			const now = new Date();
-			const nowMs = now.getTime();
 			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
-			const timeRemainingMs = midnightMs - nowMs;
-
-			const totalSeconds = Math.floor(timeRemainingMs / 1000);
-			const safeSeconds = Math.max(0, totalSeconds);
-
-			const hours = Math.floor(safeSeconds / 3600);
-			const minutes = Math.floor((safeSeconds % 3600) / 60);
-			const seconds = safeSeconds % 60;
-			const h = hours.toString().padStart(2, '0');
-			const m = minutes.toString().padStart(2, '0');
-			const s = seconds.toString().padStart(2, '0');
-
-			this.timeUntilMidnight = `${h}:${m}:${s}`;
+			this.timeUntilMidnight = formatCountdown(midnightMs - now.getTime());
 		},
 		computeTimeUntilAvailable() {
 			if (this.dinoz && this.dinoz.unavailableUntil) {
-				console.log(`${this.dinoz.unavailableUntil}`);
-				const now = new Date();
-				const nowMs = now.getTime();
-				const timeRemainingMs = new Date(this.dinoz.unavailableUntil).getTime() - nowMs;
-				console.log(`timeRemainingMs ${timeRemainingMs}`);
-
-				const totalSeconds = Math.floor(timeRemainingMs / 1000);
-				const safeSeconds = Math.max(0, totalSeconds);
-
-				const hours = Math.floor(safeSeconds / 3600);
-				const minutes = Math.floor((safeSeconds % 3600) / 60);
-				const seconds = safeSeconds % 60;
-				const h = hours.toString().padStart(2, '0');
-				const m = minutes.toString().padStart(2, '0');
-				const s = seconds.toString().padStart(2, '0');
-
-				this.timeUntilAvailable = `${h}:${m}:${s}`;
+				const timeRemainingMs = new Date(this.dinoz.unavailableUntil).getTime() - Date.now();
+				this.timeUntilAvailable = formatCountdown(timeRemainingMs);
 
 				if (timeRemainingMs <= 0) {
 					this.refreshDinoz();
@@ -226,7 +210,7 @@ export default defineComponent({
 			}
 		},
 		updateAttackCountdown() {
-			const time = useDinozStore().getDinozAttackTimer(+this.$route.params.id);
+			const time = useDinozStore().getDinozAttackTimer(this.dinozId);
 			if (!time) {
 				return;
 			}
@@ -256,7 +240,7 @@ export default defineComponent({
 				case Action.IRMAS:
 				case Action.ACTION:
 					try {
-						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+						const toast = await DinozService.useIrma(this.dinozId);
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
 							const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
 							this.$toast.open({
@@ -272,7 +256,7 @@ export default defineComponent({
 				case Action.LEVEL_UP:
 					this.$router.push({
 						name: 'Leveling',
-						params: { id: this.$route.params.id.toString() }
+						params: { id: this.dinozId.toString() }
 					});
 					break;
 				case Action.SHOP:
@@ -293,18 +277,18 @@ export default defineComponent({
 					});
 					break;
 				case Action.NPC:
-					useDinozStore().clearNpc(+this.$route.params.id);
+					useDinozStore().clearNpc(this.dinozId);
 					this.$router.push({
 						name: 'NPC',
 						params: {
-							id: this.$route.params.id.toString(),
+							id: this.dinozId.toString(),
 							npc: this.npcDisplayName(action.prop as number)
 						}
 					});
 					break;
 				case Action.FIGHT: {
 					try {
-						const fight = await FightService.processFight(+this.$route.params.id);
+						const fight = await FightService.processFight(this.dinozId);
 						this.sessionStore.setFightResult(fight);
 
 						if (fight.autoReequipped && fight.autoReequipped.length > 0) {
@@ -328,7 +312,7 @@ export default defineComponent({
 
 						this.$router.push({
 							name: 'Fight',
-							params: { dinozId: this.$route.params.id.toString() }
+							params: { dinozId: this.dinozId.toString() }
 						});
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -347,22 +331,19 @@ export default defineComponent({
 						return;
 					}
 					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
-						this.missionReward = await MissionService.finishMission(
-							this.$route.params.id.toString(),
-							this.dinoz.missionId
-						);
+						this.missionReward = await MissionService.finishMission(this.dinozId.toString(), this.dinoz.missionId);
 					} else if (this.mission && this.mission.actionType === ConditionEnum.LAUNCH_FIGHT) {
 						try {
 							this.npcName = action.prop as string;
 							const fight = await MissionService.startFightMission(
-								this.$route.params.id.toString(),
+								this.dinozId.toString(),
 								this.dinoz.missionId,
 								action.prop as string
 							);
 							this.sessionStore.setFightResult(fight);
 							this.$router.push({
 								name: 'Fight',
-								params: { dinozId: this.$route.params.id.toString() }
+								params: { dinozId: this.dinozId.toString() }
 							});
 						} catch (e) {
 							errorHandler.handle(e, this.$toast);
@@ -372,19 +353,19 @@ export default defineComponent({
 							if (this.mission && 'npcName' in this.mission) {
 								const npcName = this.mission.npcName;
 								const dialog = await MissionService.interactMission(
-									this.$route.params.id.toString(),
+									this.dinozId.toString(),
 									this.dinoz.missionId,
 									action.prop as string
 								);
 								this.$router.push({
 									name: 'NPC',
-									params: { id: this.$route.params.id.toString(), npc: npcName },
+									params: { id: this.dinozId.toString(), npc: npcName },
 									query: { dialog: dialog }
 								});
 							} else {
 								this.npcName = action.prop as string;
 								this.NPCModal = await MissionService.interactMission(
-									this.$route.params.id.toString(),
+									this.dinozId.toString(),
 									this.dinoz.missionId,
 									action.prop as string
 								);
@@ -396,13 +377,13 @@ export default defineComponent({
 					break;
 				case Action.DIG:
 					try {
-						this.digRewards = await DinozService.dig(parseInt(this.$route.params.id.toString()));
+						this.digRewards = await DinozService.dig(this.dinozId);
 
 						if (this.digRewards.fight) {
 							this.sessionStore.setFightResult(this.digRewards.fight);
 							this.$router.push({
 								name: 'Fight',
-								params: { dinozId: this.$route.params.id.toString() }
+								params: { dinozId: this.dinozId.toString() }
 							});
 
 							return;
@@ -452,13 +433,13 @@ export default defineComponent({
 					this.$router.push({
 						name: 'Gather',
 						params: {
-							dinozId: action.forDinoz ? action.forDinoz.toString() : this.$route.params.id.toString(),
+							dinozId: action.forDinoz ? action.forDinoz.toString() : this.dinozId.toString(),
 							type: action.name
 						}
 					});
 					break;
 				case Action.CONCENTRATE:
-					await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
+					await DinozService.cancelConcentration(this.dinozId);
 					await this.refreshDinoz();
 					break;
 				case Action.MARKET:
@@ -476,7 +457,7 @@ export default defineComponent({
 				}
 				case Action.UNFOLLOW: {
 					try {
-						await DinozService.unfollow(+this.$route.params.id);
+						await DinozService.unfollow(this.dinozId);
 
 						// Refresh followed and following status
 						const currentDinozList = useDinozStore().getDinozList;
@@ -485,7 +466,7 @@ export default defineComponent({
 							return;
 						}
 
-						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === this.dinozId);
 						if (!currentDinoz || !currentDinoz.leaderId) {
 							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
@@ -510,7 +491,7 @@ export default defineComponent({
 				}
 				case Action.DISBAND:
 					try {
-						await DinozService.disband(+this.$route.params.id);
+						await DinozService.disband(this.dinozId);
 
 						let currentDinozList = useDinozStore().getDinozList;
 						if (!currentDinozList) {
@@ -518,7 +499,7 @@ export default defineComponent({
 							return;
 						}
 
-						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === this.dinozId);
 						if (!currentDinoz) {
 							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
@@ -546,7 +527,7 @@ export default defineComponent({
 					break;
 				case Action.CHANGE_LEADER:
 					try {
-						const followerId = +this.$route.params.id;
+						const followerId = this.dinozId;
 						const currentLeader = useDinozStore().getDinozList.find(d => d.id === followerId)?.leaderId;
 
 						if (!currentLeader) {
@@ -573,9 +554,9 @@ export default defineComponent({
 					break;
 				case Action.CONGEL:
 					try {
-						await DinozService.frozeDinoz(+this.$route.params.id);
+						await DinozService.frozeDinoz(this.dinozId);
 
-						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
+						const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 						if (!currentDinoz) {
 							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
@@ -589,7 +570,7 @@ export default defineComponent({
 					break;
 				case Action.STOP_CONGEL:
 					try {
-						await DinozService.unfrozeDinoz(+this.$route.params.id);
+						await DinozService.unfrozeDinoz(this.dinozId);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -597,7 +578,7 @@ export default defineComponent({
 					break;
 				case Action.REST:
 					try {
-						await DinozService.restDinoz(+this.$route.params.id, true);
+						await DinozService.restDinoz(this.dinozId, true);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -605,7 +586,7 @@ export default defineComponent({
 					break;
 				case Action.STOP_REST:
 					try {
-						await DinozService.restDinoz(+this.$route.params.id, false);
+						await DinozService.restDinoz(this.dinozId, false);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -613,7 +594,7 @@ export default defineComponent({
 					break;
 				case Action.REINCARNATION:
 					try {
-						await DinozService.reincarnate(+this.$route.params.id);
+						await DinozService.reincarnate(this.dinozId);
 						await this.refreshDinoz();
 						this.$toast.open({
 							message: this.$t('toast.reincarnation'),
@@ -626,12 +607,12 @@ export default defineComponent({
 				case Action.FB_TOURNAMENT:
 					this.$router.push({
 						name: 'Forcebrute',
-						query: { dinozId: +this.$route.params.id }
+						query: { dinozId: this.dinozId }
 					});
 					break;
 				case Action.WAR_DEFEND:
 					try {
-						await ClanService.addDefenser(+this.$route.params.id);
+						await ClanService.addDefenser(this.dinozId);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -639,7 +620,7 @@ export default defineComponent({
 					break;
 				case Action.WAR_REMOVE:
 					try {
-						await ClanService.removeDefender(+this.$route.params.id);
+						await ClanService.removeDefender(this.dinozId);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -647,8 +628,8 @@ export default defineComponent({
 					break;
 				case Action.WAR_ATTACK:
 					try {
-						const fight = await ClanService.attackCastle(+this.$route.params.id);
-						const currentDinoz = useDinozStore().getDinoz(+this.$route.params.id);
+						const fight = await ClanService.attackCastle(this.dinozId);
+						const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 						if (!currentDinoz) {
 							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
@@ -662,7 +643,7 @@ export default defineComponent({
 
 						this.$router.push({
 							name: 'Fight',
-							params: { dinozId: this.$route.params.id.toString() }
+							params: { dinozId: this.dinozId.toString() }
 						});
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -671,11 +652,11 @@ export default defineComponent({
 					break;
 				case Action.DUNGEON_ENTER:
 				case Action.DUNGEON:
-					useDinozStore().setDungeonName(+this.$route.params.id, action.prop as string);
+					useDinozStore().setDungeonName(this.dinozId, action.prop as string);
 					this.$router.push({
 						name: 'Dungeon',
 						params: { id: action.prop },
-						query: { dinozId: this.$route.params.id }
+						query: { dinozId: this.dinozId }
 					});
 					break;
 				default:
@@ -709,6 +690,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		dinozId() {
+			return +this.$route.params.id;
+		},
 		UnavailableReason() {
 			return UnavailableReason;
 		},
@@ -746,9 +730,7 @@ export default defineComponent({
 			return undefined;
 		},
 		storeMission() {
-			return (
-				useDinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null
-			);
+			return useDinozStore().getDinozList.find(dinoz => dinoz.id === this.dinozId)?.missionHUD || null;
 		},
 		leaderDinoz() {
 			if (!this.dinoz) {
@@ -758,10 +740,10 @@ export default defineComponent({
 			return useDinozStore().getDinoz(this.dinoz.leaderId);
 		},
 		dinoz() {
-			return useDinozStore().getDinoz(+this.$route.params.id);
+			return useDinozStore().getDinoz(this.dinozId);
 		},
 		dinozFullParty() {
-			return useDinozStore().getDinozParty(+this.$route.params.id);
+			return useDinozStore().getDinozParty(this.dinozId);
 		}
 	},
 	watch: {
