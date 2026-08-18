@@ -375,38 +375,38 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * Fog plane: one rect per unknown cell in the skin's fog colour, blurred as
-	 * in View.hx (32px on 40px cells). The background already IS the fog colour,
-	 * so only the outward bleed shows — fog softly overlaps ~one cell of the
-	 * revealed frontier.
+	 * Fog/reveal-fx blur radius. View.hx used BlurFilter(32,32,1) (quality 1) on a
+	 * 40px cell; ported 1:1 (cell*32/40) it read too sharp — Pixi's blur falls off
+	 * faster than Flash's at the same nominal strength, so this is tuned stronger
+	 * than the literal archive value. Bump further if it's still too crisp.
+	 */
+	private get fogBlur(): number {
+		return this.cell * 1.2;
+	}
+
+	/**
+	 * Fog plane: one big jittered circle per unknown cell instead of a rect —
+	 * circles always overlap their neighbours (radius > half the cell spacing,
+	 * even after jitter), so the union is a round blob with no straight edge to
+	 * begin with. The blur on top only has seams to soften, not square corners.
 	 */
 	private drawFog(skin: Skin): void {
 		const known = this.known[this.level];
+		const isKnown = (x: number, y: number): boolean => known.has(`${x},${y}`);
+		const c = this.cell;
 		const g = new Graphics();
 		g.beginFill(skin.fog);
-		const c = this.cell;
-		const isKnown = (x: number, y: number): boolean => known.has(`${x},${y}`);
 		for (let y = 0; y < this.dims.height; y++)
 			for (let x = 0; x < this.dims.width; x++) {
 				if (isKnown(x, y)) continue;
-				g.drawRect(x * c, y * c, c, c);
-				// Organic frontier: bulge hash-jittered circles into each revealed
-				// neighbour so the blurred edge reads as clouds, not a ruler line.
-				for (const [dx, dy] of [
-					[1, 0],
-					[-1, 0],
-					[0, 1],
-					[0, -1]
-				]) {
-					if (!isKnown(x + dx, y + dy)) continue;
-					const h = this.hash(x * 4 + dx, y * 4 + dy, 11);
-					const r = c * (0.35 + (h % 100) / 300); // 0.35..0.68 cell
-					const t = c * ((((h >> 7) % 100) / 100 - 0.5) * 0.8); // slide along the shared edge
-					g.drawCircle((x + 0.5 + dx * 0.5) * c + dy * t, (y + 0.5 + dy * 0.5) * c + dx * t, r);
-				}
+				const h = this.hash(x, y, 11);
+				const r = c * 1.75
+				const ox = c * (((h >> 6) % 100) / 100 - 0.5) * 0.3;
+				const oy = c * (((h >> 12) % 100) / 100 - 0.5) * 0.3;
+				g.drawCircle((x + 0.5) * c + ox, (y + 0.5) * c + oy, r);
 			}
 		g.endFill();
-		g.filters = [new BlurFilter(this.cell * (32 / 40))];
+		g.filters = [new BlurFilter(this.fogBlur, 8)];
 		this.fogLayer.addChild(g);
 	}
 
@@ -422,7 +422,7 @@ export class MazeRenderer {
 		const p = this.center(x, y);
 		g.position.set(p.x, p.y);
 		if (origin) g.rotation = Math.atan2(origin.y - y, origin.x - x);
-		g.filters = [new BlurFilter(this.cell * (32 / 40))];
+		g.filters = [new BlurFilter(this.fogBlur, 8)];
 		this.fxLayer.addChild(g);
 		this.fx.push({ g, cpt: 0 });
 	}
