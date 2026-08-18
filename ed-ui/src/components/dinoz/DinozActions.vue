@@ -672,7 +672,11 @@ export default defineComponent({
 				case Action.DUNGEON_ENTER:
 				case Action.DUNGEON:
 					useDinozStore().setDungeonName(+this.$route.params.id, action.prop as string);
-					this.$router.push({ name: 'Dungeon', params: { id: action.prop } });
+					this.$router.push({
+						name: 'Dungeon',
+						params: { id: action.prop },
+						query: { dinozId: this.$route.params.id }
+					});
 					break;
 				default:
 					console.warn(`Unknown action: ${action.name}`);
