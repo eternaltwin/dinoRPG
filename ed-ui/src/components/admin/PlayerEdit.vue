@@ -153,10 +153,10 @@
 			<div class="items">
 				<template v-for="(item, index) in player.items" :key="index">
 					<Tippy theme="normal">
-						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
+						<img :src="getImgURL('item', `item_${itemList[item.itemId].name}`)" :alt="itemList[item.itemId].name" />
 						<template #content>
-							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
-							<p v-html="formatContent($t(`item.description.${itemNameList[item.itemId]}`))" />
+							<h1 v-html="formatContent($t(`item.name.${itemList[item.itemId].name}`))" />
+							<p v-html="formatContent($t(`item.description.${itemList[item.itemId].name}`))" />
 							<br />
 							<p>ItemId: {{ item.itemId }}</p>
 							<p>Quantity: {{ item.quantity }}</p>
@@ -168,8 +168,8 @@
 				<div>
 					<label class="title" for="itemId">Item :</label>
 					<select id="itemId" v-model.number="playerFields.selectedItem">
-						<option v-for="(name, id) in itemNameList" :key="id" :value="id">
-							{{ $t(`item.name.${name}`) }}
+						<option v-for="(item, id) in itemList" :key="id" :value="id">
+							{{ $t(`item.name.${item.name}`) }}
 						</option>
 					</select>
 				</div>
@@ -407,7 +407,7 @@ import { defineComponent } from 'vue';
 import { AdminService, PlayerService } from '../../services/index.js';
 import { epicList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
@@ -459,7 +459,7 @@ export default defineComponent({
 			} as ModerationAdminType,
 			epicList: epicList,
 			epicListFiltered: {} as Array<string>,
-			itemNameList: itemNameList,
+			itemList: itemList,
 			ingredientNameList: ingredientNameList,
 			ScenarioDetails,
 			player: {} as PlayerAdminFiche,

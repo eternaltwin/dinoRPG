@@ -2,7 +2,7 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { formatText } from './formatText.js';
 import { BadFightStatus, FighterType, GoodFightStatus } from '@drpg/core/models/fight/DetailedFighter';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { sessionStore } from '../store/index.js';
@@ -264,7 +264,7 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return [
 				t(`fight.step.${fightStep.action}`, {
 					fighter: getFighterName(fightStep.fighter, t),
-					item: t(`item.name.${itemNameList[fightStep.itemId]}`)
+					item: t(`item.name.${itemList[fightStep.itemId].name}`)
 				})
 			];
 		case 'hypnotize':

@@ -48,8 +48,8 @@
 														<div class="center" v-for="item in innerMission.items" :key="item.value">
 															<span class="item">{{ item.quantity }}</span>
 															<img
-																:src="getImgURL('item', `item_${itemNameList[item.value]}`)"
-																:alt="itemNameList[item.value]"
+																:src="getImgURL('item', `item_${itemList[item.value].name}`)"
+																:alt="itemList[item.value].name"
 															/>
 														</div>
 													</td>
@@ -89,7 +89,7 @@ import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { MissionService } from '../services/MissionService.js';
 import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../utils/errorHandler.js';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
@@ -106,7 +106,7 @@ export default defineComponent({
 			npcMissions,
 			totalMissions: npcMissions.reduce((acc, npc) => acc + (npc.missions?.length || 0), 0),
 			RewardEnum,
-			itemNameList
+			itemList
 		};
 	},
 	computed: {

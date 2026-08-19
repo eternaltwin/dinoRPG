@@ -133,7 +133,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import DZUser from '../common/DZUser.vue';
 import { errorHandler, secondsToDhms, simplifyDisplay } from '../../utils/index.js';
 import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
@@ -169,7 +168,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			itemNameList,
 			secondsToDhms,
 			simplifyDisplay,
 			ingredientNameList,

@@ -15,12 +15,12 @@
 				</tr>
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
-						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
-						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
+						<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" />
+						<p v-html="$t(`item.name.${item.name}`)" />
 						<template #content>
-							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
+							<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
 							<h2>{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}</h2>
-							<p v-html="formatContent($t(`item.description.${itemNameList[item.itemId]}`))" />
+							<p v-html="formatContent($t(`item.description.${item.name}`))" />
 						</template>
 					</Tippy>
 					<td
@@ -98,7 +98,6 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import DZSelect from './DZSelect.vue';
 
@@ -110,7 +109,7 @@ export default defineComponent({
 	data() {
 		return {
 			allItemsData: [] as Array<ItemFiche>,
-			itemNameList: itemNameList,
+			itemList: itemList,
 			playerStore: playerStore(),
 			sortOption: playerStore().getSortOption,
 			sortOptions: ['default', 'nameAsc', 'nameDesc', 'priceAsc', 'priceDesc', 'qtyAsc', 'qtyDesc'].map(o => ({
@@ -145,7 +144,7 @@ export default defineComponent({
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = this.$route.params.id as string;
 				const res = await this.$confirm({
-					message: this.$t(`inventory.confirmUse`, { name: this.$t(`item.name.${itemNameList[item.itemId]}`) }),
+					message: this.$t(`inventory.confirmUse`, { name: this.$t(`item.name.${item.name}`) }),
 					header: this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
 					rejectLabel: this.$t('popup.reject'),
@@ -223,16 +222,12 @@ export default defineComponent({
 			switch (this.sortOption) {
 				case 'nameAsc':
 					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[a.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[b.itemId]}`)
-						)
+						this.$t(`item.name.${a.name}`).localeCompare(this.$t(`item.name.${b.name}`))
 					);
 					break;
 				case 'nameDesc':
 					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[b.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[a.itemId]}`)
-						)
+						this.$t(`item.name.${b.name}`).localeCompare(this.$t(`item.name.${a.name}`))
 					);
 					break;
 				case 'priceAsc':
