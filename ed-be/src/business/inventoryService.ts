@@ -61,6 +61,7 @@ import {
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
+import { isOnHealingCell } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL } from '../context.js';
@@ -128,7 +129,11 @@ export async function useItem(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	if (dinoz.unavailableReason) {
-		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
+			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+		} else if (!(await isOnHealingCell(dinoz))) {
+			throw new ExpectedError(translate('dungeon.notHealing', authed));
+		}
 	}
 	const itemId = +req.params.itemId;
 	const item = Object.values(itemList).find(item => item.itemId === itemId);

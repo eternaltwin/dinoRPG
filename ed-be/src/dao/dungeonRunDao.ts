@@ -50,6 +50,11 @@ export async function findRun(dungeonId: string, playerId: string) {
 	return prisma.dungeonRun.findUnique({ where: { playerId_dungeonId: { playerId, dungeonId } } });
 }
 
+/** The run currently led by this dinoz, if any — followers resolve to their leader's run instead. */
+export async function findRunByLeader(leaderId: number) {
+	return prisma.dungeonRun.findFirst({ where: { leaderId } });
+}
+
 export async function updateRun(
 	id: string,
 	pos: RunPosition,

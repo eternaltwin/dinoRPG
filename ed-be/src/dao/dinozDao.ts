@@ -506,6 +506,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpFire: true,
 				raceId: true,
+				leaderId: true,
 				player: {
 					select: {
 						id: true,

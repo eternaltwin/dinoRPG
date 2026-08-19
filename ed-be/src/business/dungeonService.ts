@@ -7,6 +7,7 @@
  * solve the maze without exploring it.
  */
 
+import type { Dinoz } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
@@ -20,6 +21,7 @@ import {
 	dinozEnterRun,
 	dinozExitRun,
 	findRun,
+	findRunByLeader,
 	getDungeonById,
 	getDungeonByName,
 	updateRun,
@@ -121,6 +123,21 @@ function itemIndexAt(d: DungeonStruct, k: DungeonItem, l: number, x: number, y: 
 		if (it && it.k === k && it.x === x && it.y === y) return it.v;
 	}
 	return null;
+}
+
+/** Whether this dinoz (leader or follower) currently stands on its run's healing cell. */
+export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Promise<boolean> {
+	const run = await findRunByLeader(dinoz.leaderId ?? dinoz.id);
+	if (!run) {
+		return false;
+	}
+	const dungeon = await getDungeonById(run.dungeonId);
+	if (!dungeon) {
+		return false;
+	}
+	const codec = new DungeonCodec();
+	codec.decode(unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) }));
+	return itemIndexAt(codec.d, DungeonItem.IHeal, run.posL, run.posX, run.posY) != null;
 }
 
 /**
