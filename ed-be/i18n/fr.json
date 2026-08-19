@@ -356,7 +356,8 @@
 		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
 		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
 		"noRun": "Vous n'avez jamais visité ce donjon",
-		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !"
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
 	},
 	"UnavailableReason": {
 		"frozen": "Votre Dinoz est congelé",
