@@ -20,6 +20,7 @@ vi.mock('../../dao/dungeonRunDao.js', () => ({
 	updateRunDefeated: vi.fn()
 }));
 vi.mock('../../utils/dungeonCrypto.js', () => ({ unseal: vi.fn(() => 'stub') }));
+vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/dungeon/DungeonCodec.js', () => {
 	const stub: DungeonStruct = {
 		width: 3,
@@ -80,7 +81,7 @@ describe('dungeon team lock', () => {
 		} as never);
 
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
-			'dungeon.teamBusy'
+			'dungeon.wrongTeam'
 		);
 		expect(createRun).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).not.toHaveBeenCalled();

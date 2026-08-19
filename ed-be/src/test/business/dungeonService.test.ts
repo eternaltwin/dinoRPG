@@ -103,7 +103,9 @@ describe('dungeonService — fog-of-war boundary', () => {
 
 		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
 		const resumed = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }));
-		expect(resumed.run).toEqual({ id: 'run1', status: 'resumed', message: 'dungeon.msg.resumed' });
+		// 'unit-test-dungeon' isn't in DungeonList (see dungeonRowFor), so there's no
+		// dungeonRef to build the resume message from.
+		expect(resumed.run).toEqual({ id: 'run1', status: 'resumed', message: undefined });
 	});
 
 	it('rejects a step into a wall and reveals nothing', async () => {
