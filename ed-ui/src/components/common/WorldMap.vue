@@ -85,7 +85,7 @@ import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
 import { sessionStore, useDinozStore } from '../../store/index.js';
 import { DinozService } from '../../services/index.js';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReason } from '@drpg/prisma/enums';
@@ -237,7 +237,7 @@ export default defineComponent({
 
 				if (moveTry.autoReequipped && moveTry.autoReequipped.length > 0) {
 					const itemsStr = moveTry.autoReequipped
-						.map(item => `${item.count}x ${this.$t(`item.name.${itemNameList[item.itemId]}`)}`)
+						.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
 						.join(', ');
 					this.$toast.open({
 						message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
@@ -246,7 +246,7 @@ export default defineComponent({
 				}
 				if (moveTry.missingReequip && moveTry.missingReequip.length > 0) {
 					const itemsStr = moveTry.missingReequip
-						.map(item => `${item.count}x ${this.$t(`item.name.${itemNameList[item.itemId]}`)}`)
+						.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
 						.join(', ');
 					this.$toast.open({
 						message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
