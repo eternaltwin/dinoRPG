@@ -95,6 +95,17 @@ describe('dungeonService — fog-of-war boundary', () => {
 		expect(revealedArg).not.toContain('[[');
 	});
 
+	it('reports run.status created vs resumed', async () => {
+		vi.mocked(findRun).mockResolvedValue(null);
+		vi.mocked(createRun).mockResolvedValue({ id: 'run1' } as never);
+		const fresh = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }));
+		expect(fresh.run).toEqual({ id: 'run1', status: 'created' });
+
+		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
+		const resumed = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }));
+		expect(resumed.run).toEqual({ id: 'run1', status: 'resumed', message: 'dungeon.msg.resumed' });
+	});
+
 	it('rejects a step into a wall and reveals nothing', async () => {
 		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
 		const t = d.levels[d.start.l].table;

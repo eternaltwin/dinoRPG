@@ -229,7 +229,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		}
 		await dinozEnterRun(existing.id, dinoz.id);
 		return {
-			runId: existing.id,
+			run: { id: existing.id, status: 'resumed', message: dungeonRef ? `dungeon.${dungeonRef.name}.enter` : undefined },
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
 			width: d.width,
 			height: d.height,
@@ -267,7 +267,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	);
 
 	return {
-		runId: run.id,
+		run: { id: run.id, status: 'created' },
 		pos: { l: d.start.l, x: d.start.x, y: d.start.y },
 		width: d.width,
 		height: d.height,

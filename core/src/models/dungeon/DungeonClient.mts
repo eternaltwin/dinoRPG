@@ -30,7 +30,12 @@ export interface RevealedCell {
 }
 
 export interface StartRunResult {
-	runId: string;
+	run: {
+		id: string;
+		status: 'created' | 'resumed';
+		/** i18n key for an optional toast, e.g. shown when resuming an in-progress run. */
+		message?: string;
+	};
 	pos: Cell;
 	width: number;
 	height: number;

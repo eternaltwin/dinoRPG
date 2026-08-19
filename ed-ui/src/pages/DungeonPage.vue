@@ -344,6 +344,9 @@ export default defineComponent({
 				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: this.dungeonHash() }
 			);
 			renderer.setDebug(this.wallDebug);
+			if (run.run.message) {
+				renderer.showMessage(this.$t(run.run.message));
+			}
 
 			record(run.reveal, run.pos);
 			actor = new DinozActor(renderer, {
