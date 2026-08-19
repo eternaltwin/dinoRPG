@@ -107,6 +107,20 @@ import { scheduleJob } from 'node-schedule';
 import { finishDinozUnsacrifice } from './demonShopService.js';
 
 /**
+ * @summary Whether a dinoz can level up right now, accounting for tournament level caps
+ */
+async function canLevelUpNow(
+	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & { status: Pick<DinozStatus, 'statusId'>[] }
+) {
+	if (!canLevelUp(dinoz, gameConfig)) {
+		return false;
+	}
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const dinozTournament = await isDinozInTournament(dinoz.id);
+	return !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
+}
+
+/**
  * @summary Get available action from dinoz
  */
 export async function getAvailableActions(
@@ -304,17 +318,18 @@ export async function getAvailableActions(
 			}
 			// Dungeon ongoing
 			if (dinoz.unavailableReason === UnavailableReason.dungeon) {
+				const dungeonActions: ActionFiche[] = [];
 				if (!dinoz.leaderId) {
-					return [
-						{
-							name: actionList[Action.DUNGEON].name,
-							imgName: actionList[Action.DUNGEON].imgName,
-							prop: dungeon.name
-						}
-					];
-				} else {
-					return [];
+					dungeonActions.push({
+						name: actionList[Action.DUNGEON].name,
+						imgName: actionList[Action.DUNGEON].imgName,
+						prop: dungeon.name
+					});
 				}
+				if (await canLevelUpNow(dinoz)) {
+					dungeonActions.push(actionList[Action.LEVEL_UP]);
+				}
+				return dungeonActions;
 			}
 		}
 	}
@@ -427,15 +442,8 @@ export async function getAvailableActions(
 		});
 	}
 
-	if (canLevelUp(dinoz, gameConfig)) {
-		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-		const dinozTournament = await isDinozInTournament(dinoz.id);
-
-		const canLevelUp = !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
-
-		if (canLevelUp) {
-			availableActions.push(actionList[Action.LEVEL_UP]);
-		}
+	if (await canLevelUpNow(dinoz)) {
+		availableActions.push(actionList[Action.LEVEL_UP]);
 	}
 
 	// Market if dinoz is in market
