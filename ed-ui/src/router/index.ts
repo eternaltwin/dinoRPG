@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { getCookie } from '../utils/cookies.js';
-import { useMenuStore } from '../store';
+import { useMenuStore, playerStore } from '../store';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +30,11 @@ const router = createRouter({
 					path: '/forum',
 					name: 'Forum',
 					component: () => import('../pages/ForumPage.vue')
+				},
+				{
+					path: '/terms',
+					name: 'Terms',
+					component: () => import('../pages/TermsPage.vue')
 				},
 				{
 					path: '/forum/:threadId/:page',
@@ -509,6 +514,11 @@ router.beforeEach(to => {
 		// route to MainPage if logged and trying to go to AuthPage (it's the case when user just login)
 		if (to.name == 'AuthenticationPage') {
 			return { name: 'MainPage' };
+		}
+		// once player data has been fetched this session, block navigation away from the ToS page until accepted
+		const player = playerStore();
+		if (player.playerId && !player.getTosAccepted && to.name !== 'Terms') {
+			return { name: 'Terms' };
 		}
 	}
 	useMenuStore().setTwinoMenuOpened(false);

@@ -18,6 +18,7 @@ export interface PlayerCommonData {
 	shopkeeper: boolean;
 	notifications: Notification[];
 	discoveredSkills: Skill[];
+	tosAccepted: boolean;
 }
 
 export interface PlayerLoginData {

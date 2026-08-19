@@ -16,4 +16,5 @@ export interface StorePlayer {
 	notificationCounter: number;
 	notifications: Notification[];
 	discoveredSkills: Skill[];
+	tosAccepted: boolean;
 }

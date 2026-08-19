@@ -2704,7 +2704,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Événements ]",
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]"
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"terms": "DinoRPG [ Conditions d'utilisation ]"
 	},
 	"gather": {
 		"action": {
@@ -5311,7 +5312,7 @@
 			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
 			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
-			"enter" : "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
+			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
 			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
@@ -5421,5 +5422,13 @@
 		"select": "Voter",
 		"select_option": "Sélectionnez une option",
 		"total_participants": "{qty} votants"
+	},
+	"terms": {
+		"title": "Conditions d'utilisation",
+		"intro": "Merci de lire et d'accepter les conditions d'utilisation suivantes avant de continuer à jouer.",
+		"clause1": "La création ou l'utilisation de plusieurs comptes par un même joueur est interdite.",
+		"clause2": "L'utilisation de bots ou de tout script d'automatisation est interdite.",
+		"clause3": "L'exploitation volontaire d'un bug est interdite et doit être signalée à l'équipe.",
+		"accept_button": "J'accepte"
 	}
 }

@@ -2682,7 +2682,8 @@
 		"admin": "DinoRPG [ Administrationsseite ]",
 		"event": "DinoRPG [ Ereignisse ]",
 		"fb_tournament": "DinoRPG [ Rohkraft-Turnier ]",
-		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]"
+		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]",
+		"terms": "DinoRPG [ Nutzungsbedingungen ]"
 	},
 	"gather": {
 		"action": {
@@ -5350,5 +5351,13 @@
 		"select": "Abstimmen",
 		"select_option": "Wähle eine Option",
 		"total_participants": "{qty} Wähler"
+	},
+	"terms": {
+		"title": "Nutzungsbedingungen",
+		"intro": "Bitte lies und akzeptiere die folgenden Nutzungsbedingungen, bevor du weiterspielst.",
+		"clause1": "Das Erstellen oder Nutzen mehrerer Konten durch denselben Spieler ist verboten.",
+		"clause2": "Die Nutzung von Bots oder anderen Automatisierungsskripten ist verboten.",
+		"clause3": "Das absichtliche Ausnutzen eines Fehlers ist verboten und muss dem Team gemeldet werden.",
+		"accept_button": "Akzeptieren"
 	}
 }

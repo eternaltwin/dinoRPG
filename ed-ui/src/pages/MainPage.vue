@@ -34,6 +34,9 @@ export default defineComponent({
 			try {
 				// Set data in sessionStore
 				await this.playerStore.update();
+				if (!this.playerStore.getTosAccepted && this.$route.name !== 'Terms') {
+					await this.$router.replace({ name: 'Terms' });
+				}
 				this.loaded = true;
 				this.war = !!this.clanStore.clanEvent;
 			} catch (e) {

@@ -2682,7 +2682,8 @@
 		"admin": "DinoRPG [ Panel de Admin ]",
 		"event": "DinoRPG [ Eventos ]",
 		"fb_tournament": "DinoRPG [ Torneo de Fuerzabruta ]",
-		"skillTrees": "DinoRPG [ Árbol de Competencias ]"
+		"skillTrees": "DinoRPG [ Árbol de Competencias ]",
+		"terms": "DinoRPG [ Condiciones de uso ]"
 	},
 	"gather": {
 		"action": {
@@ -5350,5 +5351,13 @@
 		"select": "Votar",
 		"select_option": "Seleccione una opción",
 		"total_participants": "{qty} votantes"
+	},
+	"terms": {
+		"title": "Condiciones de uso",
+		"intro": "Lee y acepta las siguientes condiciones de uso antes de seguir jugando.",
+		"clause1": "Está prohibido crear o utilizar varias cuentas siendo el mismo jugador.",
+		"clause2": "Está prohibido el uso de bots o cualquier script de automatización.",
+		"clause3": "Está prohibido explotar voluntariamente un error y debe reportarse al equipo.",
+		"accept_button": "Acepto"
 	}
 }

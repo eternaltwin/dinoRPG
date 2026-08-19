@@ -33,7 +33,8 @@ export const playerStore = defineStore('playerStore', {
 		sortOption: 'default',
 		notificationCounter: 0,
 		notifications: [],
-		discoveredSkills: []
+		discoveredSkills: [],
+		tosAccepted: false
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
@@ -47,7 +48,8 @@ export const playerStore = defineStore('playerStore', {
 		getRole: (state: StorePlayer) => state.role,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
 		getNotifications: (state: StorePlayer) => state.notifications,
-		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills
+		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills,
+		getTosAccepted: (state: StorePlayer) => state.tosAccepted
 	},
 	actions: {
 		setMoney(money: number): void {
@@ -94,6 +96,9 @@ export const playerStore = defineStore('playerStore', {
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;
 		},
+		setTosAccepted(tosAccepted: boolean): void {
+			this.tosAccepted = tosAccepted;
+		},
 		async update() {
 			const commonData = await PlayerService.getLoggedInData();
 			// Set cookies
@@ -111,6 +116,7 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerOptions(commonData.playerOptions);
 			this.setRole(commonData.role as AdminRole);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
+			this.setTosAccepted(commonData.tosAccepted);
 			useDinozStore().setDinozList(commonData.dinoz);
 			clanStore().setClanEvent(commonData.clanEvent);
 		}

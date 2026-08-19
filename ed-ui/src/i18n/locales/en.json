@@ -2682,7 +2682,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Events ]",
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
-		"skillTrees": "DinoRPG [ Skill Trees ]"
+		"skillTrees": "DinoRPG [ Skill Trees ]",
+		"terms": "DinoRPG [ Terms of Service ]"
 	},
 	"gather": {
 		"action": {
@@ -5365,5 +5366,13 @@
 		"select": "Vote",
 		"select_option": "Select an option",
 		"total_participants": "{qty} voters"
+	},
+	"terms": {
+		"title": "Terms of Service",
+		"intro": "Please read and accept the following terms of service before you keep playing.",
+		"clause1": "Creating or using multiple accounts as the same player is forbidden.",
+		"clause2": "Using bots or any automation script is forbidden.",
+		"clause3": "Knowingly exploiting a bug is forbidden and must be reported to the team.",
+		"accept_button": "Accept"
 	}
 }
