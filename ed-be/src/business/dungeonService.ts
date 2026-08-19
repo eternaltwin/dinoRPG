@@ -206,7 +206,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	const resumable = existing != null && (existing.leaderId == null || existing.leaderId === dinoz.id);
 	if (team.some(t => t.unavailableReason && !(resumable && t.unavailableReason === UnavailableReason.dungeon))) {
 		// A team member is already busy elsewhere, refuse entry.
-		throw new ExpectedError(translate('dungeon.teamBusy', authed));
+		throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 	}
 
 	await updateMultipleDinoz(

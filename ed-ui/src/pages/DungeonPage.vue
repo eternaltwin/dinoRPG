@@ -46,7 +46,7 @@
 import { defineComponent } from 'vue';
 import { DinozService, DungeonService } from '../services/index.js';
 import { ARROWS, KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
-import type { Cell, RevealedCell, Skin, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
+import type { Cell, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
@@ -312,22 +312,19 @@ export default defineComponent({
 				});
 			}
 		},
-		/** Enter the dungeon: the server decrypts the layout; we get the reveals only. */
+		/** Build the maze from the run DinozActions already fetched via DungeonService.enterDungeon(). */
 		async build(): Promise<void> {
-			let run: StartRunResult;
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
-			if (!currentDinoz) {
-				return;
-			}
-			useDinozStore().setCurrentDinozId(this.dinozId);
-			try {
-				run = await DungeonService.enterDungeon(this.dungeonId, currentDinoz.id);
-				this.currentLevel = -run.pos.l - 1;
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
+			// enterDungeon() runs in DinozActions.launch() before routing here, so a throw
+			// (e.g. team already in a dungeon) is caught there and never reaches this page.
+			const run = this.sessionStore.getDungeonRun;
+			if (!currentDinoz || !run) {
 				this.$router.go(-1);
 				return;
 			}
+			this.sessionStore.setDungeonRun(undefined);
+			this.currentLevel = -run.pos.l - 1;
+			useDinozStore().setCurrentDinozId(this.dinozId);
 
 			icons.clear();
 			doorKeys.clear();

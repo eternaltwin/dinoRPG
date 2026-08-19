@@ -129,7 +129,7 @@ import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
-import { ClanService, DinozService, FightService, MissionService } from '../../services/index.js';
+import { ClanService, DinozService, DungeonService, FightService, MissionService } from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils/index.js';
@@ -652,6 +652,12 @@ export default defineComponent({
 					break;
 				case Action.DUNGEON_ENTER:
 				case Action.DUNGEON:
+					try {
+						this.sessionStore.setDungeonRun(await DungeonService.enterDungeon(action.prop as string, this.dinozId));
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+						return;
+					}
 					useDinozStore().setDungeonName(this.dinozId, action.prop as string);
 					this.$router.push({
 						name: 'Dungeon',
