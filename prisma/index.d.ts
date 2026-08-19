@@ -27753,6 +27753,7 @@ export namespace Prisma {
     displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
+    tosAccepted: boolean | null
     id: string | null
   }
 
@@ -27787,6 +27788,7 @@ export namespace Prisma {
     displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
+    tosAccepted: boolean | null
     id: string | null
   }
 
@@ -27822,6 +27824,7 @@ export namespace Prisma {
     banCaseId: number
     discoveredSkills: number
     lastVersionSeen: number
+    tosAccepted: number
     id: number
     _all: number
   }
@@ -27880,6 +27883,7 @@ export namespace Prisma {
     displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
   }
 
@@ -27914,6 +27918,7 @@ export namespace Prisma {
     displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
   }
 
@@ -27949,6 +27954,7 @@ export namespace Prisma {
     banCaseId?: true
     discoveredSkills?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
     _all?: true
   }
@@ -28071,6 +28077,7 @@ export namespace Prisma {
     banCaseId: number | null
     discoveredSkills: number[]
     lastVersionSeen: string
+    tosAccepted: boolean
     id: string
     _count: PlayerCountAggregateOutputType | null
     _avg: PlayerAvgAggregateOutputType | null
@@ -28125,6 +28132,7 @@ export namespace Prisma {
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -28201,6 +28209,7 @@ export namespace Prisma {
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -28238,6 +28247,7 @@ export namespace Prisma {
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -28275,10 +28285,11 @@ export namespace Prisma {
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "autoReequipItems" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "autoReequipItems" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "tosAccepted" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -28407,6 +28418,7 @@ export namespace Prisma {
       banCaseId: number | null
       discoveredSkills: number[]
       lastVersionSeen: string
+      tosAccepted: boolean
       id: string
     }, ExtArgs["result"]["player"]>
     composites: {}
@@ -28902,6 +28914,7 @@ export namespace Prisma {
     readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly lastVersionSeen: FieldRef<"Player", 'String'>
+    readonly tosAccepted: FieldRef<"Player", 'Boolean'>
     readonly id: FieldRef<"Player", 'String'>
   }
     
@@ -89951,6 +89964,7 @@ export namespace Prisma {
     banCaseId: 'banCaseId',
     discoveredSkills: 'discoveredSkills',
     lastVersionSeen: 'lastVersionSeen',
+    tosAccepted: 'tosAccepted',
     id: 'id'
   };
 
@@ -92127,6 +92141,7 @@ export namespace Prisma {
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     id?: UuidFilter<"Player"> | string
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
@@ -92202,6 +92217,7 @@ export namespace Prisma {
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
     clan?: ClanOrderByWithRelationInput
     leaderOf?: ClanOrderByWithRelationInput
@@ -92281,6 +92297,7 @@ export namespace Prisma {
     displayedNotifications?: IntFilter<"Player"> | number
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
@@ -92355,6 +92372,7 @@ export namespace Prisma {
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
     _avg?: PlayerAvgOrderByAggregateInput
@@ -92398,6 +92416,7 @@ export namespace Prisma {
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
+    tosAccepted?: BoolWithAggregatesFilter<"Player"> | boolean
     id?: UuidWithAggregatesFilter<"Player"> | string
   }
 
@@ -97035,6 +97054,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97110,6 +97130,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -97181,6 +97202,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97256,6 +97278,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -97329,6 +97352,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
   }
 
@@ -97362,6 +97386,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -97397,6 +97422,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -102384,6 +102410,7 @@ export namespace Prisma {
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -102429,6 +102456,7 @@ export namespace Prisma {
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -102463,6 +102491,7 @@ export namespace Prisma {
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -112342,6 +112371,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -112416,6 +112446,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -113197,6 +113228,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -113271,6 +113303,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -115807,6 +115840,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -115881,6 +115915,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -116078,6 +116113,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -116152,6 +116188,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -116652,6 +116689,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -116726,6 +116764,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -116866,6 +116905,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -116940,6 +116980,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -119665,6 +119706,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -119739,6 +119781,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -119825,6 +119868,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -119899,6 +119943,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -119969,6 +120014,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -120043,6 +120089,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -120230,6 +120277,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -120304,6 +120352,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -121095,6 +121144,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121169,6 +121219,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121255,6 +121306,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -121329,6 +121381,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -121399,6 +121452,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121473,6 +121527,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121559,6 +121614,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -121633,6 +121689,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -121741,6 +121798,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121815,6 +121873,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121951,6 +122010,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122025,6 +122085,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122251,6 +122312,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -122325,6 +122387,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -122411,6 +122474,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122485,6 +122549,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122555,6 +122620,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -122629,6 +122695,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -122715,6 +122782,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122789,6 +122857,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122859,6 +122928,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -122933,6 +123003,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123019,6 +123090,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123093,6 +123165,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123163,6 +123236,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -123237,6 +123311,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123323,6 +123398,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123397,6 +123473,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123467,6 +123544,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -123541,6 +123619,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123627,6 +123706,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123701,6 +123781,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123771,6 +123852,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -123845,6 +123927,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123931,6 +124014,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -124005,6 +124089,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -124165,6 +124250,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124239,6 +124325,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124359,6 +124446,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -124433,6 +124521,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -124609,6 +124698,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124683,6 +124773,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124927,6 +125018,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -125001,6 +125093,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -125220,6 +125313,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -125294,6 +125388,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -125492,6 +125587,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -125566,6 +125662,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -125854,6 +125951,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -125928,6 +126026,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -126014,6 +126113,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -126088,6 +126188,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -126264,6 +126365,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -126338,6 +126440,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -126536,6 +126639,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -126610,6 +126714,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -126704,6 +126809,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -126778,6 +126884,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -127092,6 +127199,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -127165,6 +127273,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -127352,6 +127461,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -127426,6 +127536,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -127737,6 +127848,7 @@ export namespace Prisma {
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     id?: UuidFilter<"Player"> | string
   }
 
@@ -128192,6 +128304,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -128266,6 +128379,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -128406,6 +128520,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -128480,6 +128595,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -129261,6 +129377,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -129335,6 +129452,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -129469,6 +129587,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -129543,6 +129662,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -129667,6 +129787,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -129741,6 +129862,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -129875,6 +129997,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -129949,6 +130072,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -130121,6 +130245,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -130195,6 +130320,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -130335,6 +130461,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -130409,6 +130536,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -130687,6 +130815,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -130761,6 +130890,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -130836,6 +130966,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -130910,6 +131041,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -130985,6 +131117,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -131058,6 +131191,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -131305,6 +131439,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -131379,6 +131514,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -131460,6 +131596,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -131534,6 +131671,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -131615,6 +131753,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -131688,6 +131827,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -131813,6 +131953,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -131887,6 +132028,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -131984,6 +132126,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -132058,6 +132201,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -132194,6 +132338,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -132268,6 +132413,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -132377,6 +132523,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -132451,6 +132598,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -132582,6 +132730,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -132656,6 +132805,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -132777,6 +132927,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -132851,6 +133002,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -132979,6 +133131,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -133053,6 +133206,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -133209,6 +133363,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -133283,6 +133438,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -133353,6 +133509,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -133427,6 +133584,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -133513,6 +133671,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -133587,6 +133746,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -133657,6 +133817,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -133731,6 +133892,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -133806,6 +133968,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -133880,6 +134043,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -133955,6 +134119,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -134029,6 +134194,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -134375,6 +134541,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -134449,6 +134616,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -134530,6 +134698,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -134604,6 +134773,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -134685,6 +134855,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -134759,6 +134930,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -135166,6 +135338,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -135240,6 +135413,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -135379,6 +135553,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -135453,6 +135628,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -136184,6 +136360,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -136258,6 +136435,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -136583,6 +136761,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -136657,6 +136836,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -136872,6 +137052,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -136946,6 +137127,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -137032,6 +137214,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -137106,6 +137289,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -137176,6 +137360,7 @@ export namespace Prisma {
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -137250,6 +137435,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -137471,6 +137657,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -137545,6 +137732,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -140656,6 +140844,7 @@ export namespace Prisma {
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
   }
 
@@ -140938,6 +141127,7 @@ export namespace Prisma {
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -141011,6 +141201,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -141083,6 +141274,7 @@ export namespace Prisma {
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 

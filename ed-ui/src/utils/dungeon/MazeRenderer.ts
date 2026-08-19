@@ -400,7 +400,7 @@ export class MazeRenderer {
 			for (let x = 0; x < this.dims.width; x++) {
 				if (isKnown(x, y)) continue;
 				const h = this.hash(x, y, 11);
-				const r = c * 1.75
+				const r = c * 1.75;
 				const ox = c * (((h >> 6) % 100) / 100 - 0.5) * 0.3;
 				const oy = c * (((h >> 12) % 100) / 100 - 0.5) * 0.3;
 				g.drawCircle((x + 0.5) * c + ox, (y + 0.5) * c + oy, r);
