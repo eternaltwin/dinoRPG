@@ -19,6 +19,8 @@ import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { getItemMaxQuantity } from '../business/inventoryService.js';
+import { translateTarget } from '../utils/server/translate.js';
+import { Lang } from '@drpg/prisma';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -165,4 +167,37 @@ export async function rewarder(
 	}
 
 	return actualRewards;
+}
+
+/**
+ * Describes a list of rewards in a human-readable format, taking into account the language and pluralization rules.
+ *
+ * @param rewards The list of rewards to describe.
+ * @param lang The language for the translation.
+ * @returns The description of the rewards in the specified language.
+ */
+export function describeRewards(rewards: Rewarder[], lang: Lang): string {
+	const formatter = new Intl.ListFormat(lang);
+	const translatedRewards = rewards.map(reward => {
+		if (reward.rewardType === RewardEnum.ITEM) {
+			const translation = translateTarget(
+				`item.name.${itemList[reward.value as Item].name.toLocaleLowerCase()}`,
+				lang,
+				{},
+				reward.quantity
+			);
+			return translateTarget('dojo.itemReward', lang, {
+				itemId: reward.value,
+				item: translation,
+				quantity: reward.quantity,
+				interpolation: { escapeValue: false }
+			});
+		} else if (reward.rewardType === RewardEnum.GOLD) {
+			return translateTarget('dojo.goldReward', lang, { value: reward.value, interpolation: { escapeValue: false } });
+		} else {
+			console.error(`Reward type ${reward.rewardType} is not supported for describeReward.`);
+			return '???';
+		}
+	});
+	return formatter.format(translatedRewards);
 }
