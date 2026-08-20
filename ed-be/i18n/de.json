@@ -68,14 +68,14 @@
 		"outdatedDefense": "Verteidigung veraltet"
 	},
 	"error": {
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
-		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
+		"notYourDinoz": "Dieser Dinoz gehört dir nicht.",
+		"noDinozAtCemetary": "Keiner deiner Dinoz ist auf dem Friedhof.",
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
-		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
-		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
-		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
-		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
-		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
+		"dinozInventoryNotEmpty": "Dein Dinoz muss seine Ausrüstung ablegen.",
+		"dinozNotAvailable": "Dein Dinoz steht für diese Aktion nicht zur Verfügung.",
+		"notEnoughTickets": "Du hast nicht genügend Gutscheine, um diese Aktion auszuführen.",
+		"noShopAccess": "Du erfüllst nicht die Bedingungen, um dieses Geschäft aufzusuchen.",
+		"tooManyItems": "Du hast zu viele Gegenstände, um diesen Vorgang durchzuführen."
 	},
 	"fb": {
 		"error": {
@@ -252,11 +252,11 @@
 		"levelLimit": "Die Höchststufe ist auf {{level}} begrenzt",
 		"poison": "Vergiftung ist eingeschaltet",
 		"nopoison": "Vergiftung ist ausgeschaltet",
-		"goldReward": "{{value}} pièces d'or :gold:",
+		"goldReward": "{{value}} Goldstücke :gold:",
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
-		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
+		"qualificationMilestone": "**{{points}} Punkte**: {{rewards}}.",
 		"newsTitle": "Neues Inter-Dojo Turnier",
-		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nVergesst nicht, dass es Belohnungen für Spieler gibt, die bis zum Ende der Qualifikation bestimmte Punktemeilensteine erreichen! Diese Belohnungen sind kumulativ und werden jedes Mal gewährt, wenn ein Spieler einen neuen Punktemeilenstein erreicht.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
+		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die bestimmte Punktemeilensteine erreicht haben, Belohnungen erhalten werden! Diese sind beim Erreichen jedes weiteren Punktemeilensteins kumulativ.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
 	},
 	"race": {
 		"1": "Möffe",
@@ -297,13 +297,13 @@
 	},
 	"item": {
 		"name": {
-			"void_sphere": "Sphère de Vide | Sphères de Vide",
-			"souffet_egg": "Œuf de Soufflet | Œufs de Soufflet",
-			"toufufu_baby": "Bébé Toufufu | Bébés Toufufu",
-			"toufufu_baby_rare": "Bébé Toufufu Rare | Bébés Toufufu Rares",
-			"golden_napodino": "Napodino d'or | Napodinos d'or",
-			"box_epic": "Boîte épique | Boîtes épiques",
-			"box_legendary": "Boîte légendaire | Boîtes légendaires"
+			"void_sphere": "Leerensphäre | Leerensphären",
+			"souffet_egg": "Wespel-Ei | Wespel-Eier",
+			"toufufu_baby": "Tofufu-Junges | Tofufu-Jungen",
+			"toufufu_baby_rare": "Seltenes Tofufu-Junges | Seltene Tofufu-Jungen",
+			"golden_napodino": "Gold-Napodino | Gold-Napodinos",
+			"box_epic": "Epische Geschenkbox | Epische Geschenkboxen",
+			"box_legendary": "Legendäre Geschenkbox | Legendäre Geschenkboxen"
 		}
 	},
 	"reward": {
@@ -352,12 +352,12 @@
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"dungeon": {
-		"inexistent": "Ce donjon n'existe pas.",
-		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
-		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
-		"noRun": "Vous n'avez jamais visité ce donjon",
-		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
-		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
+		"inexistent": "Diese Etage existiert nicht.",
+		"wrongPlace": "Dein Dinoz ist nicht am Etageneingang.",
+		"wrongTeam": "Auf dieser Etage befindet sich bereits eine andere Gruppe.",
+		"noRun": "Du hast diese Etage noch nie besucht.",
+		"notAtExit": "An dieser Stelle kannst du die Etage nicht verlassen!",
+		"notHealing": "Du kannst diesen Gegenstand nur in einem Heilungsbereich verwenden."
 	},
 	"UnavailableReason": {
 		"frozen": "Dein Dinoz ist eingefroren.",
@@ -365,7 +365,7 @@
 		"selling": "Dein Dinoz wird verkauft.",
 		"superdom": "Votre Dinoz est au superdom",
 		"resting": "Dein Dinoz ruht sich aus.",
-		"dungeon": "Votre dinoz visite un donjon."
+		"dungeon": "Dein Dinoz befindet sich auf einer Etage."
 	},
 	"fb_tournament": {
 		"noOpponent": "Es gibt derzeit keine Gegner mehr, gegen die du kämpfen könntest."
