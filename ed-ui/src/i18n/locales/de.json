@@ -4691,8 +4691,8 @@
 		"HPLost": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** hat **{hpLost} :pv:** verloren.",
 		"Death": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** ist gestorben.",
 		"Revive": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** wiederbelebt.",
-		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
-		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Sacrifice": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** für **{tickets}** Gutscheine geopfert.",
+		"Unsacrifice": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** für **{tickets}** Gutscheine wiederauferweckt.",
 		"MissionStep": "**{player} ({playerId})** erreicht mit dem Dinoz **{dinoz} ({dinozId})** in der Mission **„{mission}“ den Abschnitt {step}** .",
 		"MissionFinished": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgeschlossen.",
 		"MissionCanceled": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgebrochen.",
@@ -5302,10 +5302,10 @@
 		"blockSender": "Absender blockieren"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann die gegenwärtige Etage erst verlassen, wenn er sich am Eingang oder Ausgang befindet, oder stirbt.",
 		"floor": "{floor}. Etage",
 		"name": {
-			"katatombs": "les Katatombes"
+			"katatombs": "die Katakomben"
 		},
 		"katatombs": {
 			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
@@ -5426,9 +5426,9 @@
 	"terms": {
 		"title": "Nutzungsbedingungen",
 		"intro": "Bitte lies und akzeptiere die folgenden Nutzungsbedingungen, bevor du weiterspielst.",
-		"clause1": "Das Erstellen oder Nutzen mehrerer Konten durch denselben Spieler ist verboten.",
-		"clause2": "Die Nutzung von Bots oder anderen Automatisierungsskripten ist verboten.",
-		"clause3": "Das absichtliche Ausnutzen eines Fehlers ist verboten und muss dem Team gemeldet werden.",
-		"accept_button": "Akzeptieren"
+		"clause1": "Das Erstellen oder Nutzen mehrerer Konten durch denselben Spieler ist nicht gestattet.",
+		"clause2": "Die Nutzung von Bots und jeglicher Automatisierungsskripten ist nicht gestattet.",
+		"clause3": "Das absichtliche Ausnutzen von Fehlern ist nicht gestattet – diese müssen den Entwicklern gemeldet werden.",
+		"accept_button": "Ich stimme zu"
 	}
 }
