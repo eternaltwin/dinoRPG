@@ -1,6 +1,10 @@
-import { Prisma } from '@drpg/prisma';
+import { Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { withSpan } from '../utils/server/tracing.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+
+// Paged so a player who has sacrificed hundreds of Dinoz over time doesn't pull them all in one query.
+export const SACRIFICED_DINOZ_PAGE_SIZE = 20;
 
 /**
  * Get all the necessary data from the player for to handle pulling data from the demon shop.
@@ -35,6 +39,15 @@ export async function getPlayerDemonShopRequest(playerId: string) {
 					}
 				},
 				dinoz: {
+					// Sacrificed Dinoz are fetched separately and paginated, see getSacrificedDinozRequest.
+					// (placeId alone isn't enough: sacrificed Dinoz never leave CIMETIERE, so they'd still
+					// be pulled here unbounded without also excluding unavailableReason=sacrificed.)
+					where: {
+						AND: [
+							{ placeId: PlaceEnum.CIMETIERE },
+							{ OR: [{ unavailableReason: { not: UnavailableReason.sacrificed } }, { unavailableReason: null }] }
+						]
+					},
 					select: {
 						level: true,
 						id: true,
@@ -68,6 +81,36 @@ export async function getPlayerDemonShopRequest(playerId: string) {
 		});
 
 		return player;
+	});
+}
+
+/**
+ * Get one page of a player's sacrificed Dinoz, ordered by id ascending.
+ * @return Dinoz[]
+ */
+export async function getSacrificedDinozRequest(playerId: string, page: number) {
+	return withSpan(getSacrificedDinozRequest.name, async () => {
+		return prisma.dinoz.findMany({
+			where: {
+				playerId,
+				unavailableReason: UnavailableReason.sacrificed
+			},
+			select: {
+				id: true,
+				level: true,
+				display: true,
+				raceId: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				skills: true
+			},
+			orderBy: { id: 'asc' },
+			skip: (page - 1) * SACRIFICED_DINOZ_PAGE_SIZE,
+			take: SACRIFICED_DINOZ_PAGE_SIZE
+		});
 	});
 }
 

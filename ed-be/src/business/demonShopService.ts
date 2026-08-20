@@ -21,7 +21,8 @@ import {
 	getPlayerDemonShopRequest,
 	createMultipleDemonDinoz,
 	deleteDinozInDemonShopRequest,
-	getDinozFromDemonShopRequest
+	getDinozFromDemonShopRequest,
+	getSacrificedDinozRequest
 } from '../dao/demonShopDao.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -42,6 +43,37 @@ import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+
+/**
+ * @summary Format Dinoz rows from getSacrificedDinozRequest as DinozShopFiche.
+ */
+function toDinozShopFiche(rows: Awaited<ReturnType<typeof getSacrificedDinozRequest>>): DinozShopFiche[] {
+	return rows.map(d => ({
+		id: d.id,
+		level: d.level,
+		display: d.display,
+		raceId: d.raceId,
+		nbrUpFire: d.nbrUpFire,
+		nbrUpWood: d.nbrUpWood,
+		nbrUpWater: d.nbrUpWater,
+		nbrUpLightning: d.nbrUpLightning,
+		nbrUpAir: d.nbrUpAir,
+		skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
+		price: getDemonShopPrice(d.level)
+	}));
+}
+
+/**
+ * @summary Get one page of a player's sacrificed Dinoz (buy-back list).
+ * @param req Page number to fetch (1-indexed).
+ * @return DinozShopFiche[]
+ */
+export async function getSacrificedDinoz(req: Request): Promise<DinozShopFiche[]> {
+	const authed = await auth(req);
+	const page = +req.params.page || 1;
+
+	return toDinozShopFiche(await getSacrificedDinozRequest(authed.id, page));
+}
 
 /**
  * @summary Get all dinoz data from demon dinoz shop
@@ -88,27 +120,12 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
 	if (dinozAtCemetary.length === 0) {
-		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
 	}
 
-	const sacrificedDinoz: DinozShopFiche[] = player.dinoz
-		.filter(d => d.unavailableReason === UnavailableReason.sacrificed)
-		.map(d => {
-			return {
-				id: d.id,
-				level: d.level,
-				display: d.display,
-				raceId: d.raceId,
-				nbrUpFire: d.nbrUpFire,
-				nbrUpWood: d.nbrUpWood,
-				nbrUpWater: d.nbrUpWater,
-				nbrUpLightning: d.nbrUpLightning,
-				nbrUpAir: d.nbrUpAir,
-				skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
-				price: getDemonShopPrice(d.level)
-			};
-		})
-		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
+	// Sacrificed Dinoz can pile up into the hundreds, so only the first page is loaded here.
+	// The rest is fetched on demand via getSacrificedDinoz.
+	const sacrificedDinoz: DinozShopFiche[] = toDinozShopFiche(await getSacrificedDinozRequest(player.id, 1));
 
 	// Minimum 30 Demon tickets to see the list of demon dinoz.
 	const demonTickets = player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
@@ -290,7 +307,7 @@ export async function buyDemonDinoz(req: Request) {
 	);
 
 	if (!hasActiveDinozAtCemetary) {
-		throw new ExpectedError(translate('noDinozAtCemetary', authed));
+		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
 	}
 
 	// Check the player can get a new Dinoz.

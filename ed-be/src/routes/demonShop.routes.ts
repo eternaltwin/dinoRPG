@@ -5,6 +5,7 @@ import sendError from '../utils/server/sendErrors.js';
 import {
 	buyDemonDinoz,
 	getDinozFromDemonShop,
+	getSacrificedDinoz,
 	unsacrificeDinoz,
 	sacrificeDinoz
 } from '../business/demonShopService.js';
@@ -45,7 +46,41 @@ routes.get(`${commonPath}/`, async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /api/v1/demon/sacrificed/:dinozId:
+ * /api/v1/demon/sacrificed/:page:
+ *   get:
+ *     summary: Retrieve one page of the player's sacrificed Dinoz (buy-back list)
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Demon
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       500:
+ *         description: Error
+ */
+routes.get(
+	`${commonPath}/sacrificed/:page`,
+	[param('page').exists().isInt({ min: 1 })],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const sacrificed = await getSacrificedDinoz(req);
+			res.status(200).send(sacrificed);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/demon/sacrifice/:dinozId:
  *   post:
  *     summary: Sacrifice a Dinoz and get the matching amount of demon tickets
  *     security:
