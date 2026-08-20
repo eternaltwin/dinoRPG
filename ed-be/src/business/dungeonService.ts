@@ -52,7 +52,7 @@ import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 /** Gold granted per dungeon level for each collected pile. */
-const GOLD_PER_LEVEL = 100;
+const GOLD_PER_LEVEL = 150;
 
 /** Filter candidate reveals down to the not-yet-revealed ones and record them. */
 function newReveals(candidates: RevealedCell[], revealed: Set<string>): RevealedCell[] {
@@ -436,7 +436,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	const goldHere = itemIndexAt(d, DungeonItem.IGold, next.l, next.x, next.y) != null;
 	if (goldHere && !goldCollected.has(cellKey(next.l, next.x, next.y))) {
 		goldCollected.add(cellKey(next.l, next.x, next.y));
-		goldReward = dungeon.level * GOLD_PER_LEVEL;
+		goldReward = Math.round(dungeon.level * GOLD_PER_LEVEL * (0.93 + Math.random() * 0.17));
 		await addMoney(authed.id, goldReward);
 	}
 
