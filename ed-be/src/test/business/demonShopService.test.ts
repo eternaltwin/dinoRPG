@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
 	buyDemonDinoz,
 	getDinozFromDemonShop,
+	getSacrificedDinoz,
 	sacrificeDinoz,
 	unsacrificeDinoz
 } from '../../business/demonShopService.js';
@@ -20,7 +21,8 @@ import {
 	getDinozDataForSacrificeRequest,
 	getDinozDataForUnsacrificeRequest,
 	getDinozFromDemonShopRequest,
-	getPlayerDemonShopRequest
+	getPlayerDemonShopRequest,
+	getSacrificedDinozRequest
 } from '../../dao/demonShopDao.js';
 import { getRandomArrayElement } from '../../utils/index.js';
 import { getDemonShopPrice, hasAnyActiveDinozAt, isAtMaxActiveDinoz } from '../../utils/dinoz.js';
@@ -52,7 +54,8 @@ vi.mock('../../dao/demonShopDao.js', () => ({
 	getDinozFromDemonShopRequest: vi.fn(),
 	getDinozDataForSacrificeRequest: vi.fn(),
 	getDinozDataForUnsacrificeRequest: vi.fn(),
-	deleteDinozInDemonShopRequest: vi.fn()
+	deleteDinozInDemonShopRequest: vi.fn(),
+	getSacrificedDinozRequest: vi.fn().mockResolvedValue([])
 }));
 
 vi.mock('../../dao/playerItemDao.js', () => ({
@@ -175,6 +178,23 @@ function makeDinozWPlayer(overrides: Record<string, any> = {}, playerOverrides: 
 			items: [{ itemId: Item.DEMON_TICKET, quantity: 3000 }],
 			...playerOverrides
 		},
+		...overrides
+	};
+}
+
+/** A minimal row as returned by getSacrificedDinozRequest. */
+function makeSacrificedRow(overrides: Record<string, any> = {}): any {
+	return {
+		id: DEFAULT_DINOZ_ID,
+		level: 5,
+		display: 'display-xyz',
+		raceId: ANY_RACE_ID,
+		nbrUpFire: 1,
+		nbrUpWood: 2,
+		nbrUpWater: 3,
+		nbrUpLightning: 4,
+		nbrUpAir: 5,
+		skills: [] as { skillId: Skill }[],
 		...overrides
 	};
 }
@@ -334,45 +354,35 @@ describe('getDinozFromDemonShop', () => {
 		});
 	});
 
-	// ── result.sacrificed — sacrificed dinoz ────────────────────────────────────
+	// ── result.sacrificed — sacrificed dinoz (page 1) ───────────────────────────
+	// Filtering/sorting/pagination of sacrificed Dinoz happens in getSacrificedDinozRequest
+	// (mocked here); this just checks the page-1 result is fetched and mapped correctly.
 
-	describe('result.sacrificed (sacrificed dinoz)', () => {
-		it('includes only dinoz with sacrificed unavailableReason', async () => {
-			const dinozList = [
-				makeDinoz({ id: 1, unavailableReason: UnavailableReason.sacrificed }),
-				makeDinoz({ id: 2, unavailableReason: null }),
-				makeDinoz({ id: 3, unavailableReason: UnavailableReason.resting })
-			];
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer({ dinoz: dinozList }));
+	describe('result.sacrificed (sacrificed dinoz, page 1)', () => {
+		it('fetches page 1 of the player sacrificed Dinoz', async () => {
+			const player = makePlayer();
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(player);
+
+			await getDinozFromDemonShop(req());
+
+			expect(getSacrificedDinozRequest).toHaveBeenCalledWith(player.id, 1);
+		});
+
+		it('maps the rows returned by getSacrificedDinozRequest', async () => {
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer());
+			vi.mocked(getSacrificedDinozRequest).mockResolvedValue([makeSacrificedRow({ id: 42 })]);
 
 			const result = await getDinozFromDemonShop(req());
 
 			expect(result.sacrificed).toHaveLength(1);
-			expect(result.sacrificed[0].id).toBe(1);
-		});
-
-		it('sorts sacrificed dinoz by id ascending', async () => {
-			const dinozList = [30, 10, 20].map(id => makeDinoz({ id, unavailableReason: UnavailableReason.sacrificed }));
-			dinozList.push(makeDinoz());
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer({ dinoz: dinozList }));
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.sacrificed.map(d => d.id)).toEqual([10, 20, 30]);
+			expect(result.sacrificed[0].id).toBe(42);
 		});
 
 		it('sorts skills within each sacrificed dinoz numerically ascending', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [
-						makeDinoz({
-							unavailableReason: UnavailableReason.sacrificed,
-							skills: [{ skillId: '30' }, { skillId: '10' }, { skillId: '20' }]
-						})
-					],
-					items: []
-				})
-			);
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer());
+			vi.mocked(getSacrificedDinozRequest).mockResolvedValue([
+				makeSacrificedRow({ skills: [{ skillId: '30' }, { skillId: '10' }, { skillId: '20' }] })
+			]);
 
 			const result = await getDinozFromDemonShop(req());
 
@@ -381,12 +391,8 @@ describe('getDinozFromDemonShop', () => {
 
 		it('computes price via getDemonShopPrice using the dinoz level', async () => {
 			const level = 8;
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ level, unavailableReason: UnavailableReason.sacrificed })],
-					items: []
-				})
-			);
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer());
+			vi.mocked(getSacrificedDinozRequest).mockResolvedValue([makeSacrificedRow({ level })]);
 
 			const result = await getDinozFromDemonShop(req());
 
@@ -572,6 +578,37 @@ describe('getDinozFromDemonShop', () => {
 			sacrificed: expect.any(Array),
 			shop: expect.any(Array)
 		});
+	});
+});
+
+describe('getSacrificedDinoz', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+	});
+
+	it('fetches the requested page for the authed player', async () => {
+		vi.mocked(getSacrificedDinozRequest).mockResolvedValue([]);
+
+		await getSacrificedDinoz(req({ page: '3' }));
+
+		expect(getSacrificedDinozRequest).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, 3);
+	});
+
+	it('defaults to page 1 when no page param is given', async () => {
+		vi.mocked(getSacrificedDinozRequest).mockResolvedValue([]);
+
+		await getSacrificedDinoz(req());
+
+		expect(getSacrificedDinozRequest).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, 1);
+	});
+
+	it('maps rows to DinozShopFiche', async () => {
+		vi.mocked(getSacrificedDinozRequest).mockResolvedValue([makeSacrificedRow({ id: 7, level: 4 })]);
+
+		const result = await getSacrificedDinoz(req({ page: '1' }));
+
+		expect(result).toEqual([expect.objectContaining({ id: 7, price: getDemonShopPrice(4) })]);
 	});
 });
 

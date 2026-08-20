@@ -1,10 +1,15 @@
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { http } from '../utils/index.js';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 export const DemonShopService = {
 	async getDemonDinozShop(): Promise<demonShopFiche> {
 		const res = await http().get(`/demon`);
+		return res.data;
+	},
+	async getSacrificedDinoz(page: number): Promise<DinozShopFiche[]> {
+		const res = await http().get(`/demon/sacrificed/${page}`);
 		return res.data;
 	},
 	async sacrificeDinoz(dinozId: number): Promise<number> {

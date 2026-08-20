@@ -267,7 +267,8 @@ export default defineComponent({
 					break;
 				case Action.DEMON_SHOP:
 					this.$router.push({
-						name: 'DemonShopPage'
+						name: 'DemonShopPage',
+						query: { tab: 'buy' }
 					});
 					break;
 				case Action.ITINERANT_SHOP:

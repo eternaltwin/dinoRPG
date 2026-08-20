@@ -136,7 +136,9 @@ export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Pr
 		return false;
 	}
 	const codec = new DungeonCodec();
-	codec.decode(unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) }));
+	codec.decode(
+		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
+	);
 	return itemIndexAt(codec.d, DungeonItem.IHeal, run.posL, run.posX, run.posY) != null;
 }
 

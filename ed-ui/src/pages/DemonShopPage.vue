@@ -2,25 +2,37 @@
 	<TitleHeader :title="$t('pageTitle.demonShop')" :header="formatContent($t(`shop.demon.name`))" />
 	<div class="tabPanel">
 		<ul class="tabs">
-			<li :class="tab === 0 ? 'active' : ''">
-				<a href="#" @click="changeTab(0)">{{ $t('shop.demon.sacrifice_title') }}</a>
+			<li>
+				<RouterLink
+					:to="{ name: 'DemonShopPage', query: { tab: 'sacrifice' } }"
+					:class="{ active: tab === 'sacrifice' }"
+					>{{ $t('shop.demon.sacrifice_title') }}</RouterLink
+				>
 			</li>
-			<li :class="{ active: tab === 1, disabled: isShopEmpty }">
-				<a href="#" @click.prevent="!isShopEmpty && changeTab(1)">
-					{{ $t('shop.demon.buy_title') }}
-				</a>
+			<li :class="{ disabled: isShopEmpty }">
+				<RouterLink
+					v-if="!isShopEmpty"
+					:to="{ name: 'DemonShopPage', query: { tab: 'buy' } }"
+					:class="{ active: tab === 'buy' }"
+					>{{ $t('shop.demon.buy_title') }}</RouterLink
+				>
+				<span v-else>{{ $t('shop.demon.buy_title') }}</span>
 			</li>
-			<li :class="{ active: tab === 2, disabled: isSacrificedEmpty }">
-				<a href="#" @click.prevent="!isSacrificedEmpty && changeTab(2)">
-					{{ $t('shop.demon.unsacrifice_title') }}
-				</a>
+			<li :class="{ disabled: isSacrificedEmpty }">
+				<RouterLink
+					v-if="!isSacrificedEmpty"
+					:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice' } }"
+					:class="{ active: tab === 'unsacrifice' }"
+					>{{ $t('shop.demon.unsacrifice_title') }}</RouterLink
+				>
+				<span v-else>{{ $t('shop.demon.unsacrifice_title') }}</span>
 			</li>
 		</ul>
 	</div>
 
-	<DZDisclaimer v-if="tab === 0" help :content="$t('shop.demon.sacrifice_help')" />
-	<DZDisclaimer v-if="tab === 1" help :content="$t('shop.demon.buy_help')" />
-	<DZDisclaimer v-if="tab === 2" help :content="$t('shop.demon.unsacrifice_help')" />
+	<DZDisclaimer v-if="tab === 'sacrifice'" help :content="$t('shop.demon.sacrifice_help')" />
+	<DZDisclaimer v-if="tab === 'buy'" help :content="$t('shop.demon.buy_help')" />
+	<DZDisclaimer v-if="tab === 'unsacrifice'" help :content="$t('shop.demon.unsacrifice_help')" />
 
 	<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
 		<span>{{ demonTickets }}</span>
@@ -30,7 +42,7 @@
 		</template>
 	</Tippy>
 
-	<div v-if="tab === 0" class="shop_view">
+	<div v-if="tab === 'sacrifice'" class="shop_view">
 		<div
 			class="sacrifice_sheets"
 			:id="'sacrifice_sheet_' + index"
@@ -41,26 +53,39 @@
 		</div>
 	</div>
 
-	<div v-if="tab === 1" class="shop_view">
+	<div v-if="tab === 'buy'" class="shop_view">
 		<div class="demon_sheets" :id="'demon_sheet_' + index" v-for="(dinoz, index) in demonShop.shop" :key="dinoz.id">
 			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmPurchase(dinoz.id)" />
 		</div>
 	</div>
 
-	<!-- TODO paginate sacrificed Dinoz to avoid pulling 100s in a single query -->
-	<div v-if="tab === 2" class="shop_view">
+	<div v-if="tab === 'unsacrifice'" class="shop_view">
 		<div
 			class="unsacrifice_sheets"
 			:id="'unsacrifice_sheet_' + index"
 			v-for="(dinoz, index) in demonShop.sacrificed"
 			:key="dinoz.id"
 		>
-			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id, dinoz.price)" />
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id)" />
+		</div>
+		<div class="pagination">
+			<RouterLink
+				v-if="sacrificedPage > 1"
+				:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice', page: sacrificedPage - 1 } }"
+			>
+				{{ $t('ranking.page.previous') }}
+			</RouterLink>
+			<RouterLink
+				v-if="demonShop.sacrificed?.length === 20"
+				:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice', page: sacrificedPage + 1 } }"
+			>
+				{{ $t('ranking.page.next') }}
+			</RouterLink>
 		</div>
 	</div>
 </template>
 
-<script lang="ts" scoped>
+<script lang="ts">
 import { defineComponent } from 'vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZShop from '../components/common/DZShop.vue';
@@ -94,11 +119,16 @@ export default defineComponent({
 			ElementType,
 			demonShop: {} as demonShopFiche,
 			openDetails: new Map() as Map<number, SkillDetails[]>,
-			tab: 0 as number,
 			demonTickets: 0
 		};
 	},
 	computed: {
+		tab(): string {
+			return (this.$route.query.tab as string) || 'buy';
+		},
+		sacrificedPage(): number {
+			return Number(this.$route.query.page) || 1;
+		},
 		isShopEmpty(): boolean {
 			return !this.demonShop.shop?.length;
 		},
@@ -107,8 +137,12 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		changeTab(tab: number) {
-			this.tab = tab;
+		async loadSacrificedPage(page: number): Promise<void> {
+			try {
+				this.demonShop.sacrificed = await DemonShopService.getSacrificedDinoz(page);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
 		},
 		async refresh(): Promise<void> {
 			try {
@@ -237,6 +271,19 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		await this.refresh();
+		// refresh() only embeds page 1 of the sacrificed list; fetch the right page for a direct link.
+		if (this.tab === 'unsacrifice' && this.sacrificedPage !== 1) {
+			await this.loadSacrificedPage(this.sacrificedPage);
+		}
+	},
+	watch: {
+		// The 3 tabs share this component instance (no remount on navigation), so re-fetch the
+		// sacrificed page whenever it's entered or paged, instead of trusting stale in-memory data.
+		$route(to) {
+			if (to.query.tab === 'unsacrifice') {
+				this.loadSacrificedPage(Number(to.query.page) || 1);
+			}
+		}
 	}
 });
 </script>
@@ -275,24 +322,28 @@ export default defineComponent({
 			color: white;
 		}
 
-		li.active {
+		a.active {
 			margin-top: 1px;
 			text-shadow: 1px 1px 0px #9a4029;
-			a {
-				background-color: #d69e68;
-				line-height: 16pt;
-				color: white;
-				border-left-color: #ffe7aa;
-				border-top-color: #ffe7aa;
-				border-bottom: 1px solid #d69e68;
-			}
+			background-color: #d69e68;
+			line-height: 16pt;
+			color: white;
+			border-left-color: #ffe7aa;
+			border-top-color: #ffe7aa;
+			border-bottom: 1px solid #d69e68;
 		}
-		li.disabled {
-			a {
-				opacity: 0.45;
-				cursor: not-allowed;
-				pointer-events: none; // belt-and-suspenders alongside the @click guard
-			}
+		li.disabled span {
+			display: inline-block;
+			color: #fce3bc;
+			padding-left: 5px;
+			padding-right: 5px;
+			background-color: #bc683c;
+			border-right: 1px solid black;
+			border-left: 1px solid #d39a65;
+			border-top: 1px solid #d39a65;
+			font-size: 10pt;
+			opacity: 0.45;
+			cursor: not-allowed;
 		}
 	}
 }
@@ -303,6 +354,11 @@ export default defineComponent({
 	flex-direction: column;
 	align-self: center;
 	align-items: center;
+}
+.pagination {
+	display: flex;
+	gap: 20px;
+	color: white;
 }
 .titleContent {
 	height: fit-content;

@@ -86,7 +86,7 @@ const router = createRouter({
 					component: () => import('../pages/DinozShopPage.vue')
 				},
 				{
-					path: '/demon',
+					path: '/demonShop',
 					name: 'DemonShopPage',
 					component: () => import('../pages/DemonShopPage.vue')
 				},
