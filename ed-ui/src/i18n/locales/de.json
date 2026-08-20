@@ -258,9 +258,9 @@
 			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
 			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
 			"war_attack": "Gegnerische Burg angreifen.",
-			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
-			"dungeon": "Voir l'évolution de l'exploration actuelle...",
-			"demon_shop": "ATTENTION ! DANGER !"
+			"dungeon_enter": "Du kannst diesen Ort erkunden, aber gib Acht, dass du dich nicht verläufst!",
+			"dungeon": "Aktuellen Erkundungsstand betrachten...",
+			"demon_shop": "ACHTUNG! GEFAHR!"
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -297,9 +297,9 @@
 			"war_defend": "Burg verteidigen",
 			"war_remove": "Von der Verteidigung abziehen",
 			"war_attack": "Burg angreifen",
-			"dungeon_enter": "Entrer",
+			"dungeon_enter": "Betreten",
 			"dungeon": "Accéder au Plan",
-			"demon_shop": "Boutique Démoniaque"
+			"demon_shop": "Dämonisches Geschäft"
 		}
 	},
 	"button": {
@@ -318,7 +318,7 @@
 		"search": "Suche",
 		"loading": "Wird geladen...",
 		"noResults": "Keine Ergebnisse",
-		"details": "Détails"
+		"details": "Details"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -1806,18 +1806,18 @@
 	},
 	"shop": {
 		"demon": {
-			"name": "Boutique Démoniaque",
-			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"name": "Dämonisches Geschäft",
+			"sacrifice_help": "Herzlich Willkommen im Dämonengeschäft! Hier kannst du deine auf dem Friedhof befindlichen Dinoz **opfern** und dafür **Dämonengutscheine** :demon_tk: erhalten. Die Anzahl der Gutscheine hängt von der Stufe der Dinoz ab. Ein geopferter Dinoz wird nicht mehr spielbar oder gar sichtbar.&&Um die Liste an Dämonen-Dinoz betrachten zu können, benötigst du mindestens 30 :demon_tk:.",
 			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
 			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
-			"level": "Niv. {level}",
-			"sacrifice": "Sacrifier",
+			"level": "St. {level}",
+			"sacrifice": "Opfern",
 			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
-			"sacrifice_title": "Sacrifice",
-			"buy_title": "Invocation",
-			"unsacrifice_title": "Résurrection",
+			"sacrifice_title": "Opferung",
+			"buy_title": "Beschwörung",
+			"unsacrifice_title": "Wiedererweckung",
 			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
-			"yourDemonTickets": "Vos Tickets Démons"
+			"yourDemonTickets": "Deine Dämonengutscheine"
 		},
 		"dinoz": {
 			"header": "Dinoz-Gehege",
@@ -2678,7 +2678,7 @@
 		"default": "DinoRPG [ Dinoland-Nachrichten ]",
 		"dinoz": "DinoRPG [ Profil von {dinoz} ]",
 		"shop": "DinoRPG [ Händler: {shop} ]",
-		"demon": "DinoRPG [ Boutique Démoniaque ]",
+		"demon": "Dino-RPG [ Dämonisches Geschäft ]",
 		"dinozShop": "DinoRPG [ Dinoz-Gehege ]",
 		"account": "DinoRPG [ Persönliche Informationen ]",
 		"ranking": "DinoRPG [ Die Große Ruhmeshalle ]",
@@ -2705,7 +2705,7 @@
 		"event": "DinoRPG [ Ereignisse ]",
 		"fb_tournament": "DinoRPG [ Rohkraft-Turnier ]",
 		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]",
-		"terms": "DinoRPG [ Nutzungsbedingungen ]"
+		"terms": "Dino-RPG [ Nutzungsbedingungen ]"
 	},
 	"gather": {
 		"action": {
@@ -4655,7 +4655,7 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
+		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
 		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
@@ -5303,7 +5303,7 @@
 	},
 	"dungeon": {
 		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
-		"floor": "Etage {floor}",
+		"floor": "{floor}. Etage",
 		"name": {
 			"katatombs": "les Katatombes"
 		},
@@ -5311,7 +5311,7 @@
 			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
 			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
 			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
-			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
+			"demon": "Du hast die Dämonenschriftrolle gefunden. Diese enthält Hinweise zum Standort eines seltsamen Dinoz-Geschäfts: Des sogenannten Dämonengeschäfts, das sich angeblich irgendwo an der Oberfläche des Dämmerungsfriedhofs befindet. Zuerst musst du jedoch die Katakomben verlassen...",
 			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
 			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
