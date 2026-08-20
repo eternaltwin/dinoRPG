@@ -439,7 +439,7 @@ describe('getNpcSpeech - ongoing conversation', () => {
 			.mockResolvedValueOnce(null);
 		mockRewarder.mockResolvedValue([]);
 
-		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow("doesn't exist");
+		await expect(getNpcSpeech(req({ step: 'choiceReward' }))).rejects.toThrow('playerNotFound');
 	});
 });
 

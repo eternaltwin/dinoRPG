@@ -190,21 +190,6 @@ export default defineComponent({
 			return;
 		}
 	}
-	/*	watch: {
-		'$route.params.name': async function () {
-			if (this.itinerantId < 0) {
-				return;
-			}
-			useLoadingStore().setLoaderOn();
-			try {
-				this.ingredientList = await IngredientShopService.getIngredientsFromIngredientsShop(this.itinerantId);
-				useLoadingStore().setLoaderOff');
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-		}
-	}*/
 });
 </script>
 

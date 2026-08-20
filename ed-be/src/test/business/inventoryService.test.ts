@@ -26,11 +26,15 @@ vi.mock('../../dao/questsDao.js', () => ({ upsertQuest: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ updateDinozCount: vi.fn(), updatePoints: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
 vi.mock('../../utils/boxesLogic.js', () => ({ boxOpening: vi.fn() }));
-vi.mock('../../utils/dinoz.js', () => ({
-	initializeDinoz: vi.fn().mockReturnValue({ name: 'n' }),
-	learnNextSphereSkill: vi.fn(),
-	useRice: vi.fn()
-}));
+vi.mock('../../utils/dinoz.js', async importOriginal => {
+	const actual = await importOriginal();
+	return {
+		...actual,
+		initializeDinoz: vi.fn().mockReturnValue({ name: 'n' }),
+		learnNextSphereSkill: vi.fn(),
+		useRice: vi.fn()
+	};
+});
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/skillService.js', () => ({ applySkillEffect: vi.fn() }));
 vi.mock('@drpg/core/utils/DinozUtils', async orig => {
@@ -41,19 +45,21 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 import { updateDinozCount } from '../../dao/rankingDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
+import { decreaseItemQuantity } from '../../dao/playerItemDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../../dao/dinozItemDao.js';
 import { boxOpening } from '../../utils/boxesLogic.js';
-import { learnNextSphereSkill } from '../../utils/dinoz.js';
+import { generateDinozDisplay, learnNextSphereSkill } from '../../utils/dinoz.js';
 import {
 	getItemMaxQuantity,
 	getAllItemsData,
 	useItem,
-	generateDinozDisplay,
 	equipItem,
 	heal,
-	resurrect
+	resurrect,
+	useRice
 } from '../../business/inventoryService.js';
+import { updateDinoz } from '../../dao/dinozDao.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -307,5 +313,44 @@ describe('heal / resurrect helpers', () => {
 	});
 	it('throws when resurrecting a living dinoz', () => {
 		expect(() => resurrect({ id: 1, life: 5, player: { lang: 'fr' } } as never)).toThrow('DinozNotDead');
+	});
+});
+
+const mockUpdateDinoz = vi.mocked(updateDinoz);
+
+describe('useRice', () => {
+	const freshDinoz = (level: number, raceId: number) => ({
+		id: 'dinoz-1',
+		level,
+		raceId,
+		status: [] as { statusId: number }[],
+		skills: [] as { skillId: number }[],
+		unlockableSkills: [] as { skillId: number }[]
+	});
+
+	it('only resets name and experience for a dinoz above level 1', async () => {
+		await useRice(freshDinoz(2, raceList[1].raceId));
+		expect(mockUpdateDinoz).toHaveBeenCalledWith('dinoz-1', {
+			name: '?',
+			experience: 0,
+			canChangeName: true
+		});
+	});
+
+	it('rerolls the seed and next-up elements for a level 1 dinoz', async () => {
+		await useRice(freshDinoz(1, raceList[1].raceId));
+		const update = mockUpdateDinoz.mock.calls[0][1];
+		expect(update.name).toBe('?');
+		expect(update.experience).toBe(0);
+		expect(typeof update.seed).toBe('string');
+		expect(update.nextUpElementId).toBeGreaterThanOrEqual(1);
+		expect(update.nextUpElementId).toBeLessThanOrEqual(5);
+		expect(update.nextUpAltElementId).toBeGreaterThanOrEqual(1);
+		expect(update.nextUpAltElementId).toBeLessThanOrEqual(5);
+	});
+
+	it('throws when a level 1 dinoz references an unknown race', async () => {
+		await expect(useRice(freshDinoz(1, -1))).rejects.toThrow(ExpectedError);
+		expect(mockUpdateDinoz).not.toHaveBeenCalled();
 	});
 });

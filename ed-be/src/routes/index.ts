@@ -2,6 +2,7 @@ import { Express } from 'express';
 import { Config } from '../config/config.js';
 import adminRoutes from './admin.routes.js';
 import dinozRoutes from './dinoz.routes.js';
+import dungeonRoutes from './dungeon.routes.js';
 import fightRoutes from './fight.routes.js';
 import ingredientRoutes from './ingredient.routes.js';
 import inventoryRoutes from './inventory.routes.js';
@@ -11,6 +12,7 @@ import newsRoutes from './news.routes.js';
 import npcRoutes from './npc.routes.js';
 import playerRoutes from './player.routes.js';
 import shopRoutes from './shop.routes.js';
+import demonShopRoutes from './demonShop.routes.js';
 import rankingRoutes from './ranking.routes.js';
 import offerRoutes from './offer.routes.js';
 import logRoutes from './log.routes.js';
@@ -44,6 +46,7 @@ export default function initRoutes(app: Express, config: Config) {
 
 	app.use(adminRoutes);
 	app.use(dinozRoutes);
+	app.use(dungeonRoutes);
 	app.use(fightRoutes);
 	app.use(ingredientRoutes);
 	app.use(inventoryRoutes);
@@ -55,6 +58,7 @@ export default function initRoutes(app: Express, config: Config) {
 	// app.use(oauthRoutes);
 	app.use(playerRoutes);
 	app.use(shopRoutes);
+	app.use(demonShopRoutes);
 	app.use(rankingRoutes);
 	app.use(offerRoutes);
 	app.use(logRoutes);

@@ -361,10 +361,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientOrItemId: [Ingredient.ENERGIE_FEU],
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE },
-						{ [ConditionEnum.RANDOM]: 6 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE }, { [ConditionEnum.RANDOM]: 6 }]
 				}
 			},
 			[4]: {
@@ -372,10 +369,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientOrItemId: [Ingredient.ENERGIE_BOIS],
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE },
-						{ [ConditionEnum.RANDOM]: 6 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE }, { [ConditionEnum.RANDOM]: 6 }]
 				}
 			},
 			[5]: {
@@ -383,10 +377,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientOrItemId: [Ingredient.ENERGIE_EAU],
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE },
-						{ [ConditionEnum.RANDOM]: 6 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.FISSION_ELEMENTAIRE }, { [ConditionEnum.RANDOM]: 6 }]
 				}
 			}
 		}

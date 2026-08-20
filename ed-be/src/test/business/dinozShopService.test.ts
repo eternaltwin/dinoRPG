@@ -7,8 +7,7 @@ import { makeRequest } from '../helpers/req.js';
 // auth check and the shop query in one place.
 vi.mock('../../dao/playerDao.js', () => ({
 	auth: vi.fn(),
-	getPlayerDinozShopRequest: vi.fn(),
-	getPlayerRewardsRequest: vi.fn()
+	getPlayerDinozShopRequest: vi.fn()
 }));
 vi.mock('../../dao/playerDinozShopDao.js', () => ({
 	createMultipleDinoz: vi.fn()
@@ -19,7 +18,7 @@ vi.mock('../../utils/index.js', () => ({
 	getRandomLetter: vi.fn()
 }));
 
-import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../../dao/playerDao.js';
+import { auth, getPlayerDinozShopRequest } from '../../dao/playerDao.js';
 import { createMultipleDinoz } from '../../dao/playerDinozShopDao.js';
 import { getRandomArrayElement, getRandomLetter } from '../../utils/index.js';
 import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
@@ -31,7 +30,6 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 
 const mockAuth = vi.mocked(auth);
 const mockGetShop = vi.mocked(getPlayerDinozShopRequest);
-const mockGetRewards = vi.mocked(getPlayerRewardsRequest);
 const mockCreateMultiple = vi.mocked(createMultipleDinoz);
 const mockRandomArray = vi.mocked(getRandomArrayElement);
 const mockRandomLetter = vi.mocked(getRandomLetter);
@@ -54,26 +52,24 @@ describe('getDinozFromDinozShop', () => {
 			dinozShop: [
 				{ id: 3, raceId: 5, display: 'ccc' },
 				{ id: 1, raceId: 2, display: 'aaa' }
-			]
+			],
+			rewards: []
 		} as unknown as Awaited<ReturnType<typeof getPlayerDinozShopRequest>>);
 
 		const result = await getDinozFromDinozShop(makeRequest());
 
 		expect(result).toEqual([
-			{ id: '1', race: 2, display: 'aaa' },
-			{ id: '3', race: 5, display: 'ccc' }
+			{ id: 1, race: 2, display: 'aaa' },
+			{ id: 3, race: 5, display: 'ccc' }
 		]);
 		expect(mockAuth).toHaveBeenCalledOnce();
 	});
 });
 
 describe('getDinozFromDinozShop - empty shop fills the shop', () => {
-	const emptyShop = { id: 'player-1', dinozShop: [] } as unknown as Awaited<
+	const emptyShop = { id: 'player-1', dinozShop: [], rewards: [] } as unknown as Awaited<
 		ReturnType<typeof getPlayerDinozShopRequest>
 	>;
-
-	const rewards = (entries: { rewardId: number }[], quetzuBought = 0) =>
-		({ rewards: entries, quetzuBought }) as unknown as Awaited<ReturnType<typeof getPlayerRewardsRequest>>;
 
 	beforeEach(() => {
 		vi.clearAllMocks();
@@ -85,14 +81,7 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 		mockCreateMultiple.mockResolvedValue([] as never);
 	});
 
-	it('throws ExpectedError when the rewards lookup returns no player', async () => {
-		mockGetRewards.mockResolvedValue(null);
-		await expect(getDinozFromDinozShop(makeRequest())).rejects.toThrow(ExpectedError);
-	});
-
 	it('generates gameConfig.shop.dinozNumber dinoz with a well-formed display', async () => {
-		mockGetRewards.mockResolvedValue(rewards([]));
-
 		await getDinozFromDinozShop(makeRequest());
 
 		expect(mockCreateMultiple).toHaveBeenCalledOnce();
@@ -111,7 +100,6 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 	});
 
 	it('returns the created dinoz mapped and sorted by id', async () => {
-		mockGetRewards.mockResolvedValue(rewards([]));
 		mockCreateMultiple.mockResolvedValue([
 			{ id: 3, raceId: 5, display: 'ccc' },
 			{ id: 1, raceId: 2, display: 'aaa' }
@@ -126,7 +114,6 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 	});
 
 	it('offers only the nine base races when the player owns no trophy', async () => {
-		mockGetRewards.mockResolvedValue(rewards([]));
 		await getDinozFromDinozShop(makeRequest());
 		const offered = mockRandomArray.mock.calls[0][0] as DinozRace[];
 		expect(offered).toHaveLength(9);
@@ -134,9 +121,11 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 	});
 
 	it('adds Rocky, Hippoclamp and Pteroz when the matching trophies are owned', async () => {
-		mockGetRewards.mockResolvedValue(
-			rewards([{ rewardId: Reward.ROCKY }, { rewardId: Reward.HIPPO }, { rewardId: Reward.PTEROZ }])
-		);
+		mockGetShop.mockResolvedValue({
+			id: 'player-1',
+			dinozShop: [],
+			rewards: [{ rewardId: Reward.ROCKY }, { rewardId: Reward.HIPPO }, { rewardId: Reward.PTEROZ }]
+		} as unknown as Awaited<ReturnType<typeof getPlayerDinozShopRequest>>);
 		await getDinozFromDinozShop(makeRequest());
 		const offered = mockRandomArray.mock.calls[0][0] as DinozRace[];
 		expect(offered).toContain(raceList[RaceEnum.ROCKY]);
@@ -145,13 +134,23 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 	});
 
 	it('adds Quetzu only while the player is below the buyable Quetzu limit', async () => {
-		mockGetRewards.mockResolvedValue(rewards([{ rewardId: Reward.QUETZU }], 0));
+		mockGetShop.mockResolvedValue({
+			id: 'player-1',
+			dinozShop: [],
+			rewards: [{ rewardId: Reward.QUETZU }],
+			quetzuBought: 0
+		} as unknown as Awaited<ReturnType<typeof getPlayerDinozShopRequest>>);
 		await getDinozFromDinozShop(makeRequest());
 		expect(mockRandomArray.mock.calls[0][0]).toContain(raceList[RaceEnum.QUETZU]);
 	});
 
 	it('does not add Quetzu once the buyable Quetzu limit is reached', async () => {
-		mockGetRewards.mockResolvedValue(rewards([{ rewardId: Reward.QUETZU }], gameConfig.shop.buyableQuetzu));
+		mockGetShop.mockResolvedValue({
+			id: 'player-1',
+			dinozShop: [],
+			rewards: [{ rewardId: Reward.QUETZU }],
+			quetzuBought: gameConfig.shop.buyableQuetzu
+		} as unknown as Awaited<ReturnType<typeof getPlayerDinozShopRequest>>);
 		await getDinozFromDinozShop(makeRequest());
 		expect(mockRandomArray.mock.calls[0][0]).not.toContain(raceList[RaceEnum.QUETZU]);
 	});

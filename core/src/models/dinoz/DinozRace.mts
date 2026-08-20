@@ -1,9 +1,15 @@
 import { RaceEnum } from '../enums/RaceEnum.mjs';
+import { Condition } from '../npc/NpcConditions.mjs';
+import { Skill } from './SkillList.mjs';
 
 export interface DinozRace {
 	raceId: RaceEnum;
-	isDemon: boolean;
+	demon?: {
+		// Condition to unlock demon variant
+		condition?: Condition;
+	};
 	name: string;
+	// Initial elements
 	nbrFire: number;
 	nbrWood: number;
 	nbrWater: number;
@@ -12,9 +18,11 @@ export interface DinozRace {
 	// Chances are in x out of 20
 	// e.g. 5 means 5 chances of out 20 to get that element, i.e 25 %
 	upChance: UpChance;
+	// Price in regular tamer or demon shop
 	price: number;
 	swfLetter: string;
-	skillId?: number[];
+	// Race specific skills
+	skills?: Skill[];
 }
 
 export interface UpChance {

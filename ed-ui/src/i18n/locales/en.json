@@ -2682,7 +2682,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Events ]",
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
-		"skillTrees": "DinoRPG [ Skill Trees ]"
+		"skillTrees": "DinoRPG [ Skill Trees ]",
+		"terms": "DinoRPG [ Terms of Service ]"
 	},
 	"gather": {
 		"action": {
@@ -5274,6 +5275,21 @@
 		"participantsConv": "Participants",
 		"blockSender": "Block sender"
 	},
+	"dungeon": {
+		"katatombs": {
+			"misc": "Mandragore's note: I left the Demon Scroll in these Katatombs after making a copy of it. I hope the Dinoz Masters who find it will not use it with ill intent, for Demon Dinoz are mighty powerful...",
+			"napo": "You open a chest seemingly abandoned for hundreds of years. It is empty but, intrigued, you discover a false bottom concealing a well-hidden Golden Napodino!",
+			"potion": "You find 3 Irma Potions in a small chest — that's always something!",
+			"demon": "You find the Demon Scroll. It reveals the location of a strange Dinoz shop, called the Demonic Shop, somewhere on the surface of the Twilight Cemetery. But first you will have to get out of the Katatombs..."
+		},
+		"msg": {
+			"locked": "The \"{name}\" door is locked. You need to find the key of the same name!",
+			"opened": "The \"{name}\" key turns in the lock: the door swings open with a sinister creak...",
+			"key": "You found the \"{name}\" key! It must open a door of the same name, somewhere...",
+			"gold": "You find {value} gold!",
+			"resumed": "You resume your exploration where you left off."
+		}
+	},
 	"scenario": {
 		"star": "The Strange Creature",
 		"pac": "Strange Parchment",
@@ -5350,5 +5366,13 @@
 		"select": "Vote",
 		"select_option": "Select an option",
 		"total_participants": "{qty} voters"
+	},
+	"terms": {
+		"title": "Terms of Service",
+		"intro": "Please read and accept the following terms of service before you keep playing.",
+		"clause1": "Creating or using multiple accounts as the same player is forbidden.",
+		"clause2": "Using bots or any automation script is forbidden.",
+		"clause3": "Knowingly exploiting a bug is forbidden and must be reported to the team.",
+		"accept_button": "Accept"
 	}
 }

@@ -53,7 +53,7 @@ import {
 	checkFrozenDinoz,
 	checkRestDinoz,
 	createDinoz,
-	getActiveDinoz,
+	getAllUnavailableUntil,
 	getAvailableDinozToFollow,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
@@ -93,7 +93,7 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { prisma } from '../prisma.js';
 import { selectBox } from '../utils/boxesLogic.js';
-import { getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from '../utils/dinoz.js';
+import { isAtMaxActiveDinoz, getNumberOfGatheringTries, initializeDinoz, sanitizeGatherBoxes } from '../utils/dinoz.js';
 import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -101,6 +101,24 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
+import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
+import { LOGGER } from '../context.js';
+import { scheduleJob } from 'node-schedule';
+import { finishDinozUnsacrifice } from './demonShopService.js';
+
+/**
+ * @summary Whether a dinoz can level up right now, accounting for tournament level caps
+ */
+async function canLevelUpNow(
+	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & { status: Pick<DinozStatus, 'statusId'>[] }
+) {
+	if (!canLevelUp(dinoz, gameConfig)) {
+		return false;
+	}
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const dinozTournament = await isDinozInTournament(dinoz.id);
+	return !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
+}
 
 /**
  * @summary Get available action from dinoz
@@ -129,14 +147,15 @@ export async function getAvailableActions(
 	player: PlayerForConditionCheck
 ) {
 	const availableActions: ActionFiche[] = [];
+	const noActionsReasons: UnavailableReason[] = [
+		UnavailableReason.unfreezing,
+		UnavailableReason.restingAttack,
+		UnavailableReason.unsacrificing
+	];
 
 	const dinozPlace = actualPlace(dinoz);
 
-	if (dinoz.unavailableReason === UnavailableReason.unfreezing) {
-		return [];
-	}
-
-	if (dinoz.unavailableReason === UnavailableReason.restingAttack) {
+	if (dinoz.unavailableReason && noActionsReasons.includes(dinoz.unavailableReason)) {
 		return [];
 	}
 
@@ -287,6 +306,34 @@ export async function getAvailableActions(
 		}
 	}
 
+	if (dinozPlace.dungeon) {
+		const dungeon = Object.values(DungeonList).find(dungeon => dungeon.placeStart === dinozPlace.placeId);
+		if (dungeon) {
+			if (checkCondition(dungeon.condition, player, dinoz.id)) {
+				availableActions.push({
+					name: actionList[Action.DUNGEON_ENTER].name,
+					imgName: actionList[Action.DUNGEON_ENTER].imgName,
+					prop: dungeon.name
+				});
+			}
+			// Dungeon ongoing
+			if (dinoz.unavailableReason === UnavailableReason.dungeon) {
+				const dungeonActions: ActionFiche[] = [];
+				if (!dinoz.leaderId) {
+					dungeonActions.push({
+						name: actionList[Action.DUNGEON].name,
+						imgName: actionList[Action.DUNGEON].imgName,
+						prop: dungeon.name
+					});
+				}
+				if (await canLevelUpNow(dinoz)) {
+					dungeonActions.push(actionList[Action.LEVEL_UP]);
+				}
+				return dungeonActions;
+			}
+		}
+	}
+
 	// Fight
 	if (!dinoz.leaderId && dinoz.fight && dinoz.followers.filter(f => !f.fight).length <= 0) {
 		availableActions.push(actionList[Action.FIGHT]);
@@ -347,8 +394,8 @@ export async function getAvailableActions(
 
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
-			name: actionList[Action.ITINERANTSHOP].name,
-			imgName: actionList[Action.ITINERANTSHOP].imgName,
+			name: actionList[Action.ITINERANT_SHOP].name,
+			imgName: actionList[Action.ITINERANT_SHOP].imgName,
 			prop: itinerantShop.shopId
 		});
 	}
@@ -395,15 +442,8 @@ export async function getAvailableActions(
 		});
 	}
 
-	if (canLevelUp(dinoz, gameConfig)) {
-		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-		const dinozTournament = await isDinozInTournament(dinoz.id);
-
-		const canLevelUp = !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
-
-		if (canLevelUp) {
-			availableActions.push(actionList[Action.LEVEL_UP]);
-		}
+	if (await canLevelUpNow(dinoz)) {
+		availableActions.push(actionList[Action.LEVEL_UP]);
 	}
 
 	// Market if dinoz is in market
@@ -411,11 +451,17 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
+	// Freeze at gorges
 	if (
 		dinoz.placeId === PlaceEnum.GORGES_PROFONDES &&
 		dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
+	}
+
+	// Demon shop at cemetary
+	if (dinoz.placeId === PlaceEnum.CIMETIERE && player.rewards.some(r => r.rewardId === Reward.DEMON)) {
+		availableActions.push(actionList[Action.DEMON_SHOP]);
 	}
 
 	return availableActions;
@@ -489,19 +535,8 @@ export async function buyDinoz(req: Request) {
 	const dinozId = +req.params.id;
 
 	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
-
-	if (dinozActive.length > 0) {
-		const player = dinozActive[0].player;
-
-		if (!player) {
-			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-		}
-
-		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
-		if (dinozActive.length >= maxDinoz) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 	}
 
 	// Get dinoz details thanks to his ID
@@ -1293,6 +1328,13 @@ export async function followDinoz(req: Request) {
 		throw new ExpectedError('No dinoz found');
 	}
 
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+	if (leader.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${leader.unavailableReason}`, authed));
+	}
+
 	if (dinoz.canChangeName || leader.canChangeName) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
@@ -1336,6 +1378,14 @@ export async function unfollowDinoz(req: Request) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 
+	const dinoz = await getFollowingDinoz(dinozId);
+	if (!dinoz) {
+		throw new ExpectedError('No dinoz found');
+	}
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { disconnect: true } });
 }
@@ -1357,6 +1407,10 @@ export async function changeLeaderDinoz(req: Request) {
 
 	if (!currentLeader) {
 		throw new ExpectedError('No leader found for this dinoz');
+	}
+
+	if (currentLeader.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${currentLeader.unavailableReason}`, authed));
 	}
 
 	// Retrieve the follower who will become the new leader directly from currentLeader.followers
@@ -1397,6 +1451,10 @@ export async function disband(req: Request) {
 		throw new ExpectedError('No dinoz found');
 	}
 
+	if (dinoz.unavailableReason) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+	}
+
 	for (const d of dinoz.followers) {
 		await updateDinoz(d.id, { leader: { disconnect: true } });
 	}
@@ -1415,6 +1473,10 @@ export async function useIrma(req: Request) {
 
 	if (!dinoz || !dinoz.player) {
 		throw new ExpectedError('No dinoz found');
+	}
+
+	if (dinoz.unavailableReason && dinoz.unavailableReason !== UnavailableReason.dungeon) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 
 	const team = [dinoz, ...dinoz.followers];
@@ -1510,23 +1572,11 @@ export async function unfrozeDinoz(req: Request) {
 		throw new ExpectedError('Dinoz is not frozen');
 	}
 
-	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
-
-	if (dinozActive.length > 0) {
-		const player = dinozActive[0].player;
-
-		if (!player) {
-			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-		}
-
-		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
+	// Check if player can unfreeze the dinoz
+	if (await isAtMaxActiveDinoz(authed)) {
+		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 	}
+
 	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.unfreezing
 	});
@@ -1557,4 +1607,49 @@ export async function restDinoz(req: Request) {
 	}
 
 	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });
+}
+
+export async function scheduleDinozEndOfUnavailability() {
+	// Get all Dinoz with a date set for unavailableUntil
+	const unavailableDinoz = await getAllUnavailableUntil();
+
+	const promises = [];
+	unavailableDinoz.forEach(d => {
+		// Should not happen, if it does, just clear the field
+		if (d.unavailableReason === null) {
+			LOGGER.error(`Dinoz ${d.id} has unavailableUntil set but no unavailable reason`);
+			promises.push(
+				updateDinoz(d.id, {
+					unavailableUntil: null
+				})
+			);
+			return;
+		}
+
+		if (d.unavailableUntil === null) {
+			LOGGER.error(`Dinoz ${d.id} has no unavailableUntil set, this is highly unexpected.`);
+			return;
+		}
+
+		// If expired, just clear. No specific behavior per unavailable reason expected for now.
+		if (d.unavailableUntil <= new Date()) {
+			promises.push(
+				updateDinoz(d.id, {
+					unavailableReason: null,
+					unavailableUntil: null
+				})
+			);
+			return;
+		}
+
+		// Else (valid unavailable reason with unexpired unavailable date) handle some specific unavailable reasons that are expected to have an end date.
+		switch (d.unavailableReason) {
+			case UnavailableReason.unsacrificing:
+				scheduleJob(`unsacrifice_${d.id}`, d.unavailableUntil, () => finishDinozUnsacrifice(d.id));
+				break;
+			default:
+				// Nothing to do by default
+				break;
+		}
+	});
 }

@@ -27,54 +27,9 @@ import { Line } from 'vue-chartjs';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { LogTypes } from '../../utils/logs.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
-
-const LogTypes = [
-	'ItemUsed',
-	'ItemBought',
-	'IngredientSold',
-	'GoldWon',
-	'GoldLost',
-	'Move',
-	'LevelUp',
-	'Fight',
-	'XPEarned',
-	'HPLost',
-	'Death',
-	'Revive',
-	'MissionStep',
-	'MissionFinished',
-	'MissionCanceled',
-	'Gather',
-	'GridFinished',
-	'CreateDinoz',
-	'ChangeDinozOrder',
-	'PlayerCreated',
-	'PlayerConnected',
-	'OfferNew',
-	'OfferBid',
-	'OfferCancelled',
-	'OfferExpired',
-	'OfferWon',
-	'LBDone',
-	'AdminUpdateDinoz',
-	'AdminAddStatus',
-	'AdminRemoveStatus',
-	'AdminAddSkill',
-	'AdminRemoveSkill',
-	'AdminAddMoney',
-	'AdminRemoveMoney',
-	'AdminAddReward',
-	'AdminRemoveReward',
-	'AdminAddItem',
-	'AdminRemoveItem',
-	'AdminAddIngredient',
-	'AdminRemoveIngredient',
-	'AdminUpdateQuest',
-	'AdminUpdatePlayer',
-	'AdminUpdateSecret'
-] as const;
 
 const diffDays = 0;
 

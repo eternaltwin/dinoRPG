@@ -55,7 +55,11 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 
 	const player = await getDinozPlaces(authed.id);
 
-	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+	if (!player) {
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+	}
+
+	if (!player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
 		throw new ExpectedError(translate('noDinozAtMarket'));
 	}
 
@@ -192,7 +196,7 @@ export async function createOffer(req: Request) {
 	const availableItems = await getPlayerItems(authed.id);
 	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {
@@ -556,11 +560,11 @@ export async function checkRefund(
 	if (dinoz) {
 		const maxDinoz =
 			gameConfig.dinoz.maxQuantity +
-			(refund.leader ? 3 : 0) +
-			(refund.messie ? 3 : 0) +
+			(refund.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
+			(refund.messie ? gameConfig.dinoz.leaderMessieBonus : 0) +
 			(dinoz.playerId === playerId ? 1 : 0);
 		if (refund._count.dinoz + 1 > maxDinoz) {
-			return 'tooMuchDinoz';
+			return 'tooManyActiveDinoz';
 		}
 	}
 

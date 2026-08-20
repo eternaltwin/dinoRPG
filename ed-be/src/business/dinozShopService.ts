@@ -5,10 +5,12 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
+import { auth, getPlayerDinozShopRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
-import { getRandomArrayElement, getRandomLetter } from '../utils/index.js';
+import { getRandomArrayElement } from '../utils/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { generateDinozDisplay } from '../utils/dinoz.js';
+import translate from '../utils/server/translate.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -16,8 +18,6 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
  * @param req
  * @return Array<DinozShopFiche>
  */
-
-// TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
 	const authed = await auth(req);
 
@@ -25,10 +25,10 @@ export async function getDinozFromDinozShop(req: Request) {
 	const playerData = await getPlayerDinozShopRequest(authed.id);
 
 	if (!playerData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	// If nothing is found, create 15 (?) dinoz to fill the shop
+	// If nothing is found, create N dinoz to fill the shop (based on game config)
 	if (playerData.dinozShop.length === 0) {
 		const dinozArray = [];
 		let randomRace: DinozRace;
@@ -45,14 +45,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			raceList[RaceEnum.PIGMOU]
 		];
 
-		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player = await getPlayerRewardsRequest(authed.id);
-
-		if (!player) {
-			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
-		}
-
-		player.rewards.forEach(playerReward => {
+		playerData.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === Reward.ROCKY) {
 				availableRaces.push(raceList[RaceEnum.ROCKY]);
 			}
@@ -62,7 +55,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			if (playerReward.rewardId === Reward.PTEROZ) {
 				availableRaces.push(raceList[RaceEnum.PTEROZ]);
 			}
-			if (playerReward.rewardId === Reward.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
+			if (playerReward.rewardId === Reward.QUETZU && playerData.quetzuBought < gameConfig.shop.buyableQuetzu) {
 				availableRaces.push(raceList[RaceEnum.QUETZU]);
 			}
 		});
@@ -73,15 +66,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			randomRace = getRandomArrayElement(availableRaces);
 
 			// Make a random display
-			// First 2 digits are the race specific letters
-			randomDisplay = randomRace.swfLetter;
-
-			// For the next 11 digits, randomly generate them between '0' and 'z'
-			for (let i = 0; i < 11; i++) {
-				randomDisplay += getRandomLetter('z');
-			}
-			// Set the last 3 digits (for rare color palette, rare trait 1 & 2) to '0'
-			randomDisplay += '000';
+			randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
 
 			const dinoz: Prisma.PlayerDinozShopCreateManyInput = {
 				playerId: playerData.id,
@@ -110,12 +95,12 @@ export async function getDinozFromDinozShop(req: Request) {
 		const listDinozShop = playerData.dinozShop
 			.map(dinozShop => {
 				return {
-					id: dinozShop.id.toString(),
+					id: dinozShop.id,
 					race: dinozShop.raceId,
 					display: dinozShop.display
 				};
 			})
-			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
+			.sort((dinoz1, dinoz2) => dinoz1.id - dinoz2.id);
 
 		return listDinozShop;
 	}

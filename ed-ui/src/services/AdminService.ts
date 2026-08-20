@@ -8,6 +8,8 @@ import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
+import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
+import { DungeonGrid } from '@drpg/core/models/dungeon/DungeonEditor';
 
 export const AdminService = {
 	async getDashBoard(): Promise<boolean> {
@@ -222,6 +224,38 @@ export const AdminService = {
 	},
 	async getOngoingEvent(): Promise<OngoingEvent[]> {
 		const res = await http().get(`/admin/event`);
+		return res.data;
+	},
+	async createDungeon(form: {
+		type: string;
+		name: string;
+		layout?: string;
+		monsterLevel?: number;
+		pool?: string[];
+		seed?: number;
+		width?: number;
+		height?: number;
+		level?: number;
+		noise?: number;
+		filters?: number;
+		surface?: number;
+	}): Promise<{ id: string; type: string }> {
+		const res = await http().post(`/admin/dungeon`, form);
+		return res.data;
+	},
+	async createDungeonFromGrid(body: {
+		type: string;
+		name: string;
+		monsterLevel: number;
+		pool: string[];
+		scenarios: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
+		grid: DungeonGrid;
+	}): Promise<{ id: string; type: string }> {
+		const res = await http().post(`/admin/dungeon`, body);
+		return res.data;
+	},
+	async getDungeons(): Promise<{ id: string; type: string }[]> {
+		const res = await http().get(`/admin/dungeon`);
 		return res.data;
 	},
 	async searchClans(name: string) {

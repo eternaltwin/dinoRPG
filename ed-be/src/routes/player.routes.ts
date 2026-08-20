@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import {
+	acceptTos,
 	canCreateClan,
 	getAccountData,
 	getCommonData,
@@ -77,6 +78,36 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 		}
 
 		return res.status(200).send(response.money.toString());
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+/**
+ * @openapi
+ * /api/v1/player/tos:
+ *   patch:
+ *     summary: Accept the terms of service for the logged in player
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Player
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       500:
+ *         description: Error
+ */
+routes.patch(`${commonPath}/tos`, [], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		await acceptTos(req);
+		return res.status(200).send();
 	} catch (err) {
 		sendError(res, err);
 	}

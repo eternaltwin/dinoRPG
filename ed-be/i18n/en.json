@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 	"maxQuantityInventory": "You already have too many of this item in your inventory.",
 	"cannotClaim": "You cannot currently claim your earnings.",
-	"tooMuchDinoz": "You have reached the maximum of active Dinoz.",
 	"tooMuchIngredient": "You have an ingredient that will overflow the maximum limit.",
 	"tooMuchItem": "You have an item that will overflow the maximum limit.",
 	"equipedItems": "You cannot sell a Dinoz with equipped items.",
@@ -337,7 +336,8 @@
 		"sacrificed": "Your Dinoz is sacrificed",
 		"selling": "Your Dinoz is in auction",
 		"superdom": "Your Dinoz is at the Superdom",
-		"resting": "Your Dinoz is resting"
+		"resting": "Your Dinoz is resting",
+		"dungeon": "Your Dinoz is visiting a dungeon."
 	},
 	"fb_tournament": {
 		"noOpponent": "There is no one to fight at the moment"

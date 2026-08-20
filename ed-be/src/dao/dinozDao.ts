@@ -316,6 +316,7 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 						raceId: true,
 						leaderId: true,
 						unavailableReason: true,
+						unavailableUntil: true,
 						fight: true,
 						gather: true,
 						remaining: true,
@@ -430,7 +431,8 @@ export async function getDinozPlaces(playerId: string) {
 				dinoz: {
 					select: {
 						id: true,
-						placeId: true
+						placeId: true,
+						unavailableReason: true
 					}
 				}
 			}
@@ -504,6 +506,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpFire: true,
 				raceId: true,
+				leaderId: true,
 				player: {
 					select: {
 						id: true,
@@ -519,7 +522,8 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				},
 				status: { select: { statusId: true } },
 				skills: { select: { skillId: true } },
-				unlockableSkills: { select: { skillId: true } }
+				unlockableSkills: { select: { skillId: true } },
+				unavailableReason: true
 			}
 		});
 
@@ -952,7 +956,6 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 }
 
 // Setters
-//TODO
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	return withSpan(createDinoz.name, async () => {
 		if (!dinoz.player?.connect?.id) {
@@ -1148,7 +1151,10 @@ export async function getFollowingDinoz(dinozId: number) {
 			},
 			select: {
 				id: true,
-				followers: { select: { id: true } },
+				placeId: true,
+				fight: true,
+				unavailableReason: true,
+				followers: { select: { id: true, unavailableReason: true, fight: true } },
 				leaderId: true
 			}
 		});
@@ -1161,6 +1167,7 @@ export async function getLeaderWithFollowers(dinozId: number) {
 			where: { followers: { some: { id: dinozId } } },
 			select: {
 				id: true,
+				unavailableReason: true,
 				followers: { select: { id: true, skills: true } },
 				skills: true
 			}
@@ -1179,7 +1186,8 @@ export async function getIrmaUsageInfo(dinozId: number) {
 				remaining: true,
 				fight: true,
 				gather: true,
-				followers: { select: { id: true, remaining: true, fight: true, gather: true } },
+				unavailableReason: true,
+				followers: { select: { id: true, remaining: true, fight: true, unavailableReason: true, gather: true } },
 				player: {
 					select: {
 						id: true,
@@ -1236,7 +1244,26 @@ export async function getAllResting() {
 				skills: true
 			}
 		});
+		// TODO that does *NOT* take into account skills that increase maximum rest
 		return list.filter(d => d.life < Math.round(d.maxLife / 2));
+	});
+}
+
+export async function getAllUnavailableUntil() {
+	return withSpan(getAllResting.name, async () => {
+		const list = await prisma.dinoz.findMany({
+			where: {
+				NOT: {
+					unavailableUntil: null
+				}
+			},
+			select: {
+				id: true,
+				unavailableUntil: true,
+				unavailableReason: true
+			}
+		});
+		return list;
 	});
 }
 
@@ -1268,6 +1295,19 @@ export async function getDinozToReincarnate(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpWater: true,
 				nbrUpWood: true
+			}
+		});
+	});
+}
+
+export async function getDinozUnavailableReason(dinozId: number) {
+	return withSpan(getDinozUnavailableReason.name, async () => {
+		return await prisma.dinoz.findUnique({
+			where: {
+				id: dinozId
+			},
+			select: {
+				unavailableReason: true
 			}
 		});
 	});
