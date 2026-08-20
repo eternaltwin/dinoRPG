@@ -43,6 +43,7 @@ import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 /**
  * @summary Format Dinoz rows from getSacrificedDinozRequest as DinozShopFiche.
@@ -163,11 +164,13 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 					price: randomRace.price,
 					raceId: randomRace.raceId,
 					maxLife: 100,
-					nbrUpFire: randomRace.nbrFire,
-					nbrUpWood: randomRace.nbrWood,
-					nbrUpWater: randomRace.nbrWater,
-					nbrUpLightning: randomRace.nbrLightning,
-					nbrUpAir: randomRace.nbrAir,
+					// Elements are already fully declared by the race (no random draw needed), randomlyLevelUpDinoz
+					// builds these up to the race's target below.
+					nbrUpFire: 0,
+					nbrUpWood: 0,
+					nbrUpWater: 0,
+					nbrUpLightning: 0,
+					nbrUpAir: 0,
 					nextUpElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt),
 					nextUpAltElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt + 'pdc'),
 					seed,
@@ -184,9 +187,20 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 							skillId: s,
 							state: true
 						});
+						const skillData = skillList[s];
+						if (skillData.effects) {
+							applySkillToDinoz(skillData.effects, dinoz);
+						}
 					});
 				}
-				randomlyLevelUpDinoz(dinoz, 10);
+				const targetElements: ElementType[] = [
+					...Array(randomRace.nbrFire).fill(ElementType.FIRE),
+					...Array(randomRace.nbrWood).fill(ElementType.WOOD),
+					...Array(randomRace.nbrWater).fill(ElementType.WATER),
+					...Array(randomRace.nbrLightning).fill(ElementType.LIGHTNING),
+					...Array(randomRace.nbrAir).fill(ElementType.AIR)
+				];
+				randomlyLevelUpDinoz(dinoz, targetElements);
 				dinozArray.push(dinoz);
 			}
 
@@ -218,10 +232,11 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 			// Create the Dinoz
 			await createMultipleDemonDinoz(createCommand);
 			// Format the created Dinoz properly for the response
+			// nbrUp* already includes race + skill effects baked in at generation by randomlyLevelUpDinoz.
 			listDinozShop = (await getDinozFromDemonShopRequest(player.id))
 				.map(d => {
 					const race = raceList[d.raceId as RaceEnum];
-					const dinoz = {
+					return {
 						id: d.id,
 						level: 10,
 						maxLife: 100,
@@ -235,21 +250,13 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
 						price: race.price
 					};
-					// Apply passive skills so the elements show the proper values.
-					dinoz.skills.forEach(s => {
-						const skillData = skillList[s as Skill];
-						if (skillData.effects) {
-							applySkillToDinoz(skillData.effects, dinoz);
-						}
-					});
-					return dinoz;
 				})
 				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 		} else {
 			listDinozShop = player.demonShop
 				.map(d => {
 					const race = raceList[d.raceId as RaceEnum];
-					const dinoz = {
+					return {
 						id: d.id,
 						level: 10,
 						maxLife: 100,
@@ -263,14 +270,6 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
 						price: race.price
 					};
-					// Apply passive skills so the elements show the proper values.
-					dinoz.skills.forEach(s => {
-						const skillData = skillList[s as Skill];
-						if (skillData.effects) {
-							applySkillToDinoz(skillData.effects, dinoz);
-						}
-					});
-					return dinoz;
 				})
 				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 		}
@@ -350,13 +349,17 @@ export async function buyDemonDinoz(req: Request) {
 	promises.push(deleteDinozInDemonShopRequest(player.id));
 	await Promise.all(promises);
 
-	// Create Dinoz separately
+	// dinoz.nbrUp* already includes race + skill effects baked in at generation. maxLife isn't stored on
+	// the demon shop row though, so recompute it here (on a throwaway copy, to avoid re-applying elements).
+	const maxLifeCarrier = { ...dinoz };
 	dinoz.skills.forEach(s => {
 		const skillData = skillList[s.skillId as Skill];
 		if (skillData.effects) {
-			applySkillToDinoz(skillData.effects, dinoz);
+			applySkillToDinoz(skillData.effects, maxLifeCarrier);
 		}
 	});
+	dinoz.maxLife = maxLifeCarrier.maxLife;
+
 	const dinozCreateCommand: Prisma.DinozCreateInput = {
 		name: '?',
 		unavailableReason: null,

@@ -16,11 +16,12 @@ import translate from './server/translate.js';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
 import weightedRandom from './fight/weightedRandom.js';
-import { fromBase62, getRandomLetter } from './index.js';
+import { fromBase62, getRandomLetter, shuffle } from './index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { getActiveDinoz, getDinozPlaces } from '../dao/dinozDao.js';
 import gameConfig from '../config/game.config.js';
+import { applySkillToDinoz } from './skillParser.js';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
 	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
@@ -403,6 +404,7 @@ export const randomlyLevelUpDinoz = (
 		| 'display'
 		| 'level'
 		| 'raceId'
+		| 'maxLife'
 		| 'nbrUpAir'
 		| 'nbrUpFire'
 		| 'nbrUpLightning'
@@ -416,18 +418,20 @@ export const randomlyLevelUpDinoz = (
 		skills: Pick<DinozSkill, 'skillId'>[];
 		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
 	},
-	targetLevel: number
+	// One entry per elemental point the Dinoz must gain, e.g. a Demon race declaring nbrFire: 6 means
+	// 6 FIRE entries. Order is shuffled below, values themselves are not randomly drawn.
+	targetElements: ElementType[]
 ) => {
-	if (targetLevel <= 1) return;
+	if (targetElements.length === 0) return;
 
 	const dinozRace = raceList[dinoz.raceId as RaceEnum];
+	const elementQueue = shuffle(targetElements);
 
-	while (dinoz.level < targetLevel) {
+	elementQueue.forEach((element, index) => {
 		// For each iteration, select either a skill to learn or to unlock skills randomly.
 		// Each learnable skill's weight is 1. Unlocking skills weight is based on its length divided by 2.
 		// Note: algorithm to select a Demon Dinoz skills has not been found in MT's source code. This is an attempt to recreate it. Completely made up.
 
-		const element = dinoz.nextUpElementId as ElementType;
 		const currentLearnableSkills = getLearnableSkills(dinoz, element).map(s => s.skillId);
 		const currentUnlockableSkills = getUnlockableSkills(dinoz, element).map(s => s.skillId);
 
@@ -454,7 +458,7 @@ export const randomlyLevelUpDinoz = (
 		if (currentLearnableSkills.length === 0 && currentUnlockableSkills.length === 0) {
 			// If nothing to unlock, throw.
 			throw new ExpectedError(
-				`Dinoz is level ${dinoz.level} and out of skills to learn, ${targetLevel - dinoz.level} iterations left`
+				`Dinoz is level ${dinoz.level} and out of skills to learn, ${elementQueue.length - index} iterations left`
 			);
 		}
 
@@ -463,7 +467,7 @@ export const randomlyLevelUpDinoz = (
 		});
 
 		// Add odds of unlocking skills except for last iteration (unless there is no skill to learn)
-		if (dinoz.level < targetLevel - 1 || currentLearnableSkills.length === 0) {
+		if (index < elementQueue.length - 1 || currentLearnableSkills.length === 0) {
 			// Key is '-1' for unlocking given all skill IDs are > 0
 			odds.push({ skillId: -1, odds: currentUnlockableSkills.length / 2 });
 		}
@@ -483,6 +487,13 @@ export const randomlyLevelUpDinoz = (
 			dinoz.skills.push({
 				skillId: result.skillId
 			});
+
+			// Apply the skill's passive effects (elements, max life...) right away so the Dinoz ends up
+			// with its final stats without a separate re-application pass.
+			const skillData = skillList[result.skillId as Skill];
+			if (skillData.effects) {
+				applySkillToDinoz(skillData.effects, dinoz);
+			}
 		}
 
 		let growthLetter = fromBase62(dinoz.display[1]) % 10;
@@ -491,14 +502,15 @@ export const randomlyLevelUpDinoz = (
 			dinoz.display = dinoz.display[0] + growthLetter + dinoz.display.substring(2, dinoz.display.length);
 		}
 
-		// Determine Dinoz next ups based on its new skills
-		const newLearnableSkills = getLearnableSkills(dinoz);
-		const newUnlockableSkills = getUnlockableSkills(dinoz);
-		const upChance = getDinozUpChance(newLearnableSkills, newUnlockableSkills, dinozRace);
-		dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level);
-		dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
 		dinoz.level++;
-	}
+	});
+
+	// Roll the element(s) the Dinoz will gain on its next (real, in-game) level up, based on its final skill set.
+	const newLearnableSkills = getLearnableSkills(dinoz);
+	const newUnlockableSkills = getUnlockableSkills(dinoz);
+	const upChance = getDinozUpChance(newLearnableSkills, newUnlockableSkills, dinozRace);
+	dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level);
+	dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
 };
 
 export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: string, rare_2: string) => {
