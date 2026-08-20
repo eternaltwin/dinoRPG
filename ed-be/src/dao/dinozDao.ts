@@ -103,6 +103,7 @@ export async function getDinozItinerantShop(dinozId: number, playerId: string) {
 			select: {
 				id: true,
 				money: true,
+				shopKeeper: true,
 				ingredients: {
 					select: {
 						ingredientId: true,
