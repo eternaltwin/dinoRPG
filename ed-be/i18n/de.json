@@ -68,8 +68,14 @@
 		"outdatedDefense": "Verteidigung veraltet"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
-		"notYourDinoz": "Dieser Dinoz gehört dir nicht"
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {
@@ -345,12 +351,21 @@
 		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** die Stufe {{level}} erreicht hat!",
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
+		"noRun": "Vous n'avez jamais visité ce donjon",
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
+	},
 	"UnavailableReason": {
 		"frozen": "Dein Dinoz ist eingefroren.",
 		"sacrificed": "Dein Dinoz wurde geopfert.",
 		"selling": "Dein Dinoz wird verkauft.",
 		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Dein Dinoz ruht sich aus."
+		"resting": "Dein Dinoz ruht sich aus.",
+		"dungeon": "Votre dinoz visite un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Es gibt derzeit keine Gegner mehr, gegen die du kämpfen könntest."
