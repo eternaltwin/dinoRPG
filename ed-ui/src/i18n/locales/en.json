@@ -4725,8 +4725,7 @@
 			"disclaimer": "No :pv: will be lost, no :xp: will be earned, no items will be used.&&The training fees are **50 :gold: per Dinoz selected**. The fees contribute to the cash price of the ongoing tournament.",
 			"selectYourDinoz": "Select up to **6 of your Dinoz**.",
 			"selectOpponentDinoz": "Select here your opponent and up to **6 of its Dinoz** to fight.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "You cannot have the same Dinoz fight itself."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Uncommon Dinoz",

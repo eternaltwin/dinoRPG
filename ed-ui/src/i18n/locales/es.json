@@ -4725,8 +4725,7 @@
 			"disclaimer": "No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50 :gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
 			"selectYourDinoz": "Selecciona hasta **6 de tus Dinos**.",
 			"selectOpponentDinoz": "Selecciona aquí a tu adversario y hasta **6 Dinos** a enfrentar.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "No puedes hacer combatir al mismo Dino en ambos equipos"
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinos raros",

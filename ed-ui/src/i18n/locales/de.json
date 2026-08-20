@@ -4725,8 +4725,7 @@
 			"disclaimer": "Es werden keine :pv: verloren, keine :xp: gesammelt und keine Gegenstände verbraucht.&&Die Gebühr für die Nutzung des Trainings-Dojos beträgt **50 :gold: pro Dinoz-Kämpfer**. Dieses Geld fließt ins Preisgeld des laufenden Turniers.",
 			"selectYourDinoz": "Wähle bis zu **6 deiner Dinoz** aus.",
 			"selectOpponentDinoz": "Wähle hier deinen Gegner und bis zu **6 Dinoz**, um gegen sie anzutreten.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Du kannst einen Dinoz nicht gegen sich selbst kämpfen lassen."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Ungewöhnliche Dinoz",

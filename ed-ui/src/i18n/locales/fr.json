@@ -4725,8 +4725,7 @@
 			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
 			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
 			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",
