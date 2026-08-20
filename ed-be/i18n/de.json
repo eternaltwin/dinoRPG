@@ -246,6 +246,9 @@
 		"levelLimit": "Die Höchststufe ist auf {{level}} begrenzt",
 		"poison": "Vergiftung ist eingeschaltet",
 		"nopoison": "Vergiftung ist ausgeschaltet",
+		"goldReward": "{{value}} pièces d'or :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
 		"newsTitle": "Neues Inter-Dojo Turnier",
 		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nVergesst nicht, dass es Belohnungen für Spieler gibt, die bis zum Ende der Qualifikation bestimmte Punktemeilensteine erreichen! Diese Belohnungen sind kumulativ und werden jedes Mal gewährt, wenn ein Spieler einen neuen Punktemeilenstein erreicht.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
 	},
@@ -285,6 +288,17 @@
 		"3": "Dritter",
 		"4": "Vierter",
 		"5": "Fünfter"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Sphère de Vide | Sphères de Vide",
+			"souffet_egg": "Œuf de Soufflet | Œufs de Soufflet",
+			"toufufu_baby": "Bébé Toufufu | Bébés Toufufu",
+			"toufufu_baby_rare": "Bébé Toufufu Rare | Bébés Toufufu Rares",
+			"golden_napodino": "Napodino d'or | Napodinos d'or",
+			"box_epic": "Boîte épique | Boîtes épiques",
+			"box_legendary": "Boîte légendaire | Boîtes légendaires"
+		}
 	},
 	"reward": {
 		"perle": "Perle aus dem Brunnen",
