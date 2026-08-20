@@ -247,8 +247,11 @@
 		"levelLimit": "El límite de nivel máximo está fijado en {{level}}.",
 		"poison": "El veneno está activado.",
 		"nopoison": "El veneno está desactivado.",
+		"goldReward": "{{value}} monedas de oro :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} puntos**: {{rewards}}.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para las personas que alcancen los hitos de 500, 750, 1000, 1200, 1300 y 1400 puntos al final de las clasificatorias!\n\n¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -286,6 +289,17 @@
 		"3": "Tercer",
 		"4": "Cuarto",
 		"5": "Quinto"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Esfera de Vacío | Esferas de Vacío",
+			"souffet_egg": "Huevo de Visper | Huevos de Visper",
+			"toufufu_baby": "Bebé Tufufu | Bebés Tufufu",
+			"toufufu_baby_rare": "Bebé Tufufu raro | Bebés Tufufu raros",
+			"golden_napodino": "Napodino de oro | Napodinos de oro",
+			"box_epic": "Caja épica | Cajas épicas",
+			"box_legendary": "Caja legendaria | Cajas legendarias"
+		}
 	},
 	"reward": {
 		"perle": "Perla de la Fuente",

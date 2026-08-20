@@ -247,8 +247,11 @@
 		"levelLimit": "La limite de niveau maximum est fixé à {{level}}.",
 		"poison": "Le poison est activé.",
 		"nopoison": "Le poison est désactivé.",
+		"goldReward": "{{value}} pièces d'or :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il existe des récompenses pour les joueurs qui atteindront certains paliers de points à la fin des qualifications ! Ces récompenses sont cumulatives chaque fois qu'un joueur atteint un nouveau palier de points.\n{{qualificationRewards}}\n\nBon tournois à tous !"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -286,6 +289,17 @@
 		"3": "Troisième",
 		"4": "Quatrième",
 		"5": "Cinquième"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Sphère de Vide | Sphères de Vide",
+			"souffet_egg": "Œuf de Soufflet | Œufs de Soufflet",
+			"toufufu_baby": "Bébé Toufufu | Bébés Toufufu",
+			"toufufu_baby_rare": "Bébé Toufufu Rare | Bébés Toufufu Rares",
+			"golden_napodino": "Napodino d'or | Napodinos d'or",
+			"box_epic": "Boîte épique | Boîtes épiques",
+			"box_legendary": "Boîte légendaire | Boîtes légendaires"
+		}
 	},
 	"reward": {
 		"perle": "Perle de la Fontaine",
