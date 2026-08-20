@@ -47,6 +47,7 @@ model Dinoz {
   remaining          Int                    @default(2)
   FBTournamentStep   Int                    @default(0)
   unavailableReason  UnavailableReason?
+  unavailableUntil   DateTime?
   seed               String                 @default(dbgenerated("uuid_generate_v4()"))
   playerId           String                 @db.Uuid
   buildId            String?                @db.Uuid
@@ -316,6 +317,7 @@ model Player {
   banCase                Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
   playerTracking         PlayerTracking[]
   dinozShop              PlayerDinozShop[]
+  demonShop              PlayerDemonShop[]
   gathers                PlayerGather[]
   ingredients            PlayerIngredient[]
   items                  PlayerItem[]
@@ -420,6 +422,46 @@ model PlayerDinozShop {
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_c79ab61aa32fe6e81c03a7d87d1")
 
   @@map("player_dinoz_shop")
+}
+
+model PlayerDemonShop {
+  id                 Int                    @id @default(autoincrement())
+  raceId             Int
+  display            String                 @db.VarChar
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  seed               String                 @default(dbgenerated("uuid_generate_v4()"))
+  skills             DemonSkill[]
+  unlockableSkills   DemonSkillUnlockable[]
+  playerId           String?                @db.Uuid
+  player             Player?                @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("player_demon_shop")
+}
+
+model DemonSkill {
+  id      Int             @id @default(autoincrement())
+  skillId Int
+  dinozId Int
+  dinoz   PlayerDemonShop @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@map("demon_skill")
+}
+
+model DemonSkillUnlockable {
+  id      Int             @id @default(autoincrement())
+  skillId Int
+  dinozId Int
+  dinoz   PlayerDemonShop @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@map("demon_skill_unlockable")
 }
 
 model PlayerGather {
@@ -1003,6 +1045,7 @@ enum UnavailableReason {
   unfreezing
   defending
   restingAttack
+  unsacrificing
 }
 
 enum Lang {
@@ -1064,6 +1107,8 @@ enum LogType {
   Fight
   Death
   Revive
+  Sacrifice
+  Unsacrifice
   MissionStep
   MissionFinished
   MissionCanceled

@@ -257,7 +257,8 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_attack": "Attaquer le château adverse.",
+			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -293,7 +294,8 @@
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_attack": "Attaquer le château",
+			"demon_shop": "Boutique Démoniaque"
 		}
 	},
 	"button": {
@@ -311,7 +313,8 @@
 		"close": "Fermer",
 		"search": "Rechercher",
 		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"noResults": "Aucun résultat",
+		"details": "Détails"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -1798,6 +1801,20 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Boutique Démoniaque",
+			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
+			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"level": "Niv. {level}",
+			"sacrifice": "Sacrifier",
+			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrifice",
+			"buy_title": "Invocation",
+			"unsacrifice_title": "Résurrection",
+			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"yourDemonTickets": "Vos Tickets Démons"
+		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
 			"help": "Bienvenue dans l'Enclos des Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
@@ -2657,6 +2674,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
+		"demon": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
@@ -4632,7 +4650,8 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
 	},
 	"logs": {
@@ -4666,6 +4685,8 @@
 		"HPLost": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a perdu **{hpLost} :pv:**.",
 		"Death": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** est mort.",
 		"Revive": "**{player} ({playerId})** a ressuscité son Dinoz **{dinoz} ({dinozId})**.",
+		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** a avancé la mission **{mission}** à **l'étape {step}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** a annulé la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",

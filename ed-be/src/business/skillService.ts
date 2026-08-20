@@ -54,6 +54,7 @@ import { checkAnnounce } from '../utils/server/announcer.js';
 import {
 	getDinozUpChance,
 	getLearnableSkills,
+	getNewUnlockableSkills,
 	getRandomUpElement,
 	getUnlockableSkills,
 	reincarnateDinoz
@@ -111,7 +112,7 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`);
 	}
 
-	return getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, +req.params.tryNumber, event);
+	return getDinozLearnableSkills(dinozSkills, dinozRace, dinozId, +req.params.tryNumber, event);
 }
 
 /**
@@ -174,7 +175,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`);
 	}
 
-	const skills = getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, parseInt(req.body.tryNumber), event);
+	const skills = getDinozLearnableSkills(dinozSkills, dinozRace, dinozId, parseInt(req.body.tryNumber), event);
 
 	const isLearnableSkills =
 		skillIdList.every(skillId => skills.learnableSkills.some(skill => skill.skillId === skillId)) &&
@@ -221,26 +222,17 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		// Get all new unlockables skills
 		// First filter : get skills that required skill send in body to be learn
 		// Second filter : Keep only skills that dinoz can learn (dinoz have every unlock condition)
-		// Third filter : Remove race skills (ex : fly from Pteroz)
-		const newUnlockableSkills = Object.values(skillList)
-			.filter(skill => skill.unlockedFrom?.some(skillId => skillIdList.includes(skillId)))
-			.filter(skill =>
-				skill.unlockedFrom?.every(
-					skillId =>
-						skillIdList.includes(skillId) || dinozSkills.skills.some(dinozSkill => dinozSkill.skillId === skillId)
-				)
-			)
-			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
-			.map(skill => {
-				if (event) {
-					return {
-						skillId: skill.id,
-						gameDinozId: dinozId
-					};
-				} else {
-					return { skillId: skill.id, dinozId };
-				}
-			});
+		// Third filter : Remove race skills (ex : shell from Winks)
+		const newUnlockableSkills = getNewUnlockableSkills(dinozSkills, skill.id).map(skillId => {
+			if (event) {
+				return {
+					skillId,
+					gameDinozId: dinozId
+				};
+			} else {
+				return { skillId, dinozId };
+			}
+		});
 
 		// Add skill to dinoz in order to have same data than database.
 		dinozSkills.skills.push({
@@ -298,7 +290,6 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 }
 
 function getDinozLearnableSkills(
-	req: Request,
 	dinoz: Pick<
 		Dinoz,
 		| 'level'
@@ -545,23 +536,27 @@ export async function reincarnate(req: Request) {
 
 	const race = getRace(dinoz);
 
-	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.seed));
+	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.seed, race.demon !== undefined));
 
 	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.
 	await removeAllSkillFromDinoz(dinoz.id);
 
 	const promises = [];
-	if (race.skillId && race.skillId.length > 0) {
-		for (const skill of race.skillId) {
+	if (race.skills && race.skills.length > 0) {
+		for (const skill of race.skills) {
 			promises.push(addSkillToDinoz(dinoz.id, skill));
 		}
 	}
 	promises.push(removeAllStatusFromDinoz(dinoz.id));
 	promises.push(removeAllMissionsFromDinoz(dinoz.id));
 	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
-	promises.push(updatePoints(authed.id, -dinoz.level));
+	promises.push(updatePoints(authed.id, 1-dinoz.level)); // Remove N-1 points
 	promises.push(computeUSkillsForPlayer(authed.id));
 	await Promise.all(promises);
 
 	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
+	// Keep demon status
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.DEMON)) {
+		await addStatusToDinoz(dinozId, DinozStatusId.DEMON);
+	}
 }

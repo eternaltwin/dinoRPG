@@ -315,6 +315,7 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 						raceId: true,
 						leaderId: true,
 						unavailableReason: true,
+						unavailableUntil: true,
 						fight: true,
 						gather: true,
 						remaining: true,
@@ -429,7 +430,8 @@ export async function getDinozPlaces(playerId: string) {
 				dinoz: {
 					select: {
 						id: true,
-						placeId: true
+						placeId: true,
+						unavailableReason: true
 					}
 				}
 			}
@@ -951,7 +953,6 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 }
 
 // Setters
-//TODO
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	return withSpan(createDinoz.name, async () => {
 		if (!dinoz.player?.connect?.id) {
@@ -1235,7 +1236,26 @@ export async function getAllResting() {
 				skills: true
 			}
 		});
+		// TODO that does *NOT* take into account skills that increase maximum rest
 		return list.filter(d => d.life < Math.round(d.maxLife / 2));
+	});
+}
+
+export async function getAllUnavailableUntil() {
+	return withSpan(getAllResting.name, async () => {
+		const list = await prisma.dinoz.findMany({
+			where: {
+				NOT: {
+					unavailableUntil: null
+				}
+			},
+			select: {
+				id: true,
+				unavailableUntil: true,
+				unavailableReason: true
+			}
+		});
+		return list;
 	});
 }
 
@@ -1267,6 +1287,19 @@ export async function getDinozToReincarnate(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpWater: true,
 				nbrUpWood: true
+			}
+		});
+	});
+}
+
+export async function getDinozUnavailableReason(dinozId: number) {
+	return withSpan(getDinozUnavailableReason.name, async () => {
+		return await prisma.dinoz.findUnique({
+			where: {
+				id: dinozId
+			},
+			select: {
+				unavailableReason: true
 			}
 		});
 	});

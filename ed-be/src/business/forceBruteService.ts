@@ -6,7 +6,7 @@ import { $Enums, Prisma } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import dayjs from 'dayjs';
-import { getRandomUpElement } from '../utils/dinoz.js';
+import { generateDinozDisplay, getRandomUpElement } from '../utils/dinoz.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { randomUUID } from 'crypto';
@@ -16,7 +16,6 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { archiveFight, viewFight } from '../dao/archiveDao.js';
-import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
 	TournamentNameMiddle,

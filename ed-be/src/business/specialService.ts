@@ -23,12 +23,13 @@ import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { auth, prepareConcentration } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
+import translate from '../utils/server/translate.js';
 
 export async function concentrate(req: Request) {
 	const authed = await auth(req);
 	const player = await prepareConcentration(authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozList = player.dinoz;
 	const dinoz = player.dinoz.find(d => d.id === parseInt(req.params.id));

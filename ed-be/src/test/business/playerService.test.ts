@@ -90,7 +90,7 @@ describe('getCommonData', () => {
 
 	it('throws when the player does not exist', async () => {
 		vi.mocked(playerDao.getCommonDataRequest).mockResolvedValue(null as never);
-		await expect(getCommonData(req())).rejects.toThrow("doesn't exist");
+		await expect(getCommonData(req())).rejects.toThrow('playerNotFound');
 	});
 });
 
@@ -172,7 +172,7 @@ describe('setCustomText', () => {
 
 	it('throws when player missing', async () => {
 		vi.mocked(playerDao.getPlayerRewardsRequest).mockResolvedValue(null as never);
-		await expect(setCustomText(req({}, { message: 'hi there' }))).rejects.toThrow("doesn't exist");
+		await expect(setCustomText(req({}, { message: 'hi there' }))).rejects.toThrow('playerNotFound');
 	});
 
 	it('throws when player lacks PLUME', async () => {
@@ -277,10 +277,13 @@ describe('resetAccount', () => {
 });
 
 describe('updatePlayerSettings', () => {
-	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])('updates %s', async setting => {
-		await updatePlayerSettings(req({ setting }, { setting: true }));
-		expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
-	});
+	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])(
+		'updates %s',
+		async setting => {
+			await updatePlayerSettings(req({ setting }, { setting: true }));
+			expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
+		}
+	);
 
 	it('updates displayedNotifications when valid', async () => {
 		await updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 5 }));

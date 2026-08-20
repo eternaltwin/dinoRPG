@@ -1,6 +1,6 @@
 <template>
 	<div class="actions" v-if="dinoz">
-		<Resurect :enabled="resurect" @close="resurect = false" />
+		<Resurrect :enabled="resurrect" @close="resurrect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
@@ -33,6 +33,11 @@
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.restingAttack"
 				:content="$t('hud.restingAttackCountdown', { time: attackCountdown })"
+				help
+			/>
+			<DZDisclaimer
+				v-if="dinoz.unavailableReason === UnavailableReason.unsacrificing"
+				:content="$t('hud.unsacrificeCountdown', { time: timeUntilAvailable })"
 				help
 			/>
 			<DZDisclaimer
@@ -115,7 +120,7 @@ import DZFollow from '../../components/dinoz/DZFollow.vue';
 import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
-import Resurect from '../../components/modal/ResurrectModal.vue';
+import Resurrect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { ClanService, DinozService, FightService, MissionService } from '../../services/index.js';
@@ -131,7 +136,7 @@ export default defineComponent({
 		return {
 			shopNameList: shopNameList,
 			itinerantShopNameList: itinerantShopNameList,
-			resurect: false as boolean,
+			resurrect: false as boolean,
 			NPCModal: undefined as string | undefined,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
@@ -142,6 +147,7 @@ export default defineComponent({
 			itinerantName: '' as string,
 			playerStore: playerStore(),
 			timeUntilMidnight: '',
+			timeUntilAvailable: '',
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
 			mission: useDinozStore().getDinoz(+this.$route.params.id.toString())?.missionHUD,
@@ -149,7 +155,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Resurect,
+		Resurrect,
 		MissionHUDVue,
 		NPCModal,
 		MissionRewardModal,
@@ -180,6 +186,31 @@ export default defineComponent({
 			const s = seconds.toString().padStart(2, '0');
 
 			this.timeUntilMidnight = `${h}:${m}:${s}`;
+		},
+		computeTimeUntilAvailable() {
+			if (this.dinoz && this.dinoz.unavailableUntil) {
+				console.log(`${this.dinoz.unavailableUntil}`);
+				const now = new Date();
+				const nowMs = now.getTime();
+				const timeRemainingMs = new Date(this.dinoz.unavailableUntil).getTime() - nowMs;
+				console.log(`timeRemainingMs ${timeRemainingMs}`);
+
+				const totalSeconds = Math.floor(timeRemainingMs / 1000);
+				const safeSeconds = Math.max(0, totalSeconds);
+
+				const hours = Math.floor(safeSeconds / 3600);
+				const minutes = Math.floor((safeSeconds % 3600) / 60);
+				const seconds = safeSeconds % 60;
+				const h = hours.toString().padStart(2, '0');
+				const m = minutes.toString().padStart(2, '0');
+				const s = seconds.toString().padStart(2, '0');
+
+				this.timeUntilAvailable = `${h}:${m}:${s}`;
+
+				if (timeRemainingMs <= 0) {
+					this.refreshDinoz();
+				}
+			}
 		},
 		computeTimeUntilNextHour() {
 			const now = new Date();
@@ -244,7 +275,12 @@ export default defineComponent({
 						params: { name: shopNameList[action.prop as number] }
 					});
 					break;
-				case Action.ITINERANTSHOP:
+				case Action.DEMON_SHOP:
+					this.$router.push({
+						name: 'DemonShopPage'
+					});
+					break;
+				case Action.ITINERANT_SHOP:
 					this.$router.push({
 						name: 'ItinerantMerchantPage',
 						params: { itinerantId: action.prop }
@@ -294,7 +330,7 @@ export default defineComponent({
 					break;
 				}
 				case Action.RESURRECT:
-					this.resurect = true;
+					this.resurrect = true;
 					break;
 				case Action.MISSION:
 					if (typeof this.dinoz.missionId !== 'number') {
@@ -722,7 +758,8 @@ export default defineComponent({
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
 		const intervalId3 = window.setInterval(() => this.updateAttackCountdown(), 1000);
-		this.intervals.push(intervalId, intervalId2, intervalId3);
+		const intervalId4 = window.setInterval(() => this.computeTimeUntilAvailable(), 1000);
+		this.intervals.push(intervalId, intervalId2, intervalId3, intervalId4);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);
