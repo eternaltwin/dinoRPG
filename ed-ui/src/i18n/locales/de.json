@@ -207,7 +207,7 @@
 	},
 	"resurrection": {
 		"choice1": {
-			"name": "**Möglichkeit 1:**&&Auferstehung",
+			"name": "**Möglichkeit 1:**&&Wiederbelebung",
 			"resurrect": "Wiederbelebung",
 			"explanation": "Du kannst deinen Dinoz wiederbeleben, sofort und kostenlos:",
 			"list1": "er wird nach Dinoville zurückkehren",
@@ -298,7 +298,7 @@
 			"war_remove": "Von der Verteidigung abziehen",
 			"war_attack": "Burg angreifen",
 			"dungeon_enter": "Betreten",
-			"dungeon": "Accéder au Plan",
+			"dungeon": "Karte öffnen",
 			"demon_shop": "Dämonisches Geschäft"
 		}
 	},
@@ -1808,15 +1808,15 @@
 		"demon": {
 			"name": "Dämonisches Geschäft",
 			"sacrifice_help": "Herzlich Willkommen im Dämonengeschäft! Hier kannst du deine auf dem Friedhof befindlichen Dinoz **opfern** und dafür **Dämonengutscheine** :demon_tk: erhalten. Die Anzahl der Gutscheine hängt von der Stufe der Dinoz ab. Ein geopferter Dinoz wird nicht mehr spielbar oder gar sichtbar.&&Um die Liste an Dämonen-Dinoz betrachten zu können, benötigst du mindestens 30 :demon_tk:.",
-			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
-			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"buy_help": "Im Austausch gegen **Dämonengutscheine** :demon_tk: kannst du einen dämonischen Dinoz beschwören. Dieser ist bereits ausgewachsen und verfügt über bestimmte Fähigkeiten.",
+			"unsacrifice_help": "Ein geopferter Dinoz kann für die gleiche Anzahl an Gutscheinen, die man für seine Opferung erhalten hat, wiedererweckt werden. Das Wiederauferstehungsritual beansprucht 24 Stunden.",
 			"level": "St. {level}",
 			"sacrifice": "Opfern",
-			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_toast": "Du hast deinen Dinoz als Opfergabe dargebracht und {tickets} :demon_tk: erhalten.",
 			"sacrifice_title": "Opferung",
 			"buy_title": "Beschwörung",
 			"unsacrifice_title": "Wiedererweckung",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"unsacrifice_toast": "Dein Dinoz wird gerade wiedererweckt und steht dir in 24 Stunden zur Verfügung.",
 			"yourDemonTickets": "Deine Dämonengutscheine"
 		},
 		"dinoz": {
@@ -4656,7 +4656,7 @@
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
 		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
-		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"unsacrificeCountdown": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten endet um {time}.",
 		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
 		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
@@ -5305,22 +5305,22 @@
 		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann die gegenwärtige Etage erst verlassen, wenn er sich am Eingang oder Ausgang befindet, oder stirbt.",
 		"floor": "{floor}. Etage",
 		"name": {
-			"katatombs": "die Katakomben"
+			"katatombs": "die Kryptakomben"
 		},
 		"katatombs": {
-			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
-			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
-			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
-			"demon": "Du hast die Dämonenschriftrolle gefunden. Diese enthält Hinweise zum Standort eines seltsamen Dinoz-Geschäfts: Des sogenannten Dämonengeschäfts, das sich angeblich irgendwo an der Oberfläche des Dämmerungsfriedhofs befindet. Zuerst musst du jedoch die Katakomben verlassen...",
-			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
-			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+			"misc": "Notiz von Mandragor: Nachdem ich eine Kopie angefertigt hatte, lies ich die dämonische Schriftrolle in diesen Kryptakomben zurück. Ich hoffe, dass die Dinoz-Meister, die sie finden, sie nicht in böser Absicht missbrauchen, denn die Dämonen-Dinoz sind nach wie vor äußerst mächtig...",
+			"napo": "Du öffnest eine Truhe, die wohl bereits vor Jahrhunderten zurückgelassen wurde. Sie ist leer, doch neugierig entdeckst du einen doppelten Boden, in dem sich ein gut versteckter Gold-Napodino befindet!",
+			"potion": "In einer kleinen Truhe findest du 3 Tränke von Madame Irma. Das ist nie verkehrt!",
+			"demon": "Du hast die Dämonenschriftrolle gefunden. Diese enthält Hinweise zum Standort eines seltsamen Dinoz-Geschäfts: Des sogenannten Dämonengeschäfts, das sich angeblich irgendwo an der Oberfläche des Dämmerungsfriedhofs befindet. Zuerst musst du jedoch die Kryptakomben verlassen...",
+			"enter": "Bei einem entspannten Friedhofsspaziergang fällt dir ein scheinbar offenes Grab auf. Du folgst einer Treppe, die unter die Erde führt, in etwas, das den antiken Kryptakomben erschreckend ähnlich sieht...",
+			"exit": "Du verlässt die Kryptakomben... man könnte nicht behaupten, dass der Friedhof sonderlich angenehm ist, aber immerhin ist eine sanfte Brise zu spüren und das ist eine willkommene Abwechslung zum unterirdischen Grabeshauch."
 		},
 		"msg": {
-			"locked": "La porte des {name} est verrouillée.",
-			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez la clé des {name} !",
-			"gold": "Vous trouvez {value} pièces d'or !",
-			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
+			"locked": "Die Tür zu {name} ist verriegelt.",
+			"opened": "Der Schlüssel zu {name} dreht sich im Schloss: Die Tür öffnet sich mit einem unheimlichen Knarzen...",
+			"key": "Du hast den Schlüssel zu {name} gefunden!",
+			"gold": "Du hast {value} Goldstücke gefunden!",
+			"resumed": "Du setzt deine Erkundung dort fort, wo du aufgehört hattest."
 		},
 		"doorNames_prefix": [
 			"Arbres ",
