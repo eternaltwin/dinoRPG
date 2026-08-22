@@ -1154,7 +1154,8 @@ export async function getFollowingDinoz(dinozId: number) {
 				placeId: true,
 				fight: true,
 				unavailableReason: true,
-				followers: { select: { id: true, unavailableReason: true, fight: true } },
+				dungeonRun: true,
+				followers: { select: { id: true, unavailableReason: true, dungeonRun: true, fight: true } },
 				leaderId: true
 			}
 		});

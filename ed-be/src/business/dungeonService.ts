@@ -217,8 +217,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// check so a dungeon-busy dinoz is only let through when it's actually
 	// resuming its own run, not stolen into a new one.
 	const existing = await findRun(dungeon.id, authed.id);
-	const resumable = existing != null && (existing.leaderId == null || existing.leaderId === dinoz.id);
-	if (team.some(t => t.unavailableReason && !(resumable && t.unavailableReason === UnavailableReason.dungeon))) {
+	if (existing && team.some(t => t.unavailableReason && t.unavailableReason === UnavailableReason.dungeon && t.dungeonRun && t.dungeonRun.id === existing.id)) {
 		// A team member is already busy elsewhere, refuse entry.
 		throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 	}

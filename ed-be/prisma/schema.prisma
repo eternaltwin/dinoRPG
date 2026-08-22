@@ -53,7 +53,7 @@ model Dinoz {
   buildId            String?                @db.Uuid
   build              DinozBuild?            @relation(fields: [buildId], references: [id], onDelete: SetNull)
   catches            DinozCatch[]
-  dungeonRuns        DungeonRun[]
+  dungeonRun         DungeonRun?            @relation("DungeonRunLeader")
   logs               Log[]
   Moderation         Moderation[]
   offers             Offer[]
@@ -1241,9 +1241,10 @@ model DungeonRun {
   // Optional: the run outlives its leader (SetNull) — deleting the dinoz
   // shouldn't wipe out the run's progress.
   leaderId  Int?
-  leader    Dinoz?   @relation(fields: [leaderId], references: [id], onDelete: SetNull)
+  leader    Dinoz?   @relation("DungeonRunLeader", fields: [leaderId], references: [id], onDelete: SetNull)
 
   @@unique([playerId, dungeonId])
+  @@unique([leaderId])
   @@index([id])
   @@index([playerId, dungeonId])
   @@map("dungeon_run")
