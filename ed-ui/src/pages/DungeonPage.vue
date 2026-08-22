@@ -298,6 +298,7 @@ export default defineComponent({
 				}
 			}
 			const icon = icons.get(iconKey(cursor));
+			console.log(cursor, icon)
 			if (icon === 'stair_up') await this.tryMove(0, 0, 1);
 			else if (icon === 'stair_down') await this.tryMove(0, 0, -1);
 			else if (icon === 'start' || icon === 'exit') {
@@ -320,6 +321,7 @@ export default defineComponent({
 			// enterDungeon() runs in DinozActions.launch() before routing here, so a throw
 			// (e.g. team already in a dungeon) is caught there and never reaches this page.
 			const run = this.sessionStore.getDungeonRun;
+			console.log(currentDinoz, run)
 			if (!currentDinoz || !run) {
 				this.$router.go(-1);
 				return;
