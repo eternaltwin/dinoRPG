@@ -4658,7 +4658,7 @@
 		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
 		"unsacrificeCountdown": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten endet um {time}.",
 		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
-		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -5322,16 +5322,17 @@
 			"gold": "Du hast {value} Goldstücke gefunden!",
 			"resumed": "Du setzt deine Erkundung dort fort, wo du aufgehört hattest."
 		},
+		"doorNames": "{prefix} {sufix}",
 		"doorNames_prefix": [
-			"Arbres ",
-			"Dragons ",
-			"Calamars ",
-			"Gobelins ",
-			"Kabukis ",
-			"Roméos ",
-			"Magiciens ",
-			"Anges ",
-			"Démons "
+			"Arbres",
+			"Dragons",
+			"Calamars",
+			"Gobelins",
+			"Kabukis",
+			"Roméos",
+			"Magiciens",
+			"Anges",
+			"Démons"
 		],
 		"doorNames_sufix": [
 			"Magiques",
@@ -5343,7 +5344,7 @@
 			"Rouges",
 			"en Plastique",
 			"en Mousse",
-			"Etincelants"
+			"Étincelants"
 		]
 	},
 	"scenario": {
