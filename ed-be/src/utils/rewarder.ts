@@ -41,6 +41,7 @@ export async function rewarder(
 	let actualRewards: [Item, number][] = [];
 
 	for (const dinoz of team) {
+		let rewardsToNotify: Rewarder[] = [];
 		for (const reward of rewards) {
 			let showNotification = notify ?? true;
 
@@ -81,7 +82,7 @@ export async function rewarder(
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
 					if (showNotification) {
-						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+						rewardsToNotify.push(reward);
 					}
 					break;
 				case RewardEnum.MAX_ITEM:
@@ -132,7 +133,7 @@ export async function rewarder(
 						actualRewards.push([itemRewarded.itemId, reward.quantity]);
 					}
 					if (showNotification) {
-						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+						rewardsToNotify.push(reward);
 					}
 					break;
 				case RewardEnum.EPIC:
@@ -151,7 +152,7 @@ export async function rewarder(
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 						if (showNotification && rewardDetails.announced) {
-							await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+							rewardsToNotify.push(reward);
 						}
 					}
 					break;
@@ -169,6 +170,9 @@ export async function rewarder(
 					LOGGER.log(`Reward not yet implemented.`);
 					break;
 			}
+		}
+		if (rewardsToNotify.length > 0) {
+			await createNotification(playerId, JSON.stringify(rewardsToNotify), NotificationSeverity.reward);
 		}
 	}
 
