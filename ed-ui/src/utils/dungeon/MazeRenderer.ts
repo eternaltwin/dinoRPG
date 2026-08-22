@@ -50,6 +50,7 @@ export class MazeRenderer {
 	private readonly viewW: number;
 	private readonly viewH: number;
 	private readonly dims: MazeDims;
+	private readonly sharedFxBlur: BlurFilter;
 	/** Everything the server has revealed so far, per level, keyed "x,y". */
 	private readonly known: Map<string, RevealedCell>[];
 	private skins: Skin[];
@@ -129,6 +130,7 @@ export class MazeRenderer {
 				quality: 0.2
 			})
 		];
+		this.sharedFxBlur = new BlurFilter(this.fogBlur, 2);
 		this.app.ticker.add(this.updateFx, this);
 
 		this.showLevel(0);
@@ -406,7 +408,7 @@ export class MazeRenderer {
 				g.drawCircle((x + 0.5) * c + ox, (y + 0.5) * c + oy, r);
 			}
 		g.endFill();
-		g.filters = [new BlurFilter(this.fogBlur, 8)];
+		g.filters = [this.sharedFxBlur];
 		this.fogLayer.addChild(g);
 	}
 
@@ -422,7 +424,7 @@ export class MazeRenderer {
 		const p = this.center(x, y);
 		g.position.set(p.x, p.y);
 		if (origin) g.rotation = Math.atan2(origin.y - y, origin.x - x);
-		g.filters = [new BlurFilter(this.fogBlur, 8)];
+		g.filters = [this.sharedFxBlur];
 		this.fxLayer.addChild(g);
 		this.fx.push({ g, cpt: 0 });
 	}
