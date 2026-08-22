@@ -383,7 +383,7 @@ export default defineComponent({
 						{
 							name: this.$t('guide.text.dojos3'),
 							texts: [this.$t('guide.text.dojos3-1')],
-							listItems: [{ imageUrl: { path: 'icons', name: 'act_tournoi' }, text: this.$t('guide.text.dojos3-2') }]
+							listItems: [{ imageUrl: { path: 'icons', name: 'act_tournament' }, text: this.$t('guide.text.dojos3-2') }]
 						},
 						{ texts: [this.$t('guide.text.dojos3-3')] },
 						{
