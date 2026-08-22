@@ -260,7 +260,7 @@
 			"war_attack": "Atacar el castillo enemigo.",
 			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
 			"dungeon": "Voir l'évolution de l'exploration actuelle...",
-			"demon_shop": "ATTENTION ! DANGER !"
+			"demon_shop": "¡ATENCIÓN! ¡PELIGRO!"
 		},
 		"name": {
 			"fight": "Combatir",
@@ -299,7 +299,7 @@
 			"war_attack": "Atacar el castillo",
 			"dungeon_enter": "Entrer",
 			"dungeon": "Accéder au Plan",
-			"demon_shop": "Boutique Démoniaque"
+			"demon_shop": "Tienda Demoniaca"
 		}
 	},
 	"button": {
@@ -1806,17 +1806,17 @@
 	},
 	"shop": {
 		"demon": {
-			"name": "Boutique Démoniaque",
+			"name": "Tienda Demoniaca",
 			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
 			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
 			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
 			"level": "Niv. {level}",
 			"sacrifice": "Sacrifier",
-			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
 			"sacrifice_title": "Sacrifice",
 			"buy_title": "Invocation",
 			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
 			"yourDemonTickets": "Vos Tickets Démons"
 		},
 		"dinoz": {
@@ -4655,10 +4655,10 @@
 		"followed": "Este Dino es el líder del grupo.",
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
-		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}",
+		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Tu Dino debe recuperarse durante {time} segundos más antes de poder realizar otra acción.",
-		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -5302,8 +5302,8 @@
 		"blockSender": "Bloquear remitente"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
-		"floor": "Etage {floor}",
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Étage {floor}",
 		"name": {
 			"katatombs": "les Katatombes"
 		},
@@ -5322,16 +5322,17 @@
 			"gold": "Vous trouvez {value} pièces d'or !",
 			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
 		},
+		"doorNames": "{prefix} {sufix}",
 		"doorNames_prefix": [
-			"Arbres ",
-			"Dragons ",
-			"Calamars ",
-			"Gobelins ",
-			"Kabukis ",
-			"Roméos ",
-			"Magiciens ",
-			"Anges ",
-			"Démons "
+			"Arbres",
+			"Dragons",
+			"Calamars",
+			"Gobelins",
+			"Kabukis",
+			"Roméos",
+			"Magiciens",
+			"Anges",
+			"Démons"
 		],
 		"doorNames_sufix": [
 			"Magiques",
@@ -5343,7 +5344,7 @@
 			"Rouges",
 			"en Plastique",
 			"en Mousse",
-			"Etincelants"
+			"Étincelants"
 		]
 	},
 	"scenario": {
