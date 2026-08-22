@@ -277,10 +277,13 @@ describe('resetAccount', () => {
 });
 
 describe('updatePlayerSettings', () => {
-	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])('updates %s', async setting => {
-		await updatePlayerSettings(req({ setting }, { setting: true }));
-		expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
-	});
+	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])(
+		'updates %s',
+		async setting => {
+			await updatePlayerSettings(req({ setting }, { setting: true }));
+			expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
+		}
+	);
 
 	it('updates displayedNotifications when valid', async () => {
 		await updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 5 }));

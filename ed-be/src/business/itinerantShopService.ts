@@ -69,7 +69,9 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 			ingredientId: ingredientReference.ingredientId,
 			price: ingredientReference.price,
 			quantity: ingredientPlayer ? ingredientPlayer.quantity : 0,
-			maxQuantity: player.shopKeeper ? Math.round(ingredientReference.maxQuantity * 1.5) : ingredientReference.maxQuantity
+			maxQuantity: player.shopKeeper
+				? Math.round(ingredientReference.maxQuantity * 1.5)
+				: ingredientReference.maxQuantity
 		};
 	});
 }
