@@ -227,6 +227,7 @@ describe('resetAccount', () => {
 		targetedCases: [],
 		LeftFightArchives: [],
 		RightFightArchives: [],
+		createdDate: new Date('2021-09-01T00:00:00Z'),
 		...overrides
 	});
 
@@ -241,6 +242,12 @@ describe('resetAccount', () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(null as never);
 		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(null as never);
 		await expect(resetAccount(req())).rejects.toThrow('No player found');
+	});
+
+	it('throws when account is too young', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(null as never);
+		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(deletable({ createdDate: new Date() }) as never);
+		await expect(resetAccount(req())).rejects.toThrow('error.playerTooYoung');
 	});
 
 	it('throws when bids ongoing', async () => {
