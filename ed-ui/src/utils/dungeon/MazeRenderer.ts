@@ -51,7 +51,7 @@ export class MazeRenderer {
 	private readonly viewH: number;
 	private readonly dims: MazeDims;
 	private readonly sharedFxBlur: BlurFilter;
-	/** Everything the server has revealed so far, per level, keyed "x,y". */
+	/** Everything the server has revealed so far, per level, keyed "x * height + y". */
 	private readonly known: Map<number, RevealedCell>[];
 	private skins: Skin[];
 	private level = 0;
@@ -395,6 +395,13 @@ export class MazeRenderer {
 		return this.cell * 1.2;
 	}
 
+	/**
+	 * Produce a unique key based on horizontal and vertical position.
+	 * Key is unique as long as the assumption that y < height is true
+	 * @param x Horizontal position
+	 * @param y Vertical position
+	 * @returns A unique key, based on x * height + y.
+	 */
 	private key(x: number, y: number): number {
 		return x * this.dims.height + y;
 	}
