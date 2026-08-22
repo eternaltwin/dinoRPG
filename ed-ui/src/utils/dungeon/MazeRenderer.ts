@@ -56,6 +56,7 @@ export class MazeRenderer {
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
+	private dirty = false;
 	// Overground zone noise (View.hx initZones). Seeded from opts so the caller
 	// can key it to the dungeon id and keep decoration stable across refreshes.
 	private readonly noiseSeed: number;
@@ -170,7 +171,7 @@ export class MazeRenderer {
 				if (isNew) this.revealFx(c.x, c.y, origin);
 			}
 		}
-		if (dirty) this.showLevel(this.level);
+		if (dirty) this.dirty = true;
 	}
 
 	/** Pixel center of cell (x, y). */
@@ -438,6 +439,10 @@ export class MazeRenderer {
 	}
 
 	private updateFx(dt: number): void {
+		if (this.dirty) {
+			this.dirty = false;
+			this.showLevel(this.level);
+		}
 		for (let i = this.fx.length - 1; i >= 0; i--) {
 			const f = this.fx[i];
 			f.cpt += 0.045 * dt; // View.hx: cpt += 0.07/frame at the swf's 40fps
