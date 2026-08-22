@@ -1808,15 +1808,15 @@
 		"demon": {
 			"name": "Tienda Demoniaca",
 			"sacrifice_help": "¡Bienvenidos a la Tienda Demoniaca! Aquí puedes **sacrificar** Dinos que se encuentren en el cementerio a cambio de **Tickets-Demonio** :demon_tk:. El número de tickets obtenidos depende del nivel del Dino. Un Dino sacrificado ya no podrá ser usado ni será visible en tu cuenta. && Para consultar la lista de Dinos Demonios, necesitas un mínimo de 30 :demon_tk:.",
-			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
-			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"buy_help": "A cambio de **Tickets-Demonio** :demon_tk: puedes invocar a un Dino Demonio. Estos ya son adultos y ya poseen habilidades.",
+			"unsacrifice_help": "Puedes resucitar un Dino sacrificado por la misma cantidad de tickets obtenidos durante su sacrificio. El ritual de resurrección dura 24 horas.",
 			"level": "Nivel {level}",
-			"sacrifice": "Sacrifier",
-			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
-			"sacrifice_title": "Sacrifice",
-			"buy_title": "Invocation",
-			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
+			"sacrifice": "Sacrificar",
+			"sacrifice_toast": "Has sacrificado a tu Dino como ofrenda y has obtenido {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrificios",
+			"buy_title": "Invocaciones",
+			"unsacrifice_title": "Resurrección",
+			"unsacrifice_toast": "Tu Dino va a ser resucitado y estará disponible en 24 horas.",
 			"yourDemonTickets": "Tus Tickets-Demonio"
 		},
 		"dinoz": {
@@ -4656,7 +4656,7 @@
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
 		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}.",
-		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"unsacrificeCountdown": "El ritual para devolver a tu Dino de entre los muertos terminará en {time}.",
 		"restingAttackCountdown": "Tu Dino debe recuperarse durante {time} segundos más antes de poder realizar otra acción.",
 		"dungeon": "Tu Dino está explorando actualmente un laberinto. Sal del laberinto para poder ocuparte de él."
 	},
@@ -4691,8 +4691,8 @@
 		"HPLost": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** perdió **{hpLost} :pv:**.",
 		"Death": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** murió.",
 		"Revive": "**{player} ({playerId})** revivió al Dino **{dinoz} ({dinozId})**.",
-		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
-		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Sacrifice": "**{player} ({playerId})** ha sacrificado a su Dino **{dinoz} ({dinozId})** por {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** ha des-sacrificado a su Dino **{dinoz} ({dinozId})** por {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** avanzó **{mission}** al **paso {step}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** terminó **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceló **{mission}** con Dino **{dinoz} ({dinozId})**.",
@@ -5316,9 +5316,9 @@
 			"exit": "Sales de las Katatumbas. No se puede decir que el cementerio sea un lugar especialmente agradable, pero al menos sientes un soplo de aire fresco que cambia bastante del maloliente hedor de las Katatumbas."
 		},
 		"msg": {
-			"locked": "La porte des {name} est verrouillée.",
+			"locked": "Para abrir esta puerta necesitas la llave \"{name}\".",
 			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez la clé des {name} !",
+			"key": "¡Has encontrado la llave \"{name}\"!",
 			"gold": "Vous trouvez {value} pièces d'or !",
 			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
 		},
