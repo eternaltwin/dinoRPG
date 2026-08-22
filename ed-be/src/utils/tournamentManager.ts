@@ -676,7 +676,8 @@ class TournamentManager {
 				rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', lang),
 				rule4: translateTarget('dojo.levelLimit', lang, { level: levelLimit }),
 				number: romanize(total),
-				qualificationRewards: qualificationRewards
+				qualificationRewards: qualificationRewards,
+				interpolation: { escapeValue: false }
 			};
 		}
 

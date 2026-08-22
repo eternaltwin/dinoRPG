@@ -183,7 +183,7 @@ export function describeRewards(rewards: Rewarder[], lang: Lang): string {
 			const translation = translateTarget(
 				`item.name.${itemList[reward.value as Item].name.toLocaleLowerCase()}`,
 				lang,
-				{},
+				{ interpolation: { escapeValue: false } },
 				reward.quantity
 			);
 			return translateTarget('dojo.itemReward', lang, {
