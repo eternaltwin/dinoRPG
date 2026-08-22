@@ -217,15 +217,8 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// check so a dungeon-busy dinoz is only let through when it's actually
 	// resuming its own run, not stolen into a new one.
 	const existing = await findRun(dungeon.id, authed.id);
-	if (existing && team.some(t => t.unavailableReason && t.unavailableReason === UnavailableReason.dungeon && t.dungeonRun && t.dungeonRun.id === existing.id)) {
-		// A team member is already busy elsewhere, refuse entry.
-		throw new ExpectedError(translate('dungeon.wrongTeam', authed));
-	}
 
-	await updateMultipleDinoz(
-		team.map(t => t.id),
-		{ unavailableReason: UnavailableReason.dungeon }
-	);
+
 
 	const codec = new DungeonCodec();
 	codec.decode(
@@ -240,6 +233,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		if (existing.leaderId && existing.leaderId !== dinoz.id) {
 			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 		}
+		await updateMultipleDinoz(
+			team.map(t => t.id),
+			{ unavailableReason: UnavailableReason.dungeon }
+		);
 		await dinozEnterRun(existing.id, dinoz.id);
 		return {
 			run: { id: existing.id, status: 'resumed', message: dungeon.placeStart != null ? `dungeon.${dungeon.name}.enter` : undefined },
@@ -267,6 +264,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			)
 		};
 	}
+	await updateMultipleDinoz(
+		team.map(t => t.id),
+		{ unavailableReason: UnavailableReason.dungeon }
+	);
 
 	const revealed = new Set<string>();
 	const reveal = newReveals(revealAround(d, d.start.l, d.start.x, d.start.y), revealed);
