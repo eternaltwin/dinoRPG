@@ -5303,7 +5303,7 @@
 	},
 	"dungeon": {
 		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
-		"floor": "Piso {floor}",
+		"floor": "Nivel {floor}",
 		"name": {
 			"katatombs": "Las Katatumbas"
 		},
@@ -5317,34 +5317,34 @@
 		},
 		"msg": {
 			"locked": "Para abrir esta puerta necesitas la llave \"{name}\".",
-			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
+			"opened": "La llave \"{name}\" gira en la cerradura: la puerta se abre con un chirrido siniestro...",
 			"key": "¡Has encontrado la llave \"{name}\"!",
-			"gold": "Vous trouvez {value} pièces d'or !",
-			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
+			"gold": "¡Encontraste {value} monedas de oro!",
+			"resumed": "Retomas tu exploración donde la habías dejado."
 		},
 		"doorNames": "{prefix} {sufix}",
 		"doorNames_prefix": [
-			"Arbres",
-			"Dragons",
-			"Calamars",
-			"Gobelins",
+			"Árboles",
+			"Dragones",
+			"Calamares",
+			"Goblins",
 			"Kabukis",
-			"Roméos",
-			"Magiciens",
-			"Anges",
-			"Démons"
+			"Romeos",
+			"Magos",
+			"Ángeles",
+			"Demonios"
 		],
 		"doorNames_sufix": [
-			"Magiques",
-			"Morts",
-			"Vivants",
-			"Noirs",
-			"Enchantés",
-			"Enchanteurs",
-			"Rouges",
-			"en Plastique",
-			"en Mousse",
-			"Étincelants"
+			"Mágicos",
+			"Muertos",
+			"Vivos",
+			"Negros",
+			"Encantados",
+			"Encantadores",
+			"Rojos",
+			"de Plástico",
+			"de Espuma",
+			"Brillantes"
 		]
 	},
 	"scenario": {
