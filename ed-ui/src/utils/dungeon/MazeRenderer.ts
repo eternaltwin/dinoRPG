@@ -561,16 +561,12 @@ export class MazeRenderer {
 		}
 		switch (c.icon) {
 			case 'start':
-				this.sprite('item_stair_down', c.x, c.y, this.cell * 1.2);
-				break;
 			case 'exit':
-				this.sprite('item_stair_up', c.x, c.y, this.cell * 1.2);
-				break;
 			case 'stair_up':
-				this.sprite('item_stair_up', c.x, c.y, this.cell * 0.9);
+				this.sprite('item_stair_up', c.x, c.y - 0.4, this.cell * 1.2);
 				break;
 			case 'stair_down':
-				this.sprite('item_stair_down', c.x, c.y, this.cell * 0.9);
+				this.sprite('item_stair_down', c.x, c.y - 0.4, this.cell * 0.9);
 				break;
 			case 'door_v':
 			case 'door_h':
