@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Ingredient API
+  description: Endpoint for retrieving the authenticated player's owned ingredients.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Ingredient
+    description: Player ingredient inventory
+paths:
+  /api/v1/ingredients/all:
+    get:
+      tags: [Ingredient]
+      summary: List all ingredients owned by the authenticated player
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The player's ingredients, one entry per ingredient type owned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngredientFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper. Not enforced by
+        express-validator middleware; a missing/invalid identity results in a 500 response (see below).
+  schemas:
+    IngredientFiche:
+      type: object
+      properties:
+        ingredientId:
+          type: integer
+        name:
+          type: string
+          description: Lowercased ingredient name
+        quantity:
+          type: integer
+          description: Quantity currently owned by the player
+        maxQuantity:
+          type: integer
+          description: >-
+            Max quantity storable for this ingredient. Increased 1.5x (rounded) if the player is a
+            shopKeeper.
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain failures such as
+        missing auth or player/ingredient not found, which this API reports as 500 rather than 401/404.
+      content:
+        text/plain:
+          schema:
+            type: string

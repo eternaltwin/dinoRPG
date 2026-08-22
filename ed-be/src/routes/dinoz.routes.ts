@@ -37,27 +37,6 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.dinozRoute;
 
-/**
- * @openapi
- * /api/v1/dinoz/fiche/{dinozId}:
- *   get:
- *     summary: Get the fiche of a dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to GET.
- *     responses:
- *       200:
- *         description: Returns a dinoz fiche.
- */
 routes.get(
 	`${commonPath}/fiche/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -75,27 +54,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/buydinoz/{dinozId}:
- *   post:
- *     summary: Buy a dinoz in the shop
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to buy.
- *     responses:
- *       200:
- *         description: Returns a dinoz fiche.
- */
 routes.post(
 	`${commonPath}/buydinoz/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -113,37 +71,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/setname/{dinozId}:
- *   put:
- *     summary: Change the name of a selected dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to buy.
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - newName
- *           properties:
- *             newName:
- *               type: string
- *               description: New name of the dinoz
- *     responses:
- *       200:
- *         description: Returns a dinoz fiche.
- */
 routes.put(
 	`${commonPath}/setname/:id`,
 	[param('id').exists().toInt().isNumeric(), body('newName').exists().isString()],
@@ -161,27 +88,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/skill/{dinozId}:
- *   get:
- *     summary: Get all the skill of a selected dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz.
- *     responses:
- *       200:
- *         description: Array of the skills known
- */
 routes.get(
 	`${commonPath}/skill/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -199,46 +105,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/setskillstate/{dinozId}:
- *   put:
- *     summary: Change the state of a skill
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz.
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - skillId
- *             - skillState
- *           properties:
- *             skillId:
- *               type: number
- *               description: Id of the skill
- *             skillState:
- *               type: boolean
- *               description: state of the skill
- *               enum: [true, false]
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/setskillstate/:id`,
 	[
@@ -260,41 +126,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/betamove/{dinozId}:
- *   put:
- *     summary: Change the place of a dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz.
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - placeId
- *           properties:
- *             placeId:
- *               type: number
- *               description: Id of the destination
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/betamove`,
 	[body('placeId').exists().toInt().isNumeric(), body('dinozId').exists().toInt().isNumeric()],
@@ -329,37 +160,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/dig/{dinozId}:
- *   get:
- *     summary: Dig with the dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to dig.
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - placeId
- *           properties:
- *             placeId:
- *               type: number
- *               description: Id of the place where the digging happens
- *     responses:
- *       200:
- *         description: Returns a dig response (rewards and/or fight).
- */
 routes.get(
 	`${commonPath}/dig/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -377,27 +177,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/gather/{dinozId}:
- *   get:
- *     summary: Get the gather grid of the specific place
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to gather.
- *     responses:
- *       200:
- *         description: Returns a grid.
- */
 routes.get(
 	`${commonPath}/gather/:id/:type`,
 	[param('id').exists().toInt().isNumeric(), param('type').exists().isString()],
@@ -415,27 +194,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dinoz/gather/{dinozId}:
- *   put:
- *     summary: Gather with the dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Dinoz
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to gather.
- *     responses:
- *       200:
- *         description: Returns a grid.
- */
 routes.put(
 	`${commonPath}/gather/:id`,
 	[param('id').exists().toInt().isNumeric(), body('type').exists().isString(), body('box').exists().toArray()],

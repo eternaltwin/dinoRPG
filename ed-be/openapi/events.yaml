@@ -1,0 +1,721 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Events API
+  version: '1.0'
+  description: >
+    Endpoints for the Force Brute (FB) tournaments and events: current
+    tournament/event state, tournament dinoz creation, FB Tournament level-up
+    (skill learning), pool fight listing/viewing, and the FB Tournament
+    opponent flow (peek + fight).
+paths:
+  /api/v1/events/tournament/current/{id}:
+    get:
+      summary: Get the current state of a tournament
+      description: Returns aggregate info (participant count, qualif/fights state) for a tournament by ID.
+      tags:
+        - Events
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: FBTournament ID.
+      responses:
+        '200':
+          description: Tournament state, or empty body if no matching tournament exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentState'
+        '400':
+          description: Validation error (missing id).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Unexpected server error. The response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/tournament/{tournamentId}:
+    get:
+      summary: Get the caller's dinoz participating in a tournament
+      description: Returns the authenticated player's dinoz entered in the given FBTournament, with learned skill IDs.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema:
+            type: string
+          description: FBTournament ID.
+      responses:
+        '200':
+          description: List of the caller's dinoz in this tournament.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TournamentParticipant'
+        '400':
+          description: Validation error (missing tournamentId).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, tournament not found, or another error occurred.
+            The response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/tournament/participation:
+    post:
+      summary: Create a tournament dinoz
+      description: >
+        Creates a new level-1 dinoz entered in the given FBTournament for the
+        authenticated player, with base skills assigned. Subject to account
+        age, ranking points, one-per-day, and 256-dinoz-pool checks.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - tournamentId
+              properties:
+                name:
+                  type: string
+                  description: Name for the new dinoz (letters/numbers/accents/hyphen/apostrophe, 3-16 chars).
+                tournamentId:
+                  type: string
+                  description: FBTournament ID to enter.
+      responses:
+        '200':
+          description: Dinoz created successfully (empty body).
+        '400':
+          description: Validation error (missing name/tournamentId).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, invalid name, account too young, tournament not
+            found, not enough ranking points, dinoz already created today, or
+            tournament pool full. The response body is a plain-text error
+            message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/FBTournament/{id}/{tryNumber}:
+    get:
+      summary: Get learnable/unlockable skills for an event dinoz level-up
+      description: Returns the skills the caller's event (FBTournament) dinoz can learn or unlock on this level-up attempt.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Dinoz ID.
+        - in: path
+          name: tryNumber
+          required: true
+          schema:
+            type: integer
+          description: Level-up try number (1 or 2).
+      responses:
+        '200':
+          description: Learnable/unlockable skills and dinoz stat info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DinozSkillOwnAndUnlockable'
+        '400':
+          description: Validation error (id/tryNumber missing or non-numeric).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, dinoz not found/not owned, cannot level up, dinoz
+            unnamed, or unknown race. The response body is a plain-text error
+            message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/FBTournament/learnskill/{id}:
+    post:
+      summary: Learn skill(s) on an event dinoz level-up
+      description: Applies the chosen skill(s) for the caller's event (FBTournament) dinoz's level-up attempt.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Dinoz ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - skillIdList
+                - tryNumber
+              properties:
+                skillIdList:
+                  type: array
+                  items:
+                    type: integer
+                  description: Non-empty list of skill IDs to learn.
+                tryNumber:
+                  type: integer
+                  description: Level-up try number (1 or 2).
+      responses:
+        '200':
+          description: Result of learning the skill(s).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearnSkillData'
+        '400':
+          description: Validation error (id/tryNumber/skillIdList missing or malformed).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, dinoz not found/not owned, or cannot level up. The
+            response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/list:
+    get:
+      summary: List current events
+      description: Returns all FBTournament rows with their qualifying participant count.
+      tags:
+        - Events
+      responses:
+        '200':
+          description: List of current events/tournaments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventSummary'
+        '500':
+          description: Unexpected server error. The response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/tournament/{phase}/{id}/{pool}:
+    get:
+      summary: List a tournament pool's fights
+      description: >
+        Returns the fights for the given tournament phase/pool, each flagged
+        with whether the caller has already watched it.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: phase
+          required: true
+          schema:
+            type: string
+            enum: [qualification, pools, finals]
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: FBTournament ID.
+        - in: path
+          name: pool
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fights in the given phase/pool.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicTournamentFight'
+        '400':
+          description: Validation error (phase missing, id not a UUID, or pool missing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Not logged in or another error occurred. The response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+    patch:
+      summary: Mark a tournament pool's fights as viewed
+      description: Marks every fight in the given tournament phase/pool as viewed by the caller.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: phase
+          required: true
+          schema:
+            type: string
+            enum: [qualification, pools, finals]
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: FBTournament ID.
+        - in: path
+          name: pool
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fights marked as viewed (empty body).
+        '400':
+          description: Validation error (phase missing, id not a UUID, or pool missing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Not logged in or another error occurred. The response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/opponent/{dinozId}:
+    get:
+      summary: Peek at the caller's next FB Tournament opponent
+      description: >
+        Returns a preview (generated name, display, level) of the opponent
+        the caller's dinoz would face next in the FB Tournament ladder,
+        without resolving the fight.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Opponent preview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FBTournamentOpponentPreview'
+        '400':
+          description: Validation error (missing dinozId).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, dinoz not owned/not found, dinoz not at the Force
+            Brute place, or no opponent available. The response body is a
+            plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/events/fight/{dinozId}:
+    get:
+      summary: Fight the caller's next FB Tournament opponent
+      description: >
+        Resolves a fight between the caller's dinoz and its next FB
+        Tournament ladder opponent and advances the dinoz's tournament step.
+      tags:
+        - Events
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Result of the fight.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FightResult'
+        '400':
+          description: Validation error (missing dinozId).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Not logged in, dinoz not owned/not found/dead, dinoz not at the
+            Force Brute place, or no opponent available. The response body is
+            a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >
+        Custom "playerId:token" style authorization header (not a standard
+        bearer token) checked by the backend's own auth() function.
+  schemas:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: object
+          description: express-validator Result object describing the failed validation(s).
+    TournamentState:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        level:
+          type: integer
+        dinoz:
+          type: integer
+          description: Number of participants at the tournament's level limit.
+        state:
+          type: string
+          enum: [qualif, fights]
+    TournamentParticipant:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        level:
+          type: integer
+        display:
+          type: string
+        FBTournamentId:
+          type: string
+          nullable: true
+        skills:
+          type: array
+          items:
+            type: integer
+    LearnSkillData:
+      type: object
+      properties:
+        newMaxExperience:
+          type: integer
+        discoveredSkill:
+          type: integer
+    DinozSkillOwnAndUnlockable:
+      type: object
+      properties:
+        learnableSkills:
+          type: array
+          items:
+            type: object
+            properties:
+              skillId:
+                type: integer
+              type:
+                type: string
+              element:
+                type: array
+                items:
+                  type: integer
+        unlockableSkills:
+          type: array
+          items:
+            type: object
+            properties:
+              skillId:
+                type: integer
+              element:
+                type: array
+                items:
+                  type: integer
+        element:
+          type: integer
+        name:
+          type: string
+        display:
+          type: string
+        level:
+          type: integer
+        canRelaunch:
+          type: boolean
+        nbrUpFire:
+          type: integer
+        nbrUpWood:
+          type: integer
+        nbrUpWater:
+          type: integer
+        nbrUpLightning:
+          type: integer
+        nbrUpAir:
+          type: integer
+        upChance:
+          type: object
+          properties:
+            fire:
+              type: integer
+            wood:
+              type: integer
+            water:
+              type: integer
+            lightning:
+              type: integer
+            air:
+              type: integer
+    EventSummary:
+      type: object
+      description: Raw SQL projection of an FBTournament row.
+      properties:
+        id:
+          type: string
+        levelLimit:
+          type: integer
+        teamRace:
+          type: integer
+        date:
+          type: string
+          format: date-time
+        participantCount:
+          type: integer
+    PublicTournamentFight:
+      type: object
+      properties:
+        id:
+          type: string
+        tournamentTeamLeft:
+          $ref: '#/components/schemas/TournamentTeam'
+          nullable: true
+        tournamentTeamRight:
+          $ref: '#/components/schemas/TournamentTeam'
+          nullable: true
+        metadata:
+          type: object
+          properties:
+            phase:
+              type: string
+              enum: [qualification, pools, finals]
+            round:
+              type: integer
+            poolNumber:
+              type: integer
+            matchNumber:
+              type: integer
+            scheduledFor:
+              type: string
+              format: date-time
+            team1Id:
+              type: string
+            team2Id:
+              type: string
+        result:
+          type: boolean
+        watched:
+          type: boolean
+    TournamentTeam:
+      type: object
+      properties:
+        dinoz:
+          type: object
+          properties:
+            id:
+              type: integer
+            display:
+              type: string
+            name:
+              type: string
+        player:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+    FBTournamentOpponentPreview:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Procedurally generated opponent name.
+        display:
+          type: string
+        level:
+          type: integer
+        stage:
+          type: integer
+          description: Caller dinoz's current FBTournamentStep.
+    FighterRecap:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        name:
+          type: string
+        level:
+          type: integer
+        display:
+          type: string
+          nullable: true
+        survived:
+          type: boolean
+        attacker:
+          type: boolean
+        maxHp:
+          type: integer
+        startingHp:
+          type: integer
+        energy:
+          type: integer
+        maxEnergy:
+          type: integer
+        energyRecovery:
+          type: integer
+        dark:
+          type: boolean
+        size:
+          type: integer
+    FightResult:
+      type: object
+      description: Outcome of a processed fight.
+      properties:
+        fighters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FighterRecap'
+        goldEarned:
+          type: integer
+        xpEarned:
+          type: integer
+        levelUp:
+          type: boolean
+        totalHpLost:
+          type: integer
+        result:
+          type: boolean
+          description: Whether the attacking side (the caller's dinoz) won.
+        history:
+          type: array
+          items:
+            type: object
+          description: Step-by-step fight log.
+        hpLost:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              hpLost:
+                type: integer
+        itemsUsed:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              itemsUsed:
+                type: array
+                items:
+                  type: integer
+        place:
+          type: integer
+          description: PlaceEnum value where the fight happened.
+        startText:
+          type: object
+          nullable: true
+        endText:
+          type: object
+          nullable: true
+        itemWon:
+          type: integer
+          nullable: true
+        statusReward:
+          type: integer
+          nullable: true
+        autoReequipped:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              itemId:
+                type: integer
+              count:
+                type: integer
+        missingReequip:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              itemId:
+                type: integer
+              count:
+                type: integer

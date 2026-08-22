@@ -11,21 +11,6 @@ const commonPath: string = apiRoutes.dungeonRoute;
 // ponytail: runId-as-token — possession of the id is the capability. Bind runs
 // to the authenticated player before shipping beyond the POC.
 
-/**
- * @openapi
- * /api/v1/dungeon:
- *   post:
- *     summary: Start a dungeon run. Returns only the starting fog-of-war reveal — never the layout.
- *     tags:
- *       - Dungeon
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/:id/enter`,
 	[param('id').exists().isString().notEmpty()],
@@ -40,21 +25,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dungeon/{id}/exit:
- *   post:
- *     summary: Leave a dungeon run from its start or exit cell. Clears the dinoz's unavailableReason.
- *     tags:
- *       - Dungeon
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/:id/exit`,
 	[param('id').exists().isString().notEmpty()],
@@ -68,43 +38,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/dungeon/{id}/move:
- *   post:
- *     summary: Move one cell (dx/dy) or take a stair (dl). Returns the newly revealed cells only.
- *     tags:
- *       - Dungeon
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: id
- *         type: string
- *         required: true
- *         description: Dungeon run id.
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           properties:
- *             dx:
- *               type: number
- *               description: Horizontal step (-1, 0 or 1)
- *             dy:
- *               type: number
- *               description: Vertical step (-1, 0 or 1)
- *             dl:
- *               type: number
- *               description: Level step for stairs (-1, 0 or 1)
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/:id/move`,
 	[

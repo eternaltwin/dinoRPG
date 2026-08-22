@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Notifications API
+  description: >-
+    Endpoints for marking the authenticated player's notifications as read.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Notifications
+    description: Marking player notifications as read
+paths:
+  /api/v1/notifications/all/read:
+    patch:
+      tags: [Notifications]
+      summary: Mark all of the authenticated player's notifications as read
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: Notifications marked as read
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/notifications/{notificationId}/read:
+    patch:
+      tags: [Notifications]
+      summary: Mark a single notification as read
+      security:
+        - authHeader: []
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of the notification to mark as read (must belong to the authenticated player)
+      responses:
+        '200':
+          description: Notification marked as read
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Custom "playerId:token" style authorization header (not a standard bearer
+        token) checked by the backend's own auth() function.
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain
+        failures such as missing/invalid auth, which this API reports as 500
+        rather than 401/403.
+      content:
+        text/plain:
+          schema:
+            type: string

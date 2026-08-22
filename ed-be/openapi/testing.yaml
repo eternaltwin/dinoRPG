@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Testing API
+  description: >-
+    Routes exposed by ed-be/src/routes/testing.routes.ts. This router is only
+    mounted (in ed-be/src/routes/index.ts) when `!config.isProduction`, i.e. it
+    is not available in production. Its single route runs a batch of simulated
+    fights for debugging/tuning the fight/reward balance and does not return
+    the results in the HTTP response (they are only written to the logger).
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Testing
+    description: Non-production debugging/simulation endpoints
+paths:
+  /api/v1/testing/generateMonster/{id}:
+    get:
+      tags: [Testing]
+      summary: Run 600 simulated fights for a player's team and log the results
+      description: >-
+        Loads the player's fight data and dinoz team for the given player id, then
+        loops 600 times generating a monster list for the team's current place,
+        resolving the fight, and applying rewards. The per-iteration results
+        (gold, xp, opponents, victory) are only sent to `LOGGER.error` under the
+        message `600 fight result` — the HTTP response body is empty on success.
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Player id whose team is used for the simulated fights
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: >-
+            600 simulated fights completed. Empty body — results are only
+            written to the server log, not returned to the caller.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          description: >-
+            No authenticated player on the request (`req.auth.playerId` missing).
+            Thrown as an `ExpectedError('Unauthorized')`; not caught by this
+            handler's own try/catch, so the actual resulting HTTP response
+            depends on upstream Express error handling.
+        '404':
+          description: >-
+            No player found for the given id. Thrown as an
+            `ExpectedError` (`Player {id} doesn't exist.`); same caveat as 401
+            above about not being caught locally.
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  securitySchemes:
+    adminAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, checked by the `checkRole([AdminRole.ADMIN])`
+        middleware. A non-admin (or unresolvable) caller gets a 500 response
+        with the plain-text body `Not admin !`.
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Unexpected error caught by the route's try/catch and passed to the
+        shared `sendError` helper. Plain-text message, HTTP 500.
+      content:
+        text/plain:
+          schema:
+            type: string

@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  title: Pantheon API
+  description: Endpoints for the pantheon (hall of fame) — listing pantheon entries by motif/type, and fetching a stored dinoz illustration image.
+  version: 1.0.0
+servers:
+  - url: /api/v1/pantheon
+tags:
+  - name: Pantheon
+paths:
+  /{type}:
+    get:
+      operationId: getPantheon
+      summary: List pantheon entries for a motif
+      description: >
+        Returns up to 5 pantheon entries matching the given motif (type), optionally filtered by dinoz level,
+        race name, or reward id.
+      tags: [Pantheon]
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [race, epic]
+        - name: level
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filters to entries whose indicator equals this dinoz level (only applies when a dinoz is attached).
+        - name: raceId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Declared as an integer query param but currently unused by the handler (race is matched by name instead, see raceId field usage in code).
+        - name: rewardId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filters to entries whose indicator equals this reward id (only applies when no dinoz is attached).
+      responses:
+        '200':
+          description: List of pantheon entries (at most 5).
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PantheonEntry'
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: Unexpected error.
+
+  /{id}/illustration:
+    get:
+      operationId: getPantheonIllustration
+      summary: Get a pantheon entry's stored illustration image
+      description: Returns the raw webp image bytes stored for a pantheon entry.
+      tags: [Pantheon]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Image bytes (may be empty if no image was stored for this entry).
+          content:
+            image/webp:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: Unexpected error, including pantheon entry not found.
+
+components:
+  schemas:
+    PantheonEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+        motif:
+          type: string
+          enum: [race, epic]
+        indicator:
+          type: integer
+          nullable: true
+          description: Dinoz level or reward id, depending on which filter matched.
+        playerId:
+          type: string
+          nullable: true
+        playerName:
+          type: string
+        date:
+          type: string
+          format: date-time
+        dinoz:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            display:
+              type: string
+            name:
+              type: string
+            raceId:
+              type: integer
+        player:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string

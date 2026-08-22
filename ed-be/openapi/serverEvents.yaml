@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Server Events API
+  version: '1.0.0'
+  description: >-
+    Routes exposed by ed-be/src/routes/serverEvents.routes.ts. Covers ticket
+    issuance for WebSocket/SSE connections and the SSE event stream itself.
+    Business logic lives in ed-be/src/business/serverEventService.ts.
+paths:
+  /api/v1/server-events/websockets/authenticate:
+    post:
+      summary: Get a one-time ticket to open a WebSocket connection
+      description: >-
+        Validates the caller (Authorization header, checked via auth()) and the
+        requested WebSocket channel, then issues a short-lived ticket UUID used
+        to open the actual WebSocket connection. If the channel is
+        CLAN_FORUM, the player must belong to a clan.
+      tags:
+        - Server Events
+      parameters:
+        - in: header
+          name: user-agent
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: authorization
+          required: true
+          description: 'Basic-style header: base64("playerId:token")'
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - channel
+              properties:
+                channel:
+                  type: string
+                  description: One of the WsChannel enum values
+      responses:
+        '200':
+          description: Ticket issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket:
+                    type: string
+                    format: uuid
+        '400':
+          description: Missing/invalid user-agent header or channel (express-validator)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: >-
+            Unexpected error, or an expected domain error (e.g. not logged in,
+            invalid authorization, player not in a clan for CLAN_FORUM
+            channel). Body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api/v1/server-events/sse/authenticate:
+    post:
+      summary: Get a one-time ticket to open an SSE connection
+      description: >-
+        Validates the caller (Authorization header, checked via auth()) and the
+        requested SSE channel, then issues a short-lived ticket UUID used as
+        the `ticket` query param on GET /events.
+      tags:
+        - Server Events
+      parameters:
+        - in: header
+          name: user-agent
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: authorization
+          required: true
+          description: 'Basic-style header: base64("playerId:token")'
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - channel
+              properties:
+                channel:
+                  type: string
+                  description: One of the SseChannel enum values
+      responses:
+        '200':
+          description: Ticket issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket:
+                    type: string
+                    format: uuid
+        '400':
+          description: Missing/invalid user-agent header or channel (express-validator)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: >-
+            Unexpected error, or an expected domain error (e.g. not logged in,
+            invalid authorization). Body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api/v1/server-events/events:
+    get:
+      summary: Open an SSE stream and join the requested channel
+      description: >-
+        Long-lived `text/event-stream` connection. The ticket (obtained from
+        POST /sse/authenticate) is expected as a literal `?ticket=` suffix on
+        the request URL and is validated against the caller's user-agent, IP
+        address and ticket expiry (wsTicketMaxTime); it is consumed
+        (single-use) once validated. On connect, the server immediately sends
+        a LIVE_STATS event and then one every 30s as a heartbeat, plus
+        whatever channel-specific events the SSE channel emits. On client
+        disconnect (`req.on('close')`) the player is removed from the channel.
+      tags:
+        - Server Events
+      parameters:
+        - in: query
+          name: ticket
+          required: true
+          description: >-
+            Single-use ticket UUID issued by POST /sse/authenticate. Note: the
+            server actually parses this off the raw request URL
+            (`?ticket=...`), not as a standard query parameter binding.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: >-
+            SSE stream (`Content-Type: text/event-stream`). Each message is a
+            `data: <json>\n\n` line. At minimum a
+            `{ type: "LIVE_STATS", live_stats: {...} }` payload is sent on
+            connect and every 30s.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '500':
+          description: >-
+            Ticket missing/invalid/expired, user-agent or IP mismatch, or
+            other unexpected error. If headers were already sent (stream
+            already started), the connection is simply ended instead of
+            writing an error body.
+          content:
+            text/plain:
+              schema:
+                type: string

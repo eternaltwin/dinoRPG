@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Forum API
+  description: Routes exposed by ed-be/src/routes/forum.routes.ts. Proxies a subset of the Eternaltwin forum API.
+  version: 1.0.0
+tags:
+  - name: Forum
+    description: Forum threads and posts (backed by Eternaltwin)
+paths:
+  /api/v1/forum/{page}:
+    get:
+      tags:
+        - Forum
+      summary: Get a page of forum threads
+      description: Returns the threads for the given page (20 per page) from the DinoRPG Eternaltwin forum section.
+      parameters:
+        - in: path
+          name: page
+          required: true
+          description: 1-based page number.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of threads for the requested page.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Thread'
+        '400':
+          description: Validation error (missing/non-numeric page).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Unexpected error (e.g. Eternaltwin request failure).
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/forum/{threadId}/{page}:
+    get:
+      tags:
+        - Forum
+      summary: Get a thread's posts
+      description: Returns the title and a page of posts (20 per page) for the given thread.
+      parameters:
+        - in: path
+          name: threadId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: page
+          required: true
+          description: 1-based page number.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thread title and posts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  thread:
+                    $ref: '#/components/schemas/Posts'
+        '400':
+          description: Validation error (missing threadId, or missing/non-numeric page).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Unexpected error (e.g. Eternaltwin request failure).
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/forum/newThread:
+    post:
+      tags:
+        - Forum
+      summary: Create a new forum thread
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - message
+              properties:
+                title:
+                  type: string
+                message:
+                  type: string
+                  description: Body of the first post.
+      responses:
+        '200':
+          description: Newly created thread title and posts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  thread:
+                    $ref: '#/components/schemas/Posts'
+        '400':
+          description: Validation error (missing title or message).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Unexpected error (e.g. Eternaltwin request failure).
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: object
+          description: express-validator Result object.
+    Posts:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ForumPost'
+    Thread:
+      type: object
+      properties:
+        type:
+          type: string
+          example: ForumThread
+        id:
+          type: string
+        title:
+          type: string
+        ctime:
+          type: string
+        is_pinned:
+          type: boolean
+        is_locked:
+          type: boolean
+        posts:
+          $ref: '#/components/schemas/Posts'
+    ForumPost:
+      type: object
+      properties:
+        type:
+          type: string
+          example: ForumPost
+        id:
+          type: string
+        ctime:
+          type: string
+        author:
+          type: object
+          properties:
+            type:
+              type: string
+              example: UserForumActor
+            user:
+              type: object
+              properties:
+                id:
+                  type: string
+                display_name:
+                  type: string
+        revisions:
+          type: object
+          properties:
+            count:
+              type: integer
+            last:
+              type: object
+              properties:
+                time:
+                  type: string
+                content:
+                  type: object
+                  properties:
+                    marktwin:
+                      type: string
+                    html:
+                      type: string

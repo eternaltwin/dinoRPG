@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: NPC API
+  version: 1.0.0
+  description: Endpoints for talking to NPCs.
+paths:
+  /api/v1/npc/{dinozId}/{npc}:
+    put:
+      summary: Talk to a NPC
+      description: >
+        Advances (or starts) a dialogue between the authenticated player's dinoz and an NPC.
+        If `step` is omitted, a valid initial step of the NPC's dialogue tree is used.
+      tags:
+        - NPC
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+          description: Id of the dinoz talking to the NPC.
+        - in: path
+          name: npc
+          required: true
+          schema:
+            type: string
+          description: Name of the NPC.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                step:
+                  type: string
+                  nullable: true
+                  description: Id of the dialogue step to advance to. Omitted/undefined to start an initial step.
+      responses:
+        '200':
+          description: Successful operation, returns the NPC dialogue state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NpcTalk'
+        '400':
+          description: Invalid arguments (fails express-validator checks on npc/dinozId/step).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: >
+            Error - covers both unexpected errors and expected domain errors (e.g. not logged in,
+            dinoz not found, dinoz not named, dinoz dead, place/NPC mismatch, no valid step found).
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    NpcTalk:
+      type: object
+      properties:
+        name:
+          type: string
+        speech:
+          type: string
+        playerChoice:
+          type: array
+          items:
+            type: string
+        flashvars:
+          type: string
+        service:
+          type: array
+          items:
+            type: string
+        fight:
+          type: object
+          description: Fight result, present only when the step triggers a fight.
+        rewards:
+          type: object
+          description: Map of item name to quantity awarded, present only when the step grants rewards.
+          additionalProperties:
+            type: integer
