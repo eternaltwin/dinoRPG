@@ -209,6 +209,10 @@ export class MazeRenderer {
 	}
 
 	showLevel(l: number): void {
+		this.groundLayer.cacheAsBitmap = false;
+		this.wallBackLayer.cacheAsBitmap = false;
+		this.wallFrontLayer.cacheAsBitmap = false;
+		this.fogLayer.cacheAsBitmap = false;
 		const lv = Math.max(0, Math.min(l, this.dims.levels - 1));
 		if (lv !== this.level) this.clearFx(); // fades belong to the level they started on
 		this.level = lv;
@@ -224,6 +228,10 @@ export class MazeRenderer {
 		this.drawEntities();
 		this.drawMask(skin);
 		this.drawFog(skin);
+		this.groundLayer.cacheAsBitmap = true;
+		this.wallBackLayer.cacheAsBitmap = true;
+		this.wallFrontLayer.cacheAsBitmap = true;
+		this.fogLayer.cacheAsBitmap = true;
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
