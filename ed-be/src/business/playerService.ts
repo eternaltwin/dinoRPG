@@ -294,7 +294,13 @@ export async function resetAccount(req: Request) {
 		throw new Error('No player found.');
 	}
 
-	//Check if sell of bids are ongoing
+	// Check the account is less than 1 day old
+	let oneDayAfterCreation = playerToDelete.createdDate.getTime() + (24 * 60 * 60 * 1000);
+	if (oneDayAfterCreation > new Date().getTime()) {
+		throw new ExpectedError(translate('error.playerTooYoung', authed, { id: authed.id }));
+	}
+
+	// Check if sell of bids are ongoing
 	if (
 		playerToDelete.bids.length > 0 ||
 		playerToDelete.offers.filter(b => b.status === OfferStatus.ONGOING).length > 0
@@ -302,7 +308,7 @@ export async function resetAccount(req: Request) {
 		throw new ExpectedError(translate(`bidsOngoing`, authed));
 	}
 
-	//Check if part of a clan
+	// Check if part of a clan
 	if (playerToDelete.ClanMember) {
 		throw new ExpectedError(translate(`inClan`, authed));
 	}

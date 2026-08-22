@@ -475,7 +475,8 @@ export async function checkBeforeDeletion(playerId: string, tournamentId?: strin
 				}
 			},
 			ClanMember: true,
-			targetedCases: true
+			targetedCases: true,
+			createdDate: true
 		};
 		if (tournamentId) {
 			const tournamentFilter = {

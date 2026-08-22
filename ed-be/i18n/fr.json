@@ -68,6 +68,7 @@
 		"outdatedDefense": "Défense obsolète"
 	},
 	"error": {
+		"playerTooYoung": "Votre compte est trop récent pour faire cette opération.",
 		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
 		"notADemon": "Ce Dinoz n'est pas démon.",
 		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
