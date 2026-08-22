@@ -50,11 +50,13 @@ export class MazeRenderer {
 	private readonly viewW: number;
 	private readonly viewH: number;
 	private readonly dims: MazeDims;
-	/** Everything the server has revealed so far, per level, keyed "x,y". */
-	private readonly known: Map<string, RevealedCell>[];
+	private readonly sharedFxBlur: BlurFilter;
+	/** Everything the server has revealed so far, per level, keyed "x * height + y". */
+	private readonly known: Map<number, RevealedCell>[];
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
+	private dirty = false;
 	// Overground zone noise (View.hx initZones). Seeded from opts so the caller
 	// can key it to the dungeon id and keep decoration stable across refreshes.
 	private readonly noiseSeed: number;
@@ -73,7 +75,7 @@ export class MazeRenderer {
 		this.cell = opts.cell ?? 24;
 		this.noiseSeed = opts.noiseSeed ?? (Math.random() * 0x7fffffff) | 0;
 		this.dims = dims;
-		this.known = Array.from({ length: dims.levels }, () => new Map<string, RevealedCell>());
+		this.known = Array.from({ length: dims.levels }, () => new Map<number, RevealedCell>());
 		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];
 		this.viewW = opts.view?.w ?? dims.width * this.cell;
 		this.viewH = opts.view?.h ?? dims.height * this.cell;
@@ -129,6 +131,7 @@ export class MazeRenderer {
 				quality: 0.2
 			})
 		];
+		this.sharedFxBlur = new BlurFilter(this.fogBlur, 2);
 		this.app.ticker.add(this.updateFx, this);
 
 		this.showLevel(0);
@@ -153,7 +156,7 @@ export class MazeRenderer {
 		for (const c of cells) {
 			const level = this.known[c.l];
 			if (!level) continue;
-			const isNew = !level.has(`${c.x},${c.y}`);
+			const isNew = !level.has(this.key(c.x, c.y));
 			if (!c.monster) {
 				// Team defeated since last reveal: retire its animated sprite.
 				const stale = this.monsterSprites.get(`${c.l},${c.x},${c.y}`);
@@ -162,13 +165,13 @@ export class MazeRenderer {
 					this.monsterSprites.delete(`${c.l},${c.x},${c.y}`);
 				}
 			}
-			level.set(`${c.x},${c.y}`, c);
+			level.set(this.key(c.x, c.y), c);
 			if (c.l === this.level) {
 				dirty = true;
 				if (isNew) this.revealFx(c.x, c.y, origin);
 			}
 		}
-		if (dirty) this.showLevel(this.level);
+		if (dirty) this.dirty = true;
 	}
 
 	/** Pixel center of cell (x, y). */
@@ -207,6 +210,10 @@ export class MazeRenderer {
 	}
 
 	showLevel(l: number): void {
+		this.groundLayer.cacheAsBitmap = false;
+		this.wallBackLayer.cacheAsBitmap = false;
+		this.wallFrontLayer.cacheAsBitmap = false;
+		this.fogLayer.cacheAsBitmap = false;
 		const lv = Math.max(0, Math.min(l, this.dims.levels - 1));
 		if (lv !== this.level) this.clearFx(); // fades belong to the level they started on
 		this.level = lv;
@@ -222,6 +229,10 @@ export class MazeRenderer {
 		this.drawEntities();
 		this.drawMask(skin);
 		this.drawFog(skin);
+		this.groundLayer.cacheAsBitmap = true;
+		this.wallBackLayer.cacheAsBitmap = true;
+		this.wallFrontLayer.cacheAsBitmap = true;
+		this.fogLayer.cacheAsBitmap = true;
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
@@ -230,7 +241,7 @@ export class MazeRenderer {
 		const known = this.known[this.level];
 		const w = this.dims.width;
 		const h = this.dims.height;
-		const at = (x: number, y: number): RevealedCell | undefined => known.get(`${x},${y}`);
+		const at = (x: number, y: number): RevealedCell | undefined => known.get(this.key(x, y));
 		const floor = (x: number, y: number): boolean => at(x, y)?.floor === true;
 		// Fog three-state: only a *known* wall (or the map border) grows wall
 		// pieces. An unknown neighbour draws nothing — it is still fog.
@@ -385,6 +396,17 @@ export class MazeRenderer {
 	}
 
 	/**
+	 * Produce a unique key based on horizontal and vertical position.
+	 * Key is unique as long as the assumption that y < height is true.
+	 * @param x Horizontal position
+	 * @param y Vertical position
+	 * @returns A unique key, based on x * height + y.
+	 */
+	private key(x: number, y: number): number {
+		return x * this.dims.height + y;
+	}
+
+	/**
 	 * Fog plane: one big jittered circle per unknown cell instead of a rect —
 	 * circles always overlap their neighbours (radius > half the cell spacing,
 	 * even after jitter), so the union is a round blob with no straight edge to
@@ -392,7 +414,7 @@ export class MazeRenderer {
 	 */
 	private drawFog(skin: Skin): void {
 		const known = this.known[this.level];
-		const isKnown = (x: number, y: number): boolean => known.has(`${x},${y}`);
+		const isKnown = (x: number, y: number): boolean => known.has(this.key(x, y));
 		const c = this.cell;
 		const g = new Graphics();
 		g.beginFill(skin.fog);
@@ -406,7 +428,7 @@ export class MazeRenderer {
 				g.drawCircle((x + 0.5) * c + ox, (y + 0.5) * c + oy, r);
 			}
 		g.endFill();
-		g.filters = [new BlurFilter(this.fogBlur, 8)];
+		g.filters = [this.sharedFxBlur];
 		this.fogLayer.addChild(g);
 	}
 
@@ -422,12 +444,16 @@ export class MazeRenderer {
 		const p = this.center(x, y);
 		g.position.set(p.x, p.y);
 		if (origin) g.rotation = Math.atan2(origin.y - y, origin.x - x);
-		g.filters = [new BlurFilter(this.fogBlur, 8)];
+		g.filters = [this.sharedFxBlur];
 		this.fxLayer.addChild(g);
 		this.fx.push({ g, cpt: 0 });
 	}
 
 	private updateFx(dt: number): void {
+		if (this.dirty) {
+			this.dirty = false;
+			this.showLevel(this.level);
+		}
 		for (let i = this.fx.length - 1; i >= 0; i--) {
 			const f = this.fx[i];
 			f.cpt += 0.045 * dt; // View.hx: cpt += 0.07/frame at the swf's 40fps
@@ -542,16 +568,12 @@ export class MazeRenderer {
 		}
 		switch (c.icon) {
 			case 'start':
-				this.sprite('item_stair_down', c.x, c.y, this.cell * 1.2);
-				break;
 			case 'exit':
-				this.sprite('item_stair_up', c.x, c.y, this.cell * 1.2);
-				break;
 			case 'stair_up':
-				this.sprite('item_stair_up', c.x, c.y, this.cell * 0.9);
+				this.sprite('item_stair_up', c.x, c.y - 0.4, this.cell * 1.2);
 				break;
 			case 'stair_down':
-				this.sprite('item_stair_down', c.x, c.y, this.cell * 0.9);
+				this.sprite('item_stair_down', c.x, c.y - 0.4, this.cell * 0.9);
 				break;
 			case 'door_v':
 			case 'door_h':
