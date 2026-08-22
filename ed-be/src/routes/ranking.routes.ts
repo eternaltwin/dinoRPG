@@ -8,37 +8,6 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.rankingRoutes;
 
-/**
- * @openapi
- * /api/v1/ranking/{sort}/{page}:
- *   get:
- *     summary: Get a batch of ranking
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Ranking
- *       - Player
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: sort
- *         type: string
- *         required: true
- *         description: Type of the ranking to display
- *       - in: path
- *         name: page
- *         type: string
- *         required: true
- *         description: Number of  the page to display
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:sort/:page`,
 	[param('sort').exists().isString(), param('page').exists().isNumeric()],

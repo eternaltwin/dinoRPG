@@ -9,27 +9,6 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.fightRoute;
 
-/**
- * @openapi
- * /api/v1/fight:
- *   get:
- *     summary: Process a fight
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Fight
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz to that launches the fight
- *     responses:
- *       200:
- *         description: Returns the result of the fight
- */
 routes.put(`${commonPath}`, [body('dinozId').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });

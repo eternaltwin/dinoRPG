@@ -1,0 +1,565 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Player API
+  description: Routes defined in ed-be/src/routes/player.routes.ts
+  version: 1.0.0
+servers:
+  - url: /api/v1/player
+tags:
+  - name: Player
+    description: Player account, profile and settings operations
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Authorization header of the form "<playerId>:<token>", validated by
+        the auth() helper in dao/playerDao.ts.
+  schemas:
+    ValidationError:
+      type: object
+      properties:
+        errors:
+          type: object
+          description: express-validator Result object
+    ErrorMessage:
+      type: string
+      description: Plain-text error message (all thrown errors are sent as text/plain with status 500 by sendErrors.ts)
+    PlayerCommonData:
+      type: object
+      description: Full data set for the logged-in player, used on login/refresh.
+      properties:
+        money:
+          type: integer
+        dinoz:
+          type: array
+          items:
+            type: object
+            description: Dinoz fiche (see DinozUtils.toDinozFiche), including available actions
+        id:
+          type: string
+          format: uuid
+        connexionToken:
+          type: string
+        name:
+          type: string
+        clanId:
+          type: integer
+          nullable: true
+        playerOptions:
+          type: object
+          properties:
+            hasPDA:
+              type: boolean
+            hasPMI:
+              type: boolean
+            hasPAC:
+              type: boolean
+            skipFight:
+              type: boolean
+            skipLevel:
+              type: boolean
+            autoReequipItems:
+              type: boolean
+            archivedSiteId:
+              type: integer
+              nullable: true
+            shareArchivedData:
+              type: boolean
+            displayedNotifications:
+              type: integer
+        role:
+          type: string
+        priest:
+          type: boolean
+        shopkeeper:
+          type: boolean
+        notifications:
+          type: array
+          items:
+            type: object
+        discoveredSkills:
+          type: array
+          items:
+            type: object
+        tosAccepted:
+          type: boolean
+        clanEvent:
+          type: object
+          nullable: true
+    DinozFicheLite:
+      type: object
+      description: Lightweight dinoz fiche (see DinozUtils.toDinozFicheLite)
+    PlayerInfo:
+      type: object
+      description: Public profile data for a player account.
+      properties:
+        dinozCount:
+          type: integer
+        pointCount:
+          type: integer
+        subscribedAt:
+          type: string
+          format: date-time
+        clan:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        epicRewards:
+          type: array
+          items:
+            type: integer
+        dinoz:
+          type: array
+          items:
+            type: object
+            description: Public dinoz fiche (see DinozUtils.toDinozPublicFiche)
+        customText:
+          type: string
+          nullable: true
+        completion:
+          type: number
+        stats:
+          type: array
+          items:
+            type: object
+        archivedData:
+          type: array
+          items:
+            type: object
+            properties:
+              stat:
+                type: string
+              quantity:
+                type: number
+    PlayerSearchResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    PlayerToolTip:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        customText:
+          type: string
+          nullable: true
+paths:
+  /commondata:
+    get:
+      tags: [Player]
+      summary: Get the full data set for the logged-in player (login/refresh)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Player common data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerCommonData'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated, player not found, or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /dinozList:
+    get:
+      tags: [Player]
+      summary: Get the list of the logged-in player's dinoz (lite fiche)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of dinoz
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozFicheLite'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /getmoney:
+    get:
+      tags: [Player]
+      summary: Get the logged-in player's money amount
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Money amount as a string
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '1500'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated, player not found, or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /tos:
+    patch:
+      tags: [Player]
+      summary: Accept the terms of service for the logged-in player
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Terms of service accepted (empty body)
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /canCreateClan:
+    get:
+      tags: [Player]
+      summary: Check whether the logged-in player meets the conditions to create a clan
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Whether the player can create a clan
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /customText:
+    put:
+      tags: [Player]
+      summary: Set the logged-in player's custom profile text
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [message]
+              properties:
+                message:
+                  type: string
+                  description: >-
+                    HTML message (sanitized server-side, only b/i/em/strong/a
+                    tags and href attribute allowed). Must be more than 2
+                    characters after sanitization. Requires the PLUME reward.
+      responses:
+        '200':
+          description: Custom text updated (empty body)
+        '400':
+          description: Validation error (missing message)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: >-
+            Not authenticated, player not found, missing PLUME reward,
+            message too short, or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /search/{search}:
+    get:
+      tags: [Player]
+      summary: Search players by name or id (max 10 results)
+      parameters:
+        - in: path
+          name: search
+          required: true
+          schema:
+            type: string
+            minLength: 3
+          description: Search string, matched against player name or id
+      responses:
+        '200':
+          description: Matching players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerSearchResult'
+        '400':
+          description: Validation error (search shorter than 3 characters)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /labrute:
+    get:
+      tags: [Player]
+      summary: Check and claim LaBrute cross-game reward eligibility for the logged-in player
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: LaBrute eligibility/claim result
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: >-
+            Not authenticated, player not found, reward already claimed, or
+            other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /smallMenu/{id}:
+    get:
+      tags: [Player]
+      summary: Get the lightweight info (id, name, custom text) for the player tooltip menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Player id
+      responses:
+        '200':
+          description: Player tooltip info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerToolTip'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Player not found or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /{playerId}:
+    get:
+      tags: [Player]
+      summary: Get the public profile data for a specific player account
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playerId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Player id (UUID)
+      responses:
+        '200':
+          description: Public player profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerInfo'
+        '400':
+          description: Validation error (playerId is not a UUID)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: >-
+            Not authenticated, player not found, or player has no ranking yet
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags: [Player]
+      summary: Delete (reset) the logged-in player's account
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Account deleted (empty body)
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: >-
+            Not authenticated, no player found, or account cannot be
+            deleted yet (ongoing bids/offers, in a clan, pending ban case,
+            or qualified in the current dojo tournament)
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /language:
+    put:
+      tags: [Player]
+      summary: Update the logged-in player's language
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [language]
+              properties:
+                language:
+                  type: string
+                  enum: [fr, en, de, es]
+      responses:
+        '200':
+          description: Updated player record
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The updated player row
+        '400':
+          description: Validation error (language missing or not a valid Lang value)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Not authenticated or other server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /settings/{setting}:
+    patch:
+      tags: [Player]
+      summary: Update one setting of the logged-in player
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: setting
+          required: true
+          schema:
+            type: string
+            enum:
+              - skipLevel
+              - skipFight
+              - autoReequipItems
+              - archivedSiteId
+              - shareArchivedData
+              - displayedNotifications
+          description: >-
+            Name of the setting to update. Any value not in this list is
+            silently ignored by the handler (no error, no change applied).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [setting]
+              properties:
+                setting:
+                  description: >-
+                    New value for the setting. Boolean for skipLevel,
+                    skipFight, autoReequipItems and shareArchivedData;
+                    number/id for archivedSiteId; positive number for
+                    displayedNotifications.
+                  oneOf:
+                    - type: boolean
+                    - type: number
+      responses:
+        '200':
+          description: Setting updated (empty body)
+        '400':
+          description: Validation error (missing setting path param)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: >-
+            Not authenticated, or invalid displayedNotifications value
+            (must be a number >= 1)
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'

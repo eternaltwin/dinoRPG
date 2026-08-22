@@ -1,0 +1,3883 @@
+{
+  "communities": {
+    "0": [
+      "ed-be::src_test_utils_fight_fightengine_test",
+      "ed-be::src_test_utils_fight_fightengine_test_all_active_skills",
+      "ed-be::src_test_utils_fight_fightengine_test_it",
+      "ed-be::src_test_utils_fight_fightengine_test_makedinoz",
+      "ed-be::src_test_utils_fight_fightengine_test_runfight",
+      "ed-be::src_test_utils_fight_fightengine_test_sk",
+      "ed-be::src_test_utils_fight_fightengine_test_st",
+      "ed-be::src_test_utils_fight_fightengine_test_usable_items",
+      "ed-be::src_test_utils_tools_test",
+      "ed-be::src_test_utils_tools_test_fixed",
+      "ed-be::src_utils_fight_fightmethods",
+      "ed-be::src_utils_fight_fightmethods_activateenvironment",
+      "ed-be::src_utils_fight_fightmethods_activateevent",
+      "ed-be::src_utils_fight_fightmethods_activateskill",
+      "ed-be::src_utils_fight_fightmethods_addskillfx",
+      "ed-be::src_utils_fight_fightmethods_addstatus",
+      "ed-be::src_utils_fight_fightmethods_announceskill",
+      "ed-be::src_utils_fight_fightmethods_applystrategy",
+      "ed-be::src_utils_fight_fightmethods_attackallopponents",
+      "ed-be::src_utils_fight_fightmethods_attacksingleopponent",
+      "ed-be::src_utils_fight_fightmethods_attacktarget",
+      "ed-be::src_utils_fight_fightmethods_cancelenvironment",
+      "ed-be::src_utils_fight_fightmethods_checkafterattackeffects",
+      "ed-be::src_utils_fight_fightmethods_checkafterdefenseeffects",
+      "ed-be::src_utils_fight_fightmethods_checkdeaths",
+      "ed-be::src_utils_fight_fightmethods_checkdefensiveeffects",
+      "ed-be::src_utils_fight_fightmethods_checkreinforcementban",
+      "ed-be::src_utils_fight_fightmethods_chooserandomopponent",
+      "ed-be::src_utils_fight_fightmethods_chooserandomopponentforassault",
+      "ed-be::src_utils_fight_fightmethods_consolidateskillhitsteps",
+      "ed-be::src_utils_fight_fightmethods_countertest",
+      "ed-be::src_utils_fight_fightmethods_createmonster",
+      "ed-be::src_utils_fight_fightmethods_createstatus",
+      "ed-be::src_utils_fight_fightmethods_criticalhittest",
+      "ed-be::src_utils_fight_fightmethods_endturnchecks",
+      "ed-be::src_utils_fight_fightmethods_evasiontest",
+      "ed-be::src_utils_fight_fightmethods_getallies",
+      "ed-be::src_utils_fight_fightmethods_getfighters",
+      "ed-be::src_utils_fight_fightmethods_getlimitedrandomopponent",
+      "ed-be::src_utils_fight_fightmethods_getopponents",
+      "ed-be::src_utils_fight_fightmethods_getrandomopponent",
+      "ed-be::src_utils_fight_fightmethods_getrandomopponentforassault",
+      "ed-be::src_utils_fight_fightmethods_hasitem",
+      "ed-be::src_utils_fight_fightmethods_hasskill",
+      "ed-be::src_utils_fight_fightmethods_hasstatus",
+      "ed-be::src_utils_fight_fightmethods_heal",
+      "ed-be::src_utils_fight_fightmethods_initstepfighter",
+      "ed-be::src_utils_fight_fightmethods_isincapacitated",
+      "ed-be::src_utils_fight_fightmethods_launchassault",
+      "ed-be::src_utils_fight_fightmethods_losehp",
+      "ed-be::src_utils_fight_fightmethods_losehpwithresilience",
+      "ed-be::src_utils_fight_fightmethods_multihittest",
+      "ed-be::src_utils_fight_fightmethods_overtime_id",
+      "ed-be::src_utils_fight_fightmethods_playfighterturn",
+      "ed-be::src_utils_fight_fightmethods_poison",
+      "ed-be::src_utils_fight_fightmethods_randomlygetevent",
+      "ed-be::src_utils_fight_fightmethods_randomlygetskill",
+      "ed-be::src_utils_fight_fightmethods_rationale_1151",
+      "ed-be::src_utils_fight_fightmethods_rationale_1573",
+      "ed-be::src_utils_fight_fightmethods_rationale_3413",
+      "ed-be::src_utils_fight_fightmethods_rationale_3432",
+      "ed-be::src_utils_fight_fightmethods_rationale_3912",
+      "ed-be::src_utils_fight_fightmethods_rationale_4175",
+      "ed-be::src_utils_fight_fightmethods_rationale_4213",
+      "ed-be::src_utils_fight_fightmethods_rationale_4216",
+      "ed-be::src_utils_fight_fightmethods_rationale_81",
+      "ed-be::src_utils_fight_fightmethods_removestatus",
+      "ed-be::src_utils_fight_fightmethods_setenergy",
+      "ed-be::src_utils_fight_fightmethods_setmaxenergy",
+      "ed-be::src_utils_fight_fightmethods_stepfighter",
+      "ed-be::src_utils_fight_fightmethods_superevasiontest",
+      "ed-be::src_utils_fight_fightmethods_updateallstatus",
+      "ed-be::src_utils_fight_fightmethods_updatestat",
+      "ed-be::src_utils_fight_generatefight",
+      "ed-be::src_utils_fight_generatefight_detailedfight",
+      "ed-be::src_utils_fight_generatefight_generatefight",
+      "ed-be::src_utils_fight_generatefight_orderfighters",
+      "ed-be::src_utils_fight_generatefight_preparefight",
+      "ed-be::src_utils_fight_generatefight_startfight",
+      "ed-be::src_utils_fight_getdamage",
+      "ed-be::src_utils_fight_getdamage_applyresiliencetodamage",
+      "ed-be::src_utils_fight_getdamage_balanceandrandomizenumber",
+      "ed-be::src_utils_fight_getdamage_calculatedamage",
+      "ed-be::src_utils_fight_getdamage_getassaultvalue",
+      "ed-be::src_utils_fight_getdamage_getattackdefense",
+      "ed-be::src_utils_fight_getdamage_getelementalattack",
+      "ed-be::src_utils_fight_getdamage_getmultielementalattack",
+      "ed-be::src_utils_fight_getdamage_powerof",
+      "ed-be::src_utils_fight_getfighters",
+      "ed-be::src_utils_fight_getfighters_applyglobaldefensebonus",
+      "ed-be::src_utils_fight_getfighters_clonedinoz",
+      "ed-be::src_utils_fight_getfighters_getfighterarmor",
+      "ed-be::src_utils_fight_getfighters_getfighterarmorbreak",
+      "ed-be::src_utils_fight_getfighters_getfightercounter",
+      "ed-be::src_utils_fight_getfighters_getfightercriticalhitbonus",
+      "ed-be::src_utils_fight_getfighters_getfightercriticalhitchance",
+      "ed-be::src_utils_fight_getfighters_getfighterevasion",
+      "ed-be::src_utils_fight_getfighters_getfightermultihit",
+      "ed-be::src_utils_fight_getfighters_getfighters",
+      "ed-be::src_utils_fight_getfighters_getfightersuperevasion",
+      "ed-be::src_utils_fight_getfighters_handledinozstatuses",
+      "ed-be::src_utils_fight_getfighters_handleskills",
+      "ed-be::src_utils_fight_getfighters_initializedinoz",
+      "ed-be::src_utils_fight_getfighters_initializemonster",
+      "ed-be::src_utils_fight_getfighters_rationale_878",
+      "ed-be::src_utils_fight_getfighters_team",
+      "ed-be::src_utils_fight_monsterbonuses",
+      "ed-be::src_utils_fight_monsterbonuses_brig1",
+      "ed-be::src_utils_fight_monsterbonuses_brig2",
+      "ed-be::src_utils_fight_monsterbonuses_brig3",
+      "ed-be::src_utils_fight_monsterbonuses_cyclo",
+      "ed-be::src_utils_fight_monsterbonuses_ggoupi",
+      "ed-be::src_utils_fight_monsterbonuses_gromst",
+      "ed-be::src_utils_fight_monsterbonuses_monsterbonus",
+      "ed-be::src_utils_fight_monsterbonuses_multiplyskillprobability",
+      "ed-be::src_utils_fight_monsterbonuses_sentinel",
+      "ed-be::src_utils_fight_monsterbonuses_setskillprobability",
+      "ed-be::src_utils_fight_monsterbonuses_singmu",
+      "ed-be::src_utils_fight_monsterbonuses_stinger",
+      "ed-be::src_utils_fight_monsterbonuses_worm",
+      "ed-be::src_utils_fight_skillfightconditionparser",
+      "ed-be::src_utils_fight_skillfightconditionparser_checkskillcondition",
+      "ed-be::src_utils_fight_skillfightconditionparser_skillconditionparser",
+      "ed-be::src_utils_fight_utils",
+      "ed-be::src_utils_fight_utils_teststat",
+      "ed-be::src_utils_tools",
+      "ed-be::src_utils_tools_generatestring",
+      "ed-be::src_utils_tools_getrandomarrayelement",
+      "ed-be::src_utils_tools_getrandominteger",
+      "ed-be::src_utils_tools_getrandomnumber",
+      "ed-be::src_utils_tools_sleep"
+    ],
+    "1": [
+      "ed-be::src_business_ingredientservice",
+      "ed-be::src_business_ingredientservice_getallingredientsdata",
+      "ed-be::src_business_itinerantshopservice",
+      "ed-be::src_business_itinerantshopservice_getingredientsfromitinerantshop",
+      "ed-be::src_business_itinerantshopservice_sellingredient",
+      "ed-be::src_business_offerservice",
+      "ed-be::src_business_offerservice_bidoffer",
+      "ed-be::src_business_offerservice_canceloffer",
+      "ed-be::src_business_offerservice_checkrefund",
+      "ed-be::src_business_offerservice_claimoffer",
+      "ed-be::src_business_offerservice_createoffer",
+      "ed-be::src_business_offerservice_expireoffer",
+      "ed-be::src_business_offerservice_getofferlist",
+      "ed-be::src_business_offerservice_refundendedoffers",
+      "ed-be::src_business_offerservice_scheduleendedoffersexpiration",
+      "ed-be::src_business_offerservice_scheduleoffersexpiration",
+      "ed-be::src_dao_dinozdao_getdinozitinerantshop",
+      "ed-be::src_dao_dinozdao_getdinozplace",
+      "ed-be::src_dao_dinozdao_getdinozplaces",
+      "ed-be::src_dao_dinozdao_isdinozselling",
+      "ed-be::src_dao_offerdao",
+      "ed-be::src_dao_offerdao_addbid",
+      "ed-be::src_dao_offerdao_deleteoffer",
+      "ed-be::src_dao_offerdao_extendtimer",
+      "ed-be::src_dao_offerdao_getendedoffers",
+      "ed-be::src_dao_offerdao_getendedofferstype",
+      "ed-be::src_dao_offerdao_getoffer",
+      "ed-be::src_dao_offerdao_getoffers",
+      "ed-be::src_dao_offerdao_getongoingoffers",
+      "ed-be::src_dao_offerdao_insertoffer",
+      "ed-be::src_dao_offerdao_preparerefund",
+      "ed-be::src_dao_offerdao_updateofferdinoz",
+      "ed-be::src_dao_offerdao_updateofferstatus",
+      "ed-be::src_dao_playerdao_getplayerdiscoveredskills",
+      "ed-be::src_dao_playeringredientdao",
+      "ed-be::src_dao_playeringredientdao_decreaseingredientquantity",
+      "ed-be::src_dao_playeringredientdao_getallingredientsdatarequest",
+      "ed-be::src_dao_playeringredientdao_increaseingredientquantity",
+      "ed-be::src_dao_playeringredientdao_setingredient",
+      "ed-be::src_dao_playeringredientdao_setmultipleingredient",
+      "ed-be::src_dao_playeritemdao_getplayeritems",
+      "ed-be::src_dao_secretdao",
+      "ed-be::src_dao_secretdao_getspecificsecret",
+      "ed-be::src_routes_ingredient_routes",
+      "ed-be::src_routes_ingredient_routes_routes",
+      "ed-be::src_routes_offer_routes",
+      "ed-be::src_routes_shop_routes",
+      "ed-be::src_routes_shop_routes_routes",
+      "ed-be::src_test_business_ingredientservice_test",
+      "ed-be::src_test_business_itinerantshopservice_test",
+      "ed-be::src_test_business_itinerantshopservice_test_shoplist",
+      "ed-be::src_test_business_offerservice_test",
+      "ed-be::src_test_business_offerservice_test_atmarket"
+    ],
+    "2": [
+      "ed-be::src_business_clanservice_checkmessagecanbedeleted",
+      "ed-be::src_business_scheduleservice",
+      "ed-be::src_business_scheduleservice_scheduleatstart",
+      "ed-be::src_business_servereventservice",
+      "ed-be::src_business_servereventservice_activetickets",
+      "ed-be::src_business_servereventservice_authenticate",
+      "ed-be::src_business_servereventservice_checkifwsclientsarealive",
+      "ed-be::src_business_servereventservice_checkplayerisinclan",
+      "ed-be::src_business_servereventservice_checkticketvalidity",
+      "ed-be::src_business_servereventservice_connectusertossechannel",
+      "ed-be::src_business_servereventservice_connectusertowschannel",
+      "ed-be::src_business_servereventservice_deletewsmessage",
+      "ed-be::src_business_servereventservice_disconnectsseuser",
+      "ed-be::src_business_servereventservice_disconnectwsuser",
+      "ed-be::src_business_servereventservice_dospecificverifications",
+      "ed-be::src_business_servereventservice_dospecificverificationsforsse",
+      "ed-be::src_business_servereventservice_dospecificverificationsforws",
+      "ed-be::src_business_servereventservice_getchannelname",
+      "ed-be::src_business_servereventservice_getipaddressfromrequest",
+      "ed-be::src_business_servereventservice_getmessagefromstring",
+      "ed-be::src_business_servereventservice_getplayerwsdatafromchanneldata",
+      "ed-be::src_business_servereventservice_getticketfromurl",
+      "ed-be::src_business_servereventservice_getuseragentfromrequest",
+      "ed-be::src_business_servereventservice_getwschanneldetailsfromconnectionid",
+      "ed-be::src_business_servereventservice_processwsincomingmessage",
+      "ed-be::src_business_servereventservice_putuserinssechannel",
+      "ed-be::src_business_servereventservice_putuserinwschannel",
+      "ed-be::src_business_servereventservice_removeuserfromwschannel",
+      "ed-be::src_business_servereventservice_savewsmessageindatabase",
+      "ed-be::src_business_servereventservice_sendmessagetopeopleinwschannel",
+      "ed-be::src_business_servereventservice_sendssemessagetouserinchannel",
+      "ed-be::src_business_servereventservice_setwsconnectiontoalive",
+      "ed-be::src_business_servereventservice_ssechannels",
+      "ed-be::src_business_servereventservice_tickettochannelmap",
+      "ed-be::src_business_servereventservice_wschannels",
+      "ed-be::src_constants_index",
+      "ed-be::src_constants_index_regex",
+      "ed-be::src_constants_index_shared_dinoz_operations_lock",
+      "ed-be::src_constants_index_wsticketmaxtime",
+      "ed-be::src_constants_temporarystatus",
+      "ed-be::src_constants_temporarystatus_temporarystatus",
+      "ed-be::src_context_global",
+      "ed-be::src_context_logger",
+      "ed-be::src_cron_checkbans",
+      "ed-be::src_cron_checkbans_checkbans",
+      "ed-be::src_cron_clanwarprospector",
+      "ed-be::src_cron_clanwarprospector_prospector",
+      "ed-be::src_cron_clanwarprospector_scheduleprospector",
+      "ed-be::src_cron_healrestingdinoz",
+      "ed-be::src_cron_healrestingdinoz_healrestingdinoz",
+      "ed-be::src_cron_itinerantmerchant",
+      "ed-be::src_cron_itinerantmerchant_itinerantmerchant",
+      "ed-be::src_cron_midnightreset",
+      "ed-be::src_cron_midnightreset_midnightreset",
+      "ed-be::src_dao_clansdao_applyprospectorupdates",
+      "ed-be::src_dao_clansdao_createclanmessagerequest",
+      "ed-be::src_dao_clansdao_deleteclanmessagerequest",
+      "ed-be::src_dao_clansdao_getprospectorrankings",
+      "ed-be::src_dao_playerdao_getallbannedplayers",
+      "ed-be::src_dao_playerdao_getclanidandnamefromplayerid",
+      "ed-be::src_dao_secretdao_setspecificsecret",
+      "ed-be::src_i18n",
+      "ed-be::src_middleware_readycheck",
+      "ed-be::src_middleware_readycheck_readycheck",
+      "ed-be::src_routes_index_initroutes",
+      "ed-be::src_routes_serverevents_routes",
+      "ed-be::src_server",
+      "ed-be::src_server_express",
+      "ed-be::src_server_handlewsevents",
+      "ed-be::src_server_main",
+      "ed-be::src_server_mainwrapper",
+      "ed-be::src_server_request",
+      "ed-be::src_server_user",
+      "ed-be::src_test_business_scheduleservice_test",
+      "ed-be::src_test_business_servereventservice_test",
+      "ed-be::src_test_business_servereventservice_test_reqfor",
+      "ed-be::src_test_utils_date_test",
+      "ed-be::src_test_utils_date_test_expectinwindow",
+      "ed-be::src_utils_date",
+      "ed-be::src_utils_date_computenextprospectorrun",
+      "ed-be::src_utils_date_nextmonday",
+      "ed-be::src_utils_helpers_validatorhelper_isjson",
+      "ed-be::src_utils_warcalculation_computeprospectorupdate"
+    ],
+    "3": [
+      "ed-be::src_business_clanservice",
+      "ed-be::src_business_clanservice_acceptjoinrequest",
+      "ed-be::src_business_clanservice_createclan",
+      "ed-be::src_business_clanservice_createclanpage",
+      "ed-be::src_business_clanservice_deleteclanpage",
+      "ed-be::src_business_clanservice_denyjoinrequest",
+      "ed-be::src_business_clanservice_excludeclanmember",
+      "ed-be::src_business_clanservice_getallclans",
+      "ed-be::src_business_clanservice_getclan",
+      "ed-be::src_business_clanservice_getclanbanner",
+      "ed-be::src_business_clanservice_getclanhistory",
+      "ed-be::src_business_clanservice_getclanhistorycount",
+      "ed-be::src_business_clanservice_getclanmember",
+      "ed-be::src_business_clanservice_getclanmembers",
+      "ed-be::src_business_clanservice_getclanmessages",
+      "ed-be::src_business_clanservice_getclanmessagescount",
+      "ed-be::src_business_clanservice_getclanpage",
+      "ed-be::src_business_clanservice_getclanpages",
+      "ed-be::src_business_clanservice_getclantreasuredetails",
+      "ed-be::src_business_clanservice_getjoinrequest",
+      "ed-be::src_business_clanservice_getjoinrequestslist",
+      "ed-be::src_business_clanservice_getplayerhasright",
+      "ed-be::src_business_clanservice_getrankingclans",
+      "ed-be::src_business_clanservice_giveclaningredients",
+      "ed-be::src_business_clanservice_leaveclanself",
+      "ed-be::src_business_clanservice_searchclanbyname",
+      "ed-be::src_business_clanservice_searchclans",
+      "ed-be::src_business_clanservice_updateclanbanner",
+      "ed-be::src_business_clanservice_updateclanlanguages",
+      "ed-be::src_business_clanservice_updateclanmember",
+      "ed-be::src_business_clanservice_updateclanpage",
+      "ed-be::src_dao_clanmessagedao",
+      "ed-be::src_dao_clanmessagedao_getdataformessagedeletion",
+      "ed-be::src_dao_clansdao",
+      "ed-be::src_dao_clansdao_acceptplayerjoinrequest",
+      "ed-be::src_dao_clansdao_clanjoinrequest",
+      "ed-be::src_dao_clansdao_createclanpagerequest",
+      "ed-be::src_dao_clansdao_createclanrequest",
+      "ed-be::src_dao_clansdao_deleteclanpagerequest",
+      "ed-be::src_dao_clansdao_deleteclanrequest",
+      "ed-be::src_dao_clansdao_denyplayerjoinrequest",
+      "ed-be::src_dao_clansdao_excludeclanmemberrequest",
+      "ed-be::src_dao_clansdao_getallclansrequest",
+      "ed-be::src_dao_clansdao_getclanbannerimage",
+      "ed-be::src_dao_clansdao_getclanbannerrequest",
+      "ed-be::src_dao_clansdao_getclanhistorycountrequest",
+      "ed-be::src_dao_clansdao_getclanhistoryrequest",
+      "ed-be::src_dao_clansdao_getclanmemberrequest",
+      "ed-be::src_dao_clansdao_getclanmemberslistrequest",
+      "ed-be::src_dao_clansdao_getclanmessagescountrequest",
+      "ed-be::src_dao_clansdao_getclanmessagesrequest",
+      "ed-be::src_dao_clansdao_getclanpagerequest",
+      "ed-be::src_dao_clansdao_getclanpageslistrequest",
+      "ed-be::src_dao_clansdao_getclanrequestprivate",
+      "ed-be::src_dao_clansdao_getclanrequestpublic",
+      "ed-be::src_dao_clansdao_geteventrankingclansrequest",
+      "ed-be::src_dao_clansdao_getfullclantreasure",
+      "ed-be::src_dao_clansdao_getplayerjoinlistrequest",
+      "ed-be::src_dao_clansdao_getplayerjoinrequest",
+      "ed-be::src_dao_clansdao_getrankingclansrequest",
+      "ed-be::src_dao_clansdao_getrankingwarclansrequest",
+      "ed-be::src_dao_clansdao_joinclanrequest",
+      "ed-be::src_dao_clansdao_leaveclanselfrequest",
+      "ed-be::src_dao_clansdao_localtransactionclient",
+      "ed-be::src_dao_clansdao_searchclansbyname",
+      "ed-be::src_dao_clansdao_searchclansbynamerequest",
+      "ed-be::src_dao_clansdao_updateclanbannerrequest",
+      "ed-be::src_dao_clansdao_updateclancontribution",
+      "ed-be::src_dao_clansdao_updateclanlanguagesrequest",
+      "ed-be::src_dao_clansdao_updateclanmemberrequest",
+      "ed-be::src_dao_clansdao_updateclanpagerequest",
+      "ed-be::src_dao_clansdao_updateclantreasure",
+      "ed-be::src_dao_clansdao_upsertclaningredients",
+      "ed-be::src_dao_dinozdao_getallresting",
+      "ed-be::src_dao_dinozdao_getdinoztotalcount",
+      "ed-be::src_dao_playerdao_getplayerid",
+      "ed-be::src_dao_playerdao_getplayermoney",
+      "ed-be::src_dao_playerdao_getplayershopingredientsdatarequest",
+      "ed-be::src_dao_playerdao_getplayerspecificdinozshoprequest",
+      "ed-be::src_dao_playerdao_increasecashprice",
+      "ed-be::src_dao_playerdao_updateplayerlanguage",
+      "ed-be::src_routes_clan_routes",
+      "ed-be::src_utils_server_tracing",
+      "ed-be::src_utils_server_tracing_tracer",
+      "ed-be::src_utils_server_tracing_withspan"
+    ],
+    "4": [
+      "ed-be::src_business_demonshopservice_finishdinozunsacrifice",
+      "ed-be::src_business_dinozservice",
+      "ed-be::src_business_dinozservice_buydinoz",
+      "ed-be::src_business_dinozservice_canlevelupnow",
+      "ed-be::src_business_dinozservice_changeleaderdinoz",
+      "ed-be::src_business_dinozservice_disband",
+      "ed-be::src_business_dinozservice_followdinoz",
+      "ed-be::src_business_dinozservice_frozedinoz",
+      "ed-be::src_business_dinozservice_gatherwithdinoz",
+      "ed-be::src_business_dinozservice_getavailableactions",
+      "ed-be::src_business_dinozservice_getdinozfiche",
+      "ed-be::src_business_dinozservice_getdinozskill",
+      "ed-be::src_business_dinozservice_getdinoztomanage",
+      "ed-be::src_business_dinozservice_getgathergrid",
+      "ed-be::src_business_dinozservice_restdinoz",
+      "ed-be::src_business_dinozservice_scheduledinozendofunavailability",
+      "ed-be::src_business_dinozservice_setdinozname",
+      "ed-be::src_business_dinozservice_setskillstate",
+      "ed-be::src_business_dinozservice_unfollowdinoz",
+      "ed-be::src_business_dinozservice_unfrozedinoz",
+      "ed-be::src_business_dinozservice_updateorders",
+      "ed-be::src_business_dinozservice_useirma",
+      "ed-be::src_business_missionsservice_getmissionaction",
+      "ed-be::src_business_playerservice_getcommondata",
+      "ed-be::src_constants_digtreasures",
+      "ed-be::src_constants_digtreasures_digtreasures",
+      "ed-be::src_dao_dinozdao",
+      "ed-be::src_dao_dinozdao_checkfrozendinoz",
+      "ed-be::src_dao_dinozdao_checkrestdinoz",
+      "ed-be::src_dao_dinozdao_getallunavailableuntil",
+      "ed-be::src_dao_dinozdao_getavailabledinoztofollow",
+      "ed-be::src_dao_dinozdao_getcandinozchangename",
+      "ed-be::src_dao_dinozdao_getdinozficheliterequest",
+      "ed-be::src_dao_dinozdao_getdinozficherequest",
+      "ed-be::src_dao_dinozdao_getdinozgatherdata",
+      "ed-be::src_dao_dinozdao_getdinozskillandstatusrequest",
+      "ed-be::src_dao_dinozdao_getdinozskillrequest",
+      "ed-be::src_dao_dinozdao_getdinozunavailablereason",
+      "ed-be::src_dao_dinozdao_getirmausageinfo",
+      "ed-be::src_dao_dinozdao_getleaderwithfollowers",
+      "ed-be::src_dao_dinozdao_getmanagedata",
+      "ed-be::src_dao_dinozdao_playerwithmissiondata",
+      "ed-be::src_dao_dinozdao_updateorderdata",
+      "ed-be::src_dao_dinozskilldao_setskillstaterequest",
+      "ed-be::src_dao_logdao_createlogformultipledinoz",
+      "ed-be::src_dao_playerdao_addmoney",
+      "ed-be::src_dao_playerdao_getplayercompletion",
+      "ed-be::src_dao_playerdao_ownsdinoz",
+      "ed-be::src_dao_playerdao_removedailygridrewards",
+      "ed-be::src_dao_playerdinozshopdao_deletedinozinshoprequest",
+      "ed-be::src_dao_playerdinozshopdao_getdinozshopdetailsrequest",
+      "ed-be::src_dao_playergatherdao",
+      "ed-be::src_dao_playergatherdao_creategrid",
+      "ed-be::src_dao_playergatherdao_getcommongatherinfo",
+      "ed-be::src_dao_playergatherdao_updategrid",
+      "ed-be::src_dao_playerrewardsdao_getplayerrewards",
+      "ed-be::src_routes_dinoz_routes",
+      "ed-be::src_test_business_dinozservice_test",
+      "ed-be::src_test_business_dinozservice_test_basedinoz",
+      "ed-be::src_test_business_dinozservice_test_player",
+      "ed-be::src_utils_boxeslogic_selectbox",
+      "ed-be::src_utils_dinoz_getnumberofgatheringtries",
+      "ed-be::src_utils_dinoz_sanitizegatherboxes",
+      "ed-be::src_utils_server_translate_translate"
+    ],
+    "5": [
+      "ed-be::src_business_dungeon_reveal",
+      "ed-be::src_business_dungeon_reveal_cellkey",
+      "ed-be::src_business_dungeon_reveal_cellsforkeys",
+      "ed-be::src_business_dungeon_reveal_doorkeyat",
+      "ed-be::src_business_dungeon_reveal_iconat",
+      "ed-be::src_business_dungeon_reveal_revealaround",
+      "ed-be::src_business_dungeonservice",
+      "ed-be::src_business_dungeonservice_decoratedoors",
+      "ed-be::src_business_dungeonservice_decorategold",
+      "ed-be::src_business_dungeonservice_decoratemonsters",
+      "ed-be::src_business_dungeonservice_decoratescenarios",
+      "ed-be::src_business_dungeonservice_dropfromteam",
+      "ed-be::src_business_dungeonservice_exitrun",
+      "ed-be::src_business_dungeonservice_isonhealingcell",
+      "ed-be::src_business_dungeonservice_itemindexat",
+      "ed-be::src_business_dungeonservice_lockeddoorat",
+      "ed-be::src_business_dungeonservice_markmonsterdefeated",
+      "ed-be::src_business_dungeonservice_move",
+      "ed-be::src_business_dungeonservice_newreveals",
+      "ed-be::src_business_dungeonservice_scenariosfor",
+      "ed-be::src_business_dungeonservice_stairtarget",
+      "ed-be::src_business_dungeonservice_startrun",
+      "ed-be::src_dao_dinozdao_getfollowingdinoz",
+      "ed-be::src_dao_dinozdao_updatemultipledinoz",
+      "ed-be::src_dao_dungeonrundao",
+      "ed-be::src_dao_dungeonrundao_createrun",
+      "ed-be::src_dao_dungeonrundao_dinozenterrun",
+      "ed-be::src_dao_dungeonrundao_dinozexitrun",
+      "ed-be::src_dao_dungeonrundao_findrun",
+      "ed-be::src_dao_dungeonrundao_findrunbyleader",
+      "ed-be::src_dao_dungeonrundao_getdungeonbyid",
+      "ed-be::src_dao_dungeonrundao_getdungeonbyname",
+      "ed-be::src_dao_dungeonrundao_runposition",
+      "ed-be::src_dao_dungeonrundao_updaterun",
+      "ed-be::src_dao_dungeonrundao_updaterundefeated",
+      "ed-be::src_routes_dungeon_routes",
+      "ed-be::src_test_business_dungeonfightdeath_test",
+      "ed-be::src_test_business_dungeonfightdeath_test_dungeon",
+      "ed-be::src_test_business_dungeonfightdeath_test_fighter",
+      "ed-be::src_test_business_dungeonfightdeath_test_run",
+      "ed-be::src_test_business_dungeonservice_test",
+      "ed-be::src_test_business_dungeonservice_test_dinoz",
+      "ed-be::src_test_business_dungeonservice_test_dungeonrowfor",
+      "ed-be::src_test_business_dungeonservice_test_runrowfor",
+      "ed-be::src_test_business_dungeonteamlock_test",
+      "ed-be::src_test_business_dungeonteamlock_test_dungeon",
+      "ed-be::src_test_helpers_req",
+      "ed-be::src_test_utils_dungeoncrypto_test",
+      "ed-be::src_utils_dungeoncrypto",
+      "ed-be::src_utils_dungeoncrypto_key",
+      "ed-be::src_utils_dungeoncrypto_seal",
+      "ed-be::src_utils_dungeoncrypto_sealed",
+      "ed-be::src_utils_dungeoncrypto_unseal"
+    ],
+    "6": [
+      "ed-be::src_business_dungeon_original_checker",
+      "ed-be::src_business_dungeon_original_checker_checker",
+      "ed-be::src_business_dungeon_original_checker_checker_check",
+      "ed-be::src_business_dungeon_original_checker_checker_getroom",
+      "ed-be::src_business_dungeon_original_checker_checker_loop",
+      "ed-be::src_business_dungeon_original_data",
+      "ed-be::src_business_dungeon_original_data_group",
+      "ed-be::src_business_dungeon_original_data_group_constructor",
+      "ed-be::src_business_dungeon_original_data_level",
+      "ed-be::src_business_dungeon_original_data_level_constructor",
+      "ed-be::src_business_dungeon_original_data_levelinfos",
+      "ed-be::src_business_dungeon_original_data_levelinfos_constructor",
+      "ed-be::src_business_dungeon_original_data_roomitem",
+      "ed-be::src_business_dungeon_original_gameplay",
+      "ed-be::src_business_dungeon_original_generator",
+      "ed-be::src_business_dungeon_original_generator_generator",
+      "ed-be::src_business_dungeon_original_generator_generator_ntry",
+      "ed-be::src_business_dungeon_original_generator_generator_proba",
+      "ed-be::src_business_dungeon_original_generator_generator_rand",
+      "ed-be::src_business_dungeon_original_generator_generator_random",
+      "ed-be::src_business_dungeon_original_generator_generator_select",
+      "ed-be::src_business_dungeon_original_generator_generator_vtry",
+      "ed-be::src_business_dungeon_original_hxlist",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_add",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_first",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_fromarray",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_isempty",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_length",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_map",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_remove",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_symbol_iterator",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_toarray",
+      "ed-be::src_business_dungeon_original_index",
+      "ed-be::src_business_dungeon_original_index_attempt",
+      "ed-be::src_business_dungeon_original_index_coderoom",
+      "ed-be::src_business_dungeon_original_index_originalgenerator",
+      "ed-be::src_business_dungeon_original_index_originalgenerator_generate",
+      "ed-be::src_business_dungeon_original_index_originaloptions",
+      "ed-be::src_business_dungeon_original_index_tostruct",
+      "ed-be::src_business_dungeon_original_noise",
+      "ed-be::src_business_dungeon_original_rand",
+      "ed-be::src_business_dungeon_original_rand_rand",
+      "ed-be::src_business_dungeon_original_rand_rand_constructor",
+      "ed-be::src_business_dungeon_original_rand_rand_next",
+      "ed-be::src_business_dungeon_original_rand_rand_random",
+      "ed-be::src_business_dungeon_original_rooms",
+      "ed-be::src_business_dungeon_types_dungeonitem",
+      "ed-be::src_test_utils_dungeondoors_test"
+    ],
+    "7": [
+      "ed-be::src_business_clanservice_deleteclan",
+      "ed-be::src_business_clanservice_joinclan",
+      "ed-be::src_business_playerservice",
+      "ed-be::src_business_playerservice_accepttos",
+      "ed-be::src_business_playerservice_cancreateclan",
+      "ed-be::src_business_playerservice_canjoinclan",
+      "ed-be::src_business_playerservice_getaccountdata",
+      "ed-be::src_business_playerservice_getarchiveddata",
+      "ed-be::src_business_playerservice_getarchivedstats",
+      "ed-be::src_business_playerservice_getdinozlist",
+      "ed-be::src_business_playerservice_isplayerleaderofclan",
+      "ed-be::src_business_playerservice_playertooltip",
+      "ed-be::src_business_playerservice_resetaccount",
+      "ed-be::src_business_playerservice_searchplayers",
+      "ed-be::src_business_playerservice_setcustomtext",
+      "ed-be::src_business_playerservice_toplayerstats",
+      "ed-be::src_business_playerservice_updateplayersettings",
+      "ed-be::src_dao_dinozdao_getalldinozfichelite",
+      "ed-be::src_dao_playerdao_auth",
+      "ed-be::src_dao_playerdao_checkbeforedeletion",
+      "ed-be::src_dao_playerdao_getcancreateclanrequest",
+      "ed-be::src_dao_playerdao_getcanjoinclanrequest",
+      "ed-be::src_dao_playerdao_getplayerarchivedsiteid",
+      "ed-be::src_dao_playerdao_getplayerdatarequest",
+      "ed-be::src_dao_playerdao_gettooltipinfos",
+      "ed-be::src_dao_playerdao_isplayerleaderofclanrequest",
+      "ed-be::src_dao_playerdao_resetuser",
+      "ed-be::src_dao_playerdao_searchplayersbynameorid",
+      "ed-be::src_routes_player_routes",
+      "ed-be::src_routes_player_routes_routes",
+      "ed-be::src_test_business_clanservice_test",
+      "ed-be::src_test_business_playerservice_test",
+      "ed-be::src_test_business_playerservice_test_req"
+    ],
+    "8": [
+      "ed-be::src_routes_admin_routes_routes",
+      "ed-be::src_routes_clan_routes_routes",
+      "ed-be::src_routes_clan_war_routes_routes",
+      "ed-be::src_routes_demonshop_routes_routes",
+      "ed-be::src_routes_dinoz_routes_routes",
+      "ed-be::src_routes_dinozbuild_routes_routes",
+      "ed-be::src_routes_dojo_routes_routes",
+      "ed-be::src_routes_dungeon_routes_routes",
+      "ed-be::src_routes_events_routes_routes",
+      "ed-be::src_routes_fight_routes_routes",
+      "ed-be::src_routes_index",
+      "ed-be::src_routes_index_errorresponse",
+      "ed-be::src_routes_inventory_routes_routes",
+      "ed-be::src_routes_level_routes_routes",
+      "ed-be::src_routes_log_routes_routes",
+      "ed-be::src_routes_messagerie_routes_routes",
+      "ed-be::src_routes_missions_routes_routes",
+      "ed-be::src_routes_moderation_routes_routes",
+      "ed-be::src_routes_news_routes_routes",
+      "ed-be::src_routes_npc_routes_routes",
+      "ed-be::src_routes_offer_routes_routes",
+      "ed-be::src_routes_ranking_routes_routes",
+      "ed-be::src_routes_serverevents_routes_routes",
+      "ed-be::src_routes_testing_routes_routes"
+    ],
+    "9": [
+      "ed-be::src_business_missionsservice",
+      "ed-be::src_business_missionsservice_checkmission",
+      "ed-be::src_business_missionsservice_checkmissionfight",
+      "ed-be::src_business_missionsservice_checkprogressend",
+      "ed-be::src_business_missionsservice_dinoztocheckmissionfight",
+      "ed-be::src_business_missionsservice_endmission",
+      "ed-be::src_business_missionsservice_getglobalmissions",
+      "ed-be::src_business_missionsservice_getmissionslist",
+      "ed-be::src_business_missionsservice_interactmission",
+      "ed-be::src_business_missionsservice_missionsort",
+      "ed-be::src_business_missionsservice_startfightmission",
+      "ed-be::src_business_missionsservice_updatemission",
+      "ed-be::src_dao_dinozdao_getdinozmissionsinfo",
+      "ed-be::src_dao_dinozdao_getglobalmissionsdata",
+      "ed-be::src_dao_dinozmissiondao",
+      "ed-be::src_dao_dinozmissiondao_addmissiontodinoz",
+      "ed-be::src_dao_dinozmissiondao_finishmission",
+      "ed-be::src_dao_dinozmissiondao_removemissionfromdinoz",
+      "ed-be::src_dao_dinozmissiondao_updatemissionprogression",
+      "ed-be::src_dao_dinozmissiondao_updatemissionstep",
+      "ed-be::src_routes_missions_routes",
+      "ed-be::src_test_business_missionsservice_test",
+      "ed-be::src_test_business_missionsservice_test_basenpc",
+      "ed-be::src_test_business_missionsservice_test_missionplayer",
+      "ed-be::src_test_business_missionsservice_test_mockaddmission",
+      "ed-be::src_test_business_missionsservice_test_mockauth",
+      "ed-be::src_test_business_missionsservice_test_mockcalcfight",
+      "ed-be::src_test_business_missionsservice_test_mockcheckcondition",
+      "ed-be::src_test_business_missionsservice_test_mockdecreaseitem",
+      "ed-be::src_test_business_missionsservice_test_mockfinishmission",
+      "ed-be::src_test_business_missionsservice_test_mockgetactualstep",
+      "ed-be::src_test_business_missionsservice_test_mockgetfiche",
+      "ed-be::src_test_business_missionsservice_test_mockgetfightdata",
+      "ed-be::src_test_business_missionsservice_test_mockgetglobaldata",
+      "ed-be::src_test_business_missionsservice_test_mockgetitems",
+      "ed-be::src_test_business_missionsservice_test_mockgetmissionsinfo",
+      "ed-be::src_test_business_missionsservice_test_mockgetrewards",
+      "ed-be::src_test_business_missionsservice_test_mockremovemission",
+      "ed-be::src_test_business_missionsservice_test_mockrewarder",
+      "ed-be::src_test_business_missionsservice_test_mockrewardfight",
+      "ed-be::src_test_business_missionsservice_test_mockupdateprogression",
+      "ed-be::src_test_business_missionsservice_test_mockupdatestep",
+      "ed-be::src_test_business_missionsservice_test_req",
+      "ed-be::src_test_business_missionsservice_test_rewards"
+    ],
+    "10": [
+      "ed-be::src_business_dojoservice",
+      "ed-be::src_business_dojoservice_availabledinozids",
+      "ed-be::src_business_dojoservice_createmyteam",
+      "ed-be::src_business_dojoservice_createopponentteam",
+      "ed-be::src_business_dojoservice_fight_blocking_reasons",
+      "ed-be::src_business_dojoservice_fightchallenge",
+      "ed-be::src_business_dojoservice_fightfriend",
+      "ed-be::src_business_dojoservice_generaterandomchallenge",
+      "ed-be::src_business_dojoservice_getallarchivedfight",
+      "ed-be::src_business_dojoservice_getarchivedfight",
+      "ed-be::src_business_dojoservice_getdojo",
+      "ed-be::src_business_dojoservice_getmyteam",
+      "ed-be::src_business_dojoservice_pickopponentids",
+      "ed-be::src_business_dojoservice_skipopponent",
+      "ed-be::src_dao_archivedao_getallarchivedfightrequest",
+      "ed-be::src_dao_archivedao_getarchivedfightrequest",
+      "ed-be::src_dao_dinozdao_getdinozfordojofight",
+      "ed-be::src_dao_dinozdao_getrandomdinozfromlevel",
+      "ed-be::src_dao_dojodao",
+      "ed-be::src_dao_dojodao_addopponent",
+      "ed-be::src_dao_dojodao_cleancurrentopponentteam",
+      "ed-be::src_dao_dojodao_createchallengerequest",
+      "ed-be::src_dao_dojodao_createmydojo",
+      "ed-be::src_dao_dojodao_getchallengerequest",
+      "ed-be::src_dao_dojodao_getmydojodao",
+      "ed-be::src_dao_dojodao_getmyteamdao",
+      "ed-be::src_dao_dojodao_givereputation",
+      "ed-be::src_dao_dojodao_incrementdailyreset",
+      "ed-be::src_dao_dojodao_replacemyteamdao",
+      "ed-be::src_dao_dojodao_setfightedopponent",
+      "ed-be::src_dao_dojodao_setfightedteam",
+      "ed-be::src_dao_playerdao_getdojochallengepreparationrequest",
+      "ed-be::src_dao_playerdao_getdojodataforranking",
+      "ed-be::src_dao_playerdao_getdojofightpreparationrequest",
+      "ed-be::src_dao_playerdao_spendmoney",
+      "ed-be::src_dao_rankingdao_getplayerpositiondojodao",
+      "ed-be::src_dao_tournamentdao_incrementcashprice",
+      "ed-be::src_test_business_dojoservice_test",
+      "ed-be::src_test_business_dojoservice_test_fightresult",
+      "ed-be::src_test_business_dojoservice_test_txobj",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getcurrenttournamentstate"
+    ],
+    "11": [
+      "ed-be::src_business_demonshopservice",
+      "ed-be::src_business_demonshopservice_buydemondinoz",
+      "ed-be::src_business_demonshopservice_getdinozfromdemonshop",
+      "ed-be::src_business_demonshopservice_getsacrificeddinoz",
+      "ed-be::src_business_demonshopservice_sacrificedinoz",
+      "ed-be::src_business_demonshopservice_todinozshopfiche",
+      "ed-be::src_business_demonshopservice_unsacrificedinoz",
+      "ed-be::src_dao_demonshopdao",
+      "ed-be::src_dao_demonshopdao_createmultipledemondinoz",
+      "ed-be::src_dao_demonshopdao_deletedinozindemonshoprequest",
+      "ed-be::src_dao_demonshopdao_getdinozdataforsacrificerequest",
+      "ed-be::src_dao_demonshopdao_getdinozdataforunsacrificerequest",
+      "ed-be::src_dao_demonshopdao_getdinozfromdemonshoprequest",
+      "ed-be::src_dao_demonshopdao_getplayerdemonshoprequest",
+      "ed-be::src_dao_demonshopdao_getsacrificeddinozrequest",
+      "ed-be::src_dao_demonshopdao_sacrificed_dinoz_page_size",
+      "ed-be::src_dao_dinozdao_createdinoz",
+      "ed-be::src_dao_rankingdao_updatedinozcount",
+      "ed-be::src_dao_rankingdao_updatepoints",
+      "ed-be::src_routes_demonshop_routes",
+      "ed-be::src_test_business_demonshopservice_test",
+      "ed-be::src_test_business_demonshopservice_test_any_race_id",
+      "ed-be::src_test_business_demonshopservice_test_demon_race_id",
+      "ed-be::src_test_business_demonshopservice_test_makedinoz",
+      "ed-be::src_test_business_demonshopservice_test_makedinozwplayer",
+      "ed-be::src_test_business_demonshopservice_test_makeplayer",
+      "ed-be::src_test_business_demonshopservice_test_makerefillplayer",
+      "ed-be::src_test_business_demonshopservice_test_makesacrificedrow",
+      "ed-be::src_test_business_demonshopservice_test_makeshopdinoz",
+      "ed-be::src_test_business_demonshopservice_test_mockauthed",
+      "ed-be::src_test_business_demonshopservice_test_with_belius_total",
+      "ed-be::src_utils_dinoz_getdemonshopprice",
+      "ed-be::src_utils_dinoz_hasanyactivedinozat",
+      "ed-be::src_utils_dinoz_isatmaxactivedinoz"
+    ],
+    "12": [
+      "ed-be::src_business_dinozbuildservice",
+      "ed-be::src_business_dinozbuildservice_areskillsdiscovered",
+      "ed-be::src_business_dinozbuildservice_assignbuild",
+      "ed-be::src_business_dinozbuildservice_copysharedbuild",
+      "ed-be::src_business_dinozbuildservice_createnewbuild",
+      "ed-be::src_business_dinozbuildservice_haspac",
+      "ed-be::src_business_dinozbuildservice_listbuilds",
+      "ed-be::src_business_dinozbuildservice_listclansharedbuilds",
+      "ed-be::src_business_dinozbuildservice_removebuild",
+      "ed-be::src_business_dinozbuildservice_tointarray",
+      "ed-be::src_business_dinozbuildservice_updatebuild",
+      "ed-be::src_dao_dinozbuilddao",
+      "ed-be::src_dao_dinozbuilddao_assignbuildtodinoz",
+      "ed-be::src_dao_dinozbuilddao_createbuild",
+      "ed-be::src_dao_dinozbuilddao_deletebuild",
+      "ed-be::src_dao_dinozbuilddao_getbuild",
+      "ed-be::src_dao_dinozbuilddao_getclansharedbuilds",
+      "ed-be::src_dao_dinozbuilddao_getplayerbuilds",
+      "ed-be::src_dao_dinozbuilddao_updatebuildskills",
+      "ed-be::src_dao_playerdao_getplayerfordinozbuildchecks",
+      "ed-be::src_routes_dinozbuild_routes",
+      "ed-be::src_test_business_dinozbuildservice_test",
+      "ed-be::src_test_business_dinozbuildservice_test_buildplayer",
+      "ed-be::src_test_business_dinozbuildservice_test_mockassign",
+      "ed-be::src_test_business_dinozbuildservice_test_mockauth",
+      "ed-be::src_test_business_dinozbuildservice_test_mockcreate",
+      "ed-be::src_test_business_dinozbuildservice_test_mockdelete",
+      "ed-be::src_test_business_dinozbuildservice_test_mockfindclanmember",
+      "ed-be::src_test_business_dinozbuildservice_test_mockgetbuild",
+      "ed-be::src_test_business_dinozbuildservice_test_mockgetclanshared",
+      "ed-be::src_test_business_dinozbuildservice_test_mockgetplayer",
+      "ed-be::src_test_business_dinozbuildservice_test_mockgetplayerbuilds",
+      "ed-be::src_test_business_dinozbuildservice_test_mockownsdinoz",
+      "ed-be::src_test_business_dinozbuildservice_test_mockupdateskills"
+    ],
+    "13": [
+      "ed-be::src_prisma_pismaclientlocal",
+      "ed-be::src_utils_tournament_cache_invalidatetournamentcache",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_constructor",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_createfirsttournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_createpools",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_createtournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_generateandsavefight",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_generatenextround",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getactiveclanwarenddate",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getactiveteams",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getcurrentstate",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getcurrenttournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getdinozidsfromteam",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getlosersfrompreviousround",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getmatchtimes",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getschedule",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_getwinnersfrompreviousround",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_initializetournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_initializetournamentifnoactiveclanwar",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_postponenexttournamentcreation",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_postponenexttournamentifpending",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_reschedulenexttournamentcreation",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_resume",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_rewardqualification",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_rewardtournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_seedtournament",
+      "ed-be::src_utils_tournamentmanager_tournamentmanager_translatepools"
+    ],
+    "14": [
+      "ed-be::src_business_adminservice_createseededdungeon",
+      "ed-be::src_business_dungeon_dungeoncodec",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_decode",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_decodetable",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_encode",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_encodetable",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_nbits",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_removesignature",
+      "ed-be::src_business_dungeon_dungeoncodec_dungeoncodec_savebits",
+      "ed-be::src_business_dungeon_gridimport",
+      "ed-be::src_business_dungeon_gridimport_checkint",
+      "ed-be::src_business_dungeon_gridimport_checkscenarios",
+      "ed-be::src_business_dungeon_gridimport_fail",
+      "ed-be::src_business_dungeon_gridimport_structfromgrid",
+      "ed-be::src_business_dungeon_monsters",
+      "ed-be::src_business_dungeon_monsters_monsterteam",
+      "ed-be::src_business_dungeon_monsters_rollmonsters",
+      "ed-be::src_business_dungeon_monsters_rollteam",
+      "ed-be::src_business_dungeon_types",
+      "ed-be::src_business_dungeon_types_cell",
+      "ed-be::src_business_dungeon_types_dicon",
+      "ed-be::src_business_dungeon_types_dresponse",
+      "ed-be::src_business_dungeon_types_dungeoncommand",
+      "ed-be::src_business_dungeon_types_dungeondata",
+      "ed-be::src_business_dungeon_types_dungeondoor",
+      "ed-be::src_business_dungeon_types_dungeonitemplacement",
+      "ed-be::src_business_dungeon_types_dungeonlevel",
+      "ed-be::src_business_dungeon_types_dungeonroom",
+      "ed-be::src_business_dungeon_types_dungeonstruct",
+      "ed-be::src_dao_dungeonrundao_createdungeon",
+      "ed-be::src_test_utils_gridimport_test",
+      "ed-be::src_test_utils_gridimport_test_blankgrid"
+    ],
+    "15": [
+      "ed-be::src_business_clanwar",
+      "ed-be::src_business_clanwar_adddefender",
+      "ed-be::src_business_clanwar_attackcastle",
+      "ed-be::src_business_clanwar_buildclancastle",
+      "ed-be::src_business_clanwar_castlestatus",
+      "ed-be::src_business_clanwar_computedefenderteam",
+      "ed-be::src_business_clanwar_currentwar",
+      "ed-be::src_business_clanwar_declarewar",
+      "ed-be::src_business_clanwar_eventstate",
+      "ed-be::src_business_clanwar_forfeitwar",
+      "ed-be::src_business_clanwar_getsorteddefenders",
+      "ed-be::src_business_clanwar_notifywarresults",
+      "ed-be::src_business_clanwar_removedefender",
+      "ed-be::src_business_clanwar_repaircastle",
+      "ed-be::src_business_clanwar_resolveclanwar",
+      "ed-be::src_business_clanwar_schedulerepairticks",
+      "ed-be::src_business_clanwar_schedulewarexpiration",
+      "ed-be::src_business_clanwar_unrestingattackingdinoz",
+      "ed-be::src_business_clanwar_updatedefenseorder",
+      "ed-be::src_business_clanwar_warstatus",
+      "ed-be::src_dao_clansdao_checkcandeclarewar",
+      "ed-be::src_dao_clansdao_consumerepaircost",
+      "ed-be::src_dao_clansdao_consumewarcost",
+      "ed-be::src_dao_clansdao_getwarforresolve",
+      "ed-be::src_dao_clansdao_playerhasrightrequest",
+      "ed-be::src_dao_clansdao_updatewarrankings",
+      "ed-be::src_dao_dinozdao_getdinozfightclandatarequest",
+      "ed-be::src_routes_clan_war_routes",
+      "ed-be::src_test_business_clanwar_test",
+      "ed-be::src_test_business_clanwar_test_ongoingwar",
+      "ed-be::src_test_business_clanwar_test_txobj",
+      "ed-be::src_test_business_clanwar_test_warconfig"
+    ],
+    "16": [
+      "ed-be::src_business_newsservice",
+      "ed-be::src_business_newsservice_createpoll",
+      "ed-be::src_business_newsservice_createtranslatednews",
+      "ed-be::src_business_newsservice_deletenews",
+      "ed-be::src_business_newsservice_expirepoll",
+      "ed-be::src_business_newsservice_getallnews",
+      "ed-be::src_business_newsservice_getnews",
+      "ed-be::src_business_newsservice_getnewsadmin",
+      "ed-be::src_business_newsservice_getnewscreateddate",
+      "ed-be::src_business_newsservice_getnewsillustration",
+      "ed-be::src_business_newsservice_postnews",
+      "ed-be::src_business_newsservice_schedulepollexpiration",
+      "ed-be::src_business_newsservice_selectpolloption",
+      "ed-be::src_business_newsservice_togglelikenews",
+      "ed-be::src_business_newsservice_updatenews",
+      "ed-be::src_business_pantheonservice",
+      "ed-be::src_business_pantheonservice_getpantheon",
+      "ed-be::src_business_pantheonservice_getpantheonillustration",
+      "ed-be::src_context_discord",
+      "ed-be::src_dao_dinozdao_getdinozforannounce",
+      "ed-be::src_dao_newsdao",
+      "ed-be::src_dao_newsdao_createnews",
+      "ed-be::src_dao_newsdao_deleteanynews",
+      "ed-be::src_dao_newsdao_getallnewsfromdb",
+      "ed-be::src_dao_newsdao_getbatchofnews",
+      "ed-be::src_dao_newsdao_getnewsdate",
+      "ed-be::src_dao_newsdao_getnewsdetails",
+      "ed-be::src_dao_newsdao_getnewsillus",
+      "ed-be::src_dao_newsdao_hasplayerlikednews",
+      "ed-be::src_dao_newsdao_likenews",
+      "ed-be::src_dao_newsdao_unlikenews",
+      "ed-be::src_dao_newsdao_updateanynews",
+      "ed-be::src_dao_pantheondao",
+      "ed-be::src_dao_pantheondao_adddinoztopantheon",
+      "ed-be::src_dao_pantheondao_addplayertopantheon",
+      "ed-be::src_dao_pantheondao_getpantheonfromtype",
+      "ed-be::src_dao_pantheondao_getpantheonillus",
+      "ed-be::src_dao_pantheondao_getpantheons",
+      "ed-be::src_dao_playerdao_getplayerforannounce",
+      "ed-be::src_dao_playerdao_getroleplayer",
+      "ed-be::src_routes_news_routes",
+      "ed-be::src_routes_pantheon_routes",
+      "ed-be::src_routes_pantheon_routes_routes",
+      "ed-be::src_test_business_newsservice_test",
+      "ed-be::src_test_business_pantheonservice_test",
+      "ed-be::src_utils_server_announcer",
+      "ed-be::src_utils_server_announcer_checkannounce",
+      "ed-be::src_utils_server_jwt",
+      "ed-be::src_utils_server_jwt_checkrole",
+      "ed-be::src_utils_server_translate_translateall",
+      "ed-be::src_utils_server_translate_translatetarget"
+    ],
+    "17": [
+      "ed-be::eslintrc",
+      "ed-be::eslintrc_extends",
+      "ed-be::eslintrc_ignorepatterns",
+      "ed-be::eslintrc_json_ref_tsconfig_json",
+      "ed-be::eslintrc_parser",
+      "ed-be::eslintrc_parseroptions",
+      "ed-be::eslintrc_parseroptions_project",
+      "ed-be::eslintrc_plugins",
+      "ed-be::eslintrc_rules",
+      "ed-be::eslintrc_rules_typescript_eslint_array_type",
+      "ed-be::eslintrc_rules_typescript_eslint_consistent_type_imports",
+      "ed-be::eslintrc_rules_typescript_eslint_no_inferrable_types",
+      "ed-be::eslintrc_rules_typescript_eslint_no_namespace",
+      "ed-be::eslintrc_rules_typescript_eslint_no_unused_vars",
+      "ed-be::ref_dist",
+      "ed-be::ref_error",
+      "ed-be::ref_node_modules",
+      "ed-be::ref_plugin_typescript_eslint_strict",
+      "ed-be::ref_src_test",
+      "ed-be::ref_src_ts",
+      "ed-be::ref_stylistic_ts",
+      "ed-be::ref_typescript_eslint",
+      "ed-be::tsconfig",
+      "ed-be::tsconfig_compileroptions",
+      "ed-be::tsconfig_compileroptions_esmoduleinterop",
+      "ed-be::tsconfig_compileroptions_outdir",
+      "ed-be::tsconfig_compileroptions_rootdir",
+      "ed-be::tsconfig_exclude",
+      "ed-be::tsconfig_extends",
+      "ed-be::tsconfig_include",
+      "ed-be::tsconfig_references"
+    ],
+    "18": [
+      "ed-be::src_business_dungeon_original_data_room",
+      "ed-be::src_business_dungeon_original_data_room_constructor",
+      "ed-be::src_business_dungeon_original_data_room_over",
+      "ed-be::src_business_dungeon_original_gameplay_branch",
+      "ed-be::src_business_dungeon_original_gameplay_branch_constructor",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_buildbranch",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_buildbranchconnect",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_buildbranches",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_calcroomdist",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_closedoors",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_distantpos",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_emptyvisitedroom",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_expanddoors",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_fillreach",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_gameplay",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_makedeadend",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_reducedoors",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_removekeyitem",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_updateroomsdist",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_visit",
+      "ed-be::src_business_dungeon_original_gameplay_gameplay_visitrec",
+      "ed-be::src_business_dungeon_original_noise_noise",
+      "ed-be::src_business_dungeon_original_noise_noise_buildreach",
+      "ed-be::src_business_dungeon_original_noise_noise_clearreach",
+      "ed-be::src_business_dungeon_original_noise_noise_noise",
+      "ed-be::src_business_dungeon_original_noise_noise_noisefilter",
+      "ed-be::src_business_dungeon_original_noise_noise_noiseroom"
+    ],
+    "19": [
+      "ed-be::src_business_forcebruteservice_createtournamentdinoz",
+      "ed-be::src_business_inventoryservice",
+      "ed-be::src_business_inventoryservice_equipitem",
+      "ed-be::src_business_inventoryservice_getallitemsdata",
+      "ed-be::src_business_inventoryservice_getitemmaxquantity",
+      "ed-be::src_business_inventoryservice_hatchegg",
+      "ed-be::src_business_inventoryservice_heal",
+      "ed-be::src_business_inventoryservice_rationale_359",
+      "ed-be::src_business_inventoryservice_rationale_375",
+      "ed-be::src_business_inventoryservice_resurrect",
+      "ed-be::src_business_inventoryservice_useitem",
+      "ed-be::src_dao_dinozdao_getdinozequipitemrequest",
+      "ed-be::src_dao_dinozdao_getdinozficheitemrequest",
+      "ed-be::src_dao_dinozitemdao",
+      "ed-be::src_dao_dinozitemdao_additemtodinoz",
+      "ed-be::src_dao_dinozitemdao_removeitemfromdinoz",
+      "ed-be::src_dao_dinozskilldao_addmultipleskilltodinoz",
+      "ed-be::src_dao_playerdao_getplayerinventorydatarequest",
+      "ed-be::src_routes_inventory_routes",
+      "ed-be::src_test_business_inventoryservice_test",
+      "ed-be::src_test_business_inventoryservice_test_dinozforitem",
+      "ed-be::src_test_business_inventoryservice_test_mockupdatedinoz",
+      "ed-be::src_test_business_inventoryservice_test_withitem",
+      "ed-be::src_utils_dinoz_generatedinozdisplay",
+      "ed-be::src_utils_dinoz_learnnextsphereskill",
+      "ed-be::src_utils_tools_getletter",
+      "ed-be::src_utils_tools_getrandomletter"
+    ],
+    "20": [
+      "ed-be::src_business_inventoryservice_userice",
+      "ed-be::src_dao_dinozdao_getactivedinoz",
+      "ed-be::src_test_utils_dinoz_test",
+      "ed-be::src_test_utils_dinoz_test_activedinoz",
+      "ed-be::src_test_utils_dinoz_test_authed",
+      "ed-be::src_test_utils_dinoz_test_bothbonusplayer",
+      "ed-be::src_test_utils_dinoz_test_fireonlyrace",
+      "ed-be::src_test_utils_dinoz_test_grid",
+      "ed-be::src_test_utils_dinoz_test_leaderplayer",
+      "ed-be::src_test_utils_dinoz_test_makedinozlist",
+      "ed-be::src_test_utils_dinoz_test_messieplayer",
+      "ed-be::src_test_utils_dinoz_test_mockgetactivedinoz",
+      "ed-be::src_test_utils_dinoz_test_regularplayer",
+      "ed-be::src_utils_dinoz",
+      "ed-be::src_utils_dinoz_getdinozupchance",
+      "ed-be::src_utils_dinoz_getelementupchance",
+      "ed-be::src_utils_dinoz_getnewunlockableskills",
+      "ed-be::src_utils_dinoz_getrandomupelement",
+      "ed-be::src_utils_dinoz_initializedinoz",
+      "ed-be::src_utils_dinoz_randomlylevelupdinoz",
+      "ed-be::src_utils_dinoz_reincarnatedinoz",
+      "ed-be::src_utils_tools_frombase62"
+    ],
+    "21": [
+      "ed-be::src_business_tournamentservice",
+      "ed-be::src_business_tournamentservice_createtournamentteam",
+      "ed-be::src_business_tournamentservice_deletetournamentteam",
+      "ed-be::src_business_tournamentservice_getdojotournamentfights",
+      "ed-be::src_business_tournamentservice_getnewlevellimits",
+      "ed-be::src_business_tournamentservice_gettournamentfightstoshow",
+      "ed-be::src_business_tournamentservice_gettournamentteam",
+      "ed-be::src_business_tournamentservice_readallfightfrompool",
+      "ed-be::src_business_tournamentservice_tournamentinfo",
+      "ed-be::src_business_tournamentservice_tournamentshistory",
+      "ed-be::src_dao_archivedao_getviewedtournamentfight",
+      "ed-be::src_dao_playerdao_getplayerdinozinformationforteam",
+      "ed-be::src_dao_tournamentdao",
+      "ed-be::src_dao_tournamentdao_getlatesttournament",
+      "ed-be::src_routes_dojo_routes",
+      "ed-be::src_test_business_tournamentservice_test",
+      "ed-be::src_test_business_tournamentservice_test_latest",
+      "ed-be::src_test_utils_fight_weightedrandom_test",
+      "ed-be::src_utils_fight_weightedrandom",
+      "ed-be::src_utils_fight_weightedrandom_weightedrandom"
+    ],
+    "22": [
+      "ed-be::src_business_dinozshopservice",
+      "ed-be::src_business_dinozshopservice_getdinozfromdinozshop",
+      "ed-be::src_config_game_config",
+      "ed-be::src_config_game_config_gameconfig",
+      "ed-be::src_dao_playerdao_getplayerdinozshoprequest",
+      "ed-be::src_dao_playerdinozshopdao",
+      "ed-be::src_dao_playerdinozshopdao_createmultipledinoz",
+      "ed-be::src_dao_playerdinozshopdao_getdinozfromdinozshoprequest",
+      "ed-be::src_test_business_dinozshopservice_test",
+      "ed-be::src_test_business_dinozshopservice_test_mockauth",
+      "ed-be::src_test_business_dinozshopservice_test_mockcreatemultiple",
+      "ed-be::src_test_business_dinozshopservice_test_mockgetshop",
+      "ed-be::src_test_business_dinozshopservice_test_mockrandomarray",
+      "ed-be::src_test_business_dinozshopservice_test_mockrandomletter"
+    ],
+    "23": [
+      "ed-be::src_business_npcservice",
+      "ed-be::src_business_npcservice_checkredirect",
+      "ed-be::src_business_npcservice_getnpcspeech",
+      "ed-be::src_business_npcservice_nextstepservices",
+      "ed-be::src_dao_dinozdao_getdinoznpcrequest",
+      "ed-be::src_dao_npcdao",
+      "ed-be::src_dao_npcdao_createdinozstep",
+      "ed-be::src_dao_npcdao_getdinozstep",
+      "ed-be::src_dao_npcdao_updatedinozstep",
+      "ed-be::src_test_business_npcservice_test",
+      "ed-be::src_test_business_npcservice_test_basenpc",
+      "ed-be::src_test_business_npcservice_test_buildplayer",
+      "ed-be::src_test_business_npcservice_test_fightplayer",
+      "ed-be::src_test_business_npcservice_test_mockauth",
+      "ed-be::src_test_business_npcservice_test_mockcalcfight",
+      "ed-be::src_test_business_npcservice_test_mockcheckcondition",
+      "ed-be::src_test_business_npcservice_test_mockcreatestep",
+      "ed-be::src_test_business_npcservice_test_mockgetfightdata",
+      "ed-be::src_test_business_npcservice_test_mockgetnpc",
+      "ed-be::src_test_business_npcservice_test_mockrewarder",
+      "ed-be::src_test_business_npcservice_test_mockrewardfight",
+      "ed-be::src_test_business_npcservice_test_mockupdatestep"
+    ],
+    "24": [
+      "ed-be::src_business_oauthservice_oauth",
+      "ed-be::src_business_oauthservice_oauth_constructor",
+      "ed-be::src_business_oauthservice_oauth_redirect",
+      "ed-be::src_constants_index_apiroutes",
+      "ed-be::src_middleware_lock",
+      "ed-be::src_middleware_lock_deletelock",
+      "ed-be::src_middleware_lock_lockmiddleware",
+      "ed-be::src_middleware_lock_locks",
+      "ed-be::src_routes_fight_routes",
+      "ed-be::src_routes_level_routes",
+      "ed-be::src_routes_log_routes",
+      "ed-be::src_routes_npc_routes",
+      "ed-be::src_routes_oauth_routes",
+      "ed-be::src_routes_oauth_routes_routes",
+      "ed-be::src_test_business_oauthservice_test",
+      "ed-be::src_test_business_oauthservice_test_config",
+      "ed-be::src_test_business_oauthservice_test_etwinclientinstance",
+      "ed-be::src_test_business_oauthservice_test_makeres",
+      "ed-be::src_test_business_oauthservice_test_oauthclientinstance",
+      "ed-be::src_utils_server_senderrors",
+      "ed-be::src_utils_server_senderrors_senderror",
+      "ed-be::src_utils_server_senderrors_sendworkererror"
+    ],
+    "25": [
+      "ed-be::src_business_forcebruteservice_checkfbcreation",
+      "ed-be::src_business_skillservice",
+      "ed-be::src_business_skillservice_applyskilleffect",
+      "ed-be::src_business_skillservice_computeuskillsforplayer",
+      "ed-be::src_business_skillservice_getdinozlearnableskills",
+      "ed-be::src_business_skillservice_getlearnableandunlockableskills",
+      "ed-be::src_business_skillservice_getnewdinozdatafromlevelup",
+      "ed-be::src_business_skillservice_learnskill",
+      "ed-be::src_business_skillservice_reincarnate",
+      "ed-be::src_business_skillservice_unlockdoubleskills",
+      "ed-be::src_dao_dinozdao_getalldinozfromaccount",
+      "ed-be::src_dao_dinozdao_getdinozforlevelup",
+      "ed-be::src_dao_dinozdao_getdinozskillslearnableandunlockable",
+      "ed-be::src_dao_dinozdao_getdinoztoreincarnate",
+      "ed-be::src_dao_dinozdao_geteventdinozforlevelup",
+      "ed-be::src_dao_dinozdao_isdinozintournament",
+      "ed-be::src_dao_dinozdao_tournamentdinoz",
+      "ed-be::src_dao_dinozdao_updateeventdinoz",
+      "ed-be::src_dao_dinozmissiondao_removeallmissionsfromdinoz",
+      "ed-be::src_dao_dinozskilldao_removeallskillfromdinoz",
+      "ed-be::src_dao_dinozskillunlockabledao",
+      "ed-be::src_dao_dinozskillunlockabledao_addmultipleunlockableskills",
+      "ed-be::src_dao_dinozskillunlockabledao_removeallunlockableskillsfromdinoz",
+      "ed-be::src_dao_dinozskillunlockabledao_removeunlockableskillsfromdinoz",
+      "ed-be::src_dao_dinozstatusdao_removeallstatusfromdinoz",
+      "ed-be::src_dao_playerdao_getplayeruskills",
+      "ed-be::src_dao_playerdao_setplayer",
+      "ed-be::src_test_business_skillservice_test",
+      "ed-be::src_utils_dinoz_getlearnableskills",
+      "ed-be::src_utils_dinoz_gettreetype",
+      "ed-be::src_utils_dinoz_getunlockableskills"
+    ],
+    "26": [
+      "ed-be::src_business_adminservice",
+      "ed-be::src_business_adminservice_addsecret",
+      "ed-be::src_business_adminservice_debugfight",
+      "ed-be::src_business_adminservice_deleteclanadmin",
+      "ed-be::src_business_adminservice_editdinoz",
+      "ed-be::src_business_adminservice_editplayer",
+      "ed-be::src_business_adminservice_getadmindashboard",
+      "ed-be::src_business_adminservice_getallsecrets",
+      "ed-be::src_business_adminservice_getclandetailsadmin",
+      "ed-be::src_business_adminservice_getdinozdatafromplayer",
+      "ed-be::src_business_adminservice_getdinoztofight",
+      "ed-be::src_business_adminservice_getjobs",
+      "ed-be::src_business_adminservice_getmultiips",
+      "ed-be::src_business_adminservice_getongoingevent",
+      "ed-be::src_business_adminservice_getplayerdata",
+      "ed-be::src_business_adminservice_giveplayerepicreward",
+      "ed-be::src_business_adminservice_kickclanmemberadmin",
+      "ed-be::src_business_adminservice_listdungeons",
+      "ed-be::src_business_adminservice_listplayerbehindip",
+      "ed-be::src_business_adminservice_modifyplayeringredients",
+      "ed-be::src_business_adminservice_modifyplayeritems",
+      "ed-be::src_business_adminservice_removeclanbanneradmin",
+      "ed-be::src_business_adminservice_runjob",
+      "ed-be::src_business_adminservice_searchclansadmin",
+      "ed-be::src_business_adminservice_setclanleaderadmin",
+      "ed-be::src_business_adminservice_setplayermoney",
+      "ed-be::src_business_adminservice_startclanwarevent",
+      "ed-be::src_business_adminservice_truncateall",
+      "ed-be::src_business_adminservice_updateclanlanguagesadmin",
+      "ed-be::src_business_adminservice_updateclannameadmin",
+      "ed-be::src_business_adminservice_updateclantreasuregold",
+      "ed-be::src_business_adminservice_updateclantreasureingredients",
+      "ed-be::src_business_adminservice_updateplayerquestprogression",
+      "ed-be::src_business_moderationservice",
+      "ed-be::src_business_moderationservice_banplayer",
+      "ed-be::src_business_moderationservice_cancelban",
+      "ed-be::src_business_moderationservice_getallmoderation",
+      "ed-be::src_business_moderationservice_getpaginatedbannedplayers",
+      "ed-be::src_business_moderationservice_getplayertoreport",
+      "ed-be::src_business_moderationservice_multipleban",
+      "ed-be::src_business_moderationservice_reportclan",
+      "ed-be::src_business_moderationservice_reportplayer",
+      "ed-be::src_business_moderationservice_takeactiononreport",
+      "ed-be::src_business_moderationservice_updateban",
+      "ed-be::src_dao_clansdao_deleteclanmember",
+      "ed-be::src_dao_clansdao_updateclanleader",
+      "ed-be::src_dao_clansdao_updateclanname",
+      "ed-be::src_dao_dinozdao_getdinozforskilleffect",
+      "ed-be::src_dao_dinozdao_getdinozinfoforadmin",
+      "ed-be::src_dao_dinozskilldao_removeskillfromdinoz",
+      "ed-be::src_dao_dinozstatusdao_addmultiplestatustodinoz",
+      "ed-be::src_dao_logdao_createlog",
+      "ed-be::src_dao_moderationdao",
+      "ed-be::src_dao_moderationdao_createclanmoderationreport",
+      "ed-be::src_dao_moderationdao_createmoderationreport",
+      "ed-be::src_dao_moderationdao_getmoderationreport",
+      "ed-be::src_dao_moderationdao_getmoderationreports",
+      "ed-be::src_dao_moderationdao_setmoderationreport",
+      "ed-be::src_dao_playerdao_getbannedplayers",
+      "ed-be::src_dao_playerdao_geteternaltwinid",
+      "ed-be::src_dao_playerdao_getplayerbaninfo",
+      "ed-be::src_dao_playerdao_getplayerinfoforadmin",
+      "ed-be::src_dao_playerdao_getplayerinfotoreport",
+      "ed-be::src_dao_playeritemdao_setmultipleitem",
+      "ed-be::src_dao_playerrewardsdao_addmultiplerewardtoplayer",
+      "ed-be::src_dao_playerrewardsdao_removerewardfromplayer",
+      "ed-be::src_dao_questsdao_decreasequestprogression",
+      "ed-be::src_dao_secretdao_addnewsecret",
+      "ed-be::src_dao_secretdao_getallsecretsrequest",
+      "ed-be::src_routes_admin_routes",
+      "ed-be::src_routes_moderation_routes",
+      "ed-be::src_test_business_moderationservice_test"
+    ],
+    "27": [
+      "ed-be::src_test_business_clanservice_test_req",
+      "ed-be::src_test_business_clanwar_test_req",
+      "ed-be::src_test_business_demonshopservice_test_req",
+      "ed-be::src_test_business_dinozbuildservice_test_req",
+      "ed-be::src_test_business_dinozservice_test_req",
+      "ed-be::src_test_business_dojoservice_test_req",
+      "ed-be::src_test_business_fightservice_test_req",
+      "ed-be::src_test_business_forcebruteservice_test_req",
+      "ed-be::src_test_business_inventoryservice_test_req",
+      "ed-be::src_test_business_itemshopservice_test_req",
+      "ed-be::src_test_business_itinerantshopservice_test_req",
+      "ed-be::src_test_business_messagerieservice_test_req",
+      "ed-be::src_test_business_moderationservice_test_req",
+      "ed-be::src_test_business_newsservice_test_req",
+      "ed-be::src_test_business_npcservice_test_req",
+      "ed-be::src_test_business_offerservice_test_req",
+      "ed-be::src_test_business_rankingservice_test_req",
+      "ed-be::src_test_business_skillservice_test_req",
+      "ed-be::src_test_business_specialservice_test_req",
+      "ed-be::src_test_business_tournamentservice_test_req",
+      "ed-be::src_test_helpers_req_makerequest"
+    ],
+    "28": [
+      "core::src_models_dinoz_dinozfiche",
+      "core::src_models_dinoz_dinozfiche_dinozadminfiche",
+      "core::src_models_dinoz_dinozfiche_dinozdojofiche",
+      "core::src_models_dinoz_dinozfiche_dinozfiche",
+      "core::src_models_dinoz_dinozfiche_dinozpublicfiche"
+    ],
+    "29": [
+      "ed-be::src_business_dungeon_original_data_door",
+      "ed-be::src_business_dungeon_original_data_door_constructor",
+      "ed-be::src_business_dungeon_original_data_door_other",
+      "ed-be::src_business_dungeon_original_data_level_removeroom",
+      "ed-be::src_business_dungeon_original_data_room_addgrouprec",
+      "ed-be::src_business_dungeon_original_data_room_touch",
+      "ed-be::src_business_dungeon_original_hxlist_hxlist_push",
+      "ed-be::src_business_dungeon_original_rooms_rooms",
+      "ed-be::src_business_dungeon_original_rooms_rooms_buildroomgroups",
+      "ed-be::src_business_dungeon_original_rooms_rooms_checkleveldoor",
+      "ed-be::src_business_dungeon_original_rooms_rooms_cleandoors",
+      "ed-be::src_business_dungeon_original_rooms_rooms_constructor",
+      "ed-be::src_business_dungeon_original_rooms_rooms_generateroom",
+      "ed-be::src_business_dungeon_original_rooms_rooms_genlevel",
+      "ed-be::src_business_dungeon_original_rooms_rooms_genlevels",
+      "ed-be::src_business_dungeon_original_rooms_rooms_initleveldoor",
+      "ed-be::src_business_dungeon_original_rooms_rooms_initroomdoors",
+      "ed-be::src_business_dungeon_original_rooms_rooms_makeleveldoor",
+      "ed-be::src_business_dungeon_original_rooms_rooms_runonce",
+      "ed-be::src_business_dungeon_original_rooms_rooms_trygenerate",
+      "ed-be::src_business_dungeon_original_rooms_rooms_walklevel"
+    ],
+    "30": [
+      "ed-be::src_business_itemshopservice",
+      "ed-be::src_business_itemshopservice_buyitem",
+      "ed-be::src_business_itemshopservice_buymagicitem",
+      "ed-be::src_business_itemshopservice_checkdinozplace",
+      "ed-be::src_business_itemshopservice_getitemsfromshop",
+      "ed-be::src_dao_dinozskilldao",
+      "ed-be::src_dao_dinozskilldao_addskilltodinoz",
+      "ed-be::src_dao_playerdao_getplayerrewardsrequest",
+      "ed-be::src_dao_playerdao_getplayershopitemsdatarequest",
+      "ed-be::src_dao_playerdao_getplayershoponeitemdatarequest",
+      "ed-be::src_dao_playerdao_removemoney",
+      "ed-be::src_dao_playeringredientdao_getingredientsdatarequest",
+      "ed-be::src_dao_playeritemdao",
+      "ed-be::src_dao_playeritemdao_decreaseitemquantity",
+      "ed-be::src_dao_playeritemdao_insertitem",
+      "ed-be::src_dao_playerrewardsdao",
+      "ed-be::src_dao_playerrewardsdao_addrewardtoplayer",
+      "ed-be::src_test_business_itemshopservice_test",
+      "ed-be::src_test_business_itemshopservice_test_playerdata",
+      "ed-be::src_test_utils_rewarder_test",
+      "ed-be::src_test_utils_rewarder_test_team",
+      "ed-be::src_utils_rewarder",
+      "ed-be::src_utils_rewarder_rewarder"
+    ],
+    "31": [
+      "ed-be::prisma_seed",
+      "ed-be::prisma_seed_main",
+      "ed-be::src_business_forcebruteservice",
+      "ed-be::src_business_forcebruteservice_getcurrentevents",
+      "ed-be::src_business_forcebruteservice_getcurrenttournament",
+      "ed-be::src_business_forcebruteservice_getfbtournamentfights",
+      "ed-be::src_business_forcebruteservice_getfbtournamentopponent",
+      "ed-be::src_business_forcebruteservice_getplayerparticipation",
+      "ed-be::src_business_forcebruteservice_readallfightfromeventpool",
+      "ed-be::src_business_forcebruteservice_resumetournaments",
+      "ed-be::src_dao_archivedao",
+      "ed-be::src_dao_archivedao_archivechallenge",
+      "ed-be::src_dao_archivedao_archivefight",
+      "ed-be::src_dao_archivedao_viewfight",
+      "ed-be::src_prisma",
+      "ed-be::src_prisma_prisma",
+      "ed-be::src_routes_events_routes",
+      "ed-be::src_test_business_forcebruteservice_test",
+      "ed-be::src_test_business_forcebruteservice_test_fbinstance",
+      "ed-be::src_test_utils_randomenum_test",
+      "ed-be::src_test_utils_randomenum_test_color",
+      "ed-be::src_utils_helpers_validatorhelper",
+      "ed-be::src_utils_helpers_validatorhelper_allvaluesarenumber",
+      "ed-be::src_utils_helpers_validatorhelper_arealluuidv4",
+      "ed-be::src_utils_helpers_validatorhelper_isuuidv4",
+      "ed-be::src_utils_randomenum",
+      "ed-be::src_utils_randomenum_getrandomenumvalue"
+    ],
+    "32": [
+      "ed-be::src_context",
+      "ed-be::src_context_config",
+      "ed-be::src_logger_console",
+      "ed-be::src_logger_console_console",
+      "ed-be::src_logger_discord",
+      "ed-be::src_logger_index",
+      "ed-be::src_logger_index_formatlogrecord",
+      "ed-be::src_logger_index_loghandler",
+      "ed-be::src_logger_index_loghandler_close",
+      "ed-be::src_logger_index_loghandler_emit",
+      "ed-be::src_logger_index_loghandler_flush",
+      "ed-be::src_logger_index_loglevel",
+      "ed-be::src_logger_noop",
+      "ed-be::src_logger_noop_noop",
+      "ed-be::src_logger_parent_port",
+      "ed-be::src_logger_parent_port_forwardworkerlog",
+      "ed-be::src_logger_parent_port_parent_port",
+      "ed-be::src_utils_server_dispose",
+      "ed-be::src_utils_server_dispose_async_dispose",
+      "ed-be::src_utils_server_dispose_dispose"
+    ],
+    "33": [
+      "ed-be::concurrently",
+      "ed-be::package_devdependencies",
+      "ed-be::package_devdependencies_concurrently",
+      "ed-be::package_devdependencies_stylistic_eslint_plugin_ts",
+      "ed-be::package_devdependencies_types_node",
+      "ed-be::package_devdependencies_types_node_fetch",
+      "ed-be::package_devdependencies_types_node_schedule",
+      "ed-be::package_devdependencies_types_swagger_jsdoc",
+      "ed-be::package_devdependencies_types_swagger_ui_express",
+      "ed-be::package_devdependencies_types_ws",
+      "ed-be::package_devdependencies_typescript",
+      "ed-be::stylistic_eslint_plugin_ts",
+      "ed-be::types_node",
+      "ed-be::types_node_fetch",
+      "ed-be::types_node_schedule",
+      "ed-be::types_swagger_jsdoc",
+      "ed-be::types_swagger_ui_express",
+      "ed-be::types_ws",
+      "ed-be::typescript"
+    ],
+    "34": [
+      "ed-be::src_business_messagerieservice",
+      "ed-be::src_business_messagerieservice_getfullconversattion",
+      "ed-be::src_business_messagerieservice_getmyconversation",
+      "ed-be::src_business_messagerieservice_loadmessages",
+      "ed-be::src_business_messagerieservice_pinmesage",
+      "ed-be::src_business_messagerieservice_sendmessage",
+      "ed-be::src_business_messagerieservice_startconversation",
+      "ed-be::src_dao_messageriedao",
+      "ed-be::src_dao_messageriedao_addmessage",
+      "ed-be::src_dao_messageriedao_changepinmessage",
+      "ed-be::src_dao_messageriedao_createconversation",
+      "ed-be::src_dao_messageriedao_getconversation",
+      "ed-be::src_dao_messageriedao_getconversationswithplayer",
+      "ed-be::src_dao_messageriedao_getmoremessages",
+      "ed-be::src_dao_messageriedao_removefromconversation",
+      "ed-be::src_dao_notificationdao_createnotification",
+      "ed-be::src_dao_notificationdao_readnotificationfrommessages",
+      "ed-be::src_routes_messagerie_routes",
+      "ed-be::src_test_business_messagerieservice_test"
+    ],
+    "35": [
+      "ed-be::src_business_dinozservice_betamove",
+      "ed-be::src_business_dinozservice_digwithdinoz",
+      "ed-be::src_business_fightservice",
+      "ed-be::src_business_fightservice_calculatefightvsmonsters",
+      "ed-be::src_business_fightservice_eventmonsterproba",
+      "ed-be::src_business_fightservice_fightmonstersatplace",
+      "ed-be::src_business_fightservice_generatemonsterlist",
+      "ed-be::src_business_fightservice_monsterlevelproba",
+      "ed-be::src_business_fightservice_processfight",
+      "ed-be::src_business_fightservice_rationale_759",
+      "ed-be::src_business_fightservice_replayfight",
+      "ed-be::src_business_fightservice_rewardfightvsmonsters",
+      "ed-be::src_business_specialservice_movementlistener",
+      "ed-be::src_dao_dinozcatchdao",
+      "ed-be::src_dao_dinozcatchdao_createcatch",
+      "ed-be::src_dao_dinozcatchdao_removecatch",
+      "ed-be::src_dao_dinozcatchdao_updatecatch",
+      "ed-be::src_dao_dinozdao_getdinozfightdatarequest",
+      "ed-be::src_dao_dinozstatusdao",
+      "ed-be::src_dao_dinozstatusdao_addstatustodinoz",
+      "ed-be::src_dao_dinozstatusdao_removestatusfromdinoz",
+      "ed-be::src_dao_eventsdao",
+      "ed-be::src_dao_eventsdao_getplayereventprogression",
+      "ed-be::src_dao_eventsdao_increaseplayereventprogression",
+      "ed-be::src_routes_testing_routes",
+      "ed-be::src_test_business_fightservice_test",
+      "ed-be::src_test_business_fightservice_test_makedinoz"
+    ],
+    "36": [
+      "ed-be::src_business_fightservice_calculatefightbetweenplayers",
+      "ed-be::src_test_utils_forcebrutemanager_test",
+      "ed-be::src_test_utils_forcebrutemanager_test_activetournament",
+      "ed-be::src_test_utils_forcebrutemanager_test_mockprisma",
+      "ed-be::src_utils_forcebrutemanager",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_constructor",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_createpools",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_generateandsavefight",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_generatenextround",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_getactivetournament",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_getcurrentstate",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_getdinoztofight",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_getwinnersfrompreviousround",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_initializetournament",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_resume",
+      "ed-be::src_utils_forcebrutemanager_forcebrutemanager_translatepools",
+      "ed-be::src_utils_tools_shuffle"
+    ],
+    "37": [
+      "ed-be::src_business_fightservice_dinoztorewardfight",
+      "ed-be::src_business_specialservice",
+      "ed-be::src_business_specialservice_cancelconcentrate",
+      "ed-be::src_business_specialservice_concentrate",
+      "ed-be::src_business_specialservice_godarkworld",
+      "ed-be::src_constants_specialactions",
+      "ed-be::src_constants_specialactions_specialactions",
+      "ed-be::src_dao_concentrationdao",
+      "ed-be::src_dao_concentrationdao_concentrationfromgetconcentration",
+      "ed-be::src_dao_concentrationdao_createconcentration",
+      "ed-be::src_dao_concentrationdao_getconcentration",
+      "ed-be::src_dao_concentrationdao_removeconcentration",
+      "ed-be::src_dao_concentrationdao_updateconcentration",
+      "ed-be::src_dao_dinozdao_getdinozconcentrationrequest",
+      "ed-be::src_dao_dinozdao_updatemultipledinozplaceid",
+      "ed-be::src_dao_playerdao_prepareconcentration",
+      "ed-be::src_test_business_specialservice_test",
+      "ed-be::src_test_business_specialservice_test_specialactions"
+    ],
+    "38": [
+      "ed-be::src_business_rankingservice",
+      "ed-be::src_business_rankingservice_getplayerposition",
+      "ed-be::src_business_rankingservice_getranking",
+      "ed-be::src_business_rankingservice_getstatrankings",
+      "ed-be::src_business_rankingservice_getwarhistoryranking",
+      "ed-be::src_dao_clansdao_getwarhistory",
+      "ed-be::src_dao_rankingdao",
+      "ed-be::src_dao_rankingdao_getplayerpositiondao",
+      "ed-be::src_dao_rankingdao_getplayersaverageranking",
+      "ed-be::src_dao_rankingdao_getplayerscompletionranking",
+      "ed-be::src_dao_rankingdao_getplayersdojoranking",
+      "ed-be::src_dao_rankingdao_getplayerspoints",
+      "ed-be::src_dao_rankingdao_getplayerssumranking",
+      "ed-be::src_dao_rankingdao_updatedojopoints",
+      "ed-be::src_dao_trackingdao_geteverystattop3",
+      "ed-be::src_routes_ranking_routes",
+      "ed-be::src_test_business_rankingservice_test"
+    ],
+    "39": [
+      "core::src_returntypes_dinoz",
+      "core::src_returntypes_dinoz_digresponse",
+      "core::src_returntypes_dinoz_learnskilldata",
+      "core::src_returntypes_dinoz_managepagedata",
+      "core::src_returntypes_dinoz_missionspagedata"
+    ],
+    "40": [
+      "ed-be::src_config_config",
+      "ed-be::src_config_config_config",
+      "ed-be::src_config_config_discordconfig",
+      "ed-be::src_config_config_eternaltwinconfig",
+      "ed-be::src_config_config_loadconfig",
+      "ed-be::src_config_config_readboolean",
+      "ed-be::src_config_config_readexpiration",
+      "ed-be::src_config_config_readport",
+      "ed-be::src_config_config_readselfurl",
+      "ed-be::src_context_servercontext_constructor",
+      "ed-be::src_main",
+      "ed-be::src_main_config",
+      "ed-be::src_main_otelsdk",
+      "ed-be::src_main_require",
+      "ed-be::src_opentelemetry",
+      "ed-be::src_opentelemetry_getauthorizationheader",
+      "ed-be::src_opentelemetry_initopentelemetry"
+    ],
+    "41": [
+      "ed-be::package_scripts",
+      "ed-be::package_scripts_build",
+      "ed-be::package_scripts_coverage",
+      "ed-be::package_scripts_db_migrate_manual",
+      "ed-be::package_scripts_db_sync_dev",
+      "ed-be::package_scripts_debug",
+      "ed-be::package_scripts_lint",
+      "ed-be::package_scripts_migration",
+      "ed-be::package_scripts_prisma_postgenerate",
+      "ed-be::package_scripts_release",
+      "ed-be::package_scripts_seed",
+      "ed-be::package_scripts_serve",
+      "ed-be::package_scripts_start",
+      "ed-be::package_scripts_test",
+      "ed-be::package_scripts_test_ci",
+      "ed-be::package_scripts_test_watch"
+    ],
+    "42": [
+      "ed-be::src_dao_questsdao",
+      "ed-be::src_dao_questsdao_getplayerquestprogression",
+      "ed-be::src_dao_questsdao_increasequestprogression",
+      "ed-be::src_dao_questsdao_upsertquest",
+      "ed-be::src_test_utils_scenariochecker_test",
+      "ed-be::src_test_utils_scenariochecker_test_fightwith",
+      "ed-be::src_test_utils_scenariochecker_test_mockfindmany",
+      "ed-be::src_test_utils_scenariochecker_test_mockincrease",
+      "ed-be::src_test_utils_scenariochecker_test_mockupsert",
+      "ed-be::src_test_utils_scenariochecker_test_monstersof",
+      "ed-be::src_utils_scenariochecker",
+      "ed-be::src_utils_scenariochecker_scenariochecker"
+    ],
+    "43": [
+      "ed-be::src_business_logservice",
+      "ed-be::src_business_logservice_calculatedatedifference",
+      "ed-be::src_business_logservice_calculatetotalsbyperiod",
+      "ed-be::src_business_logservice_formatperiod",
+      "ed-be::src_business_logservice_getalllogs",
+      "ed-be::src_business_logservice_getlogs",
+      "ed-be::src_business_logservice_getlogsbydate",
+      "ed-be::src_business_logservice_getlogtypetotal",
+      "ed-be::src_business_logservice_getwarlogs",
+      "ed-be::src_dao_logdao",
+      "ed-be::src_dao_logdao_getloglist",
+      "ed-be::src_dao_logdao_getloglistall",
+      "ed-be::src_dao_logdao_getloglistbydate",
+      "ed-be::src_dao_logdao_getwarloglist",
+      "ed-be::src_dao_logdao_warlogtypes",
+      "ed-be::src_test_business_logservice_test",
+      "ed-be::src_test_business_logservice_test_req"
+    ],
+    "44": [
+      "ed-be::src_test_utils_skillparser_deep_test",
+      "ed-be::src_test_utils_skillparser_deep_test_basedinoz",
+      "ed-be::src_test_utils_skillparser_test",
+      "ed-be::src_test_utils_skillparser_test_basedinoz",
+      "ed-be::src_test_utils_skillparser_test_baseplayer",
+      "ed-be::src_utils_index",
+      "ed-be::src_utils_server_context",
+      "ed-be::src_utils_server_swagger",
+      "ed-be::src_utils_server_swagger_swaggerdefinition",
+      "ed-be::src_utils_server_swagger_swaggeroptions",
+      "ed-be::src_utils_skillparser",
+      "ed-be::src_utils_skillparser_applyskilltodinoz",
+      "ed-be::src_utils_skillparser_applyuskilleffect",
+      "ed-be::src_utils_skillparser_computeuskilleffects",
+      "ed-be::src_utils_skillparser_deapplyskillfromdinoz"
+    ],
+    "45": [
+      "ed-be::package",
+      "ed-be::package_author",
+      "ed-be::package_description",
+      "ed-be::package_exports",
+      "ed-be::package_files",
+      "ed-be::package_license",
+      "ed-be::package_name",
+      "ed-be::package_release_it",
+      "ed-be::package_release_it_git",
+      "ed-be::package_type",
+      "ed-be::package_version",
+      "ed-be::ref_dist_js_map_ts",
+      "ed-be::ref_src"
+    ],
+    "46": [
+      "ed-be::src_utils_server_discordutils",
+      "ed-be::src_utils_server_discordutils_formatembedtitle",
+      "ed-be::src_utils_server_discordutils_formatmarkdownforembed",
+      "ed-be::src_utils_server_discordutils_max_content_length",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient_constructor",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient_senderror",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient_sendmessage",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient_sendnewsnotification",
+      "ed-be::src_utils_server_discordutils_networkdiscordclient_sendpantheonnotification",
+      "ed-be::src_utils_server_discordutils_networkdiscordclientoptions",
+      "ed-be::src_utils_server_discordutils_noop_discord_client",
+      "ed-be::src_utils_server_discordutils_send_message_safe_length"
+    ],
+    "47": [
+      "ed-be::src_logger_index_logger",
+      "ed-be::src_logger_index_logger_async_dispose",
+      "ed-be::src_logger_index_logger_close",
+      "ed-be::src_logger_index_logger_constructor",
+      "ed-be::src_logger_index_logger_debug",
+      "ed-be::src_logger_index_logger_emit",
+      "ed-be::src_logger_index_logger_emitmessage",
+      "ed-be::src_logger_index_logger_error",
+      "ed-be::src_logger_index_logger_info",
+      "ed-be::src_logger_index_logger_log",
+      "ed-be::src_logger_index_logger_warn",
+      "ed-be::src_logger_index_stringifymessage"
+    ],
+    "48": [
+      "ed-be::body_parser",
+      "ed-be::dotenv",
+      "ed-be::multer",
+      "ed-be::opentelemetry_api",
+      "ed-be::package_dependencies",
+      "ed-be::package_dependencies_body_parser",
+      "ed-be::package_dependencies_dotenv",
+      "ed-be::package_dependencies_multer",
+      "ed-be::package_dependencies_opentelemetry_api",
+      "ed-be::package_dependencies_toml",
+      "ed-be::toml"
+    ],
+    "49": [
+      "ed-be::src_business_dungeon_bitcodec",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_c64",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_constructor",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_crcstr",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_d64",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_haserror",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_read",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_tostring",
+      "ed-be::src_business_dungeon_bitcodec_bitcodec_write"
+    ],
+    "50": [
+      "core::src_models_shop_shopfiche",
+      "core::src_models_shop_shopfiche_itemshopfiche",
+      "core::src_models_shop_shopfiche_itemshoptype",
+      "core::src_models_shop_shopfiche_shopfiche"
+    ],
+    "51": [
+      "ed-be::src_context_servercontext",
+      "ed-be::src_context_servercontext_async_dispose",
+      "ed-be::src_context_servercontext_close",
+      "ed-be::src_context_servercontext_init",
+      "ed-be::src_logger_discord_discordloghandler_constructor",
+      "ed-be::src_utils_server_discordutils_discordclient",
+      "ed-be::src_utils_server_discordutils_discordclient_senderror",
+      "ed-be::src_utils_server_discordutils_discordclient_sendmessage",
+      "ed-be::src_utils_server_discordutils_discordclient_sendnewsnotification",
+      "ed-be::src_utils_server_discordutils_discordclient_sendpantheonnotification"
+    ],
+    "52": [
+      "ed-be::src_logger_discord_discordloghandler",
+      "ed-be::src_logger_discord_discordloghandler_async_dispose",
+      "ed-be::src_logger_discord_discordloghandler_close",
+      "ed-be::src_logger_discord_discordloghandler_emit",
+      "ed-be::src_logger_discord_discordloghandler_ensureactive",
+      "ed-be::src_logger_discord_discordloghandler_flush",
+      "ed-be::src_logger_discord_discordloghandler_ontick",
+      "ed-be::src_logger_discord_discordloghandler_send",
+      "ed-be::src_logger_discord_format",
+      "ed-be::src_logger_index_logrecord"
+    ],
+    "53": [
+      "ed-be::src_business_notificationservice",
+      "ed-be::src_business_notificationservice_setallnotificationread",
+      "ed-be::src_business_notificationservice_setnotificationread",
+      "ed-be::src_dao_notificationdao",
+      "ed-be::src_dao_notificationdao_readallnotification",
+      "ed-be::src_dao_notificationdao_readnotification",
+      "ed-be::src_routes_notifications_routes",
+      "ed-be::src_routes_notifications_routes_routes",
+      "ed-be::src_test_business_notificationservice_test"
+    ],
+    "54": [
+      "ed-be::src_livestats",
+      "ed-be::src_livestats_livestats",
+      "ed-be::src_livestats_livestats_addconnectedplayers",
+      "ed-be::src_livestats_livestats_constructor",
+      "ed-be::src_livestats_livestats_decrementtotalplayers",
+      "ed-be::src_livestats_livestats_incrementdinoz",
+      "ed-be::src_livestats_livestats_incrementtotalplayers",
+      "ed-be::src_livestats_livestats_removeconnectedplayers",
+      "ed-be::src_livestats_livestats_summary"
+    ],
+    "55": [
+      "ed-be::src_business_forumservice",
+      "ed-be::src_business_forumservice_createthread",
+      "ed-be::src_business_forumservice_getallthreadsfrompage",
+      "ed-be::src_business_forumservice_getthread",
+      "ed-be::src_routes_forum_routes",
+      "ed-be::src_routes_forum_routes_routes",
+      "ed-be::src_test_business_forumservice_test",
+      "ed-be::src_test_business_forumservice_test_req"
+    ],
+    "56": [
+      "ed-be::src_business_dungeon_pathfind",
+      "ed-be::src_business_dungeon_pathfind_buildstairs",
+      "ed-be::src_business_dungeon_pathfind_cell",
+      "ed-be::src_business_dungeon_pathfind_findpath",
+      "ed-be::src_business_dungeon_pathfind_key",
+      "ed-be::src_business_dungeon_pathfind_reconstruct"
+    ],
+    "57": [
+      "ed-be::src_dao_dinozdao_selectdinozfordojofight",
+      "ed-be::src_test_utils_tournament_cache_test",
+      "ed-be::src_test_utils_tournament_cache_test_fakeprisma",
+      "ed-be::src_test_utils_tournament_cache_test_mockgetactiveteams",
+      "ed-be::src_test_utils_tournamentmanager_test",
+      "ed-be::src_test_utils_tournamentmanager_test_mockprisma",
+      "ed-be::src_utils_rewarder_rewarderpromise",
+      "ed-be::src_utils_server_translate",
+      "ed-be::src_utils_tournament_cache",
+      "ed-be::src_utils_tournament_cache_getactiveteamscached",
+      "ed-be::src_utils_tournament_cache_tournamentcachedata",
+      "ed-be::src_utils_tournamentmanager"
+    ],
+    "58": [
+      "ed-be::src_test_utils_serverstate_test",
+      "ed-be::src_utils_server_serverstate",
+      "ed-be::src_utils_server_serverstate_isready",
+      "ed-be::src_utils_server_serverstate_setready"
+    ],
+    "59": [
+      "core::src_models_dinoz_skillfightcondition",
+      "core::src_models_dinoz_skillfightcondition_skillfightcondition",
+      "core::src_models_dinoz_skillfightcondition_skillfightconditionenum"
+    ],
+    "60": [
+      "core::src_models_dinoz_skilllevel",
+      "core::src_models_dinoz_skilllevel_getskilllevel",
+      "core::src_models_dinoz_skilllevel_skilllevel"
+    ],
+    "61": [
+      "core::src_models_dojo_dojobasic",
+      "core::src_models_dojo_dojobasic_dojobasic",
+      "core::src_models_dojo_dojobasic_myteam"
+    ],
+    "62": [
+      "core::src_models_dojo_tournamentqualifrewards",
+      "core::src_models_dojo_tournamentqualifrewards_qualifreward",
+      "core::src_models_dojo_tournamentqualifrewards_tournamentqualifrewards"
+    ],
+    "63": [
+      "core::src_models_enums_elementtype",
+      "core::src_models_enums_elementtype_elementnames",
+      "core::src_models_enums_elementtype_elementtype"
+    ],
+    "64": [
+      "core::src_models_enums_returncode",
+      "core::src_models_enums_returncode_returncode",
+      "core::src_models_enums_returncode_returntype"
+    ],
+    "65": [
+      "core::src_models_fight_bosslist",
+      "core::src_models_fight_bosslist_boss",
+      "core::src_models_fight_bosslist_bosslist"
+    ],
+    "66": [
+      "core::src_models_fight_monsterfiche",
+      "core::src_models_fight_monsterfiche_groupmonster",
+      "core::src_models_fight_monsterfiche_monsterfiche"
+    ],
+    "67": [
+      "core::src_models_games_eternaltwingames",
+      "core::src_models_games_eternaltwingames_eternaltwingame",
+      "core::src_models_games_eternaltwingames_geteternaltwingames"
+    ],
+    "68": [
+      "core::src_models_gather_gatherrewards",
+      "core::src_models_gather_gatherrewards_gatherrewards",
+      "core::src_models_gather_gatherrewards_grid_finished_gold_reward"
+    ],
+    "69": [
+      "core::src_models_item_itemfiche",
+      "core::src_models_item_itemfiche_itemfiche",
+      "core::src_models_item_itemfiche_itemfichedto"
+    ],
+    "70": [
+      "core::src_models_missions_missionlist",
+      "core::src_models_missions_missionlist_missionid",
+      "core::src_models_missions_missionlist_missionlist"
+    ],
+    "71": [
+      "core::src_models_missions_specialactions",
+      "core::src_models_missions_specialactions_fighttext",
+      "core::src_models_missions_specialactions_specialactions"
+    ],
+    "72": [
+      "core::src_models_news_allnews",
+      "core::src_models_news_allnews_detailednews",
+      "core::src_models_news_allnews_newstype"
+    ],
+    "73": [
+      "core::src_models_notifications_notification",
+      "core::src_models_notifications_notification_notification",
+      "core::src_models_notifications_notification_translatednotification"
+    ],
+    "74": [
+      "core::src_models_npc_characters_skully",
+      "core::src_models_npc_characters_skully_mouldeur",
+      "core::src_models_npc_characters_skully_skully"
+    ],
+    "75": [
+      "core::src_models_npc_npc",
+      "core::src_models_npc_npc_npc",
+      "core::src_models_npc_npc_npcname"
+    ],
+    "76": [
+      "core::src_models_player_playercommondata",
+      "core::src_models_player_playercommondata_playercommondata",
+      "core::src_models_player_playercommondata_playerlogindata"
+    ],
+    "77": [
+      "core::src_models_reward_epicreward",
+      "core::src_models_reward_epicreward_epicreward",
+      "core::src_models_reward_epicreward_rewardtype"
+    ],
+    "78": [
+      "core::src_models_reward_rewardlist",
+      "core::src_models_reward_rewardlist_reward",
+      "core::src_models_reward_rewardlist_rewardlist"
+    ],
+    "79": [
+      "core::src_models_serverevents_ssedata",
+      "core::src_models_serverevents_ssedata_ssedata",
+      "core::src_models_serverevents_ssedata_ssedataenum"
+    ],
+    "80": [
+      "core::src_models_shop_dinozshopfiche",
+      "core::src_models_shop_dinozshopfiche_dinozshopfiche",
+      "core::src_models_shop_dinozshopfiche_dinozshopfichelite"
+    ],
+    "81": [
+      "core::src_returntypes_ranking",
+      "core::src_returntypes_ranking_getstatrankingsresponse",
+      "core::src_returntypes_ranking_rankinggetresponse"
+    ],
+    "82": [
+      "core::src_returntypes_warhistory",
+      "core::src_returntypes_warhistory_warhistoryitem",
+      "core::src_returntypes_warhistory_warhistoryresponse"
+    ],
+    "83": [
+      "core::src_utils_getassaultstat",
+      "core::src_utils_getassaultstat_assaultelement",
+      "core::src_utils_getassaultstat_getassaultstat"
+    ],
+    "84": [
+      "core::src_utils_getdefensestat",
+      "core::src_utils_getdefensestat_defenseelement",
+      "core::src_utils_getdefensestat_getdefensestat"
+    ],
+    "85": [
+      "core::src_utils_helper",
+      "core::src_utils_helper_isnotnullish",
+      "core::src_utils_helper_operatorprocess"
+    ],
+    "86": [
+      "core::src_models_admin_bannedplayertype",
+      "core::src_models_admin_bannedplayertype_bannedplayertype"
+    ],
+    "87": [
+      "core::src_models_admin_jobs",
+      "core::src_models_admin_jobs_jobs"
+    ],
+    "88": [
+      "core::src_models_admin_secretdata",
+      "core::src_models_admin_secretdata_secretdata"
+    ],
+    "89": [
+      "core::src_models_clan_clanhistory",
+      "core::src_models_clan_clanhistory_clanhistory"
+    ],
+    "90": [
+      "core::src_models_clan_clanmember",
+      "core::src_models_clan_clanmember_clanmember"
+    ],
+    "91": [
+      "core::src_models_clan_clanmessage",
+      "core::src_models_clan_clanmessage_clanmessage"
+    ],
+    "92": [
+      "core::src_models_clan_createclanmessage",
+      "core::src_models_clan_createclanmessage_createclanmessage"
+    ],
+    "93": [
+      "core::src_models_dinoz_digdata",
+      "core::src_models_dinoz_digdata_digdata"
+    ],
+    "94": [
+      "core::src_models_dinoz_dinozdetailsoffer",
+      "core::src_models_dinoz_dinozdetailsoffer_dinozdetailsoffer"
+    ],
+    "95": [
+      "core::src_models_dinoz_dinozedit",
+      "core::src_models_dinoz_dinozedit_dinozedit"
+    ],
+    "96": [
+      "core::src_models_dinoz_dinozfichelite",
+      "core::src_models_dinoz_dinozfichelite_dinozfichelite"
+    ],
+    "97": [
+      "core::src_models_dinoz_dinozlevel",
+      "core::src_models_dinoz_dinozlevel_levellist"
+    ],
+    "98": [
+      "core::src_models_dinoz_dinozskillownandunlockable",
+      "core::src_models_dinoz_dinozskillownandunlockable_dinozskillownandunlockable"
+    ],
+    "99": [
+      "core::src_models_dinoz_racelist",
+      "core::src_models_dinoz_racelist_racelist"
+    ],
+    "100": [
+      "core::src_models_dinoz_statuslist",
+      "core::src_models_dinoz_statuslist_dinozstatusid"
+    ],
+    "101": [
+      "core::src_models_dojo_dojofightresume",
+      "core::src_models_dojo_dojofightresume_dojofightresume"
+    ],
+    "102": [
+      "core::src_models_enums_clanhistorytype",
+      "core::src_models_enums_clanhistorytype_clanhistorytype"
+    ],
+    "103": [
+      "core::src_models_enums_clanmemberright",
+      "core::src_models_enums_clanmemberright_clanmemberright"
+    ],
+    "104": [
+      "core::src_models_enums_dayenum",
+      "core::src_models_enums_dayenum_dayenum"
+    ],
+    "105": [
+      "core::src_models_enums_energy",
+      "core::src_models_enums_energy_energy"
+    ],
+    "106": [
+      "core::src_models_enums_fighttype",
+      "core::src_models_enums_fighttype_fighttype"
+    ],
+    "107": [
+      "core::src_models_enums_gathertype",
+      "core::src_models_enums_gathertype_gathertype"
+    ],
+    "108": [
+      "core::src_models_enums_groundenum",
+      "core::src_models_enums_groundenum_groundenum"
+    ],
+    "109": [
+      "core::src_models_enums_itemeffect",
+      "core::src_models_enums_itemeffect_itemeffect"
+    ],
+    "110": [
+      "core::src_models_enums_itemtype",
+      "core::src_models_enums_itemtype_itemtype"
+    ],
+    "111": [
+      "core::src_models_enums_mapzone",
+      "core::src_models_enums_mapzone_mapzone"
+    ],
+    "112": [
+      "core::src_models_enums_missionsstatus",
+      "core::src_models_enums_missionsstatus_missionsstatus"
+    ],
+    "113": [
+      "core::src_models_enums_npctrigger",
+      "core::src_models_enums_npctrigger_npctrigger"
+    ],
+    "114": [
+      "core::src_models_enums_placeenum",
+      "core::src_models_enums_placeenum_placeenum"
+    ],
+    "115": [
+      "core::src_models_enums_placeicon",
+      "core::src_models_enums_placeicon_placeicon"
+    ],
+    "116": [
+      "core::src_models_enums_raceenum",
+      "core::src_models_enums_raceenum_raceenum"
+    ],
+    "117": [
+      "core::src_models_enums_serviceenum",
+      "core::src_models_enums_serviceenum_serviceenum"
+    ],
+    "118": [
+      "core::src_models_enums_severityenum",
+      "core::src_models_enums_severityenum_notificationseverity"
+    ],
+    "119": [
+      "core::src_models_enums_shoptype",
+      "core::src_models_enums_shoptype_shoptype"
+    ],
+    "120": [
+      "core::src_models_enums_skillstat",
+      "core::src_models_enums_skillstat_stat"
+    ],
+    "121": [
+      "core::src_models_enums_skilltreetype",
+      "core::src_models_enums_skilltreetype_skilltreetype"
+    ],
+    "122": [
+      "core::src_models_enums_skilltype",
+      "core::src_models_enums_skilltype_skilltype"
+    ],
+    "123": [
+      "core::src_models_enums_skillvisualeffect",
+      "core::src_models_enums_skillvisualeffect_skillvisualeffect"
+    ],
+    "124": [
+      "core::src_models_enums_stattracking",
+      "core::src_models_enums_stattracking_stattracking"
+    ],
+    "125": [
+      "core::src_models_gather_gatherdata",
+      "core::src_models_gather_gatherdata_gatherdata"
+    ],
+    "126": [
+      "core::src_models_gather_gatheritems",
+      "core::src_models_gather_gatheritems_gatheritems"
+    ],
+    "127": [
+      "core::src_models_gather_gatherlist",
+      "core::src_models_gather_gatherlist_gatherlist"
+    ],
+    "128": [
+      "core::src_models_gather_gatherpublicgrid",
+      "core::src_models_gather_gatherpublicgrid_gatherpublicgrid"
+    ],
+    "129": [
+      "core::src_models_gather_gatherresult",
+      "core::src_models_gather_gatherresult_gatherresult"
+    ],
+    "130": [
+      "core::src_models_gather_gatherresultgrid",
+      "core::src_models_gather_gatherresultgrid_gatherresultgrid"
+    ],
+    "131": [
+      "core::src_models_goals_twinoidgoals",
+      "core::src_models_goals_twinoidgoals_twinoidgoals"
+    ],
+    "132": [
+      "core::src_models_import_importdinoz",
+      "core::src_models_import_importdinoz_importdinoz"
+    ],
+    "133": [
+      "core::src_models_import_importresponse",
+      "core::src_models_import_importresponse_importresponse"
+    ],
+    "134": [
+      "core::src_models_import_siteachiev",
+      "core::src_models_import_siteachiev_siteachiev"
+    ],
+    "135": [
+      "core::src_models_import_sitestat",
+      "core::src_models_import_sitestat_sitestat"
+    ],
+    "136": [
+      "core::src_models_import_twinostat",
+      "core::src_models_import_twinostat_twinostat"
+    ],
+    "137": [
+      "core::src_models_ingredient_ingredientfiche",
+      "core::src_models_ingredient_ingredientfiche_ingredientfiche"
+    ],
+    "138": [
+      "core::src_models_ingredient_ingredientnamelist",
+      "core::src_models_ingredient_ingredientnamelist_ingredientnamelist"
+    ],
+    "139": [
+      "core::src_models_item_dinozitems",
+      "core::src_models_item_dinozitems_dinozitems"
+    ],
+    "140": [
+      "core::src_models_item_feedback",
+      "core::src_models_item_feedback_itemfeedback"
+    ],
+    "141": [
+      "core::src_models_item_itemeffects",
+      "core::src_models_item_itemeffects_itemeffects"
+    ],
+    "142": [
+      "core::src_models_item_itemprobability",
+      "core::src_models_item_itemprobability_boxprobabilities"
+    ],
+    "143": [
+      "core::src_models_missions_dinozmission",
+      "core::src_models_missions_dinozmission_dinozmission"
+    ],
+    "144": [
+      "core::src_models_missions_mission",
+      "core::src_models_missions_mission_mission"
+    ],
+    "145": [
+      "core::src_models_missions_missionhud",
+      "core::src_models_missions_missionhud_missionhud"
+    ],
+    "146": [
+      "core::src_models_missions_missionrequirement",
+      "core::src_models_missions_missionrequirement_missionrequirement"
+    ],
+    "147": [
+      "core::src_models_missions_missionsteps",
+      "core::src_models_missions_missionsteps_missionstep"
+    ],
+    "148": [
+      "core::src_models_news_image",
+      "core::src_models_news_image_image"
+    ],
+    "149": [
+      "core::src_models_npc_characters_alien",
+      "core::src_models_npc_characters_alien_alien"
+    ],
+    "150": [
+      "core::src_models_npc_characters_alpha",
+      "core::src_models_npc_characters_alpha_alpha"
+    ],
+    "151": [
+      "core::src_models_npc_characters_archisage",
+      "core::src_models_npc_characters_archisage_archisage"
+    ],
+    "152": [
+      "core::src_models_npc_characters_baobabe",
+      "core::src_models_npc_characters_baobabe_baobabe"
+    ],
+    "153": [
+      "core::src_models_npc_characters_baobob",
+      "core::src_models_npc_characters_baobob_baobob"
+    ],
+    "154": [
+      "core::src_models_npc_characters_baofan",
+      "core::src_models_npc_characters_baofan_baofan"
+    ],
+    "155": [
+      "core::src_models_npc_characters_diankorgsey",
+      "core::src_models_npc_characters_diankorgsey_diankorgsey"
+    ],
+    "156": [
+      "core::src_models_npc_characters_forgeron",
+      "core::src_models_npc_characters_forgeron_forgeron"
+    ],
+    "157": [
+      "core::src_models_npc_characters_fou",
+      "core::src_models_npc_characters_fou_fou"
+    ],
+    "158": [
+      "core::src_models_npc_characters_gardeatlante",
+      "core::src_models_npc_characters_gardeatlante_garde_atlante"
+    ],
+    "159": [
+      "core::src_models_npc_characters_gardien",
+      "core::src_models_npc_characters_gardien_gardien"
+    ],
+    "160": [
+      "core::src_models_npc_characters_hulot",
+      "core::src_models_npc_characters_hulot_hulot"
+    ],
+    "161": [
+      "core::src_models_npc_characters_hydargol",
+      "core::src_models_npc_characters_hydargol_hydargol"
+    ],
+    "162": [
+      "core::src_models_npc_characters_joveboze",
+      "core::src_models_npc_characters_joveboze_joveboze_rasca"
+    ],
+    "163": [
+      "core::src_models_npc_characters_merguez",
+      "core::src_models_npc_characters_merguez_merguez"
+    ],
+    "164": [
+      "core::src_models_npc_characters_mineur",
+      "core::src_models_npc_characters_mineur_mineur"
+    ],
+    "165": [
+      "core::src_models_npc_characters_mmex",
+      "core::src_models_npc_characters_mmex_mmex"
+    ],
+    "166": [
+      "core::src_models_npc_characters_padamoine",
+      "core::src_models_npc_characters_padamoine_padamoine"
+    ],
+    "167": [
+      "core::src_models_npc_characters_papyjoe",
+      "core::src_models_npc_characters_papyjoe_papyjoe"
+    ],
+    "168": [
+      "core::src_models_npc_characters_prof",
+      "core::src_models_npc_characters_prof_professor"
+    ],
+    "169": [
+      "core::src_models_npc_characters_rodeur",
+      "core::src_models_npc_characters_rodeur_rodeur"
+    ],
+    "170": [
+      "core::src_models_npc_characters_shaman",
+      "core::src_models_npc_characters_shaman_shaman"
+    ],
+    "171": [
+      "core::src_models_npc_characters_sofia",
+      "core::src_models_npc_characters_sofia_sofia"
+    ],
+    "172": [
+      "core::src_models_npc_characters_spelele",
+      "core::src_models_npc_characters_spelele_spelele"
+    ],
+    "173": [
+      "core::src_models_npc_characters_tournois",
+      "core::src_models_npc_characters_tournois_fb_tournament"
+    ],
+    "174": [
+      "core::src_models_npc_characters_vener",
+      "core::src_models_npc_characters_vener_venerable"
+    ],
+    "175": [
+      "core::src_models_npc_missions_baobob",
+      "core::src_models_npc_missions_baobob_m_bao_bob"
+    ],
+    "176": [
+      "core::src_models_npc_missions_diankorgsey",
+      "core::src_models_npc_missions_diankorgsey_m_diankorgsey"
+    ],
+    "177": [
+      "core::src_models_npc_missions_gardien",
+      "core::src_models_npc_missions_gardien_m_gardien"
+    ],
+    "178": [
+      "core::src_models_npc_missions_hulot",
+      "core::src_models_npc_missions_hulot_m_hulot"
+    ],
+    "179": [
+      "core::src_models_npc_missions_mmex",
+      "core::src_models_npc_missions_mmex_m_mmex"
+    ],
+    "180": [
+      "core::src_models_npc_missions_papyjoe",
+      "core::src_models_npc_missions_papyjoe_m_papy_joe"
+    ],
+    "181": [
+      "core::src_models_npc_missions_rodeur",
+      "core::src_models_npc_missions_rodeur_m_rodeur"
+    ],
+    "182": [
+      "core::src_models_npc_missions_shaman",
+      "core::src_models_npc_missions_shaman_m_shaman_mou"
+    ],
+    "183": [
+      "core::src_models_npc_missions_skully",
+      "core::src_models_npc_missions_skully_m_skully"
+    ],
+    "184": [
+      "core::src_models_npc_npcaction",
+      "core::src_models_npc_npcaction_npcaction"
+    ],
+    "185": [
+      "core::src_models_npc_npcconditions",
+      "core::src_models_npc_npcconditions_condition"
+    ],
+    "186": [
+      "core::src_models_npc_npcdata",
+      "core::src_models_npc_npcdata_npcdata"
+    ],
+    "187": [
+      "core::src_models_npc_npclist",
+      "core::src_models_npc_npclist_npclist"
+    ],
+    "188": [
+      "core::src_models_npc_npcmissions",
+      "core::src_models_npc_npcmissions_npcmissions"
+    ],
+    "189": [
+      "core::src_models_npc_npctalk",
+      "core::src_models_npc_npctalk_npctalk"
+    ],
+    "190": [
+      "core::src_models_pantheon_pantheondisplay",
+      "core::src_models_pantheon_pantheondisplay_pantheondisplay"
+    ],
+    "191": [
+      "core::src_models_place_place",
+      "core::src_models_place_place_place"
+    ],
+    "192": [
+      "core::src_models_place_placedisplayed",
+      "core::src_models_place_placedisplayed_placedisplayed"
+    ],
+    "193": [
+      "core::src_models_place_svglines",
+      "core::src_models_place_svglines_svglines"
+    ],
+    "194": [
+      "core::src_models_player_archivedplayer",
+      "core::src_models_player_archivedplayer_archivedplayer"
+    ],
+    "195": [
+      "core::src_models_player_archivedplayerstats",
+      "core::src_models_player_archivedplayerstats_archivedplayerstats"
+    ],
+    "196": [
+      "core::src_models_player_etuser",
+      "core::src_models_player_etuser_etuser"
+    ],
+    "197": [
+      "core::src_models_player_newpositions",
+      "core::src_models_player_newpositions_newpositions"
+    ],
+    "198": [
+      "core::src_models_player_playeradminfiche",
+      "core::src_models_player_playeradminfiche_playeradminfiche"
+    ],
+    "199": [
+      "core::src_models_player_playeredit",
+      "core::src_models_player_playeredit_playeredit"
+    ],
+    "200": [
+      "core::src_models_player_playerinfo",
+      "core::src_models_player_playerinfo_playerinfo"
+    ],
+    "201": [
+      "core::src_models_player_playeroptions",
+      "core::src_models_player_playeroptions_playeroptions"
+    ],
+    "202": [
+      "core::src_models_player_playerranking",
+      "core::src_models_player_playerranking_playerranking"
+    ],
+    "203": [
+      "core::src_models_player_playerstats",
+      "core::src_models_player_playerstats_playerstats"
+    ],
+    "204": [
+      "core::src_models_rankings_clanranking",
+      "core::src_models_rankings_clanranking_clanrankingtype"
+    ],
+    "205": [
+      "core::src_models_rankings_entitysearch",
+      "core::src_models_rankings_entitysearch_entitysearch"
+    ],
+    "206": [
+      "core::src_models_reward_rewarder",
+      "core::src_models_reward_rewarder_rewarder"
+    ],
+    "207": [
+      "core::src_models_serverevents_channelinfos",
+      "core::src_models_serverevents_channelinfos_channelinfos"
+    ],
+    "208": [
+      "core::src_models_serverevents_servereventticket",
+      "core::src_models_serverevents_servereventticket_servereventticket"
+    ],
+    "209": [
+      "core::src_models_serverevents_servereventticketdto",
+      "core::src_models_serverevents_servereventticketdto_servereventticketdto"
+    ],
+    "210": [
+      "core::src_models_serverevents_servereventtype",
+      "core::src_models_serverevents_servereventtype_servereventtype"
+    ],
+    "211": [
+      "core::src_models_serverevents_ssechannel",
+      "core::src_models_serverevents_ssechannel_ssechannel"
+    ],
+    "212": [
+      "core::src_models_serverevents_ssechanneldata",
+      "core::src_models_serverevents_ssechanneldata_ssechanneldata"
+    ],
+    "213": [
+      "core::src_models_serverevents_websocketcustom",
+      "core::src_models_serverevents_websocketcustom_websocketcustom"
+    ],
+    "214": [
+      "core::src_models_serverevents_websocketservercustom",
+      "core::src_models_serverevents_websocketservercustom_websocketservercustom"
+    ],
+    "215": [
+      "core::src_models_serverevents_wschannel",
+      "core::src_models_serverevents_wschannel_wschannel"
+    ],
+    "216": [
+      "core::src_models_serverevents_wschanneldata",
+      "core::src_models_serverevents_wschanneldata_wschanneldata"
+    ],
+    "217": [
+      "core::src_models_serverevents_wsmessageaction",
+      "core::src_models_serverevents_wsmessageaction_wsmessageaction"
+    ],
+    "218": [
+      "core::src_models_serverevents_wsmsgrequest",
+      "core::src_models_serverevents_wsmsgrequest_wsmsgrequest"
+    ],
+    "219": [
+      "core::src_models_serverevents_wsmsgrequestcreation",
+      "core::src_models_serverevents_wsmsgrequestcreation_wsmsgrequestcreation"
+    ],
+    "220": [
+      "core::src_models_serverevents_wsmsgrequestdeletion",
+      "core::src_models_serverevents_wsmsgrequestdeletion_wsmsgrequestdeletion"
+    ],
+    "221": [
+      "core::src_models_serverevents_wsmsgresponse",
+      "core::src_models_serverevents_wsmsgresponse_wsmsgresponse"
+    ],
+    "222": [
+      "core::src_models_serverevents_wsmsgresponsecreation",
+      "core::src_models_serverevents_wsmsgresponsecreation_wsmsgresponsecreation"
+    ],
+    "223": [
+      "core::src_models_serverevents_wsmsgresponsedeletion",
+      "core::src_models_serverevents_wsmsgresponsedeletion_wsmsgresponsedeletion"
+    ],
+    "224": [
+      "core::src_models_shop_demonshopfiche",
+      "core::src_models_shop_demonshopfiche_demonshopfiche"
+    ],
+    "225": [
+      "core::src_models_shop_shopdto",
+      "core::src_models_shop_shopdto_shopdto"
+    ],
+    "226": [
+      "core::src_models_shop_shopfeedback",
+      "core::src_models_shop_shopfeedback_shopfeedback"
+    ],
+    "227": [
+      "core::src_models_shop_shoplist",
+      "core::src_models_shop_shoplist_shoplist"
+    ],
+    "228": [
+      "core::src_models_store_livestats",
+      "core::src_models_store_livestats_livestatstype"
+    ],
+    "229": [
+      "core::src_models_store_storeclan",
+      "core::src_models_store_storeclan_storeclan"
+    ],
+    "230": [
+      "core::src_models_store_storedojo",
+      "core::src_models_store_storedojo_storedojo"
+    ],
+    "231": [
+      "core::src_models_store_storeplayer",
+      "core::src_models_store_storeplayer_storeplayer"
+    ],
+    "232": [
+      "core::src_models_store_storestatelocal",
+      "core::src_models_store_storestatelocal_storestatelocal"
+    ],
+    "233": [
+      "core::src_models_store_storestatesession",
+      "core::src_models_store_storestatesession_storestatesession"
+    ],
+    "234": [
+      "core::src_returntypes_fight",
+      "core::src_returntypes_fight_fbtournamentfightopponentresponse"
+    ],
+    "235": [
+      "core::src_returntypes_log",
+      "core::src_returntypes_log_loglistresponse"
+    ],
+    "236": [
+      "core::src_returntypes_news",
+      "core::src_returntypes_news_newsgetresponse"
+    ],
+    "237": [
+      "core::src_utils_checkcondition",
+      "core::src_utils_checkcondition_checkcondition"
+    ],
+    "238": [
+      "core::src_utils_isuuid",
+      "core::src_utils_isuuid_isuuid"
+    ],
+    "239": [
+      "core::src_utils_pad",
+      "core::src_utils_pad_pad"
+    ],
+    "240": [
+      "core::src_utils_parser",
+      "core::src_utils_parser_conditionparser"
+    ],
+    "241": [
+      "core::src_utils_type",
+      "core::src_utils_type_ensure"
+    ],
+    "242": [
+      "core::src_version",
+      "core::src_version_version"
+    ],
+    "243": [
+      "core::src_models_npc_characters_index"
+    ],
+    "244": [
+      "core::src_models_npc_missions_index"
+    ],
+    "245": [
+      "core::src_models_fight_fightstep",
+      "core::src_models_fight_fightstep_activateenvironmentstep",
+      "core::src_models_fight_fightstep_addcastle",
+      "core::src_models_fight_fightstep_addstatusstep",
+      "core::src_models_fight_fightstep_animationstep",
+      "core::src_models_fight_fightstep_arrivestep",
+      "core::src_models_fight_fightstep_attachstep",
+      "core::src_models_fight_fightstep_attackcastle",
+      "core::src_models_fight_fightstep_attempthitstep",
+      "core::src_models_fight_fightstep_counterstep",
+      "core::src_models_fight_fightstep_cursedstep",
+      "core::src_models_fight_fightstep_deathstep",
+      "core::src_models_fight_fightstep_disableditemsstep",
+      "core::src_models_fight_fightstep_endhypnosisstep",
+      "core::src_models_fight_fightstep_expireenvironmentstep",
+      "core::src_models_fight_fightstep_fightstep",
+      "core::src_models_fight_fightstep_flipstep",
+      "core::src_models_fight_fightstep_gainenergystep",
+      "core::src_models_fight_fightstep_healstep",
+      "core::src_models_fight_fightstep_hitstep",
+      "core::src_models_fight_fightstep_hypnotizestep",
+      "core::src_models_fight_fightstep_initstepfighter",
+      "core::src_models_fight_fightstep_itemusestep",
+      "core::src_models_fight_fightstep_leaveanimation",
+      "core::src_models_fight_fightstep_leavestep",
+      "core::src_models_fight_fightstep_loosehpstep",
+      "core::src_models_fight_fightstep_losecostumestep",
+      "core::src_models_fight_fightstep_losespherestep",
+      "core::src_models_fight_fightstep_movebackstep",
+      "core::src_models_fight_fightstep_movestep",
+      "core::src_models_fight_fightstep_newturnstep",
+      "core::src_models_fight_fightstep_notifystep",
+      "core::src_models_fight_fightstep_preparestep",
+      "core::src_models_fight_fightstep_reduceenergystep",
+      "core::src_models_fight_fightstep_removecostumestep",
+      "core::src_models_fight_fightstep_removestatusstep",
+      "core::src_models_fight_fightstep_resiststep",
+      "core::src_models_fight_fightstep_revivestep",
+      "core::src_models_fight_fightstep_setcostumestep",
+      "core::src_models_fight_fightstep_skillactivatestep",
+      "core::src_models_fight_fightstep_skillannouncestep",
+      "core::src_models_fight_fightstep_skillexpirestep",
+      "core::src_models_fight_fightstep_statusturnstep",
+      "core::src_models_fight_fightstep_stealgoldstep",
+      "core::src_models_fight_fightstep_stepfighter",
+      "core::src_models_fight_fightstep_survivestep",
+      "core::src_models_fight_fightstep_timelimitstep",
+      "core::src_models_fight_fightstep_timeoutstep",
+      "core::src_models_fight_fightstep_tiredstep"
+    ],
+    "246": [
+      "core::dayjs",
+      "core::eslint",
+      "core::eslint_config_standard_with_typescript",
+      "core::eslint_plugin_import",
+      "core::eslint_plugin_n",
+      "core::eslint_plugin_promise",
+      "core::package",
+      "core::package_dependencies",
+      "core::package_dependencies_dayjs",
+      "core::package_dependencies_pure_rand",
+      "core::package_dependencies_seedrandom",
+      "core::package_devdependencies",
+      "core::package_devdependencies_eslint",
+      "core::package_devdependencies_eslint_config_standard_with_typescript",
+      "core::package_devdependencies_eslint_plugin_import",
+      "core::package_devdependencies_eslint_plugin_n",
+      "core::package_devdependencies_eslint_plugin_promise",
+      "core::package_devdependencies_prettier",
+      "core::package_devdependencies_stylistic_eslint_plugin_ts",
+      "core::package_devdependencies_types_eslint",
+      "core::package_devdependencies_types_seedrandom",
+      "core::package_devdependencies_typescript",
+      "core::package_devdependencies_typescript_eslint_eslint_plugin",
+      "core::package_devdependencies_typescript_eslint_parser",
+      "core::package_exports",
+      "core::package_files",
+      "core::package_name",
+      "core::package_release_it",
+      "core::package_release_it_git",
+      "core::package_scripts",
+      "core::package_scripts_build",
+      "core::package_scripts_prettier",
+      "core::package_scripts_release",
+      "core::package_type",
+      "core::package_version",
+      "core::prettier",
+      "core::pure_rand",
+      "core::ref_dist_mjs_map_mts_js_ts",
+      "core::ref_src",
+      "core::seedrandom",
+      "core::stylistic_eslint_plugin_ts",
+      "core::types_eslint",
+      "core::types_seedrandom",
+      "core::typescript",
+      "core::typescript_eslint_eslint_plugin",
+      "core::typescript_eslint_parser"
+    ],
+    "247": [
+      "core::src_utils_dinozutils",
+      "core::src_utils_dinozutils_actualplace",
+      "core::src_utils_dinozutils_backpackslot",
+      "core::src_utils_dinozutils_calculatepvexp",
+      "core::src_utils_dinozutils_calculatepvpxp",
+      "core::src_utils_dinozutils_calculatexpbonus",
+      "core::src_utils_dinozutils_canchangeskillstate",
+      "core::src_utils_dinozutils_cangotothisplace",
+      "core::src_utils_dinozutils_canlevelup",
+      "core::src_utils_dinozutils_canwinxp",
+      "core::src_utils_dinozutils_config",
+      "core::src_utils_dinozutils_getfollowabledinoz",
+      "core::src_utils_dinozutils_getmaxfollowers",
+      "core::src_utils_dinozutils_getmaxxp",
+      "core::src_utils_dinozutils_getrace",
+      "core::src_utils_dinozutils_isalive",
+      "core::src_utils_dinozutils_ismaxlevel",
+      "core::src_utils_dinozutils_knowskillid",
+      "core::src_utils_dinozutils_orderdinozlist",
+      "core::src_utils_dinozutils_playerfordinozfiche",
+      "core::src_utils_dinozutils_possessstatus",
+      "core::src_utils_dinozutils_rationale_381",
+      "core::src_utils_dinozutils_remainingxptolevelup",
+      "core::src_utils_dinozutils_todinozfiche",
+      "core::src_utils_dinozutils_todinozfichelite",
+      "core::src_utils_dinozutils_todinozpublicfiche",
+      "core::src_utils_dinozutils_toskilldetails"
+    ],
+    "248": [
+      "ed-be::src_business_dinozservice_resurrectdinoz",
+      "ed-be::src_business_forcebruteservice_fightfbtournamentopponent",
+      "ed-be::src_business_inventoryservice_usespecialitem",
+      "ed-be::src_business_oauthservice",
+      "ed-be::src_business_oauthservice_oauth_token",
+      "ed-be::src_dao_dinozdao_updatedinoz",
+      "ed-be::src_dao_playerdao",
+      "ed-be::src_dao_playerdao_archiveoldusername",
+      "ed-be::src_dao_playerdao_createplayer",
+      "ed-be::src_dao_playerdao_extractidfromauthorization",
+      "ed-be::src_dao_playerdao_getboxhandlerinformations",
+      "ed-be::src_dao_playerdao_getcommondatarequest",
+      "ed-be::src_dao_playerdao_nostrictauth",
+      "ed-be::src_dao_playerdao_updateusernameonrelatedtables",
+      "ed-be::src_dao_playeritemdao_increaseitemquantity",
+      "ed-be::src_dao_rankingdao_addplayerinranking",
+      "ed-be::src_dao_rankingdao_updatecompletion",
+      "ed-be::src_dao_trackingdao",
+      "ed-be::src_dao_trackingdao_setspecificstat",
+      "ed-be::src_test_utils_boxeslogic_test",
+      "ed-be::src_test_utils_boxeslogic_test_mockgetboxinfo",
+      "ed-be::src_test_utils_boxeslogic_test_mockweightedrandom",
+      "ed-be::src_utils_boxeslogic",
+      "ed-be::src_utils_boxeslogic_boxopening",
+      "ed-be::src_utils_boxeslogic_calculateplayercompletion"
+    ],
+    "249": [
+      "core::ref_esnext",
+      "core::ref_src_mts",
+      "core::ref_tsconfig_json",
+      "core::tsconfig",
+      "core::tsconfig_compileroptions",
+      "core::tsconfig_compileroptions_composite",
+      "core::tsconfig_compileroptions_downleveliteration",
+      "core::tsconfig_compileroptions_emitdecoratormetadata",
+      "core::tsconfig_compileroptions_esmoduleinterop",
+      "core::tsconfig_compileroptions_experimentaldecorators",
+      "core::tsconfig_compileroptions_lib",
+      "core::tsconfig_compileroptions_module",
+      "core::tsconfig_compileroptions_moduleresolution",
+      "core::tsconfig_compileroptions_outdir",
+      "core::tsconfig_compileroptions_rootdir",
+      "core::tsconfig_compileroptions_skiplibcheck",
+      "core::tsconfig_compileroptions_sourcemap",
+      "core::tsconfig_compileroptions_strict",
+      "core::tsconfig_compileroptions_strictpropertyinitialization",
+      "core::tsconfig_compileroptions_target",
+      "core::tsconfig_compileroptions_useunknownincatchvariables",
+      "core::tsconfig_exclude",
+      "core::tsconfig_extends",
+      "core::tsconfig_include"
+    ],
+    "250": [
+      "core::eslintrc",
+      "core::eslintrc_env",
+      "core::eslintrc_env_browser",
+      "core::eslintrc_env_es2021",
+      "core::eslintrc_env_node",
+      "core::eslintrc_extends",
+      "core::eslintrc_parser",
+      "core::eslintrc_parseroptions",
+      "core::eslintrc_parseroptions_ecmaversion",
+      "core::eslintrc_parseroptions_sourcetype",
+      "core::eslintrc_plugins",
+      "core::eslintrc_rules",
+      "core::eslintrc_rules_typescript_eslint_array_type",
+      "core::eslintrc_rules_typescript_eslint_consistent_type_imports",
+      "core::eslintrc_rules_typescript_eslint_no_inferrable_types",
+      "core::eslintrc_rules_typescript_eslint_no_namespace",
+      "core::eslintrc_rules_typescript_eslint_no_unused_vars",
+      "core::ref_error",
+      "core::ref_plugin_typescript_eslint_strict",
+      "core::ref_stylistic_ts",
+      "core::ref_typescript_eslint"
+    ],
+    "251": [
+      "core::src_models_clan_clanwar",
+      "core::src_models_clan_clanwar_prospector_destroyed_grace_visits",
+      "core::src_models_clan_clanwar_prospector_destroyed_penalty_base",
+      "core::src_models_clan_clanwar_prospector_evening_window",
+      "core::src_models_clan_clanwar_prospector_morning_window",
+      "core::src_models_clan_clanwar_prospector_notification",
+      "core::src_models_clan_clanwar_prospector_standing_reward_base",
+      "core::src_models_clan_clanwar_prospector_standing_reward_growth",
+      "core::src_models_clan_clanwar_repair_base_value",
+      "core::src_models_clan_clanwar_repair_max_hp",
+      "core::src_models_clan_clanwar_repair_max_stack",
+      "core::src_models_clan_clanwar_repair_max_ticks",
+      "core::src_models_clan_clanwar_repair_scale_factor",
+      "core::src_models_clan_clanwar_repaircost",
+      "core::src_models_clan_clanwar_repaircostingredient",
+      "core::src_models_clan_clanwar_repairfrequency",
+      "core::src_models_clan_clanwar_resting_attack_timer",
+      "core::src_models_clan_clanwar_war_base_value",
+      "core::src_models_clan_clanwar_war_notification",
+      "core::src_models_clan_clanwar_war_scale_per_100_points",
+      "core::src_models_clan_clanwar_warcost"
+    ],
+    "252": [
+      "core::src_constants",
+      "core::src_constants_clan_create_money",
+      "core::src_constants_clan_create_ranking_points",
+      "core::src_constants_clan_join_money",
+      "core::src_constants_clan_max_members_amount",
+      "core::src_constants_default_simultaneous_displayed_notifications",
+      "core::src_constants_long_ban_duration_ms",
+      "core::src_constants_market_max_items",
+      "core::src_constants_market_min_value",
+      "core::src_constants_market_offer_duration",
+      "core::src_constants_market_offer_duration_debug",
+      "core::src_constants_medium_ban_duration_ms",
+      "core::src_constants_playerforconditioncheck",
+      "core::src_constants_short_ban_duration_ms",
+      "core::src_constants_unsacrifice_duration",
+      "core::src_constants_unsacrifice_duration_debug"
+    ],
+    "253": [
+      "core::src_models_dojo_tournament",
+      "core::src_models_dojo_tournament_displayedleader",
+      "core::src_models_dojo_tournament_metadata",
+      "core::src_models_dojo_tournament_publicmetada",
+      "core::src_models_dojo_tournament_publictournament",
+      "core::src_models_dojo_tournament_rawtournamentmatch",
+      "core::src_models_dojo_tournament_teamleader",
+      "core::src_models_dojo_tournament_tournamenthistory",
+      "core::src_models_dojo_tournament_tournamentmatch",
+      "core::src_models_dojo_tournament_tournamentphase",
+      "core::src_models_dojo_tournament_tournamentplayer",
+      "core::src_models_dojo_tournament_tournamentpool",
+      "core::src_models_dojo_tournament_tournamentpools",
+      "core::src_models_dojo_tournament_tournamentschedule",
+      "core::src_models_dojo_tournament_tournamentstate",
+      "core::src_models_dojo_tournament_tournamentteam"
+    ],
+    "254": [
+      "core::src_models_fight_transpiler",
+      "core::src_models_fight_transpiler_aurafxtype",
+      "core::src_models_fight_transpiler_damageseffect",
+      "core::src_models_fight_transpiler_dinoaction",
+      "core::src_models_fight_transpiler_emotebehaviour",
+      "core::src_models_fight_transpiler_emotelist",
+      "core::src_models_fight_transpiler_entranceeffect",
+      "core::src_models_fight_transpiler_fighterproperty",
+      "core::src_models_fight_transpiler_finishstate",
+      "core::src_models_fight_transpiler_gotoeffect",
+      "core::src_models_fight_transpiler_lifeeffect",
+      "core::src_models_fight_transpiler_notificationlist",
+      "core::src_models_fight_transpiler_prefightloader",
+      "core::src_models_fight_transpiler_skillfxtype",
+      "core::src_models_fight_transpiler_statuseffect",
+      "core::src_models_fight_transpiler_transpiled"
+    ],
+    "255": [
+      "core::src_utils_fightconstants",
+      "core::src_utils_fightconstants_assault_power",
+      "core::src_utils_fightconstants_attack_global_factor",
+      "core::src_utils_fightconstants_base_assault_energy_cost",
+      "core::src_utils_fightconstants_base_energy_cost",
+      "core::src_utils_fightconstants_cycle",
+      "core::src_utils_fightconstants_energy_recovery_base_factor",
+      "core::src_utils_fightconstants_environment_timeout",
+      "core::src_utils_fightconstants_fight_infinite",
+      "core::src_utils_fightconstants_maximum_max_energy",
+      "core::src_utils_fightconstants_minimum_energy_to_act",
+      "core::src_utils_fightconstants_overtime_threshold",
+      "core::src_utils_fightconstants_time_base",
+      "core::src_utils_fightconstants_time_factor",
+      "core::src_utils_fightconstants_void_assault_power"
+    ],
+    "256": [
+      "ed-be::src_dao_clansdao_resolvedwar",
+      "ed-be::src_test_utils_warcalculation_test",
+      "ed-be::src_test_utils_warcalculation_test_makewar",
+      "ed-be::src_test_utils_warcalculation_test_ranking",
+      "ed-be::src_utils_warcalculation",
+      "ed-be::src_utils_warcalculation_buildrankingupdate",
+      "ed-be::src_utils_warcalculation_clamp",
+      "ed-be::src_utils_warcalculation_clanwarranking",
+      "ed-be::src_utils_warcalculation_computeplost",
+      "ed-be::src_utils_warcalculation_computepwin",
+      "ed-be::src_utils_warcalculation_computereputation",
+      "ed-be::src_utils_warcalculation_computewarpowers",
+      "ed-be::src_utils_warcalculation_computewarrankingupdates",
+      "ed-be::src_utils_warcalculation_prospectorupdate",
+      "ed-be::src_utils_warcalculation_warrankingupdate"
+    ],
+    "257": [
+      "core::src_models_dungeon_dungeonclient",
+      "core::src_models_dungeon_dungeonclient_arrows",
+      "core::src_models_dungeon_dungeonclient_cell",
+      "core::src_models_dungeon_dungeonclient_dinozactoroptions",
+      "core::src_models_dungeon_dungeonclient_item_assets",
+      "core::src_models_dungeon_dungeonclient_key_skin_count",
+      "core::src_models_dungeon_dungeonclient_mazedims",
+      "core::src_models_dungeon_dungeonclient_moveresult",
+      "core::src_models_dungeon_dungeonclient_rendereroptions",
+      "core::src_models_dungeon_dungeonclient_revealedcell",
+      "core::src_models_dungeon_dungeonclient_skin",
+      "core::src_models_dungeon_dungeonclient_skins",
+      "core::src_models_dungeon_dungeonclient_startrunresult"
+    ],
+    "258": [
+      "core::src_models_import_twinoapi",
+      "core::src_models_import_twinoapi_achievement",
+      "core::src_models_import_twinoapi_collectionapi",
+      "core::src_models_import_twinoapi_dinoapi",
+      "core::src_models_import_twinoapi_dinorpgprofile",
+      "core::src_models_import_twinoapi_effectapi",
+      "core::src_models_import_twinoapi_objectapi",
+      "core::src_models_import_twinoapi_scenarioapi",
+      "core::src_models_import_twinoapi_site",
+      "core::src_models_import_twinoapi_stats",
+      "core::src_models_import_twinoapi_twinoresponseapi",
+      "core::src_models_import_twinoapi_twinouser"
+    ],
+    "259": [
+      "core::src_models_dojo_forcebrute",
+      "core::src_models_dojo_forcebrute_fbdetails",
+      "core::src_models_dojo_forcebrute_fbmetadata",
+      "core::src_models_dojo_forcebrute_fbopponent",
+      "core::src_models_dojo_forcebrute_fbparticipation",
+      "core::src_models_dojo_forcebrute_fbpool",
+      "core::src_models_dojo_forcebrute_fbpools",
+      "core::src_models_dojo_forcebrute_publicevent",
+      "core::src_models_dojo_forcebrute_publicfbtournament",
+      "core::src_models_dojo_forcebrute_publicfbtournamentfight",
+      "core::src_models_dojo_forcebrute_rawmatch"
+    ],
+    "260": [
+      "core::src_models_fight_detailedfighter",
+      "core::src_models_fight_detailedfighter_allfightertypeexceptboss",
+      "core::src_models_fight_detailedfighter_badfightstatus",
+      "core::src_models_fight_detailedfighter_detailedfighter",
+      "core::src_models_fight_detailedfighter_fighterresultfiche",
+      "core::src_models_fight_detailedfighter_fighterstatusdata",
+      "core::src_models_fight_detailedfighter_fightertype",
+      "core::src_models_fight_detailedfighter_fightstatus",
+      "core::src_models_fight_detailedfighter_fightstatuslength",
+      "core::src_models_fight_detailedfighter_goodfightstatus",
+      "core::src_models_fight_detailedfighter_incapacitatingstatus"
+    ],
+    "261": [
+      "core::src_models_forum_forum",
+      "core::src_models_forum_forum_author",
+      "core::src_models_forum_forum_datedthread",
+      "core::src_models_forum_forum_forumlocale",
+      "core::src_models_forum_forum_forummessage",
+      "core::src_models_forum_forum_forumpost",
+      "core::src_models_forum_forum_forumthreads",
+      "core::src_models_forum_forum_forumtype",
+      "core::src_models_forum_forum_posts",
+      "core::src_models_forum_forum_revision",
+      "core::src_models_forum_forum_thread"
+    ],
+    "262": [
+      "core::src_models_fight_fightresult",
+      "core::src_models_fight_fightresult_catchresult",
+      "core::src_models_fight_fightresult_fighterrecap",
+      "core::src_models_fight_fightresult_fightoutcome",
+      "core::src_models_fight_fightresult_fightprocessresult",
+      "core::src_models_fight_fightresult_fightreplay",
+      "core::src_models_fight_fightresult_fightresult",
+      "core::src_models_fight_fightresult_fightstats",
+      "core::src_models_fight_fightresult_fullfightstats"
+    ],
+    "263": [
+      "ed-be::src_business_eternaltwinservice",
+      "ed-be::src_business_eternaltwinservice_checklb",
+      "ed-be::src_business_eternaltwinservice_checkplayerlb",
+      "ed-be::src_dao_playerdao_getlbplayer",
+      "ed-be::src_dao_playerdao_getlbresponseinformation",
+      "ed-be::src_routes_eternaltwin_routes",
+      "ed-be::src_routes_eternaltwin_routes_routes",
+      "ed-be::src_test_business_eternaltwinservice_test",
+      "ed-be::src_test_business_eternaltwinservice_test_req"
+    ],
+    "264": [
+      "core::src_models_clan_clan",
+      "core::src_models_clan_clan_attackstatus",
+      "core::src_models_clan_clan_castle",
+      "core::src_models_clan_clan_clanforsearch",
+      "core::src_models_clan_clan_clanlite",
+      "core::src_models_clan_clan_defender",
+      "core::src_models_clan_clan_playerclanjoinrequest",
+      "core::src_models_clan_clan_treasureingredient"
+    ],
+    "265": [
+      "core::src_models_fight_fightconfiguration",
+      "core::src_models_fight_fightconfiguration_clan_war_pvp_rules",
+      "core::src_models_fight_fightconfiguration_dinoztogetfighter",
+      "core::src_models_fight_fightconfiguration_dojo_challenge_rules",
+      "core::src_models_fight_fightconfiguration_fightconfiguration",
+      "core::src_models_fight_fightconfiguration_fightrules",
+      "core::src_models_fight_fightconfiguration_monster_fight_rules",
+      "core::src_models_fight_fightconfiguration_standard_pvp_rules"
+    ],
+    "266": [
+      "core::src_returntypes_dinozbuild",
+      "core::src_returntypes_dinozbuild_assigndinozbuildresponse",
+      "core::src_returntypes_dinozbuild_copydinozbuildresponse",
+      "core::src_returntypes_dinozbuild_createdinozbuildresponse",
+      "core::src_returntypes_dinozbuild_deletedinozbuildresponse",
+      "core::src_returntypes_dinozbuild_getowndinozbuildresponse",
+      "core::src_returntypes_dinozbuild_listclansharedbuildsresponse",
+      "core::src_returntypes_dinozbuild_updatedinozbuildresponse"
+    ],
+    "267": [
+      "core::src_utils_dojoconstants",
+      "core::src_utils_dojoconstants_dojo_fight_cost",
+      "core::src_utils_dojoconstants_dojo_fight_friends_dinoz_cost",
+      "core::src_utils_dojoconstants_dojo_max_daily_challenge",
+      "core::src_utils_dojoconstants_dojo_max_series",
+      "core::src_utils_dojoconstants_dojo_opponent_in_serie",
+      "core::src_utils_dojoconstants_dojo_reputation_challenge",
+      "core::src_utils_dojoconstants_dojo_reputation_win"
+    ],
+    "268": [
+      "core::src_models_config_config",
+      "core::src_models_config_config_adminsconfig",
+      "core::src_models_config_config_config",
+      "core::src_models_config_config_dbconfig",
+      "core::src_models_config_config_discord",
+      "core::src_models_config_config_generalconfig",
+      "core::src_models_config_config_oauthconfig"
+    ],
+    "269": [
+      "core::src_models_enums_parser",
+      "core::src_models_enums_parser_comparator",
+      "core::src_models_enums_parser_conditionenum",
+      "core::src_models_enums_parser_mathoperator",
+      "core::src_models_enums_parser_operator",
+      "core::src_models_enums_parser_rewardenum",
+      "core::src_models_enums_parser_triggerenum"
+    ],
+    "270": [
+      "core::src_utils_gatherutils",
+      "core::src_utils_gatherutils_discoverbox",
+      "core::src_utils_gatherutils_getgridsize",
+      "core::src_utils_gatherutils_getpublicgrid",
+      "core::src_utils_gatherutils_hidegridingredients",
+      "core::src_utils_gatherutils_initializegathergrid",
+      "core::src_utils_gatherutils_savegrid"
+    ],
+    "271": [
+      "core::src_utils_getspecialstat",
+      "core::src_utils_getspecialstat_basespecialstats",
+      "core::src_utils_getspecialstat_getspecialstat",
+      "core::src_utils_getspecialstat_specialstat",
+      "core::src_utils_getspecialstat_specialstataspercent",
+      "core::src_utils_getspecialstat_specialstatusedinfights",
+      "core::src_utils_getspecialstat_uniquespecialstatusedinfights"
+    ],
+    "272": [
+      "core::src_models_clan_claneventconfig",
+      "core::src_models_clan_claneventconfig_claneventconfig",
+      "core::src_models_clan_claneventconfig_claneventfight",
+      "core::src_models_clan_claneventconfig_claneventreward",
+      "core::src_models_clan_claneventconfig_eventform",
+      "core::src_models_clan_claneventconfig_ongoingevent"
+    ],
+    "273": [
+      "core::src_models_enums_tournamentname",
+      "core::src_models_enums_tournamentname_tournamentnamemiddle",
+      "core::src_models_enums_tournamentname_tournamentnameprefix",
+      "core::src_models_enums_tournamentname_tournamentnamequality",
+      "core::src_models_enums_tournamentname_tournamentnamesuffix",
+      "core::src_models_enums_tournamentname_tournamentnametitle"
+    ],
+    "274": [
+      "core::src_utils_twinoidgoals",
+      "core::src_utils_twinoidgoals_adjustgoals",
+      "core::src_utils_twinoidgoals_converttoplayerstats",
+      "core::src_utils_twinoidgoals_getgoal",
+      "core::src_utils_twinoidgoals_gettotalpoints",
+      "core::src_utils_twinoidgoals_getunlockedgoals"
+    ],
+    "275": [
+      "core::src_models_dinoz_skilldetails",
+      "core::src_models_dinoz_skilldetails_effectdescriptor",
+      "core::src_models_dinoz_skilldetails_otherassaults",
+      "core::src_models_dinoz_skilldetails_passiveeffects",
+      "core::src_models_dinoz_skilldetails_skilldetails"
+    ],
+    "276": [
+      "core::src_models_dojo_challenge",
+      "core::src_models_dojo_challenge_challenge",
+      "core::src_models_dojo_challenge_challengeranges",
+      "core::src_models_dojo_challenge_challengetype",
+      "core::src_models_dojo_challenge_parsechallenge"
+    ],
+    "277": [
+      "core::src_models_dungeon_dungeoneditor",
+      "core::src_models_dungeon_dungeoneditor_dungeongrid",
+      "core::src_models_dungeon_dungeoneditor_dungeongriddoor",
+      "core::src_models_dungeon_dungeoneditor_dungeongriditem",
+      "core::src_models_dungeon_dungeoneditor_dungeongridlevel"
+    ],
+    "278": [
+      "core::src_models_dungeon_dungeonlist",
+      "core::src_models_dungeon_dungeonlist_dungeon",
+      "core::src_models_dungeon_dungeonlist_dungeondetails",
+      "core::src_models_dungeon_dungeonlist_dungeonlist",
+      "core::src_models_dungeon_dungeonlist_dungeonscenario"
+    ],
+    "279": [
+      "core::src_models_event_events",
+      "core::src_models_event_events_currentevents",
+      "core::src_models_event_events_eventdetails",
+      "core::src_models_event_events_events",
+      "core::src_models_event_events_gameevent"
+    ],
+    "280": [
+      "core::src_models_fight_monsterlist",
+      "core::src_models_fight_monsterlist_monster",
+      "core::src_models_fight_monsterlist_monsterlist",
+      "core::src_models_fight_monsterlist_rationale_1399",
+      "core::src_models_fight_monsterlist_rationale_1772"
+    ],
+    "281": [
+      "core::src_models_ingredient_ingredientlist",
+      "core::src_models_ingredient_ingredientlist_ingredient",
+      "core::src_models_ingredient_ingredientlist_ingredientlist",
+      "core::src_models_ingredient_ingredientlist_ingredientname",
+      "core::src_models_ingredient_ingredientlist_ingredientnames"
+    ],
+    "282": [
+      "core::src_models_messagerie_threadsbasic",
+      "core::src_models_messagerie_threadsbasic_fullthread",
+      "core::src_models_messagerie_threadsbasic_message",
+      "core::src_models_messagerie_threadsbasic_newthread",
+      "core::src_models_messagerie_threadsbasic_threadsbasic"
+    ],
+    "283": [
+      "core::src_models_news_polls",
+      "core::src_models_news_polls_createpolldata",
+      "core::src_models_news_polls_createpolloption",
+      "core::src_models_news_polls_createpollresult",
+      "core::src_models_news_polls_pollpublic"
+    ],
+    "284": [
+      "core::src_models_place_placelist",
+      "core::src_models_place_placelist_placelist",
+      "core::src_models_place_placelist_placesbymap",
+      "core::src_models_place_placelist_swamp_flooded_days",
+      "core::src_models_place_placelist_swamp_fog_days"
+    ],
+    "285": [
+      "core::src_returntypes_offer",
+      "core::src_returntypes_offer_claimofferdata",
+      "core::src_returntypes_offer_enhancedoffer",
+      "core::src_returntypes_offer_offerfromgetoffers",
+      "core::src_returntypes_offer_offergetlist"
+    ],
+    "286": [
+      "core::src_models_clan_clanedit",
+      "core::src_models_clan_clanedit_clanedit",
+      "core::src_models_clan_clanedit_claningredient",
+      "core::src_models_clan_clanedit_clanpage"
+    ],
+    "287": [
+      "core::src_models_dinoz_actionlist",
+      "core::src_models_dinoz_actionlist_action",
+      "core::src_models_dinoz_actionlist_actionfiche",
+      "core::src_models_dinoz_actionlist_actionlist"
+    ],
+    "288": [
+      "core::src_models_dinoz_skilllist",
+      "core::src_models_dinoz_skilllist_skill",
+      "core::src_models_dinoz_skilllist_skilllist",
+      "core::src_models_dinoz_skilllist_uskillstoplayerfieldmap"
+    ],
+    "289": [
+      "core::src_models_dojo_teamformat",
+      "core::src_models_dojo_teamformat_formatname",
+      "core::src_models_dojo_teamformat_formatteam",
+      "core::src_models_dojo_teamformat_formattid"
+    ],
+    "290": [
+      "core::src_models_enums_scenario",
+      "core::src_models_enums_scenario_scenario",
+      "core::src_models_enums_scenario_scenariodetails",
+      "core::src_models_enums_scenario_scenariotype"
+    ],
+    "291": [
+      "core::src_models_goals_goalstype",
+      "core::src_models_goals_goalstype_goal",
+      "core::src_models_goals_goalstype_language",
+      "core::src_models_goals_goalstype_unlock"
+    ],
+    "292": [
+      "core::src_models_item_boxopening",
+      "core::src_models_item_boxopening_boxopening",
+      "core::src_models_item_boxopening_boxtype",
+      "core::src_models_item_boxopening_itemprobability"
+    ],
+    "293": [
+      "core::src_models_item_itemlist",
+      "core::src_models_item_itemlist_item",
+      "core::src_models_item_itemlist_itemlist",
+      "core::src_models_item_itemlist_itemtoboxtype"
+    ],
+    "294": [
+      "core::src_models_npc_characters_totems",
+      "core::src_models_npc_characters_totems_hippo",
+      "core::src_models_npc_characters_totems_pteroz",
+      "core::src_models_npc_characters_totems_rocky"
+    ],
+    "295": [
+      "core::src_returntypes_clan",
+      "core::src_returntypes_clan_getclanmemberresponse",
+      "core::src_returntypes_clan_updateclanmemberrequestbody",
+      "core::src_returntypes_clan_updateclanmemberrequestparams"
+    ],
+    "296": [
+      "core::src_utils_expectederror",
+      "core::src_utils_expectederror_expectederror",
+      "core::src_utils_expectederror_expectederror_constructor",
+      "core::src_utils_expectederror_outdatederror"
+    ],
+    "297": [
+      "core::src_utils_missionutils",
+      "core::src_utils_missionutils_dinoztogetactualstep",
+      "core::src_utils_missionutils_getactualstep",
+      "core::src_utils_missionutils_gethudobjective"
+    ],
+    "298": [
+      "core::src_models_admin_iplist",
+      "core::src_models_admin_iplist_iplist",
+      "core::src_models_admin_iplist_suspectedplayer"
+    ],
+    "299": [
+      "core::src_models_admin_moderationtype",
+      "core::src_models_admin_moderationtype_moderationadmintype",
+      "core::src_models_admin_moderationtype_moderationtype"
+    ],
+    "300": [
+      "core::src_models_clan_clanjoinrequest",
+      "core::src_models_clan_clanjoinrequest_joinclanresponse",
+      "core::src_models_clan_clanjoinrequest_joinrequestlistresponse"
+    ],
+    "301": [
+      "core::src_models_clan_warcalculation",
+      "core::src_models_clan_warcalculation_computerepaircost",
+      "core::src_models_clan_warcalculation_computewarcost"
+    ],
+    "302": [
+      "core::src_models_dinoz_dinozrace",
+      "core::src_models_dinoz_dinozrace_dinozrace",
+      "core::src_models_dinoz_dinozrace_upchance"
+    ],
+    "303": [
+      "ed-be::cors",
+      "ed-be::package_dependencies_cors"
+    ],
+    "304": [
+      "ed-be::cron",
+      "ed-be::package_dependencies_cron"
+    ],
+    "305": [
+      "ed-be::dayjs",
+      "ed-be::package_dependencies_dayjs"
+    ],
+    "306": [
+      "ed-be::discord_js",
+      "ed-be::package_dependencies_discord_js"
+    ],
+    "307": [
+      "ed-be::drpg_core",
+      "ed-be::package_dependencies_drpg_core"
+    ],
+    "308": [
+      "ed-be::drpg_renderer",
+      "ed-be::package_dependencies_drpg_renderer"
+    ],
+    "309": [
+      "ed-be::eternaltwin_client_node",
+      "ed-be::package_dependencies_eternaltwin_client_node"
+    ],
+    "310": [
+      "ed-be::eternaltwin_core",
+      "ed-be::package_dependencies_eternaltwin_core"
+    ],
+    "311": [
+      "ed-be::eternaltwin_oauth_client_http",
+      "ed-be::package_dependencies_eternaltwin_oauth_client_http"
+    ],
+    "312": [
+      "ed-be::express",
+      "ed-be::package_dependencies_express"
+    ],
+    "313": [
+      "ed-be::express_validator",
+      "ed-be::package_dependencies_express_validator"
+    ],
+    "314": [
+      "ed-be::i18next",
+      "ed-be::package_dependencies_i18next"
+    ],
+    "315": [
+      "ed-be::i18next_fs_backend",
+      "ed-be::package_dependencies_i18next_fs_backend"
+    ],
+    "316": [
+      "ed-be::jsonwebtoken",
+      "ed-be::package_dependencies_jsonwebtoken"
+    ],
+    "317": [
+      "ed-be::node_fetch",
+      "ed-be::package_dependencies_node_fetch"
+    ],
+    "318": [
+      "ed-be::node_schedule",
+      "ed-be::package_dependencies_node_schedule"
+    ],
+    "319": [
+      "ed-be::opentelemetry_exporter_trace_otlp_proto",
+      "ed-be::package_dependencies_opentelemetry_exporter_trace_otlp_proto"
+    ],
+    "320": [
+      "ed-be::opentelemetry_instrumentation",
+      "ed-be::package_dependencies_opentelemetry_instrumentation"
+    ],
+    "321": [
+      "ed-be::opentelemetry_instrumentation_express",
+      "ed-be::package_dependencies_opentelemetry_instrumentation_express"
+    ],
+    "322": [
+      "ed-be::opentelemetry_instrumentation_http",
+      "ed-be::package_dependencies_opentelemetry_instrumentation_http"
+    ],
+    "323": [
+      "ed-be::opentelemetry_resources",
+      "ed-be::package_dependencies_opentelemetry_resources"
+    ],
+    "324": [
+      "ed-be::opentelemetry_sdk_node",
+      "ed-be::package_dependencies_opentelemetry_sdk_node"
+    ],
+    "325": [
+      "ed-be::opentelemetry_sdk_trace_node",
+      "ed-be::package_dependencies_opentelemetry_sdk_trace_node"
+    ],
+    "326": [
+      "ed-be::opentelemetry_semantic_conventions",
+      "ed-be::package_dependencies_opentelemetry_semantic_conventions"
+    ],
+    "327": [
+      "ed-be::package_dependencies_prisma_client",
+      "ed-be::prisma_client"
+    ],
+    "328": [
+      "ed-be::package_dependencies_prisma_instrumentation",
+      "ed-be::prisma_instrumentation"
+    ],
+    "329": [
+      "ed-be::package_dependencies_reflect_metadata",
+      "ed-be::reflect_metadata"
+    ],
+    "330": [
+      "ed-be::package_dependencies_romans",
+      "ed-be::romans"
+    ],
+    "331": [
+      "ed-be::package_dependencies_swagger_jsdoc",
+      "ed-be::swagger_jsdoc"
+    ],
+    "332": [
+      "ed-be::package_dependencies_swagger_ui_express",
+      "ed-be::swagger_ui_express"
+    ],
+    "333": [
+      "ed-be::package_dependencies_url",
+      "ed-be::url"
+    ],
+    "334": [
+      "ed-be::package_dependencies_ws",
+      "ed-be::ws"
+    ],
+    "335": [
+      "ed-be::package_devdependencies_prettier",
+      "ed-be::prettier"
+    ],
+    "336": [
+      "ed-be::package_devdependencies_prisma",
+      "ed-be::prisma"
+    ],
+    "337": [
+      "ed-be::package_devdependencies_sanitize_html",
+      "ed-be::sanitize_html"
+    ],
+    "338": [
+      "ed-be::package_devdependencies_ts_node",
+      "ed-be::ts_node"
+    ],
+    "339": [
+      "ed-be::package_devdependencies_tsc_watch",
+      "ed-be::tsc_watch"
+    ],
+    "340": [
+      "ed-be::package_devdependencies_types_cors",
+      "ed-be::types_cors"
+    ],
+    "341": [
+      "ed-be::package_devdependencies_types_cron",
+      "ed-be::types_cron"
+    ],
+    "342": [
+      "ed-be::package_devdependencies_types_express",
+      "ed-be::types_express"
+    ],
+    "343": [
+      "ed-be::package_devdependencies_types_multer",
+      "ed-be::types_multer"
+    ],
+    "344": [
+      "ed-be::package_devdependencies_types_request",
+      "ed-be::types_request"
+    ],
+    "345": [
+      "ed-be::package_devdependencies_types_sanitize_html",
+      "ed-be::types_sanitize_html"
+    ],
+    "346": [
+      "ed-be::package_devdependencies_types_validator",
+      "ed-be::types_validator"
+    ],
+    "347": [
+      "ed-be::package_devdependencies_vitest",
+      "ed-be::vitest"
+    ],
+    "348": [
+      "ed-be::package_devdependencies_vitest_coverage_v8",
+      "ed-be::vitest_coverage_v8"
+    ],
+    "349": [
+      "ed-be::src_constants_import_ingredientresolution",
+      "ed-be::src_constants_import_ingredientresolution_ingredientresolution"
+    ],
+    "350": [
+      "ed-be::src_constants_import_itemresolution",
+      "ed-be::src_constants_import_itemresolution_itemresolution"
+    ],
+    "351": [
+      "ed-be::src_constants_import_skillresolution",
+      "ed-be::src_constants_import_skillresolution_skillnameresolution"
+    ],
+    "352": [
+      "ed-be::src_test_data_dinozdata"
+    ],
+    "353": [
+      "ed-be::vitest_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0537874339401057,
+    "1": 0.10885341074020319,
+    "2": 0.05583308845136644,
+    "3": 0.06526610644257703,
+    "4": 0.09375,
+    "5": 0.11393323657474601,
+    "6": 0.07993197278911565,
+    "7": 0.1534090909090909,
+    "8": 0.08333333333333333,
+    "9": 0.0919661733615222,
+    "10": 0.11097560975609756,
+    "11": 0.1657754010695187,
+    "12": 0.1586452762923351,
+    "13": 0.21164021164021163,
+    "14": 0.13068181818181818,
+    "15": 0.16330645161290322,
+    "16": 0.09803921568627451,
+    "17": 0.06451612903225806,
+    "18": 0.16137566137566137,
+    "19": 0.1737891737891738,
+    "20": 0.15151515151515152,
+    "21": 0.2578947368421053,
+    "22": 0.23076923076923078,
+    "23": 0.14285714285714285,
+    "24": 0.15584415584415584,
+    "25": 0.16559139784946236,
+    "26": 0.07081377151799687,
+    "27": 0.09523809523809523,
+    "28": 0.4,
+    "29": 0.1761904761904762,
+    "30": 0.2134387351778656,
+    "31": 0.15669515669515668,
+    "32": 0.19473684210526315,
+    "33": 0.10526315789473684,
+    "34": 0.28654970760233917,
+    "35": 0.21937321937321938,
+    "36": 0.20261437908496732,
+    "37": 0.24836601307189543,
+    "38": 0.2867647058823529,
+    "39": 0.4,
+    "40": 0.15441176470588236,
+    "41": 0.125,
+    "42": 0.2878787878787879,
+    "43": 0.2426470588235294,
+    "44": 0.2,
+    "45": 0.15384615384615385,
+    "46": 0.19230769230769232,
+    "47": 0.2727272727272727,
+    "48": 0.18181818181818182,
+    "49": 0.28888888888888886,
+    "50": 0.5,
+    "51": 0.2222222222222222,
+    "52": 0.4444444444444444,
+    "53": 0.5277777777777778,
+    "54": 0.2222222222222222,
+    "55": 0.4642857142857143,
+    "56": 0.6,
+    "57": 0.19696969696969696,
+    "58": 0.5,
+    "59": 0.6666666666666666,
+    "60": 1.0,
+    "61": 0.6666666666666666,
+    "62": 0.6666666666666666,
+    "63": 0.6666666666666666,
+    "64": 0.6666666666666666,
+    "65": 0.6666666666666666,
+    "66": 0.6666666666666666,
+    "67": 0.6666666666666666,
+    "68": 0.6666666666666666,
+    "69": 0.6666666666666666,
+    "70": 0.6666666666666666,
+    "71": 0.6666666666666666,
+    "72": 0.6666666666666666,
+    "73": 0.6666666666666666,
+    "74": 0.6666666666666666,
+    "75": 0.6666666666666666,
+    "76": 0.6666666666666666,
+    "77": 0.6666666666666666,
+    "78": 0.6666666666666666,
+    "79": 0.6666666666666666,
+    "80": 0.6666666666666666,
+    "81": 0.6666666666666666,
+    "82": 0.6666666666666666,
+    "83": 0.6666666666666666,
+    "84": 0.6666666666666666,
+    "85": 0.6666666666666666,
+    "86": 1.0,
+    "87": 1.0,
+    "88": 1.0,
+    "89": 1.0,
+    "90": 1.0,
+    "91": 1.0,
+    "92": 1.0,
+    "93": 1.0,
+    "94": 1.0,
+    "95": 1.0,
+    "96": 1.0,
+    "97": 1.0,
+    "98": 1.0,
+    "99": 1.0,
+    "100": 1.0,
+    "101": 1.0,
+    "102": 1.0,
+    "103": 1.0,
+    "104": 1.0,
+    "105": 1.0,
+    "106": 1.0,
+    "107": 1.0,
+    "108": 1.0,
+    "109": 1.0,
+    "110": 1.0,
+    "111": 1.0,
+    "112": 1.0,
+    "113": 1.0,
+    "114": 1.0,
+    "115": 1.0,
+    "116": 1.0,
+    "117": 1.0,
+    "118": 1.0,
+    "119": 1.0,
+    "120": 1.0,
+    "121": 1.0,
+    "122": 1.0,
+    "123": 1.0,
+    "124": 1.0,
+    "125": 1.0,
+    "126": 1.0,
+    "127": 1.0,
+    "128": 1.0,
+    "129": 1.0,
+    "130": 1.0,
+    "131": 1.0,
+    "132": 1.0,
+    "133": 1.0,
+    "134": 1.0,
+    "135": 1.0,
+    "136": 1.0,
+    "137": 1.0,
+    "138": 1.0,
+    "139": 1.0,
+    "140": 1.0,
+    "141": 1.0,
+    "142": 1.0,
+    "143": 1.0,
+    "144": 1.0,
+    "145": 1.0,
+    "146": 1.0,
+    "147": 1.0,
+    "148": 1.0,
+    "149": 1.0,
+    "150": 1.0,
+    "151": 1.0,
+    "152": 1.0,
+    "153": 1.0,
+    "154": 1.0,
+    "155": 1.0,
+    "156": 1.0,
+    "157": 1.0,
+    "158": 1.0,
+    "159": 1.0,
+    "160": 1.0,
+    "161": 1.0,
+    "162": 1.0,
+    "163": 1.0,
+    "164": 1.0,
+    "165": 1.0,
+    "166": 1.0,
+    "167": 1.0,
+    "168": 1.0,
+    "169": 1.0,
+    "170": 1.0,
+    "171": 1.0,
+    "172": 1.0,
+    "173": 1.0,
+    "174": 1.0,
+    "175": 1.0,
+    "176": 1.0,
+    "177": 1.0,
+    "178": 1.0,
+    "179": 1.0,
+    "180": 1.0,
+    "181": 1.0,
+    "182": 1.0,
+    "183": 1.0,
+    "184": 1.0,
+    "185": 1.0,
+    "186": 1.0,
+    "187": 1.0,
+    "188": 1.0,
+    "189": 1.0,
+    "190": 1.0,
+    "191": 1.0,
+    "192": 1.0,
+    "193": 1.0,
+    "194": 1.0,
+    "195": 1.0,
+    "196": 1.0,
+    "197": 1.0,
+    "198": 1.0,
+    "199": 1.0,
+    "200": 1.0,
+    "201": 1.0,
+    "202": 1.0,
+    "203": 1.0,
+    "204": 1.0,
+    "205": 1.0,
+    "206": 1.0,
+    "207": 1.0,
+    "208": 1.0,
+    "209": 1.0,
+    "210": 1.0,
+    "211": 1.0,
+    "212": 1.0,
+    "213": 1.0,
+    "214": 1.0,
+    "215": 1.0,
+    "216": 1.0,
+    "217": 1.0,
+    "218": 1.0,
+    "219": 1.0,
+    "220": 1.0,
+    "221": 1.0,
+    "222": 1.0,
+    "223": 1.0,
+    "224": 1.0,
+    "225": 1.0,
+    "226": 1.0,
+    "227": 1.0,
+    "228": 1.0,
+    "229": 1.0,
+    "230": 1.0,
+    "231": 1.0,
+    "232": 1.0,
+    "233": 1.0,
+    "234": 1.0,
+    "235": 1.0,
+    "236": 1.0,
+    "237": 1.0,
+    "238": 1.0,
+    "239": 1.0,
+    "240": 1.0,
+    "241": 1.0,
+    "242": 1.0,
+    "243": 1.0,
+    "244": 1.0,
+    "245": 0.04081632653061224,
+    "246": 0.043478260869565216,
+    "247": 0.10256410256410256,
+    "248": 0.21333333333333335,
+    "249": 0.08333333333333333,
+    "250": 0.09523809523809523,
+    "251": 0.09523809523809523,
+    "252": 0.125,
+    "253": 0.125,
+    "254": 0.125,
+    "255": 0.13333333333333333,
+    "256": 0.24761904761904763,
+    "257": 0.15384615384615385,
+    "258": 0.16666666666666666,
+    "259": 0.18181818181818182,
+    "260": 0.18181818181818182,
+    "261": 0.18181818181818182,
+    "262": 0.2222222222222222,
+    "263": 0.3611111111111111,
+    "264": 0.25,
+    "265": 0.25,
+    "266": 0.25,
+    "267": 0.25,
+    "268": 0.2857142857142857,
+    "269": 0.2857142857142857,
+    "270": 0.38095238095238093,
+    "271": 0.2857142857142857,
+    "272": 0.3333333333333333,
+    "273": 0.3333333333333333,
+    "274": 0.4666666666666667,
+    "275": 0.4,
+    "276": 0.4,
+    "277": 0.4,
+    "278": 0.4,
+    "279": 0.4,
+    "280": 0.4,
+    "281": 0.4,
+    "282": 0.4,
+    "283": 0.4,
+    "284": 0.4,
+    "285": 0.4,
+    "286": 0.5,
+    "287": 0.5,
+    "288": 0.5,
+    "289": 0.5,
+    "290": 0.5,
+    "291": 0.5,
+    "292": 0.5,
+    "293": 0.5,
+    "294": 0.5,
+    "295": 0.5,
+    "296": 0.6666666666666666,
+    "297": 0.6666666666666666,
+    "298": 0.6666666666666666,
+    "299": 0.6666666666666666,
+    "300": 0.6666666666666666,
+    "301": 0.6666666666666666,
+    "302": 0.6666666666666666,
+    "303": 1.0,
+    "304": 1.0,
+    "305": 1.0,
+    "306": 1.0,
+    "307": 1.0,
+    "308": 1.0,
+    "309": 1.0,
+    "310": 1.0,
+    "311": 1.0,
+    "312": 1.0,
+    "313": 1.0,
+    "314": 1.0,
+    "315": 1.0,
+    "316": 1.0,
+    "317": 1.0,
+    "318": 1.0,
+    "319": 1.0,
+    "320": 1.0,
+    "321": 1.0,
+    "322": 1.0,
+    "323": 1.0,
+    "324": 1.0,
+    "325": 1.0,
+    "326": 1.0,
+    "327": 1.0,
+    "328": 1.0,
+    "329": 1.0,
+    "330": 1.0,
+    "331": 1.0,
+    "332": 1.0,
+    "333": 1.0,
+    "334": 1.0,
+    "335": 1.0,
+    "336": 1.0,
+    "337": 1.0,
+    "338": 1.0,
+    "339": 1.0,
+    "340": 1.0,
+    "341": 1.0,
+    "342": 1.0,
+    "343": 1.0,
+    "344": 1.0,
+    "345": 1.0,
+    "346": 1.0,
+    "347": 1.0,
+    "348": 1.0,
+    "349": 1.0,
+    "350": 1.0,
+    "351": 1.0,
+    "352": 1.0,
+    "353": 1.0
+  },
+  "gods": [
+    {
+      "id": "ed-be::src_dao_playerdao_auth",
+      "label": "Auth",
+      "degree": 228
+    },
+    {
+      "id": "ed-be::src_utils_server_tracing_withspan",
+      "label": "withSpan()",
+      "degree": 182
+    },
+    {
+      "id": "ed-be::src_utils_server_translate_translate",
+      "label": "translate()",
+      "degree": 107
+    },
+    {
+      "id": "ed-be::src_dao_logdao_createlog",
+      "label": "createLog()",
+      "degree": 72
+    },
+    {
+      "id": "ed-be::src_prisma_prisma",
+      "label": "prisma",
+      "degree": 69
+    },
+    {
+      "id": "ed-be::src_dao_dinozdao_updatedinoz",
+      "label": "updateDinoz()",
+      "degree": 59
+    },
+    {
+      "id": "ed-be::src_test_helpers_req_makerequest",
+      "label": "makeRequest()",
+      "degree": 58
+    },
+    {
+      "id": "ed-be::src_utils_tournamentmanager_tournamentmanager",
+      "label": "TournamentManager",
+      "degree": 41
+    },
+    {
+      "id": "ed-be::src_dao_playeritemdao_increaseitemquantity",
+      "label": "increaseItemQuantity()",
+      "degree": 37
+    },
+    {
+      "id": "ed-be::src_utils_server_senderrors_senderror",
+      "label": "sendError()",
+      "degree": 37
+    }
+  ],
+  "surprises": [
+    {
+      "source": "NetworkDiscordClientOptions",
+      "target": "Logger",
+      "source_files": [
+        "src/utils/server/DiscordUtils.ts",
+        "src/logger/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "bridges separate communities; peripheral node `NetworkDiscordClientOptions` unexpectedly reaches hub `Logger`"
+    },
+    {
+      "source": "buyItem()",
+      "target": "shopList()",
+      "source_files": [
+        "src/business/itemShopService.ts",
+        "src/test/business/itinerantShopService.test.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "getItemsFromShop()",
+      "target": "shopList()",
+      "source_files": [
+        "src/business/itemShopService.ts",
+        "src/test/business/itinerantShopService.test.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "getAvailableActions()",
+      "target": "shopList()",
+      "source_files": [
+        "src/business/dinozService.ts",
+        "src/test/business/itinerantShopService.test.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "lockMiddleware()",
+      "source_files": [
+        "src/server.ts",
+        "src/middleware/lock.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `Auth` connect `Auth` to `offerService.ts`, `serverEventService.ts`, `withSpan`, `dinozService.ts`, `dungeonService.ts`, `eternaltwinService.ts`, `missionsService.test.ts`, `dojoService.ts`, `demonShopService.ts`, `dinozBuildService.test.ts`, `clanWar.ts`, `newsService.ts`, `inventoryService.ts`, `dinoz.ts`, `tournamentService.ts`, `dinozShopService.test.ts`, `npcService.test.ts`, `skillService.ts`, `adminService.ts`, `rewarder.ts`, `prisma.ts`, `createNotification`, `fightService.ts`, `specialService.ts`, `notificationDao.ts`, `forum.routes.ts`, `playerDao.ts`?",
+      "why": "High betweenness centrality (0.054) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `withSpan()` connect `withSpan` to `offerService.ts`, `serverEventService.ts`, `dinozService.ts`, `dungeonService.ts`, `Auth`, `eternaltwinService.ts`, `missionsService.test.ts`, `dojoService.ts`, `demonShopService.ts`, `dinozBuildService.test.ts`, `clanWar.ts`, `newsService.ts`, `inventoryService.ts`, `dinoz.ts`, `tournamentService.ts`, `dinozShopService.test.ts`, `npcService.test.ts`, `skillService.ts`, `adminService.ts`, `rewarder.ts`, `prisma.ts`, `fightService.ts`, `specialService.ts`, `playerDao.ts`?",
+      "why": "High betweenness centrality (0.017) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `prisma` connect `prisma.ts` to `offerService.ts`, `serverEventService.ts`, `withSpan`, `dinozService.ts`, `dungeonService.ts`, `Auth`, `routes/index.ts`, `missionsService.test.ts`, `dojoService.ts`, `demonShopService.ts`, `dinozBuildService.test.ts`, `clanWar.ts`, `newsService.ts`, `inventoryService.ts`, `tournamentService.ts`, `dinozShopService.test.ts`, `npcService.test.ts`, `sendErrors.ts`, `skillService.ts`, `adminService.ts`, `rewarder.ts`, `createNotification`, `fightService.ts`, `specialService.ts`, `rankingDao.ts`, `questsDao.ts`, `logDao.ts`, `notificationDao.ts`, `playerDao.ts`?",
+      "why": "High betweenness centrality (0.014) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Team`, `TournamentCacheData`, `Cell` to the rest of the system?",
+      "why": "820 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `fightMethods.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0537874339401057 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `offerService.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.10885341074020319 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `serverEventService.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05583308845136644 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

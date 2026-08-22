@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Missions API
+  description: Endpoints for listing, starting, progressing and finishing dinoz missions.
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /api/v1/missions/{id}/{npc}:
+    get:
+      summary: Get the list of missions an NPC offers to a dinoz
+      description: >-
+        Returns the NPC's missions annotated with the given dinoz's status for each
+        one (available, unavailable, ongoing, finished).
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the dinoz.
+          schema:
+            type: integer
+        - in: path
+          name: npc
+          required: true
+          description: Name of the NPC.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of missions with their status for this dinoz.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    missionId:
+                      type: integer
+                    status:
+                      type: string
+                      enum: [AVAILABLE, UNAVAILABLE, ONGOING, FINISHED]
+        '400':
+          description: Validation error (missing/invalid id or npc).
+        '500':
+          description: >-
+            Domain error (not logged in, dinoz/place/NPC not found, dinoz not named,
+            NPC has no missions, dinoz cannot talk to this NPC) or unexpected error.
+            Message is returned as plain text.
+
+  /api/v1/missions/update/{dinozId}/{missionId}:
+    put:
+      summary: Start or stop a mission for a dinoz
+      description: >-
+        Sets the mission's status via body.status: "start" adds the mission to the
+        dinoz (fails if already finished, unavailable, or another mission is
+        ongoing); "stop" removes it (fails if finished, unavailable, or not ongoing).
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: missionId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [start, stop]
+      responses:
+        '200':
+          description: Mission updated.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Validation error (missing/invalid dinozId, missionId or status).
+        '500':
+          description: >-
+            Domain error (not logged in, dinoz/NPC/place not found, invalid status
+            transition) or unexpected error. Message is returned as plain text.
+
+  /api/v1/missions/step/{dinozId}:
+    put:
+      summary: Progress the current mission step for a dinoz (talk/do/give item)
+      description: >-
+        Advances the dinoz's ongoing mission by one step. Handles TALKTO/DO steps
+        (advance immediately) and GIVE_ITEM steps (consumes the required item
+        quantity from the player's inventory, then advances).
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - missionId
+                - task
+              properties:
+                missionId:
+                  type: integer
+                task:
+                  type: string
+                  description: Not read by the handler for this route; validated as a non-empty string.
+      responses:
+        '200':
+          description: >-
+            Result text ("MissionName.StepText") for a TALKTO/DO/GIVE_ITEM step,
+            or "error" for any other step type.
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Validation error (missing/invalid dinozId, missionId or task).
+        '500':
+          description: >-
+            Domain error (not logged in, no active mission for this dinoz, not
+            enough of the required item) or unexpected error. Message is returned
+            as plain text.
+
+  /api/v1/missions/finish/{dinozId}:
+    put:
+      summary: Finish the current mission and grant its rewards
+      description: Rewards the dinoz for its ongoing mission and marks it finished.
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - missionId
+              properties:
+                missionId:
+                  type: integer
+      responses:
+        '200':
+          description: The list of rewarders granted for finishing the mission.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  description: Rewarder entry (see core/src/models/reward/Rewarder.mts).
+        '400':
+          description: Validation error (missing/invalid dinozId or missionId).
+        '500':
+          description: >-
+            Domain error (not logged in, no active mission for this dinoz) or
+            unexpected error. Message is returned as plain text.
+
+  /api/v1/missions/global:
+    get:
+      summary: Get mission completion data for the /missions overview page
+      description: >-
+        Requires the player to own the PMI reward. Returns each of the player's
+        dinoz along with, for every NPC that offers missions, the finished
+        missions from that NPC.
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Per-dinoz finished-mission summary.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    display:
+                      type: string
+                    missions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          npc:
+                            type: string
+                          missions:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+        '400':
+          description: Validation error.
+        '500':
+          description: >-
+            Domain error (not logged in, player has no PMI) or unexpected error.
+            Message is returned as plain text.
+
+  /api/v1/missions/fight/{dinozId}:
+    put:
+      summary: Trigger the fight for the dinoz's current LAUNCH_FIGHT mission step
+      description: >-
+        Runs the fight against the mission step's mob list for the dinoz's team
+        (or its leader's team, if any) and advances the mission step on completion.
+        No-op (empty response) if the current step's action type is not LAUNCH_FIGHT.
+      tags:
+        - Missions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - missionId
+                - task
+              properties:
+                missionId:
+                  type: integer
+                task:
+                  type: string
+                  description: Not read by the handler for this route; validated as a non-empty string.
+      responses:
+        '200':
+          description: >-
+            The fight result, or an empty body if the current step is not a
+            LAUNCH_FIGHT step.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: FightResult (see core/src/models/fight/FightResult.mts).
+                properties:
+                  fighters:
+                    type: array
+                    items:
+                      type: object
+                  goldEarned:
+                    type: integer
+                  xpEarned:
+                    type: integer
+                  levelUp:
+                    type: boolean
+                  totalHpLost:
+                    type: integer
+                  result:
+                    type: boolean
+                  history:
+                    type: array
+                    items:
+                      type: object
+                  place:
+                    type: string
+        '400':
+          description: Validation error (missing/invalid dinozId, missionId or task).
+        '500':
+          description: >-
+            Domain error (not logged in, no active mission for this dinoz,
+            dinoz_fight resolution failure, player not found) or unexpected error.
+            Message is returned as plain text.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: base64("{playerId}:{token}")
+      description: >-
+        Authorization: Bearer <base64 of "playerId:token">, decoded and checked by
+        the backend's auth() helper.

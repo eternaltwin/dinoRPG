@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Level API
+  description: Endpoints for dinoz level-up skill selection (routes/level.routes.ts).
+  version: 1.0.0
+paths:
+  /api/v1/level/learnableskills/{id}/{tryNumber}:
+    get:
+      summary: Get the learnable/unlockable skills available for a dinoz's level up
+      description: >-
+        Authentication is resolved from the request inside the business layer (auth(req)); the caller must
+        own the dinoz identified by {id}.
+      tags:
+        - Level
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID of the dinoz.
+          schema:
+            type: integer
+        - in: path
+          name: tryNumber
+          required: true
+          description: Number of the level-up attempt (1, or 2 if the dinoz has the "Plan de carrière" skill or a cube item).
+          schema:
+            type: integer
+            enum: [1, 2]
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  learnableSkills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        skillId:
+                          type: integer
+                  unlockableSkills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        skillId:
+                          type: integer
+                  canRelaunch:
+                    type: boolean
+                  element:
+                    type: integer
+                  nbrUpFire:
+                    type: integer
+                  nbrUpWood:
+                    type: integer
+                  nbrUpWater:
+                    type: integer
+                  nbrUpLightning:
+                    type: integer
+                  nbrUpAir:
+                    type: integer
+                  upChance:
+                    type: number
+                  name:
+                    type: string
+                  display:
+                    type: string
+                  level:
+                    type: integer
+        '400':
+          description: Invalid path parameters (id or tryNumber not numeric)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: >-
+            Error - includes both unexpected errors and expected domain errors (e.g. dinoz not found, dinoz
+            doesn't belong to player, dinoz not named, dinoz already at max level, not enough experience,
+            invalid tryNumber). All errors are returned with status 500 by the shared sendError handler.
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v1/level/learnskill/{id}:
+    post:
+      summary: Learn or unlock a skill (or set of unlockable skills) for a dinoz's level up
+      description: >-
+        Authentication is resolved from the request inside the business layer (auth(req)); the caller must
+        own the dinoz identified by {id}.
+      tags:
+        - Level
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID of the dinoz.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - skillIdList
+                - tryNumber
+              properties:
+                skillIdList:
+                  type: array
+                  description: >-
+                    Non-empty array of skill IDs to learn. Must be either a single learnable skill, or the
+                    full set of currently unlockable skills.
+                  items:
+                    type: number
+                tryNumber:
+                  type: integer
+                  description: Number of the level-up attempt (1 or 2).
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  newMaxExperience:
+                    type: number
+                  discoveredSkill:
+                    type: number
+        '400':
+          description: Invalid request body or path parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        '500':
+          description: >-
+            Error - includes both unexpected errors and expected domain errors (e.g. dinoz not found, dinoz
+            doesn't belong to player, dinoz not named, invalid skill selection, unknown skill). All errors
+            are returned with status 500 by the shared sendError handler.
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

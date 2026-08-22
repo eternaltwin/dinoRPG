@@ -1,0 +1,724 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Dinoz API
+  version: '1.0'
+  description: >
+    Routes for managing a player's dinoz: fiche, shop purchase, naming, skills,
+    movement, digging, gathering, concentration, team management (follow/leader/disband),
+    Irma potion, freeze, rest, reincarnation and build assignment.
+    Reconstructed from ed-be/src/routes/dinoz.routes.ts on 2026-08-22.
+servers:
+  - url: /
+tags:
+  - name: Dinoz
+    description: Player dinoz actions
+security:
+  - basicAuth: []
+paths:
+  /api/v1/dinoz/fiche/{id}:
+    get:
+      tags: [Dinoz]
+      summary: Get the fiche of a dinoz
+      operationId: getDinozFiche
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: The dinoz fiche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DinozFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/buydinoz/{id}:
+    post:
+      tags: [Dinoz]
+      summary: Buy a dinoz in the shop
+      operationId: buyDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: The newly bought dinoz's fiche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DinozFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/setname/{id}:
+    put:
+      tags: [Dinoz]
+      summary: Change the name of a dinoz
+      operationId: setDinozName
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [newName]
+              properties:
+                newName:
+                  type: string
+      responses:
+        '200':
+          description: Name changed successfully (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/skill/{id}:
+    get:
+      tags: [Dinoz]
+      summary: Get all skills of a dinoz
+      operationId: getDinozSkill
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Array of detailed skill info known/knowable by the dinoz
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  description: SkillDetails (skill id, name, element, effects, etc.) - not fully modeled here.
+                  additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/setskillstate/{id}:
+    put:
+      tags: [Dinoz]
+      summary: Activate or deactivate a dinoz skill
+      operationId: setSkillState
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [skillId, skillState]
+              properties:
+                skillId:
+                  type: integer
+                skillState:
+                  type: boolean
+      responses:
+        '200':
+          description: Whether the skill state was changed
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/betamove:
+    put:
+      tags: [Dinoz]
+      summary: Move a dinoz (and its followers) to an adjacent place
+      operationId: betaMove
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [placeId, dinozId]
+              properties:
+                placeId:
+                  type: integer
+                  description: Id of the destination place
+                dinozId:
+                  type: integer
+                  description: Id of the dinoz to move
+      responses:
+        '200':
+          description: >
+            The resulting FightResult (a fight is rolled when moving into a place with
+            monsters; the shape isn't fully modeled here).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/resurrect/{id}:
+    put:
+      tags: [Dinoz]
+      summary: Resurrect a dead dinoz
+      operationId: resurrectDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: >
+            Empty on success, unless a special quest item is found (e.g. magic star),
+            in which case a { category, value } object is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+                properties:
+                  category:
+                    type: string
+                  value:
+                    type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/dig/{id}:
+    get:
+      tags: [Dinoz]
+      summary: Dig with the dinoz at its current place
+      operationId: digWithDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Dig rewards and/or a fight result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rewards:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+                  fight:
+                    type: object
+                    nullable: true
+                    additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/gather/{id}/{type}:
+    get:
+      tags: [Dinoz]
+      summary: Get the gather grid for a dinoz at its current place
+      operationId: getGatherGrid
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+        - in: path
+          name: type
+          required: true
+          description: Gather activity type (e.g. wood, fish, ...)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The public gather grid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grid:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: integer
+                  gatherTurn:
+                    type: integer
+                  gatherType:
+                    type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/gather/{id}:
+    put:
+      tags: [Dinoz]
+      summary: Gather with the dinoz on its current grid
+      operationId: gatherWithDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, box]
+              properties:
+                type:
+                  type: string
+                  description: Gather activity type
+                box:
+                  type: array
+                  items:
+                    type: integer
+                  description: Indexes of the grid box(es) opened this turn
+      responses:
+        '200':
+          description: Gather result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grid:
+                    type: object
+                    additionalProperties: true
+                  rewards:
+                    type: object
+                    additionalProperties: true
+                  isGridComplete:
+                    type: boolean
+                  goldReward:
+                    type: integer
+                  ingredientsAtMaxQuantity:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ingredientId:
+                          type: integer
+                        quantity:
+                          type: integer
+                        isMaxQuantity:
+                          type: boolean
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/concentrate/{id}:
+    put:
+      tags: [Dinoz]
+      summary: Start concentrating with the dinoz
+      operationId: concentrate
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Concentration started (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/noconcentrate/{id}:
+    post:
+      tags: [Dinoz]
+      summary: Cancel the dinoz's concentration
+      operationId: cancelConcentrate
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Concentration cancelled (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/manage:
+    get:
+      tags: [Dinoz]
+      summary: Get the player's dinoz list for the /manage view (requires PDA)
+      operationId: getDinozToManage
+      responses:
+        '200':
+          description: List of the player's dinoz with manage-view fields
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    level:
+                      type: integer
+                    status:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          statusId:
+                            type: integer
+                    life:
+                      type: integer
+                    maxLife:
+                      type: integer
+                    experience:
+                      type: integer
+                    nbrUpFire:
+                      type: integer
+                    nbrUpWood:
+                      type: integer
+                    nbrUpWater:
+                      type: integer
+                    nbrUpLightning:
+                      type: integer
+                    nbrUpAir:
+                      type: integer
+                    order:
+                      type: integer
+                    display:
+                      type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Dinoz]
+      summary: Update the player's dinoz ordering (requires PDA)
+      operationId: updateOrders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [order]
+              properties:
+                order:
+                  type: array
+                  items:
+                    type: integer
+                  description: Dinoz ids in their new display order
+      responses:
+        '200':
+          description: The updated order data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/follow/{targetId}:
+    post:
+      tags: [Dinoz]
+      summary: Make dinoz {id} follow (join the team of) dinoz {targetId}
+      operationId: followDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+        - in: path
+          name: targetId
+          required: true
+          description: Id of the leader dinoz to follow
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Confirmation message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/unfollow:
+    post:
+      tags: [Dinoz]
+      summary: Make dinoz {id} leave its current team
+      operationId: unfollowDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Confirmation message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/change/{targetId}:
+    post:
+      tags: [Dinoz]
+      summary: Change the team leader from dinoz {id} to dinoz {targetId}
+      operationId: changeLeaderDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+        - in: path
+          name: targetId
+          required: true
+          description: Id of the dinoz to promote as leader
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Confirmation message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/disband:
+    post:
+      tags: [Dinoz]
+      summary: Disband the team led by dinoz {id}
+      operationId: disband
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Confirmation message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/irma:
+    post:
+      tags: [Dinoz]
+      summary: Use an Irma potion to refresh fight/gather actions for the team
+      operationId: useIrma
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Item effect result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    description: ItemEffect category (e.g. ACTION)
+                  value:
+                    type: integer
+                    description: Number of Irma potions consumed
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/froze:
+    post:
+      tags: [Dinoz]
+      summary: Freeze the dinoz
+      operationId: frozeDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Dinoz frozen (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/unfroze:
+    post:
+      tags: [Dinoz]
+      summary: Unfreeze the dinoz
+      operationId: unfrozeDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Dinoz unfrozen (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/rest:
+    post:
+      tags: [Dinoz]
+      summary: Start or stop resting the dinoz
+      operationId: restDinoz
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [start]
+              properties:
+                start:
+                  type: boolean
+                  description: true to start resting, false to stop
+      responses:
+        '200':
+          description: Rest state updated (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/reincarnate:
+    post:
+      tags: [Dinoz]
+      summary: Reincarnate the dinoz
+      operationId: reincarnate
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      responses:
+        '200':
+          description: Reincarnation done (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz/{id}/build:
+    put:
+      tags: [Dinoz]
+      summary: Assign (or clear) a saved build to the dinoz
+      operationId: assignBuild
+      parameters:
+        - $ref: '#/components/parameters/dinozId'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buildId:
+                  type: string
+                  description: Id of the DinozBuild to assign; omit/empty to clear
+      responses:
+        '200':
+          description: Build assigned (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >
+        Authorization header is "Basic base64(playerId:connexionToken)" - not a real
+        username/password pair, checked in ed-be/src/dao/playerDao.ts#auth.
+  parameters:
+    dinozId:
+      in: path
+      name: id
+      required: true
+      description: Numeric id of the dinoz
+      schema:
+        type: integer
+  responses:
+    ValidationError:
+      description: Invalid path/query/body parameters (express-validator)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                additionalProperties: true
+    ServerError:
+      description: >
+        Unexpected error, or a known domain error (ExpectedError) - both are returned
+        as HTTP 500 with the error message as plain text (see utils/server/sendErrors.ts).
+      content:
+        text/plain:
+          schema:
+            type: string
+  schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    DinozFiche:
+      type: object
+      description: >
+        The full dinoz sheet sent to the front (core/src/models/dinoz/DinozFiche.mts).
+        Only the most relevant fields are listed; additional fields exist.
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display:
+          type: string
+        level:
+          type: integer
+        life:
+          type: integer
+        maxLife:
+          type: integer
+        experience:
+          type: integer
+        maxExperience:
+          type: integer
+        placeId:
+          type: integer
+        leaderId:
+          type: integer
+          nullable: true
+        unavailableReason:
+          type: string
+          nullable: true
+        unavailableUntil:
+          type: string
+          format: date-time
+          nullable: true
+        fight:
+          type: boolean
+        gather:
+          type: boolean
+        remaining:
+          type: integer
+        order:
+          type: integer
+          nullable: true
+      additionalProperties: true

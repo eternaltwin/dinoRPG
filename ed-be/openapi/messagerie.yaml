@@ -1,0 +1,343 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Messagerie API
+  description: >
+    Private-message / conversation threads between players. All routes read the
+    caller's identity via the `authorization` header (see `auth()` in
+    `dao/playerDao.ts`); there is no dedicated auth middleware on the router,
+    so every route below implicitly requires it. Any thrown error (auth
+    failure, validation failure inside the business layer such as "not in
+    conversation", Prisma errors, etc.) is caught by the shared `sendError`
+    helper, which always replies with HTTP 500 and a plain-text body
+    (`error.message`) — this file does not use 401/403 anywhere, even for auth
+    failures, because that's what the code actually does.
+  version: '1.0.0'
+servers:
+  - url: /api/v1/messagerie
+tags:
+  - name: Messagerie
+    description: Player-to-player conversations and messages
+
+paths:
+  /getThreads:
+    get:
+      tags: [Messagerie]
+      summary: List the authenticated player's conversation threads
+      operationId: getThreads
+      responses:
+        '200':
+          description: List of conversations the caller participates in, most recently updated first
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversationSummary'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+
+  /getThread/{thread}:
+    get:
+      tags: [Messagerie]
+      summary: Get a full conversation (with its most recent messages)
+      operationId: getThread
+      parameters:
+        - $ref: '#/components/parameters/ThreadId'
+      responses:
+        '200':
+          description: >
+            The conversation, its participants, and its 10 most recent messages
+            (also marks the caller's message notifications for this thread as read)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationDetail'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          description: >
+            Unexpected error, including the business rule that the caller must
+            be a participant of the thread (`notInConversation`) or the thread
+            not existing
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /loadThread/{thread}/{page}:
+    get:
+      tags: [Messagerie]
+      summary: Load a page of older messages for a conversation
+      operationId: loadThread
+      parameters:
+        - $ref: '#/components/parameters/ThreadId'
+        - name: page
+          in: path
+          required: true
+          description: 1-based page number, 10 messages per page
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: The conversation's participants and the requested page of messages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        playerId:
+                          type: string
+                          format: uuid
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+
+  /create:
+    post:
+      tags: [Messagerie]
+      summary: Start a new conversation with an initial message
+      operationId: createConversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [participants, title, message]
+              properties:
+                participants:
+                  type: array
+                  description: Player UUIDs to include (excluding the caller); max 9
+                  items:
+                    type: string
+                    format: uuid
+                title:
+                  type: string
+                message:
+                  type: string
+                  description: Content of the first message
+      responses:
+        '200':
+          description: The created conversation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationCreated'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          description: >
+            Unexpected error, including the business rule that a conversation
+            can have at most 9 other participants (`maxParticipantInThread`)
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /send/{thread}:
+    post:
+      tags: [Messagerie]
+      summary: Send a message into an existing conversation
+      operationId: sendMessageToThread
+      parameters:
+        - $ref: '#/components/parameters/ThreadId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: The conversation's 10 most recent messages after sending
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+
+  /pin/{thread}:
+    post:
+      tags: [Messagerie]
+      summary: Pin or unpin a message in a conversation
+      operationId: pinMessage
+      parameters:
+        - $ref: '#/components/parameters/ThreadId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [messageId, pin]
+              properties:
+                messageId:
+                  type: integer
+                  description: ID of the message to pin/unpin
+                pin:
+                  type: boolean
+                  description: true to pin, false to unpin
+      responses:
+        '200':
+          description: >
+            Empty response body. Silently does nothing if messageId does not
+            belong to the conversation
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+
+components:
+  parameters:
+    ThreadId:
+      name: thread
+      in: path
+      required: true
+      description: Conversation ID
+      schema:
+        type: string
+
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result object
+    UnexpectedError:
+      description: >
+        Any thrown error (including "not authenticated" and "not a participant
+        of this conversation"), always returned as HTTP 500 with a plain-text
+        message by the shared sendError handler
+      content:
+        text/plain:
+          schema:
+            type: string
+
+  schemas:
+    PlayerRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        sender:
+          $ref: '#/components/schemas/PlayerRef'
+
+    ConversationSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        createdById:
+          type: string
+          format: uuid
+        createdBy:
+          type: object
+          properties:
+            name:
+              type: string
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              playerId:
+                type: string
+                format: uuid
+        updatedAt:
+          type: string
+          format: date-time
+
+    ConversationDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        createdById:
+          type: string
+          format: uuid
+        pinnedMessage:
+          nullable: true
+          description: The currently pinned message, if any
+          allOf:
+            - $ref: '#/components/schemas/Message'
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              player:
+                $ref: '#/components/schemas/PlayerRef'
+              playerName:
+                type: string
+        messages:
+          type: array
+          description: 10 most recent messages, newest first
+          items:
+            $ref: '#/components/schemas/Message'
+        updatedAt:
+          type: string
+          format: date-time
+
+    ConversationCreated:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        createdBy:
+          $ref: '#/components/schemas/PlayerRef'
+        participants:
+          type: array
+          items:
+            type: object
+            description: Raw Participants row (player + playerName + conversationId)
+        updatedAt:
+          type: string
+          format: date-time

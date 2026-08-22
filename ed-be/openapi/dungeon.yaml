@@ -1,0 +1,307 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Dungeon API
+  description: >
+    Fog-of-war dungeon runs. The maze layout is generated and encrypted
+    server-side (see ed-be/src/business/dungeonService.ts) and is never sent
+    to the client — only the cells revealed by validated moves come back.
+  version: '1.0'
+servers:
+  - url: /
+tags:
+  - name: Dungeon
+    description: Dungeon run lifecycle (enter, move, exit).
+
+security:
+  - playerAuth: []
+
+paths:
+  /api/v1/dungeon/{id}/enter:
+    post:
+      tags:
+        - Dungeon
+      summary: Start (or resume) a dungeon run
+      description: >
+        Looks up the dungeon by name, then by id, as `{id}`. If the player
+        already has a run on this dungeon it is resumed (with everything
+        already revealed replayed back); otherwise a new run is created at
+        the dungeon's start cell. The whole team (leader + followers) is
+        marked unavailable (dungeon) for the duration of the run.
+      security:
+        - playerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Dungeon name or id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - dinozId
+              properties:
+                dinozId:
+                  type: integer
+                  description: Id of the leader dinoz entering the dungeon (its followers come along as the team).
+      responses:
+        '200':
+          description: Run created or resumed, with the starting/replayed fog-of-war reveal.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRunResult'
+        '500':
+          description: >
+            Error (e.g. unknown/inactive dungeon, wrong place, dinoz unknown, or a team
+            member already busy elsewhere) — see ExpectedError-driven message in the response body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /api/v1/dungeon/{id}/exit:
+    post:
+      tags:
+        - Dungeon
+      summary: Leave a dungeon run
+      description: >
+        Only allowed while standing on the run's start or exit cell. Clears
+        `unavailableReason` on the whole team and detaches the leader from
+        the run.
+      security:
+        - playerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Dungeon name or id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - dinozId
+              properties:
+                dinozId:
+                  type: integer
+                  description: Id of the leader dinoz exiting the dungeon.
+      responses:
+        '200':
+          description: Left the run. No response body.
+        '500':
+          description: >
+            Error (e.g. unknown dungeon/dinoz, no active run, not the run's leader,
+            or not standing on the start/exit cell).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /api/v1/dungeon/{id}/move:
+    post:
+      tags:
+        - Dungeon
+      summary: Move one cell, or take a stair
+      description: >
+        Either a one-cell step (`dx`/`dy`, exactly one of them non-zero) or a
+        stair traversal (`dl` non-zero, only valid standing on a stair cell
+        linking to that level). Persists the move and returns only the newly
+        revealed cells, plus any key pickup, scenario/gold collection, or
+        monster fight triggered by entering the new cell. An illegal step
+        (wall, out of bounds, locked door without its key, wrong stair) is
+        reported as `ok: false` with no new reveal — not a 4xx.
+      security:
+        - playerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Dungeon name or id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - dx
+                - dy
+                - dl
+              properties:
+                dx:
+                  type: integer
+                  minimum: -1
+                  maximum: 1
+                  description: Horizontal step.
+                dy:
+                  type: integer
+                  minimum: -1
+                  maximum: 1
+                  description: Vertical step.
+                dl:
+                  type: integer
+                  minimum: -1
+                  maximum: 1
+                  description: Level step, for taking a stair.
+                dinozId:
+                  type: integer
+                  description: Id of the leader dinoz moving (used if the step triggers a fight).
+      responses:
+        '200':
+          description: Move outcome (accepted or rejected) with any newly revealed cells.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveResult'
+        '400':
+          description: dx/dy/dl missing or out of the [-1,1] range.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: express-validator Result object.
+        '500':
+          description: Error (e.g. unknown dungeon or no active run).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+components:
+  securitySchemes:
+    playerAuth:
+      type: http
+      scheme: basic
+      description: >
+        `Authorization: Basic base64(playerId:token)` — checked by
+        ed-be/src/dao/playerDao.ts `auth()`. Not standard username/password,
+        just reuses the Basic encoding for playerId:token.
+
+  schemas:
+    ErrorMessage:
+      type: string
+      description: >
+        Plain-text error message (res.send(error.message)), sent with status
+        500 by ed-be/src/utils/server/sendErrors.ts for both expected
+        (ExpectedError, e.g. "dungeon.wrongTeam") and unexpected errors.
+
+    Cell:
+      type: object
+      properties:
+        l:
+          type: integer
+        x:
+          type: integer
+        y:
+          type: integer
+
+    RevealedCell:
+      type: object
+      description: One cell the server has allowed the client to see.
+      properties:
+        l:
+          type: integer
+        x:
+          type: integer
+        y:
+          type: integer
+        floor:
+          type: boolean
+          description: true = walkable floor, false = wall.
+        icon:
+          type: string
+          description: >
+            Entity token, e.g. start | exit | stair_up | stair_down | door_v |
+            door_h | door_v_open | door_h_open | monster | key_<n> | gold |
+            heal | scroll | chest.
+        monster:
+          type: string
+          description: smonster gfx name, set only on a still-alive 'monster' cell.
+        key:
+          type: integer
+          description: Key id of the locked door on this cell.
+
+    StartRunResult:
+      type: object
+      properties:
+        run:
+          type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+              enum: [created, resumed]
+            message:
+              type: string
+              description: Optional i18n key for a toast (e.g. shown when resuming).
+        pos:
+          $ref: '#/components/schemas/Cell'
+        width:
+          type: integer
+        height:
+          type: integer
+        levels:
+          type: integer
+        skinSalt:
+          type: integer
+        skin:
+          type: string
+          description: DungeonType enum value.
+        reveal:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevealedCell'
+
+    MoveResult:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          description: false = step rejected (wall/out of bounds/locked door/invalid stair); pos/reveal are unchanged.
+        pos:
+          $ref: '#/components/schemas/Cell'
+        reveal:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevealedCell'
+        fight:
+          type: object
+          description: Present only when the moved-to cell held a live, undefeated monster team. Shape from FightResult (fightService).
+          properties:
+            result:
+              type: boolean
+            goldEarned:
+              type: integer
+            xpEarned:
+              type: integer
+            levelUp:
+              type: boolean
+            totalHpLost:
+              type: integer
+        scenario:
+          type: object
+          description: Present on first visit of a scenario cell.
+          properties:
+            text:
+              type: string
+              description: Literal text (raw scenarios) or an i18n key fragment.
+            micon:
+              type: string
+        gold:
+          type: integer
+          description: Gold collected, present only on first visit of an uncollected gold pile.
