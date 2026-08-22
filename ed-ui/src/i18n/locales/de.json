@@ -803,10 +803,10 @@
 			"dktow": "Dunkler Turm",
 			"dktow2": "Dunkler Turm, Erste Etage",
 			"dktow3": "Dunkler Turm, Zweite Etage",
-			"dktow4": "Erste Dunkle Etage",
-			"dktowa": "Zweite Dunkle Etage",
-			"dktowb": "Dritte Dunkle Etage",
-			"dktows": "Letzte Dunkle Etage",
+			"dktow4": "Erstes Dunkles Verlies",
+			"dktowa": "Zweites Dunkles Verlies",
+			"dktowb": "Drittes Dunkle Verlies",
+			"dktows": "Letztes Dunkles Verlies",
 			"fake": "???",
 			"fake2": "????",
 			"gotow": "Den Dunklen Turm betreten",
@@ -901,10 +901,10 @@
 			"dktow": "Ein großer Schwarzer Turm ragt an dieser Stelle in den Himmel empor. Auf den ersten Blick sieht er unbewohnt aus, jedoch sind am Eingang zahlreiche Gebeine von Dinoz aufgehäuft. Die große, dunkle Tür, durch die man in den Turm gelangt, scheint einen Spalt weit offen zu sein. Im Moment ist es sicher besser, sich nicht weiter in den Turm hineinzuwagen, denn das wäre reiner Selbstmord!",
 			"dktow2": "Die rauen Wände sehen alle gleich aus und es braucht nicht viel, um sich hier zu verlaufen. Glücklicherweise führt nur ein einziger Weg nach oben.",
 			"dktow3": "Der lange Aufstieg führt dich weiter. Dieser Turm ist nicht gerade gastfreundlich und seine Bewohner lassen dich nur ungern ungestört bis zur Turmspitze weiterziehen.",
-			"dktow4": "Die erste Etage des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
-			"dktowa": "Die zweite Etage des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
-			"dktowb": "Die dritte Etage des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
-			"dktows": "Die letzte Etage des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
+			"dktow4": "Das erste Verlies des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
+			"dktowa": "Das zweite Verlies des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
+			"dktowb": "Das dritte Verlies des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
+			"dktows": "Das letzte Verlies des Dunklen Turms, dessen Zugang erst neulich enthüllt wurde. Die dunkle Welt entwickelt sich ununterbrochen weiter...",
 			"fake": "Eine verlassene Insel, die gemeinhin als „Insel der Verdammnis“ bezeichnet wird und auf der gequälte Seelen umherstreifen. Hier ist es besonders dunkel...",
 			"fake2": "Eine verlassene Insel, die gemeinhin als „Insel der Irrlichter“ bezeichnet wird, säen diese umherziehenden Geister Tod und Verzweiflung. Hier ist es besonders dunkel...",
 			"rechut": "Dank des Teils der Dunklen Kugel im Besitz deiner Dinoz kannst du an die Oberfläche zurückkehren. Das allgegenwärtige Licht blendet dich für einige Minuten. Es wäre wohl besser, nicht zu viel Zeit in der Dunklen Welt zu verbringen."
@@ -4658,7 +4658,7 @@
 		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
 		"unsacrificeCountdown": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten endet um {time}.",
 		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
-		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Dein Dinoz erkundet gerade ein Verlies. Um Hilfe zu bekommen, müsste dieser es erst verlassen."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
