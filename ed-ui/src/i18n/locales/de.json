@@ -5322,29 +5322,29 @@
 			"gold": "Du hast {value} Goldstücke gefunden!",
 			"resumed": "Du setzt deine Erkundung dort fort, wo du aufgehört hattest."
 		},
-		"doorNames": "{prefix} {sufix}",
+		"doorNames": "{sufix}{prefix}",
 		"doorNames_prefix": [
-			"Arbres",
-			"Dragons",
-			"Calamars",
-			"Gobelins",
+			"Bäume",
+			"Drachen",
+			"Tintenfische",
+			"Goblins",
 			"Kabukis",
-			"Roméos",
-			"Magiciens",
-			"Anges",
-			"Démons"
+			"Romeos",
+			"Magier",
+			"Engel",
+			"Dämonen"
 		],
 		"doorNames_sufix": [
-			"Magiques",
-			"Morts",
-			"Vivants",
-			"Noirs",
-			"Enchantés",
-			"Enchanteurs",
-			"Rouges",
-			"en Plastique",
-			"en Mousse",
-			"Étincelants"
+			"Magischen ",
+			"Toten ",
+			"Lebenden ",
+			"Schwarzen ",
+			"Verzauberten ",
+			"Zauberhaften ",
+			"Roten ",
+			"Plastik-",
+			"Schaumstoff-",
+			"Prickelnden "
 		]
 	},
 	"scenario": {
