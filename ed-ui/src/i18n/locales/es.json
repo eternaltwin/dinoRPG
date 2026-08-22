@@ -258,8 +258,8 @@
 			"war_defend": "Añade tu Dino a las líneas de defensa del castillo de tu clan.",
 			"war_remove": "Retira tu Dino de las líneas de defensa del castillo de tu clan.",
 			"war_attack": "Atacar el castillo enemigo.",
-			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
-			"dungeon": "Voir l'évolution de l'exploration actuelle...",
+			"dungeon_enter": "Puedes entrar en este lugar subterráneo y peligroso. ¡No te vayas a perder!",
+			"dungeon": "Ver la evolución de la exploración actual.",
 			"demon_shop": "¡ATENCIÓN! ¡PELIGRO!"
 		},
 		"name": {
@@ -297,8 +297,8 @@
 			"war_defend": "Defender tu castillo",
 			"war_remove": "Retirar de la defensa",
 			"war_attack": "Atacar el castillo",
-			"dungeon_enter": "Entrer",
-			"dungeon": "Accéder au Plan",
+			"dungeon_enter": "Entrar",
+			"dungeon": "Acceder al plano",
 			"demon_shop": "Tienda Demoniaca"
 		}
 	},
@@ -318,7 +318,7 @@
 		"search": "Buscar",
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
-		"details": "Détails"
+		"details": "Detalles"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -619,7 +619,7 @@
 			"lightning_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"air_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"void_sphere": "La Esfera Elemental enseña directamente a tu Dino una de las competencias esféricas.",
-			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoníaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
+			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoniaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
 			"treasure_coupon": "Un Bono del Tesoro vale 1.000 Monedas. Te permite participar en la Plaza del Mercado. Para pasarlo a monedas, úsalo desde la sección Inventario.",
 			"moueffe_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
 			"moueffe_egg_rare": "Este huevo extraño contiene un Dino excepcional",
@@ -1807,17 +1807,17 @@
 	"shop": {
 		"demon": {
 			"name": "Tienda Demoniaca",
-			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"sacrifice_help": "¡Bienvenidos a la Tienda Demoniaca! Aquí puedes **sacrificar** Dinos que se encuentren en el cementerio a cambio de **Tickets-Demonio** :demon_tk:. El número de tickets obtenidos depende del nivel del Dino. Un Dino sacrificado ya no podrá ser usado ni será visible en tu cuenta. && Para consultar la lista de Dinos Demonios, necesitas un mínimo de 30 :demon_tk:.",
 			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
 			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
-			"level": "Niv. {level}",
+			"level": "Nivel {level}",
 			"sacrifice": "Sacrifier",
 			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
 			"sacrifice_title": "Sacrifice",
 			"buy_title": "Invocation",
 			"unsacrifice_title": "Résurrection",
 			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
-			"yourDemonTickets": "Vos Tickets Démons"
+			"yourDemonTickets": "Tus Tickets-Demonio"
 		},
 		"dinoz": {
 			"header": "Tienda de Dinos",
@@ -2678,7 +2678,7 @@
 		"default": "DinoRPG [ La actualidad en Dinoland ]",
 		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
 		"shop": "DinoRPG [ Tienda : {shop} ]",
-		"demon": "DinoRPG [ Boutique Démoniaque ]",
+		"demon": "DinoRPG [ Tienda Demoniaca ]",
 		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
 		"account": "DinoRPG [ Información personal ]",
 		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
@@ -3897,7 +3897,7 @@
 			"magnet": "¡El Rey de los Rokkys en persona te ha ofrecido este trozo de Magnetita Negativa! A saber los misteriosos poderes que esconde...",
 			"plume": "Esta pluma es un regalo de procedencia muy lejana. Permite editar la presentación de la ficha del jugador.",
 			"kaura": "Esta aura permite acceder a la Isla del Tótem. ¡Quizás encuentres allí a Kabukis que hayan sobrevivido al Gran Cataclismo!",
-			"demon": "Este antiguo pergamino te permite acceder a la Tienda Demoníaca en el Cementerio del Crepúsculo.",
+			"demon": "Este antiguo pergamino te permite acceder a la Tienda Demoniaca en el Cementerio del Crepúsculo.",
 			"pmi": "El Pequeño Misionario Ilustrado te da acceso en todo momento a la lista de misiones efectuadas por tu Dino y las que le quedan por hacer.",
 			"pda": "La PDA es una piedra producida con una tecnología especial que permite al maestro que la posea tener una visión general de todos sus Dinos. Lo del Diamantito es sólo para chulear.",
 			"fdjv1": "¡Este trofeo agradece a los jugadores que hicieron un largo viaje hasta el Festival de Videojuegos de 2010 para conocer a los titiriteros de sombras!",
@@ -4658,7 +4658,7 @@
 		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Tu Dino debe recuperarse durante {time} segundos más antes de poder realizar otra acción.",
-		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Tu Dino está explorando actualmente un laberinto. Sal del laberinto para poder ocuparte de él."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -5302,10 +5302,10 @@
 		"blockSender": "Bloquear remitente"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
 		"floor": "Étage {floor}",
 		"name": {
-			"katatombs": "les Katatombes"
+			"katatombs": "Las Katatumbas"
 		},
 		"katatombs": {
 			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
