@@ -217,6 +217,9 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// check so a dungeon-busy dinoz is only let through when it's actually
 	// resuming its own run, not stolen into a new one.
 	const existing = await findRun(dungeon.id, authed.id);
+	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
+		throw new ExpectedError(translate('dungeon.unavailable', authed));
+	}
 
 
 
@@ -264,6 +267,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			)
 		};
 	}
+
 	await updateMultipleDinoz(
 		team.map(t => t.id),
 		{ unavailableReason: UnavailableReason.dungeon }

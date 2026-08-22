@@ -80,13 +80,13 @@ describe('dungeon team lock', () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
 			placeId: 1,
-			unavailableReason: 'dungeon',
+			unavailableReason: 'resting', // busy for a reason other than being in a dungeon
 			followers: [],
 			leaderId: null
 		} as never);
 
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
-			'dungeon.wrongTeam'
+			'dungeon.unavailable'
 		);
 		expect(createRun).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).not.toHaveBeenCalled();
