@@ -397,7 +397,7 @@ export class MazeRenderer {
 
 	/**
 	 * Produce a unique key based on horizontal and vertical position.
-	 * Key is unique as long as the assumption that y < height is true
+	 * Key is unique as long as the assumption that y < height is true.
 	 * @param x Horizontal position
 	 * @param y Vertical position
 	 * @returns A unique key, based on x * height + y.
