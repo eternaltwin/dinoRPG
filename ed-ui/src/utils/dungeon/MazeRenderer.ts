@@ -52,7 +52,7 @@ export class MazeRenderer {
 	private readonly dims: MazeDims;
 	private readonly sharedFxBlur: BlurFilter;
 	/** Everything the server has revealed so far, per level, keyed "x,y". */
-	private readonly known: Map<string, RevealedCell>[];
+	private readonly known: Map<number, RevealedCell>[];
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
@@ -75,7 +75,7 @@ export class MazeRenderer {
 		this.cell = opts.cell ?? 24;
 		this.noiseSeed = opts.noiseSeed ?? (Math.random() * 0x7fffffff) | 0;
 		this.dims = dims;
-		this.known = Array.from({ length: dims.levels }, () => new Map<string, RevealedCell>());
+		this.known = Array.from({ length: dims.levels }, () => new Map<number, RevealedCell>());
 		this.skins = opts.skins && opts.skins.length > 0 ? opts.skins : [SKINS[0]];
 		this.viewW = opts.view?.w ?? dims.width * this.cell;
 		this.viewH = opts.view?.h ?? dims.height * this.cell;
@@ -156,7 +156,7 @@ export class MazeRenderer {
 		for (const c of cells) {
 			const level = this.known[c.l];
 			if (!level) continue;
-			const isNew = !level.has(`${c.x},${c.y}`);
+			const isNew = !level.has(this.key(c.x, c.y));
 			if (!c.monster) {
 				// Team defeated since last reveal: retire its animated sprite.
 				const stale = this.monsterSprites.get(`${c.l},${c.x},${c.y}`);
@@ -165,7 +165,7 @@ export class MazeRenderer {
 					this.monsterSprites.delete(`${c.l},${c.x},${c.y}`);
 				}
 			}
-			level.set(`${c.x},${c.y}`, c);
+			level.set(this.key(c.x, c.y), c);
 			if (c.l === this.level) {
 				dirty = true;
 				if (isNew) this.revealFx(c.x, c.y, origin);
@@ -241,7 +241,7 @@ export class MazeRenderer {
 		const known = this.known[this.level];
 		const w = this.dims.width;
 		const h = this.dims.height;
-		const at = (x: number, y: number): RevealedCell | undefined => known.get(`${x},${y}`);
+		const at = (x: number, y: number): RevealedCell | undefined => known.get(this.key(x, y));
 		const floor = (x: number, y: number): boolean => at(x, y)?.floor === true;
 		// Fog three-state: only a *known* wall (or the map border) grows wall
 		// pieces. An unknown neighbour draws nothing — it is still fog.
@@ -395,6 +395,10 @@ export class MazeRenderer {
 		return this.cell * 1.2;
 	}
 
+	private key(x: number, y: number): number {
+		return x * this.dims.height + y;
+	}
+
 	/**
 	 * Fog plane: one big jittered circle per unknown cell instead of a rect —
 	 * circles always overlap their neighbours (radius > half the cell spacing,
@@ -403,7 +407,7 @@ export class MazeRenderer {
 	 */
 	private drawFog(skin: Skin): void {
 		const known = this.known[this.level];
-		const isKnown = (x: number, y: number): boolean => known.has(`${x},${y}`);
+		const isKnown = (x: number, y: number): boolean => known.has(this.key(x, y));
 		const c = this.cell;
 		const g = new Graphics();
 		g.beginFill(skin.fog);
