@@ -122,7 +122,7 @@
 			<td>{{ dungeon.type }}</td>
 			<td>
 				<!-- startRun looks dungeons up by name, so the play route carries the name. -->
-				<RouterLink :to="`/dungeon/${dungeon.name}`">Enter</RouterLink>
+				<button type="button" @click="startDungeon(dungeon.name)">Enter</button>
 			</td>
 		</tr>
 	</DZTable>
@@ -130,7 +130,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { AdminService } from '../../services';
+import { AdminService, DungeonService } from '../../services';
+import { sessionStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -181,7 +182,8 @@ export default defineComponent({
 			scenarios: [] as ScenarioRow[],
 			painting: false,
 			stopPaint: null as (() => void) | null,
-			dungeons: [] as { id: string; name: string; type: string }[]
+			dungeons: [] as { id: string; name: string; type: string }[],
+			sessionStore: sessionStore(),
 		};
 	},
 	computed: {
@@ -308,6 +310,28 @@ export default defineComponent({
 					this.levels[l].items.push({ x, y, k: this.itemKind, v: this.itemValue || 0 });
 					break;
 			}
+		},
+		async startDungeon(dungeonId: string) {
+			const dinoz = useDinozStore().getCurrentDinoz;
+			if (!dinoz) {
+				this.$toast.open({
+					message: 'Dinoz not found',
+					type: 'error'
+				});
+				return;
+			}
+			try {
+				this.sessionStore.setDungeonRun(await DungeonService.enterDungeon(dungeonId, dinoz.id));
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+				return;
+			}
+			useDinozStore().setDungeonName(dinoz.id, dungeonId);
+			this.$router.push({
+				name: 'Dungeon',
+				params: { id: dungeonId },
+				query: { dinozId: dinoz.id }
+			});
 		},
 		async refresh() {
 			this.dungeons = await AdminService.getDungeons();
