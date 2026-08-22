@@ -160,9 +160,11 @@ export default defineComponent({
 			// (9 and 10 entries in fr.json dungeon.doorNames_prefix/_sufix — keep
 			// those lengths in sync) and glues them into one flavor name.
 			const seed = this.dungeonHash() + keyId;
-			const prefix = this.$t(`dungeon.doorNames_prefix.${((seed % 9) + 9) % 9}`);
-			const sufix = this.$t(`dungeon.doorNames_sufix.${((seed % 10) + 10) % 10}`);
-			return `${prefix}${sufix}`;
+			const doorName = this.$t(`dungeon.doorNames`, {
+				prefix: this.$t(`dungeon.doorNames_prefix.${((seed % 9) + 9) % 9}`),
+				sufix: this.$t(`dungeon.doorNames_sufix.${((seed % 10) + 10) % 10}`)
+			});
+			return doorName;
 		},
 		toggleDebug(): void {
 			this.wallDebug = !this.wallDebug;

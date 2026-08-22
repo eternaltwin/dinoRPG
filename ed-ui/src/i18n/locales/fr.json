@@ -5322,16 +5322,17 @@
 			"gold": "Vous trouvez {value} pièces d'or !",
 			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
 		},
+		"doorNames": "{prefix} {sufix}",
 		"doorNames_prefix": [
-			"Arbres ",
-			"Dragons ",
-			"Calamars ",
-			"Gobelins ",
-			"Kabukis ",
-			"Roméos ",
-			"Magiciens ",
-			"Anges ",
-			"Démons "
+			"Arbres",
+			"Dragons",
+			"Calamars",
+			"Gobelins",
+			"Kabukis",
+			"Roméos",
+			"Magiciens",
+			"Anges",
+			"Démons"
 		],
 		"doorNames_sufix": [
 			"Magiques",
