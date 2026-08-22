@@ -61,7 +61,12 @@ const dungeon = {
 	type: 'CAVE',
 	level: 1,
 	monsters: JSON.stringify([{ l: 0, x: 1, y: 0, monsters: ['GOUPIGNON'] }]),
-	scenarios: '[]'
+	scenarios: '[]',
+	placeStart: null,
+	placeEnd: null,
+	condition: '{}',
+	monsterPool: '[]',
+	isActive: true
 };
 
 const run = {

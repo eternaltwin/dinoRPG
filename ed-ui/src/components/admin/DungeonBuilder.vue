@@ -17,7 +17,7 @@
 				<input type="number" v-model.number="form.monsterLevel" min="1" max="200" />
 			</div>
 			<div>
-				<label>Monster pool (ctrl-click to multi-select; empty = DungeonList lookup by name)</label>
+				<label>Monster pool (ctrl-click to multi-select; empty = keep this name's existing pool)</label>
 				<select multiple size="8" v-model="form.pool">
 					<option v-for="m in monsterNames" :key="m" :value="m">{{ m }} (lvl {{ monsterList[m].level }})</option>
 				</select>

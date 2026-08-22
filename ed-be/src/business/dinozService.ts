@@ -43,6 +43,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
+import type { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, LogType, UnavailableReason } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
@@ -72,6 +73,7 @@ import {
 	updateOrderData
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
+import { getDungeonByPlaceStart } from '../dao/dungeonRunDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import {
@@ -101,7 +103,6 @@ import translate from '../utils/server/translate.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import { finishDinozUnsacrifice } from './demonShopService.js';
@@ -307,9 +308,9 @@ export async function getAvailableActions(
 	}
 
 	if (dinozPlace.dungeon) {
-		const dungeon = Object.values(DungeonList).find(dungeon => dungeon.placeStart === dinozPlace.placeId);
+		const dungeon = await getDungeonByPlaceStart(dinozPlace.placeId);
 		if (dungeon) {
-			if (checkCondition(dungeon.condition, player, dinoz.id)) {
+			if (checkCondition(JSON.parse(dungeon.condition) as Condition, player, dinoz.id)) {
 				availableActions.push({
 					name: actionList[Action.DUNGEON_ENTER].name,
 					imgName: actionList[Action.DUNGEON_ENTER].imgName,

@@ -4,7 +4,7 @@
  *
  * The layout marks monster spots as keyless, non-stair doors (see
  * {@link DungeonDoor}); each spot gets a team drawn from the dungeon's pool
- * (DungeonList.monsters) whose total level approximates the maze level.
+ * (Dungeon.monsterPool) whose total level approximates the maze level.
  */
 
 import type { DungeonStruct } from './types.js';

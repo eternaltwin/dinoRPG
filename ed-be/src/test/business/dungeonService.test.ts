@@ -36,7 +36,7 @@ process.env.DUNGEON_KEY = randomBytes(32).toString('hex');
 
 const dinoz = { id: 1, placeId: 1, unavailableReason: null, followers: [] };
 
-/** The stored dungeon row for `d`: not in DungeonList, so no placeStart gate. */
+/** The stored dungeon row for `d`: no placeStart set, so no place gate. */
 function dungeonRowFor(d: DungeonStruct) {
 	const sealed = seal(new DungeonCodec().encode(d));
 	return {
@@ -48,7 +48,12 @@ function dungeonRowFor(d: DungeonStruct) {
 		type: 'cavern',
 		level: 1,
 		monsters: '[]',
-		scenarios: '[]'
+		scenarios: '[]',
+		placeStart: null,
+		placeEnd: null,
+		condition: '{}',
+		monsterPool: '[]',
+		isActive: true
 	};
 }
 

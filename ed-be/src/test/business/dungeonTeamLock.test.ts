@@ -53,14 +53,19 @@ import { startRun, exitRun } from '../../business/dungeonService.js';
 
 const dungeon = {
 	id: 'dungeon1',
-	name: 'unit-test-dungeon', // not in DungeonList: skips the placeStart gate
+	name: 'unit-test-dungeon', // no placeStart set: skips the place gate
 	cipher: Buffer.from('c'),
 	iv: Buffer.from('i'),
 	tag: Buffer.from('t'),
 	type: 'CAVE',
 	level: 1,
 	monsters: '[]',
-	scenarios: '[]'
+	scenarios: '[]',
+	placeStart: null,
+	placeEnd: null,
+	condition: '{}',
+	monsterPool: '[]',
+	isActive: true
 };
 
 beforeEach(() => {

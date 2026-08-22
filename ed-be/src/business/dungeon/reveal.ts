@@ -43,7 +43,7 @@ function iconAt(d: DungeonStruct, l: number, x: number, y: number): string | und
 					return 'heal';
 				default:
 					// IScenario: index rides along; the service resolves the real icon
-					// from DungeonList and strips scenarios already read.
+					// from the dungeon's own scenarios column and strips scenarios already read.
 					return `scenario_${room.item.v}`;
 			}
 		}

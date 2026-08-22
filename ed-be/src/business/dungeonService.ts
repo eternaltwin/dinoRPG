@@ -12,7 +12,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
 import { cellKey, cellsForKeys, revealAround } from './dungeon/reveal.js';
-import type { MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
+import type { DungeonScenario, MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
 import { DungeonItem } from './dungeon/types.js';
 import type { DungeonDoor, DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
@@ -39,8 +39,6 @@ import {
 	updateDinoz,
 	updateMultipleDinoz
 } from '../dao/dinozDao.js';
-import { DungeonList } from '@drpg/core/models/dungeon/DungeonList';
-import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
@@ -156,14 +154,9 @@ function decorateScenarios(reveal: RevealedCell[], scenarios: DungeonScenario[],
 	return reveal;
 }
 
-/**
- * A dungeon's scenario list: its own stored one (builder dungeons, raw popup
- * text) or, when empty, the DungeonList entry of the same name (i18n text).
- */
-function scenariosFor(dungeon: { name: string; scenarios: string }): { list: DungeonScenario[]; i18n: boolean } {
-	const own = JSON.parse(dungeon.scenarios) as DungeonScenario[];
-	if (own.length > 0) return { list: own, i18n: false };
-	return { list: Object.values(DungeonList).find(x => x.name === dungeon.name)?.scenarios ?? [], i18n: true };
+/** A dungeon's own scenario list — every row carries its scenarios directly now. */
+function scenariosFor(dungeon: { scenarios: string }): DungeonScenario[] {
+	return JSON.parse(dungeon.scenarios) as DungeonScenario[];
 }
 
 /**
@@ -199,21 +192,23 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	const authed = await auth(req);
 	const dungeonName = req.params.id;
 	let dungeon = await getDungeonByName(dungeonName);
-	const dungeonRef = Object.values(DungeonList).find(d => d.name === dungeonName);
 	if (!dungeon) {
 		dungeon = await getDungeonById(dungeonName);
 		if (!dungeon) {
 			throw new ExpectedError(translate('dungeon.inexistent', authed));
 		}
 	}
+	if (!dungeon.isActive) {
+		throw new ExpectedError(translate('dungeon.inexistent', authed));
+	}
 	const dinozId = req.body.dinozId;
 	const dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
-	// ponytail: builder dungeons have no DungeonList entry, so no place gate —
-	// they're enterable from anywhere until they get a placeStart of their own.
-	if (dungeonRef && dungeonRef.placeStart !== dinoz.placeId) {
+	// ponytail: null placeStart = no place gate (ex-builder dungeons that never
+	// got one set) — they're enterable from anywhere.
+	if (dungeon.placeStart != null && dungeon.placeStart !== dinoz.placeId) {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
@@ -248,7 +243,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		}
 		await dinozEnterRun(existing.id, dinoz.id);
 		return {
-			run: { id: existing.id, status: 'resumed', message: dungeonRef ? `dungeon.${dungeonRef.name}.enter` : undefined },
+			run: { id: existing.id, status: 'resumed', message: dungeon.placeStart != null ? `dungeon.${dungeon.name}.enter` : undefined },
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
 			width: d.width,
 			height: d.height,
@@ -268,7 +263,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 					),
 					JSON.parse(existing.gold) as string[]
 				),
-				scenariosFor(dungeon).list,
+				scenariosFor(dungeon),
 				JSON.parse(existing.scenarios) as number[]
 			)
 		};
@@ -295,7 +290,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		skinSalt: Math.floor(Math.random() * 1000),
 		reveal: decorateScenarios(
 			decorateMonsters(reveal, JSON.parse(dungeon.monsters) as MonsterTeam[], []),
-			scenariosFor(dungeon).list,
+			scenariosFor(dungeon),
 			[]
 		)
 	};
@@ -421,13 +416,13 @@ export async function move(req: Request): Promise<MoveResult> {
 	const read = JSON.parse(run.scenarios) as number[];
 	let scenario: MoveResult['scenario'];
 	const sIdx = itemIndexAt(d, DungeonItem.IScenario, next.l, next.x, next.y);
-	const sc = sIdx != null && !read.includes(sIdx) ? scenarios.list[sIdx] : undefined;
+	const sc = sIdx != null && !read.includes(sIdx) ? scenarios[sIdx] : undefined;
 	if (sc && sIdx != null) {
 		read.push(sIdx);
 		if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
 		if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
 		// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
-		scenario = { text: scenarios.i18n ? `dungeon.${dungeon.name}.${sc.text}` : sc.text, micon: sc.micon };
+		scenario = { text: sc.raw ? sc.text : `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
 	}
 
 	// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.
@@ -544,7 +539,7 @@ export async function move(req: Request): Promise<MoveResult> {
 		pos: next,
 		reveal: decorateScenarios(
 			decorateGold(decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys), [...goldCollected]),
-			scenarios.list,
+			scenarios,
 			read
 		),
 		fight: result,

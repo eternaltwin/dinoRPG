@@ -13,7 +13,7 @@
 
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import type { DungeonGrid, DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
-import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonList';
+import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonClient';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from './DungeonCodec.js';
@@ -45,7 +45,7 @@ export function checkScenarios(raw: unknown): DungeonScenario[] {
 		if (s.obj != null && !(s.obj in itemList)) fail(`scenario ${i} grants an unknown item`);
 		if (s.count != null) checkInt(s.count, 1, 999, `scenario ${i} count`);
 		if (s.collec != null && !(s.collec in rewardList)) fail(`scenario ${i} grants an unknown reward`);
-		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec };
+		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec, raw: true };
 	});
 }
 

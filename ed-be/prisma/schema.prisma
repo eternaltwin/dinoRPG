@@ -1260,8 +1260,23 @@ model Dungeon {
   level     Int         @default(1)
   // MonsterTeam[] — rolled once at creation, identical for every player: cell + composition per monster-guarded passage.
   monsters  String      @default("[]")
-  // DungeonScenario[] with raw popup text, for hand-built dungeons; '[]' = use the DungeonList entry (i18n text).
+  // DungeonScenario[] with raw popup text (ex-DungeonList catalog: '[]' used to mean
+  // "look up DungeonList by name" — every dungeon now carries its own scenarios).
   scenarios String      @default("[]")
+  // Place the dungeon-enter action appears at; null = no place gate (ex-builder
+  // dungeons with no DungeonList entry).
+  placeStart  Int?
+  // Place returned to on exit. Not read by dungeonService yet (same as before this column existed).
+  placeEnd    Int?
+  // Serialized Condition (core/src/models/npc/NpcConditions.mts), gates the enter
+  // action on top of the place gate. '{}' = always true.
+  condition   String  @default("{}")
+  // Monster[] pool this dungeon's teams are rolled from at (re)generation — distinct
+  // from `monsters`, which holds the already-rolled MonsterTeam[] result.
+  monsterPool String  @default("[]")
+  // Lets a dungeon be created (and its layout/pool tuned) without going live yet —
+  // gates the dinoz-side enter action.
+  isActive    Boolean @default(true)
 
   dungeonRuns DungeonRun[]
 

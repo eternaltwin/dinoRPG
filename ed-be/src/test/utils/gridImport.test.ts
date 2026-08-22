@@ -110,8 +110,8 @@ describe('checkScenarios', () => {
 				{ text: 'Un parchemin', icon: 'scroll', collec: Reward.DEMON }
 			])
 		).toEqual([
-			{ text: 'Un coffre !', icon: 'chest', obj: Item.POTION_IRMA, count: 3, collec: undefined },
-			{ text: 'Un parchemin', icon: 'scroll', obj: undefined, count: undefined, collec: Reward.DEMON }
+			{ text: 'Un coffre !', icon: 'chest', obj: Item.POTION_IRMA, count: 3, collec: undefined, raw: true },
+			{ text: 'Un parchemin', icon: 'scroll', obj: undefined, count: undefined, collec: Reward.DEMON, raw: true }
 		]);
 	});
 

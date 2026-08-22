@@ -13,6 +13,9 @@ import {
 	getOngoingEvent,
 	createSeededDungeon,
 	listDungeons,
+	getDungeonAdmin,
+	updateDungeonAdmin,
+	deleteDungeonAdmin,
 	givePlayerEpicReward,
 	getPlayerData,
 	getDinozDataFromPlayer,
@@ -858,6 +861,33 @@ routes.get(`${commonPath}/dungeon`, checkRole([AdminRole.ADMIN]), async (_req: R
 	try {
 		const response = await listDungeons();
 		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await getDungeonAdmin(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await updateDungeonAdmin(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.delete(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		await deleteDungeonAdmin(req);
+		return res.status(200).send({ ok: true });
 	} catch (err) {
 		sendError(res, err);
 	}
