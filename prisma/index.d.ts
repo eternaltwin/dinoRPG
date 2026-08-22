@@ -88560,10 +88560,14 @@ export namespace Prisma {
 
   export type DungeonAvgAggregateOutputType = {
     level: number | null
+    placeStart: number | null
+    placeEnd: number | null
   }
 
   export type DungeonSumAggregateOutputType = {
     level: number | null
+    placeStart: number | null
+    placeEnd: number | null
   }
 
   export type DungeonMinAggregateOutputType = {
@@ -88576,6 +88580,11 @@ export namespace Prisma {
     level: number | null
     monsters: string | null
     scenarios: string | null
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string | null
+    monsterPool: string | null
+    isActive: boolean | null
   }
 
   export type DungeonMaxAggregateOutputType = {
@@ -88588,6 +88597,11 @@ export namespace Prisma {
     level: number | null
     monsters: string | null
     scenarios: string | null
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string | null
+    monsterPool: string | null
+    isActive: boolean | null
   }
 
   export type DungeonCountAggregateOutputType = {
@@ -88600,16 +88614,25 @@ export namespace Prisma {
     level: number
     monsters: number
     scenarios: number
+    placeStart: number
+    placeEnd: number
+    condition: number
+    monsterPool: number
+    isActive: number
     _all: number
   }
 
 
   export type DungeonAvgAggregateInputType = {
     level?: true
+    placeStart?: true
+    placeEnd?: true
   }
 
   export type DungeonSumAggregateInputType = {
     level?: true
+    placeStart?: true
+    placeEnd?: true
   }
 
   export type DungeonMinAggregateInputType = {
@@ -88622,6 +88645,11 @@ export namespace Prisma {
     level?: true
     monsters?: true
     scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    isActive?: true
   }
 
   export type DungeonMaxAggregateInputType = {
@@ -88634,6 +88662,11 @@ export namespace Prisma {
     level?: true
     monsters?: true
     scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    isActive?: true
   }
 
   export type DungeonCountAggregateInputType = {
@@ -88646,6 +88679,11 @@ export namespace Prisma {
     level?: true
     monsters?: true
     scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    isActive?: true
     _all?: true
   }
 
@@ -88745,6 +88783,11 @@ export namespace Prisma {
     level: number
     monsters: string
     scenarios: string
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string
+    monsterPool: string
+    isActive: boolean
     _count: DungeonCountAggregateOutputType | null
     _avg: DungeonAvgAggregateOutputType | null
     _sum: DungeonSumAggregateOutputType | null
@@ -88776,6 +88819,11 @@ export namespace Prisma {
     level?: boolean
     monsters?: boolean
     scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    isActive?: boolean
     dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
     _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dungeon"]>
@@ -88790,6 +88838,11 @@ export namespace Prisma {
     level?: boolean
     monsters?: boolean
     scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["dungeon"]>
 
   export type DungeonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -88802,6 +88855,11 @@ export namespace Prisma {
     level?: boolean
     monsters?: boolean
     scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["dungeon"]>
 
   export type DungeonSelectScalar = {
@@ -88814,9 +88872,14 @@ export namespace Prisma {
     level?: boolean
     monsters?: boolean
     scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    isActive?: boolean
   }
 
-  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type" | "level" | "monsters" | "scenarios", ExtArgs["result"]["dungeon"]>
+  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type" | "level" | "monsters" | "scenarios" | "placeStart" | "placeEnd" | "condition" | "monsterPool" | "isActive", ExtArgs["result"]["dungeon"]>
   export type DungeonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
     _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
@@ -88839,6 +88902,11 @@ export namespace Prisma {
       level: number
       monsters: string
       scenarios: string
+      placeStart: number | null
+      placeEnd: number | null
+      condition: string
+      monsterPool: string
+      isActive: boolean
     }, ExtArgs["result"]["dungeon"]>
     composites: {}
   }
@@ -89272,6 +89340,11 @@ export namespace Prisma {
     readonly level: FieldRef<"Dungeon", 'Int'>
     readonly monsters: FieldRef<"Dungeon", 'String'>
     readonly scenarios: FieldRef<"Dungeon", 'String'>
+    readonly placeStart: FieldRef<"Dungeon", 'Int'>
+    readonly placeEnd: FieldRef<"Dungeon", 'Int'>
+    readonly condition: FieldRef<"Dungeon", 'String'>
+    readonly monsterPool: FieldRef<"Dungeon", 'String'>
+    readonly isActive: FieldRef<"Dungeon", 'Boolean'>
   }
     
 
@@ -90601,7 +90674,12 @@ export namespace Prisma {
     type: 'type',
     level: 'level',
     monsters: 'monsters',
-    scenarios: 'scenarios'
+    scenarios: 'scenarios',
+    placeStart: 'placeStart',
+    placeEnd: 'placeEnd',
+    condition: 'condition',
+    monsterPool: 'monsterPool',
+    isActive: 'isActive'
   };
 
   export type DungeonScalarFieldEnum = (typeof DungeonScalarFieldEnum)[keyof typeof DungeonScalarFieldEnum]
@@ -95865,6 +95943,11 @@ export namespace Prisma {
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
     scenarios?: StringFilter<"Dungeon"> | string
+    placeStart?: IntNullableFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableFilter<"Dungeon"> | number | null
+    condition?: StringFilter<"Dungeon"> | string
+    monsterPool?: StringFilter<"Dungeon"> | string
+    isActive?: BoolFilter<"Dungeon"> | boolean
     dungeonRuns?: DungeonRunListRelationFilter
   }
 
@@ -95878,6 +95961,11 @@ export namespace Prisma {
     level?: SortOrder
     monsters?: SortOrder
     scenarios?: SortOrder
+    placeStart?: SortOrderInput | SortOrder
+    placeEnd?: SortOrderInput | SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    isActive?: SortOrder
     dungeonRuns?: DungeonRunOrderByRelationAggregateInput
   }
 
@@ -95894,6 +95982,11 @@ export namespace Prisma {
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
     scenarios?: StringFilter<"Dungeon"> | string
+    placeStart?: IntNullableFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableFilter<"Dungeon"> | number | null
+    condition?: StringFilter<"Dungeon"> | string
+    monsterPool?: StringFilter<"Dungeon"> | string
+    isActive?: BoolFilter<"Dungeon"> | boolean
     dungeonRuns?: DungeonRunListRelationFilter
   }, "id" | "name">
 
@@ -95907,6 +96000,11 @@ export namespace Prisma {
     level?: SortOrder
     monsters?: SortOrder
     scenarios?: SortOrder
+    placeStart?: SortOrderInput | SortOrder
+    placeEnd?: SortOrderInput | SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    isActive?: SortOrder
     _count?: DungeonCountOrderByAggregateInput
     _avg?: DungeonAvgOrderByAggregateInput
     _max?: DungeonMaxOrderByAggregateInput
@@ -95927,6 +96025,11 @@ export namespace Prisma {
     level?: IntWithAggregatesFilter<"Dungeon"> | number
     monsters?: StringWithAggregatesFilter<"Dungeon"> | string
     scenarios?: StringWithAggregatesFilter<"Dungeon"> | string
+    placeStart?: IntNullableWithAggregatesFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableWithAggregatesFilter<"Dungeon"> | number | null
+    condition?: StringWithAggregatesFilter<"Dungeon"> | string
+    monsterPool?: StringWithAggregatesFilter<"Dungeon"> | string
+    isActive?: BoolWithAggregatesFilter<"Dungeon"> | boolean
   }
 
   export type ConcentrationCreateInput = {
@@ -100731,6 +100834,11 @@ export namespace Prisma {
     level?: number
     monsters?: string
     scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    isActive?: boolean
     dungeonRuns?: DungeonRunCreateNestedManyWithoutDungeonInput
   }
 
@@ -100744,6 +100852,11 @@ export namespace Prisma {
     level?: number
     monsters?: string
     scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    isActive?: boolean
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutDungeonInput
   }
 
@@ -100757,6 +100870,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     dungeonRuns?: DungeonRunUpdateManyWithoutDungeonNestedInput
   }
 
@@ -100770,6 +100888,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput
   }
 
@@ -100783,6 +100906,11 @@ export namespace Prisma {
     level?: number
     monsters?: string
     scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    isActive?: boolean
   }
 
   export type DungeonUpdateManyMutationInput = {
@@ -100795,6 +100923,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DungeonUncheckedUpdateManyInput = {
@@ -100807,6 +100940,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -105056,10 +105194,17 @@ export namespace Prisma {
     level?: SortOrder
     monsters?: SortOrder
     scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    isActive?: SortOrder
   }
 
   export type DungeonAvgOrderByAggregateInput = {
     level?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
   }
 
   export type DungeonMaxOrderByAggregateInput = {
@@ -105072,6 +105217,11 @@ export namespace Prisma {
     level?: SortOrder
     monsters?: SortOrder
     scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    isActive?: SortOrder
   }
 
   export type DungeonMinOrderByAggregateInput = {
@@ -105084,10 +105234,17 @@ export namespace Prisma {
     level?: SortOrder
     monsters?: SortOrder
     scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    isActive?: SortOrder
   }
 
   export type DungeonSumOrderByAggregateInput = {
     level?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
   }
 
   export type BytesWithAggregatesFilter<$PrismaModel = never> = {
@@ -137491,6 +137648,11 @@ export namespace Prisma {
     level?: number
     monsters?: string
     scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    isActive?: boolean
   }
 
   export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
@@ -137503,6 +137665,11 @@ export namespace Prisma {
     level?: number
     monsters?: string
     scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    isActive?: boolean
   }
 
   export type DungeonCreateOrConnectWithoutDungeonRunsInput = {
@@ -137794,6 +137961,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
@@ -137806,6 +137978,11 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DinozUpsertWithoutDungeonRunsInput = {

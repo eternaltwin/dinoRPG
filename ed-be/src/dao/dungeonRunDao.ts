@@ -39,10 +39,59 @@ export async function createDungeon(
 	name: string,
 	level: number,
 	monsters: string,
-	scenarios = '[]'
+	scenarios = '[]',
+	placeStart: number | null = null,
+	placeEnd: number | null = null,
+	condition = '{}',
+	monsterPool = '[]',
+	isActive = true
 ) {
 	return prisma.dungeon.create({
-		data: { ...sealed, type, name, level, monsters, scenarios }
+		data: { ...sealed, type, name, level, monsters, scenarios, placeStart, placeEnd, condition, monsterPool, isActive }
+	});
+}
+
+/** The active dungeon (if any) whose enter action should show at this place. */
+export async function getDungeonByPlaceStart(placeId: number) {
+	return prisma.dungeon.findFirst({ where: { placeStart: placeId, isActive: true } });
+}
+
+export interface DungeonCatalogUpdate {
+	name?: string;
+	type?: DungeonType;
+	level?: number;
+	placeStart?: number | null;
+	placeEnd?: number | null;
+	condition?: string;
+	monsterPool?: string;
+	scenarios?: string;
+	isActive?: boolean;
+}
+
+/** Catalog-only update — never touches cipher/iv/tag, the sealed maze layout is immutable here. */
+export async function updateDungeonCatalog(id: string, data: DungeonCatalogUpdate) {
+	return prisma.dungeon.update({ where: { id }, data });
+}
+
+export async function deleteDungeon(id: string) {
+	return prisma.dungeon.delete({ where: { id } });
+}
+
+/** Admin list: excludes cipher/iv/tag — the encrypted layout must never reach the client. */
+export async function listDungeonsCatalog() {
+	return prisma.dungeon.findMany({
+		select: {
+			id: true,
+			name: true,
+			type: true,
+			level: true,
+			placeStart: true,
+			placeEnd: true,
+			condition: true,
+			monsterPool: true,
+			scenarios: true,
+			isActive: true
+		}
 	});
 }
 

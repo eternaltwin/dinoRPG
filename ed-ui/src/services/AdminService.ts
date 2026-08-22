@@ -11,6 +11,19 @@ import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
 import { DungeonGrid } from '@drpg/core/models/dungeon/DungeonEditor';
 
+export type DungeonCatalogEntry = {
+	id: string;
+	name: string;
+	type: string;
+	level: number;
+	placeStart: number | null;
+	placeEnd: number | null;
+	condition: string;
+	monsterPool: string;
+	scenarios: string;
+	isActive: boolean;
+};
+
 export const AdminService = {
 	async getDashBoard(): Promise<boolean> {
 		const res = await http().get(`/admin/dashboard`);
@@ -239,6 +252,10 @@ export const AdminService = {
 		noise?: number;
 		filters?: number;
 		surface?: number;
+		placeStart?: number;
+		placeEnd?: number;
+		condition?: string;
+		isActive?: boolean;
 	}): Promise<{ id: string; type: string }> {
 		const res = await http().post(`/admin/dungeon`, form);
 		return res.data;
@@ -250,13 +267,41 @@ export const AdminService = {
 		pool: string[];
 		scenarios: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
 		grid: DungeonGrid;
+		placeStart?: number;
+		placeEnd?: number;
+		condition?: string;
+		isActive?: boolean;
 	}): Promise<{ id: string; type: string }> {
 		const res = await http().post(`/admin/dungeon`, body);
 		return res.data;
 	},
-	async getDungeons(): Promise<{ id: string; type: string }[]> {
+	async getDungeons(): Promise<DungeonCatalogEntry[]> {
 		const res = await http().get(`/admin/dungeon`);
 		return res.data;
+	},
+	async getDungeon(id: string): Promise<DungeonCatalogEntry> {
+		const res = await http().get(`/admin/dungeon/${id}`);
+		return res.data;
+	},
+	async updateDungeon(
+		id: string,
+		body: {
+			name?: string;
+			type?: string;
+			level?: number;
+			placeStart?: number | null;
+			placeEnd?: number | null;
+			condition?: string;
+			pool?: string[];
+			scenarios?: string;
+			isActive?: boolean;
+		}
+	): Promise<unknown> {
+		const res = await http().put(`/admin/dungeon/${id}`, body);
+		return res.data;
+	},
+	async deleteDungeon(id: string): Promise<void> {
+		await http().delete(`/admin/dungeon/${id}`);
 	},
 	async searchClans(name: string) {
 		const res = await http().get(`/admin/clans/search/${name}`);

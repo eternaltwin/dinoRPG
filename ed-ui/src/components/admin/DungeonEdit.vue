@@ -2,17 +2,29 @@
 	<DZTable>
 		<tr>
 			<th class="items-header">ID</th>
+			<th class="items-header">Name</th>
 			<th class="items-header">Type</th>
+			<th class="items-header">Active</th>
 			<th class="items-header">Play</th>
 		</tr>
 		<tr v-for="dungeon in dungeons" :key="dungeon.id">
 			<td>{{ dungeon.id }}</td>
+			<td>{{ dungeon.name }}</td>
 			<td>{{ dungeon.type }}</td>
+			<td>{{ dungeon.isActive ? 'yes' : 'no' }}</td>
 			<td>
 				<RouterLink :to="`/dungeon/${dungeon.id}`">Enter</RouterLink>
 			</td>
 		</tr>
 	</DZTable>
+
+	<label for="dungeon">Select a dungeon to edit : </label>
+	<select id="dungeon" v-model="selectedDungeonId" @change="selectDungeon()">
+		<option value="">-- Create new dungeon --</option>
+		<option v-for="dungeon in dungeons" :key="dungeon.id" :value="dungeon.id">
+			{{ dungeon.name }} (id: {{ dungeon.id }})
+		</option>
+	</select>
 
 	<form @submit.prevent="handleSubmit">
 		<fieldset>
@@ -22,6 +34,34 @@
 				<select v-model="form.type">
 					<option v-for="value in DungeonType" :key="value" :value="value">{{ value }}</option>
 				</select>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Catalog</legend>
+			<div>
+				<label>Place start (gate to reach the dungeon)</label>
+				<select v-model.number="form.placeStart">
+					<option :value="null">-- none --</option>
+					<option v-for="[key, value] in placeEnumEntries" :key="key" :value="value">{{ key }} ({{ value }})</option>
+				</select>
+			</div>
+			<div>
+				<label>Place end (exit place)</label>
+				<select v-model.number="form.placeEnd">
+					<option :value="null">-- none --</option>
+					<option v-for="[key, value] in placeEnumEntries" :key="key" :value="value">{{ key }} ({{ value }})</option>
+				</select>
+			</div>
+			<div>
+				<label>Condition (raw JSON)</label>
+				<textarea v-model="form.condition" rows="3" placeholder='{"active":true}'></textarea>
+			</div>
+			<div>
+				<label>
+					<input type="checkbox" v-model="form.isActive" />
+					Active (enterable in-game)
+				</label>
 			</div>
 		</fieldset>
 
@@ -48,7 +88,7 @@
 				<input type="number" v-model.number="form.monsterLevel" min="1" max="200" />
 			</div>
 			<div>
-				<label>Monster pool (ctrl-click to multi-select; empty = DungeonList lookup by name)</label>
+				<label>Monster pool (ctrl-click to multi-select; empty = keep this name's existing pool)</label>
 				<select multiple size="8" v-model="form.pool">
 					<option v-for="m in monsterNames" :key="m" :value="m">{{ m }} (lvl {{ monsterList[m].level }})</option>
 				</select>
@@ -79,7 +119,11 @@
 			</div>
 		</fieldset>
 
-		<input type="submit" value="Créer le donjon" />
+		<input type="submit" :value="selectedDungeonId ? 'Mettre à jour le donjon' : 'Créer le donjon'" />
+
+		<div v-if="selectedDungeonId">
+			<button type="button" @click="deleteDungeon()">Delete dungeon</button>
+		</div>
 	</form>
 </template>
 
@@ -88,8 +132,11 @@ import { defineComponent } from 'vue';
 import { AdminService } from '../../services';
 import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import DZTable from '../common/DZTable.vue';
+
+const placeEnumEntries = Object.entries(PlaceEnum).filter(([key]) => isNaN(Number(key))) as [string, number][];
 
 export default defineComponent({
 	name: 'DungeonEdit',
@@ -97,8 +144,10 @@ export default defineComponent({
 	data() {
 		return {
 			DungeonType: DungeonType,
+			placeEnumEntries,
 			monsterList,
 			monsterNames: Object.keys(monsterList),
+			selectedDungeonId: '' as string,
 			form: {
 				type: DungeonType.cavern as string,
 				name: '',
@@ -111,17 +160,55 @@ export default defineComponent({
 				level: 6,
 				noise: 0.2,
 				filters: 10,
-				surface: 0.3
+				surface: 0.3,
+				placeStart: null as number | null,
+				placeEnd: null as number | null,
+				condition: '{}',
+				isActive: true
 			},
-			dungeons: [] as { id: string; type: string }[]
+			dungeons: [] as Awaited<ReturnType<typeof AdminService.getDungeons>>
 		};
 	},
 	methods: {
+		async selectDungeon() {
+			if (!this.selectedDungeonId) {
+				return;
+			}
+			try {
+				const dungeon = await AdminService.getDungeon(this.selectedDungeonId);
+				this.form.name = dungeon.name;
+				this.form.type = dungeon.type;
+				this.form.monsterLevel = dungeon.level;
+				this.form.placeStart = dungeon.placeStart;
+				this.form.placeEnd = dungeon.placeEnd;
+				this.form.condition = dungeon.condition;
+				this.form.isActive = dungeon.isActive;
+				this.form.pool = dungeon.monsterPool ? JSON.parse(dungeon.monsterPool) : [];
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
 		async handleSubmit() {
 			if (this.form.name.length < 1) {
 				return;
 			}
 			try {
+				if (this.selectedDungeonId) {
+					await AdminService.updateDungeon(this.selectedDungeonId, {
+						name: this.form.name,
+						type: this.form.type,
+						level: this.form.monsterLevel,
+						placeStart: this.form.placeStart,
+						placeEnd: this.form.placeEnd,
+						condition: this.form.condition,
+						pool: this.form.pool,
+						isActive: this.form.isActive
+					});
+					this.$toast.success(`Dungeon ${this.selectedDungeonId} updated`);
+					this.selectedDungeonId = '';
+					this.dungeons = await AdminService.getDungeons();
+					return;
+				}
 				const layout = this.form.layout.trim();
 				const created = await AdminService.createDungeon(
 					layout !== ''
@@ -130,7 +217,11 @@ export default defineComponent({
 								layout,
 								name: this.form.name,
 								monsterLevel: this.form.monsterLevel,
-								pool: this.form.pool
+								pool: this.form.pool,
+								placeStart: this.form.placeStart ?? undefined,
+								placeEnd: this.form.placeEnd ?? undefined,
+								condition: this.form.condition,
+								isActive: this.form.isActive
 							}
 						: {
 								type: this.form.type,
@@ -144,10 +235,27 @@ export default defineComponent({
 								level: this.form.level,
 								noise: this.form.noise,
 								filters: this.form.filters,
-								surface: this.form.surface
+								surface: this.form.surface,
+								placeStart: this.form.placeStart ?? undefined,
+								placeEnd: this.form.placeEnd ?? undefined,
+								condition: this.form.condition,
+								isActive: this.form.isActive
 							}
 				);
 				this.$toast.success(`Dungeon ${created.id} created`);
+				this.dungeons = await AdminService.getDungeons();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async deleteDungeon() {
+			if (!this.selectedDungeonId) {
+				return;
+			}
+			try {
+				await AdminService.deleteDungeon(this.selectedDungeonId);
+				this.selectedDungeonId = '';
+				this.form.name = '';
 				this.dungeons = await AdminService.getDungeons();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

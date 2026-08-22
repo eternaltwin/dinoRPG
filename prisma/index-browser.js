@@ -789,7 +789,12 @@ exports.Prisma.DungeonScalarFieldEnum = {
   type: 'type',
   level: 'level',
   monsters: 'monsters',
-  scenarios: 'scenarios'
+  scenarios: 'scenarios',
+  placeStart: 'placeStart',
+  placeEnd: 'placeEnd',
+  condition: 'condition',
+  monsterPool: 'monsterPool',
+  isActive: 'isActive'
 };
 
 exports.Prisma.SortOrder = {

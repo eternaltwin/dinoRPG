@@ -4,6 +4,8 @@
  */
 import { DungeonType } from '@drpg/prisma/enums';
 import { FightResult } from '../fight/FightResult.mjs';
+import { Item } from '../item/ItemList.mjs';
+import { Reward } from '../reward/RewardList.mjs';
 
 export interface Cell {
 	l: number;
@@ -28,6 +30,27 @@ export interface RevealedCell {
 	/** Key id of the locked door on this cell — pairs the door with its key so the client can name both. */
 	key?: number;
 }
+
+/**
+ * One `<scenario>` entry a dungeon's `scenarios` DB column holds, in
+ * generation order — the maze's IScenario item `v` indexes this array.
+ * `obj`/`count` grant an item, `collec` grants a reward, `icon` is the map
+ * icon (a chest when omitted), `micon` the popup icon.
+ *
+ * `raw`: true = `text` is shown to the player literally (admin/builder-typed
+ * scenarios). Falsy/omitted = `text` is an i18n key fragment — the actual
+ * string lives under `dungeon.<dungeonName>.<text>` in the translation
+ * files (used by the hand-curated dungeons, e.g. katatombs).
+ */
+export type DungeonScenario = {
+	obj?: Item;
+	count?: number;
+	collec?: Reward;
+	icon?: 'scroll' | 'chest';
+	micon?: string;
+	text: string;
+	raw?: boolean;
+};
 
 export interface StartRunResult {
 	run: {
