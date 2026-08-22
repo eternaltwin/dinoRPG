@@ -125,8 +125,9 @@ describe('rewarder', () => {
 	});
 
 	it('grants an item (new, increase, and decrease)', async () => {
-		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1');
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1', true);
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
+		expect(createNotification).toHaveBeenCalled();
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
 			items: [{ itemId: 3, quantity: 1 }]
 		} as never);
@@ -137,8 +138,9 @@ describe('rewarder', () => {
 	});
 
 	it('grants an epic reward', async () => {
-		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1');
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1', true);
 		expect(addRewardToPlayer).toHaveBeenCalled();
+		expect(createNotification).toHaveBeenCalled();
 	});
 
 	it('skips epic reward already owned', async () => {
@@ -160,5 +162,33 @@ describe('rewarder', () => {
 	it('handles redirect and unknown rewards without error', async () => {
 		await expect(rewarder([{ rewardType: RewardEnum.REDIRECT } as never], team(), 'p1')).resolves.toBeDefined();
 		await expect(rewarder([{ rewardType: 'unknown' } as never], team(), 'p1')).resolves.toBeDefined();
+	});
+
+	it('multiple rewards in single notification', async () => {
+		await rewarder(
+			[
+				{ rewardType: RewardEnum.EPIC, value: 1 },
+				{ rewardType: RewardEnum.GOLD, value: 100 },
+				{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: true }
+			],
+			team(),
+			'p1',
+			true
+		);
+		expect(createNotification).toHaveBeenCalledOnce();
+	});
+
+	it('no notifications', async () => {
+		await rewarder(
+			[
+				{ rewardType: RewardEnum.EPIC, value: 1 },
+				{ rewardType: RewardEnum.GOLD, value: 100 },
+				{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: false }
+			],
+			team(),
+			'p1',
+			false
+		);
+		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 });
