@@ -183,7 +183,7 @@ export default defineComponent({
 			painting: false,
 			stopPaint: null as (() => void) | null,
 			dungeons: [] as { id: string; name: string; type: string }[],
-			sessionStore: sessionStore(),
+			sessionStore: sessionStore()
 		};
 	},
 	computed: {

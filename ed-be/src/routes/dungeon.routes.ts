@@ -29,9 +29,9 @@ const commonPath: string = apiRoutes.dungeonRoute;
 routes.post(
 	`${commonPath}/:id/enter`,
 	[param('id').exists().isString().notEmpty()],
-	async (_req: Request, res: Response) => {
+	async (req: Request, res: Response) => {
 		try {
-			const response = await startRun(_req);
+			const response = await startRun(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err);

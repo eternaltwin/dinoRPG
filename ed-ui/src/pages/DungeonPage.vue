@@ -139,7 +139,19 @@ export default defineComponent({
 			}
 		},
 		needIrma(): boolean {
-			return !(useDinozStore().getDinoz(this.dinozId)?.fight ?? false);
+			const dinoz = useDinozStore().getDinoz(this.dinozId);
+			if (!dinoz) {
+				return false;
+			} else {
+				if (!dinoz.fight) {
+					return true;
+				}
+				let needIrma = false;
+				dinoz.followers.forEach(f => {
+					if (!f.fight) needIrma = true;
+				});
+				return needIrma;
+			}
 		},
 		currentDinoz() {
 			return useDinozStore().getDinoz(this.dinozId);
