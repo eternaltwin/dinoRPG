@@ -68,8 +68,14 @@
 		"outdatedDefense": "Obsolete Defense"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
-		"notYourDinoz": "This is not your Dinoz."
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {
@@ -246,6 +252,9 @@
 		"levelLimit": "The maximum level limit is set to {{level}}.",
 		"poison": "Poison is enabled.",
 		"nopoison": "Poison is disabled.",
+		"goldReward": "{{value}} pièces d'or :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
 		"newsTitle": "New Inter Dojo Tournament",
 		"newsCorpus": "# Tournament {{number}}\n## Archetype {{type}}\nThe qualification phase will last until {{endQualif}}. The rules to create a team are:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Rewards\nThe rewards are the following:\n- First place gets: a rare Tofufu egg, a legendary box and 12% of the cash prize.\n- Second, third and fourth places get: a Tofufu egg, an epic box and respectively 10%, 8% and 6% of the cash prize.\n- 5th to 8th place get: a rare box and 4% of the cash prize each.\n- 9th to 16th places get: a rare box and 2% of the cash prize each.\n- Those with only one win get: 1% of the cash prize each.\n- The others qualified get: 0.5% of the cash prize.\n# Rewards for Qualifiers\nDo not forget that there are rewards for players who reach certain point milestones by the end of the qualifiers! These rewards are cumulative each time a player reaches a new point milestone.\n{{qualificationRewards}}\n\nHappy tournament to all!"
 	},
@@ -285,6 +294,17 @@
 		"3": "Third",
 		"4": "Fourth",
 		"5": "Fifth"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Sphère de Vide | Sphères de Vide",
+			"souffet_egg": "Œuf de Soufflet | Œufs de Soufflet",
+			"toufufu_baby": "Bébé Toufufu | Bébés Toufufu",
+			"toufufu_baby_rare": "Bébé Toufufu Rare | Bébés Toufufu Rares",
+			"golden_napodino": "Napodino d'or | Napodinos d'or",
+			"box_epic": "Boîte épique | Boîtes épiques",
+			"box_legendary": "Boîte légendaire | Boîtes légendaires"
+		}
 	},
 	"reward": {
 		"perle": "Fountain Pearl",
@@ -330,6 +350,14 @@
 	"announce": {
 		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
+	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
+		"noRun": "Vous n'avez jamais visité ce donjon",
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
 	},
 	"UnavailableReason": {
 		"frozen": "Your Dinoz is frozen",

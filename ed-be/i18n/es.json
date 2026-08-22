@@ -68,8 +68,14 @@
 		"outdatedDefense": "Defensa desactualizada"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
-		"notYourDinoz": "Este Dino no es tuyo"
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {
@@ -345,12 +351,21 @@
 		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
+		"noRun": "Vous n'avez jamais visité ce donjon",
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
+	},
 	"UnavailableReason": {
 		"frozen": "Tu Dino está congelado",
 		"sacrificed": "Tu Dino está sacrificado",
 		"selling": "Tu Dino está en venta",
 		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Tu Dino está descansando"
+		"resting": "Tu Dino está descansando",
+		"dungeon": "Votre dinoz visite un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Ya no queda nadie con quien combatir por el momento."
