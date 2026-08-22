@@ -452,7 +452,16 @@ export class MazeRenderer {
 	private updateFx(dt: number): void {
 		if (this.dirty) {
 			this.dirty = false;
-			this.showLevel(this.level);
+			// pixi.js's Ticker has no error isolation between listeners: an
+			// uncaught throw here stops it from ever requesting another animation
+			// frame, silently freezing the whole canvas until something unrelated
+			// (e.g. DinozActor.enqueue) happens to add a ticker listener and wake
+			// it back up. Don't let one bad draw take the whole renderer down.
+			try {
+				this.showLevel(this.level);
+			} catch (err) {
+				console.error('MazeRenderer: showLevel failed', err);
+			}
 		}
 		for (let i = this.fx.length - 1; i >= 0; i--) {
 			const f = this.fx[i];

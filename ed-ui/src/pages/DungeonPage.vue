@@ -87,6 +87,9 @@ let stairShownFor: string | null = null;
 // server round-trip at a time: the next step is requested only once the
 // previous one is confirmed and walked.
 const held: string[] = [];
+// Set in mounted()/cleared in beforeUnmount so the module-scope key handlers
+// below (stable refs, needed for add/removeEventListener) can reach tryMove.
+let triggerMove: ((dx: number, dy: number) => void) | null = null;
 
 const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
@@ -105,9 +108,22 @@ function record(reveal: RevealedCell[], origin?: Cell): void {
 }
 
 function onKeyDown(e: KeyboardEvent): void {
-	if (!ARROWS[e.key]) return;
+	const d = ARROWS[e.key];
+	if (!d) return;
 	e.preventDefault();
-	if (!held.includes(e.key)) held.push(e.key);
+	if (held.includes(e.key)) return;
+	held.push(e.key);
+	// A message box blocks movement until dismissed (renderer.showMessage's
+	// contract — normally a click); let the key that would've moved us
+	// dismiss it instead, same as the frame loop's poll already respects.
+	if (renderer?.messageOpen) {
+		renderer.closeMessage();
+		return;
+	}
+	// Fire the first step immediately (like the click handler) instead of
+	// waiting for the next rAF tick — a quick tap's keydown+keyup can both
+	// land inside the same frame gap, so the poll below would never see it.
+	triggerMove?.(d[0], d[1]);
 }
 function onKeyUp(e: KeyboardEvent): void {
 	const i = held.indexOf(e.key);
@@ -350,6 +366,19 @@ export default defineComponent({
 			}
 
 			record(run.reveal, run.pos);
+			// applyReveal() only flags the level dirty and lets the ticker redraw
+			// it next frame (batches multiple reveals into one showLevel() call) —
+			// force that first paint now instead of waiting on a tick. showLevel()
+			// itself only rebuilds the scene graph, though: PixiJS's cacheAsBitmap
+			// bake (and the actual pixel render) is deferred to the next real
+			// render() pass regardless, so force that too, or the canvas just sits
+			// on its last frame (plain fog) until something else happens to render.
+			renderer.showLevel(renderer.currentLevel);
+			try {
+				renderer.app.render();
+			} catch (err) {
+				console.error('DungeonPage: initial render failed', err);
+			}
 			actor = new DinozActor(renderer, {
 				code: currentDinoz.display,
 				speed: 5,
@@ -373,16 +402,24 @@ export default defineComponent({
 	async mounted() {
 		await this.build();
 
+		triggerMove = (dx, dy) => this.tryMove(dx, dy);
 		window.addEventListener('keydown', onKeyDown);
 		window.addEventListener('keyup', onKeyUp);
 
 		const frame = (): void => {
 			// View.hx froze scroll & moves while winMsg was up — same rule here.
-			if (actor && !moving && actor.pending === 0 && !renderer?.messageOpen) {
-				if (held.length > 0) {
+			if (actor && !moving && !renderer?.messageOpen) {
+				// ponytail: request the next step once the current one is down to its
+				// last queued segment instead of waiting for it to fully land — the
+				// server round-trip then overlaps the walk animation instead of
+				// happening after it, so held movement doesn't visibly pause on
+				// 'stand' between every cell. Still glitches if the round-trip runs
+				// longer than one step's animation; the real fix is a direction-based
+				// client-predicted step model.
+				if (held.length > 0 && actor.pending <= 1) {
 					const d = ARROWS[held[held.length - 1]];
 					this.tryMove(d[0], d[1]);
-				} else {
+				} else if (held.length === 0 && actor.pending === 0) {
 					this.catchUp();
 				}
 			}
@@ -393,6 +430,7 @@ export default defineComponent({
 	},
 	beforeUnmount() {
 		cancelAnimationFrame(rafId);
+		triggerMove = null;
 		window.removeEventListener('keydown', onKeyDown);
 		window.removeEventListener('keyup', onKeyUp);
 		actor?.destroy();
