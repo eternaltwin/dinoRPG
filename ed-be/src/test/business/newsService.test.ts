@@ -91,7 +91,6 @@ describe('createTranslatedNews', () => {
 	});
 	it('creates translated news without a discord notification', async () => {
 		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1, frenchTitle: 'test', frenchText: 'test' } as never);
-		console.log(`Log on test`);
 		await createTranslatedNews(
 			't',
 			NewsType.announce,
