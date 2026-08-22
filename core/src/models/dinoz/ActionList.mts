@@ -197,10 +197,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DUNGEON_ENTER]: {
 		name: Action.DUNGEON_ENTER,
-		imgName: 'act_train'
+		imgName: 'act_dungeon'
 	},
 	[Action.DUNGEON]: {
 		name: Action.DUNGEON,
-		imgName: 'act_train'
+		imgName: 'act_dungeon'
 	}
 };
