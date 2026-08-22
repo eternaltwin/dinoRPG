@@ -81,7 +81,8 @@ import DZButton from '../common/DZButton.vue';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import translateFightStep from '../../utils/translateFightStep.js';
-import { useDinozStore } from '../../store';
+import {sessionStore, useDinozStore} from '../../store';
+import {DungeonService} from "../../services";
 
 export default defineComponent({
 	name: 'FightBounce',
@@ -101,7 +102,8 @@ export default defineComponent({
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined,
-			dungeonName: undefined as string | undefined
+			dungeonName: undefined as string | undefined,
+			sessionStore: sessionStore()
 		};
 	},
 	methods: {
@@ -113,6 +115,7 @@ export default defineComponent({
 				});
 			} else if (this.dungeonName && this.fight.result) {
 				await useDinozStore().refreshDinozFiche(this.dinozId);
+				this.sessionStore.setDungeonRun(await DungeonService.enterDungeon(this.dungeonName, this.dinozId));
 				this.$router.push({
 					name: 'Dungeon',
 					params: { id: this.dungeonName },
