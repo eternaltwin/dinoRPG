@@ -5303,17 +5303,17 @@
 	},
 	"dungeon": {
 		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
-		"floor": "Étage {floor}",
+		"floor": "Piso {floor}",
 		"name": {
 			"katatombs": "Las Katatumbas"
 		},
 		"katatombs": {
-			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
-			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
-			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
-			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
-			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
-			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+			"misc": "Nota de Mandrágora: He dejado una copia del Pergamino del Demonio en estas Katatumbas. Espero que los Maestros Dinos que lo encuentren no lo utilicen con malas intenciones, pues los Dinos-Demonio son muy poderosos.",
+			"napo": "Encuentras y abres un cofre aparentemente abandonado desde hace cientos de años. Está vacío pero, intrigado, ¡descubres un doble fondo en el que encuentras un Napodino de Oro!",
+			"potion": "Encuentras 3 Pociones de la Bruja Lola en un pequeño cofre. ¡Nunca viene mal!",
+			"demon": "Encuentras el Pergamino del Demonio. Indica el lugar de una extraña tienda de Dinos, llamada Tienda Demoniaca. Esta tienda se encuentra en la superficie del Cementerio del Crepúsculo. Tendrás que salir de las Katatumbas en primer lugar...",
+			"enter": "Te paseas por el cementerio y ves una tumba abierta... Una escalera desciende bajo la tierra y decides tomar este camino. Parece que son antiguas \"Katatumbas\"...",
+			"exit": "Sales de las Katatumbas. No se puede decir que el cementerio sea un lugar especialmente agradable, pero al menos sientes un soplo de aire fresco que cambia bastante del maloliente hedor de las Katatumbas."
 		},
 		"msg": {
 			"locked": "La porte des {name} est verrouillée.",
