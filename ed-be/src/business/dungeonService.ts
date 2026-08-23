@@ -12,7 +12,13 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
 import { cellKey, cellsForKeys, revealAround } from './dungeon/reveal.js';
-import type { DungeonScenario, MoveResult, RevealedCell, StartRunResult } from '@drpg/core/models/dungeon/DungeonClient';
+import type {
+	DungeonScenario,
+	MoveResult,
+	MoveStep,
+	RevealedCell,
+	StartRunResult
+} from '@drpg/core/models/dungeon/DungeonClient';
 import { DungeonItem } from './dungeon/types.js';
 import type { DungeonDoor, DungeonStruct } from './dungeon/types.js';
 import { unseal } from '../utils/dungeonCrypto.js';
@@ -22,6 +28,7 @@ import {
 	dinozExitRun,
 	findRun,
 	findRunByLeader,
+	flushRun,
 	getDungeonById,
 	getDungeonByName,
 	updateRun,
@@ -47,7 +54,7 @@ import { isAlive } from '@drpg/core/utils/DinozUtils';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { FightOutcome, FightResult } from '@drpg/core/models/fight/FightResult';
 
 /** Gold granted per dungeon level for each collected pile. */
 const GOLD_PER_LEVEL = 150;
@@ -356,14 +363,21 @@ function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number 
 }
 
 /**
- * Validate one step (dx/dy ∈ {-1,0,1}, or dl !== 0 to take a stair under the
- * dinoz) against the decrypted layout; persist and return only the new reveals.
+ * Validate a batch of steps (each dx/dy ∈ {-1,0,1}, or dl !== 0 to take a stair
+ * under the dinoz) against the decrypted layout; persist once and return only the
+ * new reveals.
+ *
+ * The layout is loaded and decoded once for the whole batch, and the run row is
+ * written once at the end — a held-arrow dash costs one request and one UPDATE
+ * instead of one per cell. The per-step rules are unchanged: every step is still
+ * validated against the sealed layout, so batching leaks nothing a single step
+ * wouldn't. The loop stops at the first step that is refused or that lands on an
+ * event cell (fight, scenario, gold), which keeps the result single-valued; the
+ * client re-sends whatever it had queued behind that step.
  */
 export async function move(req: Request): Promise<MoveResult> {
 	const authed = await auth(req);
-	const dx = +req.body.dx;
-	const dl = +req.body.dl;
-	const dy = +req.body.dy;
+	const steps = req.body.steps as MoveStep[];
 	const dungeonId = req.params.id;
 	const dinozId = +req.body.dinozId;
 	let dungeon = await getDungeonByName(dungeonId);
@@ -382,173 +396,234 @@ export async function move(req: Request): Promise<MoveResult> {
 	);
 	const d = codec.d;
 
-	const cur = { l: run.posL, x: run.posX, y: run.posY };
-	let next: { l: number; x: number; y: number } | null = null;
-
-	if (dl !== 0) {
-		// Stair traversal: only from a stair cell, only to the level it links.
-		const to = stairTarget(d, cur.l, cur.x, cur.y);
-		if (to !== undefined && to === cur.l + dl) next = { l: to, x: cur.x, y: cur.y };
-	} else if (Math.abs(dx) + Math.abs(dy) === 1) {
-		const nx = cur.x + dx;
-		const ny = cur.y + dy;
-		const walkable = nx >= 0 && ny >= 0 && nx < d.width && ny < d.height && d.levels[cur.l].table[nx][ny];
-		if (walkable) next = { l: cur.l, x: nx, y: ny };
-	}
-
-	if (!next) {
-		// Rejected: wall, out of bounds, or no stair here. No new knowledge leaks.
-		return { ok: false, pos: cur, reveal: [] };
-	}
-
+	// Every mutable piece of run state is parsed once here and mutated in place by
+	// the loop below, then serialized once by the single updateRun at the end.
 	const keys = JSON.parse(run.keys) as number[];
 	const opened = JSON.parse(run.opened) as string[];
-
-	const door = lockedDoorAt(d, next.l, next.x, next.y);
-	if (door && !opened.includes(cellKey(next.l, next.x, next.y))) {
-		// Locked door: without its one matching key the step is refused like a wall.
-		if (!keys.includes(door.key as number)) return { ok: false, pos: cur, reveal: [] };
-		opened.push(cellKey(next.l, next.x, next.y));
-	}
-
-	// Walking over an uncollected key picks it up.
-	const keyIdx = itemIndexAt(d, DungeonItem.IKey, next.l, next.x, next.y);
-	if (keyIdx != null && !keys.includes(keyIdx)) keys.push(keyIdx);
-
-	// First visit of a scenario spot: grant its obj/collec and hand the text over.
-	const scenarios = scenariosFor(dungeon);
 	const read = JSON.parse(run.scenarios) as number[];
-	let scenario: MoveResult['scenario'];
-	const sIdx = itemIndexAt(d, DungeonItem.IScenario, next.l, next.x, next.y);
-	const sc = sIdx != null && !read.includes(sIdx) ? scenarios[sIdx] : undefined;
-	if (sc && sIdx != null) {
-		read.push(sIdx);
-		if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
-		if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
-		// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
-		scenario = { text: sc.raw ? sc.text : `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
-	}
-
-	// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.
 	const goldCollected = new Set<string>(JSON.parse(run.gold) as string[]);
+	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
+	const defeated = new Set(JSON.parse(run.defeated) as string[]);
+	const scenarios = scenariosFor(dungeon);
+	const monsters = JSON.parse(dungeon.monsters) as MonsterTeam[];
+
+	let cur = { l: run.posL, x: run.posX, y: run.posY };
+	// `saved` diverges from `cur` only on a lost fight: the run rewinds to the door
+	// while the response still reports the cell that was entered.
+	let saved = cur;
+	const reveal: RevealedCell[] = [];
+	let applied = 0;
+	let ok = true;
+	let scenario: MoveResult['scenario'];
 	let goldReward: number | undefined;
-	const goldHere = itemIndexAt(d, DungeonItem.IGold, next.l, next.x, next.y) != null;
-	if (goldHere && !goldCollected.has(cellKey(next.l, next.x, next.y))) {
-		goldCollected.add(cellKey(next.l, next.x, next.y));
-		goldReward = Math.round(dungeon.level * GOLD_PER_LEVEL * (0.93 + Math.random() * 0.17));
-		await addMoney(authed.id, goldReward);
+	let result: FightResult | undefined = undefined;
+
+	/**
+	 * Persist everything mutated so far, durably, before an irreversible payout.
+	 *
+	 * The run row is write-back cached (dungeonRunDao), so ordinary steps only
+	 * reach the database lazily. But `gold`, `scenarios` and `defeated` are what
+	 * stop a reward being handed out twice, so on the rare step that pays out we
+	 * mark first and flush, then pay. A crash in the gap costs the player one
+	 * reward; the other order would mint them.
+	 */
+	const checkpoint = async (pos: { l: number; x: number; y: number }): Promise<void> => {
+		await updateRun(
+			run.id,
+			{ posX: pos.x, posY: pos.y, posL: pos.l },
+			JSON.stringify([...revealed]),
+			JSON.stringify(keys),
+			JSON.stringify(opened),
+			JSON.stringify(read),
+			JSON.stringify([...goldCollected])
+		);
+		await flushRun(run.id);
+	};
+
+	for (const step of steps) {
+		const dx = +step.dx;
+		const dy = +step.dy;
+		const dl = +step.dl;
+		let next: { l: number; x: number; y: number } | null = null;
+
+		if (dl !== 0) {
+			// Stair traversal: only from a stair cell, only to the level it links.
+			const to = stairTarget(d, cur.l, cur.x, cur.y);
+			if (to !== undefined && to === cur.l + dl) next = { l: to, x: cur.x, y: cur.y };
+		} else if (Math.abs(dx) + Math.abs(dy) === 1) {
+			const nx = cur.x + dx;
+			const ny = cur.y + dy;
+			const walkable = nx >= 0 && ny >= 0 && nx < d.width && ny < d.height && d.levels[cur.l].table[nx][ny];
+			if (walkable) next = { l: cur.l, x: nx, y: ny };
+		}
+
+		if (!next) {
+			// Rejected: wall, out of bounds, or no stair here. No new knowledge leaks.
+			ok = false;
+			break;
+		}
+
+		const door = lockedDoorAt(d, next.l, next.x, next.y);
+		if (door && !opened.includes(cellKey(next.l, next.x, next.y))) {
+			// Locked door: without its one matching key the step is refused like a wall.
+			if (!keys.includes(door.key as number)) {
+				ok = false;
+				break;
+			}
+			opened.push(cellKey(next.l, next.x, next.y));
+		}
+
+		// Walking over an uncollected key picks it up.
+		const keyIdx = itemIndexAt(d, DungeonItem.IKey, next.l, next.x, next.y);
+		if (keyIdx != null && !keys.includes(keyIdx)) keys.push(keyIdx);
+
+		// First visit of a scenario spot: grant its obj/collec and hand the text over.
+		const sIdx = itemIndexAt(d, DungeonItem.IScenario, next.l, next.x, next.y);
+		const sc = sIdx != null && !read.includes(sIdx) ? scenarios[sIdx] : undefined;
+		if (sc && sIdx != null) {
+			read.push(sIdx);
+			// Mark the scenario read before granting what it carries.
+			if (sc.obj != null || sc.collec != null) await checkpoint(next);
+			if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
+			if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
+			// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
+			scenario = { text: sc.raw ? sc.text : `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
+		}
+
+		// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.
+		const goldHere = itemIndexAt(d, DungeonItem.IGold, next.l, next.x, next.y) != null;
+		if (goldHere && !goldCollected.has(cellKey(next.l, next.x, next.y))) {
+			goldCollected.add(cellKey(next.l, next.x, next.y));
+			goldReward = Math.round(dungeon.level * GOLD_PER_LEVEL * (0.93 + Math.random() * 0.17));
+			// Mark the pile collected before paying for it.
+			await checkpoint(next);
+			await addMoney(authed.id, goldReward);
+		}
+
+		reveal.push(...newReveals(revealAround(d, next.l, next.x, next.y), revealed));
+		const foundMonsters = monsters.find(m => {
+			if (m.l === next?.l && m.y === next?.y && m.x === next.x) {
+				return true;
+			}
+		});
+		// A lost fight rewinds the saved position to the dungeon door instead of the entered cell.
+		let lost = false;
+		if (foundMonsters && !defeated.has(cellKey(foundMonsters.l, foundMonsters.x, foundMonsters.y))) {
+			const player = await getDinozFightDataRequest(dinozId, authed.id);
+			if (!player) {
+				throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+			}
+			const dinozData = player.dinoz.find(d => d.id === dinozId);
+			if (!dinozData) {
+				throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+			}
+			if (dinozData.unavailableReason !== UnavailableReason.dungeon) {
+				throw new ExpectedError(`Dinoz is not able to fight in the dungeon.`);
+			}
+			let team = player.dinoz;
+
+			// A dinoz already dead (from an earlier fight this run) or pulled away by
+			// something else leaves the party — and, if dead, the dungeon itself —
+			// before it can be dragged into another fight.
+			const dead = team.filter(d => d.life <= 0);
+			const pulledAway = team.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
+			if (dead.length > 0)
+				await dropFromTeam(
+					dead.map(d => d.id),
+					true
+				);
+			if (pulledAway.length > 0)
+				await dropFromTeam(
+					pulledAway.map(d => d.id),
+					false
+				);
+			team = team.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
+
+			if (dinozData.concentration) {
+				throw new ExpectedError(translate(`concentration`, authed));
+			}
+
+			if (team.some(d => !d.fight)) {
+				throw new ExpectedError(translate(`missingIrma`, authed));
+			}
+
+			if (!isAlive(dinozData)) {
+				throw new ExpectedError(translate(`dead`, authed));
+			}
+
+			const monsterFiches = [] as MonsterFiche[];
+			for (const monster of foundMonsters.monsters) {
+				monsterFiches.push(monsterList[monster]);
+			}
+
+			// calculateFightVsMonsters is pure (seeded RNG, no writes) and already
+			// settles the outcome, so a win can be recorded durably before
+			// rewardFightVsMonsters hands out the XP and loot — otherwise a crash in
+			// between would resurrect the monster and let it be farmed again.
+			const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsterFiches);
+			if (fightResult.outcome === FightOutcome.AttackerWin) {
+				await markMonsterDefeated(run, next.l, next.x, next.y);
+				defeated.add(cellKey(next.l, next.x, next.y));
+				await flushRun(run.id);
+			}
+			result = await rewardFightVsMonsters(team, monsterFiches, fightResult, PlaceEnum.CIMETIERE, player);
+
+			// Same test rewardFightVsMonsters uses to log a Death: hpLost against the
+			// life it fetched the team with, before its own decrement lands.
+			const diedInFight = team.filter(d => {
+				const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
+				return attacker != null && attacker.hpLost >= d.life;
+			});
+			if (diedInFight.length > 0) {
+				await dropFromTeam(
+					diedInFight.map(d => d.id),
+					true
+				);
+				team = team.filter(d => !diedInFight.some(dead => dead.id === d.id));
+			}
+
+			if (!result.result) {
+				// Wiped: the run's leader leaves, and the next entrant restarts from the door.
+				lost = true;
+				await dinozExitRun(run.id);
+			}
+			await updateMultipleDinoz(
+				team.map(d => d.id),
+				{ fight: false }
+			);
+		}
+
+		// Re-send the entered cell even if already revealed, so a door opening, a key
+		// pickup or a won fight shows up immediately instead of on the next resume.
+		const entered = cellKey(next.l, next.x, next.y);
+		if (!reveal.some(c => cellKey(c.l, c.x, c.y) === entered)) reveal.push(...cellsForKeys(d, [entered]));
+
+		cur = next;
+		saved = lost ? d.start : next;
+		applied++;
+		// An event cell ends the batch: the result carries at most one fight, one
+		// scenario and one gold pile, and the client waits for it before going on.
+		if (result || scenario || goldReward != null) break;
 	}
 
-	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
-	const reveal = newReveals(revealAround(d, next.l, next.x, next.y), revealed);
-	const monsters = JSON.parse(dungeon.monsters) as MonsterTeam[];
-	const foundMonsters = monsters.find(m => {
-		if (m.l === next?.l && m.y === next?.y && m.x === next.x) {
-			return true;
-		}
-	});
-	const defeated = new Set(JSON.parse(run.defeated) as string[]);
-	let result: FightResult | undefined = undefined;
-	// A lost fight rewinds the saved position to the dungeon door instead of the entered cell.
-	let lost = false;
-	if (foundMonsters && !defeated.has(cellKey(foundMonsters.l, foundMonsters.x, foundMonsters.y))) {
-		const player = await getDinozFightDataRequest(dinozId, authed.id);
-		if (!player) {
-			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
-		}
-		const dinozData = player.dinoz.find(d => d.id === dinozId);
-		if (!dinozData) {
-			throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
-		}
-		if (dinozData.unavailableReason !== UnavailableReason.dungeon) {
-			throw new ExpectedError(`Dinoz is not able to fight in the dungeon.`);
-		}
-		let team = player.dinoz;
-
-		// A dinoz already dead (from an earlier fight this run) or pulled away by
-		// something else leaves the party — and, if dead, the dungeon itself —
-		// before it can be dragged into another fight.
-		const dead = team.filter(d => d.life <= 0);
-		const pulledAway = team.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
-		if (dead.length > 0)
-			await dropFromTeam(
-				dead.map(d => d.id),
-				true
-			);
-		if (pulledAway.length > 0)
-			await dropFromTeam(
-				pulledAway.map(d => d.id),
-				false
-			);
-		team = team.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
-
-		if (dinozData.concentration) {
-			throw new ExpectedError(translate(`concentration`, authed));
-		}
-
-		if (team.some(d => !d.fight)) {
-			throw new ExpectedError(translate(`missingIrma`, authed));
-		}
-
-		if (!isAlive(dinozData)) {
-			throw new ExpectedError(translate(`dead`, authed));
-		}
-
-		const monsters = [] as MonsterFiche[];
-		for (const monster of foundMonsters.monsters) {
-			monsters.push(monsterList[monster]);
-		}
-
-		const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsters);
-		result = await rewardFightVsMonsters(team, monsters, fightResult, PlaceEnum.CIMETIERE, player);
-
-		// Same test rewardFightVsMonsters uses to log a Death: hpLost against the
-		// life it fetched the team with, before its own decrement lands.
-		const diedInFight = team.filter(d => {
-			const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
-			return attacker != null && attacker.hpLost >= d.life;
-		});
-		if (diedInFight.length > 0) {
-			await dropFromTeam(
-				diedInFight.map(d => d.id),
-				true
-			);
-			team = team.filter(d => !diedInFight.some(dead => dead.id === d.id));
-		}
-
-		if (result.result) {
-			await markMonsterDefeated(run, next.l, next.x, next.y);
-			defeated.add(cellKey(next.l, next.x, next.y));
-		} else {
-			// Wiped: the run's leader leaves, and the next entrant restarts from the door.
-			lost = true;
-			await dinozExitRun(run.id);
-		}
-		await updateMultipleDinoz(
-			team.map(d => d.id),
-			{ fight: false }
+	// A batch refused on its very first step changed nothing — keep it a pure read,
+	// as the single-step version was.
+	if (applied > 0) {
+		await updateRun(
+			run.id,
+			{ posX: saved.x, posY: saved.y, posL: saved.l },
+			JSON.stringify([...revealed]),
+			JSON.stringify(keys),
+			JSON.stringify(opened),
+			JSON.stringify(read),
+			JSON.stringify([...goldCollected])
 		);
 	}
 
-	// Re-send the entered cell even if already revealed, so a door opening, a key
-	// pickup or a won fight shows up immediately instead of on the next resume.
-	const entered = cellKey(next.l, next.x, next.y);
-	if (!reveal.some(c => cellKey(c.l, c.x, c.y) === entered)) reveal.push(...cellsForKeys(d, [entered]));
-
-	const saved = lost ? d.start : next;
-	await updateRun(
-		run.id,
-		{ posX: saved.x, posY: saved.y, posL: saved.l },
-		JSON.stringify([...revealed]),
-		JSON.stringify(keys),
-		JSON.stringify(opened),
-		JSON.stringify(read),
-		JSON.stringify([...goldCollected])
-	);
-
 	return {
-		ok: true,
-		pos: next,
+		ok,
+		pos: cur,
+		applied,
 		reveal: decorateScenarios(
 			decorateGold(decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys), [...goldCollected]),
 			scenarios,

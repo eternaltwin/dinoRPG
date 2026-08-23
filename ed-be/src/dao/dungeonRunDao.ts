@@ -1,11 +1,126 @@
 import { prisma } from '../prisma.js';
+import type { DungeonRun } from '@drpg/prisma';
 import type { Sealed } from '../utils/dungeonCrypto.js';
 import { DungeonType } from '@drpg/prisma/enums';
+import { LOGGER } from '../context.js';
 
 export interface RunPosition {
 	posX: number;
 	posY: number;
 	posL: number;
+}
+
+// ── in-process run cache ─────────────────────────────────────────────────────
+//
+// A run is single-owner (one player, one leader) and is read on every single
+// move, so it lives in memory and is written back lazily. Position and fog are
+// allowed to lag the database: a crash rewinds the player a cell or two, which
+// costs nothing.
+//
+// What may NOT lag is the run's other job — it is the dedup ledger for
+// irreversible writes to the *player*. `gold`, `scenarios` and `defeated` are
+// what stop a gold pile paying twice, a scenario granting its item twice, or a
+// monster being re-farmed. Those are marked and flushed with flushRun() BEFORE
+// the payout, so the only thing a crash can do is lose a reward, never duplicate
+// one. See the checkpoint() calls in dungeonService.move().
+//
+
+/** How long position/fog may lag the DB. ~2-3 cells at the client's walk speed. */
+const FLUSH_MS = 500;
+/** Safety valve against unbounded growth; evicts oldest-inserted first (Map order). */
+const MAX_RUNS = 5000;
+
+const runs = new Map<string, DungeonRun>();
+const byPlayerDungeon = new Map<string, string>();
+const byLeader = new Map<number, string>();
+const dirty = new Set<string>();
+const timers = new Map<string, NodeJS.Timeout>();
+
+const pdKey = (playerId: string, dungeonId: string): string => `${playerId}:${dungeonId}`;
+
+function cacheRun(row: DungeonRun): DungeonRun {
+	if (!runs.has(row.id) && runs.size >= MAX_RUNS) {
+		// Oldest inserted. Evicting is always safe — it flushes, and the next read
+		// just falls through to the database.
+		const oldest = runs.keys().next().value;
+		if (oldest) void evictRun(oldest);
+	}
+	runs.set(row.id, row);
+	byPlayerDungeon.set(pdKey(row.playerId, row.dungeonId), row.id);
+	if (row.leaderId != null) byLeader.set(row.leaderId, row.id);
+	return row;
+}
+
+/** Write a dirty run out now. Safe to call when clean or uncached — it no-ops. */
+export async function flushRun(id: string): Promise<void> {
+	const timer = timers.get(id);
+	if (timer) {
+		clearTimeout(timer);
+		timers.delete(id);
+	}
+	const row = runs.get(id);
+	if (!row || !dirty.has(id)) return;
+	dirty.delete(id);
+	try {
+		await prisma.dungeonRun.update({
+			where: { id },
+			data: {
+				posX: row.posX,
+				posY: row.posY,
+				posL: row.posL,
+				revealed: row.revealed,
+				keys: row.keys,
+				opened: row.opened,
+				scenarios: row.scenarios,
+				gold: row.gold,
+				defeated: row.defeated
+			}
+		});
+	} catch (err) {
+		// Keep it dirty so the next flush retries rather than silently dropping progress.
+		dirty.add(id);
+		LOGGER.error(`Failed to flush dungeon run ${id}: ${err}`);
+		throw err;
+	}
+}
+
+function scheduleFlush(id: string): void {
+	if (timers.has(id)) return;
+	timers.set(
+		id,
+		setTimeout(() => {
+			timers.delete(id);
+			// Nothing awaits this timer, so a failure must not become an unhandled
+			// rejection; flushRun has already re-marked the run dirty for the retry.
+			void flushRun(id).catch(() => undefined);
+		}, FLUSH_MS).unref()
+	);
+}
+
+async function evictRun(id: string): Promise<void> {
+	await flushRun(id).catch(() => undefined);
+	const row = runs.get(id);
+	if (row) {
+		byPlayerDungeon.delete(pdKey(row.playerId, row.dungeonId));
+		if (row.leaderId != null) byLeader.delete(row.leaderId);
+	}
+	runs.delete(id);
+	dirty.delete(id);
+}
+
+/** Flush every pending run — call on shutdown so a deploy doesn't rewind players. */
+export async function flushAllRuns(): Promise<void> {
+	await Promise.all([...dirty].map(id => flushRun(id).catch(() => undefined)));
+}
+
+/** Test seam: drop everything without writing. */
+export function clearRunCache(): void {
+	for (const t of timers.values()) clearTimeout(t);
+	timers.clear();
+	runs.clear();
+	byPlayerDungeon.clear();
+	byLeader.clear();
+	dirty.clear();
 }
 
 /** Persist a freshly sealed dungeon run and return its id (the capability token). */
@@ -16,9 +131,12 @@ export async function createRun(
 	dungeonId: string,
 	leaderId: number
 ) {
-	return prisma.dungeonRun.create({
-		data: { ...pos, revealed, playerId, dungeonId, leaderId }
-	});
+	// Seeded into the cache straight away: entering is always followed by moves.
+	return cacheRun(
+		await prisma.dungeonRun.create({
+			data: { ...pos, revealed, playerId, dungeonId, leaderId }
+		})
+	);
 }
 
 export async function getDungeonById(id: string) {
@@ -96,12 +214,22 @@ export async function listDungeonsCatalog() {
 }
 
 export async function findRun(dungeonId: string, playerId: string) {
-	return prisma.dungeonRun.findUnique({ where: { playerId_dungeonId: { playerId, dungeonId } } });
+	const cached = runs.get(byPlayerDungeon.get(pdKey(playerId, dungeonId)) ?? '');
+	if (cached) return cached;
+	const row = await prisma.dungeonRun.findUnique({ where: { playerId_dungeonId: { playerId, dungeonId } } });
+	return row ? cacheRun(row) : row;
 }
 
-/** The run currently led by this dinoz, if any — followers resolve to their leader's run instead. */
+/**
+ * The run currently led by this dinoz, if any — followers resolve to their leader's
+ * run instead. Reads the cache first: isOnHealingCell() compares against the run's
+ * position, which would be stale if this went straight to the database.
+ */
 export async function findRunByLeader(leaderId: number) {
-	return prisma.dungeonRun.findFirst({ where: { leaderId } });
+	const cached = runs.get(byLeader.get(leaderId) ?? '');
+	if (cached) return cached;
+	const row = await prisma.dungeonRun.findFirst({ where: { leaderId } });
+	return row ? cacheRun(row) : row;
 }
 
 export async function updateRun(
@@ -113,29 +241,58 @@ export async function updateRun(
 	scenarios: string,
 	gold: string
 ) {
-	return prisma.dungeonRun.update({
-		where: { id },
-		data: { ...pos, revealed, keys, opened, scenarios, gold }
-	});
-}
-
-export async function dinozEnterRun(id: string, dinozId: number) {
-	return prisma.dungeonRun.update({
-		where: { id },
-		data: { leaderId: dinozId }
-	});
-}
-
-export async function dinozExitRun(id: string) {
-	return prisma.dungeonRun.update({
-		where: { id },
-		data: { leaderId: null }
-	});
+	const row = runs.get(id);
+	if (!row) {
+		// Uncached (evicted, or a caller that never read it) — write straight through.
+		return prisma.dungeonRun.update({
+			where: { id },
+			data: { ...pos, revealed, keys, opened, scenarios, gold }
+		});
+	}
+	Object.assign(row, pos, { revealed, keys, opened, scenarios, gold });
+	dirty.add(id);
+	scheduleFlush(id);
+	return row;
 }
 
 export async function updateRunDefeated(id: string, defeated: string) {
-	return prisma.dungeonRun.update({
+	const row = runs.get(id);
+	if (!row) {
+		return prisma.dungeonRun.update({
+			where: { id },
+			data: { defeated }
+		});
+	}
+	row.defeated = defeated;
+	dirty.add(id);
+	scheduleFlush(id);
+	return row;
+}
+
+// Leader changes gate the "one team at a time" check and are rare, so they stay
+// synchronous — the cached row is corrected to match rather than written back later.
+
+export async function dinozEnterRun(id: string, dinozId: number) {
+	const updated = await prisma.dungeonRun.update({
 		where: { id },
-		data: { defeated }
+		data: { leaderId: dinozId }
 	});
+	const row = runs.get(id);
+	if (row) {
+		if (row.leaderId != null) byLeader.delete(row.leaderId);
+		row.leaderId = dinozId;
+		byLeader.set(dinozId, id);
+	}
+	return updated;
+}
+
+/** The run is over for now: flush what's pending, then drop it from the cache. */
+export async function dinozExitRun(id: string) {
+	await flushRun(id);
+	const updated = await prisma.dungeonRun.update({
+		where: { id },
+		data: { leaderId: null }
+	});
+	await evictRun(id);
+	return updated;
 }
