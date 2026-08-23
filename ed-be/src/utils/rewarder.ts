@@ -31,7 +31,7 @@ export async function rewarder(
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
 	playerId: string,
-	notify?: boolean,
+	notify?: (RewardEnum.GOLD | RewardEnum.ITEM | RewardEnum.EPIC)[],
 	missionLevel?: number
 ): Promise<[Item, number][]> {
 	if (!team.length) {
@@ -40,11 +40,11 @@ export async function rewarder(
 
 	let actualRewards: [Item, number][] = [];
 
+	notify = notify ?? [RewardEnum.GOLD, RewardEnum.ITEM, RewardEnum.EPIC];
+
 	for (const dinoz of team) {
 		let rewardsToNotify: Rewarder[] = [];
 		for (const reward of rewards) {
-			let showNotification = notify ?? true;
-
 			switch (reward.rewardType) {
 				case RewardEnum.STATUS:
 					if (reward.reverse) {
@@ -81,7 +81,7 @@ export async function rewarder(
 				}
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
-					if (showNotification) {
+					if (notify.includes(RewardEnum.GOLD)) {
 						rewardsToNotify.push(reward);
 					}
 					break;
@@ -112,7 +112,7 @@ export async function rewarder(
 						throw new ExpectedError(`Item ${reward.value} doesn't exist.`);
 					}
 
-					showNotification = reward.notify ?? true;
+					const showNotification = reward.notify ?? true;
 
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
 					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
@@ -132,7 +132,7 @@ export async function rewarder(
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 						actualRewards.push([itemRewarded.itemId, reward.quantity]);
 					}
-					if (showNotification) {
+					if (notify.includes(RewardEnum.ITEM) && showNotification) {
 						rewardsToNotify.push(reward);
 					}
 					break;
@@ -151,7 +151,7 @@ export async function rewarder(
 							player: { connect: { id: playerId } }
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
-						if (showNotification && rewardDetails.announced) {
+						if (notify.includes(RewardEnum.EPIC) && rewardDetails.announced) {
 							rewardsToNotify.push(reward);
 						}
 					}
