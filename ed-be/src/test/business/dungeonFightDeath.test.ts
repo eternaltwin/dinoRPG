@@ -80,6 +80,8 @@ const run = {
 	opened: '[]',
 	scenarios: '[]',
 	gold: '[]',
+	healed: '[]',
+	healPending: null,
 	leaderId: 1
 };
 
@@ -120,7 +122,9 @@ describe('dungeon fight death', () => {
 		} as never);
 		vi.mocked(rewardFightVsMonsters).mockResolvedValue({ result: true } as never);
 
-		await move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dx: 1, dy: 0, dl: 0, dinozId: 1 } }));
+		await move(
+			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { steps: [{ dx: 1, dy: 0, dl: 0 }], dinozId: 1 } })
+		);
 
 		// Dinoz 2 died: disconnected from the leader and freed from unavailableReason.
 		expect(updateDinoz).toHaveBeenCalledWith(2, { leader: { disconnect: true }, unavailableReason: null });
@@ -143,7 +147,9 @@ describe('dungeon fight death', () => {
 		} as never);
 		vi.mocked(rewardFightVsMonsters).mockResolvedValue({ result: true } as never);
 
-		await move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dx: 1, dy: 0, dl: 0, dinozId: 1 } }));
+		await move(
+			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { steps: [{ dx: 1, dy: 0, dl: 0 }], dinozId: 1 } })
+		);
 
 		expect(updateDinoz).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).toHaveBeenCalledWith([1, 2], { fight: false });

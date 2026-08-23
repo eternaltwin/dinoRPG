@@ -73,6 +73,8 @@ export async function flushRun(id: string): Promise<void> {
 				opened: row.opened,
 				scenarios: row.scenarios,
 				gold: row.gold,
+				healed: row.healed,
+				healPending: row.healPending,
 				defeated: row.defeated
 			}
 		});
@@ -250,6 +252,21 @@ export async function updateRun(
 		});
 	}
 	Object.assign(row, pos, { revealed, keys, opened, scenarios, gold });
+	dirty.add(id);
+	scheduleFlush(id);
+	return row;
+}
+
+export async function updateRunHealing(id: string, healed: string, healPending: string | null) {
+	const row = runs.get(id);
+	if (!row) {
+		return prisma.dungeonRun.update({
+			where: { id },
+			data: { healed, healPending }
+		});
+	}
+	row.healed = healed;
+	row.healPending = healPending;
 	dirty.add(id);
 	scheduleFlush(id);
 	return row;

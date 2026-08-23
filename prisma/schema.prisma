@@ -1215,33 +1215,38 @@ enum DungeonType {
 }
 
 model DungeonRun {
-  id        String   @id @default(cuid())
-  posX      Int      @map("pos_x")
-  posY      Int      @map("pos_y")
-  posL      Int      @map("pos_l")
-  revealed  String   @default("[]")
+  id          String   @id @default(cuid())
+  posX        Int      @map("pos_x")
+  posY        Int      @map("pos_y")
+  posL        Int      @map("pos_l")
+  revealed    String   @default("[]")
   // Cell keys ("l,x,y") of the monster teams this player has beaten.
-  defeated  String   @default("[]")
+  defeated    String   @default("[]")
   // Key indices (door.key / item.v in the sealed layout) this player has picked up.
-  keys      String   @default("[]")
+  keys        String   @default("[]")
   // Cell keys ("l,x,y") of the doors this player has unlocked.
-  opened    String   @default("[]")
+  opened      String   @default("[]")
   // Scenario indices (IScenario item.v) this player has read / been granted.
-  scenarios String   @default("[]")
+  scenarios   String   @default("[]")
   // Cell keys ("l,x,y") of the gold piles this player has collected.
-  gold      String   @default("[]")
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  playerId  String   @db.Uuid
-  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  dungeonId String   @db.Uuid
-  dungeon   Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
+  gold        String   @default("[]")
+  // Cell keys ("l,x,y") of the healing cells this player has used up for good.
+  healed      String   @default("[]")
+  // The healing cell ("l,x,y") the party healed on and is still standing on: as
+  // many items as they like until they step off, which spends it into `healed`.
+  healPending String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  playerId    String   @db.Uuid
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  dungeonId   String   @db.Uuid
+  dungeon     Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
   // The dinoz that opened this run — only it can move/resume/exit it. Its
   // current followers (Dinoz.leaderId) ARE the rest of the team: no separate
   // roster to desync, since a dead/pulled dinoz is disconnected immediately.
   // Optional: the run outlives its leader (SetNull) — deleting the dinoz
   // shouldn't wipe out the run's progress.
-  leaderId  Int?
-  leader    Dinoz?   @relation("DungeonRunLeader", fields: [leaderId], references: [id], onDelete: SetNull)
+  leaderId    Int?
+  leader      Dinoz?   @relation("DungeonRunLeader", fields: [leaderId], references: [id], onDelete: SetNull)
 
   @@unique([playerId, dungeonId])
   @@unique([leaderId])

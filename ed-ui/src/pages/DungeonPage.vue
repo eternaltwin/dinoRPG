@@ -45,8 +45,8 @@
  */
 import { defineComponent } from 'vue';
 import { DinozService, DungeonService } from '../services/index.js';
-import { ARROWS, KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
-import type { Cell, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
+import { ARROWS, KEY_SKIN_COUNT, MAX_STEPS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import type { Cell, MoveResult, MoveStep, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
@@ -74,19 +74,40 @@ const icons = new Map<string, string>();
 const doorKeys = new Map<string, number>();
 // Cells the server already revealed as walls — don't ask it again about those.
 const walls = new Set<string>();
-// Logical position = last server-confirmed cell. Moves are driven off this.
+// The mirror of `walls`: cells revealed as walkable. Because the server reveals the
+// whole 3×3 block around every cell entered, all four neighbours of the dinoz are
+// always in here — which is what lets a plain step be predicted instead of awaited.
+const floors = new Set<string>();
+// Logical position, predicted: `cursor` runs ahead of `confirmed` by `pending.length`
+// steps. Moves are driven off this so input never waits on the network.
 let cursor: Cell = { l: 0, x: 0, y: 0 };
-// One in-flight move at a time; the server is the authority, not the keyboard.
-let moving = false;
+// Last server-confirmed cell — what we snap back to if a prediction was ever wrong.
+let confirmed: Cell = { l: 0, x: 0, y: 0 };
+// Steps taken locally but not yet acknowledged. One request in flight at a time;
+// whatever piles up behind it ships as the next batch, so a dash is ~1 request.
+const pending: MoveStep[] = [];
+let inflight = false;
+// A step whose outcome we could not predict (stair, fight, pickup) is in flight.
+// Nothing may be predicted on top of it: its result can change the level under us.
+let blocking = false;
 let rafId = 0;
 // Show the stair button (top-right of the stage) only once the dinoz has settled
 // on a revealed stair cell. The button, not the step, performs the traversal.
 let stairShownFor: string | null = null;
+/** Cells walked per second — the actor's tween speed, and the movement cadence. */
+const WALK_SPEED = 5;
+/**
+ * How long a key must stay down before the frame loop starts repeating it. A tap
+ * is one press, one cell; only a genuine hold walks on. Set to exactly one cell's
+ * walk so the repeat picks up as the first cell lands and a hold stays seamless.
+ * ponytail: raise it if a deliberate slow press still reads as two cells.
+ */
+const REPEAT_DELAY = 1000 / WALK_SPEED;
 // Drive movement from held keys ourselves (a per-frame loop) instead of the
-// OS key-repeat, which inserts a ~500ms pause after the first press. One
-// server round-trip at a time: the next step is requested only once the
-// previous one is confirmed and walked.
+// OS key-repeat, which inserts a ~500ms pause after the first press.
 const held: string[] = [];
+// When the currently held key went down — the frame loop repeats only past REPEAT_DELAY.
+let heldSince = 0;
 // Set in mounted()/cleared in beforeUnmount so the module-scope key handlers
 // below (stable refs, needed for add/removeEventListener) can reach tryMove.
 let triggerMove: ((dx: number, dy: number) => void) | null = null;
@@ -102,9 +123,31 @@ function record(reveal: RevealedCell[], origin?: Cell): void {
 		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
 		else icons.delete(`${c.l},${c.x},${c.y}`);
 		if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
-		if (!c.floor) walls.add(`${c.l},${c.x},${c.y}`);
+		if (c.floor) {
+			floors.add(`${c.l},${c.x},${c.y}`);
+		} else {
+			walls.add(`${c.l},${c.x},${c.y}`);
+			floors.delete(`${c.l},${c.x},${c.y}`);
+		}
 	}
 	renderer?.applyReveal(reveal, origin);
+}
+
+/**
+ * Icons that are inert to *walk onto*: entering the cell has no server-side effect,
+ * so the step's outcome is a foregone conclusion and can be predicted. A stair is in
+ * here because walking onto one does nothing — only the action button's dl move
+ * traverses it. Everything absent (monster, closed door, key_<n>, gold, scroll,
+ * chest) triggers a fight, a key check, an RNG roll or a one-shot grant, and must be
+ * left to the server.
+ */
+const INERT = new Set(['start', 'exit', 'heal', 'stair_up', 'stair_down', 'door_v_open', 'door_h_open']);
+
+/** Can we move onto this cell without asking? Only if it is known floor and inert. */
+function predictable(k: string): boolean {
+	if (!floors.has(k)) return false; // unknown or wall
+	const icon = icons.get(k);
+	return !icon || INERT.has(icon);
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -113,6 +156,9 @@ function onKeyDown(e: KeyboardEvent): void {
 	e.preventDefault();
 	if (held.includes(e.key)) return;
 	held.push(e.key);
+	// A fresh press (including a change of direction) restarts the repeat delay,
+	// so this keydown's step is the only one until the key is genuinely held.
+	heldSince = performance.now();
 	// A message box blocks movement until dismissed (renderer.showMessage's
 	// contract — normally a click); let the key that would've moved us
 	// dismiss it instead, same as the frame loop's poll already respects.
@@ -186,38 +232,81 @@ export default defineComponent({
 			this.wallDebug = !this.wallDebug;
 			renderer?.setDebug(this.wallDebug);
 		},
-		/** Ask the server for one step; on approval, walk the dinoz and fold in the reveal. */
-		async tryMove(dx: number, dy: number, dl = 0): Promise<void> {
+		/**
+		 * Take one step. A plain step onto known floor is walked immediately and
+		 * confirmed in the background — the server reveals the whole 3×3 block around
+		 * every cell entered, so the dinoz's neighbours are always already known and
+		 * the answer is never in doubt. Anything with a server-side effect (fight,
+		 * locked door, pickup, stair) still waits for the real answer.
+		 */
+		tryMove(dx: number, dy: number, dl = 0): void {
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
-			if (!currentDinoz || !currentDinoz.fight) {
+			if (!currentDinoz || !currentDinoz.fight || !actor) {
 				return;
 			}
-			if (moving || !actor) return;
+			const at = `${cursor.l},${cursor.x + dx},${cursor.y + dy}`;
 			// Known wall (already revealed): the server would just say no — skip the round-trip.
-			if (dl === 0 && walls.has(`${cursor.l},${cursor.x + dx},${cursor.y + dy}`)) return;
-			moving = true;
+			if (dl === 0 && walls.has(at)) return;
+			if (dl === 0 && !blocking && predictable(at)) {
+				this.advance({ l: cursor.l, x: cursor.x + dx, y: cursor.y + dy });
+				pending.push({ dx, dy, dl });
+				this.flush();
+				return;
+			}
+			// Event cell or stair: the server decides. Let the queue drain first so its
+			// cursor is where we think it is, then send this step on its own. The frame
+			// loop re-offers the step until it goes through.
+			if (inflight || pending.length > 0) return;
+			blocking = true;
+			pending.push({ dx, dy, dl });
+			this.flush();
+		},
+		/** Walk the dinoz onto `cell` and drag the follower conga line along behind it. */
+		advance(cell: Cell): void {
+			cursor = { ...cell };
+			actor?.enqueue(cursor);
+			trail.unshift({ ...cursor });
+			if (trail.length > followers.length + 1) trail.pop();
+			// The first enqueue each follower gets is its own cell — a walk-in-place
+			// beat that staggers the line's start, as View.hx's delay = w*10 did.
+			followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
+		},
+		/**
+		 * Ship the queued steps. One request in flight: everything the player walks
+		 * while it's out coalesces into the next batch, so a long dash costs one
+		 * round-trip rather than one per cell.
+		 */
+		async flush(): Promise<void> {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (inflight || pending.length === 0 || !currentDinoz) return;
+			inflight = true;
+			const batch = pending.splice(0, MAX_STEPS);
 			try {
-				const move = await DungeonService.moveDinoz(this.dungeonId, dx, dy, dl, currentDinoz.id);
-				moving = false;
-				if (!move.ok) {
-					// A still-closed door refused us: no key for it yet.
-					const at = `${cursor.l},${cursor.x + dx},${cursor.y + dy}`;
-					const blocked = icons.get(at);
-					if (dl === 0 && (blocked === 'door_v' || blocked === 'door_h'))
-						renderer?.showMessage(this.$t('dungeon.msg.locked', { name: this.doorName(doorKeys.get(at) ?? 0) }));
-					return; // wall / no stair: the server said no, nothing was revealed
-				}
-				if (move.fight) {
-					this.sessionStore.setFightResult(move.fight);
-					this.$router.push({
-						name: 'Fight',
-						params: { dinozId: currentDinoz.id.toString() }
-					});
-				}
-				// What the entered cell held BEFORE this step's re-reveal clears it —
-				// that difference is the pickup/opening to announce.
-				const entered = icons.get(iconKey(move.pos));
-				record(move.reveal, move.pos);
+				this.applyResult(await DungeonService.moveDinoz(this.dungeonId, batch, currentDinoz.id), batch);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				this.snapBack(confirmed);
+			} finally {
+				inflight = false;
+				blocking = false;
+				if (pending.length > 0) this.flush();
+			}
+		},
+		/** Fold a confirmed batch back in: reveals, messages, then reconcile our guess. */
+		applyResult(move: MoveResult, batch: MoveStep[]): void {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (move.fight && currentDinoz) {
+				this.sessionStore.setFightResult(move.fight);
+				this.$router.push({
+					name: 'Fight',
+					params: { dinozId: currentDinoz.id.toString() }
+				});
+			}
+			// What the entered cell held BEFORE this step's re-reveal clears it —
+			// that difference is the pickup/opening to announce.
+			const entered = icons.get(iconKey(move.pos));
+			record(move.reveal, move.pos);
+			if (move.applied > 0) {
 				if (entered === 'door_v' || entered === 'door_h') {
 					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
 					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_${entered}_open`);
@@ -234,17 +323,43 @@ export default defineComponent({
 				if (move.gold) {
 					renderer?.showMessage(this.$t('dungeon.msg.gold', { value: move.gold }), 'item_gold');
 				}
-				cursor = { ...move.pos };
-				actor?.enqueue(cursor);
-				trail.unshift({ ...cursor });
-				if (trail.length > followers.length + 1) trail.pop();
-				// The first enqueue each follower gets is its own cell — a walk-in-place
-				// beat that staggers the line's start, as View.hx's delay = w*10 did.
-				followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
-			} catch (err) {
-				moving = false;
-				errorHandler.handle(err, this.$toast);
 			}
+			confirmed = { ...move.pos };
+			if (!move.ok) {
+				// The step after the last applied one was refused — a still-closed door
+				// (no key yet) or, if we ever mispredicted, a wall.
+				const step = batch[move.applied];
+				if (step && step.dl === 0) {
+					const at = `${move.pos.l},${move.pos.x + step.dx},${move.pos.y + step.dy}`;
+					const blocked = icons.get(at);
+					if (blocked === 'door_v' || blocked === 'door_h')
+						renderer?.showMessage(this.$t('dungeon.msg.locked', { name: this.doorName(doorKeys.get(at) ?? 0) }));
+				}
+				this.snapBack(move.pos);
+			} else if (move.applied < batch.length) {
+				// Stopped early on an event cell. Our cursor is still valid — put the
+				// tail back at the head of the queue and carry on.
+				pending.unshift(...batch.slice(move.applied));
+			} else if (move.applied > 0) {
+				// Confirmed as predicted: walk the party onto the cell the server named.
+				// A blocking step (stair, event cell) was never walked locally, so it
+				// only moves the dinoz now.
+				if (iconKey(cursor) !== iconKey(move.pos) && pending.length === 0) this.advance(move.pos);
+			}
+		},
+		/** The server is the authority: drop our guesses and re-seat the party on its cell. */
+		snapBack(pos: Cell): void {
+			pending.length = 0;
+			cursor = { ...pos };
+			// placeAt re-seats the sprite; takeControl resets its queued path.
+			actor?.placeAt({ ...pos });
+			actor?.takeControl();
+			trail.length = 0;
+			trail.push({ ...pos });
+			followers.forEach(f => {
+				f.placeAt({ ...pos });
+				f.takeControl();
+			});
 		},
 		/**
 		 * Leader idle: send each follower the whole remaining trail in one go so it
@@ -273,7 +388,9 @@ export default defineComponent({
 			if (!currentDinoz) {
 				return;
 			}
-			if (!actor || moving || actor.pending > 0) return this.hideButton();
+			// Only once the server has confirmed the cell under the dinoz — the button
+			// acts on it, so a predicted-but-unacknowledged position must not arm it.
+			if (!actor || inflight || pending.length > 0 || actor.pending > 0) return this.hideButton();
 			const k = iconKey(actor.cell);
 			const icon = icons.get(k);
 			if (!icon) return this.hideButton();
@@ -314,8 +431,8 @@ export default defineComponent({
 				}
 			}
 			const icon = icons.get(iconKey(cursor));
-			if (icon === 'stair_up') await this.tryMove(0, 0, 1);
-			else if (icon === 'stair_down') await this.tryMove(0, 0, -1);
+			if (icon === 'stair_up') this.tryMove(0, 0, 1);
+			else if (icon === 'stair_down') this.tryMove(0, 0, -1);
 			else if (icon === 'start' || icon === 'exit') {
 				try {
 					await DungeonService.exitDungeon(this.dungeonId, currentDinoz.id);
@@ -347,6 +464,10 @@ export default defineComponent({
 			icons.clear();
 			doorKeys.clear();
 			walls.clear();
+			floors.clear();
+			pending.length = 0;
+			inflight = false;
+			blocking = false;
 			this.hideButton();
 
 			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
@@ -379,18 +500,19 @@ export default defineComponent({
 			}
 			actor = new DinozActor(renderer, {
 				code: currentDinoz.display,
-				speed: 5,
+				speed: WALK_SPEED,
 				onLevelChange: l => renderer?.showLevel(l)
 			});
 			actor.placeAt({ ...run.pos });
 			actor.takeControl();
 			cursor = { ...run.pos };
+			confirmed = { ...run.pos };
 			trail.length = 0;
 			trail.push({ ...run.pos });
 			for (const d of useDinozStore()
 				.getDinozParty(currentDinoz.id)
 				.filter(p => p.id !== currentDinoz.id)) {
-				const f = new DinozActor(renderer, { code: d.display, speed: 5, lead: false });
+				const f = new DinozActor(renderer, { code: d.display, speed: WALK_SPEED, lead: false });
 				f.placeAt({ ...run.pos });
 				f.takeControl();
 				followers.push(f);
@@ -406,18 +528,17 @@ export default defineComponent({
 
 		const frame = (): void => {
 			// View.hx froze scroll & moves while winMsg was up — same rule here.
-			if (actor && !moving && !renderer?.messageOpen) {
-				// ponytail: request the next step once the current one is down to its
-				// last queued segment instead of waiting for it to fully land — the
-				// server round-trip then overlaps the walk animation instead of
-				// happening after it, so held movement doesn't visibly pause on
-				// 'stand' between every cell. Still glitches if the round-trip runs
-				// longer than one step's animation; the real fix is a direction-based
-				// client-predicted step model.
-				if (held.length > 0 && actor.pending <= 1) {
+			if (actor && !renderer?.messageOpen) {
+				// Auto-repeat a *held* key: the keydown already fired its own step, so
+				// this only takes over once the key has outlived REPEAT_DELAY — one tap
+				// is one cell. Past that, feed the next step while the current one is
+				// down to its last queued segment, so the walk never drains to 'stand'
+				// between cells. The cadence is the animation, not the network: a
+				// predicted step is walked now and confirmed later.
+				if (held.length > 0 && performance.now() - heldSince >= REPEAT_DELAY && actor.pending <= 1) {
 					const d = ARROWS[held[held.length - 1]];
 					this.tryMove(d[0], d[1]);
-				} else if (held.length === 0 && actor.pending === 0) {
+				} else if (held.length === 0 && actor.pending === 0 && !inflight && pending.length === 0) {
 					this.catchUp();
 				}
 			}
@@ -441,8 +562,12 @@ export default defineComponent({
 		icons.clear();
 		doorKeys.clear();
 		walls.clear();
+		floors.clear();
 		held.length = 0;
-		moving = false;
+		heldSince = 0;
+		pending.length = 0;
+		inflight = false;
+		blocking = false;
 		stairShownFor = null;
 	}
 });
