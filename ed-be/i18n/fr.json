@@ -73,7 +73,7 @@
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
 		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
 		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
-		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'assez de tickets pour faire cette action.",
 		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
 		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
@@ -254,7 +254,7 @@
 		"nopoison": "Le poison est désactivé.",
 		"goldReward": "{{value}} pièces d'or :gold:",
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
-		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
+		"qualificationMilestone": "**{{points}} points** : {{rewards}}.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
 		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il existe des récompenses pour les joueurs qui atteindront certains paliers de points à la fin des qualifications ! Ces récompenses sont cumulatives chaque fois qu'un joueur atteint un nouveau palier de points.\n{{qualificationRewards}}\n\nBon tournois à tous !"
 	},
@@ -353,12 +353,12 @@
 	},
 	"dungeon": {
 		"inexistent": "Ce donjon n'existe pas.",
-		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
-		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
-		"noRun": "Vous n'avez jamais visité ce donjon",
+		"wrongPlace": "Votre Dinoz n'est pas à l'entrée du donjon.",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe.",
+		"noRun": "Vous n'avez jamais visité ce donjon.",
 		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
-		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin.",
-		"unavailable": "Un de vos dinoz est occupé à autre chose."
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut aller à une zone de soin.",
+		"unavailable": "Un de vos Dinoz est occupé à autre chose."
 	},
 	"UnavailableReason": {
 		"frozen": "Votre Dinoz est congelé",
@@ -366,7 +366,7 @@
 		"selling": "Votre Dinoz est en vente",
 		"superdom": "Votre Dinoz est au superdom",
 		"resting": "Votre Dinoz se repose",
-		"dungeon": "Votre dinoz visite un donjon."
+		"dungeon": "Votre Dinoz visite un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Il n'y a plus personne à combattre pour le moment."

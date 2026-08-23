@@ -1812,11 +1812,11 @@
 			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
 			"level": "Niv. {level}",
 			"sacrifice": "Sacrifier",
-			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
 			"sacrifice_title": "Sacrifice",
 			"buy_title": "Invocation",
 			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
 			"yourDemonTickets": "Vos Tickets Démons"
 		},
 		"dinoz": {
@@ -4658,7 +4658,7 @@
 		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
-		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
@@ -5302,8 +5302,8 @@
 		"blockSender": "Bloquer l'expéditeur"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
-		"floor": "Etage {floor}",
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Étage {floor}",
 		"name": {
 			"katatombs": "les Katatombes"
 		},
@@ -5344,7 +5344,7 @@
 			"Rouges",
 			"en Plastique",
 			"en Mousse",
-			"Etincelants"
+			"Étincelants"
 		]
 	},
 	"scenario": {
