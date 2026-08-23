@@ -966,6 +966,7 @@ model FBTournament {
   id           String         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   date         DateTime       @default(now()) @db.Timestamp(6)
   teamRace     String         @db.Text
+  demon        Boolean        @default(false)
   levelLimit   Int            @default(50)
   participants GameDinoz[]
   fights       FightArchive[]

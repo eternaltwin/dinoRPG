@@ -155,7 +155,7 @@ function makeDinozWPlayer(overrides: Record<string, any> = {}, playerOverrides: 
 		id: DEFAULT_DINOZ_ID,
 		level: 10,
 		experience: 0,
-		raceId: RaceEnum.GORILLOZ_DEMON,
+		raceId: RaceEnum.GORILLOZ,
 		leaderId: null,
 		fight: true,
 		gather: true,
@@ -204,7 +204,7 @@ function makeShopDinoz(overrides: Record<string, any> = {}): any {
 	return {
 		id: DEFAULT_DINOZ_ID,
 		display: 'display-shop',
-		raceId: RaceEnum.GORILLOZ_DEMON,
+		raceId: RaceEnum.GORILLOZ,
 		seed: '123',
 		nbrUpFire: 1,
 		nbrUpWood: 2,
