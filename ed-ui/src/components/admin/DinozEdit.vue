@@ -137,7 +137,6 @@
 						type="radio"
 						value="add"
 						name="addStatus"
-						@click="filterStatusList('add')"
 						v-model="statusOperation"
 					/>
 					<label class="radio">add</label>
@@ -146,7 +145,6 @@
 						type="radio"
 						value="remove"
 						name="removeStatus"
-						@click="filterStatusList('remove')"
 						v-model="statusOperation"
 					/>
 					<label class="radio">remove</label>
@@ -177,7 +175,6 @@
 					type="radio"
 					value="add"
 					name="addSkill"
-					@click="filterSkillList('add')"
 					v-model="skillOperation"
 				/>
 				<label class="radio">add</label>
@@ -186,7 +183,6 @@
 					type="radio"
 					value="remove"
 					name="removeSkill"
-					@click="filterSkillList('remove')"
 					v-model="skillOperation"
 				/>
 				<label class="radio">remove</label>
@@ -216,7 +212,6 @@
 					type="radio"
 					value="add"
 					name="addUnlockableSkill"
-					@click="filterUnlockableSkillList('add')"
 					v-model="unlockableSkillOperation"
 				/>
 				<label class="radio">add</label>
@@ -225,7 +220,6 @@
 					type="radio"
 					value="remove"
 					name="removeUnlockableSkill"
-					@click="filterUnlockableSkillList('remove')"
 					v-model="unlockableSkillOperation"
 				/>
 				<label class="radio">remove</label>
@@ -261,19 +255,52 @@ export default defineComponent({
 			placeList: placeList,
 			statusList: statusList,
 			statusOperation: '' as string,
-			statusListFiltered: [] as Array<string>,
 			skillList,
-			skillListFiltered: [] as SkillDetails[],
-			unlockableSkillListFiltered: [] as SkillDetails[],
+			allSkills: Object.values(skillList),
 			skillOperation: '' as string,
 			unlockableSkillOperation: '' as string,
-			unavailableReasonOperation: '' as '' | 'add' | 'remove',
-			unavailableReasonListFiltered: [] as Array<UnavailableReason>
+			unavailableReasonOperation: '' as '' | 'add' | 'remove'
 		};
 	},
 	props: {
 		playerId: { type: String, required: true },
 		dinozId: { type: Number, required: true }
+	},
+	computed: {
+		statusListFiltered(): Array<string> {
+			const dinozStatusSet = new Set(this.dinoz.status ?? []);
+			const allStatus = Object.values(statusList.imgName);
+			const statusListFiltered =
+				this.statusOperation === 'add'
+					? allStatus.filter(status => !dinozStatusSet.has(parseInt(status)))
+					: allStatus.filter(status => dinozStatusSet.has(parseInt(status)));
+			return statusListFiltered;
+		},
+		skillListFiltered(): SkillDetails[] {
+			const dinozSkillSet = new Set(this.dinoz.skills ?? []);
+			const skillListFiltered =
+				this.skillOperation === 'add'
+					? this.allSkills.filter(skill => !dinozSkillSet.has(skill.id))
+					: this.allSkills.filter(skill => dinozSkillSet.has(skill.id));
+			return skillListFiltered;
+		},
+		unlockableSkillListFiltered(): SkillDetails[] {
+			const dinozSkillSet = new Set(this.dinoz.unlockableSkills ?? []);
+			const unlockableSkillListFiltered =
+				this.unlockableSkillOperation === 'add'
+					? this.allSkills.filter(skill => !dinozSkillSet.has(skill.id))
+					: this.allSkills.filter(skill => dinozSkillSet.has(skill.id));
+			return unlockableSkillListFiltered;
+		},
+		unavailableReasonListFiltered(): Array<UnavailableReason> {
+			if (this.dinoz.unavailableReason === null) {
+				return Object.values(UnavailableReason);
+			} else {
+				return  Object.values(UnavailableReason).filter(
+					reason => reason === this.dinoz.unavailableReason
+				);
+			}
+		}
 	},
 	methods: {
 		async dinozUpdate(): Promise<void> {
@@ -284,7 +311,7 @@ export default defineComponent({
 					this.dinozField.level ||
 					this.dinozField.placeId ||
 					this.dinozField.canChangeName !== undefined ||
-					(this.dinozField.life ?? 0) > -1 ||
+					this.dinozField.life ||
 					this.dinozField.maxLife ||
 					this.dinozField.experience ||
 					this.dinozField.nbrUpFire ||
@@ -338,52 +365,9 @@ export default defineComponent({
 			}
 
 			this.dinozField.skillList = [];
-			this.filterSkillList(this.skillOperation);
 			this.dinozField.statusList = [];
-			this.filterStatusList(this.statusOperation);
 			this.unavailableReasonOperation = '';
-			this.filterUnavailableReason();
 		},
-		filterSkillList(operation: string): void {
-			if (operation === 'add') {
-				this.skillListFiltered = Object.values(skillList).filter(
-					skill => !this.dinoz.skills?.some(s => s === skill.id)
-				);
-			} else {
-				this.skillListFiltered = Object.values(skillList).filter(skill => this.dinoz.skills?.some(s => s === skill.id));
-			}
-		},
-		filterUnlockableSkillList(operation: string): void {
-			if (operation === 'add') {
-				this.unlockableSkillListFiltered = Object.values(skillList).filter(
-					skill => !this.dinoz.unlockableSkills?.some(s => s === skill.id)
-				);
-			} else {
-				this.unlockableSkillListFiltered = Object.values(skillList).filter(skill =>
-					this.dinoz.unlockableSkills?.some(s => s === skill.id)
-				);
-			}
-		},
-		filterStatusList(operation: string): void {
-			if (operation === 'add') {
-				this.statusListFiltered = Object.keys(statusList.imgName).filter(
-					statusId => !this.dinoz.status?.some(status => status === parseInt(statusId))
-				);
-			} else {
-				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
-					this.dinoz.status?.some(status => status === parseInt(statusId))
-				);
-			}
-		},
-		filterUnavailableReason(): void {
-			if (this.dinoz.unavailableReason === null) {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReason);
-			} else {
-				this.unavailableReasonListFiltered = Object.values(UnavailableReason).filter(
-					reason => reason === this.dinoz.unavailableReason
-				);
-			}
-		}
 	},
 	async mounted() {
 		try {
@@ -393,15 +377,8 @@ export default defineComponent({
 		}
 
 		this.skillOperation = 'add';
-		this.filterSkillList(this.skillOperation);
-
 		this.unlockableSkillOperation = 'add';
-		this.filterUnlockableSkillList(this.unlockableSkillOperation);
-
 		this.statusOperation = 'add';
-		this.filterStatusList(this.statusOperation);
-
-		this.filterUnavailableReason();
 	}
 });
 </script>
