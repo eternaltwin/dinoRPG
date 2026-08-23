@@ -126,7 +126,7 @@ export async function dinozEnterRun(id: string, dinozId: number) {
 	});
 }
 
-export async function dinozExitRun(id: string, dinozId: number) {
+export async function dinozExitRun(id: string) {
 	return prisma.dungeonRun.update({
 		where: { id },
 		data: { leaderId: null }

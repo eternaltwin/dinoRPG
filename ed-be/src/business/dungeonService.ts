@@ -340,7 +340,7 @@ export async function exitRun(req: Request) {
 	// longer shows up here — the leader's live followers are the whole team.
 	const team = [dinoz.id, ...dinoz.followers.map(f => f.id)];
 	await updateMultipleDinoz(team, { unavailableReason: null });
-	await dinozExitRun(run.id, dinoz.id);
+	await dinozExitRun(run.id);
 }
 
 /** Stair lookup: is there a stair door at (l,x,y), and where does it lead? */
@@ -449,6 +449,8 @@ export async function move(req: Request): Promise<MoveResult> {
 	});
 	const defeated = new Set(JSON.parse(run.defeated) as string[]);
 	let result: FightResult | undefined = undefined;
+	// A lost fight rewinds the saved position to the dungeon door instead of the entered cell.
+	let lost = false;
 	if (foundMonsters && !defeated.has(cellKey(foundMonsters.l, foundMonsters.x, foundMonsters.y))) {
 		const player = await getDinozFightDataRequest(dinozId, authed.id);
 		if (!player) {
@@ -517,20 +519,26 @@ export async function move(req: Request): Promise<MoveResult> {
 		if (result.result) {
 			await markMonsterDefeated(run, next.l, next.x, next.y);
 			defeated.add(cellKey(next.l, next.x, next.y));
+		} else {
+			// Wiped: the run's leader leaves, and the next entrant restarts from the door.
+			lost = true;
+			await dinozExitRun(run.id);
 		}
 		await updateMultipleDinoz(
 			team.map(d => d.id),
 			{ fight: false }
 		);
 	}
+
 	// Re-send the entered cell even if already revealed, so a door opening, a key
 	// pickup or a won fight shows up immediately instead of on the next resume.
 	const entered = cellKey(next.l, next.x, next.y);
 	if (!reveal.some(c => cellKey(c.l, c.x, c.y) === entered)) reveal.push(...cellsForKeys(d, [entered]));
 
+	const saved = lost ? d.start : next;
 	await updateRun(
 		run.id,
-		{ posX: next.x, posY: next.y, posL: next.l },
+		{ posX: saved.x, posY: saved.y, posL: saved.l },
 		JSON.stringify([...revealed]),
 		JSON.stringify(keys),
 		JSON.stringify(opened),
