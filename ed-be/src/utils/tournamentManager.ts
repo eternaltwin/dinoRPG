@@ -596,7 +596,7 @@ class TournamentManager {
 				if (rewards.length > 0) {
 					numRewardedPlayers += 1;
 					promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
-					promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, false));
+					promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, []));
 				}
 			}
 		}
@@ -1329,7 +1329,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 				.filter(player => player.dojo >= floor.floor)
 				.forEach(player => {
 					if (!player.player || !player.player.dinoz || !player.playerId) return;
-					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId, true));
+					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId));
 				});
 		});
 		LOGGER.log(`Rewarding ${allRewarded.length} players.`);

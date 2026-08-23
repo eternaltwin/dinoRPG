@@ -109,7 +109,7 @@ describe('rewarder', () => {
 	});
 
 	it('grants gold with notification', async () => {
-		await rewarder([{ rewardType: RewardEnum.GOLD, value: 100 } as never], team(), 'p1');
+		await rewarder([{ rewardType: RewardEnum.GOLD, value: 100 } as never], team(), 'p1', [RewardEnum.GOLD]);
 		expect(playerDao.addMoney).toHaveBeenCalledWith('p1', 100);
 		expect(createNotification).toHaveBeenCalled();
 	});
@@ -125,7 +125,7 @@ describe('rewarder', () => {
 	});
 
 	it('grants an item (new, increase, and decrease)', async () => {
-		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1', true);
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1', [RewardEnum.ITEM]);
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
 		expect(createNotification).toHaveBeenCalled();
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
@@ -138,7 +138,7 @@ describe('rewarder', () => {
 	});
 
 	it('grants an epic reward', async () => {
-		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1', true);
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1', [RewardEnum.EPIC]);
 		expect(addRewardToPlayer).toHaveBeenCalled();
 		expect(createNotification).toHaveBeenCalled();
 	});
@@ -172,8 +172,7 @@ describe('rewarder', () => {
 				{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: true }
 			],
 			team(),
-			'p1',
-			true
+			'p1'
 		);
 		expect(createNotification).toHaveBeenCalledOnce();
 	});
@@ -183,12 +182,18 @@ describe('rewarder', () => {
 			[
 				{ rewardType: RewardEnum.EPIC, value: 1 },
 				{ rewardType: RewardEnum.GOLD, value: 100 },
-				{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: false }
+				{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: true }
 			],
 			team(),
 			'p1',
-			false
+			[]
 		);
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 }], team(), 'p1', [RewardEnum.GOLD, RewardEnum.ITEM]);
+		await rewarder([{ rewardType: RewardEnum.GOLD, value: 100 }], team(), 'p1', [RewardEnum.EPIC, RewardEnum.ITEM]);
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, notify: true }], team(), 'p1', [
+			RewardEnum.GOLD,
+			RewardEnum.EPIC
+		]);
 		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 });

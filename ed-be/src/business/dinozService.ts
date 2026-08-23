@@ -962,7 +962,7 @@ export async function digWithDinoz(req: Request) {
 	if (rewards.length === 0 && !fight) {
 		rewards = [{ rewardType: RewardEnum.GOLD, value: getRandomInteger(0, 125) }];
 	}
-	await rewarder(rewards, [dinozData], authed.id, false);
+	await rewarder(rewards, [dinozData], authed.id, [RewardEnum.ITEM]);
 
 	// Always break normal shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {

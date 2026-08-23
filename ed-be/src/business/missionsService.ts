@@ -1,4 +1,5 @@
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
@@ -229,7 +230,7 @@ export async function endMission(req: Request) {
 
 	const authed = await auth(req);
 
-	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id, false);
+	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id, [RewardEnum.ITEM]);
 	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
