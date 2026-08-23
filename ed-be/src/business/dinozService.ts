@@ -591,15 +591,10 @@ export async function buyDinoz(req: Request) {
 		]
 	};
 
-	const skillsToAdd = Object.values(skillList).filter(
-		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
-	);
+	const skillsToAdd = race.skills ?? [];
 
 	// Add base skills to created dinoz
-	await addMultipleSkillToDinoz(
-		dinozCreated.id,
-		skillsToAdd.map(skill => skill.id)
-	);
+	await addMultipleSkillToDinoz(dinozCreated.id, skillsToAdd);
 
 	// Update player points and dinoz count
 	await updateDinozCount(authed.id, 1);

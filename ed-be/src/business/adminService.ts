@@ -1160,7 +1160,11 @@ export async function createSeededDungeon(req: Request) {
 		(m: string): m is Monster => m in monsterList
 	);
 	const existingForPool = bodyPool.length ? null : await getDungeonByName(name);
-	const pool = bodyPool.length ? bodyPool : existingForPool ? (JSON.parse(existingForPool.monsterPool) as string[]) : [];
+	const pool = bodyPool.length
+		? bodyPool
+		: existingForPool
+			? (JSON.parse(existingForPool.monsterPool) as string[])
+			: [];
 
 	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
 	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
@@ -1274,7 +1278,9 @@ export async function updateDungeonAdmin(req: Request) {
 	const existing = await getDungeonById(id);
 	if (!existing) throw new ExpectedError(`Dungeon ${id} not found`);
 
-	const pool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter((m: string): m is Monster => m in monsterList);
+	const pool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
+		(m: string): m is Monster => m in monsterList
+	);
 	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
 	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
 	let condition = existing.condition;
@@ -1285,7 +1291,8 @@ export async function updateDungeonAdmin(req: Request) {
 			throw new ExpectedError('Invalid condition JSON');
 		}
 	}
-	const scenarios = req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
+	const scenarios =
+		req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
 
 	return updateDungeonCatalog(id, {
 		name: req.body.name ?? existing.name,

@@ -66,7 +66,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			randomRace = getRandomArrayElement(availableRaces);
 
 			// Make a random display
-			randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
+			randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0', false);
 
 			const dinoz: Prisma.PlayerDinozShopCreateManyInput = {
 				playerId: playerData.id,

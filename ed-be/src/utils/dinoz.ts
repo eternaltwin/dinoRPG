@@ -392,9 +392,9 @@ export const learnNextSphereSkill = (
 };
 
 /**
- * @summary Randomly level a Dinoz N times. Levels are picked up based on element affinity of the Dinoz.
+ * @summary Level up a Dinoz, pick its skills randomly based on the provided list of elements to pick and apply their passive effects.
  * @param dinoz Data of the Dinoz to level up, this data is mutated directly.
- * @param targetLevel The expected level to bring the Dinoz to.
+ * @param targetElements The elements to select for the Dinoz.
  * @returns None, it mutates the dinoz data directly.
  */
 export const randomlyLevelUpDinoz = (
@@ -425,9 +425,8 @@ export const randomlyLevelUpDinoz = (
 	if (targetElements.length === 0) return;
 
 	const dinozRace = raceList[dinoz.raceId as RaceEnum];
-	const elementQueue = shuffle(targetElements);
 
-	elementQueue.forEach((element, index) => {
+	targetElements.forEach((element, index) => {
 		// For each iteration, select either a skill to learn or to unlock skills randomly.
 		// Each learnable skill's weight is 1. Unlocking skills weight is based on its length divided by 2.
 		// Note: algorithm to select a Demon Dinoz skills has not been found in MT's source code. This is an attempt to recreate it. Completely made up.
@@ -458,7 +457,7 @@ export const randomlyLevelUpDinoz = (
 		if (currentLearnableSkills.length === 0 && currentUnlockableSkills.length === 0) {
 			// If nothing to unlock, throw.
 			throw new ExpectedError(
-				`Dinoz is level ${dinoz.level} and out of skills to learn, ${elementQueue.length - index} iterations left`
+				`Dinoz is level ${dinoz.level} and out of skills to learn, ${targetElements.length - index} iterations left`
 			);
 		}
 
@@ -467,7 +466,7 @@ export const randomlyLevelUpDinoz = (
 		});
 
 		// Add odds of unlocking skills except for last iteration (unless there is no skill to learn)
-		if (index < elementQueue.length - 1 || currentLearnableSkills.length === 0) {
+		if (index < targetElements.length - 1 || currentLearnableSkills.length === 0) {
 			// Key is '-1' for unlocking given all skill IDs are > 0
 			odds.push({ skillId: -1, odds: currentUnlockableSkills.length / 2 });
 		}
@@ -513,15 +512,24 @@ export const randomlyLevelUpDinoz = (
 	dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
 };
 
-export const generateDinozDisplay = (race: DinozRace, palette: string, rare_1: string, rare_2: string) => {
+export const generateDinozDisplay = (
+	race: DinozRace,
+	palette: string,
+	rare_1: string,
+	rare_2: string,
+	isDemon: boolean
+) => {
 	// Generate display:
-	// - the first 2 chars come from the race swf letters
+	// - the first char comes from the race swf letter
 	// - the second char is '0' for non-demon and 'A' for demon
 	// - the next 11 chars are random between '0' and 'z'
 	// - the next (14th) is the provided color palette
 	// - the next (15th) is the provided 1st rare visual attribute
 	// - the last one (16h) is the provided 2nd rare visual attribute
 	let randomDisplay = race.swfLetter;
+
+	if (isDemon) randomDisplay += 'A';
+	else randomDisplay += '0';
 
 	for (let i = 0; i < 11; i++) {
 		randomDisplay += getRandomLetter('z');
