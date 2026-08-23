@@ -32,7 +32,8 @@ import {
 	getDungeonById,
 	getDungeonByName,
 	updateRun,
-	updateRunDefeated
+	updateRunDefeated,
+	updateRunHealing
 } from '../dao/dungeonRunDao.js';
 import translate from '../utils/server/translate.js';
 import { addMoney, auth } from '../dao/playerDao.js';
@@ -105,6 +106,15 @@ function decorateDoors(reveal: RevealedCell[], opened: string[], keys: number[])
 	return reveal;
 }
 
+/** Strip the 'heal' icon from cells this player already healed on — they're spent. */
+function decorateHeal(reveal: RevealedCell[], healed: string[]): RevealedCell[] {
+	const done = new Set(healed);
+	for (const c of reveal) {
+		if (c.icon === 'heal' && done.has(cellKey(c.l, c.x, c.y))) c.icon = undefined;
+	}
+	return reveal;
+}
+
 /** Strip the 'gold' icon from cells whose pile this player already collected. */
 function decorateGold(reveal: RevealedCell[], collected: string[]): RevealedCell[] {
 	const done = new Set(collected);
@@ -130,10 +140,18 @@ function itemIndexAt(d: DungeonStruct, k: DungeonItem, l: number, x: number, y: 
 	return null;
 }
 
-/** Whether this dinoz (leader or follower) currently stands on its run's healing cell. */
+/** Whether this dinoz (leader or follower) stands on its run's healing cell, unspent. */
 export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Promise<boolean> {
 	const run = await findRunByLeader(dinoz.leaderId ?? dinoz.id);
 	if (!run) {
+		return false;
+	}
+	const here = cellKey(run.posL, run.posX, run.posY);
+	// Already healing here: the cell stays open until the party walks off it.
+	if (run.healPending === here) {
+		return true;
+	}
+	if ((JSON.parse(run.healed) as string[]).includes(here)) {
 		return false;
 	}
 	const dungeon = await getDungeonById(run.dungeonId);
@@ -145,6 +163,20 @@ export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Pr
 		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
 	);
 	return itemIndexAt(codec.d, DungeonItem.IHeal, run.posL, run.posX, run.posY) != null;
+}
+
+/**
+ * Note that the party healed on the cell it stands on. The cell keeps working —
+ * heal the whole team, as many items as you like — until they step off it; move()
+ * is what spends it. Caller has checked isOnHealingCell() first.
+ */
+export async function markHealingCellUsed(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Promise<void> {
+	const run = await findRunByLeader(dinoz.leaderId ?? dinoz.id);
+	if (!run) return;
+	const here = cellKey(run.posL, run.posX, run.posY);
+	if (run.healPending === here) return;
+	await updateRunHealing(run.id, run.healed, here);
+	await flushRun(run.id);
 }
 
 /**
@@ -228,8 +260,6 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.unavailable', authed));
 	}
 
-
-
 	const codec = new DungeonCodec();
 	codec.decode(
 		unseal({ cipher: Buffer.from(dungeon.cipher), iv: Buffer.from(dungeon.iv), tag: Buffer.from(dungeon.tag) })
@@ -249,7 +279,11 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		);
 		await dinozEnterRun(existing.id, dinoz.id);
 		return {
-			run: { id: existing.id, status: 'resumed', message: dungeon.placeStart != null ? `dungeon.${dungeon.name}.enter` : undefined },
+			run: {
+				id: existing.id,
+				status: 'resumed',
+				message: dungeon.placeStart != null ? `dungeon.${dungeon.name}.enter` : undefined
+			},
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
 			width: d.width,
 			height: d.height,
@@ -257,17 +291,20 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			skin: dungeon.type,
 			skinSalt: Math.floor(Math.random() * 1000),
 			reveal: decorateScenarios(
-				decorateGold(
-					decorateDoors(
-						decorateMonsters(
-							cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
-							JSON.parse(dungeon.monsters) as MonsterTeam[],
-							JSON.parse(existing.defeated) as string[]
+				decorateHeal(
+					decorateGold(
+						decorateDoors(
+							decorateMonsters(
+								cellsForKeys(d, JSON.parse(existing.revealed) as string[]),
+								JSON.parse(dungeon.monsters) as MonsterTeam[],
+								JSON.parse(existing.defeated) as string[]
+							),
+							JSON.parse(existing.opened) as string[],
+							JSON.parse(existing.keys) as number[]
 						),
-						JSON.parse(existing.opened) as string[],
-						JSON.parse(existing.keys) as number[]
+						JSON.parse(existing.gold) as string[]
 					),
-					JSON.parse(existing.gold) as string[]
+					JSON.parse(existing.healed) as string[]
 				),
 				scenariosFor(dungeon),
 				JSON.parse(existing.scenarios) as number[]
@@ -402,6 +439,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	const opened = JSON.parse(run.opened) as string[];
 	const read = JSON.parse(run.scenarios) as number[];
 	const goldCollected = new Set<string>(JSON.parse(run.gold) as string[]);
+	const healed = JSON.parse(run.healed) as string[];
 	const revealed = new Set<string>(JSON.parse(run.revealed) as string[]);
 	const defeated = new Set(JSON.parse(run.defeated) as string[]);
 	const scenarios = scenariosFor(dungeon);
@@ -609,6 +647,11 @@ export async function move(req: Request): Promise<MoveResult> {
 	// A batch refused on its very first step changed nothing — keep it a pure read,
 	// as the single-step version was.
 	if (applied > 0) {
+		// Walking off a cell the party healed on spends it: it never heals again.
+		if (run.healPending && run.healPending !== cellKey(saved.l, saved.x, saved.y)) {
+			healed.push(run.healPending);
+			await updateRunHealing(run.id, JSON.stringify(healed), null);
+		}
 		await updateRun(
 			run.id,
 			{ posX: saved.x, posY: saved.y, posL: saved.l },
@@ -625,7 +668,12 @@ export async function move(req: Request): Promise<MoveResult> {
 		pos: cur,
 		applied,
 		reveal: decorateScenarios(
-			decorateGold(decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys), [...goldCollected]),
+			decorateHeal(
+				decorateGold(decorateDoors(decorateMonsters(reveal, monsters, [...defeated]), opened, keys), [
+					...goldCollected
+				]),
+				healed
+			),
 			scenarios,
 			read
 		),
