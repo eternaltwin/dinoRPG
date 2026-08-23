@@ -87304,6 +87304,8 @@ export namespace Prisma {
     opened: string | null
     scenarios: string | null
     gold: string | null
+    healed: string | null
+    healPending: string | null
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
@@ -87321,6 +87323,8 @@ export namespace Prisma {
     opened: string | null
     scenarios: string | null
     gold: string | null
+    healed: string | null
+    healPending: string | null
     createdAt: Date | null
     playerId: string | null
     dungeonId: string | null
@@ -87338,6 +87342,8 @@ export namespace Prisma {
     opened: number
     scenarios: number
     gold: number
+    healed: number
+    healPending: number
     createdAt: number
     playerId: number
     dungeonId: number
@@ -87371,6 +87377,8 @@ export namespace Prisma {
     opened?: true
     scenarios?: true
     gold?: true
+    healed?: true
+    healPending?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -87388,6 +87396,8 @@ export namespace Prisma {
     opened?: true
     scenarios?: true
     gold?: true
+    healed?: true
+    healPending?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -87405,6 +87415,8 @@ export namespace Prisma {
     opened?: true
     scenarios?: true
     gold?: true
+    healed?: true
+    healPending?: true
     createdAt?: true
     playerId?: true
     dungeonId?: true
@@ -87509,6 +87521,8 @@ export namespace Prisma {
     opened: string
     scenarios: string
     gold: string
+    healed: string
+    healPending: string | null
     createdAt: Date
     playerId: string
     dungeonId: string
@@ -87545,6 +87559,8 @@ export namespace Prisma {
     opened?: boolean
     scenarios?: boolean
     gold?: boolean
+    healed?: boolean
+    healPending?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -87565,6 +87581,8 @@ export namespace Prisma {
     opened?: boolean
     scenarios?: boolean
     gold?: boolean
+    healed?: boolean
+    healPending?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -87585,6 +87603,8 @@ export namespace Prisma {
     opened?: boolean
     scenarios?: boolean
     gold?: boolean
+    healed?: boolean
+    healPending?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
@@ -87605,13 +87625,15 @@ export namespace Prisma {
     opened?: boolean
     scenarios?: boolean
     gold?: boolean
+    healed?: boolean
+    healPending?: boolean
     createdAt?: boolean
     playerId?: boolean
     dungeonId?: boolean
     leaderId?: boolean
   }
 
-  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "defeated" | "keys" | "opened" | "scenarios" | "gold" | "createdAt" | "playerId" | "dungeonId" | "leaderId", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "defeated" | "keys" | "opened" | "scenarios" | "gold" | "healed" | "healPending" | "createdAt" | "playerId" | "dungeonId" | "leaderId", ExtArgs["result"]["dungeonRun"]>
   export type DungeonRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
@@ -87646,6 +87668,8 @@ export namespace Prisma {
       opened: string
       scenarios: string
       gold: string
+      healed: string
+      healPending: string | null
       createdAt: Date
       playerId: string
       dungeonId: string
@@ -88086,6 +88110,8 @@ export namespace Prisma {
     readonly opened: FieldRef<"DungeonRun", 'String'>
     readonly scenarios: FieldRef<"DungeonRun", 'String'>
     readonly gold: FieldRef<"DungeonRun", 'String'>
+    readonly healed: FieldRef<"DungeonRun", 'String'>
+    readonly healPending: FieldRef<"DungeonRun", 'String'>
     readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
     readonly playerId: FieldRef<"DungeonRun", 'String'>
     readonly dungeonId: FieldRef<"DungeonRun", 'String'>
@@ -90642,6 +90668,8 @@ export namespace Prisma {
     opened: 'opened',
     scenarios: 'scenarios',
     gold: 'gold',
+    healed: 'healed',
+    healPending: 'healPending',
     createdAt: 'createdAt',
     playerId: 'playerId',
     dungeonId: 'dungeonId',
@@ -95821,6 +95849,8 @@ export namespace Prisma {
     opened?: StringFilter<"DungeonRun"> | string
     scenarios?: StringFilter<"DungeonRun"> | string
     gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -95841,6 +95871,8 @@ export namespace Prisma {
     opened?: SortOrder
     scenarios?: SortOrder
     gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -95866,6 +95898,8 @@ export namespace Prisma {
     opened?: StringFilter<"DungeonRun"> | string
     scenarios?: StringFilter<"DungeonRun"> | string
     gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -95885,6 +95919,8 @@ export namespace Prisma {
     opened?: SortOrder
     scenarios?: SortOrder
     gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -95910,6 +95946,8 @@ export namespace Prisma {
     opened?: StringWithAggregatesFilter<"DungeonRun"> | string
     scenarios?: StringWithAggregatesFilter<"DungeonRun"> | string
     gold?: StringWithAggregatesFilter<"DungeonRun"> | string
+    healed?: StringWithAggregatesFilter<"DungeonRun"> | string
+    healPending?: StringNullableWithAggregatesFilter<"DungeonRun"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
     playerId?: UuidWithAggregatesFilter<"DungeonRun"> | string
     dungeonId?: UuidWithAggregatesFilter<"DungeonRun"> | string
@@ -100705,6 +100743,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
@@ -100722,6 +100762,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     playerId: string
     dungeonId: string
@@ -100739,6 +100781,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
@@ -100756,6 +100800,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
@@ -100773,6 +100819,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     playerId: string
     dungeonId: string
@@ -100790,6 +100838,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -100804,6 +100854,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
@@ -105107,6 +105159,8 @@ export namespace Prisma {
     opened?: SortOrder
     scenarios?: SortOrder
     gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -105131,6 +105185,8 @@ export namespace Prisma {
     opened?: SortOrder
     scenarios?: SortOrder
     gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -105148,6 +105204,8 @@ export namespace Prisma {
     opened?: SortOrder
     scenarios?: SortOrder
     gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
     createdAt?: SortOrder
     playerId?: SortOrder
     dungeonId?: SortOrder
@@ -112324,6 +112382,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
@@ -112340,6 +112400,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     playerId: string
     dungeonId: string
@@ -113185,6 +113247,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
@@ -113201,6 +113265,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     dungeonId?: StringFieldUpdateOperationsInput | string
@@ -118726,6 +118792,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
     leader?: DinozCreateNestedOneWithoutDungeonRunInput
@@ -118742,6 +118810,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     dungeonId: string
     leaderId?: number | null
@@ -119830,6 +119900,8 @@ export namespace Prisma {
     opened?: StringFilter<"DungeonRun"> | string
     scenarios?: StringFilter<"DungeonRun"> | string
     gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
     createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
     playerId?: UuidFilter<"DungeonRun"> | string
     dungeonId?: UuidFilter<"DungeonRun"> | string
@@ -138111,6 +138183,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     player: PlayerCreateNestedOneWithoutDungeonRunsInput
     leader?: DinozCreateNestedOneWithoutDungeonRunInput
@@ -138127,6 +138201,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     playerId: string
     leaderId?: number | null
@@ -139569,6 +139645,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     dungeonId: string
     leaderId?: number | null
@@ -140630,6 +140708,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
     leader?: DinozUpdateOneWithoutDungeonRunNestedInput
@@ -140646,6 +140726,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -140662,6 +140744,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dungeonId?: StringFieldUpdateOperationsInput | string
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -142738,6 +142822,8 @@ export namespace Prisma {
     opened?: string
     scenarios?: string
     gold?: string
+    healed?: string
+    healPending?: string | null
     createdAt?: Date | string
     playerId: string
     leaderId?: number | null
@@ -142754,6 +142840,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
     leader?: DinozUpdateOneWithoutDungeonRunNestedInput
@@ -142770,6 +142858,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -142786,6 +142876,8 @@ export namespace Prisma {
     opened?: StringFieldUpdateOperationsInput | string
     scenarios?: StringFieldUpdateOperationsInput | string
     gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: StringFieldUpdateOperationsInput | string
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null

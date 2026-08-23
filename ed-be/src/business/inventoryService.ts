@@ -61,7 +61,7 @@ import {
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
-import { isOnHealingCell } from './dungeonService.js';
+import { isOnHealingCell, markHealingCellUsed } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL } from '../context.js';
@@ -128,10 +128,12 @@ export async function useItem(req: Request) {
 	if (!dinoz || !dinoz.player) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
+	let healingZone = false;
 	if (dinoz.unavailableReason) {
+		healingZone = await isOnHealingCell(dinoz);
 		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
 			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
-		} else if (!(await isOnHealingCell(dinoz))) {
+		} else if (!healingZone) {
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
 		}
 	}
@@ -202,6 +204,11 @@ export async function useItem(req: Request) {
 			});
 			//Update stats
 			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
+			// The dungeon's healing cell stays open for the rest of the team; it's spent
+			// once they walk off it.
+			if (healingZone) {
+				await markHealingCellUsed(dinoz);
+			}
 			break;
 		case ItemEffect.RESURRECT:
 			await updateDinoz(dinoz.id, resurrect(dinoz));
