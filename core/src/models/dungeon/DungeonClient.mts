@@ -68,9 +68,25 @@ export interface StartRunResult {
 	reveal: RevealedCell[];
 }
 
+/** Most steps one /move request may carry — enforced by the route validator and the client's flush. */
+export const MAX_STEPS = 32;
+
+/** One step of a move request: dx/dy for a cell move, dl (±1) to take a stair under the dinoz. */
+export interface MoveStep {
+	dx: number;
+	dy: number;
+	dl: number;
+}
+
 export interface MoveResult {
 	ok: boolean;
 	pos: Cell;
+	/**
+	 * How many of the submitted steps were applied. Fewer than sent means the batch
+	 * stopped early: refused (`ok: false`) or interrupted by an event cell — a fight,
+	 * a scenario or a gold pile ends the batch so this result stays single-valued.
+	 */
+	applied: number;
 	reveal: RevealedCell[];
 	fight?: FightResult;
 	/** Scenario reached on this step: i18n key of its text + popup icon (XML micon). */
