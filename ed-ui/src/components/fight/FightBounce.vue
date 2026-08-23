@@ -81,8 +81,8 @@ import DZButton from '../common/DZButton.vue';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import translateFightStep from '../../utils/translateFightStep.js';
-import {sessionStore, useDinozStore} from '../../store';
-import {DungeonService} from "../../services";
+import { sessionStore, useDinozStore } from '../../store';
+import { DungeonService } from '../../services';
 
 export default defineComponent({
 	name: 'FightBounce',
