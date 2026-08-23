@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG OAuth API
+  version: '1.0.0'
+  description: >-
+    Routes exposed by ed-be/src/routes/oauth.routes.ts. Note: this router is
+    not currently mounted in ed-be/src/routes/index.ts (commented out there).
+    Both handlers are currently stubs that ignore the request and always
+    return a hardcoded success value.
+paths:
+  /api/v1/oauth/redirect:
+    post:
+      summary: Get the URL to authenticate at Eternal Twin
+      description: >-
+        Stub endpoint: currently ignores the request body and always returns
+        `true`. No request validation middleware or auth is applied.
+      tags:
+        - Oauth
+      responses:
+        '200':
+          description: Hardcoded success flag (not yet a real redirect URL)
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '500':
+          description: Unexpected server error. Body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api/v1/oauth/authenticate/eternal-twin:
+    put:
+      summary: Authenticate at Eternal Twin
+      description: >-
+        Stub endpoint: currently ignores the request body and always returns
+        `true`. No request validation middleware or auth is applied, so the
+        expected request shape (e.g. an Eternal Twin auth code) is not yet
+        enforced by the code.
+      tags:
+        - Oauth
+      responses:
+        '200':
+          description: Hardcoded success flag (not yet a real player JWT)
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '500':
+          description: Unexpected server error. Body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string

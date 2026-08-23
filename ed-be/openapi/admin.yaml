@@ -1,0 +1,1536 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Admin API
+  description: >-
+    Admin-panel endpoints for managing players, dinoz, clans, bans/moderation,
+    scheduled jobs, dungeons and clan-war events. All routes are gated by the
+    `checkRole` middleware (admin role membership) and most handlers additionally
+    call the `auth()` helper to resolve the acting admin for logging.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Admin
+    description: Admin-panel management endpoints
+paths:
+  /api/v1/admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Check whether the caller can access the admin dashboard
+      description: Requires ADMIN or AMPHI role.
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: Always true when authorized
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/dinoz/{id}:
+    get:
+      tags: [Admin]
+      summary: Get full admin view of a dinoz (owned player's dinoz)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dinoz data, with items/skills/status/unlockableSkills flattened to id arrays
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags: [Admin]
+      summary: Edit most fields of a dinoz (stats, status, skills, unlockable skills)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                unavailableReason:
+                  type: string
+                level:
+                  type: integer
+                placeId:
+                  type: integer
+                canChangeName:
+                  type: boolean
+                life:
+                  type: integer
+                maxLife:
+                  type: integer
+                experience:
+                  type: integer
+                nbrUpFire:
+                  type: integer
+                nbrUpWood:
+                  type: integer
+                nbrUpWater:
+                  type: integer
+                nbrUpLightning:
+                  type: integer
+                nbrUpAir:
+                  type: integer
+                status:
+                  type: array
+                  items:
+                    type: string
+                  description: Status ids (as strings) to apply the operation to
+                statusOperation:
+                  type: string
+                  enum: [add, remove]
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                skillOperation:
+                  type: string
+                  enum: [add, remove]
+                unlockableSkills:
+                  type: array
+                  items:
+                    type: integer
+                unlockableSkillOperation:
+                  type: string
+                  enum: [add, remove]
+      responses:
+        '200':
+          description: Dinoz updated
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/gold/{id}:
+    put:
+      tags: [Admin]
+      summary: Add or remove gold from a player
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [operation, gold]
+              properties:
+                operation:
+                  type: string
+                  enum: [add, remove]
+                gold:
+                  type: integer
+      responses:
+        '200':
+          description: New player money total
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/epic/{id}:
+    put:
+      tags: [Admin]
+      summary: Add or remove epic rewards from a player
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [operation, epicRewardId]
+              properties:
+                operation:
+                  type: string
+                  enum: [add, remove]
+                epicRewardId:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Epic reward(s) applied
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/{id}/items:
+    put:
+      tags: [Admin]
+      summary: Increase or decrease item quantities for a player
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [operation, items]
+              properties:
+                operation:
+                  type: string
+                  enum: [increase, decrease]
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      quantity:
+                        type: integer
+      responses:
+        '200':
+          description: Items modified successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/{id}/ingredients:
+    put:
+      tags: [Admin]
+      summary: Increase or decrease ingredient quantities for a player
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [operation, ingredients]
+              properties:
+                operation:
+                  type: string
+                  enum: [increase, decrease]
+                ingredients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      quantity:
+                        type: integer
+      responses:
+        '200':
+          description: Ingredients modified successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/{id}/quests:
+    put:
+      tags: [Admin]
+      summary: Increase or decrease a player's quest progression entries
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [operation, quests]
+              properties:
+                operation:
+                  type: string
+                  enum: [increase, decrease]
+                quests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questId:
+                        type: integer
+                      progression:
+                        type: integer
+      responses:
+        '200':
+          description: Progression quest modified successfuly
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/player/{id}:
+    put:
+      tags: [Admin]
+      summary: Edit a player's profile flags/roles
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customText:
+                  type: string
+                quetzuBought:
+                  type: number
+                dailyGridRewards:
+                  type: number
+                leader:
+                  type: boolean
+                engineer:
+                  type: boolean
+                cooker:
+                  type: boolean
+                shopKeeper:
+                  type: boolean
+                merchant:
+                  type: boolean
+                priest:
+                  type: boolean
+                teacher:
+                  type: boolean
+                messie:
+                  type: boolean
+                matelasseur:
+                  type: boolean
+      responses:
+        '200':
+          description: Player updated
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/playerinfo/{id}:
+    get:
+      tags: [Admin]
+      summary: Get full admin view of a player
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Player data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/secret/all:
+    get:
+      tags: [Admin]
+      summary: List all stored secrets
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: All secrets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/secret/add:
+    put:
+      tags: [Admin]
+      summary: Add (or overwrite) a secret
+      security:
+        - adminAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [key, value]
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+      responses:
+        '200':
+          description: All secrets, after the addition
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/moderation/{page}:
+    get:
+      tags: [Admin]
+      summary: List moderation reports (paginated)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated moderation reports
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/moderation/{id}:
+    put:
+      tags: [Admin]
+      summary: Record the action taken on a moderation report
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [closed, warning, shortBan, mediumBan, longBan, infiniteBan]
+      responses:
+        '200':
+          description: Report action recorded
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/ban/{page}:
+    get:
+      tags: [Admin]
+      summary: List banned players (paginated)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated banned players
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/ban/{id}:
+    post:
+      tags: [Admin]
+      summary: Directly ban a player, creating the backing moderation report
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action, reason, comment]
+              properties:
+                action:
+                  type: string
+                  enum: [shortBan, mediumBan, longBan, infiniteBan]
+                reason:
+                  type: string
+                  enum: [multi, dinozName, accountName, avatar, customText, other]
+                comment:
+                  type: string
+                dinozId:
+                  type: integer
+      responses:
+        '200':
+          description: Player banned
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/updateBan/{id}:
+    put:
+      tags: [Admin]
+      summary: Update an existing ban's action/reason/comment
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [closed, warning, shortBan, mediumBan, longBan, infiniteBan]
+                reason:
+                  type: string
+                  enum: [multi, dinozName, accountName, avatar, customText, other]
+                comment:
+                  type: string
+                dinozId:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          description: Ban updated
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/cancelBan/{id}:
+    put:
+      tags: [Admin]
+      summary: Cancel a player's active ban
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ban cancelled
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/truncateGame:
+    delete:
+      tags: [Admin]
+      summary: Wipe (truncate) most game tables
+      description: >-
+        Restricted beyond `checkRole`: the calling admin's id must match the configured
+        `administrator` secret, otherwise an ExpectedError is thrown (reported as 500).
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: Game data truncated
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/{dinoz1}/{dinoz2}/{seed}/{type}:
+    get:
+      tags: [Admin]
+      summary: Run a debug fight simulation between two dinoz
+      security:
+        - adminAuth: []
+      parameters:
+        - name: dinoz1
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: First dinoz id
+        - name: dinoz2
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Second dinoz id
+        - name: seed
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [gameDinoz, classic, dojo]
+      responses:
+        '200':
+          description: Fight simulation result
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/jobs:
+    get:
+      tags: [Admin]
+      summary: List scheduled cron jobs
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: Scheduled jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    nextRun:
+                      type: string
+                      format: date-time
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/jobs/{jobId}:
+    patch:
+      tags: [Admin]
+      summary: Trigger a scheduled job to run immediately
+      security:
+        - adminAuth: []
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job triggered (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/accounts/page/{page}:
+    get:
+      tags: [Admin]
+      summary: List IPs shared by more than 5 non-banned players (paginated)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Suspicious IPs with player counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ip:
+                      type: string
+                    count:
+                      type: integer
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/accounts/ip/{ip}:
+    get:
+      tags: [Admin]
+      summary: List non-banned players behind a given IP
+      security:
+        - adminAuth: []
+      parameters:
+        - name: ip
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Base64-encoded IP address (decoded server-side with atob)
+      responses:
+        '200':
+          description: Players behind the IP
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
+                    lastLogin:
+                      type: string
+                      format: date-time
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/massban:
+    put:
+      tags: [Admin]
+      summary: Ban a list of players indefinitely (mass ban, e.g. multi-accounts)
+      description: Request body is not validated by express-validator here; shape is inferred from the handler.
+      security:
+        - adminAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                list:
+                  type: array
+                  items:
+                    type: string
+                  description: Player ids to ban
+      responses:
+        '200':
+          description: Players banned (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/search/{name}:
+    get:
+      tags: [Admin]
+      summary: Search clans by name
+      security:
+        - adminAuth: []
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching clans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}:
+    get:
+      tags: [Admin]
+      summary: Get full clan details (members, pages, ingredients)
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Clan details
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          description: Clan not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Admin]
+      summary: Delete a clan
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Whether the clan was deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/name:
+    patch:
+      tags: [Admin]
+      summary: Rename a clan
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Updated clan
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/langs:
+    patch:
+      tags: [Admin]
+      summary: Update a clan's languages
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [langs]
+              properties:
+                langs:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated clan
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/leader:
+    patch:
+      tags: [Admin]
+      summary: Change a clan's leader
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [newLeaderId]
+              properties:
+                newLeaderId:
+                  type: string
+      responses:
+        '200':
+          description: Leader changed (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/treasure/gold:
+    patch:
+      tags: [Admin]
+      summary: Add or remove gold from a clan's treasure
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount, operation]
+              properties:
+                amount:
+                  type: integer
+                  minimum: 0
+                operation:
+                  type: string
+                  enum: [add, remove]
+      responses:
+        '200':
+          description: Updated clan treasure gold
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/treasure/ingredients:
+    patch:
+      tags: [Admin]
+      summary: Add or remove an ingredient from a clan's treasure
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ingredientId, quantity, operation]
+              properties:
+                ingredientId:
+                  type: integer
+                  minimum: 1
+                quantity:
+                  type: integer
+                  minimum: 1
+                operation:
+                  type: string
+                  enum: [add, remove]
+      responses:
+        '200':
+          description: Updated clan treasure ingredients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ingredientId:
+                      type: integer
+                    quantity:
+                      type: integer
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/member/{playerId}:
+    delete:
+      tags: [Admin]
+      summary: Kick a member from their clan
+      security:
+        - adminAuth: []
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member kicked
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/{id}/banner:
+    delete:
+      tags: [Admin]
+      summary: Remove a clan's banner
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated clan
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/clans/pages/{pageId}:
+    put:
+      tags: [Admin]
+      summary: Update a clan page's name/content
+      security:
+        - adminAuth: []
+      parameters:
+        - name: pageId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, content]
+              properties:
+                name:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Updated clan page
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Admin]
+      summary: Delete a clan page
+      security:
+        - adminAuth: []
+      parameters:
+        - name: pageId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted clan page
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/event/start:
+    put:
+      tags: [Admin]
+      summary: Start a clan-war event
+      security:
+        - adminAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start:
+                  type: string
+                  format: date
+                  description: Event start date
+                duration:
+                  type: integer
+                  description: Duration in weeks
+                places:
+                  type: array
+                  items:
+                    type: integer
+                  description: PlaceEnum ids where the war takes place
+                winner:
+                  description: Reward granted to the winner
+                podium:
+                  description: Reward granted to the podium
+                participant:
+                  description: Reward granted to participants
+      responses:
+        '200':
+          description: Event created (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/event:
+    get:
+      tags: [Admin]
+      summary: List ongoing clan events
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: Ongoing clan events, with `config` parsed from JSON
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/dungeon:
+    get:
+      tags: [Admin]
+      summary: List dungeon catalog entries
+      description: Excludes the sealed layout fields (cipher/iv/tag), which never reach the client.
+      security:
+        - adminAuth: []
+      responses:
+        '200':
+          description: Dungeon catalog entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DungeonCatalogEntry'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Admin]
+      summary: Create a dungeon (generated, from an explicit grid, or from an encoded layout string)
+      description: >-
+        Exactly one of `grid`, `layout`, or the seed/width/height/level/noise/filters/surface
+        generation params should be supplied; `grid` and `layout` take precedence in that order.
+      security:
+        - adminAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/DungeonType'
+                name:
+                  type: string
+                monsterLevel:
+                  type: integer
+                  description: Approximate total level of each monster team
+                pool:
+                  type: array
+                  items:
+                    type: string
+                  description: Admin-picked monster names; overrides the existing dungeon's pool when non-empty
+                placeStart:
+                  type: integer
+                  nullable: true
+                placeEnd:
+                  type: integer
+                  nullable: true
+                condition:
+                  type: string
+                  description: JSON-encoded condition object
+                isActive:
+                  type: boolean
+                  default: true
+                grid:
+                  type: object
+                  description: DungeonGridLevel[]-based editor grid; generates and seals a layout when present
+                scenarios:
+                  type: array
+                  description: Required alongside `grid`; validated against the grid's scenario item references
+                layout:
+                  type: string
+                  description: A pre-encoded dungeon layout string, used verbatim instead of generating one
+                seed:
+                  type: string
+                width:
+                  type: integer
+                height:
+                  type: integer
+                level:
+                  type: integer
+                noise:
+                  type: number
+                filters:
+                  type: array
+                  items:
+                    type: string
+                surface:
+                  type: number
+      responses:
+        '200':
+          description: Created dungeon id and type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    $ref: '#/components/schemas/DungeonType'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/admin/dungeon/{id}:
+    get:
+      tags: [Admin]
+      summary: Get a dungeon's catalog fields
+      description: Excludes the sealed layout fields (cipher/iv/tag), which never reach the client.
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dungeon catalog entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DungeonCatalogEntry'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags: [Admin]
+      summary: Update a dungeon's catalog fields
+      description: Catalog-only update — never touches the sealed layout (cipher/iv/tag), which is immutable here.
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  $ref: '#/components/schemas/DungeonType'
+                level:
+                  type: integer
+                placeStart:
+                  type: integer
+                  nullable: true
+                placeEnd:
+                  type: integer
+                  nullable: true
+                condition:
+                  type: string
+                  description: JSON-encoded condition object
+                pool:
+                  type: array
+                  items:
+                    type: string
+                scenarios:
+                  type: array
+                isActive:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated dungeon catalog entry
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Admin]
+      summary: Delete a dungeon
+      security:
+        - adminAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deletion confirmation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    adminAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper and then
+        checked against the admin role list by the `checkRole` middleware. A non-admin
+        caller gets a 500 response with the plain-text body `Not admin !` (see below).
+  schemas:
+    Secret:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    DungeonType:
+      type: string
+      enum: [cavern, crypt, egypt, forest, hell, ruin]
+    DungeonCatalogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/DungeonType'
+        level:
+          type: integer
+        placeStart:
+          type: integer
+          nullable: true
+        placeEnd:
+          type: integer
+          nullable: true
+        condition:
+          type: string
+        monsterPool:
+          type: string
+        scenarios:
+          type: string
+        isActive:
+          type: boolean
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message, HTTP 500). Also covers expected domain
+        failures — not found, invalid operation, forbidden, etc. — which this API reports
+        as 500 rather than 401/403/404, and the `checkRole` "not admin" rejection.
+      content:
+        text/plain:
+          schema:
+            type: string

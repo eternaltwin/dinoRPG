@@ -11,7 +11,11 @@ export default defineConfig(({ mode }) => {
 		plugins: [vue(), vueDevTools()],
 		publicDir: STATIC_DIR,
 		resolve: {
-			extensions: ['.js', '.ts', '.json', '.vue']
+			extensions: ['.js', '.ts', '.json', '.vue'],
+			// @eternaltwin/dinorpg_animations bundles its own copy of pixi.js; dedupe so
+			// the app and the package share a single Pixi instance (avoids duplicate
+			// DisplayObject classes breaking `instanceof` checks at render time).
+			dedupe: ['pixi.js']
 		},
 		css: {
 			preprocessorOptions: {

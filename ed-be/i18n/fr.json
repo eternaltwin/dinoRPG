@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 	"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
-	"tooMuchDinoz": "Vous avez déjà atteint le maximum de Dinoz actifs.",
 	"tooMuchIngredient": "Vous avez un ingrédient risquant de dépasser la limite maximum.",
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
 	"equipedItems": "Vous ne pouvez pas vendre un Dinoz avec des objets équipés.",
@@ -69,8 +68,14 @@
 		"outdatedDefense": "Défense obsolète"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
-		"notYourDinoz": "Ce Dinoz n'est pas le vôtre"
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {
@@ -247,8 +252,11 @@
 		"levelLimit": "La limite de niveau maximum est fixé à {{level}}.",
 		"poison": "Le poison est activé.",
 		"nopoison": "Le poison est désactivé.",
+		"goldReward": "{{value}} pièces d'or :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il existe des récompenses pour les joueurs qui atteindront certains paliers de points à la fin des qualifications ! Ces récompenses sont cumulatives chaque fois qu'un joueur atteint un nouveau palier de points.\n{{qualificationRewards}}\n\nBon tournois à tous !"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -286,6 +294,17 @@
 		"3": "Troisième",
 		"4": "Quatrième",
 		"5": "Cinquième"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Sphère de Vide | Sphères de Vide",
+			"souffet_egg": "Œuf de Soufflet | Œufs de Soufflet",
+			"toufufu_baby": "Bébé Toufufu | Bébés Toufufu",
+			"toufufu_baby_rare": "Bébé Toufufu Rare | Bébés Toufufu Rares",
+			"golden_napodino": "Napodino d'or | Napodinos d'or",
+			"box_epic": "Boîte épique | Boîtes épiques",
+			"box_legendary": "Boîte légendaire | Boîtes légendaires"
+		}
 	},
 	"reward": {
 		"perle": "Perle de la Fontaine",
@@ -332,12 +351,22 @@
 		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
+		"noRun": "Vous n'avez jamais visité ce donjon",
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin.",
+		"unavailable": "Un de vos dinoz est occupé à autre chose."
+	},
 	"UnavailableReason": {
 		"frozen": "Votre Dinoz est congelé",
 		"sacrificed": "Votre Dinoz est sacrifié",
 		"selling": "Votre Dinoz est en vente",
 		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Votre Dinoz se repose"
+		"resting": "Votre Dinoz se repose",
+		"dungeon": "Votre dinoz visite un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Il n'y a plus personne à combattre pour le moment."

@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: Ranking API
+  description: Player and clan-war ranking endpoints.
+  version: 1.0.0
+paths:
+  /api/v1/ranking/{sort}/{page}:
+    get:
+      summary: Get a page of player ranking
+      tags:
+        - Ranking
+      parameters:
+        - in: path
+          name: sort
+          required: true
+          schema:
+            type: string
+            enum: [classic, average, completion, dojo]
+          description: Ranking type. Any unrecognized value falls back to the classic (points) ranking.
+        - in: path
+          name: page
+          required: true
+          schema:
+            type: string
+          description: Page number (1-based, 20 results per page). Must be numeric.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - description: classic / average / completion ranking entry
+                      type: object
+                      properties:
+                        points:
+                          type: number
+                        average:
+                          type: number
+                        completion:
+                          type: number
+                        dinozCount:
+                          type: integer
+                        player:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                    - description: dojo ranking entry
+                      type: object
+                      properties:
+                        dojo:
+                          type: number
+                        player:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            worth:
+                              type: number
+                              description: Dojo challenge win rate, in percent.
+        '400':
+          description: Invalid arguments (sort not a string, or page not numeric)
+        '500':
+          description: Unexpected error
+  /api/v1/ranking/{playerId}/get/position:
+    get:
+      summary: Get a player's position in the classic (points) ranking
+      tags:
+        - Ranking
+      parameters:
+        - in: path
+          name: playerId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  position:
+                    type: integer
+        '400':
+          description: Invalid arguments
+        '500':
+          description: Unexpected error (including player ranking not found)
+  /api/v1/ranking/war/history/{page}:
+    get:
+      summary: Get a page of clan war history
+      tags:
+        - Ranking
+      parameters:
+        - in: path
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    startedAt:
+                      type: string
+                      format: date-time
+                    attacker:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                    defender:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                    winnerClanId:
+                      type: string
+                      nullable: true
+                    isCastleDestroyed:
+                      type: boolean
+                    endReason:
+                      type: string
+                      nullable: true
+                      description: One of castleDestroyed, expiration, or a stolen-war log reason; null while the war is unresolved.
+        '400':
+          description: Invalid arguments (page not an integer >= 1)
+        '500':
+          description: Unexpected error
+  /api/v1/ranking/stats:
+    get:
+      summary: Get the top 3 players for each tracked stat
+      tags:
+        - Ranking
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    stat:
+                      type: string
+                    playerId:
+                      type: string
+                    quantity:
+                      type: number
+                    playerName:
+                      type: string
+                      nullable: true
+        '400':
+          description: Invalid arguments
+        '500':
+          description: Unexpected error

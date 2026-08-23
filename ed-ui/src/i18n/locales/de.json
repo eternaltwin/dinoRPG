@@ -84,7 +84,7 @@
 			"stats": "Aktuelle Statistiken",
 			"skipFight": "Kampfergebnis sofort anzeigen",
 			"skipLevel": "Animation beim Stufenaufstieg überspringen",
-			"autoReequipItems": "Verbrauchte Gegenstände automatisch wieder ausrüsten",
+			"autoReequipItems": "Verbrauchte Gegenstände automatisch auffüllen",
 			"archivedSiteId": "Historisierte Seite",
 			"shareArchivedData": "Twinoid-Statistiken teilen",
 			"displayedNotifications": "Anzahl der Benachrichtigungen, die gleichzeitig angezeigt werden",
@@ -126,8 +126,8 @@
 		"clan_prospector_reward": "Der Gutachter hat eure Burg überprüft – euer Ansehen ist nun: {reputation}.",
 		"clan_prospector_penalty": "Der Gutachter hat eure Burg in Trümmern vorgefunden – euer Ansehen ist auf {reputation} gefallen.",
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
-		"autoReequipSuccess": "Gegenstand/Gegenstände automatisch wieder ausgerüstet: {items}",
-		"autoReequipMissing": "Fehlende Gegenstände zum Wiederaufrüsten: {items}",
+		"autoReequipSuccess": "Automatisch aufgefüllt: {items}",
+		"autoReequipMissing": "Es fehlen zum Auffüllen folgende Gegenstände: {items}",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Dein Dinoz hat die Fähigkeit „{value}“ erlernt.",
@@ -207,7 +207,7 @@
 	},
 	"resurrection": {
 		"choice1": {
-			"name": "**Möglichkeit 1:**&&Auferstehung",
+			"name": "**Möglichkeit 1:**&&Wiederbelebung",
 			"resurrect": "Wiederbelebung",
 			"explanation": "Du kannst deinen Dinoz wiederbeleben, sofort und kostenlos:",
 			"list1": "er wird nach Dinoville zurückkehren",
@@ -257,7 +257,10 @@
 			"fb_tournament": "Das Rohkraft-Turnier betreten.",
 			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
 			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
-			"war_attack": "Gegnerische Burg angreifen."
+			"war_attack": "Gegnerische Burg angreifen.",
+			"dungeon_enter": "Du kannst diesen Ort erkunden, aber gib Acht, dass du dich nicht verläufst!",
+			"dungeon": "Aktuellen Erkundungsstand betrachten...",
+			"demon_shop": "ACHTUNG! GEFAHR!"
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -293,7 +296,10 @@
 			"fb_tournament": "Turnier",
 			"war_defend": "Burg verteidigen",
 			"war_remove": "Von der Verteidigung abziehen",
-			"war_attack": "Burg angreifen"
+			"war_attack": "Burg angreifen",
+			"dungeon_enter": "Betreten",
+			"dungeon": "Karte öffnen",
+			"demon_shop": "Dämonisches Geschäft"
 		}
 	},
 	"button": {
@@ -311,7 +317,8 @@
 		"close": "Schließen",
 		"search": "Suche",
 		"loading": "Wird geladen...",
-		"noResults": "Keine Ergebnisse"
+		"noResults": "Keine Ergebnisse",
+		"details": "Details"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -560,11 +567,11 @@
 			"surviving_ration": "Wenn dein Dinoz im Kampf eine schwere Verletzung erleidet, kann er mit dieser Überlebensration **zwischen 10 und 40 Lebenspunkte** wiederherstellen.",
 			"goblin_merguez": "Eine Spezialität des Großen Immerhitzus. Mit Vorsicht genießen!",
 			"pampleboum": "Diese schöne, leckere Frucht wartet nur auf einen ordentlichen Biss, um **bis zu 15 Lebenspunkte** wiederherzustellen.",
-			"sos_helmet": "Verleiht den Status „Geschützt“ (20% Rüstung) für eine mittlere Dauer.",
+			"sos_helmet": "Verleiht den Status „Geschützt“ für eine mittlere Dauer.",
 			"little_pepper": "Erhöht den nächsten Angriff deines Dinoz um 10.",
 			"zippo": "Dein Dinoz entzündet sich!",
 			"sos_flame": "Nichts geht über ein Notfallflämmchen, das einem im Kampf hilft.",
-			"refrigerated_shield": "Erhöht deine Feuerabwehr um 20.",
+			"refrigerated_shield": "Erhöht die Feuerabwehr um 20.",
 			"fuca_pill": "Verdoppelt die Angriffsgeschwindigkeit deines Dinoz.",
 			"monochromatic": "Dein Dinoz verwendet zum Angreifen immer sein stärkstes Element.",
 			"poisonite_shot": "Schützt deinen Dinoz vor Vergiftungen.",
@@ -1798,6 +1805,20 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Dämonisches Geschäft",
+			"sacrifice_help": "Herzlich Willkommen im Dämonengeschäft! Hier kannst du deine auf dem Friedhof befindlichen Dinoz **opfern** und dafür **Dämonengutscheine** :demon_tk: erhalten. Die Anzahl der Gutscheine hängt von der Stufe der Dinoz ab. Ein geopferter Dinoz wird nicht mehr spielbar oder gar sichtbar.&&Um die Liste an Dämonen-Dinoz betrachten zu können, benötigst du mindestens 30 :demon_tk:.",
+			"buy_help": "Im Austausch gegen **Dämonengutscheine** :demon_tk: kannst du einen dämonischen Dinoz beschwören. Dieser ist bereits ausgewachsen und verfügt über bestimmte Fähigkeiten.",
+			"unsacrifice_help": "Ein geopferter Dinoz kann für die gleiche Anzahl an Gutscheinen, die man für seine Opferung erhalten hat, wiedererweckt werden. Das Wiederauferstehungsritual beansprucht 24 Stunden.",
+			"level": "St. {level}",
+			"sacrifice": "Opfern",
+			"sacrifice_toast": "Du hast deinen Dinoz als Opfergabe dargebracht und {tickets} :demon_tk: erhalten.",
+			"sacrifice_title": "Opferung",
+			"buy_title": "Beschwörung",
+			"unsacrifice_title": "Wiedererweckung",
+			"unsacrifice_toast": "Dein Dinoz wird gerade wiedererweckt und steht dir in 24 Stunden zur Verfügung.",
+			"yourDemonTickets": "Deine Dämonengutscheine"
+		},
 		"dinoz": {
 			"header": "Dinoz-Gehege",
 			"help": "Willkommen im Dinoz-Gehege! Hier kannst du **jeden Tag** unterschiedliche Dinoz begutachten, die zur Adoption freigegeben sind. Suche dir einen aus, der am besten zu dir passt!"
@@ -2208,7 +2229,7 @@
 			"CarapaceDeMagma": "Erhöht die maximalen Lebenspunkte um 30 und die Stärke von Feuer**angriffen** um 5.",
 			"Carapace": "Erhöht die Rüstung um 5%.",
 			"Sauvagerie": "Erhöht die Stärke von Holz**angriffen** um 5.",
-			"Endurance": "Erhöht die Holz**abwehr** um 2.",
+			"Endurance": "Erhöht alle durch das Holzelement verliehene **Abwehr** um 2.",
 			"Vignes": "Verringert die Initiative eines Gegners um 15.",
 			"RenfortsKorgon": "Ruft einen Korgonen herbei, um im Kampf zu helfen.",
 			"Sympathique": "Dem Dinoz kann ein weiterer Dinoz folgen.",
@@ -2241,7 +2262,7 @@
 			"VoieDeKaos": "Erhöht die Stärke von Feuer- und Blitz**angriffen** um 6.",
 			"PlanDeCarriere": "Ermöglicht es dem Dinoz, bei jedem Stufenaufstieg die Elementauslosung zu wiederholen. Begrenzt auf einmal pro Stufe. ",
 			"Adrenaline": "Erhöht die Geschwindigkeit von Blitzangriffen um 50%.",
-			"VoieDeGaia": "Erhöht die Holz- und Blitz**abwehr** um 3.",
+			"VoieDeGaia": "Erhöht alle durch das Holz- und Blitzelement verliehene **Abwehr** um 3.",
 			"DanseFoudroyante": "Greift 5 Mal mit einer Blitzkraft von 3 an.",
 			"Embuche": "Erhöht die Initiative um 7.",
 			"Surcharge": "Erhöht die Chance auf einen Mehrfachschlag um 15%.",
@@ -2251,13 +2272,13 @@
 			"BarriereElectrifiee": "Erhöht die Luft**abwehr** um 20.",
 			"Agilite": "Erhöht die Stärke von Luft**angriffen** um 5.",
 			"Esquive": "Erhöht die Chance auf Ausweichen um 10 %.",
-			"Elasticite": "Erhöht die Stärke von Luft**angriffen** um 10 und die Luft**abwehr** um 3.",
+			"Elasticite": "Erhöht die Stärke von Luft**angriffen** um 10 und alle durch das Luftelement verliehene **Abwehr** um 3.",
 			"MaitriseCorporelle": "Erhöht die Erholungsgeschwindigkeit des Dinoz um 25%",
 			"CompetenceDouble": "Ermöglicht es dem Dinoz, Dualfähigkeiten zu erlernen.",
 			"FrenesieCollective": "Erhöht die Geschwindigkeit aller Dinoz in der Gruppe um 50%.",
 			"LimiteBrisee": "Ermöglicht es dem Dinoz, sein ursprüngliches Potenzial zu überschreiten und einen neuen Fähigkeitenbaum zu erkunden.",
 			"Waikikido": "Erhöht die Chance auf einen Gegenangriff um 10% und die maximalen Lebenspunkte um 20. Verringert die Initiative des Dinoz um 5.",
-			"Vigilance": "Erhöht die Feuer**abwehr** um 5.",
+			"Vigilance": "Erhöht alle durch das Feuerelement verliehene **Abwehr** um 5.",
 			"PaumeChalumeau": "Greift einen Gegner mit einer Feuerkraft von 10 an, wonach die Initiative des Wirkers um 15 verringert wird.",
 			"ChefDeGuerre": "Erhöht die Stärke aller **Angriffe** von Dinoz in der Gruppe um 2.",
 			"Belier": "Erhöht die Stärke des ersten Angriffs um 20.",
@@ -2279,7 +2300,7 @@
 			"HeritageFaroe": "Erhöht die Stärke von Holz**angriffen** um 12 und die Rüstung um 10%.",
 			"PrintempsPrecoce": "Alle anderen Dinoz der Gruppe erhalten maximal so viele Lebenspunkte zurück wie der Dinoz Holzelementepunkte besitzt.",
 			"EspritGorilloz": "Ruft einen Gorillo-Geist herbei, um im Kampf zu helfen.",
-			"GardeForestier": "Erhöht die Holz**abwehr** aller Dinoz in der Gruppe um 3.",
+			"GardeForestier": "Erhöht für Dinoz in der Gruppe alle durch das Holzelement verliehene **Abwehr** um 3.",
 			"Fouille": "Ermöglicht es dem Dinoz, an bestimmten Orten nach Artefakten zu suchen.",
 			"Detective": "Ermöglicht es dem Dinoz, an bestimmten Orten nach seltenen Artefakten zu suchen.",
 			"ExpertEnFouille": "Ermöglicht es dem Dinoz, ein zusätzliches Feld freizulegen.",
@@ -2292,11 +2313,11 @@
 			"ResistanceALaMagie": "Hebt alle negativen Effekte dieses Dinoz auf.",
 			"Ingenieur": "Schaltet für alle Dinoz einen zusätzlichen Ausrüstungsplatz frei.",
 			"CanonAEau": "Greift einen Gegner mit einer Wasserkraft von 6 an.",
-			"Gel": "Greift einen Gegner mit einer Wasserkraft von 5 an. Der Gegner wird daraufhin verlangsamt.",
+			"Gel": "Greift einen Gegner mit einer Wasserkraft von 5 an und „verlangsamt“ ihn für eine mittlere Dauer.",
 			"DoucheEcossaise": "Greift alle Gegner mit einer Wasserkraft von 2 an.",
 			"ZeroAbsolu": "Erhöht die Feuer**abwehr** um 25.",
-			"Petrification": "Versteinert einen Gegner für eine mittlere Dauer – dieser kann sich nicht mehr bewegen, aber seine Rüstung ist um 50% erhöht.",
-			"Acupuncture": "Regeneriert jede Runde 1 LP und Angreifer im Nahkampf erleiden 1 Schaden.",
+			"Petrification": "„Versteinert“ einen Gegner für eine mittlere Dauer – dieser kann sich nicht mehr bewegen, aber seine Rüstung ist um 50% erhöht.",
+			"Acupuncture": "Erhält den Status „Regeneriert“ und Angreifer im Nahkampf erleiden 1 Schaden.",
 			"Sapeur": "Erhöht die Wahrscheinlichkeit, dass die Ausrüstung benutzt wird, um 50%.",
 			"RayonKaarSher": "Greift alle Gegner mit einer Wasserkraft von 7 an.",
 			"Magasinier": "Erhöht die maximale Kapazität des Inventars um 50%.",
@@ -2306,7 +2327,7 @@
 			"CoupFatal": "Greift einen Gegner an. Wenn er getroffen wird, verliert er all seine Lebenspunkte.",
 			"EntrainementSousMarin": "Erhöht die maximalen Lebenspunkte um 10.",
 			"PecheurConfirme": "Ermöglicht es dem Dinoz, an bestimmten Stellen große Fische zu fangen.",
-			"Marecage": "Verlangsamt alle Gegner um 50%.",
+			"Marecage": "Verlangsamt alle Gegner um 50% für eine mittlere Dauer.",
 			"EntrainementSousMarinAvance": "Erhöht die maximalen Lebenspunkte um 20.",
 			"MaitrePecheur": "Ermöglicht es dem Dinoz, an bestimmten Stellen seltene und außergewöhnliche Fische zu fangen.",
 			"MaitreNageur": "Erhöht das Wasserelement um 5.",
@@ -2320,10 +2341,10 @@
 			"Regenerescence": "Erhöht beim Ausruhen die wiederhergestellten Lebenspunkte pro Stunde um 2.",
 			"PremiersSoins": "Ermöglicht es dem Dinoz, am Ende eines Kampfes einen Lebenspunkt wiederherzustellen, falls dieser Leben verlor",
 			"PureeSalvatrice": "Hebt alle negativen Effekte der Gruppe auf.",
-			"AuraHermetique": "Der Dinoz gibt sich selbst den Status „Geschützt“ (erhöht die Rüstung um 20%) für eine längere Dauer.",
+			"AuraHermetique": "Der Dinoz verleiht für eine lange Dauer sich selbst den Status „Geschützt“.",
 			"CrepusculeFlambloyant": "Greift alle Gegner mit einer Feuer- und Blitzkraft von 6 an.",
 			"AubeFeuillue": "Stellt Dinoz in der Gruppe bis zu Blitz 2 + Holz 2 Lebenspunkte wieder her.",
-			"Benediction": "Verleiht allen Dinoz in der Gruppe den Status „Gesegnet“.",
+			"Benediction": "Verleiht allen Dinoz in der Gruppe für eine mittlere Dauer den Status „Gesegnet“.",
 			"ArchangeCorrosif": "Erhöht das Feuerelement um 2 und das Blitzelement um 1.",
 			"ArchangeGenesif": "Erhöht das Holzelement um 2 und das Blitzelement um 1.",
 			"Pretre": "Alle Dinoz stellen beim Ausruhen pro Stunde 1 zusätzlichen LP wieder her.",
@@ -2337,7 +2358,7 @@
 			"Saut": "Ermöglicht, beim **Angreifen**, fliegende Gegner zu treffen.",
 			"DisqueVacuum": "Greift einen Gegner mit einer Luftkraft von 12 an.",
 			"AttaquePlongeante": "Führt einen fliegenden Angriff mit einem Luftbonus von 2 aus.",
-			"Furtivite": "Erhöht die Luft-, Wasser- und Blitz**abwehr** um 2.",
+			"Furtivite": "Erhöht alle durch das Luft-, Wasser- und Blitzelement verliehene **Abwehr** um 2.",
 			"TrouNoir": "Schickt einen Gegner in eine Paralleldimension.",
 			"MaitreLevitateur": "Ermöglicht es allen Dinoz in der Gruppe, beim Angreifen fliegende Gegner zu treffen.",
 			"Strategie": "Wende die beste Angriffsstrategie in Abhängigkeit von der gegnerischen Abwehr an.",
@@ -2346,20 +2367,20 @@
 			"Specialiste": "Entfernt das schwächste Element aus der **Angriffs**rotation.",
 			"TalonDAchille": "Erhöht die Stärke aller **Angriffe** um 2.",
 			"OeilDeLynx": "Ermöglicht es dem Dinoz, an bestimmten Orten exotische Pflanzen zu sammeln.",
-			"NuageToxique": "Vergiftet alle Gegner. Der Schaden pro Runde entspricht dem Luftelement des Wirkers.",
-			"HaleineFetive": "Vergiftet Gegner, die von einem Angriff getroffen wurden.",
+			"NuageToxique": "Vergiftet alle Gegner für eine mittlere Dauer. Der Schaden pro Runde entspricht dem Luftelement des Wirkers.",
+			"HaleineFetive": "Vergiftet von einem Angriff getroffene Gegner für eine lange Dauer. Der Schaden pro Runde entspricht dem Luftelement des Wirkers.",
 			"Mistral": "Greift alle Feinde mit einer Luftkraft von 3 an.",
-			"TaiChi": "Erhöht die Stärke von Luft**angriffen** um 15. Verringert die Geschwindigkeit von Luftfähigkeiten um 20%.",
+			"TaiChi": "Erhöht die Stärke von Luft**angriffen** um 15. Verringert die Geschwindigkeit von Luft**angriffen** um 20%.",
 			"Tornade": "Greift alle Gegner mit einer Luftkraft von 10 an und stürzt fliegende zu Boden.",
-			"Eveil": "Verringert die Geschwindigkeit aller Angriffe um 20%.",
+			"Eveil": "Verringert die Geschwindigkeit von Luft**angriffen** um 20%.",
 			"PaumeEjectable": "Führt einen Angriff mit doppelter Stärke aus, wonach sich die Initiative des Dinoz um 15 verringert.",
-			"VentVif": "Verleiht den Status „Beschleunigt“ (Erhöht die Geschwindigkeit um 50%).",
-			"FormeVaporeuse": "Gewährt dem Dinoz eine Chance von 6%, vorübergehend den Status „Unantastbar“ zu erhalten, wenn dieser angegriffen wird.",
+			"VentVif": "Verleiht für eine kurze Dauer den Status „Beschleunigt“ (Erhöht die Geschwindigkeit um 50%).",
+			"FormeVaporeuse": "Gewährt dem Dinoz eine Chance von 6%, für eine kurze Dauer den Status „Unantastbar“ zu erhalten, wenn dieser angegriffen wird.",
 			"Professeur": "Erhöht die von allen Dinoz erhaltenen Erfahrungspunkte um 5%.",
-			"MeditationSolitaire": "Erhöht die Luft**abwehr** um 3 und verringert die Geschwindigkeit von Luft**angriffen** um 50%.",
-			"MeditationTranscendantale": "Erhöht die Luft**abwehr** um 6 und verringert die Geschwindigkeit von Luft**angriffen** um 50%.",
+			"MeditationSolitaire": "Erhöht alle durch das Luftelement verliehene **Abwehr** um 3 und verringert die Geschwindigkeit von Luft**angriffen** um 50%.",
+			"MeditationTranscendantale": "Erhöht alle durch das Luftelement verliehene **Abwehr** um 6 und verringert die Geschwindigkeit von Luft**angriffen** um 50%.",
 			"SouffleDeVie": "Der Dinoz ist immun gegen Gift und Flüche.",
-			"FormeEtherale": "Der Dinoz erhält permanent den Status „Unantastbar“.",
+			"FormeEtherale": "Der Dinoz erhält dauerhaft den Status „Unantastbar“.",
 			"Brasero": "Greift alle Gegner mit einer Feuerkraft von 3 an.",
 			"Detonation": "Der Dinoz verliert 5 Lebenspunkte und erhält 15 Initiative.",
 			"CoeurDuPhenix": "Erhöht die Anzahl der beim Ausruhen wiederhergestellten Lebenspunkte um 15%.",
@@ -2373,7 +2394,7 @@
 			"EclairSinueux": "Trifft 3 Gegner mit einer Blitzkraft von 10.",
 			"Survie": "Im Falle seines Todes wird der Dinoz einmalig mit 12 Lebenspunkten wiederbelebt.",
 			"Aiguillon": "Greift einen Gegner mit einer Luftkraft von 3 an.",
-			"AuraPuante": "Vergiftet die Angreifer im Nahkampf.",
+			"AuraPuante": "Vergiftet für eine mittlere Dauer Angreifer im Nahkampf, welche dann jede Runde 10 Schaden erleiden.",
 			"Hypnose": "Einer der Gegner wird hypnotisiert und kämpft dann an deiner Seite.",
 			"Vendetta": "Erhöht die Chance auf einen Gegenangriff um 20%.",
 			"Secousse": "Schlägt mit einer Holz- und Luftkraft von 4 auf dem Boden auf und fügt dabei allen Gegnern Schaden zu.",
@@ -2430,7 +2451,7 @@
 			"ReceptacleTesla": "Negiert bei einem Dinoz die Blitzsphärenfähigkeiten des Typs A und E.",
 			"VitaliteMarine": "Erhöht die maximalen LP um 80.",
 			"StimulationCardiaque": "Erhöht die Energiewiederherstellung des Dinoz um 20%.",
-			"MorsureDuSoleil": "Ein gegnerischer Dinoz erhält den Status „geblendet“. Zwei Drittel seiner **Angriffe** werden ihr Ziel verfehlen.",
+			"MorsureDuSoleil": "Ein gegnerischer Dinoz erhält für eine mittlere Dauer den Status „Geblendet“. Zwei Drittel seiner **Angriffe** werden ihr Ziel verfehlen.",
 			"BatterieSupplementaire": "Erhöht die maximalen Lebenspunkte um 50 und verringert die Initiative um 15.",
 			"Einstein": "Ermöglicht es dem Dinoz, von einem zusätzlichen Feld Energie abzuzapfen.",
 			"ReceptacleAerien": "Negiert bei einem Dinoz die Luftsphärenfähigkeiten des Typs A und E",
@@ -2465,7 +2486,7 @@
 			"LoupGarou": "Greift alle Gegner mit einer Holzkraft von 30 an.",
 			"Salamandre": "Greift einen Gegner mit einer Feuerkraft von 40 an.",
 			"BenedictionDesFees": "Die Gruppe erhält 10 Initiative.",
-			"Bouddha": "Bei Verbündeten wird alle **Abwehr** um 10 erhöht.",
+			"Bouddha": "Bei Verbündeten wird alle durch jedes Element verliehene **Abwehr** um 10 erhöht.",
 			"TotemAncestralAeroporte": "Greift einen Gegner mit einer Luftkraft von 30 an.",
 			"Leviathan": "Greift alle Gegner mit einer Wasserkraft von 20 an.",
 			"Vulcain": "Greift alle Gegner mit einer Feuerkraft von 20 an.",
@@ -2596,7 +2617,7 @@
 			"48": "Mit diesem Schlüssel können deine Dinoz das Tor von Waldenacht entsperren und die Magnetischen Steppen betreten.",
 			"30": "Dieser Dinoz hat den Ehrwürdigen bezwungen.",
 			"23": "Die Feuerverzauberung erhöht die Stärke der Feuerangriffe dieses Dinoz.",
-			"24": "Die Bao-Verzauberung erhöht die Abwehr dieses Dinoz gegen Wasserangriffe.",
+			"24": "Die Bao-Verzauberung erhöht die vom Wasserlement verliehene Abwehr dieses Dinoz.",
 			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt.",
 			"72": "Dieser Schwimmreifen ist in einem Zustand fortlaufender Veränderung und ermöglicht es so deinem Dinoz, zu erkennen, ob der Klebrige Sumpf geflutet ist oder nicht.",
 			"73": "Die besondere Intensität dieser Laterne ermöglicht es deinem Dinoz, zu erkennen, ob der Klebrige Sumpf vom Nebel umhüllt ist."
@@ -2657,6 +2678,7 @@
 		"default": "DinoRPG [ Dinoland-Nachrichten ]",
 		"dinoz": "DinoRPG [ Profil von {dinoz} ]",
 		"shop": "DinoRPG [ Händler: {shop} ]",
+		"demon": "Dino-RPG [ Dämonisches Geschäft ]",
 		"dinozShop": "DinoRPG [ Dinoz-Gehege ]",
 		"account": "DinoRPG [ Persönliche Informationen ]",
 		"ranking": "DinoRPG [ Die Große Ruhmeshalle ]",
@@ -2676,13 +2698,14 @@
 		"faq": "DinoRPG [ FAQ ]",
 		"clan": "DinoRPG [ Klan: {clan} ]",
 		"clansList": "DinoRPG [ Liste der Klane ]",
-		"createClan": "Dino-RPG [ Klan gründen ]",
-		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]",
+		"createClan": "DinoRPG [ Klan gründen ]",
+		"challengeFriend": "DinoRPG [ Freundschaftsscharmützel ]",
 		"forum": "DinoRPG [ Foren ]",
 		"admin": "DinoRPG [ Administrationsseite ]",
 		"event": "DinoRPG [ Ereignisse ]",
 		"fb_tournament": "DinoRPG [ Rohkraft-Turnier ]",
-		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]"
+		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]",
+		"terms": "Dino-RPG [ Nutzungsbedingungen ]"
 	},
 	"gather": {
 		"action": {
@@ -3881,7 +3904,7 @@
 			"dico1": "Ein antikes, staubiges Buch. Unmöglich zu sagen, ob es dir nützlich sein kann. Denn im Moment ist es leider durch ein kompliziertes Schloss verschlossen. Vielleicht gibt es ja jemanden, der weiß, wie man das Schloss öffnet. Doch bis dahin ist das Buch vorerst nutzlos für dich...",
 			"dicarb": "Ein antikes, staubiges Buch, mit dessen Hilfe du die Sprache Arborianisch übersetzen kannst.",
 			"caush": "Das Abbild von Mandragor in Form einer Puppe, kann diese je nach Wunsch als Voodoo-Puppe, Boxsack oder Kissen verwendet werden. Sie ist in einem erbärmlichen Zustand, was darauf hindeutet, dass der ehemalige Besitzer wohl recht häufig seinen Frust an ihr ausgelassen haben muss.",
-			"fmedal": "Vous avez reconstitué le médaillon permettant d'accéder à une nouvelle partie de l'île céleste de Nimbao. Il vous faut trouver le bon endroit où utiliser ce médaillon afin d'ouvrir le portail correctement.",
+			"fmedal": "Du hast das Medaillon wiederhergestellt, das dir nun Zugang zu einer neuen Region der Himmlischen Insel Nimbao gewährt. Um das Portal richtig nutzen zu können, musst du aber zunächst den passenden Ort finden.",
 			"war1a": "Ce collier forgé dans un minerai rare est la récompense des plus puissants guerriers ayant participé à la 1ère Guerre des Clans !",
 			"war1b": "On raconte que ce minerai étrange peut rendre fou celui qui le touche, et qu'il se met alors à faire des mouvements bizarres. C'est en tout cas un objet très rare, réservé aux maîtres Dinoz s'étant fait remarquer lors de la 1ère Guerre des Clans !",
 			"war2a": "Ce bijou, composé de trois gemmes de sang serties d'une aura d'obscurité, a été décerné aux meilleurs tacticiens de la Seconde Guerre des Clans !",
@@ -4425,7 +4448,7 @@
 			"quickened": "beschleunigt",
 			"shielded": "geschützt",
 			"blessed": "gesegnet",
-			"healing": "heilend"
+			"healing": "regeneriert"
 		},
 		"step": {
 			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
@@ -4632,8 +4655,10 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
-		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann."
+		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
+		"unsacrificeCountdown": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten endet um {time}.",
+		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
+		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
@@ -4666,6 +4691,8 @@
 		"HPLost": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** hat **{hpLost} :pv:** verloren.",
 		"Death": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** ist gestorben.",
 		"Revive": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** wiederbelebt.",
+		"Sacrifice": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** für **{tickets}** Gutscheine geopfert.",
+		"Unsacrifice": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** für **{tickets}** Gutscheine wiederauferweckt.",
 		"MissionStep": "**{player} ({playerId})** erreicht mit dem Dinoz **{dinoz} ({dinozId})** in der Mission **„{mission}“ den Abschnitt {step}** .",
 		"MissionFinished": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgeschlossen.",
 		"MissionCanceled": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgebrochen.",
@@ -4725,8 +4752,7 @@
 			"disclaimer": "Es werden keine :pv: verloren, keine :xp: gesammelt und keine Gegenstände verbraucht.&&Die Gebühr für die Nutzung des Trainings-Dojos beträgt **50 :gold: pro Dinoz-Kämpfer**. Dieses Geld fließt ins Preisgeld des laufenden Turniers.",
 			"selectYourDinoz": "Wähle bis zu **6 deiner Dinoz** aus.",
 			"selectOpponentDinoz": "Wähle hier deinen Gegner und bis zu **6 Dinoz**, um gegen sie anzutreten.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Du kannst einen Dinoz nicht gegen sich selbst kämpfen lassen."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Ungewöhnliche Dinoz",
@@ -5275,6 +5301,51 @@
 		"participantsConv": "Teilnehmer",
 		"blockSender": "Absender blockieren"
 	},
+	"dungeon": {
+		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann die gegenwärtige Etage erst verlassen, wenn er sich am Eingang oder Ausgang befindet, oder stirbt.",
+		"floor": "{floor}. Etage",
+		"name": {
+			"katatombs": "die Kryptakomben"
+		},
+		"katatombs": {
+			"misc": "Notiz von Mandragor: Nachdem ich eine Kopie angefertigt hatte, lies ich die dämonische Schriftrolle in diesen Kryptakomben zurück. Ich hoffe, dass die Dinoz-Meister, die sie finden, sie nicht in böser Absicht missbrauchen, denn die Dämonen-Dinoz sind nach wie vor äußerst mächtig...",
+			"napo": "Du öffnest eine Truhe, die wohl bereits vor Jahrhunderten zurückgelassen wurde. Sie ist leer, doch neugierig entdeckst du einen doppelten Boden, in dem sich ein gut versteckter Gold-Napodino befindet!",
+			"potion": "In einer kleinen Truhe findest du 3 Tränke von Madame Irma. Das ist nie verkehrt!",
+			"demon": "Du hast die Dämonenschriftrolle gefunden. Diese enthält Hinweise zum Standort eines seltsamen Dinoz-Geschäfts: Des sogenannten Dämonengeschäfts, das sich angeblich irgendwo an der Oberfläche des Dämmerungsfriedhofs befindet. Zuerst musst du jedoch die Kryptakomben verlassen...",
+			"enter": "Bei einem entspannten Friedhofsspaziergang fällt dir ein scheinbar offenes Grab auf. Du folgst einer Treppe, die unter die Erde führt, in etwas, das den antiken Kryptakomben erschreckend ähnlich sieht...",
+			"exit": "Du verlässt die Kryptakomben... man könnte nicht behaupten, dass der Friedhof sonderlich angenehm ist, aber immerhin ist eine sanfte Brise zu spüren und das ist eine willkommene Abwechslung zum unterirdischen Grabeshauch."
+		},
+		"msg": {
+			"locked": "Die Tür zu {name} ist verriegelt.",
+			"opened": "Der Schlüssel zu {name} dreht sich im Schloss: Die Tür öffnet sich mit einem unheimlichen Knarzen...",
+			"key": "Du hast den Schlüssel zu {name} gefunden!",
+			"gold": "Du hast {value} Goldstücke gefunden!",
+			"resumed": "Du setzt deine Erkundung dort fort, wo du aufgehört hattest."
+		},
+		"doorNames_prefix": [
+			"Arbres ",
+			"Dragons ",
+			"Calamars ",
+			"Gobelins ",
+			"Kabukis ",
+			"Roméos ",
+			"Magiciens ",
+			"Anges ",
+			"Démons "
+		],
+		"doorNames_sufix": [
+			"Magiques",
+			"Morts",
+			"Vivants",
+			"Noirs",
+			"Enchantés",
+			"Enchanteurs",
+			"Rouges",
+			"en Plastique",
+			"en Mousse",
+			"Etincelants"
+		]
+	},
 	"scenario": {
 		"star": "Seltsames Wesen",
 		"pac": "Seltsame Schriftrolle",
@@ -5351,5 +5422,13 @@
 		"select": "Abstimmen",
 		"select_option": "Wähle eine Option",
 		"total_participants": "{qty} Wähler"
+	},
+	"terms": {
+		"title": "Nutzungsbedingungen",
+		"intro": "Bitte lies und akzeptiere die folgenden Nutzungsbedingungen, bevor du weiterspielst.",
+		"clause1": "Das Erstellen oder Nutzen mehrerer Konten durch denselben Spieler ist nicht gestattet.",
+		"clause2": "Die Nutzung von Bots und jeglicher Automatisierungsskripten ist nicht gestattet.",
+		"clause3": "Das absichtliche Ausnutzen von Fehlern ist nicht gestattet – diese müssen den Entwicklern gemeldet werden.",
+		"accept_button": "Ich stimme zu"
 	}
 }

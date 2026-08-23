@@ -24,6 +24,9 @@ export const SHORT_BAN_DURATION_MS = 24 * 60 * 60 * 1000; // 24h
 export const MEDIUM_BAN_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 1w
 export const LONG_BAN_DURATION_MS = 31 * 24 * 60 * 60 * 1000; // 1m
 
+export const UNSACRIFICE_DURATION = 24 * 60 * 60 * 1000; // 24h
+export const UNSACRIFICE_DURATION_DEBUG = 30 * 1000; // 30s
+
 export const DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS = 3;
 
 /* Clan related constants */

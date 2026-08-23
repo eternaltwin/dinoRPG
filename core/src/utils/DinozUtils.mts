@@ -52,6 +52,7 @@ export const toDinozFiche = (
 			| 'name'
 			| 'display'
 			| 'unavailableReason'
+			| 'unavailableUntil'
 			| 'level'
 			| 'leaderId'
 			| 'life'
@@ -93,6 +94,7 @@ export const toDinozFiche = (
 		name: dinoz.name,
 		display: dinoz.display,
 		unavailableReason: dinoz.unavailableReason,
+		unavailableUntil: dinoz.unavailableUntil,
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,

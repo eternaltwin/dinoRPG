@@ -155,6 +155,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   remaining: 'remaining',
   FBTournamentStep: 'FBTournamentStep',
   unavailableReason: 'unavailableReason',
+  unavailableUntil: 'unavailableUntil',
   seed: 'seed',
   playerId: 'playerId',
   buildId: 'buildId'
@@ -304,6 +305,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   banCaseId: 'banCaseId',
   discoveredSkills: 'discoveredSkills',
   lastVersionSeen: 'lastVersionSeen',
+  tosAccepted: 'tosAccepted',
   id: 'id'
 };
 
@@ -360,6 +362,33 @@ exports.Prisma.PlayerDinozShopScalarFieldEnum = {
   raceId: 'raceId',
   display: 'display',
   playerId: 'playerId'
+};
+
+exports.Prisma.PlayerDemonShopScalarFieldEnum = {
+  id: 'id',
+  raceId: 'raceId',
+  display: 'display',
+  nextUpElementId: 'nextUpElementId',
+  nextUpAltElementId: 'nextUpAltElementId',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  seed: 'seed',
+  playerId: 'playerId'
+};
+
+exports.Prisma.DemonSkillScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DemonSkillUnlockableScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
 };
 
 exports.Prisma.PlayerGatherScalarFieldEnum = {
@@ -734,6 +763,40 @@ exports.Prisma.ServerStateScalarFieldEnum = {
   nextCheck: 'nextCheck'
 };
 
+exports.Prisma.DungeonRunScalarFieldEnum = {
+  id: 'id',
+  posX: 'posX',
+  posY: 'posY',
+  posL: 'posL',
+  revealed: 'revealed',
+  defeated: 'defeated',
+  keys: 'keys',
+  opened: 'opened',
+  scenarios: 'scenarios',
+  gold: 'gold',
+  createdAt: 'createdAt',
+  playerId: 'playerId',
+  dungeonId: 'dungeonId',
+  leaderId: 'leaderId'
+};
+
+exports.Prisma.DungeonScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  cipher: 'cipher',
+  iv: 'iv',
+  tag: 'tag',
+  type: 'type',
+  level: 'level',
+  monsters: 'monsters',
+  scenarios: 'scenarios',
+  placeStart: 'placeStart',
+  placeEnd: 'placeEnd',
+  condition: 'condition',
+  monsterPool: 'monsterPool',
+  isActive: 'isActive'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -766,7 +829,9 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon',
+  unsacrificing: 'unsacrificing'
 };
 
 exports.NewsType = exports.$Enums.NewsType = {
@@ -814,6 +879,8 @@ exports.LogType = exports.$Enums.LogType = {
   Fight: 'Fight',
   Death: 'Death',
   Revive: 'Revive',
+  Sacrifice: 'Sacrifice',
+  Unsacrifice: 'Unsacrifice',
   MissionStep: 'MissionStep',
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',
@@ -930,6 +997,17 @@ exports.ServerAction = exports.$Enums.ServerAction = {
   prospector: 'prospector'
 };
 
+exports.DungeonType = exports.$Enums.DungeonType = {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -955,6 +1033,9 @@ exports.Prisma.ModelName = {
   DojoChallengeHistory: 'DojoChallengeHistory',
   UsernameHistory: 'UsernameHistory',
   PlayerDinozShop: 'PlayerDinozShop',
+  PlayerDemonShop: 'PlayerDemonShop',
+  DemonSkill: 'DemonSkill',
+  DemonSkillUnlockable: 'DemonSkillUnlockable',
   PlayerGather: 'PlayerGather',
   PlayerIngredient: 'PlayerIngredient',
   PlayerItem: 'PlayerItem',
@@ -993,7 +1074,9 @@ exports.Prisma.ModelName = {
   FBTournament: 'FBTournament',
   GameDinoz: 'GameDinoz',
   Events: 'Events',
-  ServerState: 'ServerState'
+  ServerState: 'ServerState',
+  DungeonRun: 'DungeonRun',
+  Dungeon: 'Dungeon'
 };
 
 /**

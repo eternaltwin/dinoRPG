@@ -18,6 +18,7 @@ export interface DinozFiche {
 	name: string;
 	display: string;
 	unavailableReason: UnavailableReason | null;
+	unavailableUntil: Date | null;
 	level: number;
 	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;
@@ -53,6 +54,7 @@ export interface DinozFiche {
 		npcName: string;
 	};
 	build?: DinozBuild;
+	dungeonName?: string;
 }
 
 // This is the model to use to communicate with the admin panel

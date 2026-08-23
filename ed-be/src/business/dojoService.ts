@@ -173,6 +173,13 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 		);
 		d.life = d.maxLife;
 	});
+	let maxId = Math.max(...leftTeam.concat(rightTeam).map(d => d.id));
+	for (const dinoz of rightTeam) {
+		if (leftTeam.some(d => d.id === dinoz.id)) {
+			dinoz.id = maxId + 1; // New id to avoid collision
+			maxId++;
+		}
+	}
 
 	const fightResult = calculateFightBetweenPlayers(
 		DOJO_CHALLENGE_RULES,

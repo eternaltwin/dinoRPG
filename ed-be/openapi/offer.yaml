@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Offer API
+  description: Marketplace offers (create, list, bid, cancel, claim). Reconstructed from ed-be/src/routes/offer.routes.ts.
+  version: 1.0.0
+servers:
+  - url: /api/v1
+tags:
+  - name: Offer
+    description: Marketplace offer operations
+paths:
+  /offer/list/{filter}:
+    get:
+      tags:
+        - Offer
+      summary: Get the list of current offers
+      description: >-
+        Requires an authenticated player (session cookie, checked in the business layer) with a
+        Dinoz currently at the market place.
+      parameters:
+        - name: filter
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Offer filter, e.g. "own" for the caller's own offers.
+        - name: sellerId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: bidderId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: expired
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: onlyMines
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Page number, read directly from req.query.page (not validated by express-validator).
+      responses:
+        '200':
+          description: List of offers matching the filter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offers:
+                    type: array
+                    items:
+                      type: object
+                      description: Offer with seller, dinoz, items and bids details.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /offer:
+    put:
+      tags:
+        - Offer
+      summary: Create a new offer
+      description: >-
+        Requires an authenticated player with a Dinoz at the market place, and no other ongoing
+        offer of their own.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - total
+                - ingredients
+                - items
+              properties:
+                dinoz:
+                  type: integer
+                  description: Id of the Dinoz being sold, if any.
+                total:
+                  type: number
+                ingredients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      count:
+                        type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      count:
+                        type: integer
+      responses:
+        '200':
+          description: Offer created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Offer created
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /offer/{offerId}:
+    delete:
+      tags:
+        - Offer
+      summary: Cancel an offer
+      description: Only the seller of an ONGOING offer with no bids can cancel it.
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Offer cancelled.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Offer canceled
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /offer/{offerId}/bid:
+    post:
+      tags:
+        - Offer
+      summary: Bid on an offer
+      description: >-
+        Requires an authenticated player (not the seller) with a Dinoz at the market place and
+        enough treasure coupons. Bid must exceed the previous bid and the offer's minimum.
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: integer
+      responses:
+        '200':
+          description: Bid placed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bid placed
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /offer/{offerId}/claim:
+    post:
+      tags:
+        - Offer
+      summary: Claim an ended offer
+      description: >-
+        Settles an ENDED offer: transfers the Dinoz/items to the winning bidder (or refunds the
+        seller if there was no bid), then marks the offer CLAIMED.
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Offer claimed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  discoveredSkills:
+                    type: array
+                    items:
+                      type: integer
+                    description: New skills discovered by the winner as a result of claiming the Dinoz.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    ValidationError:
+      description: Request failed express-validator checks.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result object.
+    ServerError:
+      description: >-
+        Business error (e.g. not authenticated, invalid offer, not enough items) or unexpected
+        server error. Both are returned with status 500 and a plain-text message by the shared
+        sendError handler.
+      content:
+        text/plain:
+          schema:
+            type: string

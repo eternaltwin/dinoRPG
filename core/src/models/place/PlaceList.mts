@@ -30,6 +30,7 @@ export const placeList: Record<
 		bottom?: number;
 		itinerant?: boolean;
 		warPlace?: boolean;
+		dungeon?: boolean;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -169,7 +170,8 @@ export const placeList: Record<
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 's_graveyard',
-		top: 110
+		top: 110,
+		dungeon: true
 	},
 	[PlaceEnum.GO_TO_DINOPLAZA]: {
 		placeId: PlaceEnum.GO_TO_DINOPLAZA,

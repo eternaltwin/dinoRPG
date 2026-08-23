@@ -1,0 +1,234 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Dinoz Build API
+  description: Endpoints for creating, updating, listing, deleting, sharing and copying dinoz skill builds.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Dinoz Build
+    description: Dinoz skill build management (create, edit, delete, clan sharing, copy)
+paths:
+  /api/v1/dinoz-build:
+    get:
+      tags: [Dinoz Build]
+      summary: List the authenticated player's dinoz builds
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The player's builds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozBuild'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Dinoz Build]
+      summary: Create a new dinoz build
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [skills, name, shareable]
+              properties:
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                  description: Skill ids for the build; all must be discovered by the player
+                name:
+                  type: string
+                  minLength: 1
+                shareable:
+                  type: boolean
+      responses:
+        '201':
+          description: Build created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          description: >-
+            Server/domain error (plain text message). Also covers expected domain failures such as
+            missing auth, missing PAC reward, or undiscovered skills, which this route reports as 500.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api/v1/dinoz-build/{buildId}:
+    put:
+      tags: [Dinoz Build]
+      summary: Update an existing dinoz build owned by the authenticated player
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/BuildId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [skills, name, shareable]
+              properties:
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                name:
+                  type: string
+                  minLength: 1
+                shareable:
+                  type: boolean
+      responses:
+        '200':
+          description: Build updated (no content returned)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Dinoz Build]
+      summary: Delete a dinoz build owned by the authenticated player
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/BuildId'
+      responses:
+        '204':
+          description: Build deleted
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz-build/shared/clan:
+    get:
+      tags: [Dinoz Build]
+      summary: List shareable dinoz builds from the authenticated player's clan members
+      description: Returns an empty array if the player is not in a clan.
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: Clan-shared builds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/DinozBuild'
+                    - type: object
+                      properties:
+                        player:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            name:
+                              type: string
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dinoz-build/{buildId}/copy:
+    post:
+      tags: [Dinoz Build]
+      summary: Copy a shareable dinoz build belonging to another player
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/BuildId'
+      responses:
+        '201':
+          description: Copy of the build created for the authenticated player
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          description: >-
+            Server/domain error (plain text message). Also covers expected domain failures such as
+            build not found, copying one's own build, or the build not being shareable.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper. Not enforced by
+        express-validator middleware; a missing/invalid header results in a 500 response (see below).
+  parameters:
+    BuildId:
+      name: buildId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    DinozBuild:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        playerId:
+          type: string
+          format: uuid
+        skills:
+          type: array
+          items:
+            type: integer
+        shareable:
+          type: boolean
+        name:
+          type: string
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain failures such as
+        missing auth or missing PAC reward, which this API reports as 500 rather than 401/403/404.
+      content:
+        text/plain:
+          schema:
+            type: string

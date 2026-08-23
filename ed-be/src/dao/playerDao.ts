@@ -54,6 +54,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 				displayedNotifications: true,
 				ClanMember: { select: { clanId: true } },
 				discoveredSkills: true,
+				tosAccepted: true,
 				notifications: {
 					select: { id: true, message: true, severity: true, link: true, date: true },
 					where: { read: false }
@@ -72,6 +73,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 						order: true,
 						raceId: true,
 						unavailableReason: true,
+						unavailableUntil: true,
 						missions: true,
 						nbrUpFire: true,
 						nbrUpWood: true,
@@ -142,7 +144,7 @@ export function extractIdFromAuthorization(request: Request) {
 }
 
 export type Auth = Awaited<ReturnType<typeof auth>>;
-export async function auth(request: Request, banByPass = false) {
+export async function auth(request: Request, banByPass = false, tosByPass = false) {
 	return withSpan(auth.name, async () => {
 		const {
 			headers: { authorization }
@@ -175,7 +177,8 @@ export async function auth(request: Request, banByPass = false) {
 				lastLogin: true,
 				matelasseur: true,
 				lastVersionSeen: true,
-				clanId: true
+				clanId: true,
+				tosAccepted: true
 			}
 		});
 
@@ -189,6 +192,10 @@ export async function auth(request: Request, banByPass = false) {
 
 		if (user.banCase && !banByPass) {
 			throw new ExpectedError('Action forbidden: you have been banned');
+		}
+
+		if (!user.tosAccepted && !tosByPass) {
+			throw new ExpectedError('Terms of service not accepted');
 		}
 
 		// Check if it's the first login of the day
@@ -677,6 +684,7 @@ export async function getCommonDataRequest(playerId: string) {
 					shareArchivedData: true,
 					displayedNotifications: true,
 					discoveredSkills: true,
+					tosAccepted: true,
 					ClanMember: { select: { clanId: true } },
 					notifications: {
 						select: { id: true, message: true, severity: true, link: true, date: true },
@@ -711,6 +719,7 @@ export async function getCommonDataRequest(playerId: string) {
 					order: true,
 					raceId: true,
 					unavailableReason: true,
+					unavailableUntil: true,
 					missions: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
@@ -1018,6 +1027,7 @@ export async function getPlayerDinozShopRequest(playerId: string) {
 						display: true
 					}
 				},
+				quetzuBought: true,
 				rewards: true
 			}
 		});

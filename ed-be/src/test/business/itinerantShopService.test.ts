@@ -25,6 +25,7 @@ import { getDinozItinerantShop } from '../../dao/dinozDao.js';
 import { getSpecificSecret } from '../../dao/secretDao.js';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { getIngredientsFromItinerantShop, sellIngredient } from '../../business/itinerantShopService.js';
+import { Ingredient, ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -37,6 +38,7 @@ beforeEach(() => {
 	};
 	vi.mocked(getSpecificSecret).mockResolvedValue({ value: '5' } as never);
 	vi.mocked(getDinozItinerantShop).mockResolvedValue({
+		shopkeeper: false,
 		dinoz: [{ placeId: 5 }],
 		ingredients: [{ ingredientId: 1, quantity: 10 }]
 	} as never);
@@ -46,6 +48,15 @@ describe('getIngredientsFromItinerantShop', () => {
 	it('returns the shop ingredients', async () => {
 		const result = await getIngredientsFromItinerantShop(req({ dinozId: '1' }));
 		expect(result[0].ingredientId).toBe(1);
+	});
+	it('returns the shop ingredients with correct max quantity if player has shopkeeper', async () => {
+		vi.mocked(getDinozItinerantShop).mockResolvedValue({
+			shopKeeper: true,
+			dinoz: [{ placeId: 5 }],
+			ingredients: [{ ingredientId: Ingredient.MEROU_LUJIDANE, quantity: 10 }]
+		} as never);
+		const result = await getIngredientsFromItinerantShop(req({ dinozId: '1' }));
+		expect(result[0].maxQuantity).toBe(Math.round(ingredientList[Ingredient.MEROU_LUJIDANE].maxQuantity * 1.5));
 	});
 	it('throws when player missing', async () => {
 		vi.mocked(getDinozItinerantShop).mockResolvedValue(null as never);
@@ -80,7 +91,7 @@ describe('sellIngredient', () => {
 	it('throws when player has no ingredients data', async () => {
 		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue(null as never);
 		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 1 }] }))).rejects.toThrow(
-			"doesn't exist"
+			'playerNotFound'
 		);
 	});
 });

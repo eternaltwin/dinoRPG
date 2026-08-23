@@ -2,7 +2,7 @@
 	<DZDisclaimer help content="market.disclaimer" />
 	<div class="header df aic jcsb center">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
-		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow df aic g4 p2-4">
+		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
 			<span>{{ treasuryNotes }}</span>
 			<img :src="getImgURL('icons', 'ticket', true)" :alt="$t('item.name.treasure_coupon')" />
 			<template #content>
@@ -57,7 +57,7 @@ import { OfferService } from '../../services/OfferService.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import OfferLine from './OfferLine.vue';
 import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { InventoryService } from '../../services';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -90,7 +90,7 @@ export default defineComponent({
 				endDate: new Date(offer.endDate),
 				items: offer.items.map(item => ({
 					...item,
-					name: (item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]) ?? ''
+					name: (item.isIngredient ? ingredientNameList[item.itemId] : itemList[item.itemId]?.name) ?? ''
 				}))
 			}));
 		},
@@ -158,6 +158,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .treasury-notes {
 	color: #fce3bc;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 4px;
 }
 select {
 	background-color: #bc683c;

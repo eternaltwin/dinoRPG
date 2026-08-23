@@ -81,7 +81,8 @@ import DZButton from '../common/DZButton.vue';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import translateFightStep from '../../utils/translateFightStep.js';
-import { useDinozStore } from '../../store';
+import {sessionStore, useDinozStore} from '../../store';
+import {DungeonService} from "../../services";
 
 export default defineComponent({
 	name: 'FightBounce',
@@ -100,15 +101,25 @@ export default defineComponent({
 			displayFightHistory: false,
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
-			npcName: undefined as string | undefined
+			npcName: undefined as string | undefined,
+			dungeonName: undefined as string | undefined,
+			sessionStore: sessionStore()
 		};
 	},
 	methods: {
-		returnToDinoz() {
+		async returnToDinoz() {
 			if (this.npcSpeech && this.fight.result) {
 				this.$router.push({
 					name: 'NPC',
 					params: { id: this.dinozId.toString(), npc: this.npcName }
+				});
+			} else if (this.dungeonName && this.fight.result) {
+				await useDinozStore().refreshDinozFiche(this.dinozId);
+				this.sessionStore.setDungeonRun(await DungeonService.enterDungeon(this.dungeonName, this.dinozId));
+				this.$router.push({
+					name: 'Dungeon',
+					params: { id: this.dungeonName },
+					query: { dinozId: this.dinozId.toString() }
 				});
 			} else {
 				useDinozStore().clearNpc(this.dinozId);
@@ -132,10 +143,12 @@ export default defineComponent({
 	},
 	mounted() {
 		useDinozStore().setCurrentDinozId(this.dinozId);
-		if (this.fight.result) {
-			const npc = useDinozStore().getCurrentDinoz.npcAwait;
+		const currentDinoz = useDinozStore().getCurrentDinoz;
+		if (this.fight.result && currentDinoz) {
+			const npc = currentDinoz.npcAwait;
 			this.npcSpeech = npc?.npcSpeech;
 			this.npcName = npc?.npcName;
+			this.dungeonName = currentDinoz.dungeonName;
 		} else {
 			useDinozStore().clearNpc(this.dinozId);
 		}

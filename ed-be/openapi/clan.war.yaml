@@ -1,0 +1,471 @@
+openapi: 3.0.3
+info:
+  title: Clan War API
+  description: Endpoints for the clan war event — castle building/repair, declaring/forfeiting wars, defender management and castle attacks.
+  version: 1.0.0
+servers:
+  - url: /api/v1/clan/war
+tags:
+  - name: Clan War
+paths:
+  /:
+    get:
+      operationId: getEventState
+      summary: Get the current clan war event state
+      description: Returns the currently ongoing clan war event, if any.
+      tags: [Clan War]
+      responses:
+        '200':
+          description: Current event state, or an empty body if no event is ongoing.
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+                properties:
+                  id:
+                    type: integer
+                  endDate:
+                    type: string
+                    format: date-time
+        '400':
+          description: Validation error.
+        '500':
+          description: Unexpected error.
+
+  /castle:
+    put:
+      operationId: buildOrRepairClanCastle
+      summary: Build or rebuild the caller's clan castle
+      description: >
+        Builds a new castle for the caller's clan (during an ongoing war event), or rebuilds an already-destroyed one.
+        Requires the CLAN_BUILD_CASTLE clan right. On first build, resets clan ingredients/treasure and initializes
+        the war ranking entry.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      responses:
+        '200':
+          description: Castle built/rebuilt.
+        '400':
+          description: Validation error.
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. not in a clan, no clan right, no event in progress,
+            castle already built).
+    get:
+      operationId: getCastleStatus
+      summary: Get the caller's clan castle status
+      description: Returns the caller's clan castle (life, defenders in defense order, ongoing repairs) or null if no castle exists.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      responses:
+        '200':
+          description: Castle status, or null if the clan has no castle.
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+                properties:
+                  maxLife:
+                    type: integer
+                  currentLife:
+                    type: integer
+                  defenseOrder:
+                    type: array
+                    items:
+                      type: integer
+                  defender:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DefenderSummary'
+                  repairs:
+                    type: array
+                    items:
+                      type: object
+                      description: Ongoing (not-yet-completed) repair jobs.
+                  nextProspectorVisit:
+                    type: string
+                    format: date-time
+                    nullable: true
+        '400':
+          description: Validation error.
+        '500':
+          description: Unexpected or expected domain error (e.g. not in a clan).
+
+  /{clanId}:
+    get:
+      operationId: getWarStatus
+      summary: Get ongoing wars for a clan
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: clanId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of the clan's ongoing (unresolved) wars, as attacker or defender.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    attacker:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                    defender:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                    endsAt:
+                      type: string
+                      format: date-time
+        '400':
+          description: Validation error (clanId missing/not numeric).
+        '500':
+          description: Unexpected error.
+    post:
+      operationId: declareWar
+      summary: Declare war on another clan
+      description: >
+        Starts a war of the caller's clan against the clan identified by clanId. Requires the WAR_OFFICER clan right,
+        an ongoing war event, a built castle on both sides, the defender not already under 3 attacks, and enough
+        ingredients to pay the war cost.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: clanId
+          in: path
+          required: true
+          description: Id of the clan to declare war against.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: War declared.
+        '400':
+          description: Validation error (clanId missing/not numeric).
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan/right, no event, same clan, no castle on either side,
+            defender already under attack, not enough ingredients, concurrent declaration conflict).
+
+  /{warId}:
+    delete:
+      operationId: forfeitWar
+      summary: Forfeit an ongoing war
+      description: >
+        Cancels a war started by the caller's clan, awarding the win to the defender. Requires the WAR_OFFICER clan
+        right and that the caller's clan is the attacker of that war.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: warId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: War forfeited.
+        '400':
+          description: Validation error (warId missing/not a UUID).
+        '500':
+          description: Unexpected or expected domain error (e.g. no clan/right, no such ongoing war for this clan).
+
+  /dinoz/{dinozId}:
+    put:
+      operationId: addDefender
+      summary: Add a dinoz to the castle's defense
+      description: >
+        Adds one of the caller's dinoz to the caller's clan castle defense line. The dinoz must belong to the
+        caller, be alive and available, be located at the castle's place, and the defense must not already be full
+        or contain it.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: dinozId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated defense line.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  defender:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DefenderSummary'
+        '400':
+          description: Validation error (dinozId missing/not numeric).
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan, dinoz not found/not owned/dead, no castle,
+            wrong location, defense full, already in defense).
+
+    delete:
+      operationId: removeDefender
+      summary: Remove a dinoz from the castle's defense
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: dinozId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated defense line.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  defenseOrder:
+                    type: array
+                    items:
+                      type: integer
+                  defender:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DefenderSummary'
+        '400':
+          description: Validation error (dinozId missing/not numeric).
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan, dinoz not found/not owned, no castle, dinoz not
+            currently defending).
+
+  /dinoz:
+    patch:
+      operationId: updateDefenseOrder
+      summary: Reorder the castle's defense line
+      description: >
+        Requires the WAR_OFFICER clan right. previousDinozIds must match the current defense order exactly
+        (otherwise the order was changed concurrently and 409 is returned); dinozIds must contain the same set of
+        ids as the current order, just reordered.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dinozIds, previousDinozIds]
+              properties:
+                dinozIds:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: integer
+                    minimum: 0
+                  description: The new defense order (same ids as previousDinozIds, reordered).
+                previousDinozIds:
+                  type: array
+                  items:
+                    type: integer
+                  description: The defense order the client last saw, used to detect concurrent updates.
+      responses:
+        '200':
+          description: Defenders in their new order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Defender'
+        '400':
+          description: Validation error (dinozIds missing/empty/not an array of non-negative integers).
+        '409':
+          description: The defense order was changed concurrently since previousDinozIds was read.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan/right, no castle, dinozIds not a reordering of the
+            current defense).
+
+  /attack/{dinozId}:
+    put:
+      operationId: attackCastle
+      summary: Attack an enemy clan's castle
+      description: >
+        Fights the leading dinoz (and its available followers) against the defense of the castle the caller's clan
+        is currently attacking. Deals castle damage on victory; resolves the war if the castle is destroyed. Awards
+        XP/HP changes to both sides and consumes fight items.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      parameters:
+        - name: dinozId
+          in: path
+          required: true
+          description: Id of the leading attacking dinoz.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fight result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fighters:
+                    type: array
+                    items:
+                      type: object
+                  goldEarned:
+                    type: integer
+                  xpEarned:
+                    type: number
+                  levelUp:
+                    type: boolean
+                  totalHpLost:
+                    type: integer
+                  result:
+                    type: boolean
+                    description: true if the attackers won.
+                  history:
+                    type: array
+                    items:
+                      type: object
+                    description: Ordered fight steps (includes a leading castle-info step and attack-castle steps).
+                  hpLost:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        hpLost:
+                          type: integer
+                  itemsUsed:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        itemsUsed:
+                          type: array
+                          items:
+                            type: string
+                  place:
+                    type: integer
+        '400':
+          description: Validation error (dinozId missing/not numeric).
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan, no active attacking war, own/enemy castle destroyed,
+            dinoz not found, wrong location, dinoz dead/unavailable, missing fight fee).
+
+  /repair:
+    put:
+      operationId: repairCastle
+      summary: Schedule a castle repair
+      description: >
+        Requires the WAR_OFFICER clan right. Schedules a repair job that restores hpPerTick life every frequency
+        minutes for tick ticks (capped by REPAIR_MAX_HP/REPAIR_MAX_TICKS/REPAIR_MAX_STACK), consuming clan
+        ingredients for the cost.
+      tags: [Clan War]
+      security:
+        - playerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [hpPerTick, frequency, tick]
+              properties:
+                hpPerTick:
+                  type: integer
+                  description: HP restored per tick (1-10).
+                frequency:
+                  type: integer
+                  description: Minutes between ticks; must be one of the RepairFrequency enum values.
+                tick:
+                  type: integer
+                  description: Number of ticks to schedule (1-REPAIR_MAX_TICKS).
+      responses:
+        '200':
+          description: Repair scheduled.
+        '400':
+          description: Validation error (hpPerTick/frequency/tick missing/not numeric).
+        '500':
+          description: >
+            Unexpected or expected domain error (e.g. no clan/right, invalid repair params, no castle, castle
+            destroyed/full life, repair stack full, not enough ingredients).
+
+components:
+  securitySchemes:
+    playerAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >
+        Custom scheme (not standard Bearer/Basic): "<scheme> <base64(playerId:token)>"; the part after the first
+        space is base64-decoded into "playerId:token" and checked against the player's session token.
+  schemas:
+    DefenderSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display:
+          type: string
+        maxLife:
+          type: integer
+        life:
+          type: integer
+    Defender:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        life:
+          type: integer
+        maxLife:
+          type: integer
+        display:
+          type: string
+        level:
+          type: integer

@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Inventory API
+  description: Endpoints for listing a player's inventory and using/equipping items on a dinoz.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Inventory
+    description: Player item inventory, item usage and equip/unequip
+paths:
+  /api/v1/inventory/all:
+    get:
+      tags: [Inventory]
+      summary: Retrieve the authenticated player's inventory
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: One entry per item type owned by the player
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemFicheDTO'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/inventory/{dinozId}/{itemId}:
+    get:
+      tags: [Inventory]
+      summary: Use an item on a dinoz
+      description: >-
+        Consumes one unit of the item on the given dinoz (heal, resurrect, hatch egg, learn skill,
+        gold, special effects, etc. depending on the item's effect category). The dinoz must belong
+        to the authenticated player and must be available (not busy, unless it's on a healing cell
+        in a dungeon).
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          description: Numeric ID of the dinoz
+          schema:
+            type: integer
+        - in: path
+          name: itemId
+          required: true
+          description: Numeric ID of the item
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Feedback describing the effect(s) applied
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemFeedBack'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+    put:
+      tags: [Inventory]
+      summary: Equip or unequip an item on a dinoz
+      description: >-
+        Moves one unit of the item between the player's inventory and the dinoz's equipped items,
+        subject to backpack slot limits and (for MAGICAL items) the equipped-magical-item limit.
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          description: Numeric ID of the dinoz
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [itemId, equip]
+              properties:
+                itemId:
+                  type: integer
+                  description: Numeric ID of the item
+                equip:
+                  type: boolean
+                  description: true to equip the item, false to unequip it
+      responses:
+        '200':
+          description: The dinoz's items after the change
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozItems'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper. Not enforced by
+        express-validator middleware; a missing/invalid identity results in a 500 response (see below).
+  schemas:
+    ItemFicheDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Item ID
+        price:
+          type: integer
+        quantity:
+          type: integer
+          description: Quantity currently owned by the player
+        maxQuantity:
+          type: integer
+          description: >-
+            Max quantity storable for this item. Increased for shopKeeper players (and for
+            GOBLIN_MERGUEZ if the MERGUEZ_CARD reward was obtained).
+    ItemFeedBack:
+      type: object
+      description: >-
+        Shape varies by effect category. `value`/`effect`/`quantity` are present or absent
+        depending on `category` (HEAL/GOLD/ACTION/QUEST use a numeric or string `value`;
+        RESURRECT has none; EGG/SPHERE use a string `value`; SPECIAL adds `effect` and `quantity`).
+      properties:
+        category:
+          type: string
+          description: ItemEffect enum value (HEAL, GOLD, ACTION, RESURRECT, EGG, SPHERE, SPECIAL, QUEST)
+        value:
+          oneOf:
+            - type: number
+            - type: string
+        effect:
+          type: string
+        quantity:
+          type: integer
+    DinozItems:
+      type: object
+      properties:
+        itemId:
+          type: integer
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain failures such as
+        missing auth, dinoz/item not found, dinoz not belonging to player, or dinoz unavailable,
+        which this API reports as 500 rather than 401/403/404.
+      content:
+        text/plain:
+          schema:
+            type: string

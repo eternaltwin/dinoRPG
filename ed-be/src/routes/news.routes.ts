@@ -22,61 +22,6 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.newsRoute;
 
-/**
- * @openapi
- * /api/v1/news/create/{title}:
- *   put:
- *     summary: Create a news
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Admin
- *       - News
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: title
- *         type: string
- *         required: true
- *         description: Name of the new
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           properties:
- *             frenchText:
- *               type: string
- *               description: French text of the news
- *             englishText:
- *               type: number
- *               description: English text of the news
- *             spanishText:
- *               type: string
- *               description: Spanish text of the news
- *             germanText:
- *               type: number
- *               description: German text of the news
- *             frenchTitle:
- *               type: string
- *               description: French title of the news
- *             englishTitle:
- *               type: number
- *               description: English title of the news
- *             spanishTitle:
- *               type: string
- *               description: Spanish title of the news
- *             germanTitle:
- *               type: number
- *               description: German title of the news
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/create/:title`,
 	[
@@ -137,31 +82,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/news/page/{page}:
- *   get:
- *     summary: Get a batch of news
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - News
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: page
- *         type: string
- *         required: true
- *         description: Number of  the page to display
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -175,26 +95,6 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 	}
 });
 
-/**
- * @openapi
- * /api/v1/news/all:
- *   get:
- *     summary: Get all news
- *     security:
- *       - bearerAuth: []
- *     tags:
- * 	     - Admin
- *       - News
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.get(`${commonPath}/all`, checkRole([AdminRole.ADMIN, AdminRole.AMPHI]), async (req: Request, res: Response) => {
 	try {
 		const response = await getAllNews();
@@ -204,27 +104,6 @@ routes.get(`${commonPath}/all`, checkRole([AdminRole.ADMIN, AdminRole.AMPHI]), a
 	}
 });
 
-/**
- * @openapi
- * /api/v1/news/{id:
- *   get:
- *     summary: Get all info of a news
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - News
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id`,
 	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
@@ -243,61 +122,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/news/update/{title}:
- *   put:
- *     summary: Update a news
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Admin
- *       - News
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: title
- *         type: string
- *         required: true
- *         description: Name of the new
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           properties:
- *             frenchText:
- *               type: string
- *               description: French text of the news
- *             englishText:
- *               type: number
- *               description: English text of the news
- *             spanishText:
- *               type: string
- *               description: Spanish text of the news
- *             germanText:
- *               type: number
- *               description: German text of the news
- *             frenchTitle:
- *               type: string
- *               description: French title of the news
- *             englishTitle:
- *               type: number
- *               description: English title of the news
- *             spanishTitle:
- *               type: string
- *               description: Spanish title of the news
- *             germanTitle:
- *               type: number
- *               description: German title of the news
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/update/:id`,
 	[
@@ -327,32 +151,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/news/delete/:id
- *   delete:
- *     summary: Delete a news
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Admin
- *       - News
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: id
- *         type: string
- *         required: true
- *         description: ID of the news
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.delete(
 	`${commonPath}/delete/:id`,
 	param('id').exists().toInt().isInt(),

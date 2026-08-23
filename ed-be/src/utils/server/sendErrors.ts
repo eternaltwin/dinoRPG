@@ -37,6 +37,7 @@ const sendError = (res: Response, error: unknown) => {
 
 	if (!(error instanceof ExpectedError)) {
 		try {
+			console.error(error);
 			DISCORD.sendError(error, res);
 		} catch (discordError) {
 			console.error(discordError);

@@ -14,6 +14,7 @@ import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
 import { backpackSlot } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
@@ -24,7 +25,8 @@ import {
 	DinozStatus,
 	LogType,
 	Player,
-	PlayerItem
+	PlayerItem,
+	Prisma
 } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
@@ -46,12 +48,23 @@ import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { initializeDinoz, learnNextSphereSkill, useRice } from '../utils/dinoz.js';
+import {
+	isAtMaxActiveDinoz,
+	generateDinozDisplay,
+	getDinozUpChance,
+	getLearnableSkills,
+	getRandomUpElement,
+	getUnlockableSkills,
+	initializeDinoz,
+	learnNextSphereSkill
+} from '../utils/dinoz.js';
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
-import { SWAMP_FLOODED_DAYS } from '@drpg/core/models/place/PlaceList';
+import { isOnHealingCell } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
+import { randomUUID } from 'crypto';
+import { GLOBAL } from '../context.js';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -114,6 +127,13 @@ export async function useItem(req: Request) {
 	const dinoz = await getDinozFicheItemRequest(dinozId);
 	if (!dinoz || !dinoz.player) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+	}
+	if (dinoz.unavailableReason) {
+		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
+			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+		} else if (!(await isOnHealingCell(dinoz))) {
+			throw new ExpectedError(translate('dungeon.notHealing', authed));
+		}
 	}
 	const itemId = +req.params.itemId;
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
@@ -401,23 +421,6 @@ export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lan
 	return race;
 }
 
-export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
-	// Generate display:
-	// - the first 2 chars are the race's chars
-	// - the next 11 chars are random between '0' and 'z'
-	// - the next (14th) is the provided color palette
-	// - the next (15th) is the provided 1st rare visual attribute
-	// - the last one (16h) is the provided 2nd rare visual attribute
-	let randomDisplay = race.swfLetter;
-
-	for (let i = 0; i < 11; i++) {
-		randomDisplay += getRandomLetter('z');
-	}
-
-	randomDisplay += palette + rare_1 + rare_2;
-	return randomDisplay;
-}
-
 async function useSpecialItem(
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife' | 'level' | 'raceId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
@@ -590,4 +593,36 @@ export const resurrect = (
 		id: dinoz.id,
 		life: dinoz.life
 	};
+};
+
+export const useRice = async (
+	dinoz: Pick<Dinoz, 'id' | 'level' | 'raceId'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
+	}
+) => {
+	const newDinozData: Prisma.DinozUpdateInput = {
+		name: '?',
+		experience: 0,
+		canChangeName: true
+	};
+
+	if (dinoz.level === 1) {
+		const dinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId);
+
+		if (!dinozRace) {
+			throw new ExpectedError(`Dinoz race ${dinoz.raceId} doesn't exist.`);
+		}
+
+		const learnableSkills = getLearnableSkills(dinoz);
+		const unlockableSkills = getUnlockableSkills(dinoz);
+		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
+
+		newDinozData.seed = randomUUID();
+		// Set next ups similarly to initialization and reincarnation
+		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
+		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
+	}
+	await updateDinoz(dinoz.id, newDinozData);
 };

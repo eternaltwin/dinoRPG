@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
 	"maxQuantityInventory": "Ya tienes lo máximo permitido de este objeto en tu inventario",
 	"cannotClaim": "Actualmente no puedes recibir lo que ganaste.",
-	"tooMuchDinoz": "Ya has alcanzado el máximo de Dinos activos.",
 	"tooMuchIngredient": "Tienes un ingrediente que podría superar el límite máximo.",
 	"tooMuchItem": "Tienes un objeto que podría superar el límite máximo.",
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
@@ -69,8 +68,14 @@
 		"outdatedDefense": "Defensa desactualizada"
 	},
 	"error": {
+		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
-		"notYourDinoz": "Este Dino no es tuyo"
+		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",
+		"dinozNotAvailable": "Votre Dinoz n'est pas disponible pour faire cette action.",
+		"notEnoughTickets": "Vous ne disposez pas d'asses de tickets pour faire cette action.",
+		"noShopAccess": "Vous ne remplissez pas les conditions pour accéder à cette boutique.",
+		"tooManyItems": "Vous avez trop d'objets pour faire cette opération."
 	},
 	"fb": {
 		"error": {
@@ -247,8 +252,11 @@
 		"levelLimit": "El límite de nivel máximo está fijado en {{level}}.",
 		"poison": "El veneno está activado.",
 		"nopoison": "El veneno está desactivado.",
+		"goldReward": "{{value}} monedas de oro :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} puntos**: {{rewards}}.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para las personas que alcancen los hitos de 500, 750, 1000, 1200, 1300 y 1400 puntos al final de las clasificatorias!\n\n¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -286,6 +294,17 @@
 		"3": "Tercer",
 		"4": "Cuarto",
 		"5": "Quinto"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Esfera de Vacío | Esferas de Vacío",
+			"souffet_egg": "Huevo de Visper | Huevos de Visper",
+			"toufufu_baby": "Bebé Tufufu | Bebés Tufufu",
+			"toufufu_baby_rare": "Bebé Tufufu raro | Bebés Tufufu raros",
+			"golden_napodino": "Napodino de oro | Napodinos de oro",
+			"box_epic": "Caja épica | Cajas épicas",
+			"box_legendary": "Caja legendaria | Cajas legendarias"
+		}
 	},
 	"reward": {
 		"perle": "Perla de la Fuente",
@@ -332,12 +351,21 @@
 		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Votre dinoz n'est pas à l'entrée du donjon",
+		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe",
+		"noRun": "Vous n'avez jamais visité ce donjon",
+		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
+		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut une zone de soin."
+	},
 	"UnavailableReason": {
 		"frozen": "Tu Dino está congelado",
 		"sacrificed": "Tu Dino está sacrificado",
 		"selling": "Tu Dino está en venta",
 		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Tu Dino está descansando"
+		"resting": "Tu Dino está descansando",
+		"dungeon": "Votre dinoz visite un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Ya no queda nadie con quien combatir por el momento."

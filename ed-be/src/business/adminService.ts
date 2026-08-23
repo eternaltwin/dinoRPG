@@ -9,14 +9,7 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import {
-	addMoney,
-	auth,
-	getPlayerInfoForAdmin,
-	getEternalTwinId,
-	removeMoney,
-	setPlayer
-} from '../dao/playerDao.js';
+import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../dao/playerItemDao.js';
@@ -49,6 +42,23 @@ import {
 import dayjs from 'dayjs';
 import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import TournamentManager from '../utils/tournamentManager.js';
+import { OriginalGenerator } from './dungeon/original/index.js';
+import { DungeonCodec } from './dungeon/DungeonCodec.js';
+import { DungeonType } from '@drpg/prisma/enums';
+import {
+	createDungeon,
+	deleteDungeon,
+	getDungeonById,
+	getDungeonByName,
+	listDungeonsCatalog,
+	updateDungeonCatalog
+} from '../dao/dungeonRunDao.js';
+import { seal } from '../utils/dungeonCrypto.js';
+import { rollMonsters } from './dungeon/monsters.js';
+import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
+import { DungeonItem } from './dungeon/types.js';
+import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
+import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1137,4 +1147,164 @@ export async function getOngoingEvent(req: Request) {
 		}
 	});
 	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
+}
+
+export async function createSeededDungeon(req: Request) {
+	const type = req.body.type ?? DungeonType.cavern;
+	const name = req.body.name;
+	// Approximate total level of each monster team.
+	const monsterLevel = req.body.monsterLevel ?? 1;
+	// body.pool (admin-picked monsters) overrides the existing dungeon's monsterPool by name,
+	// so arbitrary-named / generated dungeons can still have a chosen monster set.
+	const bodyPool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
+		(m: string): m is Monster => m in monsterList
+	);
+	const existingForPool = bodyPool.length ? null : await getDungeonByName(name);
+	const pool = bodyPool.length ? bodyPool : existingForPool ? (JSON.parse(existingForPool.monsterPool) as string[]) : [];
+
+	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
+	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
+	let condition = '{}';
+	if (req.body.condition != null && req.body.condition !== '') {
+		try {
+			condition = JSON.stringify(JSON.parse(req.body.condition));
+		} catch {
+			throw new ExpectedError('Invalid condition JSON');
+		}
+	}
+	const isActive = req.body.isActive ?? true;
+
+	const grid = req.body.grid;
+	if (grid) {
+		const d = structFromGrid(grid);
+		const encoded = new DungeonCodec().encode(d);
+		// BitCodec.write does not mask overflowing values — round-trip before sealing.
+		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
+		// Every chest/scroll (IScenario item) must point at one of the dungeon's scenario entries.
+		const scenarios = checkScenarios(req.body.scenarios);
+		for (const lvl of grid.levels as DungeonGridLevel[])
+			for (const it of lvl.items)
+				if (it.k === DungeonItem.IScenario && it.v >= scenarios.length)
+					throw new ExpectedError(`Invalid dungeon grid: scenario item v=${it.v} has no scenario entry`);
+		const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
+		const created = await createDungeon(
+			seal(encoded),
+			type,
+			name,
+			monsterLevel,
+			monsters,
+			JSON.stringify(scenarios),
+			placeStart,
+			placeEnd,
+			condition,
+			JSON.stringify(pool),
+			isActive
+		);
+		return { id: created.id, type: created.type };
+	}
+
+	// Custom layout: an already-encoded dungeon string (e.g. original MT format), no generation.
+	const layout = req.body.layout;
+	if (layout) {
+		const codec = new DungeonCodec();
+		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
+		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
+		const created = await createDungeon(
+			seal(codec.encode()),
+			type,
+			name,
+			monsterLevel,
+			monsters,
+			undefined,
+			placeStart,
+			placeEnd,
+			condition,
+			JSON.stringify(pool),
+			isActive
+		);
+		return { id: created.id, type: created.type };
+	}
+
+	const seed = req.body.seed;
+	const width = req.body.width;
+	const height = req.body.height;
+	const levels = req.body.level;
+	const noise = req.body.noise;
+	const filters = req.body.filters;
+	const surface = req.body.surface;
+
+	const d = OriginalGenerator.generate({
+		width: width,
+		height: height,
+		levels: levels,
+		noise: noise,
+		filters: filters,
+		surface: surface,
+		seed: seed
+	});
+	const encoded = new DungeonCodec().encode(d);
+	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
+	const created = await createDungeon(
+		seal(encoded),
+		type,
+		name,
+		monsterLevel,
+		monsters,
+		undefined,
+		placeStart,
+		placeEnd,
+		condition,
+		JSON.stringify(pool),
+		isActive
+	);
+	return { id: created.id, type: created.type };
+}
+
+/** Admin view of a dungeon's catalog fields — the sealed layout (cipher/iv/tag) must never reach the client. */
+export async function getDungeonAdmin(req: Request) {
+	const id = req.params.id;
+	const dungeon = await getDungeonById(id);
+	if (!dungeon) throw new ExpectedError(`Dungeon ${id} not found`);
+	const { cipher, iv, tag, ...rest } = dungeon;
+	return rest;
+}
+
+export async function updateDungeonAdmin(req: Request) {
+	const id = req.params.id;
+	const existing = await getDungeonById(id);
+	if (!existing) throw new ExpectedError(`Dungeon ${id} not found`);
+
+	const pool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter((m: string): m is Monster => m in monsterList);
+	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
+	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
+	let condition = existing.condition;
+	if (req.body.condition != null) {
+		try {
+			condition = JSON.stringify(JSON.parse(req.body.condition));
+		} catch {
+			throw new ExpectedError('Invalid condition JSON');
+		}
+	}
+	const scenarios = req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
+
+	return updateDungeonCatalog(id, {
+		name: req.body.name ?? existing.name,
+		type: req.body.type ?? existing.type,
+		level: req.body.level != null ? Number(req.body.level) : existing.level,
+		placeStart,
+		placeEnd,
+		condition,
+		monsterPool: JSON.stringify(pool),
+		scenarios,
+		isActive: req.body.isActive ?? existing.isActive
+	});
+}
+
+export async function deleteDungeonAdmin(req: Request) {
+	const id = req.params.id;
+	await deleteDungeon(id);
+}
+
+export async function listDungeons() {
+	return listDungeonsCatalog();
 }

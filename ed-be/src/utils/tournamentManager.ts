@@ -24,7 +24,7 @@ import 'dayjs/locale/fr.js';
 import 'dayjs/locale/es.js';
 import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
-import { rewarder, RewarderPromise } from './rewarder.js';
+import { rewarder, RewarderPromise, describeRewards } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -647,7 +647,17 @@ class TournamentManager {
 		const total = await prisma.tournament.count();
 
 		const newsParams = {} as Record<Lang, Record<string, unknown>>;
+		const sortedQualifRewards = [...tournamentQualifRewards].sort((a, b) => a.floor - b.floor);
 		for (const lang of Object.values(Lang)) {
+			const qualificationRewards = sortedQualifRewards.reduce((acc, milestoneRewards) => {
+				const translatedRewards = translateTarget(`dojo.qualificationMilestone`, lang, {
+					points: milestoneRewards.floor,
+					rewards: describeRewards(milestoneRewards.rewards, lang),
+					interpolation: { escapeValue: false }
+				});
+				return `${acc}- ${translatedRewards}\n`;
+			}, '');
+
 			newsParams[lang] = {
 				type: translateTarget(`tournament.${tournamentFormat.name}`, lang),
 				endQualif: dayjs(endQualif).locale(lang).format('ddd DD MMMM HH:mm'),
@@ -661,7 +671,8 @@ class TournamentManager {
 				}),
 				rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', lang),
 				rule4: translateTarget('dojo.levelLimit', lang, { level: levelLimit }),
-				number: romanize(total)
+				number: romanize(total),
+				qualificationRewards: qualificationRewards
 			};
 		}
 

@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Moderation API
+  description: >
+    Routes for reporting a player or a clan for moderation review. Reconstructed from
+    ed-be/src/routes/moderation.routes.ts and ed-be/src/business/moderationService.ts.
+  version: '1.0.0'
+servers:
+  - url: /
+tags:
+  - name: Moderation
+    description: Player/clan reporting
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >
+        Authentication is checked inside the business layer (auth(req) reading the Authorization
+        header), not via Express middleware. A missing or invalid token throws and is reported as
+        a 500 response (see ServerError).
+  responses:
+    ValidationError:
+      description: express-validator rejected one or more path/query/body params
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result object
+    ServerError:
+      description: >
+        Error while processing the request. Covers unexpected failures as well as expected domain
+        errors (not authenticated, inexistent player/clan, invalid reason, ...) - the handler
+        always replies with HTTP 500 and the error message as plain text in both cases.
+      content:
+        text/plain:
+          schema:
+            type: string
+  schemas:
+    PlayerToReport:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        customText:
+          type: string
+          nullable: true
+        dinoz:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+
+paths:
+  /api/v1/moderation/player/{id}:
+    get:
+      tags: [Moderation]
+      summary: Get a player's info to display before filing a report
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Player info (name, custom text, dinoz list)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PlayerToReport' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '500': { $ref: '#/components/responses/ServerError' }
+    post:
+      tags: [Moderation]
+      summary: Report a player
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason, comment]
+              properties:
+                reason:
+                  type: string
+                  enum:
+                    [multi, dinozName, accountName, avatar, customText, other, clanBanner, clanBehavior, clanPages, clanOther]
+                comment:
+                  type: string
+                dinozId:
+                  type: integer
+      responses:
+        '200':
+          description: Empty response on success
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/v1/moderation/clan/{id}:
+    post:
+      tags: [Moderation]
+      summary: Report a clan (leader is the actual report target)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason, comment]
+              properties:
+                reason:
+                  type: string
+                  description: >
+                    Any ModerationReason value; 'other' is automatically remapped to 'clanOther'
+                    server-side.
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Empty response on success
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '500': { $ref: '#/components/responses/ServerError' }

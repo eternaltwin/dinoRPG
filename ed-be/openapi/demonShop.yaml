@@ -1,0 +1,266 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Demon Shop API
+  description: >
+    Routes for the demon shop: viewing the shop, buying demon Dinoz, and sacrificing/unsacrificing
+    Dinoz for demon tickets. Reconstructed from ed-be/src/routes/demonShop.routes.ts.
+  version: '1.0.0'
+servers:
+  - url: /
+tags:
+  - name: Demon Shop
+    description: Demon shop, sacrifice and buy-back of Dinoz.
+paths:
+  /api/v1/demon/:
+    get:
+      operationId: getDemonShop
+      summary: Get the player's demon shop data
+      description: >
+        Returns the player's own Dinoz, the first page of their sacrificed Dinoz (buy-back list),
+        and the current demon shop offer. Requires the DEMON reward and at least one Dinoz at the
+        cemetary; the shop dinoz list requires at least 30 demon tickets.
+      tags:
+        - Demon Shop
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Demon shop data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemonShopFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/demon/sacrificed/{page}:
+    get:
+      operationId: getSacrificedDinoz
+      summary: Get one page of the player's sacrificed Dinoz (buy-back list)
+      tags:
+        - Demon Shop
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: path
+          required: true
+          description: 1-indexed page number.
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Page of sacrificed Dinoz.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozShopFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/demon/sacrifice/{dinozId}:
+    post:
+      operationId: sacrificeDinoz
+      summary: Sacrifice a Dinoz for demon tickets
+      description: >
+        Marks the Dinoz as sacrificed and credits the player with demon tickets based on the
+        Dinoz's level. The Dinoz must belong to the player, be at the cemetary, and the player
+        must have the DEMON reward.
+      tags:
+        - Demon Shop
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: dinozId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Number of demon tickets received.
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/demon/unsacrifice/{dinozId}:
+    post:
+      operationId: unsacrificeDinoz
+      summary: Unsacrifice a Dinoz, spending demon tickets
+      description: >
+        Consumes demon tickets to bring a previously sacrificed Dinoz back. The player must have
+        an active Dinoz at the cemetary and not be at their max active Dinoz count. Returns no body.
+      tags:
+        - Demon Shop
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: dinozId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dinoz unsacrificed successfully. No response body.
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/demon/buy/{id}:
+    post:
+      operationId: buyDemonDinoz
+      summary: Buy a Dinoz from the demon shop
+      description: >
+        Buys the given Dinoz from the current demon shop offer, provided the player has an active
+        Dinoz at the cemetary and is not at their max active Dinoz count. Returns the newly created
+        Dinoz's full fiche.
+      tags:
+        - Demon Shop
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the demon shop offer entry to buy.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The newly created Dinoz.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DinozFiche'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >
+        Bearer token whose value is base64(playerId:token). See ed-be/src/dao/playerDao.ts (auth,
+        extractIdFromAuthorization).
+
+  responses:
+    ValidationError:
+      description: express-validator failed on the request params.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+    Error:
+      description: >
+        Unexpected error, or an expected domain error (e.g. no shop access, wrong Dinoz location,
+        not your Dinoz, too many active Dinoz) — both are returned with status 500 and a plain-text
+        message by this file's error handler (sendError).
+      content:
+        text/plain:
+          schema:
+            type: string
+
+  schemas:
+    DinozShopFiche:
+      type: object
+      description: A Dinoz as shown in the demon shop or buy-back list, with its buy-back/sacrifice price.
+      properties:
+        id:
+          type: integer
+        level:
+          type: integer
+        display:
+          type: string
+        raceId:
+          type: integer
+        nbrUpFire:
+          type: integer
+        nbrUpWood:
+          type: integer
+        nbrUpWater:
+          type: integer
+        nbrUpLightning:
+          type: integer
+        nbrUpAir:
+          type: integer
+        skills:
+          type: array
+          items:
+            type: integer
+        price:
+          type: integer
+          description: Demon ticket price (buy-back cost / sacrifice reward), derived from level.
+
+    DemonShopFiche:
+      type: object
+      properties:
+        dinoz:
+          type: array
+          items:
+            $ref: '#/components/schemas/DinozShopFiche'
+          description: Player's own Dinoz currently at the cemetary.
+        sacrificed:
+          type: array
+          items:
+            $ref: '#/components/schemas/DinozShopFiche'
+          description: First page of the player's sacrificed Dinoz (buy-back list).
+        shop:
+          type: array
+          items:
+            $ref: '#/components/schemas/DinozShopFiche'
+          description: Current demon shop offer (empty unless the player has 30+ demon tickets).
+
+    DinozFiche:
+      type: object
+      description: >
+        Full Dinoz data as sent to the front-end (see core/src/models/dinoz/DinozFiche.mts).
+        Only the most relevant fields are listed; the object has more properties.
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display:
+          type: string
+        level:
+          type: integer
+        life:
+          type: integer
+        maxLife:
+          type: integer
+        experience:
+          type: integer
+        maxExperience:
+          type: integer
+        placeId:
+          type: integer
+        race:
+          type: object
+        skills:
+          type: array
+          items:
+            type: object
+        status:
+          type: array
+          items:
+            type: object

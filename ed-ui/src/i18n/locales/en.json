@@ -84,7 +84,7 @@
 			"stats": "Live Statistics",
 			"skipFight": "Immediately display fight outcome",
 			"skipLevel": "Skip level up animation",
-			"autoReequipItems": "Automatically re-equip items after PvE fight",
+			"autoReequipItems": "Automatically re-equip consumed items",
 			"archivedSiteId": "Historical Site",
 			"shareArchivedData": "Share Twinoid Stats",
 			"displayedNotifications": "Number of toasts displayed",
@@ -127,7 +127,7 @@
 		"clan_prospector_penalty": "The Prospector found your castle in ruins — your reputation fell to {reputation}.",
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"autoReequipSuccess": "Successfully re-equipped: {items}",
-		"autoReequipMissing": "Failed to re-equip: {items} (missing in inventory)",
+		"autoReequipMissing": "Failed to re-equip missing items: {items}",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
 		"gold": "You received {value} :gold:.",
 		"sphere": "Your Dinoz has learned the {value} skill.",
@@ -257,7 +257,10 @@
 			"fb_tournament": "Access the BrutForce Tournament.",
 			"war_defend": "Add your Dinoz to the defense lines of your clan castle.",
 			"war_remove": "Remove your Dinoz to the defense lines of your clan castle.",
-			"war_attack": "Attack the enemy castle."
+			"war_attack": "Attack the enemy castle.",
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"dungeon": "Voir l'évolution de l'exploration actuelle...",
+			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
 			"fight": "Fight",
@@ -293,7 +296,10 @@
 			"fb_tournament": "Tournament",
 			"war_defend": "Defend your castle",
 			"war_remove": "Remove from defense",
-			"war_attack": "Attack the castle"
+			"war_attack": "Attack the castle",
+			"dungeon_enter": "Entrer",
+			"dungeon": "Accéder au Plan",
+			"demon_shop": "Boutique Démoniaque"
 		}
 	},
 	"button": {
@@ -311,7 +317,8 @@
 		"close": "Close",
 		"search": "Search",
 		"loading": "Loading...",
-		"noResults": "No result"
+		"noResults": "No result",
+		"details": "Détails"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -1798,6 +1805,20 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Boutique Démoniaque",
+			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
+			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"level": "Niv. {level}",
+			"sacrifice": "Sacrifier",
+			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrifice",
+			"buy_title": "Invocation",
+			"unsacrifice_title": "Résurrection",
+			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"yourDemonTickets": "Vos Tickets Démons"
+		},
 		"dinoz": {
 			"header": "Dinoz Enclosure",
 			"help": "Welcome to the Dinoz enclosure ! Here, **daily**, you can discover the various Dinoz options available for adoption. Choose the one that suits you best."
@@ -2657,6 +2678,7 @@
 		"default": "DinoRPG [ Dinoland News ]",
 		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
 		"shop": "DinoRPG [ Merchant: {shop} ]",
+		"demon": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
 		"account": "DinoRPG [ Personal Information ]",
 		"ranking": "DinoRPG [ Great Hall of Glory ]",
@@ -2682,7 +2704,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Events ]",
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
-		"skillTrees": "DinoRPG [ Skill Trees ]"
+		"skillTrees": "DinoRPG [ Skill Trees ]",
+		"terms": "DinoRPG [ Terms of Service ]"
 	},
 	"gather": {
 		"action": {
@@ -4633,7 +4656,9 @@
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
-		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action."
+		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action.",
+		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -4666,6 +4691,8 @@
 		"HPLost": "The Dinoz **{dinoz} ({dinozId})** of **{player} ({playerId})** has lost **{hpLost} :pv:**.",
 		"Death": "**{player} ({playerId})**'s Dinoz *{dinoz} ({dinozId})** died.",
 		"Revive": "**{player} ({playerId})** revived its Dinoz **{dinoz} ({dinozId})**.",
+		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** made progress for mission **{mission}** to **step {step}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** has completed the mission **{mission}** with his Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with Dinoz **{dinoz} ({dinozId})**.",
@@ -4725,8 +4752,7 @@
 			"disclaimer": "No :pv: will be lost, no :xp: will be earned, no items will be used.&&The training fees are **50 :gold: per Dinoz selected**. The fees contribute to the cash price of the ongoing tournament.",
 			"selectYourDinoz": "Select up to **6 of your Dinoz**.",
 			"selectOpponentDinoz": "Select here your opponent and up to **6 of its Dinoz** to fight.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "You cannot have the same Dinoz fight itself."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Uncommon Dinoz",
@@ -5275,6 +5301,51 @@
 		"participantsConv": "Participants",
 		"blockSender": "Block sender"
 	},
+	"dungeon": {
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Etage {floor}",
+		"name": {
+			"katatombs": "les Katatombes"
+		},
+		"katatombs": {
+			"misc": "Mandragore's note: I left the Demon Scroll in these Katatombs after making a copy of it. I hope the Dinoz Masters who find it will not use it with ill intent, for Demon Dinoz are mighty powerful...",
+			"napo": "You open a chest seemingly abandoned for hundreds of years. It is empty but, intrigued, you discover a false bottom concealing a well-hidden Golden Napodino!",
+			"potion": "You find 3 Irma Potions in a small chest — that's always something!",
+			"demon": "You find the Demon Scroll. It reveals the location of a strange Dinoz shop, called the Demonic Shop, somewhere on the surface of the Twilight Cemetery. But first you will have to get out of the Katatombs...",
+			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
+			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+		},
+		"msg": {
+			"locked": "The \"{name}\" door is locked. You need to find the key of the same name!",
+			"opened": "The \"{name}\" key turns in the lock: the door swings open with a sinister creak...",
+			"key": "You found the \"{name}\" key! It must open a door of the same name, somewhere...",
+			"gold": "You find {value} gold!",
+			"resumed": "You resume your exploration where you left off."
+		},
+		"doorNames_prefix": [
+			"Arbres ",
+			"Dragons ",
+			"Calamars ",
+			"Gobelins ",
+			"Kabukis ",
+			"Roméos ",
+			"Magiciens ",
+			"Anges ",
+			"Démons "
+		],
+		"doorNames_sufix": [
+			"Magiques",
+			"Morts",
+			"Vivants",
+			"Noirs",
+			"Enchantés",
+			"Enchanteurs",
+			"Rouges",
+			"en Plastique",
+			"en Mousse",
+			"Etincelants"
+		]
+	},
 	"scenario": {
 		"star": "The Strange Creature",
 		"pac": "Strange Parchment",
@@ -5351,5 +5422,13 @@
 		"select": "Vote",
 		"select_option": "Select an option",
 		"total_participants": "{qty} voters"
+	},
+	"terms": {
+		"title": "Terms of Service",
+		"intro": "Please read and accept the following terms of service before you keep playing.",
+		"clause1": "Creating or using multiple accounts as the same player is forbidden.",
+		"clause2": "Using bots or any automation script is forbidden.",
+		"clause3": "Knowingly exploiting a bug is forbidden and must be reported to the team.",
+		"accept_button": "Accept"
 	}
 }

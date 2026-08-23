@@ -1,0 +1,608 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Dojo API
+  description: >-
+    Endpoints for the Dojo: team management, friendly/challenge fights, fight archives,
+    and the qualification/pools/finals tournament.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Dojo
+    description: Dojo team management, fights, fight archive, and tournament
+paths:
+  /api/v1/dojo/team:
+    put:
+      tags: [Dojo]
+      summary: Set the authenticated player's dojo team (5 to 10 dinoz)
+      description: >-
+        Only allowed while the tournament is in the QUALIFICATION phase. Also (re)rolls a fresh
+        batch of opponents for the team.
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [team]
+              properties:
+                team:
+                  type: array
+                  items:
+                    type: integer
+                  description: Dinoz ids owned by the player, must resolve to 5-10 distinct dinoz all level >= 10
+      responses:
+        '200':
+          description: Updated dojo team and newly rolled opponents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DojoTeamState'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags: [Dojo]
+      summary: Get the authenticated player's current dojo team and opponents
+      description: >-
+        If the current opponent series is exhausted (all achieved, or none yet) and the daily
+        reset budget isn't spent, a fresh batch of opponents is generated as a side effect.
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The player's dojo team state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DojoTeamState'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/fight:
+    put:
+      tags: [Dojo]
+      summary: Fight another player's dinoz in the dojo (friendly fight, costs gold)
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [left, right, rightId]
+              properties:
+                left:
+                  type: array
+                  items:
+                    type: integer
+                  description: Ids of the authenticated player's own dinoz to fight with
+                right:
+                  type: array
+                  items:
+                    type: integer
+                  description: Ids of the opposing player's dinoz to fight against
+                rightId:
+                  type: string
+                  format: uuid
+                  description: Id of the opposing player
+      responses:
+        '200':
+          description: Fight result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FightOutcome'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/share/{id}:
+    get:
+      tags: [Dojo]
+      summary: Get an archived fight by id and mark it viewed for the authenticated player
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/ArchiveId'
+      responses:
+        '200':
+          description: The archived fight
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DojoFightResume'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/history/{page}:
+    get:
+      tags: [Dojo]
+      summary: List the authenticated player's dojo fight archive (paginated)
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: Page of the player's dojo fight archive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  archive:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        fighters:
+                          type: array
+                          items:
+                            type: object
+                            description: FighterRecap (per-participant fight recap)
+                  quantity:
+                    type: integer
+                    description: Total number of archived dojo fights for the player
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/challenge:
+    put:
+      tags: [Dojo]
+      summary: Fight the current dojo challenge opponent with one of the player's own dinoz
+      description: Only allowed while the tournament is in the QUALIFICATION phase. Costs gold.
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [myDinoz, opponent]
+              properties:
+                myDinoz:
+                  type: integer
+                  description: Id of the player's dinoz already assigned to the dojo team
+                opponent:
+                  type: integer
+                  description: Id of the opponent dinoz from the current opponent series
+      responses:
+        '200':
+          description: Fight result and challenge outcome
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FightOutcome'
+                  - type: object
+                    properties:
+                      challengeWon:
+                        type: boolean
+                      victory:
+                        type: boolean
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/challenge/skip:
+    put:
+      tags: [Dojo]
+      summary: Skip (forfeit, without fighting) a dojo opponent that was already fought once
+      description: Only allowed while the tournament is in the QUALIFICATION phase. Costs gold.
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [opponent]
+              properties:
+                opponent:
+                  type: integer
+                  description: Id of the opponent dinoz to skip
+      responses:
+        '200':
+          description: Opponent skipped (no content returned)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/tournament:
+    get:
+      tags: [Dojo]
+      summary: Get the current/latest tournament info
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: Latest tournament, with teamRace expanded to an array of race ids
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Tournament row plus teamRace parsed into number[]
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags: [Dojo]
+      summary: Register the authenticated player's team for the current tournament
+      description: >-
+        Only allowed while the tournament is in the QUALIFICATION phase, once per player,
+        with a team matching the tournament's size/race/level rules.
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [team]
+              properties:
+                team:
+                  type: array
+                  items:
+                    type: integer
+                  description: Dinoz ids owned by the player, must match the tournament's required team size
+      responses:
+        '200':
+          description: Team registered (no content returned)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/tournament/{phase}/{id}/{pool}:
+    get:
+      tags: [Dojo]
+      summary: List the tournament fights for a given phase/tournament/pool, up to the player's most advanced unwatched round
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/TournamentPhase'
+        - $ref: '#/components/parameters/TournamentId'
+        - $ref: '#/components/parameters/TournamentPool'
+      responses:
+        '200':
+          description: List of tournament fights (pool is forced to 5 when phase is finals)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicTournamentFight'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags: [Dojo]
+      summary: Mark all fights of a given phase/tournament/pool as viewed by the authenticated player
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/TournamentPhase'
+        - $ref: '#/components/parameters/TournamentId'
+        - $ref: '#/components/parameters/TournamentPool'
+      responses:
+        '200':
+          description: Fights marked as viewed (no content returned)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/tournaments/{page}:
+    get:
+      tags: [Dojo]
+      summary: List past tournaments (paginated, 10 per page, most recent first)
+      security:
+        - authHeader: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: Page of tournament history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Total number of tournaments
+                  history:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        date:
+                          type: string
+                          format: date-time
+                        formatName:
+                          type: string
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/tournament/team:
+    delete:
+      tags: [Dojo]
+      summary: Unregister the authenticated player's team from the current tournament
+      description: Only allowed while the tournament is in the QUALIFICATION phase.
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: Team unregistered (no content returned)
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags: [Dojo]
+      summary: Get the authenticated player's registered tournament team
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The team's dinoz (empty array if no team is registered)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozSummary'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/dojo/:
+    get:
+      tags: [Dojo]
+      summary: Get (creating on first visit) the authenticated player's dojo, ranking, and current tournament state
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The player's dojo, dojo ranking, and current tournament state
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dojo:
+                    type: object
+                    description: The player's Dojo row (created with a random challenge on first visit)
+                  rank:
+                    type: integer
+                    nullable: true
+                    description: The player's dojo leaderboard rank
+                  tournament:
+                    type: object
+                    nullable: true
+                    description: Current TournamentState, or null if no tournament is active
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper. Not enforced by
+        express-validator middleware; a missing/invalid header results in a 500 response (see below).
+  parameters:
+    ArchiveId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Page:
+      name: page
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    TournamentPhase:
+      name: phase
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: [qualification, pools, finals]
+    TournamentId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TournamentPool:
+      name: pool
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    DinozSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display:
+          type: string
+        level:
+          type: integer
+    Challenge:
+      type: object
+      properties:
+        type:
+          type: string
+          description: ChallengeType, e.g. kill, takeAttack, takeRawDmg, assault, maxDmg, poison...
+        goal:
+          type: integer
+    DojoTeamState:
+      type: object
+      description: myTeam shape (see core DojoBasic model); returned by GET/PUT team
+      properties:
+        team:
+          type: array
+          items:
+            type: object
+            properties:
+              fighted:
+                type: boolean
+              dinoz:
+                $ref: '#/components/schemas/DinozSummary'
+        DojoOpponents:
+          type: array
+          items:
+            type: object
+            properties:
+              fighted:
+                type: boolean
+              achieved:
+                type: boolean
+              dinoz:
+                $ref: '#/components/schemas/DinozSummary'
+        activeChallenge:
+          $ref: '#/components/schemas/Challenge'
+        dailyReset:
+          type: integer
+    DojoFightResume:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fighters:
+          type: array
+          items:
+            type: object
+            description: FighterRecap
+        result:
+          type: boolean
+        history:
+          type: array
+          items:
+            type: object
+            description: FightStep
+        seed:
+          type: string
+        leftPlayer:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        rightPlayer:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+    FightOutcome:
+      type: object
+      description: Result of a computed fight, archived as a DojoFightResume plus its raw stats
+      properties:
+        fight:
+          $ref: '#/components/schemas/DojoFightResume'
+        stats:
+          type: object
+          description: FullFightStats (per-side attack/defense stats of the computed fight)
+    PublicTournamentFight:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tournamentTeamLeft:
+          type: object
+          nullable: true
+          properties:
+            dinoz:
+              type: object
+              description: FighterRecap of the left team's leader
+            player:
+              type: object
+              nullable: true
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+        tournamentTeamRight:
+          type: object
+          nullable: true
+          properties:
+            dinoz:
+              type: object
+              description: FighterRecap of the right team's leader
+            player:
+              type: object
+              nullable: true
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+        metadata:
+          type: object
+          description: PublicMetada (phase, round, poolNumber, matchNumber, scheduledFor, team1Id, team2Id)
+        result:
+          type: boolean
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain failures such as
+        missing auth, qualification phase over, not enough gold, or dinoz not owned by the player,
+        which this API reports as 500 rather than 401/403/404.
+      content:
+        text/plain:
+          schema:
+            type: string

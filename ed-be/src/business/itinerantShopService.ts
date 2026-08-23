@@ -69,7 +69,9 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 			ingredientId: ingredientReference.ingredientId,
 			price: ingredientReference.price,
 			quantity: ingredientPlayer ? ingredientPlayer.quantity : 0,
-			maxQuantity: ingredientReference.maxQuantity
+			maxQuantity: player.shopKeeper
+				? Math.round(ingredientReference.maxQuantity * 1.5)
+				: ingredientReference.maxQuantity
 		};
 	});
 }
@@ -91,7 +93,7 @@ export async function sellIngredient(req: Request) {
 
 	// Throw an exception if the player doesn't exist
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	// Lock negative quantities

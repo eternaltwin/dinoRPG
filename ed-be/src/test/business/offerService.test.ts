@@ -352,7 +352,7 @@ describe('checkRefund', () => {
 		} as never);
 		expect(await checkRefund('p1', [], [], null, 5)).toBe(true);
 	});
-	it('returns tooMuchDinoz when over the dinoz limit', async () => {
+	it('returns tooManyActiveDinoz when over the dinoz limit', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
 			leader: false,
 			messie: false,
@@ -361,7 +361,7 @@ describe('checkRefund', () => {
 			ingredients: [],
 			items: []
 		} as never);
-		expect(await checkRefund('p1', [], [], { playerId: 'x' }, 5)).toBe('tooMuchDinoz');
+		expect(await checkRefund('p1', [], [], { playerId: 'x' }, 5)).toBe('tooManyActiveDinoz');
 	});
 	it('returns tooMuchIngredient when an ingredient would overflow', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({

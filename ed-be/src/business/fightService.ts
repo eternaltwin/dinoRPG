@@ -10,7 +10,13 @@ import {
 	FightRules,
 	MONSTER_FIGHT_RULES
 } from '@drpg/core/models/fight/FightConfiguration';
-import { FighterRecap, FightOutcome, FightProcessResult, FightReplay } from '@drpg/core/models/fight/FightResult';
+import {
+	FighterRecap,
+	FightOutcome,
+	FightProcessResult,
+	FightReplay,
+	FightResult
+} from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -63,7 +69,7 @@ export async function processFight(req: Request) {
 	// Get Dinoz info
 	const player = await getDinozFightDataRequest(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
@@ -306,7 +312,7 @@ export async function rewardFightVsMonsters(
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
 	player: Pick<Player, 'id' | 'teacher' | 'autoReequipItems'> & { items: { itemId: number; quantity: number }[] }
-) {
+): Promise<FightResult> {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
 	}

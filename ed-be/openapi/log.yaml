@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Log API
+  description: Admin-only endpoints for reading game logs (activity logs, war logs).
+  version: '1.0'
+servers:
+  - url: /api/v1/log
+
+paths:
+  /list/all:
+    get:
+      tags:
+        - Log
+      summary: Get all logs
+      description: Returns every log entry, most recent first. Admin only.
+      operationId: getAllLogs
+      responses:
+        '200':
+          description: List of logs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /list/{page}/{type}/{playerId}/{dinozId}:
+    get:
+      tags:
+        - Log
+      summary: Get paginated logs filtered by type/player/dinoz
+      description: >-
+        Returns a page of 20 logs, most recent first, optionally filtered by log type,
+        player id and dinoz id. Pass the literal string "null" for a param to skip its
+        filter. Admin only.
+      operationId: getLogs
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - name: type
+          in: path
+          required: true
+          description: LogType enum value, or "null" to not filter by type.
+          schema:
+            type: string
+        - name: playerId
+          in: path
+          required: true
+          description: Player id (uuid), or "null" to not filter by player.
+          schema:
+            type: string
+        - name: dinozId
+          in: path
+          required: true
+          description: Dinoz id, or "null" to not filter by dinoz.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page of logs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /list/{type}/{fromDate}:
+    get:
+      tags:
+        - Log
+      summary: Get log totals grouped by period
+      description: >-
+        Returns logs since fromDate (optionally filtered by type), grouped into a
+        totals-per-period map. Periods are hourly if the range is 1 day or less,
+        otherwise daily. Admin only.
+      operationId: getLogsByDate
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: LogType enum value, or "null" to not filter by type.
+          schema:
+            type: string
+        - name: fromDate
+          in: path
+          required: true
+          description: ISO date string to start from, or "null" for no lower bound.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Map of period label to summed log value for that period.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: number
+              example:
+                '2026-08-20': 42
+                '2026-08-21': 17
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /war/{page}/{clanId}:
+    get:
+      tags:
+        - Log
+      summary: Get paginated clan war logs
+      description: >-
+        Returns a page of 20 clan-war-related logs (declarations, castle attacks,
+        defender changes, etc.), most recent first, optionally filtered by clan id.
+        Admin only.
+      operationId: getWarLogs
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - name: clanId
+          in: path
+          required: true
+          description: Clan id, or "null" to not filter by clan.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page of war logs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  responses:
+    ValidationError:
+      description: Request params failed express-validator checks.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+    ServerError:
+      description: >-
+        Unexpected error (including a failed admin-role check, which also returns 500
+        with a plain-text body).
+      content:
+        text/plain:
+          schema:
+            type: string
+
+  schemas:
+    Log:
+      type: object
+      properties:
+        id:
+          type: integer
+        dinozId:
+          type: integer
+          nullable: true
+        type:
+          type: string
+          description: LogType enum value (e.g. Fight, LevelUp, GoldWon, ClanWarDeclared, ...).
+        values:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        playerId:
+          type: string
+          format: uuid
+          nullable: true
+        playerOldId:
+          type: string
+        player:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        dinoz:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: x-drpg-{channel}-token
+      description: >-
+        All routes in this file are additionally gated by an admin-role check
+        (checkRole([AdminRole.ADMIN])) performed server-side after authentication.
+
+security:
+  - cookieAuth: []

@@ -15,6 +15,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Item } from '@drpg/core/models/item/ItemList';
+import translate from '../utils/server/translate.js';
 
 /**
  * The requested step is either 'undefined' or a string. If undefined, it defaults to a valid initial step. Else, it tries to find the step.
@@ -34,7 +35,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	let player = await getDinozNPCRequest(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	const dinozBase = player.dinoz.find(d => d.id === dinozId);
@@ -255,7 +256,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		const condition = Object.values(npc.data).find(data => data.stepName === possibility)?.condition;
 		// If there is a condition non-met, replace it with empty string
 		if (!player) {
-			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 		}
 		return condition === undefined || checkCondition(condition, player, dinozId);
 	});

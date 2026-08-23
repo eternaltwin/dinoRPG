@@ -4872,6 +4872,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/upng-js@npm:^2":
+  version: 2.1.5
+  resolution: "@types/upng-js@npm:2.1.5"
+  checksum: 10/d09eba084a4bd6eb0b0a791fda229df6398aa22e124bac9990aa301e47c28bbbd83ab43bc9330eb2400b48dc03493242933cfb9b60f03773eaa7911febeccf92
+  languageName: node
+  linkType: hard
+
 "@types/url-join@npm:^4.0.3":
   version: 4.0.3
   resolution: "@types/url-join@npm:4.0.3"
@@ -7880,6 +7887,9 @@ __metadata:
     "@ckeditor/ckeditor5-vue": "npm:^7.3.0"
     "@drpg/core": "workspace:^"
     "@eternaltwin/dinorpg_animations": "npm:^1.0.9"
+    "@pixi/filter-drop-shadow": "npm:^5.2.0"
+    "@pixi/filter-glow": "npm:^5.2.1"
+    "@types/upng-js": "npm:^2"
     "@types/url-join": "npm:^4.0.3"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"
@@ -7901,9 +7911,11 @@ __metadata:
     mitt: "npm:^3.0.1"
     pinia: "npm:^2.1.7"
     pinia-plugin-persistedstate: "npm:^3.2.0"
+    pixi.js: "npm:^7.4.3"
     prettier: "npm:^3.4.2"
     sass: "npm:^1.60.0"
     typescript: "npm:^5.7.2"
+    upng-js: "npm:^2.1.0"
     url-join: "npm:^5.0.0"
     vite: "npm:^4.5.0"
     vite-plugin-mkcert: "npm:^1.17.6"
@@ -12618,6 +12630,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pako@npm:^1.0.5":
+  version: 1.0.11
+  resolution: "pako@npm:1.0.11"
+  checksum: 10/1ad07210e894472685564c4d39a08717e84c2a68a70d3c1d9e657d32394ef1670e22972a433cbfe48976cb98b154ba06855dcd3fcfba77f60f1777634bec48c0
+  languageName: node
+  linkType: hard
+
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -15526,6 +15545,15 @@ __metadata:
     semver-diff: "npm:^4.0.0"
     xdg-basedir: "npm:^5.1.0"
   checksum: 10/f84da89f07b1148df7d1fe31972e2f1c449949ba83fa823a3b3a7bab446c42ee1433bab33428b48683e510ff708f5c0da5fc63482853e9d0c7e09c5ea4b02c7d
+  languageName: node
+  linkType: hard
+
+"upng-js@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "upng-js@npm:2.1.0"
+  dependencies:
+    pako: "npm:^1.0.5"
+  checksum: 10/ed4098eea838da09b061cfcbf80b453a977fc0e6910249d0b4e54ee8e8a7f2197fd02eda585df54c95883990db085fa695360f9b9c6cdea895fb694d846c97d1
   languageName: node
   linkType: hard
 

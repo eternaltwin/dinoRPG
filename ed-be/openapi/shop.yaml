@@ -1,0 +1,275 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG - Shop API
+  description: Endpoints for the dinoz shop, item shops, and the itinerant (traveling) ingredient shop.
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: Shop
+    description: Dinoz shop, item shops, and itinerant ingredient shop
+paths:
+  /api/v1/shop/dinoz:
+    get:
+      tags: [Shop]
+      summary: Get the dinoz shop
+      description: >-
+        Returns the player's current dinoz shop offer. If the shop is empty, it is filled with new
+        randomly-rolled dinoz (count and available races depend on game config and the player's rewards)
+        before being returned.
+      security:
+        - authHeader: []
+      responses:
+        '200':
+          description: The list of dinoz currently offered in the shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DinozShopEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/shop/getShop/{shopId}:
+    get:
+      tags: [Shop]
+      summary: Get the items sold in a shop
+      description: >-
+        Returns the list of items sold by the given shop, with price and the player's current owned
+        quantity of each. Fails if the shop does not exist or the player has no eligible dinoz at the
+        shop's location.
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          description: Numeric ID of the shop (see ShopList in core models)
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The list of items sold in the shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemShopEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/shop/getItinerantShop/{dinozId}:
+    get:
+      tags: [Shop]
+      summary: Get the ingredients sold by the itinerant shop
+      description: >-
+        Returns the list of ingredients sold by the itinerant (traveling) merchant for the given dinoz,
+        provided the dinoz is at the itinerant merchant's current location and meets the shop's condition.
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          description: Numeric ID of the dinoz used to access the shop
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The list of ingredients sold by the itinerant shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngredientShopEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/shop/buyItem/{shopId}:
+    put:
+      tags: [Shop]
+      summary: Buy an item from a shop
+      description: >-
+        Buys a given quantity of an item from a shop, debiting player money (or golden napodinos for
+        magical shops, or ingredients for the Filou coupon shop) and adding the item to the player's
+        inventory. Fails on invalid shop/item, insufficient funds/currency, or insufficient storage space.
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: shopId
+          required: true
+          description: Numeric ID of the shop
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [itemId, quantity]
+              properties:
+                itemId:
+                  type: integer
+                  description: Numeric ID of the item to buy
+                quantity:
+                  type: integer
+                  description: Quantity to buy
+      responses:
+        '200':
+          description: The purchase result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuyItemResult'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/v1/shop/sellIngredient/{dinozId}:
+    put:
+      tags: [Shop]
+      summary: Sell ingredients to the itinerant shop
+      description: >-
+        Sells one or more ingredients from the player's inventory to the itinerant merchant accessible by
+        the given dinoz, crediting the player with gold. Fails on invalid/negative quantities, insufficient
+        owned quantity, or if the dinoz cannot access the itinerant shop.
+      security:
+        - authHeader: []
+      parameters:
+        - in: path
+          name: dinozId
+          required: true
+          description: Numeric ID of the dinoz used to access the shop
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ingredients]
+              properties:
+                ingredients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: integer
+                        description: Ingredient ID
+                      quantity:
+                        type: integer
+                        description: Quantity to sell
+      responses:
+        '200':
+          description: The sale result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gold:
+                    type: integer
+                    description: Total gold earned from the sale
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >-
+        Player identity/token, validated by the business-layer `auth()` helper. Not enforced by
+        express-validator middleware; a missing/invalid identity results in a 500 response (see below).
+  schemas:
+    DinozShopEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the shop-dinoz entry (serialized as a string when the shop is freshly generated)
+        race:
+          type: integer
+          description: Race ID of the offered dinoz
+        display:
+          type: string
+          description: Generated display string of the offered dinoz
+    ItemShopEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Item (or ingredient) ID
+        price:
+          type: number
+          description: Price, possibly discounted for merchants at the flying shop
+        quantity:
+          type: integer
+          description: Quantity currently owned by the player
+        type:
+          type: integer
+          description: ItemShopType enum (0 = INGREDIENT, 1 = ITEM)
+    IngredientShopEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        ingredientId:
+          type: integer
+        price:
+          type: number
+        quantity:
+          type: integer
+          description: Quantity currently owned by the player
+        maxQuantity:
+          type: integer
+    BuyItemResult:
+      type: object
+      properties:
+        itemId:
+          type: integer
+        quantity:
+          type: integer
+          description: Quantity bought
+        gold:
+          type: integer
+          description: >-
+            Gold spent on the purchase. Omitted for magical-shop purchases (paid in golden
+            napodinos instead of gold).
+  responses:
+    ValidationError:
+      description: express-validator request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                description: express-validator Result<ValidationError> object
+    ServerError:
+      description: >-
+        Server/domain error (plain text message). Also covers expected domain failures such as
+        missing auth, unknown shop/item, insufficient money/storage, or dinoz not at the shop's
+        location, which this API reports as 500 rather than 401/404.
+      content:
+        text/plain:
+          schema:
+            type: string

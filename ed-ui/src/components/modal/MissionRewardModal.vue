@@ -18,15 +18,15 @@
 							<Tippy
 								theme="normal"
 								tag="img"
-								:src="getImgURL('item', `item_${itemNameList[reward.value]}`)"
-								:alt="itemNameList[reward.value]"
+								:src="getImgURL('item', `item_${itemList[reward.value].name}`)"
+								:alt="itemList[reward.value].name"
 							>
 								<template #content>
-									<h1 v-html="formatContent($t(`item.name.${itemNameList[reward.value]}`))" />
-									<p v-html="formatContent($t(`item.description.${itemNameList[reward.value]}`))" />
+									<h1 v-html="formatContent($t(`item.name.${itemList[reward.value].name}`))" />
+									<p v-html="formatContent($t(`item.description.${itemList[reward.value].name}`))" />
 								</template>
 							</Tippy>
-							{{ $t(`item.name.${itemNameList[reward.value]}`) }} x {{ reward.quantity }}
+							{{ $t(`item.name.${itemList[reward.value].name}`) }} x {{ reward.quantity }}
 						</li>
 						<li v-if="reward.rewardType === rewardEnum.EPIC">
 							<Tippy
@@ -67,7 +67,7 @@ import { missionsList, statusList } from '../../constants/index.js';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 export default defineComponent({
@@ -76,7 +76,7 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			rewardEnum: RewardEnum,
-			itemNameList: itemNameList,
+			itemList: itemList,
 			rewardList: rewardList,
 			statusList: statusList
 		};

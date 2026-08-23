@@ -257,7 +257,10 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_attack": "Attaquer le château adverse.",
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"dungeon": "Voir l'évolution de l'exploration actuelle...",
+			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -293,7 +296,10 @@
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_attack": "Attaquer le château",
+			"dungeon_enter": "Entrer",
+			"dungeon": "Accéder au Plan",
+			"demon_shop": "Boutique Démoniaque"
 		}
 	},
 	"button": {
@@ -311,7 +317,8 @@
 		"close": "Fermer",
 		"search": "Rechercher",
 		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"noResults": "Aucun résultat",
+		"details": "Détails"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -1798,6 +1805,20 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Boutique Démoniaque",
+			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
+			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"level": "Niv. {level}",
+			"sacrifice": "Sacrifier",
+			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrifice",
+			"buy_title": "Invocation",
+			"unsacrifice_title": "Résurrection",
+			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"yourDemonTickets": "Vos Tickets Démons"
+		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
 			"help": "Bienvenue dans l'Enclos des Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
@@ -2657,6 +2678,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
+		"demon": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
@@ -2682,7 +2704,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Événements ]",
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]"
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"terms": "DinoRPG [ Conditions d'utilisation ]"
 	},
 	"gather": {
 		"action": {
@@ -4632,8 +4655,10 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
-		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
@@ -4666,6 +4691,8 @@
 		"HPLost": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a perdu **{hpLost} :pv:**.",
 		"Death": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** est mort.",
 		"Revive": "**{player} ({playerId})** a ressuscité son Dinoz **{dinoz} ({dinozId})**.",
+		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** a avancé la mission **{mission}** à **l'étape {step}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** a annulé la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
@@ -4725,8 +4752,7 @@
 			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
 			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
 			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",
@@ -5275,6 +5301,52 @@
 		"participantsConv": "Participants",
 		"blockSender": "Bloquer l'expéditeur"
 	},
+	"dungeon": {
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Etage {floor}",
+		"name": {
+			"katatombs": "les Katatombes"
+		},
+		"katatombs": {
+			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
+			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
+			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
+			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
+			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
+			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+		},
+		"msg": {
+			"locked": "La porte des {name} est verrouillée.",
+			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
+			"key": "Vous trouvez la clé des {name} !",
+			"gold": "Vous trouvez {value} pièces d'or !",
+			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
+		},
+		"doorNames": "{prefix} {sufix}",
+		"doorNames_prefix": [
+			"Arbres",
+			"Dragons",
+			"Calamars",
+			"Gobelins",
+			"Kabukis",
+			"Roméos",
+			"Magiciens",
+			"Anges",
+			"Démons"
+		],
+		"doorNames_sufix": [
+			"Magiques",
+			"Morts",
+			"Vivants",
+			"Noirs",
+			"Enchantés",
+			"Enchanteurs",
+			"Rouges",
+			"en Plastique",
+			"en Mousse",
+			"Etincelants"
+		]
+	},
 	"scenario": {
 		"star": "L'être étrange",
 		"pac": "Parchemin étrange",
@@ -5351,5 +5423,13 @@
 		"select": "Voter",
 		"select_option": "Sélectionnez une option",
 		"total_participants": "{qty} votants"
+	},
+	"terms": {
+		"title": "Conditions d'utilisation",
+		"intro": "Merci de lire et d'accepter les conditions d'utilisation suivantes avant de continuer à jouer.",
+		"clause1": "La création ou l'utilisation de plusieurs comptes par un même joueur est interdite.",
+		"clause2": "L'utilisation de bots ou de tout script d'automatisation est interdite.",
+		"clause3": "L'exploitation volontaire d'un bug est interdite et doit être signalée à l'équipe.",
+		"accept_button": "J'accepte"
 	}
 }

@@ -9,23 +9,6 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.inventoryRoute;
 
-/**
- * @openapi
- * /api/v1/inventory/all:
- *   get:
- *     summary: Retrieve player's inventory
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Inventory
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -39,36 +22,6 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 	}
 });
 
-/**
- * @openapi
- * /api/v1/inventory/{dinozId}/{itemId}:
- *   get:
- *     summary: Use the item on the dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Level
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz.
- *       - in: path
- *         name: itemId
- *         type: string
- *         required: true
- *         description: Numeric ID of the item.
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:dinozId/:itemId`,
 	[param('dinozId').exists().toInt().isNumeric(), param('itemId').exists().toInt().isNumeric()],
@@ -86,41 +39,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/inventory/{dinozId}/{itemId}:
- *   put:
- *     summary: Equip the item on the dinoz
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Level
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: dinozId
- *         type: string
- *         required: true
- *         description: Numeric ID of the dinoz.
- *       - in: body
- *         name: itemId
- *         type: number
- *         required: true
- *         description: Numeric ID of the item.
- *       - in: body
- *         name: equip
- *         type: boolean
- *         required: true
- *         description: True for equip, false for unequip
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       400:
- *         description: Invalid arguments
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:dinozId`,
 	[
