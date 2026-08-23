@@ -774,6 +774,8 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   opened: 'opened',
   scenarios: 'scenarios',
   gold: 'gold',
+  healed: 'healed',
+  healPending: 'healPending',
   createdAt: 'createdAt',
   playerId: 'playerId',
   dungeonId: 'dungeonId',

@@ -3,6 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import { startRun, exitRun, move } from '../business/dungeonService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
+import { MAX_STEPS } from '@drpg/core/models/dungeon/DungeonClient';
 
 const routes: Router = Router();
 
@@ -42,9 +43,12 @@ routes.post(
 	`${commonPath}/:id/move`,
 	[
 		param('id').exists().isString().notEmpty(),
-		body('dx').exists().toInt().isInt({ min: -1, max: 1 }),
-		body('dy').exists().toInt().isInt({ min: -1, max: 1 }),
-		body('dl').exists().toInt().isInt({ min: -1, max: 1 })
+		// A batch of steps, applied in order. The cap bounds the work one request can buy.
+		body('steps').isArray({ min: 1, max: MAX_STEPS }),
+		body('steps.*.dx').exists().toInt().isInt({ min: -1, max: 1 }),
+		body('steps.*.dy').exists().toInt().isInt({ min: -1, max: 1 }),
+		body('steps.*.dl').exists().toInt().isInt({ min: -1, max: 1 }),
+		body('dinozId').exists().toInt().isInt()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

@@ -10,7 +10,10 @@ vi.mock('../../dao/dungeonRunDao.js', () => ({
 	getDungeonById: vi.fn(),
 	dinozEnterRun: vi.fn(),
 	dinozExitRun: vi.fn(),
-	updateRunDefeated: vi.fn()
+	updateRunDefeated: vi.fn(),
+	findRunByLeader: vi.fn(),
+	updateRunHealing: vi.fn(),
+	flushRun: vi.fn()
 }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), addMoney: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({
@@ -22,10 +25,19 @@ vi.mock('../../dao/dinozDao.js', () => ({
 	updateMultipleDinoz: vi.fn()
 }));
 
-import { createRun, findRun, updateRun, getDungeonByName } from '../../dao/dungeonRunDao.js';
+import {
+	createRun,
+	findRun,
+	findRunByLeader,
+	updateRun,
+	updateRunHealing,
+	getDungeonByName,
+	getDungeonById
+} from '../../dao/dungeonRunDao.js';
 import { auth } from '../../dao/playerDao.js';
 import { getFollowingDinoz } from '../../dao/dinozDao.js';
-import { startRun, move } from '../../business/dungeonService.js';
+import { startRun, move, isOnHealingCell, markHealingCellUsed } from '../../business/dungeonService.js';
+import { DungeonItem } from '../../business/dungeon/types.js';
 import { OriginalGenerator } from '../../business/dungeon/original/index.js';
 import { DungeonCodec } from '../../business/dungeon/DungeonCodec.js';
 import { findPath } from '../../business/dungeon/pathfind.js';
@@ -70,6 +82,8 @@ function runRowFor(d: DungeonStruct) {
 		opened: '[]',
 		scenarios: '[]',
 		gold: '[]',
+		healed: '[]',
+		healPending: null,
 		defeated: '[]'
 	};
 }
@@ -128,7 +142,7 @@ describe('dungeonService — fog-of-war boundary', () => {
 		const r = await move(
 			makeRequest({
 				params: { id: 'unit-test-dungeon' },
-				body: { dinozId: 1, dx: wallDir![0], dy: wallDir![1], dl: 0 }
+				body: { dinozId: 1, steps: [{ dx: wallDir![0], dy: wallDir![1], dl: 0 }] }
 			})
 		);
 		expect(r.ok).toBe(false);
@@ -152,7 +166,7 @@ describe('dungeonService — fog-of-war boundary', () => {
 		const r = await move(
 			makeRequest({
 				params: { id: 'unit-test-dungeon' },
-				body: { dinozId: 1, dx: floorDir![0], dy: floorDir![1], dl: 0 }
+				body: { dinozId: 1, steps: [{ dx: floorDir![0], dy: floorDir![1], dl: 0 }] }
 			})
 		);
 		expect(r.ok).toBe(true);
@@ -164,20 +178,153 @@ describe('dungeonService — fog-of-war boundary', () => {
 	it('rejects diagonal and multi-cell steps', async () => {
 		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
 		expect(
-			(await move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, dx: 1, dy: 1, dl: 0 } }))).ok
+			(
+				await move(
+					makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, steps: [{ dx: 1, dy: 1, dl: 0 }] } })
+				)
+			).ok
 		).toBe(false);
 		expect(
-			(await move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, dx: 0, dy: 0, dl: 0 } }))).ok
+			(
+				await move(
+					makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, steps: [{ dx: 0, dy: 0, dl: 0 }] } })
+				)
+			).ok
 		).toBe(false);
+	});
+
+	/** The first `n` same-level steps of the solution path out of the start cell. */
+	function stepsFromStart(d: DungeonStruct, n: number) {
+		const path = findPath(d, d.start, d.exit);
+		expect(path).not.toBeNull();
+		const steps = [];
+		for (let i = 1; i < path!.length && steps.length < n; i++) {
+			const from = path![i - 1];
+			const to = path![i];
+			if (to.l !== from.l) break; // stop at the first stair
+			steps.push({ dx: to.x - from.x, dy: to.y - from.y, dl: 0 });
+		}
+		expect(steps.length).toBe(n);
+		return { steps, cells: path!.slice(1, n + 1) };
+	}
+
+	it('applies a batch of steps in order and persists once', async () => {
+		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+		const { steps, cells } = stepsFromStart(d, 3);
+		const r = await move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, steps } }));
+		expect(r.ok).toBe(true);
+		expect(r.applied).toBe(3);
+		// landed on the third cell of the path, not the first
+		expect(r.pos).toEqual(cells[2]);
+		// one write for the whole batch, not one per step
+		expect(updateRun).toHaveBeenCalledOnce();
+		expect(vi.mocked(updateRun).mock.calls[0][1]).toEqual({ posX: cells[2].x, posY: cells[2].y, posL: cells[2].l });
+		// the batch still reveals only what walking those cells reveals
+		expect(r.reveal.length).toBeLessThanOrEqual(9 * 3);
+		expect(JSON.stringify(r)).not.toContain('table');
+	});
+
+	it('a batch stops at the first refused step, keeping what came before', async () => {
+		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+		const { steps, cells } = stepsFromStart(d, 2);
+		// wedge a step into a real wall neighbour of the cell step 1 lands on
+		const t = d.levels[cells[0].l].table;
+		const wallDir = (
+			[
+				[1, 0],
+				[-1, 0],
+				[0, 1],
+				[0, -1]
+			] as [number, number][]
+		).find(([dx, dy]) => !(t[cells[0].x + dx]?.[cells[0].y + dy] ?? false));
+		expect(wallDir).toBeDefined();
+		const wall = { dx: wallDir![0], dy: wallDir![1], dl: 0 };
+		const r = await move(
+			makeRequest({
+				params: { id: 'unit-test-dungeon' },
+				body: { dinozId: 1, steps: [steps[0], wall, steps[1]] }
+			})
+		);
+		expect(r.ok).toBe(false);
+		expect(r.applied).toBe(1);
+		expect(r.pos).toEqual(cells[0]);
+		// the one applied step is still persisted, exactly once
+		expect(updateRun).toHaveBeenCalledOnce();
+		expect(vi.mocked(updateRun).mock.calls[0][1]).toEqual({ posX: cells[0].x, posY: cells[0].y, posL: cells[0].l });
 	});
 
 	it('rejects a stair step when not on a stair cell', async () => {
 		// The generator never puts a stair on the start cell.
 		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
 		const r = await move(
-			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, dx: 0, dy: 0, dl: 1 } })
+			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1, steps: [{ dx: 0, dy: 0, dl: 1 }] } })
 		);
 		expect(r.ok).toBe(false);
+	});
+});
+
+describe('dungeonService — healing cell', () => {
+	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
+	const healCell = (() => {
+		for (let l = 0; l < d.levels.length; l++)
+			for (const r of d.levels[l].rooms) if (r.item?.k === DungeonItem.IHeal) return { l, x: r.item.x, y: r.item.y };
+		throw new Error('generated dungeon has no heal cell');
+	})();
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(getDungeonById).mockResolvedValue(dungeonRowFor(d) as never);
+	});
+
+	it('keeps healing while the party stands there, and dies once they walk off', async () => {
+		const key = `${healCell.l},${healCell.x},${healCell.y}`;
+		const run = {
+			...runRowFor(d),
+			dungeonId: 'dungeon1',
+			posL: healCell.l,
+			posX: healCell.x,
+			posY: healCell.y,
+			healPending: null as string | null
+		};
+		vi.mocked(findRunByLeader).mockResolvedValue(run as never);
+		vi.mocked(findRun).mockResolvedValue(run as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+		vi.mocked(updateRunHealing).mockImplementation(async (_id, healed, healPending) => {
+			run.healed = healed;
+			run.healPending = healPending;
+			return run as never;
+		});
+		const dinozOnCell = { id: 1, leaderId: null };
+
+		expect(await isOnHealingCell(dinozOnCell)).toBe(true);
+		await markHealingCellUsed(dinozOnCell);
+		expect(run.healPending).toBe(key);
+		// the rest of the team can still be healed on the same cell
+		expect(await isOnHealingCell(dinozOnCell)).toBe(true);
+
+		// one step off the cell spends it
+		const dirs: [number, number][] = [
+			[1, 0],
+			[-1, 0],
+			[0, 1],
+			[0, -1]
+		];
+		const t = d.levels[healCell.l].table;
+		const away = dirs.find(([dx, dy]) => t[healCell.x + dx]?.[healCell.y + dy] === true);
+		expect(away).toBeDefined();
+		await move(
+			makeRequest({
+				params: { id: 'unit-test-dungeon' },
+				body: { dinozId: 1, steps: [{ dx: away![0], dy: away![1], dl: 0 }] }
+			})
+		);
+		expect(run.healPending).toBeNull();
+		expect(JSON.parse(run.healed)).toEqual([key]);
+
+		// walking back onto it doesn't bring it back
+		expect(await isOnHealingCell(dinozOnCell)).toBe(false);
 	});
 });
 

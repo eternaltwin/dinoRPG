@@ -120,6 +120,9 @@ describe('dungeon team lock', () => {
 			opened: '[]',
 			keys: '[]',
 			gold: '[]',
+			healed: '[]',
+			healPending: null,
+			healPending: null,
 			scenarios: '[]'
 		} as never);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({

@@ -1230,6 +1230,11 @@ model DungeonRun {
   scenarios String   @default("[]")
   // Cell keys ("l,x,y") of the gold piles this player has collected.
   gold      String   @default("[]")
+  // Cell keys ("l,x,y") of the healing cells this player has used up for good.
+  healed    String   @default("[]")
+  // The healing cell ("l,x,y") the party healed on and is still standing on: as
+  // many items as they like until they step off, which spends it into `healed`.
+  healPending String?
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
