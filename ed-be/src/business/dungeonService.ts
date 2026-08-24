@@ -231,12 +231,14 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (!dinoz) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
-	// ponytail: null placeStart = no place gate (old builder dungeons), enterable from anywhere.
 	if (dungeon.placeStart != null && dungeon.placeStart !== dinoz.placeId) {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
 	const team = [dinoz, ...dinoz.followers];
+	if (team.some(d => !d.fight)) {
+		throw new ExpectedError(translate(`missingIrma`, authed));
+	}
 	// One run per player per dungeon. Looked up before the busy check so a dungeon-busy
 	// dinoz only gets through when it's resuming its own run.
 	const existing = await findRun(dungeon.id, authed.id);
