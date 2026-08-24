@@ -46,7 +46,7 @@ import type { DungeonStruct } from '../../business/dungeon/types.js';
 
 process.env.DUNGEON_KEY = randomBytes(32).toString('hex');
 
-const dinoz = { id: 1, placeId: 1, unavailableReason: null, followers: [] };
+const dinoz = { id: 1, placeId: 1, unavailableReason: null, fight: true, followers: [] };
 
 /** The stored dungeon row for `d`: no placeStart set, so no place gate. */
 function dungeonRowFor(d: DungeonStruct) {

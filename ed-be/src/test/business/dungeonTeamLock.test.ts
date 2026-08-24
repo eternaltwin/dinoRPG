@@ -81,6 +81,7 @@ describe('dungeon team lock', () => {
 			id: 1,
 			placeId: 1,
 			unavailableReason: 'resting', // busy for a reason other than being in a dungeon
+			fight: true,
 			followers: [],
 			leaderId: null
 		} as never);
@@ -98,7 +99,8 @@ describe('dungeon team lock', () => {
 			id: 1,
 			placeId: 1,
 			unavailableReason: null,
-			followers: [{ id: 2, unavailableReason: null }],
+			fight: true,
+			followers: [{ id: 2, unavailableReason: null, fight: true }],
 			leaderId: null
 		} as never);
 		vi.mocked(createRun).mockResolvedValue({ id: 'run1' } as never);
@@ -106,6 +108,24 @@ describe('dungeon team lock', () => {
 		await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }));
 
 		expect(createRun).toHaveBeenCalledWith(expect.anything(), expect.anything(), 'player1', 'dungeon1', 1);
+	});
+
+	it('startRun refuses a team whose follower has no action left', async () => {
+		vi.mocked(findRun).mockResolvedValue(null);
+		vi.mocked(getFollowingDinoz).mockResolvedValue({
+			id: 1,
+			placeId: 1,
+			unavailableReason: null,
+			fight: true,
+			followers: [{ id: 2, unavailableReason: null, fight: false }],
+			leaderId: null
+		} as never);
+
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'missingIrma'
+		);
+		expect(createRun).not.toHaveBeenCalled();
+		expect(updateMultipleDinoz).not.toHaveBeenCalled();
 	});
 
 	it('startRun refuses to resume another team’s in-progress run', async () => {
@@ -129,6 +149,7 @@ describe('dungeon team lock', () => {
 			id: 1,
 			placeId: 1,
 			unavailableReason: null,
+			fight: true,
 			followers: [],
 			leaderId: null
 		} as never);
