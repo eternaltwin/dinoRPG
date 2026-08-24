@@ -32,6 +32,6 @@ export default defineConfig(({ mode }) => {
 		build: {
 			target: 'esnext'
 		},
-		assetsInclude: '**/*.swf'
+		assetsInclude: ['**/*.swf', '**/*.md']
 	};
 });
