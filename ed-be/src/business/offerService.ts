@@ -615,11 +615,11 @@ export async function checkRefund(
 			};
 		});
 
-	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchIngredient';
+	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
+		return 'tooManyIngredients';
 	}
-	if (itemWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchItem';
+	if (itemWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
+		return 'tooManyItems';
 	}
 	return true;
 }
