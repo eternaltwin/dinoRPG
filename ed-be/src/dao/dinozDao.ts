@@ -774,7 +774,6 @@ export async function getDinozForLevelUp(dinozId: number) {
 			where: { id: dinozId },
 			select: {
 				id: true,
-				placeId: true,
 				maxLife: true,
 				raceId: true,
 				name: true,
@@ -815,6 +814,7 @@ export async function getDinozInfoForAdmin(dinozId: number) {
 			where: { id: dinozId },
 			select: {
 				id: true,
+				placeId: true,
 				maxLife: true,
 				raceId: true,
 				name: true,

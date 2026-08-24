@@ -1,5 +1,5 @@
 import { RaceEnum } from '../enums/RaceEnum.mjs';
-import { PublicMetada, TeamLeader, TournamentPhase } from './tournament.mjs';
+import { PublicMetada, TournamentPhase } from './tournament.mjs';
 import { FighterRecap } from '../fight/FightResult.mjs';
 
 export type FBMetaData = {
@@ -62,48 +62,142 @@ export type PublicEvent = {
 	participantCount: number;
 };
 
-export const FBDetails: Readonly<Record<number, RaceEnum>> = {
-	[10]: RaceEnum.WANWAN,
-	[11]: RaceEnum.CASTIVORE,
-	[12]: RaceEnum.MOUEFFE,
-	[13]: RaceEnum.NUAGOZ,
-	[14]: RaceEnum.WINKS,
-	[15]: RaceEnum.GORILLOZ,
-	[16]: RaceEnum.PIGMOU,
-	[17]: RaceEnum.PLANAILLE,
-	[18]: RaceEnum.SIRAIN,
-	[19]: RaceEnum.ROCKY,
-	[20]: RaceEnum.HIPPOCLAMP,
-	[21]: RaceEnum.PTEROZ,
-	[22]: RaceEnum.MOUEFFE,
-	[23]: RaceEnum.WINKS,
-	[24]: RaceEnum.PLANAILLE,
-	[25]: RaceEnum.SANTAZ,
-	[26]: RaceEnum.CASTIVORE,
-	[27]: RaceEnum.NUAGOZ,
-	[28]: RaceEnum.PIGMOU,
-	[29]: RaceEnum.GORILLOZ,
-	[30]: RaceEnum.FEROSS,
-	[31]: RaceEnum.SIRAIN,
-	[32]: RaceEnum.WANWAN,
-	[33]: RaceEnum.TOUFUFU,
-	[34]: RaceEnum.ROCKY,
-	[35]: RaceEnum.TRICERAGNON,
-	[36]: RaceEnum.WINKS_DEMON,
-	[37]: RaceEnum.SMOG,
-	[38]: RaceEnum.MOUEFFE,
-	[39]: RaceEnum.PLANAILLE_DEMON,
-	[40]: RaceEnum.KABUKI,
-	[41]: RaceEnum.HIPPOCLAMP,
-	[42]: RaceEnum.MAHAMUTI,
-	[43]: RaceEnum.PTEROZ,
-	[44]: RaceEnum.PIGMOU_DEMON,
-	[45]: RaceEnum.QUETZU,
-	[46]: RaceEnum.MOUEFFE_DEMON,
-	[47]: RaceEnum.SOUFFLET,
-	[48]: RaceEnum.GORILLOZ_DEMON,
-	[49]: RaceEnum.WANWAN_DEMON,
-	[50]: RaceEnum.KABUKI_DEMON
+export type FBRaceConfig = {
+	race: RaceEnum;
+	demon?: boolean;
+};
+
+export const FBDetails: Readonly<Record<number, FBRaceConfig>> = {
+	[10]: {
+		race: RaceEnum.WANWAN
+	},
+	[11]: {
+		race: RaceEnum.CASTIVORE
+	},
+	[12]: {
+		race: RaceEnum.MOUEFFE
+	},
+	[13]: {
+		race: RaceEnum.NUAGOZ
+	},
+	[14]: {
+		race: RaceEnum.WINKS
+	},
+	[15]: {
+		race: RaceEnum.GORILLOZ
+	},
+	[16]: {
+		race: RaceEnum.PIGMOU
+	},
+	[17]: {
+		race: RaceEnum.PLANAILLE
+	},
+	[18]: {
+		race: RaceEnum.SIRAIN
+	},
+	[19]: {
+		race: RaceEnum.ROCKY
+	},
+	[20]: {
+		race: RaceEnum.HIPPOCLAMP
+	},
+	[21]: {
+		race: RaceEnum.PTEROZ
+	},
+	[22]: {
+		race: RaceEnum.MOUEFFE
+	},
+	[23]: {
+		race: RaceEnum.WINKS
+	},
+	[24]: {
+		race: RaceEnum.PLANAILLE
+	},
+	[25]: {
+		race: RaceEnum.SANTAZ
+	},
+	[26]: {
+		race: RaceEnum.CASTIVORE
+	},
+	[27]: {
+		race: RaceEnum.NUAGOZ
+	},
+	[28]: {
+		race: RaceEnum.PIGMOU
+	},
+	[29]: {
+		race: RaceEnum.GORILLOZ
+	},
+	[30]: {
+		race: RaceEnum.FEROSS
+	},
+	[31]: {
+		race: RaceEnum.SIRAIN
+	},
+	[32]: {
+		race: RaceEnum.WANWAN
+	},
+	[33]: {
+		race: RaceEnum.TOUFUFU
+	},
+	[34]: {
+		race: RaceEnum.ROCKY
+	},
+	[35]: {
+		race: RaceEnum.TRICERAGNON
+	},
+	[36]: {
+		race: RaceEnum.WINKS,
+		demon: true
+	},
+	[37]: {
+		race: RaceEnum.SMOG
+	},
+	[38]: {
+		race: RaceEnum.MOUEFFE
+	},
+	[39]: {
+		race: RaceEnum.PLANAILLE,
+		demon: true
+	},
+	[40]: {
+		race: RaceEnum.KABUKI
+	},
+	[41]: {
+		race: RaceEnum.HIPPOCLAMP
+	},
+	[42]: {
+		race: RaceEnum.MAHAMUTI
+	},
+	[43]: {
+		race: RaceEnum.PTEROZ
+	},
+	[44]: {
+		race: RaceEnum.PIGMOU,
+		demon: true
+	},
+	[45]: {
+		race: RaceEnum.QUETZU
+	},
+	[46]: {
+		race: RaceEnum.MOUEFFE,
+		demon: true
+	},
+	[47]: {
+		race: RaceEnum.SOUFFLET
+	},
+	[48]: {
+		race: RaceEnum.GORILLOZ,
+		demon: true
+	},
+	[49]: {
+		race: RaceEnum.WANWAN,
+		demon: true
+	},
+	[50]: {
+		race: RaceEnum.KABUKI,
+		demon: true
+	}
 };
 
 export interface FBOpponent {

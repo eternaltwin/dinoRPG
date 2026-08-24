@@ -721,6 +721,7 @@ exports.Prisma.FBTournamentScalarFieldEnum = {
   id: 'id',
   date: 'date',
   teamRace: 'teamRace',
+  demon: 'demon',
   levelLimit: 'levelLimit',
   cashPrice: 'cashPrice',
   nextRound: 'nextRound',

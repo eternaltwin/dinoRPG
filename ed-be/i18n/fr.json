@@ -69,6 +69,7 @@
 	},
 	"error": {
 		"notYourDinoz": "Ce Dinoz n'est pas le vôtre.",
+		"notADemon": "Ce Dinoz n'est pas démon.",
 		"noDinozAtCemetary": "Aucun de vos Dinoz n'est au cimetière.",
 		"dinozWrongLocation": "Votre Dinoz ne peut pas faire cette action à cet endroit.",
 		"dinozInventoryNotEmpty": "Votre Dinoz doit vider son inventaire.",

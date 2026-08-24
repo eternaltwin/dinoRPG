@@ -82462,6 +82462,7 @@ export namespace Prisma {
     id: string | null
     date: Date | null
     teamRace: string | null
+    demon: boolean | null
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
@@ -82472,6 +82473,7 @@ export namespace Prisma {
     id: string | null
     date: Date | null
     teamRace: string | null
+    demon: boolean | null
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
@@ -82482,6 +82484,7 @@ export namespace Prisma {
     id: number
     date: number
     teamRace: number
+    demon: number
     levelLimit: number
     cashPrice: number
     nextRound: number
@@ -82506,6 +82509,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -82516,6 +82520,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -82526,6 +82531,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -82623,6 +82629,7 @@ export namespace Prisma {
     id: string
     date: Date
     teamRace: string
+    demon: boolean
     levelLimit: number
     cashPrice: number
     nextRound: Date
@@ -82652,6 +82659,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -82665,6 +82673,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -82675,6 +82684,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -82685,13 +82695,14 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
     winnerId?: boolean
   }
 
-  export type FBTournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound" | "winnerId", ExtArgs["result"]["fBTournament"]>
+  export type FBTournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamRace" | "demon" | "levelLimit" | "cashPrice" | "nextRound" | "winnerId", ExtArgs["result"]["fBTournament"]>
   export type FBTournamentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | FBTournament$participantsArgs<ExtArgs>
     fights?: boolean | FBTournament$fightsArgs<ExtArgs>
@@ -82710,6 +82721,7 @@ export namespace Prisma {
       id: string
       date: Date
       teamRace: string
+      demon: boolean
       levelLimit: number
       cashPrice: number
       nextRound: Date
@@ -83142,6 +83154,7 @@ export namespace Prisma {
     readonly id: FieldRef<"FBTournament", 'String'>
     readonly date: FieldRef<"FBTournament", 'DateTime'>
     readonly teamRace: FieldRef<"FBTournament", 'String'>
+    readonly demon: FieldRef<"FBTournament", 'Boolean'>
     readonly levelLimit: FieldRef<"FBTournament", 'Int'>
     readonly cashPrice: FieldRef<"FBTournament", 'Int'>
     readonly nextRound: FieldRef<"FBTournament", 'DateTime'>
@@ -90603,6 +90616,7 @@ export namespace Prisma {
     id: 'id',
     date: 'date',
     teamRace: 'teamRace',
+    demon: 'demon',
     levelLimit: 'levelLimit',
     cashPrice: 'cashPrice',
     nextRound: 'nextRound',
@@ -95521,6 +95535,7 @@ export namespace Prisma {
     id?: UuidFilter<"FBTournament"> | string
     date?: DateTimeFilter<"FBTournament"> | Date | string
     teamRace?: StringFilter<"FBTournament"> | string
+    demon?: BoolFilter<"FBTournament"> | boolean
     levelLimit?: IntFilter<"FBTournament"> | number
     cashPrice?: IntFilter<"FBTournament"> | number
     nextRound?: DateTimeFilter<"FBTournament"> | Date | string
@@ -95533,6 +95548,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -95548,6 +95564,7 @@ export namespace Prisma {
     NOT?: FBTournamentWhereInput | FBTournamentWhereInput[]
     date?: DateTimeFilter<"FBTournament"> | Date | string
     teamRace?: StringFilter<"FBTournament"> | string
+    demon?: BoolFilter<"FBTournament"> | boolean
     levelLimit?: IntFilter<"FBTournament"> | number
     cashPrice?: IntFilter<"FBTournament"> | number
     nextRound?: DateTimeFilter<"FBTournament"> | Date | string
@@ -95560,6 +95577,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -95578,6 +95596,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"FBTournament"> | string
     date?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
     teamRace?: StringWithAggregatesFilter<"FBTournament"> | string
+    demon?: BoolWithAggregatesFilter<"FBTournament"> | boolean
     levelLimit?: IntWithAggregatesFilter<"FBTournament"> | number
     cashPrice?: IntWithAggregatesFilter<"FBTournament"> | number
     nextRound?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
@@ -100384,6 +100403,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -100396,6 +100416,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -100408,6 +100429,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -100420,6 +100442,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -100432,6 +100455,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -100442,6 +100466,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -100452,6 +100477,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -104894,6 +104920,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -104910,6 +104937,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -104920,6 +104948,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -134581,6 +134610,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -134592,6 +134622,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -135335,6 +135366,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -135346,6 +135378,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -136825,6 +136858,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -136836,6 +136870,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -137204,6 +137239,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -137215,6 +137251,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string

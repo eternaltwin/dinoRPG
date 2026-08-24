@@ -340,7 +340,16 @@ function getDinozLearnableSkills(
 		throw new ExpectedError(`tryNumber ${tryNumber} is invalid`);
 	}
 
-	const learnableElement = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
+	let learnableElement = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
+
+	// Override for demons if a level matches one of the guaranteed elements.
+	if (
+		dinoz.status.some(s => s.statusId === DinozStatusId.DEMON) &&
+		race.demon?.guaranteed_elements &&
+		race.demon.guaranteed_elements[dinoz.level + 1]
+	) {
+		learnableElement = race.demon.guaranteed_elements[dinoz.level + 1] as number;
+	}
 
 	return {
 		learnableSkills: getLearnableSkills(dinoz, learnableElement),
@@ -406,7 +415,16 @@ function getNewDinozDataFromLevelUp(
 	};
 
 	// Elements
-	const nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
+	let nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
+
+	// Override for demons if the next level matches one of the guaranteed elements.
+	if (
+		dinozSkills.status.some(s => s.statusId === DinozStatusId.DEMON) &&
+		dinozRace.demon?.guaranteed_elements &&
+		dinozRace.demon.guaranteed_elements[dinoz.level]
+	) {
+		nextUpElementId = dinozRace.demon.guaranteed_elements[dinoz.level] as number;
+	}
 
 	switch (nextUpElementId) {
 		case ElementType.FIRE:
@@ -425,7 +443,7 @@ function getNewDinozDataFromLevelUp(
 			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
 			break;
 		default:
-			throw new ExpectedError(`Up type is not valid !`);
+			throw new ExpectedError(`Up type ${nextUpElementId} is not valid !`);
 	}
 
 	// Display

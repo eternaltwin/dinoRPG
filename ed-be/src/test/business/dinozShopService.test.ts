@@ -90,7 +90,7 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 
 		// Race 0 of the base pool is Winks; display = swfLetter + 11 letters + '000' (16 chars).
 		const winks = raceList[RaceEnum.WINKS];
-		const expectedDisplay = winks.swfLetter + 'a'.repeat(11) + '000';
+		const expectedDisplay = winks.swfLetter + '0' + 'a'.repeat(11) + '000';
 		for (const dinoz of created) {
 			expect(dinoz.playerId).toBe('player-1');
 			expect(dinoz.raceId).toBe(winks.raceId);
