@@ -684,7 +684,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		}
 
 		// Don't show level up if Dinoz is at max level.
-		if (dinoz.level === gameConfig().dinoz.maxLevel) levelup = false;
+		if (dinoz.level >= gameConfig().dinoz.maxLevel) levelup = false;
 	}
 
 	await updateDinoz(dinoz.id, {

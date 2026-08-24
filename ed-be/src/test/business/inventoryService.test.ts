@@ -224,12 +224,15 @@ describe('useItem - egg hatching', () => {
 			dinoz: {
 				maxLevel: 50,
 				maxQuantity: 100, // Here increase max active dinoz
-				leaderBonus: 3,
+				leaderMessieBonus: 3,
 				initialMaxLevel: 50
 			},
 			shop: {
 				dinozNumber: 10,
 				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
 			},
 			general: {
 				initialMoney: 1000000,
@@ -258,12 +261,15 @@ describe('useItem - egg hatching', () => {
 			dinoz: {
 				maxLevel: 50,
 				maxQuantity: 10,
-				leaderBonus: 3,
+				leaderMessieBonus: 3,
 				initialMaxLevel: 50
 			},
 			shop: {
 				dinozNumber: 10,
 				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
 			},
 			general: {
 				initialMoney: 1000000,

@@ -4,7 +4,6 @@ import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
 import { auth } from '../dao/playerDao.js';
-import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
 import {
@@ -44,6 +43,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Format Dinoz rows from getSacrificedDinozRequest as DinozShopFiche.
@@ -135,7 +135,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	if (demonTickets >= 30) {
 		// Expected number of Dinoz is based on game config plus some extra for the Belius reward.
 		const hasBelius = player.rewards.some(r => r.rewardId === Reward.BELIUS);
-		const totalDinoz = Math.round(gameConfig.demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
+		const totalDinoz = Math.round(gameConfig().demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
 
 		// If the shop does not have the matching create N dinoz to fill the shop (based on game config)
 		if (player.demonShop.length === 0 || player.demonShop.length < totalDinoz) {
@@ -418,7 +418,7 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	const ret = toDinozFiche(ficheData, createdDinoz.id, null);
+	const ret = toDinozFiche(ficheData, createdDinoz.id, null, gameConfig());
 
 	return ret;
 }
