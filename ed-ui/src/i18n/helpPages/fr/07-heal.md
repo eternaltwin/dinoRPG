@@ -4,7 +4,7 @@ icon:
   name: small_use
 ---
 
-#  Se Soigner
+# Se Soigner
 
 Une fois un **combat** fini, votre Dinoz peut avoir perdu des **points de vie**. Il est donc nécessaire de le soigner de façon à éviter qu'il ne meure. Pour cela, vous pouvez acheter avec vos pièces d'or ![](@icons/small_gold) différents objets dans la **Boutique** ![](@icons/act_boutique).
 
