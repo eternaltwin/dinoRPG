@@ -6,13 +6,13 @@ icon:
 
 # Vider son cache
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.
+Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut résoudre bon nombre de problèmes techniques.
 
 Sur Microsoft Edge:
 - Appuyer en même temps sur les touches [Ctrl], [Maj] et [Suppr]
 - Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
 - Confirmez votre choix en cliquant sur le bouton 'Effacer'
- 
+
 Sur Mozilla Firefox :
 - Cliquez sur le bouton de menu et sélectionnez les Paramètres
 - Sélectionnez le panneau Vie privée et sécurité
