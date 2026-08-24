@@ -415,7 +415,7 @@ function getNewDinozDataFromLevelUp(
 	};
 
 	// Elements
-	let nextUpElementId = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
+	let nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
 
 	// Override for demons if the next level matches one of the guaranteed elements.
 	if (
@@ -443,7 +443,7 @@ function getNewDinozDataFromLevelUp(
 			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
 			break;
 		default:
-			throw new ExpectedError(`Up type is not valid !`);
+			throw new ExpectedError(`Up type ${nextUpElementId} is not valid !`);
 	}
 
 	// Display
