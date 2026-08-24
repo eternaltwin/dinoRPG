@@ -6,7 +6,7 @@ icon:
 
 # Vider son cache
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.
+Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut résoudre bon nombre de problèmes techniques.
 
 Sur Microsoft Edge:
 
