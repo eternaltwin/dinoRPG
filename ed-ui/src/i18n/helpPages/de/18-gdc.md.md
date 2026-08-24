@@ -35,11 +35,11 @@ Voici un exemple de l'onglet Château :
 La page du Château résume ce qui suit :
 
 - _L'emplacement du Château_
-- _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300:pv: points de vie._
+- _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300 :pv: points de vie._
 
 # Déclarer une guerre
 
-Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquer, les clans qui vous attaques et les batailles que vous avez déjà remportés contre des clans adverses.
+Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquez, les clans qui vous attaquent et les batailles que vous avez déjà remportées contre des clans adverses.
 
 Pour lancer une guerre, il vous est nécessaire de disposer des ingrédients suffisants dans votre trésor. Une guerre dure 100 heures au maximum et ne peut être annulée. Pour remporter la guerre, il vous faudra détruire le château ennemi.
 
@@ -59,7 +59,7 @@ Voici un exemple d'une attaque de Château :
 
 Lorsque votre Clan est attaqué, il est important de préparer une bonne défense afin de ne pas perdre la Guerre lancée par un clan adverse ou lorsque vous déclarez la guerre.
 
-Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour ne pas que votre Château soit touché.
+Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour que votre Château ne soit pas touché.
 
 Voici un exemple d'une défense de Château :
 
