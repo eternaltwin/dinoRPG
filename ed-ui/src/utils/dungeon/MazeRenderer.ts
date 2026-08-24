@@ -11,40 +11,27 @@ import { gfx, pad2 } from './dungeonAssets.js';
 type SMonster = Container & { collider: { width: number; height: number }; playing: boolean };
 
 /**
- * MazeRenderer — draws only the cells the server has revealed.
- *
- * Fog of war: the renderer never sees the layout. It accumulates the cells the
- * backend reveals — {@link MazeRenderer#applyReveal} — and draws only those;
- * every unknown cell stays the skin's fog colour.
- *
- * Per the archive's `View.hx`: walkable cells get a ground tile, and wall edges
- * are composited from front (N), back (S), side (W/E, mirrored) and corner
- * (diagonal, mirrored) pieces of the level's skin, split over two planes so the
- * dinoz is occluded by near walls.
+ * Draws only the cells the server has revealed ({@link MazeRenderer#applyReveal});
+ * unknown cells stay the skin's fog colour. Wall edges are composited from the
+ * skin's front/back/side/corner pieces, split over two planes so the dinoz is
+ * occluded by near walls.
  */
 export class MazeRenderer {
 	readonly app: Application;
 	readonly cell: number;
 	readonly actorLayer: Container;
-	// Ground + overground tiles only (View.hx's groundBitmap raster) — kept apart
-	// from mapLayer's icons/monsters so the ground-only filter stack below doesn't
-	// touch them, matching View.hx which never filters its item/monster clips.
+	/** Ground + overground tiles only, kept apart from mapLayer so the filters below miss icons/monsters. */
 	private readonly groundLayer: Container;
 	private readonly mapLayer: Container;
-	// View.hx's two wall planes: north faces (front + N corners) sit behind the
-	// dinoz; the south/side faces (sides + back + S corners) sit in front of it,
-	// so the dinoz is occluded by near walls and walks over far ones.
+	/** North faces, behind the dinoz. */
 	private readonly wallBackLayer: Container;
+	/** South/side faces, in front of the dinoz. */
 	private readonly wallFrontLayer: Container;
-	// Per-skin atmosphere wash (View.hx skin.mask) — a flat fog-tinted rect over
-	// the whole level, above the map but below the fog-of-war unknown-cell fog.
+	/** Per-skin atmosphere wash over the whole level. */
 	private readonly maskLayer: Container;
-	// Blurred fog plane over unknown cells, topmost — View.hx blurs its fog
-	// bitmap (BlurFilter 32px on 40px cells) so fog bleeds ~one cell over the
-	// revealed frontier instead of cutting hard at the cell edge.
+	/** Blurred fog plane over unknown cells. */
 	private readonly fogLayer: Container;
-	// View.hx fx_reveal: a blurred fog-coloured square fading off each freshly
-	// revealed cell (addFadeFx — alpha = cos(cpt), cpt += 0.07/frame).
+	/** Fade-out squares on freshly revealed cells. */
 	private readonly fxLayer: Container;
 	private readonly fx: { g: Graphics; cpt: number }[] = [];
 	private readonly viewW: number;
@@ -57,17 +44,15 @@ export class MazeRenderer {
 	private level = 0;
 	private debug = false;
 	private dirty = false;
-	// Overground zone noise (View.hx initZones). Seeded from opts so the caller
-	// can key it to the dungeon id and keep decoration stable across refreshes.
+	/** Overground zone noise seed — key it to the dungeon id to keep decoration stable across refreshes. */
 	private readonly noiseSeed: number;
 	/** Cached zone id (0..2) per cell, one grid per level. */
 	private readonly zones = new Map<number, Uint8Array>();
 	/** Animated monster sprites, keyed "l,x,y" — created once, re-attached on each level redraw. */
 	private readonly monsterSprites = new Map<string, SMonster>();
-	/** The message box (View.hx winMsg), if one is open. */
+	/** The open message box, if any. */
 	private msgBox: Container | null = null;
-	// View.hx updateScroll's eased camera position (View.hx view.dx/dy), world px.
-	// NaN until the first focus() call, which snaps instead of easing in from (0,0).
+	/** Eased camera position in world px; NaN until the first focus(), which snaps. */
 	private camX = NaN;
 	private camY = NaN;
 
@@ -106,11 +91,7 @@ export class MazeRenderer {
 			this.fogLayer,
 			this.fxLayer
 		);
-		// View.hx's post-processing on the merged ground+overground raster: an inner
-		// drop shadow plus a dark inner glow (ambient occlusion) and a muted outer
-		// glow (ambient tint). Never touches walls/icons/monsters, same as the original.
-		// ponytail: @pixi/filter-drop-shadow has no inner/knockout mode like Flash's —
-		// approximated as a regular outer shadow; swap for a custom shader if it reads flat.
+		// Ground post-processing: drop shadow + dark inner glow (occlusion) + muted outer glow (tint).
 		const s = this.cell / 40;
 		this.groundLayer.filters = [
 			new DropShadowFilter({ offset: { x: 15 * s, y: 0 }, color: 0x000000, alpha: 0.3, blur: 3 * s, quality: 2 }),
@@ -146,10 +127,8 @@ export class MazeRenderer {
 
 	/**
 	 * Fold newly revealed cells into the known map; redraw if any are visible.
-	 * `origin` is the player's cell at reveal time (View.hx posX/posY at the point
-	 * updateFog() runs, i.e. *after* the move) — orients each reveal's fade-fx away
-	 * from the player, per View.hx's `atan2(posY-py, posX-px)`. Omit it to skip
-	 * the rotation (fx still fades, just axis-aligned).
+	 * `origin` is the player's cell *after* the move — it orients each fade-fx
+	 * away from the player. Omit it for an axis-aligned fade.
 	 */
 	applyReveal(cells: RevealedCell[], origin?: { x: number; y: number }): void {
 		let dirty = false;
@@ -158,7 +137,7 @@ export class MazeRenderer {
 			if (!level) continue;
 			const isNew = !level.has(this.key(c.x, c.y));
 			if (!c.monster) {
-				// Team defeated since last reveal: retire its animated sprite.
+				// Team defeated since last reveal.
 				const stale = this.monsterSprites.get(`${c.l},${c.x},${c.y}`);
 				if (stale) {
 					this.retireMonster(stale);
@@ -180,12 +159,9 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * Scroll the camera to keep world point (px, py) centered, easing 10%/frame
-	 * toward that target every call — View.hx's `updateScroll()` (`view.dx +=
-	 * (target - view.dx) * 0.1`, every frame, no dead zone). Snaps instead of
-	 * easing in on the very first call, so entering a level doesn't fly the
-	 * camera in from a corner. Clamped to the map bounds (View.hx doesn't clamp,
-	 * but its fixed-size stage never needed to).
+	 * Keep world point (px, py) centered, easing 10% per call toward it and
+	 * clamped to the map bounds. Snaps on the first call so entering a level
+	 * doesn't fly the camera in from a corner.
 	 */
 	focus(px: number, py: number): void {
 		const worldW = this.dims.width * this.cell;
@@ -243,12 +219,9 @@ export class MazeRenderer {
 		const h = this.dims.height;
 		const at = (x: number, y: number): RevealedCell | undefined => known.get(this.key(x, y));
 		const floor = (x: number, y: number): boolean => at(x, y)?.floor === true;
-		// Fog three-state: only a *known* wall (or the map border) grows wall
-		// pieces. An unknown neighbour draws nothing — it is still fog.
+		// Only a known wall (or the map border) grows wall pieces; an unknown neighbour is still fog.
 		const wall = (x: number, y: number): boolean => x < 0 || y < 0 || x >= w || y >= h || at(x, y)?.floor === false;
-		// View.hx's only wall overhang: the corner offset SIZE+8 (a flat 8px past
-		// the 40px cell). Scaled to our cell, that is the single foot line the side
-		// strips and the south corners all rest on — nothing is ever stretched.
+		// The single foot line the side strips and south corners rest on: 8px past the 40px cell, scaled.
 		const OV = this.cell * (8 / 40);
 
 		// Ground first, then overground decoration, then wall edges on top.
@@ -260,15 +233,13 @@ export class MazeRenderer {
 				const over = skin.over[mid - 1];
 				if (!over) continue;
 				const val = this.overVal(mid, c.x, c.y);
-				// ponytail: skipped View.hx's GlowFilter(0x0,0.7,2,2) outline on the
-				// overground plane — needs pixi-filters; add if the overlays look flat.
+				// ponytail: skipped the original's outline glow on overgrounds; add if they look flat.
 				if (val > 0) this.tile(`overground_${over}_${pad2(val)}`, c.x, c.y);
 			}
 		}
-		// Row by row (top to bottom) so lower cells' pieces draw over higher ones.
-		// Mirrors View.hx displayLevel(): every piece is placed at native scale,
-		// front rising off the N edge, back hanging off the S edge, the W/E sides
-		// and the S corners all resting their foot on the shared line B + OV.
+		// Row by row so lower cells' pieces draw over higher ones. Every piece is placed at
+		// native scale: front rises off the N edge, back hangs off the S edge, sides and S
+		// corners rest their foot on B + OV.
 		for (let y = 0; y < h; y++) {
 			for (let x = 0; x < w; x++) {
 				if (!floor(x, y)) continue;
@@ -277,10 +248,10 @@ export class MazeRenderer {
 				const T = y * c;
 				const R = L + c;
 				const B = T + c;
-				const F = B + OV; // shared foot line for sides + south corners
+				const F = B + OV; // shared foot line
 				const f = 1 + (this.hash(x, y, 7) % skin.frontCount);
-				const back = this.wallBackLayer; // behind the dinoz (north faces)
-				const front = this.wallFrontLayer; // in front of the dinoz (near faces)
+				const back = this.wallBackLayer;
+				const front = this.wallFrontLayer;
 				if (wall(x, y - 1)) this.edge(`front_${skin.name}_${pad2(f)}`, L, T, 0, 1, false, false, back);
 				if (wall(x - 1, y)) this.edge(`side_${skin.name}_01`, L, F - 9, 1, 1, false, false, front);
 				if (wall(x + 1, y)) this.edge(`side_${skin.name}_01`, R, F - 9, 1, 1, true, false, front);
@@ -293,12 +264,11 @@ export class MazeRenderer {
 		}
 	}
 
-	// ── overground decoration (View.hx getOverMap / initZones) ────────────────
+	// ── overground decoration ─────────────────────────────────────────────────
 	//
-	// Two overlay themes per skin, painted over the ground by zone noise: a cell
-	// whose zone id reaches the layer's threshold gets the full tile (15); a cell
-	// bordering such a zone gets the matching edge piece, picked by a corner
-	// bitmask (8=NW 4=NE 2=SW 1=SE) built from its 8 neighbours.
+	// Two overlay themes per skin, painted by zone noise: a cell whose zone id reaches the
+	// layer's threshold gets the full tile (15); a bordering cell gets the edge piece picked
+	// by a corner bitmask (8=NW 4=NE 2=SW 1=SE) over its 8 neighbours.
 
 	/** Frame 1..15 of overlay `mid` for cell (x,y), or 0 for nothing. */
 	private overVal(mid: number, x: number, y: number): number {
@@ -321,10 +291,9 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * Zone id (0..2) per cell for one level. View.hx thresholds Flash perlinNoise
-	 * into three bands; we bilerp a seeded value-noise lattice instead.
-	 * // ponytail: one octave where the original used up to four — same blobby
-	 * // zones, add octaves only if the patches look too round.
+	 * Zone id (0..2) per cell for one level: a seeded value-noise lattice, bilerped
+	 * and thresholded into three bands.
+	 * ponytail: one octave where the original used four — add more if patches look too round.
 	 */
 	private zoneIds(l: number): Uint8Array {
 		let z = this.zones.get(l);
@@ -332,7 +301,7 @@ export class MazeRenderer {
 		const skin = this.skinFor(l);
 		const w = this.dims.width;
 		const h = this.dims.height;
-		const step = skin.perlin === 'dense' ? 5 : 7; // lattice period, cells (View.hx base 5/5 vs 7/7)
+		const step = skin.perlin === 'dense' ? 5 : 7; // lattice period, in cells
 		const lo = skin.perlin === 'few' ? 60 : 85;
 		const hi = skin.perlin === 'few' ? 75 : 115;
 		const lat = (ix: number, iy: number): number => {
@@ -364,16 +333,9 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * View.hx skin.mask: a skin.fog-tinted wash over the whole level, strength
-	 * scaled by skin.mask (0 = none, e.g. forest; 100 = strongest, e.g. crypt).
-	 * Screen-space-fixed in the original (attached to the root, not the scrolling
-	 * level clip); a full-world rect of a flat colour looks identical either way.
-	 * ponytail: View.hx's `mask` is a library graphic we don't have (likely a
-	 * soft vignette, not a flat fill) — `_alpha = skin.mask` (0-100) was its clip
-	 * alpha, not a fill alpha, so using skin.mask/100 directly on an opaque rect
-	 * painted solid fog colour over the whole ground at mask=100. Capped instead
-	 * to a max ~18% tint so it reads as atmosphere; raise MASK_MAX if a real
-	 * vignette asset replaces this flat rect.
+	 * A fog-tinted wash over the whole level, strength scaled by skin.mask (0..100).
+	 * ponytail: the original used a vignette graphic we don't have — flat rect capped at
+	 * an 18% tint so it reads as atmosphere; raise MASK_MAX if a real asset replaces it.
 	 */
 	private drawMask(skin: Skin): void {
 		if (skin.mask <= 0) return;
@@ -385,32 +347,19 @@ export class MazeRenderer {
 		this.maskLayer.addChild(g);
 	}
 
-	/**
-	 * Fog/reveal-fx blur radius. View.hx used BlurFilter(32,32,1) (quality 1) on a
-	 * 40px cell; ported 1:1 (cell*32/40) it read too sharp — Pixi's blur falls off
-	 * faster than Flash's at the same nominal strength, so this is tuned stronger
-	 * than the literal archive value. Bump further if it's still too crisp.
-	 */
+	/** Fog/reveal-fx blur radius — tuned stronger than the original's 32/40px, Pixi's blur falls off faster. */
 	private get fogBlur(): number {
 		return this.cell * 1.2;
 	}
 
-	/**
-	 * Produce a unique key based on horizontal and vertical position.
-	 * Key is unique as long as the assumption that y < height is true.
-	 * @param x Horizontal position
-	 * @param y Vertical position
-	 * @returns A unique key, based on x * height + y.
-	 */
+	/** Cell key; unique as long as y < height. */
 	private key(x: number, y: number): number {
 		return x * this.dims.height + y;
 	}
 
 	/**
-	 * Fog plane: one big jittered circle per unknown cell instead of a rect —
-	 * circles always overlap their neighbours (radius > half the cell spacing,
-	 * even after jitter), so the union is a round blob with no straight edge to
-	 * begin with. The blur on top only has seams to soften, not square corners.
+	 * One jittered circle per unknown cell rather than a rect: circles always overlap their
+	 * neighbours, so the union is a round blob and the blur has no square corners to soften.
 	 */
 	private drawFog(skin: Skin): void {
 		const known = this.known[this.level];
@@ -432,10 +381,7 @@ export class MazeRenderer {
 		this.fogLayer.addChild(g);
 	}
 
-	/**
-	 * View.hx's fx_reveal: blurred fog square over the cell, fading out, oriented
-	 * away from `origin` (the player's cell) — `atan2(posY-py, posX-px)`.
-	 */
+	/** Blurred fog square over the cell, fading out, oriented away from `origin` (the player's cell). */
 	private revealFx(x: number, y: number, origin?: { x: number; y: number }): void {
 		const g = new Graphics();
 		g.beginFill(this.skinFor(this.level).fog);
@@ -452,11 +398,8 @@ export class MazeRenderer {
 	private updateFx(dt: number): void {
 		if (this.dirty) {
 			this.dirty = false;
-			// pixi.js's Ticker has no error isolation between listeners: an
-			// uncaught throw here stops it from ever requesting another animation
-			// frame, silently freezing the whole canvas until something unrelated
-			// (e.g. DinozActor.enqueue) happens to add a ticker listener and wake
-			// it back up. Don't let one bad draw take the whole renderer down.
+			// Ticker listeners share no error isolation: an uncaught throw here stops it
+			// requesting further frames and silently freezes the whole canvas.
 			try {
 				this.showLevel(this.level);
 			} catch (err) {
@@ -465,9 +408,8 @@ export class MazeRenderer {
 		}
 		for (let i = this.fx.length - 1; i >= 0; i--) {
 			const f = this.fx[i];
-			f.cpt += 0.045 * dt; // View.hx: cpt += 0.07/frame at the swf's 40fps
+			f.cpt += 0.045 * dt;
 			f.g.alpha = Math.cos(f.cpt);
-			// ponytail: original kept fx until cpt >= π with negative (invisible) alpha; drop at π/2, same look.
 			if (f.cpt >= Math.PI / 2) {
 				f.g.destroy();
 				this.fx.splice(i, 1);
@@ -480,7 +422,7 @@ export class MazeRenderer {
 		this.fx.length = 0;
 	}
 
-	// ── message box (View.hx message()) ───────────────────────────────────────
+	// ── message box ──────────────────────────────────────────────────────────
 
 	get messageOpen(): boolean {
 		return this.msgBox != null;
@@ -492,17 +434,14 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * View.hx message(): a panel framed with the msgbox_* tiles — solid 0x4d1e10
-	 * fill, 23px top/bottom strips, 41px left/right strips, 77px corners drawn
-	 * over them — centered in the view, with an optional item icon riding the top
-	 * border. A click dismisses it; the page blocks movement while one is open.
+	 * A panel framed with the msgbox_* tiles (23px top/bottom strips, 41px sides, corners over
+	 * them), centered in the view with an optional icon on the top border. A click dismisses it;
+	 * the page blocks movement while one is open.
 	 */
 	showMessage(text: string, icon?: string): void {
 		this.closeMessage();
 		const pad = 8;
 		const w = 320;
-		// ponytail: Pixi wordWrap instead of the original's manual hyphenation loop
-		// that re-narrowed the box for orphan last lines — same box, simpler text.
 		const label = new Text(text, {
 			fill: 0xf5deb0,
 			fontSize: text.length <= 100 ? 20 : 13,
@@ -514,8 +453,7 @@ export class MazeRenderer {
 		const x = (this.viewW - w) / 2;
 		const y = (this.viewH - h) / 2;
 		const box = new Container();
-		// The stage scrolls the world; undo its offset so the box is view-fixed
-		// (the camera cannot move while it is open — movement is blocked).
+		// Undo the stage scroll so the box is view-fixed.
 		box.position.set(-this.app.stage.position.x, -this.app.stage.position.y);
 		const g = new Graphics();
 		g.beginFill(0x4d1e10);
@@ -548,7 +486,6 @@ export class MazeRenderer {
 		}
 		label.position.set(x + pad, y + pad);
 		box.addChild(label);
-		// View.hx: GlowFilter(0x0,0.7,32,32,2,2) — soft dark halo around the dialog.
 		box.filters = [
 			new GlowFilter({ distance: 32, outerStrength: 2, innerStrength: 0, color: 0x000000, alpha: 0.7, quality: 0.2 })
 		];
@@ -559,7 +496,7 @@ export class MazeRenderer {
 		this.msgBox = box;
 	}
 
-	// ── revealed entities (icons the server sent along with the cells) ────────
+	// ── revealed entities ────────────────────────────────────────────────────
 
 	private drawEntities(): void {
 		for (const c of this.known[this.level].values()) {
@@ -569,7 +506,7 @@ export class MazeRenderer {
 	}
 
 	private drawIcon(c: RevealedCell): void {
-		// 'key_<n>': skins cycle so every key in a maze looks distinct.
+		// key_<n>: skins cycle so every key in a maze looks distinct.
 		if (c.icon?.startsWith('key_')) {
 			const v = Number(c.icon.slice(4));
 			this.sprite(`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`, c.x, c.y, this.cell * 0.7);
@@ -638,9 +575,8 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * A wall-edge piece, drawn at its native aspect ratio (scaled by `cell / 40`,
-	 * the original tile unit) and pinned to a cell edge via `(ax, ay)` anchor.
-	 * Mirrors `View.hx`, where walls have real height and overhang the cell.
+	 * A wall-edge piece at its native aspect ratio (scaled by `cell / 40`, the original tile
+	 * unit) and pinned to a cell edge via the `(ax, ay)` anchor. Walls overhang their cell.
 	 */
 	private edge(
 		name: string,
@@ -713,9 +649,8 @@ export class MazeRenderer {
 	}
 
 	/**
-	 * The smonster Animator registers a Ticker.shared listener it never detaches
-	 * (same leak as sdino — see DinozActor.destroy). Freeze before destroying so
-	 * the leaked listener no-ops instead of hitting null transforms every frame.
+	 * The smonster Animator leaks a Ticker.shared listener it never detaches (same as sdino,
+	 * see DinozActor.destroy). Freeze before destroying so the leaked listener no-ops.
 	 */
 	private retireMonster(m: SMonster): void {
 		m.playing = false;
@@ -723,8 +658,7 @@ export class MazeRenderer {
 	}
 
 	destroy(): void {
-		// Sprites on other levels are detached from the stage, so app.destroy
-		// would miss them — retire every cached sprite explicitly.
+		// Sprites on other levels are detached from the stage, so app.destroy would miss them.
 		for (const m of this.monsterSprites.values()) this.retireMonster(m);
 		this.monsterSprites.clear();
 		this.app.destroy(true, { children: true });

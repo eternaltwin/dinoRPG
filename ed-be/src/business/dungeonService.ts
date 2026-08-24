@@ -1,10 +1,6 @@
 /**
- * dungeonService — "pixy", the sole holder of the maze layout.
- *
- * The layout is generated here, encrypted (AES-256-GCM) before it touches the
- * database, and NEVER sent to the client. The client only ever receives the
- * fog-of-war reveals produced by its own validated moves, so a player cannot
- * solve the maze without exploring it.
+ * Sole holder of the maze layout: encrypted (AES-256-GCM) at rest and never sent to the
+ * client, which only receives the fog-of-war reveals its own validated moves produce.
  */
 
 import type { Dinoz } from '@drpg/prisma';
@@ -72,10 +68,7 @@ function newReveals(candidates: RevealedCell[], revealed: Set<string>): Revealed
 	return out;
 }
 
-/**
- * Strip the 'monster' icon from cells whose team this player already beat, and
- * tag the still-alive ones with the gfx name of their team's first monster.
- */
+/** Strip beaten teams' 'monster' icon; tag the rest with their first monster's gfx name. */
 function decorateMonsters(reveal: RevealedCell[], teams: MonsterTeam[], defeated: string[]): RevealedCell[] {
 	const dead = new Set(defeated);
 	const first = new Map(teams.map(t => [cellKey(t.l, t.x, t.y), t.monsters[0]]));
@@ -147,7 +140,7 @@ export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Pr
 		return false;
 	}
 	const here = cellKey(run.posL, run.posX, run.posY);
-	// Already healing here: the cell stays open until the party walks off it.
+	// The cell stays open until the party walks off it.
 	if (run.healPending === here) {
 		return true;
 	}
@@ -166,9 +159,8 @@ export async function isOnHealingCell(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Pr
 }
 
 /**
- * Note that the party healed on the cell it stands on. The cell keeps working —
- * heal the whole team, as many items as you like — until they step off it; move()
- * is what spends it. Caller has checked isOnHealingCell() first.
+ * Note that the party healed here. The cell keeps working until they step off it
+ * (move() spends it). Caller has checked isOnHealingCell() first.
  */
 export async function markHealingCellUsed(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Promise<void> {
 	const run = await findRunByLeader(dinoz.leaderId ?? dinoz.id);
@@ -179,10 +171,7 @@ export async function markHealingCellUsed(dinoz: Pick<Dinoz, 'id' | 'leaderId'>)
 	await flushRun(run.id);
 }
 
-/**
- * Resolve 'scenario_<v>' tokens against the dungeon's scenario list: strip the
- * ones this player already read, give the others their XML icon (chest default).
- */
+/** Resolve 'scenario_<v>' tokens: strip the ones already read, give the rest their icon. */
 function decorateScenarios(reveal: RevealedCell[], scenarios: DungeonScenario[], read: number[]): RevealedCell[] {
 	const done = new Set(read);
 	for (const c of reveal) {
@@ -193,16 +182,13 @@ function decorateScenarios(reveal: RevealedCell[], scenarios: DungeonScenario[],
 	return reveal;
 }
 
-/** A dungeon's own scenario list — every row carries its scenarios directly now. */
 function scenariosFor(dungeon: { scenarios: string }): DungeonScenario[] {
 	return JSON.parse(dungeon.scenarios) as DungeonScenario[];
 }
 
 /**
- * A dinoz that died (or was pulled away, e.g. by an admin action) mid-run leaves
- * the party for good. Dead dinoz also get their unavailableReason cleared —
- * dying is how they leave the dungeon. No roster to update: the leader's live
- * followers (Dinoz.leaderId) ARE the rest of the team.
+ * A dinoz that died or was pulled away mid-run leaves the party for good; dying also
+ * clears unavailableReason. The leader's live followers ARE the team, so no roster to update.
  */
 async function dropFromTeam(dinozIds: number[], clearUnavailable: boolean): Promise<void> {
 	for (const id of dinozIds) {
@@ -245,16 +231,14 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (!dinoz) {
 		throw new ExpectedError(translate('dungeon.inexistent', authed));
 	}
-	// ponytail: null placeStart = no place gate (ex-builder dungeons that never
-	// got one set) — they're enterable from anywhere.
+	// ponytail: null placeStart = no place gate (old builder dungeons), enterable from anywhere.
 	if (dungeon.placeStart != null && dungeon.placeStart !== dinoz.placeId) {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
 	const team = [dinoz, ...dinoz.followers];
-	// Resume: one run per player per dungeon — look this up before the busy
-	// check so a dungeon-busy dinoz is only let through when it's actually
-	// resuming its own run, not stolen into a new one.
+	// One run per player per dungeon. Looked up before the busy check so a dungeon-busy
+	// dinoz only gets through when it's resuming its own run.
 	const existing = await findRun(dungeon.id, authed.id);
 	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
 		throw new ExpectedError(translate('dungeon.unavailable', authed));
@@ -266,10 +250,9 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	);
 	const d = codec.d;
 
-	// hand back the position and everything already revealed instead of
-	// violating the unique constraint.
+	// Resume: hand back the position and everything already revealed.
 	if (existing) {
-		// Only one team at a time in the dungeon
+		// Only one team at a time in the dungeon.
 		if (existing.leaderId && existing.leaderId !== dinoz.id) {
 			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
 		}
@@ -380,14 +363,13 @@ export async function exitRun(req: Request) {
 		throw new ExpectedError(translate('dungeon.notAtExit', authed));
 	}
 
-	// A dead/pulled-away follower already left (dropFromTeam, in move()) and no
-	// longer shows up here — the leader's live followers are the whole team.
+	// Dead/pulled-away followers already left in move(), so the live followers are the whole team.
 	const team = [dinoz.id, ...dinoz.followers.map(f => f.id)];
 	await updateMultipleDinoz(team, { unavailableReason: null });
 	await dinozExitRun(run.id);
 }
 
-/** Stair lookup: is there a stair door at (l,x,y), and where does it lead? */
+/** The level a stair door at (l,x,y) leads to, if there is one. */
 function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number | undefined {
 	for (const room of d.levels[l].rooms) {
 		for (const door of room.doors) {
@@ -400,17 +382,10 @@ function stairTarget(d: DungeonStruct, l: number, x: number, y: number): number 
 }
 
 /**
- * Validate a batch of steps (each dx/dy ∈ {-1,0,1}, or dl !== 0 to take a stair
- * under the dinoz) against the decrypted layout; persist once and return only the
- * new reveals.
- *
- * The layout is loaded and decoded once for the whole batch, and the run row is
- * written once at the end — a held-arrow dash costs one request and one UPDATE
- * instead of one per cell. The per-step rules are unchanged: every step is still
- * validated against the sealed layout, so batching leaks nothing a single step
- * wouldn't. The loop stops at the first step that is refused or that lands on an
- * event cell (fight, scenario, gold), which keeps the result single-valued; the
- * client re-sends whatever it had queued behind that step.
+ * Validate a batch of steps (dx/dy ∈ {-1,0,1}, or dl !== 0 for a stair under the dinoz)
+ * against the decrypted layout; decode and persist once for the whole batch, and return
+ * only the new reveals. The loop stops at the first refused step or event cell (fight,
+ * scenario, gold) so the result stays single-valued; the client re-sends the rest.
  */
 export async function move(req: Request): Promise<MoveResult> {
 	const authed = await auth(req);
@@ -433,8 +408,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	);
 	const d = codec.d;
 
-	// Every mutable piece of run state is parsed once here and mutated in place by
-	// the loop below, then serialized once by the single updateRun at the end.
+	// Parsed once, mutated in place by the loop, serialized once by the updateRun at the end.
 	const keys = JSON.parse(run.keys) as number[];
 	const opened = JSON.parse(run.opened) as string[];
 	const read = JSON.parse(run.scenarios) as number[];
@@ -446,8 +420,8 @@ export async function move(req: Request): Promise<MoveResult> {
 	const monsters = JSON.parse(dungeon.monsters) as MonsterTeam[];
 
 	let cur = { l: run.posL, x: run.posX, y: run.posY };
-	// `saved` diverges from `cur` only on a lost fight: the run rewinds to the door
-	// while the response still reports the cell that was entered.
+	// `saved` diverges from `cur` only on a lost fight: the run rewinds to the door while
+	// the response still reports the cell that was entered.
 	let saved = cur;
 	const reveal: RevealedCell[] = [];
 	let applied = 0;
@@ -457,13 +431,9 @@ export async function move(req: Request): Promise<MoveResult> {
 	let result: FightResult | undefined = undefined;
 
 	/**
-	 * Persist everything mutated so far, durably, before an irreversible payout.
-	 *
-	 * The run row is write-back cached (dungeonRunDao), so ordinary steps only
-	 * reach the database lazily. But `gold`, `scenarios` and `defeated` are what
-	 * stop a reward being handed out twice, so on the rare step that pays out we
-	 * mark first and flush, then pay. A crash in the gap costs the player one
-	 * reward; the other order would mint them.
+	 * Persist everything mutated so far, durably, before an irreversible payout. The run row
+	 * is write-back cached, but `gold`/`scenarios`/`defeated` are what stop a double reward:
+	 * mark and flush first, then pay. A crash in the gap costs one reward instead of minting one.
 	 */
 	const checkpoint = async (pos: { l: number; x: number; y: number }): Promise<void> => {
 		await updateRun(
@@ -496,7 +466,7 @@ export async function move(req: Request): Promise<MoveResult> {
 		}
 
 		if (!next) {
-			// Rejected: wall, out of bounds, or no stair here. No new knowledge leaks.
+			// Wall, out of bounds, or no stair here. No new knowledge leaks.
 			ok = false;
 			break;
 		}
@@ -560,9 +530,7 @@ export async function move(req: Request): Promise<MoveResult> {
 			}
 			let team = player.dinoz;
 
-			// A dinoz already dead (from an earlier fight this run) or pulled away by
-			// something else leaves the party — and, if dead, the dungeon itself —
-			// before it can be dragged into another fight.
+			// Already-dead or pulled-away dinoz leave the party before being dragged into a fight.
 			const dead = team.filter(d => d.life <= 0);
 			const pulledAway = team.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
 			if (dead.length > 0)
@@ -594,10 +562,8 @@ export async function move(req: Request): Promise<MoveResult> {
 				monsterFiches.push(monsterList[monster]);
 			}
 
-			// calculateFightVsMonsters is pure (seeded RNG, no writes) and already
-			// settles the outcome, so a win can be recorded durably before
-			// rewardFightVsMonsters hands out the XP and loot — otherwise a crash in
-			// between would resurrect the monster and let it be farmed again.
+			// calculateFightVsMonsters is pure and already settles the outcome, so record the win
+			// durably before the rewards land — a crash between would let the monster be farmed.
 			const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsterFiches);
 			if (fightResult.outcome === FightOutcome.AttackerWin) {
 				await markMonsterDefeated(run, next.l, next.x, next.y);
@@ -606,8 +572,8 @@ export async function move(req: Request): Promise<MoveResult> {
 			}
 			result = await rewardFightVsMonsters(team, monsterFiches, fightResult, PlaceEnum.CIMETIERE, player);
 
-			// Same test rewardFightVsMonsters uses to log a Death: hpLost against the
-			// life it fetched the team with, before its own decrement lands.
+			// Same test rewardFightVsMonsters uses to log a Death: hpLost against the life it
+			// fetched the team with, before its own decrement lands.
 			const diedInFight = team.filter(d => {
 				const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
 				return attacker != null && attacker.hpLost >= d.life;
@@ -631,21 +597,19 @@ export async function move(req: Request): Promise<MoveResult> {
 			);
 		}
 
-		// Re-send the entered cell even if already revealed, so a door opening, a key
-		// pickup or a won fight shows up immediately instead of on the next resume.
+		// Re-send the entered cell even if already revealed, so a door opening, key pickup or
+		// won fight shows up now instead of on the next resume.
 		const entered = cellKey(next.l, next.x, next.y);
 		if (!reveal.some(c => cellKey(c.l, c.x, c.y) === entered)) reveal.push(...cellsForKeys(d, [entered]));
 
 		cur = next;
 		saved = lost ? d.start : next;
 		applied++;
-		// An event cell ends the batch: the result carries at most one fight, one
-		// scenario and one gold pile, and the client waits for it before going on.
+		// The result carries at most one fight, scenario and gold pile.
 		if (result || scenario || goldReward != null) break;
 	}
 
-	// A batch refused on its very first step changed nothing — keep it a pure read,
-	// as the single-step version was.
+	// A batch refused on its first step changed nothing: keep it a pure read.
 	if (applied > 0) {
 		// Walking off a cell the party healed on spends it: it never heals again.
 		if (run.healPending && run.healPending !== cellKey(saved.l, saved.x, saved.y)) {
