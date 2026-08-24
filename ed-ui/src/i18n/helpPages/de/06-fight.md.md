@@ -60,7 +60,7 @@ De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire 
 
 ## Gains
 
-À la fin du combat, votre Dinoz gagne des pièces d'or :gold qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
+À la fin du combat, votre Dinoz gagne des pièces d'or :gold: qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
 
 ## L'Énergie
 
@@ -77,26 +77,26 @@ Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de 
 Pendant le combat, différents statuts affecteront vos Dinoz, en bonus ou en malus, vous pouvez retrouver la liste de ses statuts ci-dessous :
 
 - ![Statut Endormi](@guide/status_sleep) Le Dinoz est endormi, il ne peut pas bouger
-- ![Statut Endormi](@guide/status_untouchable) Le Dinoz ne peut être touché par un assaut classique
-- ![Statut Endormi](@guide/status_slow_down) Le Dinoz est ralenti
-- ![Statut Endormi](@guide/status_faster) Le Dinoz est plus rapide
-- ![Statut Endormi](@guide/status_petrified) Le Dinoz est pétrifié, il ne peut plus attaquer
-- ![Statut Endormi](@guide/status_assault_bonus) Le Dinoz a un bonus sur ses assauts
-- ![Statut Endormi](@guide/status_poisoned) Le Dinoz est empoisonné et subit des dégâts chaque tour
-- ![Statut Endormi](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
-- ![Statut Endormi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
-- ![Statut Endormi](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
-- ![Statut Endormi](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
-- ![Statut Endormi](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires
-- ![Statut Endormi](@guide/status_blocked_inventory) Le Dinoz ne peut plus utiliser le contenu de son inventaire
-- ![Statut Endormi](@guide/status_energy_penalty) Le Dinoz a un malus d'énergie
-- ![Statut Endormi](@guide/status_energy_bonus) Le Dinoz a un bonus d'énergie
-- ![Statut Endormi](@guide/status_bonus_def_fire) Le Dinoz a un bonus de défense en feu
-- ![Statut Endormi](@guide/status_bonus_def_wood) Le Dinoz a un bonus de défense en bois
-- ![Statut Endormi](@guide/status_bonus_def_water) Le Dinoz a un bonus de défense en eau
-- ![Statut Endormi](@guide/status_bonus_def_lightning) Le Dinoz a un bonus de défense en foudre
-- ![Statut Endormi](@guide/status_bonus_def_air) Le Dinoz a un bonus de défense en air
-- ![Statut Endormi](@guide/status_initiative_bonus) Le Dinoz a un bonus en initiative
-- ![Statut Endormi](@guide/status_initiative_penalty) Le Dinoz a un malus en initiative
-- ![Statut Endormi](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
-- ![Statut Endormi](@guide/status_def_bonus) Le Dinoz a un bonus en défense
+- ![Statut Intangible](@guide/status_untouchable) Le Dinoz ne peut être touché par un assaut classique
+- ![Statut Ralenti](@guide/status_slow_down) Le Dinoz est ralenti
+- ![Statut Accéléré](@guide/status_faster) Le Dinoz est plus rapide
+- ![Statut Pétrifié](@guide/status_petrified) Le Dinoz est pétrifié, il ne peut plus attaquer
+- ![Statut Bonus Assaut](@guide/status_assault_bonus) Le Dinoz a un bonus sur ses assauts
+- ![Statut Poison](@guide/status_poisoned) Le Dinoz est empoisonné et subit des dégâts chaque tour
+- ![Statut Vérouillé](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
+- ![Statut Étourdi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
+- ![Statut Protégé](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
+- ![Statut Muet](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
+- ![Statut Sharingan](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires
+- ![Statut Équipement Bloqué](@guide/status_blocked_inventory) Le Dinoz ne peut plus utiliser d'équipements
+- ![Statut Pénalité d'Énergie](@guide/status_energy_penalty) Le Dinoz a un malus d'énergie
+- ![Statut Bonus d'Énergie](@guide/status_energy_bonus) Le Dinoz a un bonus d'énergie
+- ![Statut Défense Feu](@guide/status_bonus_def_fire) Le Dinoz a un bonus de défense en feu
+- ![Statut Défense Bois](@guide/status_bonus_def_wood) Le Dinoz a un bonus de défense en bois
+- ![Statut Défense Eau](@guide/status_bonus_def_water) Le Dinoz a un bonus de défense en eau
+- ![Statut Défense Foudre](@guide/status_bonus_def_lightning) Le Dinoz a un bonus de défense en foudre
+- ![Statut Défense Air](@guide/status_bonus_def_air) Le Dinoz a un bonus de défense en air
+- ![Statut Bonus Initiative](@guide/status_initiative_bonus) Le Dinoz a un bonus en initiative
+- ![Statut Malus Initiative](@guide/status_initiative_penalty) Le Dinoz a un malus en initiative
+- ![Statut Bonus Esquive](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
+- ![Statut Bonus Défense](@guide/status_def_bonus) Le Dinoz a un bonus en défense
