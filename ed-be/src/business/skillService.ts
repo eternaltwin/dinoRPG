@@ -318,7 +318,7 @@ function getDinozLearnableSkills(
 	tryNumber: number,
 	event?: GameDinozUsage
 ) {
-	if (dinoz.level === gameConfig().dinoz.maxLevel) {
+	if (dinoz.level >= gameConfig().dinoz.maxLevel) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
