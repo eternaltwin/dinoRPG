@@ -4,14 +4,14 @@ icon:
   name: small_home
 ---
 
-# Introduction
+# Einleitung
 
-Bienvenue sur **DinoRPG** !
+Willkommen bei **Dino-RPG**!
 
-Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou plusieurs petites créatures sauvages nommées les **Dinoz**. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure.
+Auf dieser Seite spielst du einen **Meisterzüchter** und kannst einen oder mehrere kleine wilde Kreaturen namens **Dinoz** adoptieren. Du kannst die Welt von Dinoland bereisen, deine Dinoz kämpfen und weiterentwickeln lassen, Missionen erfüllen und zahlreiche Aufgaben abschließen, die du während deiner Abenteuer erhalten wirst.
 
-Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce **Guide du Jeu** en cliquant sur le bouton ![point d'interrogation](@icons/small_question) dans le Menu de droite.
+Falls du Hilfe benötigst, kannst du jederzeit auf dieses **Spielhandbuch** zugreifen, indem du im Menü auf der rechten Seite die Schaltfläche mit dem ![Fragezeichen](@icons/small_question) anklickst.
 
-Pour découvrir la suite du **Guide**, merci de cliquer sur le bouton ![page suivante](@icons/small_page_down) ci-dessous.
+Um im **Handbuch** weiterzublättern, klicke bitte auf die Schaltfläche ![Einen Dinoz adoptieren](@icons/small_page_down) weiter unten.
 
-Certaines sections de ce guide ne sont pas finies et sont en cours de mise à jour.
+Einige Abschnitte des Handbuchs sind nicht mehr aktuell und werden derzeit überarbeitet.
