@@ -4,16 +4,16 @@ icon:
   name: fx_ccard
 ---
 
-# La Fiche du Dinoz
+# Dinoz-Profil
 
-La **Fiche** de votre Dinoz est l'endroit où vous pouvez à la fois voir l'**état** de votre Dinoz et effectuer un certain nombre d'**actions**. Elle se présente sous la forme suivante :
+Im **Profil** deines Dinoz kannst du dir einen Überblick über seinen **Zustand** verschaffen, sowie eine bestimmte Anzahl an **Aktionen** ausführen. Das sieht folgendermaßen aus:
 
-![Fiche du Dinoz](@guide/card)
+![Dinoz-Profil](@guide/card)
 
-Vous pouvez y apercevoir les informations suivantes :
+Hier kannst du folgende Informationen einsehen:
 
-- En haut à droite, les **éléments** et la **race** de votre Dinoz.
-- En dessous de l'image, dans le rond rouge, son **niveau**, permettant de mesurer sa puissance actuelle. Dans la barre marquée ![pv](@icons/small_pv) (PV), ses **points de vie** : c'est la santé de votre Dinoz. Quand la barre est entièrement vide, votre Dinoz **meurt**. Dans la barre marquée ![xp](@icons/small_xp) (XP), ses **points d'expérience** : vous en gagnez après chaque combat. Quand la barre est pleine, votre Dinoz pourra progresser d'un niveau.
-- En dessous, les différentes **actions** que votre Dinoz peut effectuer, par exemple _Combattre_.
+- Im oberen Bereich sind **Rasse** und **Elemente** deines Dinoz dargestellt.
+- Unterhalb seiner Abbildung, im roten Kreis, ist seine **Stufe**, die seine momentane Stärke repräsentiert. Der Balken mit der Aufschrift ![LP](@icons/small_pv) sind seine **Lebenspunkte**: Das ist die Gesundheit deines Dinoz. Sollte dieser Balken leer werden, gilt dein Dinoz als **tot**. Der Balken mit der Aufschrift ![EP](@icons/small_xp) steht für seine **Erfahrungspunkte**, welche er nach jedem Kampf erhält. Sobald dieser Balken vollständig gefüllt wird, steigt dein Dinoz eine Stufe auf.
+- Unten sind unterschiedliche **Aktionen** aufgeführt, die dein Dinoz ausführen kann, wie zum Beispiel _„Kämpfen“_.
 
-Nous allons maintenant parler des différentes actions que votre Dinoz peut effectuer.
+Nun kommen wir zu den unterschiedlichen Aktionen, die dein Dinoz ausführen kann.
