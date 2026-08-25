@@ -28,7 +28,7 @@ Les défis sont des combats dans lesquels il faudra se battre face au Dinoz d'un
 
 Le Tournoi est un événement mensuel de DinoRPG, il réunit dans 16 groupes, les 256 dojos s'étant qualifiés pendant les phases éliminatoires. Ils devront se battre entre eux jusqu'à déterminer le meilleur joueur de Dinoland !
 
-![](@icons/act_tournoi) Ce bouton permet d'accéder à la page Tournoi. Pendant plus d'une semaine, les joueurs évolueront dans **16 groupes de 16 joueurs**. Une fois le premier tour terminé, les 16 joueurs finalistes se retrouveront dans le groupe final. Le meilleur Maître Dinoz sera désigné à l'issue de cette épreuve. _Comme pour les défis, pendant les phases finales, les Dinoz ne perdent pas leurs points de vie._ Mais cette fois-ci, les combats seront plus variés, avec ou sans objets magiques, en 1 contre 1 ou par équipe : 3 contre 3, 5 contre 5. Cela changera selon les éditions !_
+![](@icons/act_tournoi) Ce bouton permet d'accéder à la page Tournoi. Pendant plus d'une semaine, les joueurs évolueront dans **16 groupes de 16 joueurs**. Une fois le premier tour terminé, les 16 joueurs finalistes se retrouveront dans le groupe final. Le meilleur Maître Dinoz sera désigné à l'issue de cette épreuve. _Comme pour les défis, pendant les phases finales, les Dinoz ne perdent pas leurs points de vie._
 
 Sur la page Tournoi, vous pourrez sélectionner les Dinoz qui participeront au Tournoi, vous ne pourrez pas les changer entre les combats des phases finales. Le tournoi commence au moment où les phases éliminatoires se terminent.
 
