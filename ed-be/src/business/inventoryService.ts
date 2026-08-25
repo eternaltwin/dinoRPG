@@ -129,25 +129,26 @@ export async function useItem(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	let healingZone = false;
+	const itemId = +req.params.itemId;
+	const item = Object.values(itemList).find(item => item.itemId === itemId);
+	if (item === undefined) {
+		throw new ExpectedError(`This item didn't exist`);
+	}
 	if (dinoz.unavailableReason) {
 		healingZone = await isOnHealingCell(dinoz);
 		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
 			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
-		} else if (!healingZone) {
+		} else if (!healingZone && item.itemId !== Item.POTION_IRMA) {
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
 		}
 	}
-	const itemId = +req.params.itemId;
-	const item = Object.values(itemList).find(item => item.itemId === itemId);
 
 	// If player found is different from player who do the request, throw exception
 	if (dinoz.player.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
-	if (item === undefined) {
-		throw new ExpectedError(`This item didn't exist`);
-	}
+
 
 	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
 	if (itemData === undefined || itemData.quantity <= 0) {
