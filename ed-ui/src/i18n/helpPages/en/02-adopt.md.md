@@ -4,15 +4,15 @@ icon:
   name: small_member
 ---
 
-# Adopter un Dinoz
+# Adopting a Dinoz
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **50 000** pièces d'or ![](@icons/small_gold) obtenues lors de la création de votre compte.
+The first thing you need to do on DinoRPG is to adopt a Dinoz. For this, you have **50,000** gold coins ![](@icons/small_gold) obtained when creating your account.
 
-En cliquant sur ![ACHETER UN DINOZ](@guide/adopt_button_fr) dans le menu de gauche ou ![bouton mobile](@icons/act_treasure) sur mobile, vous pourrez accéder à l'Enclos des Dinoz. Chaque Dinoz est unique et chaque jour l'enclos vous proposera une nouvelle sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. Cette sélection change aussi à chaque adoption faite via l'enclos.
+By clicking on ![BUY A DINOZ](@guide/adopt_button_en) in the left menu or ![mobile button](@icons/act_treasure) on mobile, you can access the Dinoz Enclosure. Each Dinoz is unique, and every day, the enclosure will offer you a new selection of Dinoz among which you can choose the one that suits you the most. It also refreshes every time your adopt a new Dinoz from it.
 
-Chaque Dinoz est présenté de la façon suivante :
-![Écran d'adoption](@guide/adopt_shop_fr)
+Each Dinoz is presented as follows:
+![Adoption Screen](@guide/adopt_shop_en)
 
-Vous pouvez voir une image du Dinoz, sa **race** et son **prix**. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères.
+You can see the look of the Dinoz, its **race** and its **price**. There are different breeds of Dinoz, each with its own properties. In particular, the values of the **5 elements** indicated during the purchase depend on the breed of the Dinoz, and some breeds have an **additional skill**. These two points influence the **fight** as we will see later. The price also varies depending on the breed of the Dinoz, the rarest breeds are more expensive.
 
-Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.
+First, choose the Dinoz you prefer and buy it.
