@@ -4,10 +4,10 @@ icon:
   name: small_question
 ---
 
-# Nommer son Dinoz
+# Name your Dinoz
 
-Une fois votre Dinoz acheté, il vous est demandé de lui donner un nom, par exemple ici :
+Once you've purchased your Dinoz, you will be asked to give it a name, as shown here:
 
-![Écran de nommage](@guide/name_fr)
+![Name screen](@guide/name_fr)
 
-Choisissez le nom que vous préférez pour votre Dinoz, et votre Dinoz s'ajoutera au menu de gauche. En cliquant dessus, vous pourrez accéder à sa **Fiche**.
+Choose the name you prefer for your Dinoz, and it will be added to the left menu. By clicking on it, you can access its **profile**.
