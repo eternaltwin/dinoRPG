@@ -56,27 +56,27 @@ The stronger **the assault power** of an element, the more health points the Din
 
 ## The Monsters
 
-De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire que tous vos éléments sont pris en compte lors de la défense. Cependant, certains monstres sont capables d'effectuer des assauts ou des attaques spéciales d'un élément particulier.
+Many monsters perform Void element assaults. This means that all your elements are taken into account during defense. However, some monsters are capable of performing assaults or special attacks of a particular element.
 
 ## Gains
 
-À la fin du combat, votre Dinoz gagne des pièces d'or :gold: qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
+At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow it to heal, and **experience points** that will enable it to level up.
 
-## L'Énergie
+## The Energy
 
-![Énergie du Dinoz](@guide/energy)
+![Dinoz Energy](@guide/energy)
 
-Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le Dinoz détient. L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance.
+This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
 
-Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le Dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres.
+Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others.
 
-Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises. Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.
+This energy bar gradually fills up during the battle, referred to as **recovery**. The recovery of a Dinoz can vary depending on certain learned skills. The Dinoz must therefore wait until it has replenished its energy before using a skill.
 
-## Les Statuts en Combats
+## Fight Statuses
 
-Pendant le combat, différents statuts affecteront vos Dinoz, en bonus ou en malus, vous pouvez retrouver la liste de ses statuts ci-dessous :
+During the battle, different statuses will affect your Dinoz, either as a bonus or a penalty. You can find the list of these statuses below:
 
-- ![Statut Endormi](@guide/status_sleep) Le Dinoz est endormi, il ne peut pas bouger
+- ![Asleep Status](@guide/status_sleep) The Dinoz is asleep, it cannot move
 - ![Statut Intangible](@guide/status_untouchable) Le Dinoz ne peut être touché par un assaut classique
 - ![Statut Ralenti](@guide/status_slow_down) Le Dinoz est ralenti
 - ![Statut Accéléré](@guide/status_faster) Le Dinoz est plus rapide
