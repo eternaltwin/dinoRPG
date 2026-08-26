@@ -56,7 +56,6 @@ export class MazeRenderer {
 	private camX = NaN;
 	private camY = NaN;
 
-	private layerCachePending = false;
 	private fogDirty = true;
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
@@ -210,12 +209,9 @@ export class MazeRenderer {
 		// Show fog only if it needs an update
 		if (this.fogDirty) {
 			this.fogDirty = false;
-			this.fogLayer.cacheAsBitmap = false;
 			this.fogLayer.removeChildren();
 			this.drawFog(skin);
 		}
-		// Defer cache as bitmap to the top of the following tick
-		this.layerCachePending = true;
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
@@ -403,13 +399,6 @@ export class MazeRenderer {
 	}
 
 	private updateFx(dt: number): void {
-		if (this.layerCachePending) {
-			this.layerCachePending = false;
-			this.groundLayer.cacheAsBitmap = true;
-			this.wallBackLayer.cacheAsBitmap = true;
-			this.wallFrontLayer.cacheAsBitmap = true;
-			this.fogLayer.cacheAsBitmap = true;
-		}
 		if (this.dirty) {
 			this.dirty = false;
 			// Ticker listeners share no error isolation: an uncaught throw here stops it
