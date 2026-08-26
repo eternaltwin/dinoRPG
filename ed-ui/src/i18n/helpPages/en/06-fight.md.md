@@ -4,57 +4,57 @@ icon:
   name: small_fire
 ---
 
-# Les Combats
+# Fights
 
-Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monstres. Les différents protagonistes rejoignent alors le combat qui se déroule de façon automatique :
+A battle occurs when your Dinoz is attacked or attacks one or more monsters. The different participants then join the battle, which unfolds automatically:
 
 ![Combattre un monstre](@guide/fight)
 
-Les monstres et votre Dinoz attaquent au tour à tour, en fonction de leur **initiative**, de leur **vitesse**, et de leur **énergie**. À chaque coup, l'adversaire perd des **points de vie** ![pv](@icons/small_pv) qui sont affichés. Il faut que votre Dinoz tue tous les monstres pour pouvoir remporter le combat.
+Monsters and your Dinoz take turns attacking, based on their **initiative**, **speed**, and **energy**. With each hit, the opponent loses **health points** ![pv](@icons/small_pv), which are displayed. Your Dinoz must defeat all the monsters to win the battle.
 
-Lors de son tour, votre Dinoz peut effectuer une ou plusieurs des actions suivantes suivant son énergie :
+During its turn, your Dinoz can perform one or more of the following actions based on its energy:
 
-- Lancer un **assaut**, c'est-à-dire une attaque normale
-- Effectuer une **attaque spéciale**, qui remplace alors l'assaut
-- Utiliser une compétence de type **événement**
-- Utiliser un **équipement de combat**
+- Launch an **assault**, meaning a normal attack
+- Execute a **special attack**, which then replaces the assault
+- Use an **event** type skill
+- Use **combat equipment**
 
-## Les Éléments
+## The Elements
 
-Un Dinoz possède 5 valeurs d'**éléments** qui sont indiqués sur sa fiche :
+A Dinoz has 5 **elemental** values that are indicated on its profile:
 
-- ![Élément Feu](@elements/elem_fire) Feu
-- ![Élément Bois](@elements/elem_wood) Bois
-- ![Élément Eau](@elements/elem_water) Eau
-- ![Élément Foudre](@elements/elem_lightning) Foudre
-- ![Élément Air](@elements/elem_air) Air
+- ![](@elements/elem_fire) Fire
+- ![](@elements/elem_wood) Wood
+- ![](@elements/elem_water) Water
+- ![](@elements/elem_lightning) Lightning
+- ![](@elements/elem_air) Air
 
-Ces éléments sont organisés selon le **Grand Cycle des Éléments** :
+These elements are organized according to **the Grand Cycle of Elements**:
 
-![Grand Cycle des Éléments](@guide/elements)
+![Grand Cycle of Elements](@guide/elements)
 
-Un élément est fort contre les deux qui le suivent et faible contre les deux qui le précèdent. Ainsi, par exemple, le Feu est très fort contre le Bois et plutôt fort contre l'Eau, mais est très faible contre l'Air et plutôt faible contre la Foudre.
+An element is strong against the two that follow it and weak against the two that precede it. Thus, for example, Fire is very strong against Wood and quite strong against Water, but is very weak against Air and rather weak against Thunder.
 
-## Les Assauts
+## The Assaults
 
-Les Assauts se font toujours dans un ordre bien précis, qui est déterminé en fonction des valeurs des éléments, avec un tirage aléatoire en cas d'égalité.
+Assaults always occur in a specific order, determined by the elemental values, with a random draw in case of a tie.
 
-![Éléments du Dinoz](@guide/assault)
+![Dinoz Elements](@guide/assault)
 
-Ainsi, un Dinoz ayant les éléments ci-dessus va effectuer ses assauts dans l'ordre suivant :
+Thus, a Dinoz with the above elements will perform its assaults in the following order:
 
-- Eau ![Élément Eau](@elements/elem_water) en premier
-- puis Bois ![Élément Bois](@elements/elem_wood)
-- puis Foudre ![Élément Foudre](@elements/elem_lightning) et Air ![Élément Air](@elements/elem_air) dans un ordre indéterminé
-- et enfin Feu ![Élément Feu](@elements/elem_fire)
+- Water ![](@elements/elem_water) first
+- then Wood ![](@elements/elem_wood)
+- then Lightning ![](@elements/elem_lightning) and Air ![](@elements/elem_air) in a random order
+- and finally Fire ![](@elements/elem_fire)
 
-Une fois les 5 assauts effectués, le Dinoz recommencera à nouveau le cycle.
+Once the 5 assaults are completed, the Dinoz will go through the cycle again.
 
-En fonction de ses **éléments** et de ses **compétences**, le Dinoz a donc une certaine **puissance d'assaut** ainsi qu'une **défense** pour chaque élément. Ces caractéristiques sont visibles dans l'onglet **Détails** de la fiche du Dinoz.
+Based on its **elements** and **skills**, the Dinoz has a certain **assault power** and **defense** for each element. These characteristics are visible in the **Details** tab of the Dinoz' profile.
 
-Plus la **puissance d'assaut** d'un élément est forte et plus le Dinoz fera perdre des points de vie à ses adversaires quand il effectuera un assaut de cet élément. Plus la **défense** contre un élément est forte et plus le Dinoz sera protégé contre les attaques des adversaires effectuées avec cet élément.
+The stronger **the assault power** of an element, the more health points the Dinoz will deduct from its opponents when performing an assault of that element. The stronger **the defense** against an element, the more protected the Dinoz will be against attacks from opponents using that element.
 
-## Les Monstres
+## The Monsters
 
 De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire que tous vos éléments sont pris en compte lors de la défense. Cependant, certains monstres sont capables d'effectuer des assauts ou des attaques spéciales d'un élément particulier.
 
