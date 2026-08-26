@@ -4,9 +4,9 @@ icon:
   name: small_fire
 ---
 
-# Les Combats
+# Die Kämpfe
 
-Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monstres. Les différents protagonistes rejoignent alors le combat qui se déroule de façon automatique :
+Ein Kampf wird ausgelöst, wenn deine Dinoz unterwegs angegriffen werden oder selbst Monster angreifen. Die verschiedenen Akteure beteiligen sich automatisch am stattfindenden Kampf:
 
 ![Combattre un monstre](@guide/fight)
 
