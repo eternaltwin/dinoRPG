@@ -4,18 +4,18 @@ icon:
   name: small_follow
 ---
 
-# Se Déplacer
+# Moving Around
 
-L'Univers de Dinoland est constitué de nombreux endroits à découvrir. Ces différents lieux sont reliés par des chemins que votre Dinoz peut emprunter en se déplaçant. Pour **déplacer** votre Dinoz, il suffit de cliquer sur le point suivant de la Carte. La Carte de Dinoland est affichée de cette manière :
+The world of Dinoland consists of many places to discover. These different locations are connected by paths that your Dinoz can traverse by moving. To **move** your Dinoz, simply click on the next point on the Map. The Dinoland Map is displayed as follows:
 
 ![Déplacer son Dinoz](@guide/move)
 
-Les chemins partant du lieu où se trouve actuellement votre Dinoz s'affichent et les lieux sur lesquels vous pouvez vous rendre se mettront à clignoter. Cliquez sur le lieu où vous désirez déplacer votre Dinoz pour qu'il s'y rende.
+Paths starting from the current location of your Dinoz are displayed, and the locations you can travel to will begin to blink. Click on the location where you want to move your Dinoz to send it there.
 
-Votre Dinoz peut se déplacer au minimum deux fois par jour. Il existe un cycle de récupération des actions, qui est le suivant :
+Your Dinoz can move a minimum of two times per day. There is a recovery cycle for actions, which is as follows:
 
-- Votre Dinoz récupère ses nouvelles actions **chaque jour à minuit** (heure serveur).
+- Your Dinoz regains its new actions **every day at midnight** (server time).
 
-Mais il suffit qu'il utilise une **potion de Madame Irma** ![potion irma](@item/item_irma) pour pouvoir à nouveau se déplacer le même jour, sans que vous ayez à attendre la fin du cycle.
+**However**, using a **potion from Madame Irma** allows it to move again on the same day without having to wait for the end of the cycle.
 
-Lors d'un déplacement entre deux lieux, des monstres attaquent votre Dinoz et un **combat** est donc lancé.
+During movement between two locations, monsters attack your Dinoz, initiating a **battle**.
