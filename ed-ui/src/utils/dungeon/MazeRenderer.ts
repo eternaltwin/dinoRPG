@@ -56,6 +56,9 @@ export class MazeRenderer {
 	private camX = NaN;
 	private camY = NaN;
 
+	private layerCachePending = false;
+	private fogDirty = true;
+
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
 		this.noiseSeed = opts.noiseSeed ?? (Math.random() * 0x7fffffff) | 0;
@@ -147,7 +150,11 @@ export class MazeRenderer {
 			level.set(this.key(c.x, c.y), c);
 			if (c.l === this.level) {
 				dirty = true;
-				if (isNew) this.revealFx(c.x, c.y, origin);
+				if (isNew) {
+					// Only mark the fog dirty when a cell is new.
+					this.fogDirty = true;
+					this.revealFx(c.x, c.y, origin);
+				}
 			}
 		}
 		if (dirty) this.dirty = true;
@@ -186,10 +193,6 @@ export class MazeRenderer {
 	}
 
 	showLevel(l: number): void {
-		this.groundLayer.cacheAsBitmap = false;
-		this.wallBackLayer.cacheAsBitmap = false;
-		this.wallFrontLayer.cacheAsBitmap = false;
-		this.fogLayer.cacheAsBitmap = false;
 		const lv = Math.max(0, Math.min(l, this.dims.levels - 1));
 		if (lv !== this.level) this.clearFx(); // fades belong to the level they started on
 		this.level = lv;
@@ -200,15 +203,19 @@ export class MazeRenderer {
 		this.wallBackLayer.removeChildren();
 		this.wallFrontLayer.removeChildren();
 		this.maskLayer.removeChildren();
-		this.fogLayer.removeChildren();
 		this.drawLevel(skin);
 		this.drawEntities();
 		this.drawMask(skin);
-		this.drawFog(skin);
-		this.groundLayer.cacheAsBitmap = true;
-		this.wallBackLayer.cacheAsBitmap = true;
-		this.wallFrontLayer.cacheAsBitmap = true;
-		this.fogLayer.cacheAsBitmap = true;
+
+		// Show fog only if it needs an update
+		if (this.fogDirty) {
+			this.fogDirty = false;
+			this.fogLayer.cacheAsBitmap = false;
+			this.fogLayer.removeChildren();
+			this.drawFog(skin);
+		}
+		// Defer cache as bitmap to the top of the following tick
+		this.layerCachePending = true;
 	}
 
 	// ── tiles ────────────────────────────────────────────────────────────────
@@ -396,6 +403,13 @@ export class MazeRenderer {
 	}
 
 	private updateFx(dt: number): void {
+		if (this.layerCachePending) {
+			this.layerCachePending = false;
+			this.groundLayer.cacheAsBitmap = true;
+			this.wallBackLayer.cacheAsBitmap = true;
+			this.wallFrontLayer.cacheAsBitmap = true;
+			this.fogLayer.cacheAsBitmap = true;
+		}
 		if (this.dirty) {
 			this.dirty = false;
 			// Ticker listeners share no error isolation: an uncaught throw here stops it
