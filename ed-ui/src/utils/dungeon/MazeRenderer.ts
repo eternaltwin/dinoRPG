@@ -45,8 +45,6 @@ export class MazeRenderer {
 	private debug = false;
 	/** New floor/wall cells → ground + wall layers need a rebuild. */
 	private geometryDirty = false;
-	/** Any touched cell (new or re-sent) → icons/monsters may have changed. */
-	private entitiesDirty = false;
 	/** Reapply fog if necessary. */
 	private fogDirty = true;
 	/** Overground zone noise seed — key it to the dungeon id to keep decoration stable across refreshes. */
@@ -55,12 +53,15 @@ export class MazeRenderer {
 	private readonly zones = new Map<number, Uint8Array>();
 	/** Animated monster sprites, keyed "l,x,y" — created once, re-attached on each level redraw. */
 	private readonly monsterSprites = new Map<string, SMonster>();
+	/** Non-monster icon sprites, keyed "l,x,y" — same reuse pattern as monsterSprites. */
+	private readonly entitySprites = new Map<string, Sprite>();
+	/** Cell keys (this.key(x,y), current level only) touched since the last rebuild(). */
+	private readonly touchedEntityCells = new Set<number>();
 	/** The open message box, if any. */
 	private msgBox: Container | null = null;
 	/** Eased camera position in world px; NaN until the first focus(), which snaps. */
 	private camX = NaN;
 	private camY = NaN;
-
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -151,7 +152,7 @@ export class MazeRenderer {
 			}
 			level.set(this.key(c.x, c.y), c);
 			if (c.l === this.level) {
-				this.entitiesDirty = true;
+				this.touchedEntityCells.add(this.key(c.x, c.y));
 				if (isNew) {
 					// Only mark the fog and background as dirty when a cell is new.
 					this.geometryDirty = true;
@@ -204,8 +205,9 @@ export class MazeRenderer {
 		this.drawMask(skin);
 
 		this.geometryDirty = true;
-		this.entitiesDirty = true;
 		this.fogDirty = true;
+		this.mapLayer.removeChildren(); // stale sprites from the previous level; drawAllEntities() repopulates
+		this.drawAllEntities();
 		this.rebuild();
 	}
 
@@ -219,10 +221,16 @@ export class MazeRenderer {
 			this.wallFrontLayer.removeChildren();
 			this.drawLevel(skin);
 		}
-		if (this.entitiesDirty) {
-			this.entitiesDirty = false;
-			this.mapLayer.removeChildren();
-			this.drawEntities();
+
+		if (this.touchedEntityCells.size > 0) {
+			const known = this.known[this.level];
+			const h = this.dims.height;
+			for (const key of this.touchedEntityCells) {
+				const y = key % h;
+				const x = (key - y) / h;
+				this.updateEntitySprite(x, y, known.get(key));
+			}
+			this.touchedEntityCells.clear();
 		}
 		if (this.fogDirty) {
 			this.fogDirty = false;
@@ -416,7 +424,7 @@ export class MazeRenderer {
 	}
 
 	private updateFx(dt: number): void {
-		if (this.geometryDirty || this.entitiesDirty || this.fogDirty) {
+		if (this.geometryDirty || this.fogDirty) {
 			// Ticker listeners share no error isolation: an uncaught throw here stops it
 			// requesting further frames and silently freezes the whole canvas.
 			try {
@@ -517,53 +525,66 @@ export class MazeRenderer {
 
 	// ── revealed entities ────────────────────────────────────────────────────
 
-	private drawEntities(): void {
-		for (const c of this.known[this.level].values()) {
-			if (!c.icon) continue;
-			this.drawIcon(c);
+	// private drawEntities(): void {
+	// 	for (const c of this.known[this.level].values()) {
+	// 		if (!c.icon) continue;
+	// 		this.drawIcon(c);
+	// 	}
+	// }
+
+	/** (Re)draws one cell's icon, destroying whatever was there before. Pass `undefined` to just clear it. */
+	private updateEntitySprite(x: number, y: number, c: RevealedCell | undefined): void {
+		const spriteKey = `${this.level},${x},${y}`;
+		const existing = this.entitySprites.get(spriteKey);
+		if (existing) {
+			existing.destroy();
+			this.entitySprites.delete(spriteKey);
 		}
+		if (!c?.icon) return;
+		const sp = this.drawIcon(c);
+		if (sp) this.entitySprites.set(spriteKey, sp);
 	}
 
-	private drawIcon(c: RevealedCell): void {
+	/** Full redraw of every known cell's icon on the current level — used only on an actual level switch. */
+	private drawAllEntities(): void {
+		const known = this.known[this.level];
+		for (const c of known.values()) this.updateEntitySprite(c.x, c.y, c);
+		this.touchedEntityCells.clear(); // a full pass covers any incremental work already pending
+	}
+
+	private drawIcon(c: RevealedCell): Sprite | null {
 		// key_<n>: skins cycle so every key in a maze looks distinct.
 		if (c.icon?.startsWith('key_')) {
 			const v = Number(c.icon.slice(4));
-			this.sprite(`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`, c.x, c.y, this.cell * 0.7);
-			return;
+			return this.sprite(`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`, c.x, c.y, this.cell * 0.7);
 		}
 		switch (c.icon) {
 			case 'start':
 			case 'exit':
 			case 'stair_up':
-				this.sprite('item_stair_up', c.x, c.y - 0.4, this.cell * 1.2);
-				break;
+				return this.sprite('item_stair_up', c.x, c.y - 0.4, this.cell * 1.2);
 			case 'stair_down':
-				this.sprite('item_stair_down', c.x, c.y - 0.4, this.cell * 0.9);
-				break;
+				return this.sprite('item_stair_down', c.x, c.y - 0.4, this.cell * 0.9);
 			case 'door_v':
 			case 'door_h':
-				this.sprite(`item_${c.icon}_01`, c.x, c.y, this.cell * 1.3);
-				break;
+				return this.sprite(`item_${c.icon}_01`, c.x, c.y, this.cell * 1.3);
 			case 'door_v_open':
 			case 'door_h_open':
-				this.sprite(`item_${c.icon}`, c.x, c.y, this.cell * 1.3);
-				break;
+				return this.sprite(`item_${c.icon}`, c.x, c.y, this.cell * 1.3);
 			case 'monster':
-				if (c.monster) this.monsterAt(c);
-				else this.sprite('item_skel', c.x, c.y, this.cell * 0.8);
-				break;
+				if (c.monster) {
+					this.monsterAt(c);
+					return null;
+				}
+				return this.sprite('item_skel', c.x, c.y, this.cell * 0.8);
 			case 'gold':
-				this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
-				break;
+				return this.sprite('item_gold', c.x, c.y, this.cell * 0.8);
 			case 'heal':
-				this.sprite('item_heal', c.x, c.y, this.cell * 0.8);
-				break;
+				return this.sprite('item_heal', c.x, c.y, this.cell * 0.8);
 			case 'chest':
-				this.sprite('item_chest', c.x, c.y, this.cell * 0.8);
-				break;
+				return this.sprite('item_chest', c.x, c.y, this.cell * 0.8);
 			default:
-				this.sprite('item_scroll', c.x, c.y, this.cell * 0.7);
-				break;
+				return this.sprite('item_scroll', c.x, c.y, this.cell * 0.7);
 		}
 	}
 
@@ -651,13 +672,14 @@ export class MazeRenderer {
 	}
 
 	/** An aspect-preserving sprite that fits within `size`, centered on a cell. */
-	private sprite(name: string, cx: number, cy: number, size: number): void {
+	private sprite(name: string, cx: number, cy: number, size: number): Sprite {
 		const sp = new Sprite(gfx(name));
 		sp.anchor.set(0.5);
 		const c = this.cell;
 		sp.position.set(cx * c + c / 2, cy * c + c / 2);
 		sp.scale.set(size / Math.max(sp.texture.width, sp.texture.height));
 		this.mapLayer.addChild(sp);
+		return sp;
 	}
 
 	/** Stable per-cell pseudo-random index. */
@@ -680,6 +702,8 @@ export class MazeRenderer {
 		// Sprites on other levels are detached from the stage, so app.destroy would miss them.
 		for (const m of this.monsterSprites.values()) this.retireMonster(m);
 		this.monsterSprites.clear();
+		for (const sp of this.entitySprites.values()) sp.destroy();
+		this.entitySprites.clear();
 		this.app.destroy(true, { children: true });
 	}
 }
