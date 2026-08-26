@@ -5317,8 +5317,8 @@
 		},
 		"msg": {
 			"locked": "Die Tür zu den {name} ist verriegelt.",
-			"opened": "Der Schlüssel zu {name} dreht sich im Schloss: Die Tür öffnet sich mit einem unheimlichen Knarzen...",
-			"key": "Du hast den Schlüssel zu {name} gefunden!",
+			"opened": "Der Schlüssel zu den {name} dreht sich im Schloss: Die Tür öffnet sich mit einem unheimlichen Knarzen...",
+			"key": "Du hast den Schlüssel zu den {name} gefunden!",
 			"gold": "Du hast {value} Goldstücke gefunden!",
 			"resumed": "Du setzt deine Erkundung dort fort, wo du aufgehört hattest."
 		},
