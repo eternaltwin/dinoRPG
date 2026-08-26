@@ -5316,7 +5316,7 @@
 			"exit": "Du verlässt die Kryptakomben... man könnte nicht behaupten, dass der Friedhof sonderlich angenehm ist, aber immerhin ist eine sanfte Brise zu spüren und das ist eine willkommene Abwechslung zum unterirdischen Grabeshauch."
 		},
 		"msg": {
-			"locked": "Die Tür zu {name} ist verriegelt.",
+			"locked": "Die Tür zu den {name} ist verriegelt.",
 			"opened": "Der Schlüssel zu {name} dreht sich im Schloss: Die Tür öffnet sich mit einem unheimlichen Knarzen...",
 			"key": "Du hast den Schlüssel zu {name} gefunden!",
 			"gold": "Du hast {value} Goldstücke gefunden!",
@@ -5324,14 +5324,14 @@
 		},
 		"doorNames": "{sufix}{prefix}",
 		"doorNames_prefix": [
-			"Bäume",
+			"Bäumen",
 			"Drachen",
-			"Tintenfische",
+			"Tintenfischen",
 			"Goblins",
 			"Kabukis",
 			"Romeos",
-			"Magier",
-			"Engel",
+			"Magiern",
+			"Engeln",
 			"Dämonen"
 		],
 		"doorNames_sufix": [
