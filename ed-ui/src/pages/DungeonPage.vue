@@ -97,6 +97,8 @@ let heldSince = 0;
 // Set in mounted/cleared in beforeUnmount so the module-scope key handlers (stable refs,
 // needed for add/removeEventListener) can reach tryMove.
 let triggerMove: ((dx: number, dy: number) => void) | null = null;
+// Flag to avoid building and mounting will unmounting is happening.
+let unmounting = false;
 
 const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
@@ -440,6 +442,9 @@ export default defineComponent({
 			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
 			// Lazy-load only this run's tiles now that the server told us the skin.
 			await loadDungeonAssets(skins.flatMap(skinAssetNames));
+
+			if (unmounting) return; // page was left while assets/build were in flight
+
 			// cell 45 renders the dino at native resolution; the 500×350 viewport scrolls.
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
@@ -484,7 +489,9 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
+		unmounting = false;
 		await this.build();
+		if (unmounting) return; // navigated away mid-build; nothing left to wire up
 
 		triggerMove = (dx, dy) => this.tryMove(dx, dy);
 		window.addEventListener('keydown', onKeyDown);
@@ -509,6 +516,7 @@ export default defineComponent({
 		rafId = requestAnimationFrame(frame);
 	},
 	beforeUnmount() {
+		unmounting = true;
 		cancelAnimationFrame(rafId);
 		triggerMove = null;
 		window.removeEventListener('keydown', onKeyDown);
