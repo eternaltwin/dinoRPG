@@ -43,7 +43,12 @@ export class MazeRenderer {
 	private skins: Skin[];
 	private level = 0;
 	private debug = false;
-	private dirty = false;
+	/** New floor/wall cells → ground + wall layers need a rebuild. */
+	private geometryDirty = false;
+	/** Any touched cell (new or re-sent) → icons/monsters may have changed. */
+	private entitiesDirty = false;
+	/** Reapply fog if necessary. */
+	private fogDirty = true;
 	/** Overground zone noise seed — key it to the dungeon id to keep decoration stable across refreshes. */
 	private readonly noiseSeed: number;
 	/** Cached zone id (0..2) per cell, one grid per level. */
@@ -56,7 +61,6 @@ export class MazeRenderer {
 	private camX = NaN;
 	private camY = NaN;
 
-	private fogDirty = true;
 
 	constructor(parent: HTMLElement, dims: MazeDims, opts: RendererOptions = {}) {
 		this.cell = opts.cell ?? 24;
@@ -133,7 +137,6 @@ export class MazeRenderer {
 	 * away from the player. Omit it for an axis-aligned fade.
 	 */
 	applyReveal(cells: RevealedCell[], origin?: { x: number; y: number }): void {
-		let dirty = false;
 		for (const c of cells) {
 			const level = this.known[c.l];
 			if (!level) continue;
@@ -148,15 +151,15 @@ export class MazeRenderer {
 			}
 			level.set(this.key(c.x, c.y), c);
 			if (c.l === this.level) {
-				dirty = true;
+				this.entitiesDirty = true;
 				if (isNew) {
-					// Only mark the fog dirty when a cell is new.
+					// Only mark the fog and background as dirty when a cell is new.
+					this.geometryDirty = true;
 					this.fogDirty = true;
 					this.revealFx(c.x, c.y, origin);
 				}
 			}
 		}
-		if (dirty) this.dirty = true;
 	}
 
 	/** Pixel center of cell (x, y). */
@@ -197,16 +200,30 @@ export class MazeRenderer {
 		this.level = lv;
 		const skin = this.skinFor(this.level);
 		this.app.renderer.background.color = skin.fog;
-		this.groundLayer.removeChildren();
-		this.mapLayer.removeChildren();
-		this.wallBackLayer.removeChildren();
-		this.wallFrontLayer.removeChildren();
 		this.maskLayer.removeChildren();
-		this.drawLevel(skin);
-		this.drawEntities();
 		this.drawMask(skin);
 
-		// Show fog only if it needs an update
+		this.geometryDirty = true;
+		this.entitiesDirty = true;
+		this.fogDirty = true;
+		this.rebuild();
+	}
+
+	/** Redraws only the layers whose dirty flag is set. Called every tick from updateFx(). */
+	private rebuild(): void {
+		const skin = this.skinFor(this.level);
+		if (this.geometryDirty) {
+			this.geometryDirty = false;
+			this.groundLayer.removeChildren();
+			this.wallBackLayer.removeChildren();
+			this.wallFrontLayer.removeChildren();
+			this.drawLevel(skin);
+		}
+		if (this.entitiesDirty) {
+			this.entitiesDirty = false;
+			this.mapLayer.removeChildren();
+			this.drawEntities();
+		}
 		if (this.fogDirty) {
 			this.fogDirty = false;
 			this.fogLayer.removeChildren();
@@ -399,14 +416,13 @@ export class MazeRenderer {
 	}
 
 	private updateFx(dt: number): void {
-		if (this.dirty) {
-			this.dirty = false;
+		if (this.geometryDirty || this.entitiesDirty || this.fogDirty) {
 			// Ticker listeners share no error isolation: an uncaught throw here stops it
 			// requesting further frames and silently freezes the whole canvas.
 			try {
-				this.showLevel(this.level);
+				this.rebuild();
 			} catch (err) {
-				console.error('MazeRenderer: showLevel failed', err);
+				console.error('MazeRenderer: rebuild failed', err);
 			}
 		}
 		for (let i = this.fx.length - 1; i >= 0; i--) {
