@@ -318,7 +318,8 @@
 		"search": "Rechercher",
 		"loading": "Chargement...",
 		"noResults": "Aucun résultat",
-		"details": "Détails"
+		"details": "Détails",
+		"return": "Retour"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -3576,8 +3577,7 @@
 			"title": "Options du compte",
 			"fight": "Afficher les combats",
 			"todo": "Non disponible",
-			"reset": "Supprimer le compte",
-			"retour": "Retour"
+			"reset": "Supprimer le compte"
 		},
 		"twinoidgoals": {
 			"name": "Statistiques DinoRPG",
@@ -4611,7 +4611,6 @@
 		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
 		"bid": "Enchérir",
 		"detail": "Voir détails",
 		"yourTreasuryNotes": "Vos Bons du Trésor",
@@ -4714,7 +4713,6 @@
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",

@@ -29,6 +29,7 @@
 			<button @click="toggleDebug">Wall debug: {{ wallDebug ? 'ON' : 'OFF' }}</button>
 		</div>
 	</div>
+	<DZButton back class="returnButton" @click="goBack()">{{ $t('button.return') }}</DZButton>
 </template>
 
 <script lang="ts">
@@ -48,6 +49,7 @@ import { sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import DZButton from '../components/common/DZButton.vue';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // At module scope on purpose: Pixi objects must stay out of Vue's reactivity (deep proxies
@@ -157,7 +159,7 @@ function onKeyUp(e: KeyboardEvent): void {
 
 export default defineComponent({
 	name: 'DungeonPage',
-	components: { DZDisclaimer },
+	components: { DZDisclaimer, DZButton },
 	props: {
 		dinozId: { type: Number, required: true }
 	},
@@ -381,7 +383,7 @@ export default defineComponent({
 			this.buttonIcon = '';
 		},
 		async action(): Promise<void> {
-			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			const currentDinoz = useDinozStore().getCurrentDinoz;
 			if (!currentDinoz) {
 				console.warn('Current Dinoz not found');
 				return;
@@ -423,7 +425,7 @@ export default defineComponent({
 		},
 		/** Build the maze from the run DinozActions already fetched via DungeonService.enterDungeon(). */
 		async build(): Promise<void> {
-			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			const currentDinoz = useDinozStore().getCurrentDinoz;
 			// enterDungeon() runs in DinozActions.launch() before routing here, so its errors
 			// (team already in a dungeon, …) never reach this page.
 			const run = this.sessionStore.getDungeonRun;
@@ -491,6 +493,12 @@ export default defineComponent({
 				f.takeControl();
 				followers.push(f);
 			}
+		},
+		goBack(): void {
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: useDinozStore().currentDinozId }
+			});
 		}
 	},
 	async mounted() {
@@ -673,5 +681,8 @@ export default defineComponent({
 	img {
 		image-rendering: pixelated;
 	}
+}
+.returnButton {
+	width: fit-content;
 }
 </style>
