@@ -5301,6 +5301,17 @@
 		"blockSender": "Bloquer l'expéditeur"
 	},
 	"dungeon": {
+		"buttons": {
+			"up": "Bouger vers le haut",
+			"left": "Bouger vers la gauche",
+			"right": "Bouger vers la droite",
+			"down": "Bouger vers le bas",
+			"irma": "Utiliser une potion d'irma pour continuer à avancer",
+			"stair_down": "Descendre les escaliers",
+			"stair_up": "Monter les escaliers",
+			"start": "Retourner à l'entrée du donjon",
+			"exit": "Sortir du donjon"
+		},
 		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
 		"floor": "Étage {floor}",
 		"name": {

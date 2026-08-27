@@ -7,21 +7,47 @@
 	<div class="dungeon-page">
 		<div ref="stageEl" class="stage">
 			<div class="dpad">
-				<button v-if="!needIrma" class="btn up" title="Move up" @click="tryMove(0, -1)">
-					<img :src="arrowIcon" alt="up" />
-				</button>
-				<button v-if="!needIrma" class="btn left" title="Move left" @click="tryMove(-1, 0)">
-					<img :src="arrowIcon" alt="left" />
-				</button>
-				<button v-if="!needIrma" class="btn right" title="Move right" @click="tryMove(1, 0)">
-					<img :src="arrowIcon" alt="right" />
-				</button>
-				<button v-if="!needIrma" class="btn down" title="Move down" @click="tryMove(0, 1)">
-					<img :src="arrowIcon" alt="down" />
-				</button>
-				<button v-if="needIrma || buttonIcon !== ''" class="btn center" title="action" @click="action()">
-					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
-				</button>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn up" @click="tryMove(0, -1)">
+						<img :src="arrowIcon" alt="up" />
+					</button>
+					<template #content>
+						{{  $t(`dungeon.buttons.up`)  }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn left" @click="tryMove(-1, 0)">
+						<img :src="arrowIcon" alt="left" />
+					</button>
+					<template #content>
+						{{  $t(`dungeon.buttons.left`)  }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn right" @click="tryMove(1, 0)">
+						<img :src="arrowIcon" alt="right" />
+					</button>
+					<template #content>
+						{{  $t(`dungeon.buttons.right`)  }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn down" @click="tryMove(0, 1)">
+						<img :src="arrowIcon" alt="down" />
+					</button>
+					<template #content>
+						{{  $t(`dungeon.buttons.down`)  }}
+					</template>
+				</Tippy>
+				<!-- Need to fix reflexiveness of actionImg first -->
+				<!-- <Tippy theme="small"> -->
+					<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
+						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
+					</button>
+					<!-- <template #content>
+						{{  $t(`dungeon.buttons.${actionImg}`)  }}
+					</template>
+				</Tippy> -->
 			</div>
 			<span class="floor">{{ $t(`dungeon.floor`, { floor: currentLevel }) }}</span>
 		</div>
@@ -178,6 +204,7 @@ export default defineComponent({
 			if (this.needIrma) {
 				return 'irma';
 			} else {
+				// Does not work because Vue 2 does not handle reflexiveness of Maps and Set
 				const icon = icons.get(iconKey(cursor));
 				return icon ?? '';
 			}
