@@ -45,7 +45,7 @@ import type { Cell, MoveResult, MoveStep, RevealedCell, Skin } from '@drpg/core/
 import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
 import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
 import { DinozActor } from '../utils/dungeon/DinozActor.js';
-import { sessionStore, useDinozStore } from '../store';
+import { sessionStore, useDinozStore, playerStore } from '../store';
 import { errorHandler } from '../utils';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
@@ -169,6 +169,7 @@ export default defineComponent({
 			buttonIcon: '' as string,
 			arrowIcon: assetUrl('interf_arrow'),
 			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			currentLevel: 0
 		};
 	},
@@ -301,6 +302,7 @@ export default defineComponent({
 				}
 				if (move.gold) {
 					renderer?.showMessage(this.$t('dungeon.msg.gold', { value: move.gold }), 'item_gold');
+					this.playerStore.addMoney(move.gold);
 				}
 			}
 			confirmed = { ...move.pos };
