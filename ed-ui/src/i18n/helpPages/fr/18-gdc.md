@@ -15,6 +15,7 @@ Chaque Clan possède un Trésor qui correspond à la valeur des ingrédients à 
 Pour remplir le Trésor du Clan, chaque membre peut donner tout ou partie de ses ingrédients recueillis lors de ses actions de collecte. À partir de la page Ingrédients dans le menu de droite, vous aurez accès à un bouton permettant de 'Donner au Clan'.
 
 Le trésor a différentes utilités, les voici :
+
 - _La construction/reconstruction du Château_
 - _La déclaration de guerre contre un autre Clan_
 - _Le paiement du percepteur_
@@ -32,6 +33,7 @@ Voici un exemple de l'onglet Château :
 ![Exemple de page de château](@guide/castle)
 
 La page du Château résume ce qui suit :
+
 - _L'emplacement du Château_
 - _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300 :pv: points de vie._
 
