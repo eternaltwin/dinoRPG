@@ -29,7 +29,7 @@
 			</div>
 		</div>
 
-		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
+		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('button.return') }}</DZButton>
 
 		<Transition name="bounce">
 			<FightRecap :stats="fightStat" />
