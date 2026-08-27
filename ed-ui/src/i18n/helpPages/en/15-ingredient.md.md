@@ -14,4 +14,4 @@ Vous devez sélectionner la ou les cases que vous désirez examiner. Avec un peu
 
 Pour vendre vos ingrédients, vous devez trouver le **Marchand Ambulant** qui se déplace chaque semaine dans un nouveau lieu. En fonction du **jour de la semaine**, il pourra vous acheter différents types d'ingrédients pour un très bon prix, alors soyez attentifs.
 
-Vous avez une quantité maximale d'ingrédients que vous pouvez transporter, il vous faudra donc les vendre de façon régulière.
+Vous avez une quantité maximum d'ingrédients que vous pouvez transporter, il vous faudra donc les vendre de façon régulière.
