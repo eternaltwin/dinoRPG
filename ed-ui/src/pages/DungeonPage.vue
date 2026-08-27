@@ -180,7 +180,11 @@ export default defineComponent({
 			}
 		},
 		needIrma(): boolean {
-			return !(useDinozStore().getDinoz(this.dinozId)?.fight ?? false);
+			let leader = useDinozStore().getDinoz(this.dinozId);
+			// Leader cannot fight or a follower cannot fight then irma needed.
+			if (leader && (!leader.fight || leader.followers.some(d => !d.fight))) return true;
+			// Default to false. Irma not needed.
+			return false;
 		},
 		currentDinoz() {
 			return useDinozStore().getDinoz(this.dinozId);
@@ -379,12 +383,11 @@ export default defineComponent({
 		async action(): Promise<void> {
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (!currentDinoz) {
+				console.warn('Current Dinoz not found');
 				return;
 			}
 			if (this.needIrma) {
-				if (currentDinoz.fight) {
-					return;
-				}
+				// Handle irma potion if needed and that's all.
 				try {
 					const toast = await DinozService.useIrma(currentDinoz.id);
 					if (toast.category === ItemEffect.ACTION && toast.value > 0) {
@@ -398,22 +401,24 @@ export default defineComponent({
 				} catch (e) {
 					errorHandler.handle(e, this.$toast);
 				}
-			}
-			const icon = icons.get(iconKey(cursor));
-			if (icon === 'stair_up') this.tryMove(0, 0, 1);
-			else if (icon === 'stair_down') this.tryMove(0, 0, -1);
-			else if (icon === 'start' || icon === 'exit') {
-				try {
-					await DungeonService.exitDungeon(this.dungeonId, currentDinoz.id);
-				} catch (err) {
-					errorHandler.handle(err, this.$toast);
-					return;
+			} else {
+				// Otherwise, handle whatever the current icon is.
+				const icon = icons.get(iconKey(cursor));
+				if (icon === 'stair_up') this.tryMove(0, 0, 1);
+				else if (icon === 'stair_down') this.tryMove(0, 0, -1);
+				else if (icon === 'start' || icon === 'exit') {
+					try {
+						await DungeonService.exitDungeon(this.dungeonId, currentDinoz.id);
+					} catch (err) {
+						errorHandler.handle(err, this.$toast);
+						return;
+					}
+					await useDinozStore().refreshDinozFiche(currentDinoz.id);
+					this.$router.push({
+						name: 'DinozPage',
+						params: { id: currentDinoz.id.toString() }
+					});
 				}
-				await useDinozStore().refreshDinozFiche(currentDinoz.id);
-				this.$router.push({
-					name: 'DinozPage',
-					params: { id: currentDinoz.id.toString() }
-				});
 			}
 		},
 		/** Build the maze from the run DinozActions already fetched via DungeonService.enterDungeon(). */
