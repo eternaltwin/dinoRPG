@@ -497,12 +497,12 @@ export default defineComponent({
 			// rebuilds the scene graph — the cacheAsBitmap bake and the pixels wait for a
 			// render() pass. Force both, or the canvas sits on plain fog until something
 			// else happens to render.
-			// renderer.showLevel(renderer.currentLevel);
-			// try {
-			// 	renderer.app.render();
-			// } catch (err) {
-			// 	console.error('DungeonPage: initial render failed', err);
-			// }
+			renderer.showLevel(renderer.currentLevel);
+			try {
+				renderer.app.render();
+			} catch (err) {
+				console.error('DungeonPage: initial render failed', err);
+			}
 			actor = new DinozActor(renderer, {
 				code: currentDinoz.display,
 				speed: WALK_SPEED,
