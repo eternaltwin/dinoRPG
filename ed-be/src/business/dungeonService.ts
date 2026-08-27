@@ -235,13 +235,9 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
 
-	const team = [dinoz, ...dinoz.followers];
-	if (team.some(d => !d.fight)) {
-		throw new ExpectedError(translate(`missingIrma`, authed));
-	}
 	// One run per player per dungeon. Looked up before the busy check so a dungeon-busy
 	// dinoz only gets through when it's resuming its own run.
-	const existing = await findRun(dungeon.id, authed.id);
+	const team = [dinoz, ...dinoz.followers];
 	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
 		throw new ExpectedError(translate('dungeon.unavailable', authed));
 	}
@@ -253,6 +249,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	const d = codec.d;
 
 	// Resume: hand back the position and everything already revealed.
+	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
 		// Only one team at a time in the dungeon.
 		if (existing.leaderId && existing.leaderId !== dinoz.id) {
