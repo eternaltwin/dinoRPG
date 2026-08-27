@@ -60,7 +60,7 @@ De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire 
 
 ## Gains
 
-À la fin du combat, votre Dinoz gagne des pièces d'or ![](@icons/small_gold) qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
+À la fin du combat, votre Dinoz gagne des pièces d'or :gold: qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
 
 ## L'Énergie
 
