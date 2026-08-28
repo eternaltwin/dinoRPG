@@ -100,7 +100,13 @@ export class MazeRenderer {
 		);
 		// Ground post-processing: drop shadow + dark inner glow (occlusion) + muted outer glow (tint).
 		const s = this.cell / 40;
-		let dropShadowFilter = new DropShadowFilter({ offset: { x: 15 * s, y: 0 }, color: 0x000000, alpha: 0.3, blur: 3 * s, quality: 2 });
+		const dropShadowFilter = new DropShadowFilter({
+			offset: { x: 15 * s, y: 0 },
+			color: 0x000000,
+			alpha: 0.3,
+			blur: 3 * s,
+			quality: 2
+		});
 		// Glow filters introduce a lot of latency.
 		// Render effect is quite difficult to assess visually.
 		// Disabled for now

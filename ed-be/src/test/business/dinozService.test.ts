@@ -188,7 +188,7 @@ const baseTournament = (overrides = {}) => ({
 		qualificationStart: new Date(),
 		qualificationEnd: new Date(),
 		poolsStart: new Date(),
-		finalsStart: new Date(),
+		finalsStart: new Date()
 	},
 	cashPrice: 0,
 	levelLimit: 10,
@@ -374,7 +374,11 @@ describe('getAvailableActions', () => {
 	});
 
 	it('offers a gather action when the place has a gather and condition passes', async () => {
-		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: GatherType.SEEK, specialGather: undefined } as never);
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+			placeId: 1,
+			gather: GatherType.SEEK,
+			specialGather: undefined
+		} as never);
 		vi.mocked(checkCondition).mockReturnValue(true as never);
 		const result = await getAvailableActions(baseDinoz({ gather: true }) as never, player());
 		expect(result.some(a => a.name === Action.SEEK)).toBe(true);
@@ -398,7 +402,11 @@ describe('getAvailableActions', () => {
 	});
 
 	it('offers follower gather actions when a follower can gather', async () => {
-		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: GatherType.SEEK, specialGather: undefined } as never);
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+			placeId: 1,
+			gather: GatherType.SEEK,
+			specialGather: undefined
+		} as never);
 		vi.mocked(checkCondition).mockReturnValue(true as never);
 		const leader = baseDinoz({
 			followers: [{ id: 2, fight: true, remaining: 1, gather: true }]
