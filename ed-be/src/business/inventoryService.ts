@@ -148,8 +148,6 @@ export async function useItem(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
-
-
 	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
 	if (itemData === undefined || itemData.quantity <= 0) {
 		throw new ExpectedError(translate(`notEnoughItem`, authed));
