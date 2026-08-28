@@ -12,7 +12,7 @@
 						<img :src="arrowIcon" alt="up" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.up`)  }}
+						{{ $t(`dungeon.buttons.up`) }}
 					</template>
 				</Tippy>
 				<Tippy theme="small">
@@ -20,7 +20,7 @@
 						<img :src="arrowIcon" alt="left" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.left`)  }}
+						{{ $t(`dungeon.buttons.left`) }}
 					</template>
 				</Tippy>
 				<Tippy theme="small">
@@ -28,7 +28,7 @@
 						<img :src="arrowIcon" alt="right" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.right`)  }}
+						{{ $t(`dungeon.buttons.right`) }}
 					</template>
 				</Tippy>
 				<Tippy theme="small">
@@ -36,15 +36,15 @@
 						<img :src="arrowIcon" alt="down" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.down`)  }}
+						{{ $t(`dungeon.buttons.down`) }}
 					</template>
 				</Tippy>
 				<!-- Need to fix reflexiveness of actionImg first -->
 				<!-- <Tippy theme="small"> -->
-					<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
-						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
-					</button>
-					<!-- <template #content>
+				<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
+					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
+				</button>
+				<!-- <template #content>
 						{{  $t(`dungeon.buttons.${actionImg}`)  }}
 					</template>
 				</Tippy> -->
@@ -210,7 +210,7 @@ export default defineComponent({
 			}
 		},
 		needIrma(): boolean {
-			let leader = useDinozStore().getDinoz(this.dinozId);
+			const leader = useDinozStore().getDinoz(this.dinozId);
 			// Leader cannot fight or a follower cannot fight then irma needed.
 			if (leader && (!leader.fight || leader.followers.some(d => !d.fight))) return true;
 			// Default to false. Irma not needed.

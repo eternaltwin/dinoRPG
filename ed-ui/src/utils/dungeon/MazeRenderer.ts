@@ -100,25 +100,36 @@ export class MazeRenderer {
 		);
 		// Ground post-processing: drop shadow + dark inner glow (occlusion) + muted outer glow (tint).
 		const s = this.cell / 40;
+		let dropShadowFilter = new DropShadowFilter({ offset: { x: 15 * s, y: 0 }, color: 0x000000, alpha: 0.3, blur: 3 * s, quality: 2 });
+		// Glow filters introduce a lot of latency.
+		// Render effect is quite difficult to assess visually.
+		// Disabled for now
+		// Possible optimisations:
+		// - reduce distance factor (64 -> 32 -> 16)
+		// - reduce quality (0.2 -> 0.1)
+		// - reduce resolution: `innerGlowFilter.resolution = 0.5;`
+		// let innerGlowFilter = new GlowFilter({
+		// 	distance: 64 * s,
+		// 	innerStrength: 2,
+		// 	outerStrength: 0,
+		// 	color: 0x000000,
+		// 	alpha: 0.35,
+		// 	quality: 0.2
+		// });
+		// let outerGlowFilter = new GlowFilter({
+		// 	distance: 64 * s,
+		// 	outerStrength: 2,
+		// 	innerStrength: 0,
+		// 	color: 0x72525b,
+		// 	alpha: 0.6,
+		// 	quality: 0.2
+		// });
 		this.groundLayer.filters = [
-			new DropShadowFilter({ offset: { x: 15 * s, y: 0 }, color: 0x000000, alpha: 0.3, blur: 3 * s, quality: 2 }),
-			new GlowFilter({
-				distance: 64 * s,
-				innerStrength: 2,
-				outerStrength: 0,
-				color: 0x000000,
-				alpha: 0.35,
-				quality: 0.2
-			}),
-			new GlowFilter({
-				distance: 64 * s,
-				outerStrength: 2,
-				innerStrength: 0,
-				color: 0x72525b,
-				alpha: 0.6,
-				quality: 0.2
-			})
+			dropShadowFilter
+			// innerGlowFilter,
+			// outerGlowFilter
 		];
+		this.groundLayer.filterArea = this.app.screen;
 		this.sharedFxBlur = new BlurFilter(this.fogBlur, 2);
 		this.app.ticker.add(this.updateFx, this);
 
@@ -406,6 +417,7 @@ export class MazeRenderer {
 			}
 		g.endFill();
 		g.filters = [this.sharedFxBlur];
+		g.filterArea = this.app.screen;
 		this.fogLayer.addChild(g);
 	}
 
@@ -419,6 +431,7 @@ export class MazeRenderer {
 		g.position.set(p.x, p.y);
 		if (origin) g.rotation = Math.atan2(origin.y - y, origin.x - x);
 		g.filters = [this.sharedFxBlur];
+		g.filterArea = this.app.screen;
 		this.fxLayer.addChild(g);
 		this.fx.push({ g, cpt: 0 });
 	}
