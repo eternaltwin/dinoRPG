@@ -363,7 +363,9 @@ describe('checkRefund', () => {
 			ingredients: [{ ingredientId: Ingredient.MEROU_LUJIDANE, quantity: 45 }], // Merou max quantity is 50
 			items: []
 		} as never);
-		expect( await checkRefund('p1', [{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }], [], null, 5)).toBe(true);
+		expect(
+			await checkRefund('p1', [{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }], [], null, 5)
+		).toBe(true);
 	});
 	it('returns true when at the limit of items', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
@@ -374,7 +376,9 @@ describe('checkRefund', () => {
 			ingredients: [],
 			items: [{ itemId: Item.HOT_BREAD, quantity: 95 }] // Hot bread max quantity is 100
 		} as never);
-		expect(await checkRefund('p1', [], [{ itemId: Item.HOT_BREAD, quantity: 5, isIngredient: false }], null, 5)).toBe(true);
+		expect(await checkRefund('p1', [], [{ itemId: Item.HOT_BREAD, quantity: 5, isIngredient: false }], null, 5)).toBe(
+			true
+		);
 	});
 	it('takes into account shopkeeper for ingredients', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
@@ -385,7 +389,9 @@ describe('checkRefund', () => {
 			ingredients: [{ ingredientId: Ingredient.MEROU_LUJIDANE, quantity: 70 }], // Merou max quantity is 75 with shopkeeper
 			items: []
 		} as never);
-		expect( await checkRefund('p1', [{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }], [], null, 5)).toBe(true);
+		expect(
+			await checkRefund('p1', [{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }], [], null, 5)
+		).toBe(true);
 	});
 	it('takes into account shopkeeper for items', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
@@ -396,7 +402,9 @@ describe('checkRefund', () => {
 			ingredients: [],
 			items: [{ itemId: Item.HOT_BREAD, quantity: 145 }] // Hot bread max quantity is 150 with shopkeeper
 		} as never);
-		expect(await checkRefund('p1', [], [{ itemId: Item.HOT_BREAD, quantity: 5, isIngredient: false }], null, 5)).toBe(true);
+		expect(await checkRefund('p1', [], [{ itemId: Item.HOT_BREAD, quantity: 5, isIngredient: false }], null, 5)).toBe(
+			true
+		);
 	});
 	it('returns tooManyActiveDinoz when over the dinoz limit', async () => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
@@ -418,7 +426,13 @@ describe('checkRefund', () => {
 			ingredients: [{ ingredientId: Ingredient.MEROU_LUJIDANE, quantity: 49 }],
 			items: []
 		} as never);
-		const result = await checkRefund('p1', [{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }], [], null, 5);
+		const result = await checkRefund(
+			'p1',
+			[{ itemId: Ingredient.MEROU_LUJIDANE, quantity: 5, isIngredient: true }],
+			[],
+			null,
+			5
+		);
 		expect(result).toBe('tooManyIngredients');
 	});
 	it('returns tooManyItems when an item would overflow', async () => {

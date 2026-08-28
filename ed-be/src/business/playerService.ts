@@ -296,7 +296,7 @@ export async function resetAccount(req: Request) {
 	}
 
 	// Check the account is less than 1 day old
-	let oneDayAfterCreation = playerToDelete.createdDate.getTime() + (24 * 60 * 60 * 1000);
+	let oneDayAfterCreation = playerToDelete.createdDate.getTime() + 24 * 60 * 60 * 1000;
 	if (oneDayAfterCreation > new Date().getTime()) {
 		throw new ExpectedError(translate('error.playerTooYoung', authed, { id: authed.id }));
 	}
