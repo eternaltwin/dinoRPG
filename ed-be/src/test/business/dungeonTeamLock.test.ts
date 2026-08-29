@@ -87,7 +87,7 @@ describe('dungeon team lock', () => {
 		} as never);
 
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
-			'dungeon.unavailable'
+			'error.dinozNotAvailable'
 		);
 		expect(createRun).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).not.toHaveBeenCalled();
