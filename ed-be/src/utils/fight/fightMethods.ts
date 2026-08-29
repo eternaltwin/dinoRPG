@@ -2036,7 +2036,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.PIRHANOZ_IN_BAG: {
-				createMonster(fightData, fighter, monsterList.PIRA);
+				createMonster(fightData, fighter, monsterList.PIRHANOZ);
 				break;
 			}
 			case Item.AMAZON: {
