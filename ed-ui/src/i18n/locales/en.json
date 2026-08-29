@@ -4406,7 +4406,7 @@
 			"pteroz": "Pteroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rocky",
-			"pira": "Pirhanoz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine",
 			"anguil": "Eeloz",
 			"korgon": "Facetious Korgon",
@@ -5323,7 +5323,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
