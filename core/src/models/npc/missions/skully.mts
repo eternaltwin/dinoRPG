@@ -127,12 +127,12 @@ export const M_SKULLY: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.LAUNCH_FIGHT,
 					mobList: [
-						monsterList.PIRA,
-						monsterList.PIRA,
-						monsterList.PIRA,
-						monsterList.PIRA,
-						monsterList.PIRA,
-						monsterList.PIRA
+						monsterList.PIRHANOZ,
+						monsterList.PIRHANOZ,
+						monsterList.PIRHANOZ,
+						monsterList.PIRHANOZ,
+						monsterList.PIRHANOZ,
+						monsterList.PIRHANOZ
 					],
 					target: 'baiePira',
 					startText: {

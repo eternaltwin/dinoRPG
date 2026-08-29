@@ -18,7 +18,8 @@ export enum Monster {
 	GOBLIN = 'GOBLIN',
 	BARCHE = 'BARCHE',
 	COBRA = 'COBRA',
-	PIRA = 'PIRA',
+	PIRHALOZ = 'PIRHALOZ',
+	PIRHANOZ = 'PIRHANOZ',
 	KAZKA = 'KAZKA',
 	ANGUIL = 'ANGUIL',
 	BORG = 'BORG',
@@ -38,6 +39,7 @@ export enum Monster {
 	BRIG3_HOME = 'BRIG3_HOME',
 	GROPI = 'GROPI',
 	MIMIC = 'MIMIC',
+	MIMIC2 = 'MIMIC2',
 	EARTH2 = 'EARTH2',
 	KORGON_REINFORCEMENT = 'KORGON_REINFORCEMENT',
 	KORGON_SKULLY = 'KORGON_SKULLY',
@@ -262,7 +264,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 50,
 		bonus_defense: 30,
 		resilience: 40,
-		odds: 250,
+		odds: 5,
 		level: 15,
 		zones: [MapZone.DINOLAND],
 		places: [PlaceEnum.CIMETIERE],
@@ -356,16 +358,38 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 0,
-		odds: 50,
+		odds: 100,
 		level: 20,
 		zones: [MapZone.GTOUTCHAUD],
 		canBeCaptured: true,
 		display: 'cobra',
 		entrance: EntranceEffect.GROW
 	},
-	[Monster.PIRA]: {
-		id: Monster.PIRA,
-		name: 'pira',
+	[Monster.PIRHALOZ]: {
+		id: Monster.PIRHALOZ,
+		name: 'pirhaloz',
+		hp: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		resilience: 0,
+		odds: 100,
+		level: 1,
+		zones: [MapZone.ILES],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 1 }
+		],
+		canBeCaptured: true,
+		display: 'pira'
+	},
+	[Monster.PIRHANOZ]: {
+		id: Monster.PIRHANOZ,
+		name: 'pirhanoz',
 		hp: 5,
 		elements: {
 			fire: 0,
@@ -402,7 +426,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 3,
 		bonus_defense: 7,
 		resilience: 0,
-		odds: 50,
+		odds: 100,
 		level: 8,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
@@ -533,7 +557,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 25,
 		bonus_defense: 18,
 		resilience: 40,
-		odds: 50,
+		odds: 100,
 		level: 20,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
@@ -578,7 +602,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 6,
 		bonus_defense: 10,
 		resilience: 40,
-		odds: 50,
+		odds: 100,
 		level: 20,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
@@ -597,7 +621,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 40,
-		odds: 50,
+		odds: 100,
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
@@ -617,7 +641,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 40,
-		odds: 50,
+		odds: 100,
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
@@ -637,7 +661,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 40,
 		bonus_defense: 130,
 		resilience: 40,
-		odds: 50,
+		odds: 100,
 		level: 38,
 		xp: 12,
 		zones: [MapZone.STEPPE],
@@ -840,6 +864,31 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOWEST],
 		canBeCaptured: true
 	},
+	[Monster.MIMIC2]: {
+		id: Monster.MIMIC2,
+		name: 'mimic',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 50,
+		resilience: 40,
+		odds: 100,
+		groups: [
+			{ quantity: 0, odds: 3 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 },
+			{ quantity: 3, odds: 0 }
+		],
+		level: 35,
+		zones: [MapZone.DINOWEST],
+		canBeCaptured: true
+	},
 	[Monster.EARTH2]: {
 		id: Monster.EARTH2,
 		name: 'earth2',
@@ -920,7 +969,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 30,
 		bonus_defense: 15,
 		resilience: 0,
-		odds: 0,
+		odds: 100,
 		level: 22,
 		zones: [],
 		skills: [Skill.M_VEGETOX_DEFENDER, Skill.M_INFINITE_REINFORCEMENTS],
