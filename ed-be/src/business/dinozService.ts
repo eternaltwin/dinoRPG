@@ -309,7 +309,8 @@ export async function getAvailableActions(
 		}
 	}
 
-	if (dinozPlace.dungeon) {
+	// If leader or solo, allow to enter the dungeon.
+	if (dinozPlace.dungeon && dinoz.leaderId === null) {
 		const dungeon = await getDungeonByPlaceStart(dinozPlace.placeId);
 		if (dungeon) {
 			if (checkCondition(JSON.parse(dungeon.condition) as Condition, player, dinoz.id)) {

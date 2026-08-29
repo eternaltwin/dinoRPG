@@ -220,17 +220,21 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (!dungeon) {
 		dungeon = await getDungeonById(dungeonName);
 		if (!dungeon) {
-			throw new ExpectedError(translate('dungeon.inexistent', authed));
+			throw new ExpectedError(translate('dungeon.notFound', authed));
 		}
 	}
 	if (!dungeon.isActive) {
-		throw new ExpectedError(translate('dungeon.inexistent', authed));
+		throw new ExpectedError(translate('dungeon.notFound', authed));
 	}
 	const dinozId = req.body.dinozId;
 	const dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(translate('dungeon.inexistent', authed));
+		throw new ExpectedError(translate('dinozNotFound', authed));
 	}
+	if (dinoz.leaderId !== null) {
+		throw new ExpectedError(translate('notLeader', authed));
+	}
+
 	if (dungeon.placeStart != null && dungeon.placeStart !== dinoz.placeId) {
 		throw new ExpectedError(translate('dungeon.wrongPlace', authed));
 	}
@@ -239,7 +243,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// dinoz only gets through when it's resuming its own run.
 	const team = [dinoz, ...dinoz.followers];
 	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
-		throw new ExpectedError(translate('dungeon.unavailable', authed));
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	const codec = new DungeonCodec();
@@ -333,13 +337,13 @@ export async function exitRun(req: Request) {
 	if (!dungeon) {
 		dungeon = await getDungeonById(dungeonName);
 		if (!dungeon) {
-			throw new ExpectedError(translate('dungeon.inexistent', authed));
+			throw new ExpectedError(translate('dungeon.notFound', authed));
 		}
 	}
 	const dinozId = req.body.dinozId;
 	const dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(translate('dungeon.inexistent', authed));
+		throw new ExpectedError(translate('dinozNotFound', authed));
 	}
 
 	const run = await findRun(dungeon.id, authed.id);
@@ -395,7 +399,7 @@ export async function move(req: Request): Promise<MoveResult> {
 	if (!dungeon) {
 		dungeon = await getDungeonById(dungeonId);
 		if (!dungeon) {
-			throw new ExpectedError(translate('dungeon.inexistent', authed));
+			throw new ExpectedError(translate('dungeon.notFound', authed));
 		}
 	}
 	const run = await findRun(dungeon.id, authed.id);
