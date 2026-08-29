@@ -25,6 +25,11 @@ vi.mock('../../dao/dinozDao.js', () => ({
 	updateMultipleDinoz: vi.fn()
 }));
 
+vi.mock('../../utils/server/translate.js', () => ({
+	default: vi.fn((key: string) => key)
+}));
+
+
 import {
 	createRun,
 	findRun,
@@ -43,10 +48,26 @@ import { DungeonCodec } from '../../business/dungeon/DungeonCodec.js';
 import { findPath } from '../../business/dungeon/pathfind.js';
 import { seal } from '../../utils/dungeonCrypto.js';
 import type { DungeonStruct } from '../../business/dungeon/types.js';
+import { UnavailableReason } from '@drpg/prisma';
 
 process.env.DUNGEON_KEY = randomBytes(32).toString('hex');
 
-const dinoz = { id: 1, placeId: 1, unavailableReason: null, fight: true, followers: [] };
+const DEFAULT_DINOZ_ID = 1;
+const TEST_PLACE_ID = 1;
+const mockAuthed: any = { id: 'player1', lang: 'en' };
+
+function makeDinoz(overrides: Record<string, any> = {}): any {
+	return {
+		id: DEFAULT_DINOZ_ID,
+		placeId: TEST_PLACE_ID,
+		unavailableReason: null,
+		fight: true,
+		followers: [],
+		leaderId: null,
+		...overrides
+	}
+};
+
 
 /** The stored dungeon row for `d`: no placeStart set, so no place gate. */
 function dungeonRowFor(d: DungeonStruct) {
@@ -61,8 +82,8 @@ function dungeonRowFor(d: DungeonStruct) {
 		level: 1,
 		monsters: '[]',
 		scenarios: '[]',
-		placeStart: null,
-		placeEnd: null,
+		placeStart: TEST_PLACE_ID,
+		placeEnd: TEST_PLACE_ID,
 		condition: '{}',
 		monsterPool: '[]',
 		isActive: true
@@ -73,7 +94,7 @@ function dungeonRowFor(d: DungeonStruct) {
 function runRowFor(d: DungeonStruct) {
 	return {
 		id: 'run1',
-		leaderId: dinoz.id,
+		leaderId: DEFAULT_DINOZ_ID,
 		posX: d.start.x,
 		posY: d.start.y,
 		posL: d.start.l,
@@ -88,13 +109,44 @@ function runRowFor(d: DungeonStruct) {
 	};
 }
 
+describe('dungeonService - startRun', () => {
+	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz());
+		vi.mocked(getDungeonByName).mockResolvedValue(dungeonRowFor(d) as never);
+	});
+
+	it('throws if Dinoz not found', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(null);
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('dinozNotFound');
+	});
+
+	it('throws if Dinoz not leader', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ leaderId: 123 }));
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('notLeader');
+	});
+
+	it('throws if Dinoz not at dungeon place', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ placeId: 123 }));
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('dungeon.wrongPlace');
+	});
+
+	it('throws if Dinoz not available', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ unavailableReason: UnavailableReason.frozen }));
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('error.dinozNotAvailable');
+	});
+});
+
 describe('dungeonService — fog-of-war boundary', () => {
 	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(auth).mockResolvedValue({ id: 'player1' } as never);
-		vi.mocked(getFollowingDinoz).mockResolvedValue(dinoz as never);
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz());
 		vi.mocked(getDungeonByName).mockResolvedValue(dungeonRowFor(d) as never);
 	});
 
@@ -124,7 +176,7 @@ describe('dungeonService — fog-of-war boundary', () => {
 		const resumed = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }));
 		// 'unit-test-dungeon' isn't in DungeonList (see dungeonRowFor), so there's no
 		// dungeonRef to build the resume message from.
-		expect(resumed.run).toEqual({ id: 'run1', status: 'resumed', message: undefined });
+		expect(resumed.run).toEqual({ id: 'run1', status: 'resumed', message: 'dungeon.unit-test-dungeon.enter' });
 	});
 
 	it('rejects a step into a wall and reveals nothing', async () => {
