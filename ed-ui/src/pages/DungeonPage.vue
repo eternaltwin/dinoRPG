@@ -39,15 +39,14 @@
 						{{ $t(`dungeon.buttons.down`) }}
 					</template>
 				</Tippy>
-				<!-- Need to fix reflexiveness of actionImg first -->
-				<!-- <Tippy theme="small"> -->
-				<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
-					<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
-				</button>
-				<!-- <template #content>
+				<Tippy theme="small">
+					<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
+						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
+					</button>
+					<template #content>
 						{{  $t(`dungeon.buttons.${actionImg}`)  }}
 					</template>
-				</Tippy> -->
+				</Tippy>
 			</div>
 			<span class="floor">{{ $t(`dungeon.floor`, { floor: currentLevel }) }}</span>
 		</div>
@@ -87,8 +86,6 @@ let actor: DinozActor | null = null;
 // the cell the leader held i+1 moves ago. `trail` is that history, newest first.
 const followers: DinozActor[] = [];
 const trail: Cell[] = [];
-// Revealed entities, keyed "l,x,y" — drives the stair button.
-const icons = new Map<string, string>();
 // Locked-door cells → key id, so door and key can share a flavor name.
 const doorKeys = new Map<string, number>();
 const walls = new Set<string>();
@@ -96,9 +93,6 @@ const walls = new Set<string>();
 // entered, so the dinoz's four neighbours are always in here — which is what lets a plain
 // step be predicted instead of awaited.
 const floors = new Set<string>();
-// Predicted position: runs ahead of `confirmed` by `pending.length` steps, so input never
-// waits on the network.
-let cursor: Cell = { l: 0, x: 0, y: 0 };
 // Last server-confirmed cell — what we snap back to if a prediction was wrong.
 let confirmed: Cell = { l: 0, x: 0, y: 0 };
 // Steps taken locally but not yet acknowledged. One request in flight; whatever piles up
@@ -130,23 +124,6 @@ let unmounting = false;
 
 const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
 
-/** `origin` is the player's cell after the move; it orients the fade-fx. See MazeRenderer#applyReveal. */
-function record(reveal: RevealedCell[], origin?: Cell): void {
-	for (const c of reveal) {
-		// Re-sent cells can lose their icon (key picked up, monster beaten).
-		if (c.icon) icons.set(`${c.l},${c.x},${c.y}`, c.icon);
-		else icons.delete(`${c.l},${c.x},${c.y}`);
-		if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
-		if (c.floor) {
-			floors.add(`${c.l},${c.x},${c.y}`);
-		} else {
-			walls.add(`${c.l},${c.x},${c.y}`);
-			floors.delete(`${c.l},${c.x},${c.y}`);
-		}
-	}
-	renderer?.applyReveal(reveal, origin);
-}
-
 /**
  * Icons with no server-side effect on entry, so the step can be predicted. Stairs count:
  * walking onto one does nothing, only the action button's dl move traverses it. Anything
@@ -154,34 +131,7 @@ function record(reveal: RevealedCell[], origin?: Cell): void {
  */
 const INERT = new Set(['start', 'exit', 'heal', 'stair_up', 'stair_down', 'door_v_open', 'door_h_open']);
 
-/** Can we move onto this cell without asking? Only if it is known floor and inert. */
-function predictable(k: string): boolean {
-	if (!floors.has(k)) return false; // unknown or wall
-	const icon = icons.get(k);
-	return !icon || INERT.has(icon);
-}
 
-function onKeyDown(e: KeyboardEvent): void {
-	const d = ARROWS[e.key];
-	if (!d) return;
-	e.preventDefault();
-	if (held.includes(e.key)) return;
-	held.push(e.key);
-	// A fresh press (direction change included) restarts the repeat delay.
-	heldSince = performance.now();
-	// A message box blocks movement; let the key that would've moved us dismiss it.
-	if (renderer?.messageOpen) {
-		renderer.closeMessage();
-		return;
-	}
-	// Fire the first step now rather than on the next rAF tick: a quick tap's keydown+keyup
-	// can both land inside one frame gap, where the loop's poll would never see it.
-	triggerMove?.(d[0], d[1]);
-}
-function onKeyUp(e: KeyboardEvent): void {
-	const i = held.indexOf(e.key);
-	if (i >= 0) held.splice(i, 1);
-}
 
 export default defineComponent({
 	name: 'DungeonPage',
@@ -196,7 +146,12 @@ export default defineComponent({
 			arrowIcon: assetUrl('interf_arrow'),
 			sessionStore: sessionStore(),
 			playerStore: playerStore(),
-			currentLevel: 0
+			currentLevel: 0,
+			// Revealed entities, keyed "l,x,y" — drives the stair button.
+			icons: new Map<string, string>(),
+			// Predicted position: runs ahead of `confirmed` by `pending.length` steps, so input never
+			// waits on the network.
+			cursor: { l: 0, x: 0, y: 0 } as Cell
 		};
 	},
 	computed: {
@@ -204,8 +159,7 @@ export default defineComponent({
 			if (this.needIrma) {
 				return 'irma';
 			} else {
-				// Does not work because Vue 2 does not handle reflexiveness of Maps and Set
-				const icon = icons.get(iconKey(cursor));
+				const icon = this.icons.get(iconKey(this.cursor));
 				return icon ?? '';
 			}
 		},
@@ -224,6 +178,49 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		/** `origin` is the player's cell after the move; it orients the fade-fx. See MazeRenderer#applyReveal. */
+		record(reveal: RevealedCell[], origin?: Cell): void {
+			for (const c of reveal) {
+				// Re-sent cells can lose their icon (key picked up, monster beaten).
+				if (c.icon) this.icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+				else this.icons.delete(`${c.l},${c.x},${c.y}`);
+				if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
+				if (c.floor) {
+					floors.add(`${c.l},${c.x},${c.y}`);
+				} else {
+					walls.add(`${c.l},${c.x},${c.y}`);
+					floors.delete(`${c.l},${c.x},${c.y}`);
+				}
+			}
+			renderer?.applyReveal(reveal, origin);
+		},
+		/** Can we move onto this cell without asking? Only if it is known floor and inert. */
+		predictable(k: string): boolean {
+			if (!floors.has(k)) return false; // unknown or wall
+			const icon = this.icons.get(k);
+			return !icon || INERT.has(icon);
+		},
+		onKeyDown(e: KeyboardEvent): void {
+			const d = ARROWS[e.key];
+			if (!d) return;
+			e.preventDefault();
+			if (held.includes(e.key)) return;
+			held.push(e.key);
+			// A fresh press (direction change included) restarts the repeat delay.
+			heldSince = performance.now();
+			// A message box blocks movement; let the key that would've moved us dismiss it.
+			if (renderer?.messageOpen) {
+				renderer.closeMessage();
+				return;
+			}
+			// Fire the first step now rather than on the next rAF tick: a quick tap's keydown+keyup
+			// can both land inside one frame gap, where the loop's poll would never see it.
+			triggerMove?.(d[0], d[1]);
+		},
+		onKeyUp(e: KeyboardEvent): void {
+			const i = held.indexOf(e.key);
+			if (i >= 0) held.splice(i, 1);
+		},
 		/** djb2 of the dungeon id — seeds anything that must stay stable across refreshes. */
 		dungeonHash(): number {
 			let h = 5381;
@@ -254,11 +251,11 @@ export default defineComponent({
 			if (!currentDinoz || !currentDinoz.fight || !actor) {
 				return;
 			}
-			const at = `${cursor.l},${cursor.x + dx},${cursor.y + dy}`;
+			const at = `${this.cursor.l},${this.cursor.x + dx},${this.cursor.y + dy}`;
 			// Known wall: the server would just say no, skip the round-trip.
 			if (dl === 0 && walls.has(at)) return;
-			if (dl === 0 && !blocking && predictable(at)) {
-				this.advance({ l: cursor.l, x: cursor.x + dx, y: cursor.y + dy });
+			if (dl === 0 && !blocking && this.predictable(at)) {
+				this.advance({ l: this.cursor.l, x: this.cursor.x + dx, y: this.cursor.y + dy });
 				pending.push({ dx, dy, dl });
 				this.flush();
 				return;
@@ -272,9 +269,9 @@ export default defineComponent({
 		},
 		/** Walk the dinoz onto `cell` and drag the follower conga line along behind it. */
 		advance(cell: Cell): void {
-			cursor = { ...cell };
-			actor?.enqueue(cursor);
-			trail.unshift({ ...cursor });
+			this.cursor = { ...cell };
+			actor?.enqueue(this.cursor);
+			trail.unshift({ ...this.cursor });
 			if (trail.length > followers.length + 1) trail.pop();
 			// The first enqueue each follower gets is its own cell: a walk-in-place beat that
 			// staggers the line's start.
@@ -311,8 +308,8 @@ export default defineComponent({
 				});
 			}
 			// What the entered cell held before this step's re-reveal clears it: the pickup to announce.
-			const entered = icons.get(iconKey(move.pos));
-			record(move.reveal, move.pos);
+			const entered = this.icons.get(iconKey(move.pos));
+			this.record(move.reveal, move.pos);
 			if (move.applied > 0) {
 				if (entered === 'door_v' || entered === 'door_h') {
 					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
@@ -339,7 +336,7 @@ export default defineComponent({
 				const step = batch[move.applied];
 				if (step && step.dl === 0) {
 					const at = `${move.pos.l},${move.pos.x + step.dx},${move.pos.y + step.dy}`;
-					const blocked = icons.get(at);
+					const blocked = this.icons.get(at);
 					if (blocked === 'door_v' || blocked === 'door_h')
 						renderer?.showMessage(this.$t('dungeon.msg.locked', { name: this.doorName(doorKeys.get(at) ?? 0) }));
 				}
@@ -350,13 +347,13 @@ export default defineComponent({
 			} else if (move.applied > 0) {
 				// Walk the party onto the cell the server named. A blocking step was never walked
 				// locally, so it only moves the dinoz now.
-				if (iconKey(cursor) !== iconKey(move.pos) && pending.length === 0) this.advance(move.pos);
+				if (iconKey(this.cursor) !== iconKey(move.pos) && pending.length === 0) this.advance(move.pos);
 			}
 		},
 		/** The server is the authority: drop our guesses and re-seat the party on its cell. */
 		snapBack(pos: Cell): void {
 			pending.length = 0;
-			cursor = { ...pos };
+			this.cursor = { ...pos };
 			// placeAt re-seats the sprite; takeControl resets its queued path.
 			actor?.placeAt({ ...pos });
 			actor?.takeControl();
@@ -374,7 +371,7 @@ export default defineComponent({
 		 */
 		catchUp(): void {
 			if (followers.some(f => f.pending > 0)) return;
-			const at = (c: Cell): boolean => c.l === cursor.l && c.x === cursor.x && c.y === cursor.y;
+			const at = (c: Cell): boolean => c.l === this.cursor.l && c.x === this.cursor.x && c.y === this.cursor.y;
 			if (trail.every(at)) return; // everyone is stacked
 			followers.forEach((f, i) => {
 				// Follower i sits at trail[i+1]; retrace trail[i]‥trail[0] (= the leader).
@@ -386,7 +383,7 @@ export default defineComponent({
 					prev = t;
 				}
 			});
-			for (let i = 0; i < trail.length; i++) trail[i] = { ...cursor };
+			for (let i = 0; i < trail.length; i++) trail[i] = { ...this.cursor };
 		},
 		updateButton(): void {
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
@@ -396,7 +393,7 @@ export default defineComponent({
 			// The button acts on the cell under the dinoz, so only a server-confirmed one arms it.
 			if (!actor || inflight || pending.length > 0 || actor.pending > 0) return this.hideButton();
 			const k = iconKey(actor.cell);
-			const icon = icons.get(k);
+			const icon = this.icons.get(k);
 			if (!icon) return this.hideButton();
 			if (k === stairShownFor) return;
 			stairShownFor = k;
@@ -434,7 +431,7 @@ export default defineComponent({
 				}
 			} else {
 				// Otherwise, handle whatever the current icon is.
-				const icon = icons.get(iconKey(cursor));
+				const icon = this.icons.get(iconKey(this.cursor));
 				if (icon === 'stair_up') this.tryMove(0, 0, 1);
 				else if (icon === 'stair_down') this.tryMove(0, 0, -1);
 				else if (icon === 'start' || icon === 'exit') {
@@ -466,7 +463,7 @@ export default defineComponent({
 			this.currentLevel = -run.pos.l - 1;
 			useDinozStore().setCurrentDinozId(this.dinozId);
 
-			icons.clear();
+			this.icons.clear();
 			doorKeys.clear();
 			walls.clear();
 			floors.clear();
@@ -492,7 +489,7 @@ export default defineComponent({
 				renderer.showMessage(this.$t(run.run.message));
 			}
 
-			record(run.reveal, run.pos);
+			this.record(run.reveal, run.pos);
 			// applyReveal() only flags the level dirty for the ticker, and showLevel() only
 			// rebuilds the scene graph — the cacheAsBitmap bake and the pixels wait for a
 			// render() pass. Force both, or the canvas sits on plain fog until something
@@ -510,7 +507,7 @@ export default defineComponent({
 			});
 			actor.placeAt({ ...run.pos });
 			actor.takeControl();
-			cursor = { ...run.pos };
+			this.cursor = { ...run.pos };
 			confirmed = { ...run.pos };
 			trail.length = 0;
 			trail.push({ ...run.pos });
@@ -536,8 +533,8 @@ export default defineComponent({
 		if (unmounting) return; // navigated away mid-build; nothing left to wire up
 
 		triggerMove = (dx, dy) => this.tryMove(dx, dy);
-		window.addEventListener('keydown', onKeyDown);
-		window.addEventListener('keyup', onKeyUp);
+		window.addEventListener('keydown', this.onKeyDown);
+		window.addEventListener('keyup', this.onKeyUp);
 
 		const frame = (): void => {
 			// Scroll and moves freeze while a message box is up.
@@ -561,8 +558,8 @@ export default defineComponent({
 		unmounting = true;
 		cancelAnimationFrame(rafId);
 		triggerMove = null;
-		window.removeEventListener('keydown', onKeyDown);
-		window.removeEventListener('keyup', onKeyUp);
+		window.removeEventListener('keydown', this.onKeyDown);
+		window.removeEventListener('keyup', this.onKeyUp);
 		actor?.destroy();
 		for (const f of followers) f.destroy();
 		followers.length = 0;
@@ -570,7 +567,7 @@ export default defineComponent({
 		renderer?.destroy();
 		actor = null;
 		renderer = null;
-		icons.clear();
+		this.icons.clear();
 		doorKeys.clear();
 		walls.clear();
 		floors.clear();
