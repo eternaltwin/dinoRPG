@@ -661,7 +661,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
 
-	let gold = (getRandomNumber(0, 36) + 43) * 10;
+	let gold = (getRandomNumber(0, 36) + 33) * 10;
 
 	gold = Math.round(gold * goldMultiplier);
 
