@@ -338,10 +338,7 @@ export async function rewardFightVsMonsters(
 	let gold = 0;
 
 	for (const d of team) {
-		//TODO escape
-		/*//if escaped, no XP !
-		if( Lambda.has( escaped, r.f) )
-			continue;*/
+		// TODO ignore on escape
 
 		let xp = 0;
 		const cur = d.level / teamLevel;
@@ -358,15 +355,18 @@ export async function rewardFightVsMonsters(
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
 			let monsterXp = (f.xp ?? 10) * factor * cur;
 			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
-			// newbie bonus
+			// Newbie bonus
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
-			// bonus for fighters of same level of the monster
+			// 50% more xp bonus for monsters of same or higher levels
+			else if (f.level >= d.level) monsterXp *= 1.5;
+			// Award bonus xp from monster (if any) to Dinoz within 5 level of them
 			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
 			xp += monsterXp;
 		}
 
 		xp = calculatePvExp(xp, d.level, gameConfig().dinoz.maxLevel, gameConfig().dinoz.maxLevel);
 
+		// Apply player & Dinoz XP amplifiers
 		xp = calculateXPBonus(d, xp, player);
 		const max = getMaxXp(d, gameConfig());
 		if (d.experience >= max) {
@@ -420,7 +420,7 @@ export async function rewardFightVsMonsters(
 			}
 		}
 
-		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
+		gold += (getRandomNumber(0, 36) + 33) * 10; // Gold base average: 510
 	}
 
 	const fprob = getRandomNumber(0, 100);
@@ -428,8 +428,9 @@ export async function rewardFightVsMonsters(
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
+
 	// Gold multiplier average: 1.29
-	// Gold base * multiplier: 610 * 1.29 = 786.9
+	// Gold base * multiplier: 510 * 1.29 = 657.9
 
 	// Malus based on size of team starting size 2
 	// Size 2: 0.5 - Size 3: 0.45 - Size 4: 0.445 - Size 5: 0.4445 etc.
