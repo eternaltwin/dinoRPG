@@ -99,6 +99,9 @@ export enum Monster {
 }
 
 export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 20 to 10
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',
@@ -119,6 +122,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'goupi'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 20 to 10
 	[Monster.GOUPIGNON2]: {
 		id: Monster.GOUPIGNON2,
 		name: 'goupignon',
@@ -139,6 +145,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'goupi2'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 20 to 10
 	[Monster.GOUPIGNON3]: {
 		id: Monster.GOUPIGNON3,
 		name: 'goupignon',
@@ -159,6 +168,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'goupi3'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
 		name: 'wolf',
@@ -185,6 +196,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_BITE],
 		display: 'wolf'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.GLUON]: {
 		id: Monster.GLUON,
 		name: 'gluon',
@@ -208,6 +221,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'gluon',
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
 		name: 'greeng',
@@ -229,6 +244,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_REGENERATION],
 		display: 'gvert'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.COQDUR]: {
 		id: Monster.COQDUR,
 		name: 'coq',
@@ -304,6 +321,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'flam'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 60 to 40
 	[Monster.GOBLIN]: {
 		id: Monster.GOBLIN,
 		name: 'goblin',
@@ -324,6 +344,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'goblin'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 70 to 60
+	// - fire element increased from 3 to 5
 	[Monster.BARCHE]: {
 		id: Monster.BARCHE,
 		name: 'barche',
@@ -434,6 +458,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'kazka',
 		entrance: EntranceEffect.GROW
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 120 to 60
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,
 		name: 'anguil',
@@ -454,6 +481,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_ELECTROCUTION],
 		display: 'anguil'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - level reduced from 28 to 25
 	[Monster.BORG]: {
 		id: Monster.BORG,
 		name: 'borg',
@@ -476,6 +506,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'borg',
 		entrance: EntranceEffect.GROW
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
 		name: 'korgon',
@@ -520,6 +552,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			entrance: 'korgon_start'
 		}
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
 		name: 'ronciv',
@@ -564,6 +598,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_FLIGHT],
 		display: 'bat'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - level increased from 25 to 28
 	[Monster.GRDIEN]: {
 		id: Monster.GRDIEN,
 		name: 'grdien',
@@ -928,6 +965,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'rkrgns'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.VEGETOX_GUARD]: {
 		id: Monster.VEGETOX_GUARD,
 		name: 'mugard',
@@ -955,6 +994,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.VEGETOX_GUARD_2]: {
 		id: Monster.VEGETOX_GUARD_2,
 		name: 'veginf',
@@ -976,6 +1017,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.FRUTOX_DEFENDER]: {
 		id: Monster.FRUTOX_DEFENDER,
 		name: 'frutox',
@@ -1343,6 +1386,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ALL],
 		canBeCaptured: true
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.DARK_LEECH]: {
 		id: Monster.DARK_LEECH,
 		name: 'sangsa',
@@ -1370,6 +1415,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND, MapZone.ILES],
 		canBeCaptured: true
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.LONG_LEGGED_LEECH]: {
 		id: Monster.LONG_LEGGED_LEECH,
 		name: 'sangs2',
@@ -1466,6 +1513,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: false,
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.TW_BIGBEASTLY_1]: {
 		id: Monster.TW_BIGBEASTLY_1,
 		name: 'wbour1',
