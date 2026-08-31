@@ -1,4 +1,3 @@
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
@@ -30,10 +29,8 @@ import {
 } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import {
 	createDinoz,
-	getActiveDinoz,
 	getDinozEquipItemRequest,
 	getDinozFicheItemRequest,
 	updateDinoz

@@ -9,7 +9,6 @@ import { VERSION } from '@drpg/core/version';
 import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import type { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
@@ -19,6 +18,7 @@ import { increaseItemQuantity } from './playerItemDao.js';
 import { updateCompletion } from './rankingDao.js';
 import { setSpecificStat } from './trackingDao.js';
 import { withSpan } from '../utils/server/tracing.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return withSpan(createPlayer.name, async () => {
@@ -204,7 +204,7 @@ export async function auth(request: Request, banByPass = false, tosByPass = fals
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig.general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards
 			});
 
 			const playerDinozData = await prisma.dinoz.findMany({
@@ -353,7 +353,7 @@ export async function noStrictAuth(request: Request, banByPass = false) {
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig.general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards
 			});
 			const playerDinozData = await prisma.dinoz.findMany({
 				where: {

@@ -16,7 +16,6 @@ import {
 import { PlayerForConditionCheck } from '../constants.mjs';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
-import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
@@ -32,6 +31,7 @@ import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
 import { getHUDObjective } from './MissionUtils.mjs';
 import { MathOperator } from '../models/enums/Parser.mjs';
 import { operatorProcess } from './helper.mjs';
+import { getGameConfig } from '../game.config.mjs';
 
 type Config = {
 	dinoz: {
@@ -81,7 +81,8 @@ export const toDinozFiche = (
 		})[];
 	},
 	activeDinoz: number,
-	currentTournament: TournamentState | null
+	currentTournament: TournamentState | null,
+	config: Config
 ): DinozFiche => {
 	const playerForCondition = structuredClone(player);
 	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
@@ -102,7 +103,7 @@ export const toDinozFiche = (
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
-		maxExperience: getMaxXp(dinoz),
+		maxExperience: getMaxXp(dinoz, config),
 		race: getRace(dinoz),
 		placeId: dinoz.placeId,
 		items: dinoz.items?.map(item => item.itemId),
@@ -158,7 +159,8 @@ export const toDinozFicheLite = (
 		| 'level'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-	}
+	},
+	config: Config
 ): DinozFicheLite => {
 	return {
 		id: dinoz.id,
@@ -168,7 +170,7 @@ export const toDinozFicheLite = (
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
-		maxExperience: getMaxXp(dinoz),
+		maxExperience: getMaxXp(dinoz, config),
 		placeId: dinoz.placeId,
 		order: dinoz.order,
 		unavailableReason: dinoz.unavailableReason
@@ -319,19 +321,19 @@ export const getRace = (dinoz: Pick<Dinoz, 'raceId'>) => {
 export const getMaxXp = (
 	dinoz: Pick<Dinoz, 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-	}
+	},
+	config: Config
 ) => {
-	const level = levelList.find(level => level.id === dinoz.level);
+	const configMaxLevel = config.dinoz.maxLevel;
+	// Determine max level reachable by the Dinoz
+	let maxLevel = 50;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_1)) maxLevel += 10;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_2)) maxLevel += 10;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_3)) maxLevel += 10;
 
-	if (!level) {
-		throw new Error(`Level ${dinoz.level} doesn't exist.`);
-	}
+	if (maxLevel > configMaxLevel) maxLevel = configMaxLevel;
 
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
-
-	return level.experience;
+	return dinoz.level >= maxLevel ? 0 : Math.floor(100 * Math.pow(1.075, dinoz.level - 1));
 };
 
 export const isAlive = (dinoz: Pick<Dinoz, 'life'>) => dinoz.life > 0;
@@ -349,9 +351,10 @@ export const actualPlace = (dinoz: Pick<Dinoz, 'placeId'>) => {
 export const remainingXPToLevelUp = (
 	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-	}
+	},
+	config: Config,
 ) => {
-	return getMaxXp(dinoz) - dinoz.experience;
+	return getMaxXp(dinoz, config) - dinoz.experience;
 };
 
 export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level >= config.dinoz.maxLevel;
@@ -360,9 +363,9 @@ export const canLevelUp = (
 	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	},
-	config: Config
+	config: Config,
 ) => {
-	return remainingXPToLevelUp(dinoz) <= 0 && !isMaxLevel(dinoz, config);
+	return remainingXPToLevelUp(dinoz, config) <= 0 && !isMaxLevel(dinoz, config);
 };
 
 export const backpackSlot = (
@@ -406,19 +409,6 @@ export const possessStatus = (
 	statusId: number
 ) => {
 	return dinoz.status.some(status => status.statusId === statusId);
-};
-
-export const canWinXP = (
-	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-	}
-) => {
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.CURSED)) return false;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_3)) return true;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_2) && dinoz.level < 70) return true;
-	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_1) && dinoz.level < 60) return true;
-	if (dinoz.level < 50) return true;
-	else return false;
 };
 
 export const calculateXPBonus = (

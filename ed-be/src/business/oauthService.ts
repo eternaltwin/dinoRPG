@@ -16,7 +16,6 @@ import dayjs from 'dayjs';
 import { Request, Response } from 'express';
 import { Config } from 'release-it';
 import urlJoin from 'url-join';
-import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -35,6 +34,7 @@ import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
 import { eventState } from './clanWar.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export class OAuth {
 	#oauthClient: RfcOauthClient;
@@ -113,7 +113,7 @@ export class OAuth {
 				player = await createPlayer({
 					id: etwinUser.id,
 					name: etwinUser.displayName.current.value,
-					money: gameConfig.general.initialMoney,
+					money: gameConfig().general.initialMoney,
 					quetzuBought: 0
 				});
 				// Create player at position 0 in ranking
@@ -169,7 +169,7 @@ export class OAuth {
 				await setPlayer(player.id, {
 					lastLogin: new Date(),
 					labruteDone: false,
-					dailyGridRewards: gameConfig.general.dailyGridRewards
+					dailyGridRewards: gameConfig().general.dailyGridRewards
 				});
 
 				// Tik bracelet regen (& alive)
@@ -204,7 +204,7 @@ export class OAuth {
 			}
 
 			const dinoz = player.dinoz.map(d => {
-				return { ...toDinozFiche(player, d.id, null) };
+				return { ...toDinozFiche(player, d.id, null, gameConfig()) };
 			});
 			for (const d of dinoz) {
 				d.actions = await getAvailableActions(d, player);

@@ -34,6 +34,7 @@ import { updateDinozCount, updatePoints } from '../../dao/rankingDao.js';
 import { createDinoz, getDinozFicheRequest, updateDinoz } from '../../dao/dinozDao.js';
 import { computeUSkillsForPlayer } from '../../business/skillService.js';
 import { createLog } from '../../dao/logDao.js';
+import { gameConfig } from '../../utils/gameConfig.js';
 
 // ─── Module mocks ─────────────────────────────────────────────────────────────
 // Only internal / infra modules are mocked. @drpg/core and @drpg/prisma are real.
@@ -119,7 +120,7 @@ const ANY_RACE_ID = Object.values(RaceEnum)[0] as RaceEnum;
 const DEMON_RACE_ID = (Object.values(RaceEnum).find(id => Boolean(raceList[id as RaceEnum]?.demon)) ??
 	ANY_RACE_ID) as RaceEnum;
 
-const MOCK_DINOZ_NUMBER = 3; // mirrors the game.config mock
+const MOCK_DINOZ_NUMBER = gameConfig().demonShop.dinozNumber;
 const WITHOUT_BELIUS_TOTAL = MOCK_DINOZ_NUMBER; // Math.round(3 × 1) = 3
 const WITH_BELIUS_TOTAL = Math.round(MOCK_DINOZ_NUMBER * 1.5); // Math.round(4.5) = 5
 
@@ -463,12 +464,12 @@ describe('getDinozFromDemonShop', () => {
 
 		it('sorts existing shop dinoz by id ascending', async () => {
 			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({ demonShop: [3, 1, 2].map(id => makeShopDinoz({ id })) })
+				makePlayer({ demonShop: [3, 1, 2, 4, 5].map(id => makeShopDinoz({ id })) })
 			);
 
 			const result = await getDinozFromDemonShop(req());
 
-			expect(result.shop.map(d => d.id)).toEqual([1, 2, 3]);
+			expect(result.shop.map(d => d.id)).toEqual([1, 2, 3, 4, 5]);
 		});
 
 		it('uses 1.5× totalDinoz when player has BELIUS reward', async () => {

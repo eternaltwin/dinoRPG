@@ -20,8 +20,8 @@ import { fromBase62, getRandomLetter, shuffle } from './index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { getActiveDinoz, getDinozPlaces } from '../dao/dinozDao.js';
-import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz } from './skillParser.js';
+import { gameConfig } from './gameConfig.js';
 
 export const getTreeType = (status: Pick<DinozStatus, 'statusId'>[]) => {
 	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
@@ -556,9 +556,9 @@ export async function isAtMaxActiveDinoz(authed: Pick<Player, 'id' | 'lang'>) {
 		}
 
 		const maxDinoz =
-			gameConfig.dinoz.maxQuantity +
-			(player.leader ? gameConfig.dinoz.leaderMessieBonus : 0) +
-			(player.messie ? gameConfig.dinoz.leaderMessieBonus : 0);
+			gameConfig().dinoz.maxQuantity +
+			(player.leader ? gameConfig().dinoz.leaderMessieBonus : 0) +
+			(player.messie ? gameConfig().dinoz.leaderMessieBonus : 0);
 		if (dinozActive.length >= maxDinoz) {
 			return true;
 		} else {
