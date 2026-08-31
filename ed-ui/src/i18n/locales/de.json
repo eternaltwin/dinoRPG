@@ -319,7 +319,7 @@
 		"loading": "Wird geladen...",
 		"noResults": "Keine Ergebnisse",
 		"details": "Details",
-		"return": "Retour"
+		"return": "Zurück"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -4406,7 +4406,7 @@
 			"pteroz": "Ptero",
 			"hippo": "Hippoklamp",
 			"rocky": "Rocky",
-			"pirhaloz": "Pirhaloz",
+			"pirhaloz": "Piränhsel",
 			"pirhanoz": "Piranhsel",
 			"kazka": "Kazkadine",
 			"anguil": "Aalos",
@@ -5302,15 +5302,15 @@
 	},
 	"dungeon": {
 		"buttons": {
-			"up": "Bouger vers le haut",
-			"left": "Bouger vers la gauche",
-			"right": "Bouger vers la droite",
-			"down": "Bouger vers le bas",
-			"irma": "Utiliser une potion d'irma pour continuer à avancer",
-			"stair_down": "Descendre les escaliers",
-			"stair_up": "Monter les escaliers",
-			"start": "Retourner à l'entrée du donjon",
-			"exit": "Sortir du donjon"
+			"up": "Nach oben bewegen",
+			"left": "Nach links bewegen",
+			"right": "Nach rechts bewegen",
+			"down": "Nach unten bewegen",
+			"irma": "Trank von Madame Irma verwenden, um fortzufahren",
+			"stair_down": "Die Stufen hinabgehen",
+			"stair_up": "Die Stufen hinaufgehen",
+			"start": "Zum Verlieseingang zurückkehren",
+			"exit": "Verlies verlassen"
 		},
 		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann die gegenwärtige Etage erst verlassen, wenn er sich am Eingang oder Ausgang befindet, oder stirbt.",
 		"floor": "{floor}. Etage",
