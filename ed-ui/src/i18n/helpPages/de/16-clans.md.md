@@ -4,9 +4,9 @@ icon:
   name: small_leader
 ---
 
-Les **Clans** sont des groupes de joueurs de DinoRPG. Appartenir à un Clan vous permet de discuter avec d'autres joueurs, d'échanger des techniques et des astuces, et de vous entraider. Vous pouvez rejoindre un Clan ou créer votre propre Clan à partir du menu de droite **Clans**.
+**Klane** sind Gemeinschaften von Dino-RPG-Spielern. Appartenir à un Clan vous permet de discuter avec d'autres joueurs, d'échanger des techniques et des astuces, et de vous entraider. Vous pouvez rejoindre un Clan ou créer votre propre Clan à partir du menu de droite **Clans**.
 
-# Rejoindre un Clan
+# Klanbeitritt
 
 Tout d'abord, sachez que vous ne pouvez faire partie que d'un seul Clan.
 
