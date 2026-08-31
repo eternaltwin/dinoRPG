@@ -210,36 +210,44 @@ export default defineComponent({
 				return;
 			}
 
-			try {
-				if (!this.updateOffer) return;
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
 
-				await OfferService.bidOffer(this.offer.id, this.bidValue);
+			if (res) {
+				try {
+					if (!this.updateOffer) return;
 
-				// Update offer
-				this.updateOffer({
-					...this.offer,
-					bids: [
-						...this.offer.bids,
-						{
-							value: this.bidValue,
-							user: {
-								id: this.playerStore.playerId,
-								name: this.playerStore.name
+					await OfferService.bidOffer(this.offer.id, this.bidValue);
+
+					// Update offer
+					this.updateOffer({
+						...this.offer,
+						bids: [
+							...this.offer.bids,
+							{
+								value: this.bidValue,
+								user: {
+									id: this.playerStore.playerId,
+									name: this.playerStore.name
+								}
 							}
-						}
-					]
-				});
+						]
+					});
 
-				this.$emit('bid', {
-					offerId: this.offer.id,
-					bidValue: this.bidValue
-				});
+					// Increment bidValue
+					this.bidValue++;
 
-				// Increment bidValue
-				this.bidValue++;
-			} catch (error) {
-				errorHandler.handle(error, this.$toast);
-				return;
+					// Emit 'bid' to parent
+					this.$emit('bid', { offerId: this.offer.id, bidValue: this.bidValue });
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
+				}
 			}
 		}
 	},
