@@ -51,6 +51,8 @@ export enum Boss {
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.TOWER_GUARDIAN]: {
 		id: Boss.TOWER_GUARDIAN,
 		boss: true,
@@ -63,7 +65,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 0,
+		resilience: 40,
 		xp: 40,
 		odds: 100,
 		level: 30,
@@ -72,6 +74,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_ELEMENTAL],
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.SUMMIT_GUARDIAN]: {
 		id: Boss.SUMMIT_GUARDIAN,
 		boss: true,
@@ -84,7 +88,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 0,
+		resilience: 40,
 		groups: [
 			{ quantity: 0, odds: 1 },
 			{ quantity: 1, odds: 0 },
@@ -98,6 +102,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_ELEMENTAL],
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.LOWER_GUARDIAN]: {
 		id: Boss.LOWER_GUARDIAN,
 		boss: true,
@@ -110,7 +116,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 0,
+		resilience: 40,
 		groups: [
 			{ quantity: 0, odds: 1 },
 			{ quantity: 1, odds: 0 },
@@ -124,6 +130,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_ELEMENTAL],
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.STEEL_ALCHEMIST]: {
 		id: Boss.STEEL_ALCHEMIST,
 		boss: true,
@@ -138,7 +146,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 40,
 		bonus_defense: 100,
-		resilience: 0,
+		resilience: 40,
 		groups: [
 			{ quantity: 0, odds: 1 },
 			{ quantity: 1, odds: 0 },
@@ -152,6 +160,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [],
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
+	// - level increase to 8
 	[Boss.ELEMENTAIRE_FEU]: {
 		id: Boss.ELEMENTAIRE_FEU,
 		boss: true,
@@ -164,16 +176,20 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 1.5,
 		xp: 50,
 		odds: 1,
-		level: 5,
+		level: 8,
 		zones: [MapZone.DARKWORLD],
 		canBeCaptured: false,
 		display: 'efire',
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
+	// - level increase to 8
 	[Boss.ELEMENTAIRE_EAU]: {
 		id: Boss.ELEMENTAIRE_EAU,
 		boss: true,
@@ -186,16 +202,19 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 1.5,
 		xp: 50,
 		odds: 1,
-		level: 5,
+		level: 8,
 		zones: [MapZone.DARKWORLD],
 		canBeCaptured: false,
 		display: 'ewater',
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
 	[Boss.RASCAPHANDRE]: {
 		id: Boss.RASCAPHANDRE,
 		boss: true,
@@ -208,7 +227,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 1,
 			air: 2
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 1.5,
 		xp: 100,
 		odds: 1,
@@ -218,6 +237,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'rasca',
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
+	// - elements changed from [2,8,2,2,2] to [3,10,3,3,3]
+	// - increased level to 15
 	[Boss.ELEMENTAIRE_TERRE]: {
 		id: Boss.ELEMENTAIRE_TERRE,
 		boss: true,
@@ -230,16 +254,19 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 3,
 			air: 3
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 1.5,
 		xp: 100,
 		odds: 1,
-		level: 10,
+		level: 15,
 		zones: [MapZone.ILES],
 		canBeCaptured: false,
 		display: 'eearth',
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
 	[Boss.PTEROZ]: {
 		id: Boss.PTEROZ,
 		boss: true,
@@ -252,7 +279,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 2,
 			air: 3
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 2,
 		xp: 50,
 		odds: 1,
@@ -262,6 +289,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'pteroz'
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
 	[Boss.HIPPOCLAMP]: {
 		id: Boss.HIPPOCLAMP,
 		boss: true,
@@ -274,7 +304,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 1,
 			air: 1
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 2,
 		xp: 50,
 		odds: 1,
@@ -284,6 +314,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'hippo'
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
 	[Boss.ROCKY]: {
 		id: Boss.ROCKY,
 		boss: true,
@@ -296,7 +329,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 6,
 			air: 3
 		},
-		resilience: 0,
+		resilience: 40,
 		gold: 2,
 		xp: 50,
 		odds: 1,
@@ -306,6 +339,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'rocky'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.MASTER_CHA]: {
 		id: Boss.MASTER_CHA,
 		boss: true,
@@ -320,7 +355,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		odds: 100,
 		xp: 200,
@@ -416,6 +451,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
+	// - resilience set to 40
 	[Boss.VENERABLE]: {
 		id: Boss.VENERABLE,
 		boss: true,
@@ -431,7 +469,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 60,
-		resilience: 0,
+		resilience: 40,
 		hp: 1000,
 		odds: 100,
 		skills: [Skill.M_VENERABLE],
@@ -442,6 +480,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'vener',
 		entrance: EntranceEffect.STAND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.VENERABLE_2]: {
 		id: Boss.VENERABLE_2,
 		boss: true,
@@ -456,7 +496,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 60,
-		resilience: 0,
+		resilience: 40,
 		hp: 1000,
 		odds: 100,
 		skills: [Skill.M_VENERABLE],
@@ -467,6 +507,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'vener',
 		entrance: EntranceEffect.STAND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.VENERABLE_3]: {
 		id: Boss.VENERABLE_3,
 		boss: true,
@@ -481,7 +523,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 5,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		odds: 100,
 		skills: [Skill.M_VENERABLE],
@@ -493,6 +535,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'vener',
 		entrance: EntranceEffect.STAND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.VENERABLE_4]: {
 		id: Boss.VENERABLE_4,
 		boss: true,
@@ -507,7 +551,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 40,
-		resilience: 0,
+		resilience: 40,
 		hp: 700,
 		odds: 100,
 		skills: [Skill.M_VENERABLE],
@@ -518,6 +562,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'vener',
 		entrance: EntranceEffect.STAND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.SCORPIOUS]: {
 		id: Boss.SCORPIOUS,
 		boss: true,
@@ -532,7 +578,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 0,
+		resilience: 40,
 		hp: 1200,
 		odds: 100,
 		xp: 800,
@@ -658,6 +704,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.BIO_METALIC_LEECH]: {
 		id: Boss.BIO_METALIC_LEECH,
 		boss: true,
@@ -672,7 +720,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		odds: 100,
 		xp: 150,
@@ -749,6 +797,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		entrance: EntranceEffect.GROUND
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.BEHEMOUNT]: {
 		id: Boss.BEHEMOUNT,
 		boss: true,
@@ -763,13 +813,15 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 80,
 		bonus_defense: 120,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		odds: 100,
 		skills: [],
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.SERPETHER]: {
 		id: Boss.SERPETHER,
 		boss: true,
@@ -784,7 +836,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 60,
 		bonus_defense: 110,
-		resilience: 0,
+		resilience: 40,
 		hp: 1000,
 		xp: 500,
 		odds: 100,
@@ -795,6 +847,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.SERPETHER_2]: {
 		id: Boss.SERPETHER_2,
 		boss: true,
@@ -809,7 +863,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 70,
 		bonus_defense: 120,
-		resilience: 0,
+		resilience: 40,
 		hp: 1000,
 		odds: 100,
 		noMove: true,
@@ -819,6 +873,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.MORG]: {
 		id: Boss.MORG,
 		boss: true,
@@ -833,7 +889,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 60,
 		bonus_defense: 90,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		xp: 400,
 		odds: 100,
@@ -841,6 +897,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.MORG_2]: {
 		id: Boss.MORG_2,
 		boss: true,
@@ -855,7 +913,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 60,
 		bonus_defense: 90,
-		resilience: 0,
+		resilience: 40,
 		hp: 500,
 		xpBonus: 10,
 		odds: 100,
@@ -863,6 +921,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.MUTATED_MORG]: {
 		id: Boss.MUTATED_MORG,
 		boss: true,
@@ -877,7 +937,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 55,
 		bonus_defense: 100,
-		resilience: 0,
+		resilience: 40,
 		hp: 800,
 		xp: 500,
 		odds: 100,
@@ -887,6 +947,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		entrance: EntranceEffect.FALL
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.GRIZORG]: {
 		id: Boss.GRIZORG,
 		boss: true,
@@ -901,7 +963,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 65,
 		bonus_defense: 90,
-		resilience: 0,
+		resilience: 40,
 		hp: 700,
 		xp: 0,
 		gold: 0,
@@ -913,6 +975,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.GRIZOU]: {
 		id: Boss.GRIZOU,
 		boss: true,
@@ -927,7 +991,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 200,
 		bonus_defense: 400,
-		resilience: 0,
+		resilience: 40,
 		hp: 1000,
 		xp: 0,
 		gold: 0,
@@ -939,6 +1003,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.MUTATED_GRIZORG]: {
 		id: Boss.MUTATED_GRIZORG,
 		boss: true,
@@ -953,7 +1019,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 120,
 		bonus_defense: 150,
-		resilience: 0,
+		resilience: 40,
 		hp: 1200,
 		xp: 0,
 		gold: 0,
@@ -965,6 +1031,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.ULTIMATE_GRIZORG]: {
 		id: Boss.ULTIMATE_GRIZORG,
 		boss: true,
@@ -979,7 +1047,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 150,
 		bonus_defense: 150,
-		resilience: 0,
+		resilience: 40,
 		hp: 1800,
 		xp: 0,
 		gold: 0,
@@ -991,6 +1059,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.SOFIA]: {
 		id: Boss.SOFIA,
 		boss: true,
@@ -1005,7 +1075,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 250,
 		bonus_defense: 100,
-		resilience: 0,
+		resilience: 40,
 		hp: 5000,
 		odds: 100,
 		noMove: true,
@@ -1015,6 +1085,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// TODO not implemented
 		//entrance: EntranceEffect.FIXED
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Boss.CHIEF_DOROGON]: {
 		id: Boss.CHIEF_DOROGON,
 		boss: true,
@@ -1029,7 +1101,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		bonus_attack: 55,
 		bonus_defense: 85,
-		resilience: 0,
+		resilience: 40,
 		hp: 450,
 		xpBonus: 10,
 		odds: 100,
@@ -1037,6 +1109,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// Diffs from MT's source:
+	// - increased gold reward
 	[Boss.MEGA_WOLF]: {
 		id: Boss.MEGA_WOLF,
 		boss: true,
@@ -1063,6 +1137,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false
 	},
+	// New boss
 	[Boss.SWAMP_MONSTER_FLOODED]: {
 		id: Boss.SWAMP_MONSTER_FLOODED,
 		boss: true,
@@ -1103,6 +1178,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'crokoc',
 		entrance: EntranceEffect.GROW
 	},
+	// New boss
 	[Boss.SWAMP_MONSTER_FOG]: {
 		id: Boss.SWAMP_MONSTER_FOG,
 		boss: true,
@@ -1115,7 +1191,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			lightning: 0,
 			air: 15
 		},
-		resilience: 30,
+		resilience: 40,
 		gold: 1.5,
 		xp: 50,
 		odds: 100,
