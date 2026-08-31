@@ -319,7 +319,7 @@
 		"loading": "Loading...",
 		"noResults": "No result",
 		"details": "Details",
-		"return": "Retour"
+		"return": "Return"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -5302,15 +5302,15 @@
 	},
 	"dungeon": {
 		"buttons": {
-			"up": "Bouger vers le haut",
-			"left": "Bouger vers la gauche",
-			"right": "Bouger vers la droite",
-			"down": "Bouger vers le bas",
-			"irma": "Utiliser une potion d'irma pour continuer à avancer",
-			"stair_down": "Descendre les escaliers",
-			"stair_up": "Monter les escaliers",
-			"start": "Retourner à l'entrée du donjon",
-			"exit": "Sortir du donjon"
+			"up": "Move upward",
+			"left": "Move leftward",
+			"right": "Move rightward",
+			"down": "Move downward",
+			"irma": "Use Irma's potion to continue exploring",
+			"stair_down": "Go down the stairs",
+			"stair_up": "Go up the stairs",
+			"start": "Go back to the dungeon entrance",
+			"exit": "Exit the dungeon"
 		},
 		"disclaimer": "**{dinoz}** currently explores **{dungeonName}**. To leave, it must find the exit, go back to the entrance, or die.",
 		"floor": "Floor {floor}",
