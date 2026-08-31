@@ -24,7 +24,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.PIRA.name],
+					target: [monsterList.PIRHANOZ.name],
 					value: 6,
 					zone: MapZone.ILES
 				},
