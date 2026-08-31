@@ -318,7 +318,8 @@
 		"search": "Buscar",
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
-		"details": "Detalles"
+		"details": "Detalles",
+		"return": "Retour"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -3576,8 +3577,7 @@
 			"title": "Opciones de Mi Cuenta",
 			"fight": "Mostrar combates",
 			"todo": "No disponible",
-			"reset": "Eliminar la cuenta",
-			"retour": "Volver"
+			"reset": "Eliminar la cuenta"
 		},
 		"twinoidgoals": {
 			"name": "Estadísticas de DinoRPG",
@@ -4406,6 +4406,7 @@
 			"pteroz": "Teroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rokky",
+			"pirhaloz": "Pirhaloz",
 			"pirhanoz": "Piranta",
 			"kazka": "Kaskadino",
 			"anguil": "Anguilos",
@@ -4610,7 +4611,6 @@
 		"details": "Detalles",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "Los **Bonos del Tesoro** necesarios para compras en el Mercado de los Maestros se pueden obtener por el equivalente de **1** :ticket: **= 1000** :gold: del **Banco de Dinoland**",
-		"back": "Volver",
 		"bid": "Pujar",
 		"detail": "Ver detalles",
 		"yourTreasuryNotes": "Tus Bonos del Tesoro",
@@ -4713,7 +4713,6 @@
 		"welcome": "Bienvenido a tu Dojo",
 		"markAsRead": "Marcar como visto",
 		"noTournament": "Aún no hay suficientes Dinos para poder empezar un torneo, ¡vuelve más tarde una vez que hayas traído a tus amigos al juego!",
-		"return": "Regresar",
 		"accessTournament": "Accede al torneo",
 		"disclaimer": "**¡No hay forma de escapar!** && ¡La habilidad Agujero negro y el objeto Dimensión Paralela no se activan durante las batallas del torneo ni en desafíos futuros!",
 		"tidInProgress": "Las fases finales del torneo inter-dojo están en curso.",
@@ -5302,6 +5301,17 @@
 		"blockSender": "Bloquear remitente"
 	},
 	"dungeon": {
+		"buttons": {
+			"up": "Bouger vers le haut",
+			"left": "Bouger vers la gauche",
+			"right": "Bouger vers la droite",
+			"down": "Bouger vers le bas",
+			"irma": "Utiliser une potion d'irma pour continuer à avancer",
+			"stair_down": "Descendre les escaliers",
+			"stair_up": "Monter les escaliers",
+			"start": "Retourner à l'entrée du donjon",
+			"exit": "Sortir du donjon"
+		},
 		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
 		"floor": "Nivel {floor}",
 		"name": {
