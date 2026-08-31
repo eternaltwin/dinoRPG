@@ -352,7 +352,7 @@
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"inexistent": "This dungeon does not exist.",
+		"notFound": "This dungeon does not exist.",
 		"wrongPlace": "Your Dinoz is not at the entrance of the dungeon.",
 		"wrongTeam": "A group is already exploring this dungeon.",
 		"noRun": "You have never visited this dungeon.",

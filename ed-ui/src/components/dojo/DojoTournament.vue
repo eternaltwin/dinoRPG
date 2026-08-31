@@ -55,7 +55,7 @@
 		<div class="wrapper final" v-if="displayFinal">
 			<div class="header">
 				<RouterLink :to="`/dojo/tournament/${tournamentId}/0`">
-					<DZButton>{{ $t('dojo.return') }}</DZButton>
+					<DZButton>{{ $t('button.return') }}</DZButton>
 				</RouterLink>
 			</div>
 			<div class="rounds">
