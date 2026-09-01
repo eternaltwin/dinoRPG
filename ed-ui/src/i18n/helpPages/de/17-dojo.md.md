@@ -4,13 +4,13 @@ icon:
   name: small_dojo
 ---
 
-![point d'interrogation](@icons/small_question) Cette page n'est pas à jour avec le nouveau fonctionnement du dojo.
+![Ausrufezeichen](@icons/small_question) Dieser Abschnitt ist nicht im Einklang mit der neuen Dojo-Funktionalität.
 
-Les **Dojos** sont des lieux où vous pouvez entraîner vos Dinoz les uns contre les autres, en combat singulier.
+Das **Dojo** ist ein Ort, an dem du deine Dinoz gegen Andere im Einzelkampf antreten lassen kannst.
 
-![](@icons/act_train) Vous pouvez y faire **affronter** vos Dinoz entre eux, mais aussi affronter ceux des membres de votre clan.",
+![](@icons/act_train) Sie können entweder einander **gegenübertreten**, oder auch den Dinoz deiner Klanmitglieder.
 
-Il vous est proposé un maximum de 50 défis tous les jours, par série de 5, à vous de les gagner pour faire monter votre Dojo dans le classement.
+Es werden dir täglich bis zu 50 Herausforderungen angeboten, die in 5er-Sätze aufgeteilt sind. Es liegt an dir, diese zu gewinnen, damit dein Dojo in der Rangliste aufsteigen kann.
 
 Si vous gagnez ou annulez les 5 défis proposés, une nouvelle liste de 5 défis vous sera immédiatement proposée (dans la limite des défis restants).
 
