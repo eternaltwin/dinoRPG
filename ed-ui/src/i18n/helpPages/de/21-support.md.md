@@ -18,16 +18,16 @@ In Mozilla Firefox:
 
 - Klicke oben im Menü auf „Extras“ und dann „Einstellungen“
 - Wähle den Abschnitt „Datenschutz und Sicherheit“ aus
-- Dans la section Cookies et données de sites, cliquez sur le bouton 'Effacer les données...'
-- Cochez la case 'Contenu web en cache', puis cliquez sur le bouton 'Effacer'
+- Weiter unten bei „Cookies und Website-Daten“, klicke auf die Schaltfläche „Daten entfernen...“
+- Setze das Häkchen bei „Temporäre Dateien und Seiten im Cache“ und bestätige mit „Löschen“
 
-Sur Google Chrome :
+In Google Chrome:
 
-- Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
-- Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'
+- Klicke auf „Mehr“ und wähle „Browser-Daten leeren“
+- Wähle „Bilder und Daten im Cache“ und klicke dann auf „Daten löschen“
 
-# Demander de l'aide
+# Hilfe anfordern
 
-Vous trouverez souvent la réponse à vos questions directement sur le [serveur Discord d'Eternaltwin](https://discord.gg/ERc3svy).
+Die Antworten auf Fragen findet man oft direkt auf dem [Eternaltwin-Discord](https://discord.gg/ERc3svy).
 
-Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.
+Falls nicht, stelle deine Fragen und jemand aus der Gemeinschaft wird dir sicher helfen.
