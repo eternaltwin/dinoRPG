@@ -8,7 +8,16 @@ import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/m
 import { gfx, pad2 } from './dungeonAssets.js';
 
 /** The slice of smonster (a Pixi Container) we use — the published typings omit it. */
-type SMonster = Container & { collider: { width: number; height: number }; playing: boolean };
+type SMonster = Container & {
+	collider: { width: number; height: number };
+	playing: boolean;
+	/** Fires once every part's texture is loaded — immediately if they already are. */
+	onLoad: () => void;
+};
+
+/** Widest and tallest a monster may render, in cells. See MazeRenderer#fitScale. */
+const MONSTER_MAX_W = 1.15;
+const MONSTER_MAX_H = 1.25;
 
 /**
  * Draws only the cells the server has revealed ({@link MazeRenderer#applyReveal});
@@ -83,7 +92,9 @@ export class MazeRenderer {
 		this.mapLayer = new Container();
 		this.wallBackLayer = new Container();
 		this.actorLayer = new Container();
-		this.actorLayer.sortableChildren = true; // leader (zIndex 1) draws over followers
+		// Dinoz and monsters share one ground plane, depth-sorted by screen y so whoever stands
+		// lower draws in front (the leader wins a tie); see DinozActor#syncDepth.
+		this.actorLayer.sortableChildren = true;
 		this.wallFrontLayer = new Container();
 		this.maskLayer = new Container();
 		this.fogLayer = new Container();
@@ -224,6 +235,8 @@ export class MazeRenderer {
 		this.geometryDirty = true;
 		this.fogDirty = true;
 		this.mapLayer.removeChildren(); // stale sprites from the previous level; drawAllEntities() repopulates
+		// Monsters live on the actor plane, so removeChildren() above misses them.
+		for (const m of this.monsterSprites.values()) m.parent?.removeChild(m);
 		this.drawAllEntities();
 		this.rebuild();
 	}
@@ -613,12 +626,36 @@ export class MazeRenderer {
 		let m = this.monsterSprites.get(key);
 		if (!m) {
 			m = new smonster({ type: c.monster, pflag: true }) as SMonster;
-			m.scale.set((this.cell * 2) / 90);
+			// The parts stream in, so the art has no usable bounds yet: fit on the collider now
+			// (it tracks the art within ~20%) and refit exactly once the sprite has loaded.
+			const sprite = m;
+			m.scale.set(this.fitScale(m.collider.width, m.collider.height));
+			// Registered before onLoad, which fires synchronously when the art is already cached.
 			this.monsterSprites.set(key, m);
+			m.onLoad = (): void => {
+				// The team can be beaten while the art is still loading, and retireMonster() has
+				// destroyed the sprite by the time this fires.
+				if (this.monsterSprites.get(key) !== sprite) return;
+				const b = sprite.getLocalBounds();
+				if (b.width > 0 && b.height > 0) sprite.scale.set(this.fitScale(b.width, b.height));
+			};
 		}
 		const p = this.center(c.x, c.y);
 		m.position.set(p.x, p.y + this.cell * 0.25);
-		this.mapLayer.addChild(m);
+		m.zIndex = m.y;
+		this.actorLayer.addChild(m);
+	}
+
+	/**
+	 * Scale that keeps a monster on its own cell. smonster art is authored at wildly different
+	 * sizes — a korgon is 35×35 px, a behemu 240×218 — while the dinoz is around 44×48 and
+	 * DinozActor renders it at one cell. Unscaled, the big ones covered whole rooms: the wall
+	 * band above a cell is only 0.7 cell tall, so anything past MONSTER_MAX_H pokes out over
+	 * the next room. Never upscale, so a korgon still reads as small next to a behemu.
+	 */
+	private fitScale(w: number, h: number): number {
+		const base = (this.cell * 2) / 90; // the dinoz's scale — see DinozActor
+		return Math.min(base, (this.cell * MONSTER_MAX_W) / w, (this.cell * MONSTER_MAX_H) / h);
 	}
 
 	// ── primitives ─────────────────────────────────────────────────────────────
