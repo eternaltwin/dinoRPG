@@ -357,15 +357,19 @@
 		"wrongTeam": "Le donjon est déjà en cours de visite par un autre groupe.",
 		"noRun": "Vous n'avez jamais visité ce donjon.",
 		"notAtExit": "Vous ne pouvez pas sortir du donjon ici !",
-		"notHealing": "Vous ne pouvez utiliser un objet ici, il vous faut aller à une zone de soin."
+		"notHealing": "Vous ne pouvez pas utiliser un objet ici, il vous faut aller à une zone de soin."
 	},
 	"UnavailableReason": {
-		"frozen": "Votre Dinoz est congelé",
-		"sacrificed": "Votre Dinoz est sacrifié",
-		"selling": "Votre Dinoz est en vente",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Votre Dinoz se repose",
-		"dungeon": "Votre Dinoz visite un donjon."
+		"frozen": "Votre Dinoz est congelé.",
+		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
+		"defending": "Votre Dinoz défend le château de votre clan.",
+		"restingAttack": "Votre Dinoz se remet de son combat.",
+		"sacrificed": "Votre Dinoz est sacrifié.",
+		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
+		"selling": "Votre Dinoz est en vente.",
+		"superdom": "Votre Dinoz est au superdom.",
+		"resting": "Votre Dinoz se repose.",
+		"dungeon": "Votre Dinoz explore un donjon."
 	},
 	"fb_tournament": {
 		"noOpponent": "Il n'y a plus personne à combattre pour le moment."

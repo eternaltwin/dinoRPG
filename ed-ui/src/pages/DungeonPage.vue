@@ -44,7 +44,7 @@
 						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.${actionImg}`)  }}
+						{{ $t(`dungeon.buttons.${actionImg}`) }}
 					</template>
 				</Tippy>
 			</div>
@@ -130,8 +130,6 @@ const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
  * absent (monster, closed door, key, gold, scroll, chest) is left to the server.
  */
 const INERT = new Set(['start', 'exit', 'heal', 'stair_up', 'stair_down', 'door_v_open', 'door_h_open']);
-
-
 
 export default defineComponent({
 	name: 'DungeonPage',

@@ -117,6 +117,8 @@ export async function getAllItemsData(req: Request) {
 	return allItemsDataReply;
 }
 
+const CAN_STILL_USE_ITEMS: UnavailableReason[] = [UnavailableReason.resting, UnavailableReason.defending, UnavailableReason.restingAttack];
+
 export async function useItem(req: Request) {
 	//The Promise need to be reworked
 	const authed = await auth(req);
@@ -131,12 +133,15 @@ export async function useItem(req: Request) {
 	if (item === undefined) {
 		throw new ExpectedError(`This item didn't exist`);
 	}
-	if (dinoz.unavailableReason) {
+	// For some specific unavailable reasons, the Dinoz cannot use an item:
+	if (dinoz.unavailableReason && !CAN_STILL_USE_ITEMS.includes(dinoz.unavailableReason)) {
 		healingZone = await isOnHealingCell(dinoz);
-		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
-			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
-		} else if (!healingZone && item.itemId !== Item.POTION_IRMA) {
+		if (dinoz.unavailableReason === UnavailableReason.dungeon && !healingZone && item.itemId !== Item.POTION_IRMA) {
+			// Only item usable in a dungeon outside of a healing zone are irma potions
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
+		} else {
+			// Else no item can be used if the Dinoz is unavailable (minus the exceptions)
+			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 		}
 	}
 
@@ -150,7 +155,7 @@ export async function useItem(req: Request) {
 		throw new ExpectedError(translate(`notEnoughItem`, authed));
 	}
 
-	//Star quest
+	// Star quest
 	const starQuest = dinoz.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
 	if (starQuest) {
 		// Current date
