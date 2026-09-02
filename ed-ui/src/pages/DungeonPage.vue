@@ -44,7 +44,7 @@
 						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
 					</button>
 					<template #content>
-						{{  $t(`dungeon.buttons.${actionImg}`)  }}
+						{{ $t(`dungeon.buttons.${actionImg}`) }}
 					</template>
 				</Tippy>
 			</div>
@@ -131,8 +131,6 @@ const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
  */
 const INERT = new Set(['start', 'exit', 'heal', 'stair_up', 'stair_down', 'door_v_open', 'door_h_open']);
 
-
-
 export default defineComponent({
 	name: 'DungeonPage',
 	components: { DZDisclaimer, DZButton },
@@ -151,7 +149,8 @@ export default defineComponent({
 			icons: new Map<string, string>(),
 			// Predicted position: runs ahead of `confirmed` by `pending.length` steps, so input never
 			// waits on the network.
-			cursor: { l: 0, x: 0, y: 0 } as Cell
+			cursor: { l: 0, x: 0, y: 0 } as Cell,
+			run: sessionStore().getDungeonRun
 		};
 	},
 	computed: {
@@ -454,13 +453,15 @@ export default defineComponent({
 			const currentDinoz = useDinozStore().getCurrentDinoz;
 			// enterDungeon() runs in DinozActions.launch() before routing here, so its errors
 			// (team already in a dungeon, …) never reach this page.
-			const run = this.sessionStore.getDungeonRun;
-			if (!currentDinoz || !run) {
+			if (!currentDinoz) {
 				this.$router.go(-1);
 				return;
 			}
+			if (this.run === undefined) {
+				return;
+			}
 			this.sessionStore.setDungeonRun(undefined);
-			this.currentLevel = -run.pos.l - 1;
+			this.currentLevel = -this.run.pos.l - 1;
 			useDinozStore().setCurrentDinozId(this.dinozId);
 
 			this.icons.clear();
@@ -472,7 +473,7 @@ export default defineComponent({
 			blocking = false;
 			this.hideButton();
 
-			const skins: Skin[] = SKINS.filter(s => s.name === run.skin);
+			const skins: Skin[] = SKINS.filter(s => s.name === this.run?.skin);
 			// Lazy-load only this run's tiles now that the server told us the skin.
 			await loadDungeonAssets(skins.flatMap(skinAssetNames));
 
@@ -481,15 +482,18 @@ export default defineComponent({
 			// cell 45 renders the dino at native resolution; the 500×350 viewport scrolls.
 			renderer = new MazeRenderer(
 				this.$refs.stageEl as HTMLDivElement,
-				{ width: run.width, height: run.height, levels: run.levels },
+				{ width: this.run.width, height: this.run.height, levels: this.run.levels },
 				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: this.dungeonHash() }
 			);
 			renderer.setDebug(this.wallDebug);
-			if (run.run.message) {
-				renderer.showMessage(this.$t(run.run.message));
+			if (this.run.run.message) {
+				this.$toast.open({
+					message: this.$t(this.run.run.message),
+					type: 'info'
+				});
 			}
 
-			this.record(run.reveal, run.pos);
+			this.record(this.run.reveal, this.run.pos);
 			// applyReveal() only flags the level dirty for the ticker, and showLevel() only
 			// rebuilds the scene graph — the cacheAsBitmap bake and the pixels wait for a
 			// render() pass. Force both, or the canvas sits on plain fog until something
@@ -505,17 +509,17 @@ export default defineComponent({
 				speed: WALK_SPEED,
 				onLevelChange: l => renderer?.showLevel(l)
 			});
-			actor.placeAt({ ...run.pos });
+			actor.placeAt({ ...this.run.pos });
 			actor.takeControl();
-			this.cursor = { ...run.pos };
-			confirmed = { ...run.pos };
+			this.cursor = { ...this.run.pos };
+			confirmed = { ...this.run.pos };
 			trail.length = 0;
-			trail.push({ ...run.pos });
+			trail.push({ ...this.run.pos });
 			for (const d of useDinozStore()
 				.getDinozParty(currentDinoz.id)
 				.filter(p => p.id !== currentDinoz.id)) {
 				const f = new DinozActor(renderer, { code: d.display, speed: WALK_SPEED, lead: false });
-				f.placeAt({ ...run.pos });
+				f.placeAt({ ...this.run.pos });
 				f.takeControl();
 				followers.push(f);
 			}
