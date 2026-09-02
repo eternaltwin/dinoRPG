@@ -352,7 +352,7 @@
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"dungeon": {
-		"notFound": "Dieses Verlies existiert nicht.",
+		"inexistent": "Dieses Verlies existiert nicht.",
 		"wrongPlace": "Dein Dinoz ist nicht am Eingang zum Verlies.",
 		"wrongTeam": "In diesem Verlies befindet sich bereits eine andere Gruppe.",
 		"noRun": "Du hast dieses Verlies noch nie besucht.",
