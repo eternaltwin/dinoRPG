@@ -8,7 +8,7 @@ icon:
 
 Als Erstes solltest du in Dino-RPG einen Dinoz adoptieren. Hierfür hast du bei der Kontoerstellung **50.000** ![Goldmünzen](@icons/small_gold) erhalten.
 
-Klicke links im Menü auf ![Kaufe Dinoz!](@guide/adopt_button_de) oder auf ![diese Schaltfläche](@icons/act_treasure) auf dem Smartphone, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst, welcher dir am besten gefällt. Diese wird ebenfalls nach dem Adoptieren eines Dinoz erneuert.
+Klicke links im Menü auf ![Kaufe Dinoz!](@guide/adopt_button_de) oder auf ![die Schatztruhe](@icons/act_treasure) auf dem Smartphone, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst, welcher dir am besten gefällt. Diese wird ebenfalls nach dem Adoptieren eines Dinoz erneuert.
 
 Jeder Dinoz wird wie folgt dargestellt:
 ![Adoptionsseite](@guide/adopt_shop_de)

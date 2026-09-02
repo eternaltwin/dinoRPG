@@ -318,7 +318,8 @@
 		"search": "Suche",
 		"loading": "Wird geladen...",
 		"noResults": "Keine Ergebnisse",
-		"details": "Details"
+		"details": "Details",
+		"return": "Zurück"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -3576,8 +3577,7 @@
 			"title": "Kontoeinstellungen",
 			"fight": "Kampf zeigen",
 			"todo": "Nicht verfügbar",
-			"reset": "Konto löschen",
-			"retour": "Zurück"
+			"reset": "Konto löschen"
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistiken",
@@ -4406,6 +4406,7 @@
 			"pteroz": "Ptero",
 			"hippo": "Hippoklamp",
 			"rocky": "Rocky",
+			"pirhaloz": "Piränhsel",
 			"pirhanoz": "Piranhsel",
 			"kazka": "Kazkadine",
 			"anguil": "Aalos",
@@ -4610,7 +4611,6 @@
 		"details": "Details",
 		"time": "{days}T {hours}Std. {minutes}Min. {seconds}Sek.",
 		"currency": "Die **Schatzbriefe**, die zum Handeln auf dem Züchtermarkt benötigt werden, können bei der **Dinoländischen Bank** in einem Verhältnis von **1** :ticket: **= 1000** :gold: erworben werden.",
-		"back": "Zurück",
 		"bid": "Bieten",
 		"detail": "Details zeigen",
 		"yourTreasuryNotes": "Deine Schatzbriefe",
@@ -4713,7 +4713,6 @@
 		"welcome": "Willkommen in deinem Dojo",
 		"markAsRead": "Als angeschaut setzen",
 		"noTournament": "Es sind nicht genug Dinoz da, um ein Turnier zu veranstalten. Komm später wieder, nachdem du deine Freunde zum Spiel mitgebracht hast!",
-		"return": "Zurück",
 		"accessTournament": "An Wettkampf teilnehmen",
 		"disclaimer": "**Es gibt kein Entkommen!**&&Die Fähigkeit „Schwarzes Loch“ und der Gegenstand „Dimensionales Pulver“ sind weder in Wettkämpfen, noch in weiteren Herausforderungen verfügbar!",
 		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo Turniers ist im Gange.",
@@ -5302,6 +5301,17 @@
 		"blockSender": "Absender blockieren"
 	},
 	"dungeon": {
+		"buttons": {
+			"up": "Nach oben bewegen",
+			"left": "Nach links bewegen",
+			"right": "Nach rechts bewegen",
+			"down": "Nach unten bewegen",
+			"irma": "Trank von Madame Irma verwenden, um fortzufahren",
+			"stair_down": "Die Stufen hinabgehen",
+			"stair_up": "Die Stufen hinaufgehen",
+			"start": "Zum Verlieseingang zurückkehren",
+			"exit": "Verlies verlassen"
+		},
 		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann die gegenwärtige Etage erst verlassen, wenn er sich am Eingang oder Ausgang befindet, oder stirbt.",
 		"floor": "{floor}. Etage",
 		"name": {

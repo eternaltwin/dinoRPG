@@ -4,30 +4,30 @@ icon:
   name: small_browse_next
 ---
 
-# Vider son cache
+# Cache leeren
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut résoudre bon nombre de problèmes techniques.
+Vor allem Anderen, denk bitte daran, den **Browser-Cache zu leeren**! Dieser Vorgang ist simpel, kann aber eine Vielzahl technischer Probleme lösen.
 
-Sur Microsoft Edge:
+In Microsoft Edge:
 
-- Appuyer en même temps sur les touches [Ctrl], [Maj] et [Suppr]
-- Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
-- Confirmez votre choix en cliquant sur le bouton 'Effacer'
+- Drücke gleichzeitig [Strg], [Umschalt] und [Entf]
+- Es öffnet sich ein neues Fenster,  in dessen Reiter du „Gecachte Bilder und Daten“ auswählen musst
+- Bestätige deine Auswahl, indem du auf „Leeren“ drückst
 
-Sur Mozilla Firefox :
+In Mozilla Firefox:
 
-- Cliquez sur le bouton de menu et sélectionnez les Paramètres
-- Sélectionnez le panneau Vie privée et sécurité
-- Dans la section Cookies et données de sites, cliquez sur le bouton 'Effacer les données...'
-- Cochez la case 'Contenu web en cache', puis cliquez sur le bouton 'Effacer'
+- Klicke oben im Menü auf „Extras“ und dann „Einstellungen“
+- Wähle den Abschnitt „Datenschutz und Sicherheit“ aus
+- Weiter unten bei „Cookies und Website-Daten“, klicke auf die Schaltfläche „Daten entfernen...“
+- Setze das Häkchen bei „Temporäre Dateien und Seiten im Cache“ und bestätige mit „Löschen“
 
-Sur Google Chrome :
+In Google Chrome:
 
-- Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
-- Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'
+- Klicke auf „Mehr“ und wähle „Browser-Daten leeren“
+- Wähle „Bilder und Daten im Cache“ und klicke dann auf „Daten löschen“
 
-# Demander de l'aide
+# Hilfe anfordern
 
-Vous trouverez souvent la réponse à vos questions directement sur le [serveur Discord d'Eternaltwin](https://discord.gg/ERc3svy).
+Die Antworten auf Fragen findet man oft direkt auf dem [Eternaltwin-Discord](https://discord.gg/ERc3svy).
 
-Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.
+Falls nicht, stelle deine Fragen und jemand aus der Gemeinschaft wird dir sicher helfen.

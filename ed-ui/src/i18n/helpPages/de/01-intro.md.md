@@ -12,6 +12,6 @@ Auf dieser Seite spielst du einen **Meisterzüchter** und kannst einen oder mehr
 
 Falls du Hilfe benötigst, kannst du jederzeit auf dieses **Spielhandbuch** zugreifen, indem du im Menü auf der rechten Seite die Schaltfläche mit dem ![Fragezeichen](@icons/small_question) anklickst.
 
-Um im **Handbuch** weiterzublättern, klicke bitte auf die Schaltfläche ![Einen Dinoz adoptieren](@icons/small_page_down) weiter unten.
+Um im **Handbuch** weiterzublättern, klicke bitte auf die Schaltfläche ![mit grünem Pfeil](@icons/small_page_down) „Einen Dinoz adoptieren“ weiter unten.
 
 Einige Abschnitte des Handbuchs sind nicht mehr aktuell und werden derzeit überarbeitet.

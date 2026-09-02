@@ -318,7 +318,8 @@
 		"search": "Search",
 		"loading": "Loading...",
 		"noResults": "No result",
-		"details": "Details"
+		"details": "Details",
+		"return": "Return"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -3576,8 +3577,7 @@
 			"title": "Account Options",
 			"fight": "Display the fights",
 			"todo": "Not available",
-			"reset": "Delete the account",
-			"retour": "Return"
+			"reset": "Delete the account"
 		},
 		"twinoidgoals": {
 			"name": "DinoRPG Statistics",
@@ -4406,6 +4406,7 @@
 			"pteroz": "Pteroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rocky",
+			"pirhaloz": "Pirhaloz",
 			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine",
 			"anguil": "Eeloz",
@@ -4610,7 +4611,6 @@
 		"details": "Details",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
-		"back": "Back",
 		"bid": "Bid",
 		"detail": "See Details",
 		"yourTreasuryNotes": "Your Treasure Coupons",
@@ -4713,7 +4713,6 @@
 		"welcome": "Welcome to your Dojo",
 		"markAsRead": "Set as watched",
 		"noTournament": "There is not enough Dinoz to start a tournament. Come back later when you'll have brought your friends to the game!",
-		"return": "Back",
 		"accessTournament": "Access tournament",
 		"disclaimer": "**No way to escape!** && The Black Hole skill and the Dimensional Powder item are not activated during tournament battles, nor in future challenges!",
 		"tidInProgress": "The final phases of the inter-dojo tournament are in progress.",
@@ -5302,6 +5301,17 @@
 		"blockSender": "Block sender"
 	},
 	"dungeon": {
+		"buttons": {
+			"up": "Move upward",
+			"left": "Move leftward",
+			"right": "Move rightward",
+			"down": "Move downward",
+			"irma": "Use Irma's potion to continue exploring",
+			"stair_down": "Go down the stairs",
+			"stair_up": "Go up the stairs",
+			"start": "Go back to the dungeon entrance",
+			"exit": "Exit the dungeon"
+		},
 		"disclaimer": "**{dinoz}** currently explores **{dungeonName}**. To leave, it must find the exit, go back to the entrance, or die.",
 		"floor": "Floor {floor}",
 		"name": {
