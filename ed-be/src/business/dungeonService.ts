@@ -268,7 +268,13 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 			run: {
 				id: existing.id,
 				status: 'resumed',
-				message: dungeon.placeStart != null ? `dungeon.${dungeon.name}.enter` : undefined
+				message:
+					dungeon.placeStart != null &&
+					d.start.l === existing.posL &&
+					d.start.x === existing.posX &&
+					d.start.y === existing.posY
+						? `dungeon.${dungeon.name}.enter`
+						: undefined
 			},
 			pos: { l: existing.posL, x: existing.posX, y: existing.posY },
 			width: d.width,

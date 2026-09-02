@@ -29,7 +29,6 @@ vi.mock('../../utils/server/translate.js', () => ({
 	default: vi.fn((key: string) => key)
 }));
 
-
 import {
 	createRun,
 	findRun,
@@ -65,9 +64,8 @@ function makeDinoz(overrides: Record<string, any> = {}): any {
 		followers: [],
 		leaderId: null,
 		...overrides
-	}
-};
-
+	};
+}
 
 /** The stored dungeon row for `d`: no placeStart set, so no place gate. */
 function dungeonRowFor(d: DungeonStruct) {
@@ -121,22 +119,30 @@ describe('dungeonService - startRun', () => {
 
 	it('throws if Dinoz not found', async () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue(null);
-		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('dinozNotFound');
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'dinozNotFound'
+		);
 	});
 
 	it('throws if Dinoz not leader', async () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ leaderId: 123 }));
-		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('notLeader');
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'notLeader'
+		);
 	});
 
 	it('throws if Dinoz not at dungeon place', async () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ placeId: 123 }));
-		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('dungeon.wrongPlace');
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'dungeon.wrongPlace'
+		);
 	});
 
 	it('throws if Dinoz not available', async () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ unavailableReason: UnavailableReason.frozen }));
-		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow('error.dinozNotAvailable');
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'error.dinozNotAvailable'
+		);
 	});
 });
 

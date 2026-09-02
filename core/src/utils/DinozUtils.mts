@@ -352,7 +352,7 @@ export const remainingXPToLevelUp = (
 	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	},
-	config: Config,
+	config: Config
 ) => {
 	return getMaxXp(dinoz, config) - dinoz.experience;
 };
@@ -363,7 +363,7 @@ export const canLevelUp = (
 	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	},
-	config: Config,
+	config: Config
 ) => {
 	return remainingXPToLevelUp(dinoz, config) <= 0 && !isMaxLevel(dinoz, config);
 };

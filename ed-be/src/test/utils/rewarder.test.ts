@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 
-
 vi.mock('../../utils/gameConfig.js', () => ({
 	gameConfig: vi.fn()
 }));
