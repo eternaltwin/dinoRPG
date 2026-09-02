@@ -5323,7 +5323,7 @@
 			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
 			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
-			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
 			"locked": "La porte des {name} est verrouillée.",
