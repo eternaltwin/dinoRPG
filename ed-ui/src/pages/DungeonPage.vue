@@ -311,7 +311,7 @@ export default defineComponent({
 			if (move.applied > 0) {
 				if (entered === 'door_v' || entered === 'door_h') {
 					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
-					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_${entered}_open`);
+					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_door_h_open`);
 				} else if (entered?.startsWith('key_')) {
 					const v = Number(entered.slice(4));
 					renderer?.showMessage(
