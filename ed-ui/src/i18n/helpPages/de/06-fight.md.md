@@ -10,7 +10,7 @@ Ein Kampf wird ausgelöst, wenn deine Dinoz unterwegs angegriffen werden oder se
 
 ![Gegen ein Monster kämpfen](@guide/fight)
 
-Die Monster und deine Dinoz greifen einander der Reihe nach an, abhängig von ihrer **Initiative**, **Geschwindigkeit** und **Energie**. Mit jedem Treffer verlieren Gegner die angezeigten ![Lebenspunkte](@icons/small_pv). Um den Kampf zu gewinnen, müssen deine Dinoz alle Monster töten.
+Die Monster und deine Dinoz greifen einander der Reihe nach an, abhängig von ihrer **Initiative**, **Geschwindigkeit** und **Energie**. Mit jedem Treffer verlieren Gegner die angezeigten **Lebenspunkte** ![](@icons/small_pv). Um den Kampf zu gewinnen, müssen deine Dinoz alle Monster töten.
 
 Während seines Zuges kann ein Dinoz abhängig von seiner Energie eine oder mehrere der folgenden Aktionen ausführen:
 
@@ -23,11 +23,11 @@ Während seines Zuges kann ein Dinoz abhängig von seiner Energie eine oder mehr
 
 Ein Dinoz verfügt über 5 **Element**-Werte, die auf seinem Profil zu sehen sind:
 
-- ![Feuer](@elements/elem_fire)
-- ![Holz](@elements/elem_wood)
-- ![Wasser](@elements/elem_water)
-- ![Blitz](@elements/elem_lightning)
-- ![Luft](@elements/elem_air)
+- ![](@elements/elem_fire) Feuer
+- ![](@elements/elem_wood) Holz
+- ![](@elements/elem_water) Wasser
+- ![](@elements/elem_lightning) Blitz
+- ![](@elements/elem_air) Luft
 
 Diese Elemente sind dem **Großen Zyklus der Elemente** nach angeordnet:
 
@@ -43,10 +43,10 @@ Angriffe erfolgen immer in einer festgelegten Reihenfolge, die auf den Elementar
 
 So wird ein Dinoz mit den oben dargestellten Elementen seine Angriffe in der folgenden Reihenfolge ausführen:
 
-- Zunächst ![Wasser](@elements/elem_water)
-- dann ![Holz](@elements/elem_wood)
-- anschließend ![Blitz](@elements/elem_lightning) oder ![Luft](@elements/elem_air) in einer zufälligen Reihenfolge
-- und schließlich ![Feuer](@elements/elem_fire)
+- Zunächst Wasser ![](@elements/elem_water)
+- dann Holz ![](@elements/elem_wood)
+- anschließend Blitz ![](@elements/elem_lightning) oder Luft ![](@elements/elem_air) in einer zufälligen Reihenfolge
+- und schließlich Feuer ![](@elements/elem_fire)
 
 Sobald 5 Angriffe erfolgt sind, wird der Dinoz den Zyklus von Vorne beginnen.
 
@@ -76,27 +76,27 @@ Im Laufe des Kampfes füllt sich der Energiebalken allmählich auf, was **Erholu
 
 Während des Kampfes kann ein Dinoz von diversen Status betroffen sein, die entweder ein Bonus oder ein Malus sein können. Im Folgenden findest du eine Liste solcher Status:
 
-- ![Schlafend](@guide/status_sleep) Der Dinoz ist eingeschlafen und kann sich nicht bewegen
-- ![Unantastbar](@guide/status_untouchable) Der Dinoz kann nicht von gewöhnlichen Angriffen getroffen werden
-- ![Verlangsamt](@guide/status_slow_down) Der Dinoz ist verlangsamt
-- ![Beschleunigt](@guide/status_faster) Der Dinoz ist beschleunigt
-- ![Versteinert](@guide/status_petrified) Der Dinoz ist versteinert und kann nicht mehr angreifen
-- ![Gesegnet](@guide/status_assault_bonus) Der Dinoz hat einen Angriffsbonus
-- ![Vergiftet](@guide/status_poisoned) Der Dinoz ist vergiftet und bekommt jede Runde Schaden
-- ![Versiegelt](@guide/status_locked) Der Dinoz ist in der Nutzung seiner Elemente eingeschränkt
-- ![Geblendet](@guide/status_dazzled) Der Dinoz ist geblendet und seine Angriffe können verfehlen
-- ![Geschützt](@guide/status_protected) Der Dinoz steht unter dem Schutz eines Verbündeten
-- ![Verstummt](@guide/status_mute) Der Dinoz ist zum Schweigen gebracht und kann keine Beschwörungen einsetzen
-- ![Sharingan](@guide/status_sharingan) Der Dinoz kann gegnerische Fähigkeiten kopieren
-- ![Ausrüstung blockiert](@guide/status_blocked_inventory) Der Dinoz kann nicht auf seine Ausrüstung zugreifen
-- ![Malus auf Energie](@guide/status_energy_penalty) Der Dinoz hat einen Energiemalus
-- ![Bonus auf Energie](@guide/status_energy_bonus) Der Dinoz hat einen Energiebonus
-- ![Feuerabwehr](@guide/status_bonus_def_fire) Der Dinoz hat einen Bonus auf Feuerabwehr
-- ![Holzabwehr](@guide/status_bonus_def_wood) Der Dinoz hat einen Bonus auf Holzabwehr
-- ![Wasserabwehr](@guide/status_bonus_def_water) Der Dinoz hat einen Bonus auf Wasserabwehr
-- ![Blitzabwehr](@guide/status_bonus_def_lightning) Der Dinoz hat einen Bonus auf Blitzabwehr
-- ![Luftabwehr](@guide/status_bonus_def_air) Der Dinoz hat einen Bonus auf Luftabwehr
-- ![Bonus auf Initiative](@guide/status_initiative_bonus) Der Dinoz hat einen Initiativebonus
-- ![Malus auf Initiative](@guide/status_initiative_penalty) Der Dinoz hat einen Initiativemalus
-- ![Bonus auf Ausweichen](@guide/status_dodge_bonus) Der Dinoz hat einen Ausweichbonus
-- ![Bonus auf Verteidigung](@guide/status_def_bonus) Der Dinoz hat einen Verteidigungsbonus
+- ![Schlafend:](@guide/status_sleep) Der Dinoz ist eingeschlafen und kann sich nicht bewegen
+- ![Unantastbar:](@guide/status_untouchable) Der Dinoz kann nicht von gewöhnlichen Angriffen getroffen werden
+- ![Verlangsamt:](@guide/status_slow_down) Der Dinoz ist verlangsamt
+- ![Beschleunigt:](@guide/status_faster) Der Dinoz ist beschleunigt
+- ![Versteinert:](@guide/status_petrified) Der Dinoz ist versteinert und kann nicht mehr angreifen
+- ![Gesegnet:](@guide/status_assault_bonus) Der Dinoz hat einen Angriffsbonus
+- ![Vergiftet:](@guide/status_poisoned) Der Dinoz ist vergiftet und bekommt jede Runde Schaden
+- ![Versiegelt:](@guide/status_locked) Der Dinoz ist in der Nutzung seiner Elemente eingeschränkt
+- ![Geblendet:](@guide/status_dazzled) Der Dinoz ist geblendet und seine Angriffe können verfehlen
+- ![Geschützt:](@guide/status_protected) Der Dinoz steht unter dem Schutz eines Verbündeten
+- ![Verstummt:](@guide/status_mute) Der Dinoz ist zum Schweigen gebracht und kann keine Beschwörungen einsetzen
+- ![Sharingan:](@guide/status_sharingan) Der Dinoz kann gegnerische Fähigkeiten kopieren
+- ![Ausrüstung blockiert:](@guide/status_blocked_inventory) Der Dinoz kann nicht auf seine Ausrüstung zugreifen
+- ![Malus auf Energie:](@guide/status_energy_penalty) Der Dinoz hat einen Energiemalus
+- ![Bonus auf Energie:](@guide/status_energy_bonus) Der Dinoz hat einen Energiebonus
+- ![Feuerabwehr:](@guide/status_bonus_def_fire) Der Dinoz hat einen Bonus auf Feuerabwehr
+- ![Holzabwehr:](@guide/status_bonus_def_wood) Der Dinoz hat einen Bonus auf Holzabwehr
+- ![Wasserabwehr:](@guide/status_bonus_def_water) Der Dinoz hat einen Bonus auf Wasserabwehr
+- ![Blitzabwehr:](@guide/status_bonus_def_lightning) Der Dinoz hat einen Bonus auf Blitzabwehr
+- ![Luftabwehr:](@guide/status_bonus_def_air) Der Dinoz hat einen Bonus auf Luftabwehr
+- ![Bonus auf Initiative:](@guide/status_initiative_bonus) Der Dinoz hat einen Initiativebonus
+- ![Malus auf Initiative:](@guide/status_initiative_penalty) Der Dinoz hat einen Initiativemalus
+- ![Bonus auf Ausweichen:](@guide/status_dodge_bonus) Der Dinoz hat einen Ausweichbonus
+- ![Bonus auf Verteidigung:](@guide/status_def_bonus) Der Dinoz hat einen Verteidigungsbonus

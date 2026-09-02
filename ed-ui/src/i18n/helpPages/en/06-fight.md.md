@@ -77,11 +77,11 @@ This energy bar gradually fills up during the battle, referred to as **recovery*
 During the battle, different statuses will affect your Dinoz, either as a bonus or a penalty. You can find the list of these statuses below:
 
 - ![Asleep Status](@guide/status_sleep) The Dinoz is asleep, it cannot move
-- ![Statut Intangible](@guide/status_untouchable) Le Dinoz ne peut être touché par un assaut classique
-- ![Statut Ralenti](@guide/status_slow_down) Le Dinoz est ralenti
-- ![Statut Accéléré](@guide/status_faster) Le Dinoz est plus rapide
-- ![Statut Pétrifié](@guide/status_petrified) Le Dinoz est pétrifié, il ne peut plus attaquer
-- ![Statut Bonus Assaut](@guide/status_assault_bonus) Le Dinoz a un bonus sur ses assauts
+- ![Intangible Status](@guide/status_untouchable) The Dinoz cannot be hit by a standard assault
+- ![Slowed Status](@guide/status_slow_down) The Dinoz is slowed down
+- ![Accelerated Status](@guide/status_faster) The Dinoz is faster
+- ![Petrified Status](@guide/status_petrified) The Dinoz is petrified, it cannot attack anymore
+- ![Assault Bonus Status](@guide/status_assault_bonus) The Dinoz has a bonus on its assaults
 - ![Statut Poison](@guide/status_poisoned) Le Dinoz est empoisonné et subit des dégâts chaque tour
 - ![Statut Vérouillé](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
 - ![Statut Étourdi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
