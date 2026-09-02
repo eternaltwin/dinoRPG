@@ -4,11 +4,11 @@ icon:
   name: small_member
 ---
 
-# Adopter un Dinoz
+# Adoptar un Dino
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **50 000** pièces d'or ![](@icons/small_gold) obtenues lors de la création de votre compte.
+Lo primero que debes hacer en DinoRPG es adoptar un Dino. Para ello dispones de **50 000** monedas de oro ![](@icons/small_gold) obtenidas al crear tu cuenta.
 
-En cliquant sur ![ACHETER UN DINOZ](@guide/adopt_button_fr) dans le menu de gauche ou ![bouton mobile](@icons/act_treasure) sur mobile, vous pourrez accéder à l'Enclos des Dinoz. Chaque Dinoz est unique et chaque jour l'enclos vous proposera une nouvelle sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. Cette sélection change aussi à chaque adoption faite via l'enclos.
+Al hacer clic en ![¡COMPRAR UN DINO!](@guide/adopt_button_es) en el menú de la izquierda o en ![botón móvil](@icons/act_treasure) desde un dispositivo móvil, podrás acceder a la Tienda de Dinos. Chaque Dinoz est unique et chaque jour l'enclos vous proposera une nouvelle sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. Cette sélection change aussi à chaque adoption faite via l'enclos.
 
 Chaque Dinoz est présenté de la façon suivante :
 ![Écran d'adoption](@guide/adopt_shop_fr)
