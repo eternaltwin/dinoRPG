@@ -1213,13 +1213,16 @@ export async function createSeededDungeon(req: Request) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
 		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
+		// The layout's IScenario items index this list, so it must travel with them: dropping it
+		// leaves every chest/scroll silent and drawn with decorateScenarios' fallback icon.
+		const scenarios = checkScenarios(req.body.scenarios);
 		const created = await createDungeon(
 			seal(codec.encode()),
 			type,
 			name,
 			monsterLevel,
 			monsters,
-			undefined,
+			JSON.stringify(scenarios),
 			placeStart,
 			placeEnd,
 			condition,
@@ -1248,13 +1251,15 @@ export async function createSeededDungeon(req: Request) {
 	});
 	const encoded = new DungeonCodec().encode(d);
 	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
+	// OriginalGenerator scatters IScenario items numbered 0..n-1, which index this list.
+	const scenarios = checkScenarios(req.body.scenarios);
 	const created = await createDungeon(
 		seal(encoded),
 		type,
 		name,
 		monsterLevel,
 		monsters,
-		undefined,
+		JSON.stringify(scenarios),
 		placeStart,
 		placeEnd,
 		condition,

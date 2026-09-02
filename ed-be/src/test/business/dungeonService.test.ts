@@ -386,6 +386,64 @@ describe('dungeonService — healing cell', () => {
 	});
 });
 
+describe('dungeonService — items sitting inside a room rect', () => {
+	// A room is a rectangle and its item lives at absolute coordinates somewhere inside it,
+	// so an item cell almost never equals the room's own (x,y) origin. Matching a cell against
+	// the room origin instead of the item's position silently loses most pickups.
+	// Seed 8 is picked for putting a scenario item off its room origin, which seed 7 does not.
+	const d = OriginalGenerator.generate({ seed: 8, width: 24, height: 24, levels: 2 });
+
+	/** A scenario item that is NOT on its room's origin, plus a walkable neighbour to step from. */
+	const offOrigin = (() => {
+		const dirs: [number, number][] = [
+			[1, 0],
+			[-1, 0],
+			[0, 1],
+			[0, -1]
+		];
+		for (let l = 0; l < d.levels.length; l++)
+			for (const r of d.levels[l].rooms) {
+				const it = r.item;
+				if (it?.k !== DungeonItem.IScenario) continue;
+				if (it.x === r.x && it.y === r.y) continue;
+				const t = d.levels[l].table;
+				const from = dirs.find(([dx, dy]) => t[it.x + dx]?.[it.y + dy] === true);
+				if (from) return { l, v: it.v, x: it.x, y: it.y, dx: -from[0], dy: -from[1] };
+			}
+		throw new Error('generated dungeon has no off-origin scenario item with a walkable neighbour');
+	})();
+
+	it('grants the scenario of an item that is not on its room origin', async () => {
+		const scenarios = [{ text: 'sc0' }, { text: 'sc1' }, { text: 'sc2' }, { text: 'sc3' }];
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz());
+		vi.mocked(getDungeonByName).mockResolvedValue({
+			...dungeonRowFor(d),
+			scenarios: JSON.stringify(scenarios)
+		} as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+		// stand on the neighbour, one step away from the item cell
+		vi.mocked(findRun).mockResolvedValue({
+			...runRowFor(d),
+			posL: offOrigin.l,
+			posX: offOrigin.x - offOrigin.dx,
+			posY: offOrigin.y - offOrigin.dy
+		} as never);
+
+		const r = await move(
+			makeRequest({
+				params: { id: 'unit-test-dungeon' },
+				body: { dinozId: 1, steps: [{ dx: offOrigin.dx, dy: offOrigin.dy, dl: 0 }] }
+			})
+		);
+
+		expect(r.ok).toBe(true);
+		expect(r.pos).toEqual({ l: offOrigin.l, x: offOrigin.x, y: offOrigin.y });
+		expect(r.scenario?.text).toBe(`dungeon.unit-test-dungeon.sc${offOrigin.v}`);
+	});
+});
+
 describe('dungeon pipeline (ported from maze-poc)', () => {
 	it('encode/decode round-trip is stable', () => {
 		for (let seed = 1; seed <= 12; seed++) {
