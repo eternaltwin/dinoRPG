@@ -398,18 +398,13 @@ export const initializeMonster = (
 				throw new Error(`Skill ${skill} not found`);
 			}
 
-			// Reduce probability by 3.5 for each consecutive M_RENFORTS
+			// Reduce probability by 3.5 for each consecutive M_RENFORTS or M_WORM_CALLS
 			let probability = skillDetails.probability ?? 0;
 
-			if (skill === Skill.M_RENFORTS) {
+			if (skill === Skill.M_RENFORTS || skill === Skill.M_WORM_CALL) {
 				probability -= 3.5 * memory.renfortApplied;
-				memory.renfortApplied++;
 			}
 
-			if (skill === Skill.M_WORM_CALL) {
-				probability -= 3.5 * memory.renfortApplied;
-				memory.wormCalls++;
-			}
 
 			if (probability < 0) {
 				probability = 0;
