@@ -126,11 +126,11 @@ function lockedDoorAt(d: DungeonStruct, l: number, x: number, y: number): Dungeo
 
 /** The index (`v`) of the item of kind `k` lying on (l,x,y), if any. */
 function itemIndexAt(d: DungeonStruct, k: DungeonItem, l: number, x: number, y: number): number | null {
-	for (const room of d.levels[l].rooms) {
-		const it = room.item;
-		if (it && it.k === k && it.x === x && it.y === y) return it.v;
-	}
-	return null;
+	// An item carries absolute coordinates somewhere inside its room's rectangle, so it is
+	// the item's own position that must match: a room's (x,y) is the rect origin, which is
+	// rarely the item's cell (only gridImport's 1x1 item rooms make the two coincide).
+	const room = d.levels[l].rooms.find(r => r.item != null && r.item.k === k && r.item.x === x && r.item.y === y);
+	return room?.item?.v ?? null;
 }
 
 /** Whether this dinoz (leader or follower) stands on its run's healing cell, unspent. */
