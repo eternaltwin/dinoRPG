@@ -275,7 +275,7 @@ describe('useItem - egg hatching', () => {
 				initialMoney: 1000000,
 				dailyGridRewards: 10
 			}
-		}); 
+		});
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(63) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '63' }))).rejects.toThrow('tooManyActiveDinoz');
 	});

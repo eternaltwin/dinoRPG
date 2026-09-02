@@ -29,12 +29,7 @@ import {
 } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
-import {
-	createDinoz,
-	getDinozEquipItemRequest,
-	getDinozFicheItemRequest,
-	updateDinoz
-} from '../dao/dinozDao.js';
+import { createDinoz, getDinozEquipItemRequest, getDinozFicheItemRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
