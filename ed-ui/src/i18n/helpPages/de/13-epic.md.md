@@ -4,8 +4,8 @@ icon:
   name: small_mode
 ---
 
-# Les Objets Épiques
+# Epische Gegenstände
 
-Sur votre fiche de Maître Dinoz, accessible à partir du lien **Mon Compte** dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques.
+Auf deinem Dinoz-Meister-Profil, das du rechts im Menü über **„Mein Konto“** erreichen kannst, ist eine Liste epischer Belohnungen zu finden.
 
-Ces objets peuvent être récupérés de différentes façons, soit par l'accomplissement de **Quêtes**, soit par la participation à des **événements** qui rythment la vie du site. Vous ne pouvez en posséder qu'un seul exemplaire de chaque et ils sont visibles par les autres joueurs de DinoRPG.
+Diese Gegenstände sind auf unterschiedliche Arten erhältlich, wie beispielsweise durch das Abschließen von **Aufträgen** oder die Teilnahme an **Ereignissen**, die gelegentlich den Webseiten-Alltag zieren. Derartige Belohnungen sind nur einmalig erhältlich und sind für andere Spieler von Dino-RPG sichtbar.

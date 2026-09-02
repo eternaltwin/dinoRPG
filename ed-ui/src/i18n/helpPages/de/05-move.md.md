@@ -16,6 +16,6 @@ Dein Dinoz kann sich täglich mindestens zweimal fortbewegen. Es gibt für Aktio
 
 - Deine Dinoz erhalten **täglich um Mitternacht** (Serverzeit) neue Aktionen.
 
-Wenn du allerdings einen ![Trank von Madame Irma](@item/item_irma) verwendest, wird er sich am selben Tag nochmals fortbewegen können, ohne dass du auf das Ende des Zyklus warten musst.
+Wenn du allerdings einen **Trank von Madame Irma** ![](@item/item_irma) verwendest, wird er sich am selben Tag nochmals fortbewegen können, ohne dass du auf das Ende des Zyklus warten musst.
 
 Bei Fortbewegung zwischen zwei Orten werden deine Dinoz von Monstern angegriffen und es kommt zu einem **Kampf**.
