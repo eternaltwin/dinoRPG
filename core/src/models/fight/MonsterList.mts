@@ -170,10 +170,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
+	// - hp reduced from 30 to 25
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
 		name: 'wolf',
-		hp: 30,
+		hp: 25,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -223,10 +224,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
+	// - hp reduced from 70 to 50
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
 		name: 'greeng',
-		hp: 70,
+		hp: 50,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -294,6 +296,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_FLIGHT],
 		display: 'piraos'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
 		name: 'flam',
@@ -323,11 +327,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
-	// - hp reduced from 60 to 40
+	// - hp reduced from 60 to 25
 	[Monster.GOBLIN]: {
 		id: Monster.GOBLIN,
 		name: 'goblin',
-		hp: 40,
+		hp: 25,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -346,12 +350,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
-	// - hp reduced from 70 to 60
+	// - hp reduced from 70 to 40
 	// - fire element increased from 3 to 5
 	[Monster.BARCHE]: {
 		id: Monster.BARCHE,
 		name: 'barche',
-		hp: 60,
+		hp: 40,
 		elements: {
 			fire: 5,
 			wood: 1,
@@ -370,10 +374,13 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'barche',
 		entrance: EntranceEffect.RUN
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 100 to 75
 	[Monster.COBRA]: {
 		id: Monster.COBRA,
 		name: 'cobra',
-		hp: 100,
+		hp: 75,
 		elements: {
 			fire: 5,
 			wood: 0,
@@ -389,6 +396,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'cobra',
 		entrance: EntranceEffect.GROW
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.PIRHALOZ]: {
 		id: Monster.PIRHALOZ,
 		name: 'pirhaloz',
@@ -411,6 +420,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'pira'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
 	[Monster.PIRHANOZ]: {
 		id: Monster.PIRHANOZ,
 		name: 'pirhanoz',
@@ -436,10 +447,13 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_FLIGHT],
 		display: 'pira'
 	},
+	// Diffs from MT's source:
+	// - resilience set to 40
+	// - hp reduced from 50 to 40
 	[Monster.KAZKA]: {
 		id: Monster.KAZKA,
 		name: 'kazka',
-		hp: 50,
+		hp: 40,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -484,10 +498,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	// Diffs from MT's source:
 	// - resilience set to 40
 	// - level reduced from 28 to 25
+	// - increase bonus attack from 10 to 25
+	// - reduce hp from 100 to 80
 	[Monster.BORG]: {
 		id: Monster.BORG,
 		name: 'borg',
-		hp: 100,
+		hp: 80,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -495,7 +511,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		bonus_attack: 10,
+		bonus_attack: 25,
 		bonus_defense: 40,
 		resilience: 40,
 		odds: 50,
@@ -508,10 +524,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
+	// - increase hp from 10 to 15
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
 		name: 'korgon',
-		hp: 10,
+		hp: 15,
 		elements: {
 			fire: 3,
 			wood: 4,
@@ -534,7 +551,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	[Monster.KORGON_SKULLY]: {
 		id: Monster.KORGON_SKULLY,
 		name: 'korgon',
-		hp: 10,
+		hp: 15,
 		elements: {
 			fire: 3,
 			wood: 4,
@@ -554,10 +571,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	},
 	// Diffs from MT's source:
 	// - resilience set to 40
+	// - hp reduced from 70 to 50
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
 		name: 'ronciv',
-		hp: 70,
+		hp: 50,
 		elements: {
 			fire: 0,
 			wood: 0,
