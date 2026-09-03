@@ -5323,7 +5323,7 @@
 			"potion": "Encuentras 3 Pociones de la Bruja Lola en un pequeño cofre. ¡Nunca viene mal!",
 			"demon": "Encuentras el Pergamino del Demonio. Indica el lugar de una extraña tienda de Dinos, llamada Tienda Demoniaca. Esta tienda se encuentra en la superficie del Cementerio del Crepúsculo. Tendrás que salir de las Katatumbas en primer lugar...",
 			"enter": "Te paseas por el cementerio y ves una tumba abierta... Una escalera desciende bajo la tierra y decides tomar este camino. Parece que son antiguas \"Katatumbas\"...",
-			"exit": "Sales de las Katatumbas. No se puede decir que el cementerio sea un lugar especialmente agradable, pero al menos sientes un soplo de aire fresco que cambia bastante del maloliente hedor de las Katatumbas."
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
 			"locked": "Para abrir esta puerta necesitas la llave \"{name}\".",
