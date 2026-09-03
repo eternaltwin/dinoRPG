@@ -65,6 +65,7 @@ const dungeon = {
 	placeEnd: null,
 	condition: '{}',
 	monsterPool: '[]',
+	fightBackgrounds: '[]',
 	isActive: true
 };
 

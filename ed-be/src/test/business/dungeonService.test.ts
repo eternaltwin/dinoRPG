@@ -84,6 +84,7 @@ function dungeonRowFor(d: DungeonStruct) {
 		placeEnd: TEST_PLACE_ID,
 		condition: '{}',
 		monsterPool: '[]',
+		fightBackgrounds: '[]',
 		isActive: true
 	};
 }

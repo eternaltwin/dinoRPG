@@ -59,6 +59,7 @@ import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
 import { DungeonItem } from './dungeon/types.js';
 import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
+import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1149,6 +1150,12 @@ export async function getOngoingEvent(req: Request) {
 	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
 }
 
+/** Keeps only the keys the animation engine can actually render, dropping duplicates. */
+function checkFightBackgrounds(value: unknown): FightBackground[] {
+	if (!Array.isArray(value)) return [];
+	return [...new Set(value.filter((b): b is FightBackground => typeof b === 'string' && isFightBackground(b)))];
+}
+
 export async function createSeededDungeon(req: Request) {
 	const type = req.body.type ?? DungeonType.cavern;
 	const name = req.body.name;
@@ -1177,6 +1184,7 @@ export async function createSeededDungeon(req: Request) {
 		}
 	}
 	const isActive = req.body.isActive ?? true;
+	const fightBackgrounds = JSON.stringify(checkFightBackgrounds(req.body.fightBackgrounds));
 
 	const grid = req.body.grid;
 	if (grid) {
@@ -1202,7 +1210,8 @@ export async function createSeededDungeon(req: Request) {
 			placeEnd,
 			condition,
 			JSON.stringify(pool),
-			isActive
+			isActive,
+			fightBackgrounds
 		);
 		return { id: created.id, type: created.type };
 	}
@@ -1227,7 +1236,8 @@ export async function createSeededDungeon(req: Request) {
 			placeEnd,
 			condition,
 			JSON.stringify(pool),
-			isActive
+			isActive,
+			fightBackgrounds
 		);
 		return { id: created.id, type: created.type };
 	}
@@ -1264,7 +1274,8 @@ export async function createSeededDungeon(req: Request) {
 		placeEnd,
 		condition,
 		JSON.stringify(pool),
-		isActive
+		isActive,
+		fightBackgrounds
 	);
 	return { id: created.id, type: created.type };
 }
@@ -1308,7 +1319,11 @@ export async function updateDungeonAdmin(req: Request) {
 		condition,
 		monsterPool: JSON.stringify(pool),
 		scenarios,
-		isActive: req.body.isActive ?? existing.isActive
+		isActive: req.body.isActive ?? existing.isActive,
+		fightBackgrounds:
+			req.body.fightBackgrounds != null
+				? JSON.stringify(checkFightBackgrounds(req.body.fightBackgrounds))
+				: existing.fightBackgrounds
 	});
 }
 

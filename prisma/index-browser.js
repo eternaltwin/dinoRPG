@@ -797,6 +797,7 @@ exports.Prisma.DungeonScalarFieldEnum = {
   placeEnd: 'placeEnd',
   condition: 'condition',
   monsterPool: 'monsterPool',
+  fightBackgrounds: 'fightBackgrounds',
   isActive: 'isActive'
 };
 

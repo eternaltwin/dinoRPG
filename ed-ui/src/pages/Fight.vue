@@ -90,7 +90,7 @@ export default defineComponent({
 			return;
 		}
 		if (this.fight) {
-			const initPlace = resolveFightingPlace(this.fight.place);
+			const initPlace = resolveFightingPlace(this.fight.place, this.fight.background);
 			this.fightTransformed = {
 				...initPlace,
 				history: nexFight.filter(n => n != undefined),

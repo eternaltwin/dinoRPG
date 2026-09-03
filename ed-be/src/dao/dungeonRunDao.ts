@@ -164,10 +164,24 @@ export async function createDungeon(
 	placeEnd: number | null = null,
 	condition = '{}',
 	monsterPool = '[]',
-	isActive = true
+	isActive = true,
+	fightBackgrounds = '[]'
 ) {
 	return prisma.dungeon.create({
-		data: { ...sealed, type, name, level, monsters, scenarios, placeStart, placeEnd, condition, monsterPool, isActive }
+		data: {
+			...sealed,
+			type,
+			name,
+			level,
+			monsters,
+			scenarios,
+			placeStart,
+			placeEnd,
+			condition,
+			monsterPool,
+			isActive,
+			fightBackgrounds
+		}
 	});
 }
 
@@ -186,6 +200,7 @@ export interface DungeonCatalogUpdate {
 	monsterPool?: string;
 	scenarios?: string;
 	isActive?: boolean;
+	fightBackgrounds?: string;
 }
 
 /** Catalog-only update — never touches cipher/iv/tag, the sealed maze layout is immutable here. */
@@ -210,7 +225,8 @@ export async function listDungeonsCatalog() {
 			condition: true,
 			monsterPool: true,
 			scenarios: true,
-			isActive: true
+			isActive: true,
+			fightBackgrounds: true
 		}
 	});
 }

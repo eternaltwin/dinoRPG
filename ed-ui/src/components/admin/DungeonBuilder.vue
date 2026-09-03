@@ -22,6 +22,15 @@
 					<option v-for="m in monsterNames" :key="m" :value="m">{{ m }} (lvl {{ monsterList[m].level }})</option>
 				</select>
 			</div>
+			<div>
+				<label>
+					Fight backgrounds (ctrl-click to multi-select; one is drawn at random per fight; empty = use the start place's
+					own background)
+				</label>
+				<select multiple size="8" v-model="form.fightBackgrounds">
+					<option v-for="b in fightBackgroundList" :key="b" :value="b">{{ b }}</option>
+				</select>
+			</div>
 		</fieldset>
 
 		<fieldset>
@@ -135,6 +144,7 @@ import { sessionStore, useDinozStore } from '../../store/index.js';
 import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { fightBackgroundList } from '@drpg/core/models/fight/FightBackgroundList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import type { DungeonGridDoor, DungeonGridItem } from '@drpg/core/models/dungeon/DungeonEditor';
@@ -155,6 +165,7 @@ export default defineComponent({
 			itemList,
 			rewardList,
 			monsterNames: Object.keys(monsterList),
+			fightBackgroundList,
 			tools: [
 				{ id: 'floor', label: 'Floor' },
 				{ id: 'wall', label: 'Wall' },
@@ -165,7 +176,13 @@ export default defineComponent({
 				{ id: 'lock', label: 'Locked door' },
 				{ id: 'item', label: 'Item' }
 			],
-			form: { type: DungeonType.cavern as string, name: '', monsterLevel: 1, pool: [] as string[] },
+			form: {
+				type: DungeonType.cavern as string,
+				name: '',
+				monsterLevel: 1,
+				pool: [] as string[],
+				fightBackgrounds: [] as string[]
+			},
 			width: 16,
 			height: 16,
 			// The template reads levels[cur] on first render, before mounted — start with a live grid.
@@ -351,6 +368,7 @@ export default defineComponent({
 					name: this.form.name,
 					monsterLevel: this.form.monsterLevel,
 					pool: this.form.pool,
+					fightBackgrounds: this.form.fightBackgrounds,
 					scenarios: this.scenarios.map(s => ({
 						text: s.text,
 						icon: s.icon,

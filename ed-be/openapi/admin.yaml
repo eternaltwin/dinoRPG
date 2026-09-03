@@ -1319,6 +1319,13 @@ paths:
                   items:
                     type: string
                   description: Admin-picked monster names; overrides the existing dungeon's pool when non-empty
+                fightBackgrounds:
+                  type: array
+                  items:
+                    type: string
+                  description: >-
+                    Fight background keys one is drawn from at each fight in this dungeon; unknown
+                    keys are dropped. Empty keeps the start place's own background.
                 placeStart:
                   type: integer
                   nullable: true
@@ -1430,6 +1437,11 @@ paths:
                   type: array
                   items:
                     type: string
+                fightBackgrounds:
+                  type: array
+                  items:
+                    type: string
+                  description: Fight background keys; omit to keep the dungeon's current list
                 scenarios:
                   type: array
                 isActive:
@@ -1514,6 +1526,9 @@ components:
           type: string
         isActive:
           type: boolean
+        fightBackgrounds:
+          type: string
+          description: JSON-encoded array of fight background keys
   responses:
     ValidationError:
       description: express-validator request validation failed
