@@ -5323,7 +5323,7 @@
 			"potion": "You find 3 Irma Potions in a small chest — that's always something!",
 			"demon": "You find the Demon Scroll. It reveals the location of a strange Dinoz shop, called the Demonic Shop, somewhere on the surface of the Twilight Cemetery. But first you will have to get out of the Katacombs...",
 			"enter": "Whilst walking in the cemetery, you notice what seems to be an open grave. After closer inspection you find a rickety old staircase. You follow the steps which lead underground into what seems to be the old Katacombs...",
-			"exit": "You leave the Katacombs... The cemetery isn't particularly nice, but at least the light breeze has removed all traces of the underground stench that lingers in there."
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
 			"locked": "The \"{name}\" door is locked. You need to find the key of the same name!",
