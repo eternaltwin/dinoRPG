@@ -66,6 +66,7 @@ const dungeon = {
 	placeEnd: null,
 	condition: '{}',
 	monsterPool: '[]',
+	fightBackgrounds: '[]',
 	isActive: true
 };
 
@@ -153,5 +154,56 @@ describe('dungeon fight death', () => {
 
 		expect(updateDinoz).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).toHaveBeenCalledWith([1, 2], { fight: false });
+	});
+});
+
+describe('dungeon fight background', () => {
+	beforeEach(() => {
+		vi.mocked(getDinozFightDataRequest).mockResolvedValue({
+			id: 'player1',
+			cooker: false,
+			dinoz: [fighter(1, 50)]
+		} as never);
+		vi.mocked(calculateFightVsMonsters).mockReturnValue({ attackers: [{ dinozId: 1, hpLost: 10 }] } as never);
+		vi.mocked(rewardFightVsMonsters).mockResolvedValue({ result: true } as never);
+	});
+
+	const walkIntoMonster = () =>
+		move(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { steps: [{ dx: 1, dy: 0, dl: 0 }], dinozId: 1 } }));
+
+	it('draws the fight background out of the dungeon pool', async () => {
+		vi.mocked(getDungeonByName).mockResolvedValue({
+			...dungeon,
+			fightBackgrounds: JSON.stringify(['cave1'])
+		} as never);
+
+		const result = await walkIntoMonster();
+
+		expect(result.fight?.background).toBe('cave1');
+	});
+
+	it('draws from the whole pool over repeated fights', async () => {
+		vi.mocked(getDungeonByName).mockResolvedValue({
+			...dungeon,
+			fightBackgrounds: JSON.stringify(['cave1', 'cave2', 'cave3'])
+		} as never);
+
+		const drawn = new Set<string | undefined>();
+		for (let i = 0; i < 60; i++) {
+			// rewardFightVsMonsters is mocked with a shared object; a fresh one per run keeps the
+			// draws independent.
+			vi.mocked(rewardFightVsMonsters).mockResolvedValue({ result: true } as never);
+			drawn.add((await walkIntoMonster()).fight?.background);
+		}
+
+		expect([...drawn].sort()).toEqual(['cave1', 'cave2', 'cave3']);
+	});
+
+	it('leaves the background to the place when the pool is empty', async () => {
+		vi.mocked(getDungeonByName).mockResolvedValue({ ...dungeon, fightBackgrounds: '[]' } as never);
+
+		const result = await walkIntoMonster();
+
+		expect(result.fight?.background).toBeUndefined();
 	});
 });

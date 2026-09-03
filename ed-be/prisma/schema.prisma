@@ -1281,6 +1281,9 @@ model Dungeon {
   // Monster[] pool this dungeon's teams are rolled from at (re)generation — distinct
   // from `monsters`, which holds the already-rolled MonsterTeam[] result.
   monsterPool String  @default("[]")
+  // Fight background keys (core/src/models/fight/FightBackgroundList.mts) this dungeon draws
+  // from at each fight; '[]' falls back to the placeStart place's own background.
+  fightBackgrounds String @default("[]")
   // Lets a dungeon be created (and its layout/pool tuned) without going live yet —
   // gates the dinoz-side enter action.
   isActive    Boolean @default(true)

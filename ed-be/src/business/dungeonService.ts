@@ -52,6 +52,9 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FightOutcome, FightResult } from '@drpg/core/models/fight/FightResult';
+import { FightBackground } from '@drpg/core/models/fight/FightBackgroundList';
+import { getRandomArrayElement } from '../utils/tools.js';
+import { Place } from '@drpg/core/models/place/Place';
 
 /** Gold granted per dungeon level for each collected pile. */
 const GOLD_PER_LEVEL = 150;
@@ -573,13 +576,18 @@ export async function move(req: Request): Promise<MoveResult> {
 
 			// calculateFightVsMonsters is pure and already settles the outcome, so record the win
 			// durably before the rewards land — a crash between would let the monster be farmed.
-			const fightResult = calculateFightVsMonsters(team, player, PlaceEnum.CIMETIERE, monsterFiches);
+			const fightResult = calculateFightVsMonsters(team, player, dungeon.placeStart as PlaceEnum, monsterFiches);
 			if (fightResult.outcome === FightOutcome.AttackerWin) {
 				await markMonsterDefeated(run, next.l, next.x, next.y);
 				defeated.add(cellKey(next.l, next.x, next.y));
 				await flushRun(run.id);
 			}
-			result = await rewardFightVsMonsters(team, monsterFiches, fightResult, PlaceEnum.CIMETIERE, player);
+			result = await rewardFightVsMonsters(team, monsterFiches, fightResult, dungeon.placeStart as PlaceEnum, player);
+
+			// The dungeon's own scenery: one key drawn per fight out of its pool, overriding the
+			// background placeStart would otherwise resolve to. An empty pool keeps that default.
+			const backgrounds = JSON.parse(dungeon.fightBackgrounds) as FightBackground[];
+			if (backgrounds.length > 0) result.background = getRandomArrayElement(backgrounds);
 
 			// Same test rewardFightVsMonsters uses to log a Death: hpLost against the life it
 			// fetched the team with, before its own decrement lands.

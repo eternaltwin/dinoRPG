@@ -8,6 +8,7 @@ import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { EntranceEffect } from './transpiler.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 import { PlayerInfo } from '../player/PlayerInfo.mjs';
+import { FightBackground } from './FightBackgroundList.mjs';
 
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -26,6 +27,11 @@ export interface FightResult {
 		itemsUsed: number[];
 	}[];
 	place: PlaceEnum;
+	/**
+	 * Fight background key overriding the one `place` resolves to — a dungeon rolls one out of
+	 * its own `fightBackgrounds` pool per fight. Undefined keeps the place's own background.
+	 */
+	background?: FightBackground;
 	startText?: FightText;
 	endText?: FightText;
 	itemWon?: number;

@@ -22,6 +22,8 @@ export type DungeonCatalogEntry = {
 	monsterPool: string;
 	scenarios: string;
 	isActive: boolean;
+	/** JSON-encoded FightBackground[] the dungeon draws a fight background from. */
+	fightBackgrounds: string;
 };
 
 export const AdminService = {
@@ -245,6 +247,7 @@ export const AdminService = {
 		layout?: string;
 		monsterLevel?: number;
 		pool?: string[];
+		fightBackgrounds?: string[];
 		seed?: number;
 		width?: number;
 		height?: number;
@@ -265,6 +268,7 @@ export const AdminService = {
 		name: string;
 		monsterLevel: number;
 		pool: string[];
+		fightBackgrounds?: string[];
 		scenarios: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
 		grid: DungeonGrid;
 		placeStart?: number;
@@ -293,6 +297,7 @@ export const AdminService = {
 			placeEnd?: number | null;
 			condition?: string;
 			pool?: string[];
+			fightBackgrounds?: string[];
 			scenarios?: string;
 			isActive?: boolean;
 		}

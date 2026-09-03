@@ -26,11 +26,15 @@ import {
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Boss, bossList } from '@drpg/core/models/fight/BossList';
 
-export function resolveFightingPlace(placeId: number) {
+/**
+ * @param background Overrides the place's own background — a dungeon draws one per fight out of
+ * its `fightBackgrounds` pool and sends it back on the FightResult.
+ */
+export function resolveFightingPlace(placeId: number, background?: string) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
 	if (!place) return;
 	return {
-		bg: place.background,
+		bg: background ?? place.background,
 		top: place.top ?? 120,
 		bottom: place.bottom ?? 0,
 		right: 0,

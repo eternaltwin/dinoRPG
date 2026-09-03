@@ -35,6 +35,27 @@
 					<option v-for="value in DungeonType" :key="value" :value="value">{{ value }}</option>
 				</select>
 			</div>
+			<div>
+				<label>
+					Fight backgrounds (ctrl-click to multi-select; one is drawn at random per fight; empty = use the start place's
+					own background)
+				</label>
+				<select multiple size="8" v-model="form.fightBackgrounds">
+					<option v-for="b in fightBackgroundList" :key="b" :value="b">{{ b }}</option>
+				</select>
+				<div class="bg-previews">
+					<figure v-for="b in form.fightBackgrounds" :key="b">
+						<img
+							v-if="!missingPreviews.includes(b)"
+							:src="backgroundPreview(b)"
+							:alt="b"
+							@error="missingPreviews.push(b)"
+						/>
+						<div v-else class="no-preview">no preview</div>
+						<figcaption>{{ b }}</figcaption>
+					</figure>
+				</div>
+			</div>
 		</fieldset>
 
 		<fieldset>
@@ -134,6 +155,7 @@ import { errorHandler } from '../../utils';
 import { DungeonType } from '@drpg/prisma/enums';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { fightBackgroundList } from '@drpg/core/models/fight/FightBackgroundList';
 import DZTable from '../common/DZTable.vue';
 
 const placeEnumEntries = Object.entries(PlaceEnum).filter(([key]) => isNaN(Number(key))) as [string, number][];
@@ -147,12 +169,16 @@ export default defineComponent({
 			placeEnumEntries,
 			monsterList,
 			monsterNames: Object.keys(monsterList),
+			fightBackgroundList,
+			// Keys whose assets/battle preview 404'd — see backgroundPreview.
+			missingPreviews: [] as string[],
 			selectedDungeonId: '' as string,
 			form: {
 				type: DungeonType.cavern as string,
 				name: '',
 				monsterLevel: 1,
 				pool: [] as string[],
+				fightBackgrounds: [] as string[],
 				layout: '',
 				seed: undefined as number | undefined,
 				width: 24,
@@ -170,6 +196,13 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		/**
+		 * assets/battle only mirrors part of the animation engine's background set, so ~a third of
+		 * the keys have no local file — those 404 and fall back to a placeholder.
+		 */
+		backgroundPreview(name: string) {
+			return new URL(`/src/assets/battle/${name}.webp`, import.meta.url).toString();
+		},
 		async selectDungeon() {
 			if (!this.selectedDungeonId) {
 				return;
@@ -184,6 +217,7 @@ export default defineComponent({
 				this.form.condition = dungeon.condition;
 				this.form.isActive = dungeon.isActive;
 				this.form.pool = dungeon.monsterPool ? JSON.parse(dungeon.monsterPool) : [];
+				this.form.fightBackgrounds = dungeon.fightBackgrounds ? JSON.parse(dungeon.fightBackgrounds) : [];
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -202,6 +236,7 @@ export default defineComponent({
 						placeEnd: this.form.placeEnd,
 						condition: this.form.condition,
 						pool: this.form.pool,
+						fightBackgrounds: this.form.fightBackgrounds,
 						isActive: this.form.isActive
 					});
 					this.$toast.success(`Dungeon ${this.selectedDungeonId} updated`);
@@ -218,6 +253,7 @@ export default defineComponent({
 								name: this.form.name,
 								monsterLevel: this.form.monsterLevel,
 								pool: this.form.pool,
+								fightBackgrounds: this.form.fightBackgrounds,
 								placeStart: this.form.placeStart ?? undefined,
 								placeEnd: this.form.placeEnd ?? undefined,
 								condition: this.form.condition,
@@ -228,6 +264,7 @@ export default defineComponent({
 								name: this.form.name,
 								monsterLevel: this.form.monsterLevel,
 								pool: this.form.pool,
+								fightBackgrounds: this.form.fightBackgrounds,
 								// an emptied number input is '' — omit it so the backend picks a random seed
 								seed: typeof this.form.seed === 'number' ? this.form.seed : undefined,
 								width: this.form.width,
@@ -327,6 +364,37 @@ form {
 		background-color: #f3ca92;
 		color: #710;
 		font-family: monospace;
+	}
+	.bg-previews {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 10px;
+		figure {
+			margin: 0;
+			width: 110px;
+			img,
+			.no-preview {
+				width: 110px;
+				height: 60px;
+				object-fit: cover;
+				border: 1px solid #c88f44;
+			}
+			.no-preview {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: #f3ca92;
+				color: #a86;
+				font-size: 8pt;
+			}
+			figcaption {
+				color: #710;
+				font-size: 8pt;
+				font-family: monospace;
+				text-align: center;
+			}
+		}
 	}
 	input[type='submit'] {
 		margin-top: 20px;
