@@ -5323,7 +5323,7 @@
 			"potion": "In einer kleinen Truhe findest du 3 Tränke von Madame Irma. Das ist nie verkehrt!",
 			"demon": "Du hast die Dämonenschriftrolle gefunden. Diese enthält Hinweise zum Standort eines seltsamen Dinoz-Geschäfts: Des sogenannten Dämonengeschäfts, das sich angeblich irgendwo an der Oberfläche des Dämmerungsfriedhofs befindet. Zuerst musst du jedoch die Kryptakomben verlassen...",
 			"enter": "Bei einem entspannten Friedhofsspaziergang fällt dir ein scheinbar offenes Grab auf. Du folgst einer Treppe, die unter die Erde führt, in etwas, das den antiken Kryptakomben erschreckend ähnlich sieht...",
-			"exit": "Du verlässt die Kryptakomben... man könnte nicht behaupten, dass der Friedhof sonderlich angenehm ist, aber immerhin ist eine sanfte Brise zu spüren und das ist eine willkommene Abwechslung zum unterirdischen Grabeshauch."
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
 			"locked": "Die Tür zu den {name} ist verriegelt.",
