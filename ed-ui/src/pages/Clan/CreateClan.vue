@@ -33,7 +33,7 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { ClanService } from '../../services/ClanService.js';
 import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
-import { formatNumber } from '../../utils/formatText.js';
+import { formatNumber } from '@drpg/core/utils/string';
 import { playerStore } from '../../store/index.js';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import DZInput from '../../components/common/DZInput.vue';

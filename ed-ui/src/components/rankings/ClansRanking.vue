@@ -110,7 +110,7 @@
 import { defineComponent, PropType } from 'vue';
 import { ClanLite } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
-import { errorHandler, utils } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
@@ -118,6 +118,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { SelectOption } from '../common/DZSelect.vue';
 import { clanStore } from '../../store/clanStore';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -168,7 +169,7 @@ export default defineComponent({
 			});
 		},
 		moneyLint(quantity: number): string {
-			return utils.beautifulNumber(quantity.toString());
+			return formatNumber(quantity);
 		}
 	},
 	computed: {

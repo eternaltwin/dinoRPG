@@ -177,7 +177,7 @@ import { localStore, playerStore, useDinozStore, useMenuStore } from '../../stor
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReason } from '@drpg/prisma/enums';
 import DinozMini from '../dinoz/DinozMini.vue';
-import { utils } from '../../utils';
+import { formatNumber } from '@drpg/core/utils/string';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { placeList } from '../../constants';
 import { CINEMA_LINK } from '../../utils/goTo.js';
@@ -202,7 +202,7 @@ export default defineComponent({
 			if (!this.playerStore.getMoney) {
 				return;
 			}
-			return utils.beautifulNumber(this.playerStore.getMoney.toString());
+			return formatNumber(this.playerStore.getMoney);
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
