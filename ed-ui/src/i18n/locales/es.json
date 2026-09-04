@@ -319,7 +319,7 @@
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
 		"details": "Detalles",
-		"return": "Retour"
+		"return": "Volver"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -4406,7 +4406,7 @@
 			"pteroz": "Teroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rokky",
-			"pirhaloz": "Pirhaloz",
+			"pirhaloz": "Piranho",
 			"pirhanoz": "Piranta",
 			"kazka": "Kaskadino",
 			"anguil": "Anguilos",
