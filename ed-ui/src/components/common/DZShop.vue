@@ -22,7 +22,7 @@
 					</div>
 					<div class="price">
 						<span class="money">
-							{{ utils.beautifulNumber(dinoz.price.toString()) }}
+							{{ formatNumber(dinoz.price) }}
 							<img :src="getImgURL('icons', currency === 'demon' ? 'small_demon_tk' : 'small_gold')" :alt="currency" />
 						</span>
 					</div>
@@ -122,7 +122,7 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import type { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { utils } from '../../utils/index.js';
+import { formatNumber } from '@drpg/core/utils/string';
 import type { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 /*
@@ -169,7 +169,7 @@ export default defineComponent({
 	emits: ['action'],
 	data() {
 		return {
-			utils,
+			formatNumber,
 			raceList,
 			skillList,
 			ElementType,

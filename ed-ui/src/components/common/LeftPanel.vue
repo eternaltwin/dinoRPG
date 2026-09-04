@@ -82,7 +82,7 @@ import { CINEMA_LINK } from '../../utils/goTo.js';
 import { defineComponent } from 'vue';
 import DinozList from '../../components/dinoz/DinozList.vue';
 import { playerStore, useDinozStore } from '../../store/index.js';
-import { utils } from '../../utils/index.js';
+import { formatNumber } from '@drpg/core/utils/string';
 import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
@@ -173,7 +173,7 @@ export default defineComponent({
 			if (!this.money) {
 				return;
 			}
-			return utils.beautifulNumber(this.money.toString());
+			return formatNumber(this.money);
 		}
 	},
 	watch: {
