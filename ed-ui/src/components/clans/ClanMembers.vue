@@ -123,7 +123,8 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanService } from '../../services/ClanService.js';
 import { playerStore } from '../../store';
-import { errorHandler, utils } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { formatNumber } from '@drpg/core/utils/string';
 import DZButton from '../common/DZButton.vue';
 import DZUser from '../common/DZUser.vue';
 
@@ -144,7 +145,7 @@ export default defineComponent({
 	},
 	methods: {
 		moneyLint(quantity: number): string {
-			return utils.beautifulNumber(quantity.toString());
+			return formatNumber(quantity);
 		},
 		goToMemberEdit(_id: number): void {
 			this.$router.push({ name: 'ClanMemberEdit', params: { memberId: _id } });

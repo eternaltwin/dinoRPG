@@ -59,7 +59,7 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import { playerStore } from '../../store/index.js';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { CLAN_JOIN_MONEY } from '@drpg/core/constants';
-import { formatNumber } from '../../utils/formatText';
+import { formatNumber } from '@drpg/core/utils/string';
 import { formatText } from '../../utils/formatText.js';
 import { JoinClanResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import axios from 'axios';

@@ -123,7 +123,3 @@ export function formatText(text: string): string {
 		return match; // fallback for unrecognized tokens
 	});
 }
-
-export function formatNumber(num: number, separator: string): string {
-	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
-}
