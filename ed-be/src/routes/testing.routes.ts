@@ -12,7 +12,7 @@ import { LOGGER } from '../context.js';
 import { AdminRole } from '@drpg/prisma';
 import { createMyDojo } from '../dao/dojoDao.js';
 import { generateRandomChallenge } from '../business/dojoService.js';
-import gameConfig from '../config/game.config.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import fetch from 'node-fetch';
 import { prisma } from '../prisma.js';
@@ -116,7 +116,7 @@ routes.post(`${commonPath}/test-users`, async (req: Request, res: Response) => {
 				const player = await createPlayer({
 					id: user_id,
 					name: user_name,
-					money: gameConfig.general.initialMoney,
+					money: gameConfig().general.initialMoney,
 					quetzuBought: 0
 				});
 				await addPlayerInRanking(player.id);

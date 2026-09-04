@@ -325,6 +325,7 @@ export async function createTournamentTestDinoz(playerId: string, name: string, 
 		select: {
 			levelLimit: true,
 			teamRace: true,
+			demon: true,
 			id: true
 		}
 	});
@@ -347,48 +348,42 @@ export async function createTournamentTestDinoz(playerId: string, name: string, 
 	const seed = randomUUID();
 	const currentRace = raceList[+activeTournament.teamRace as RaceEnum];
 
-	let display = generateDinozDisplay(currentRace, '0', '0', '0');
-	if (Math.random() * 100 <= 1) {
+	let display = generateDinozDisplay(currentRace, '0', '0', '0', activeTournament.demon);
+	// 1% chance for rare format, except for demons
+	if (!activeTournament.demon && Math.random() * 100 <= 1) {
 		switch (currentRace.raceId) {
 			case RaceEnum.MOUEFFE:
-			case RaceEnum.MOUEFFE_DEMON:
 			case RaceEnum.WINKS:
-			case RaceEnum.WINKS_DEMON:
 			case RaceEnum.PLANAILLE:
-			case RaceEnum.PLANAILLE_DEMON:
 			case RaceEnum.GORILLOZ:
-			case RaceEnum.GORILLOZ_DEMON:
 			case RaceEnum.SANTAZ:
 			case RaceEnum.MAHAMUTI:
 			case RaceEnum.QUETZU:
 			case RaceEnum.TRICERAGNON:
 			case RaceEnum.PIGMOU:
-			case RaceEnum.PIGMOU_DEMON:
 			case RaceEnum.SIRAIN:
 			case RaceEnum.KABUKI:
-			case RaceEnum.KABUKI_DEMON:
-				display = generateDinozDisplay(currentRace, '1', '1', '0');
+				display = generateDinozDisplay(currentRace, '1', '1', '0', false);
 				break;
 			case RaceEnum.CASTIVORE:
-				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0', false);
 				break;
 			case RaceEnum.ROCKY:
 			case RaceEnum.NUAGOZ:
 			case RaceEnum.SMOG:
-				display = generateDinozDisplay(currentRace, '1', '0', '0');
+				display = generateDinozDisplay(currentRace, '1', '0', '0', false);
 				break;
 			case RaceEnum.WANWAN:
-			case RaceEnum.WANWAN_DEMON:
-				display = generateDinozDisplay(currentRace, '2', '0', '0');
+				display = generateDinozDisplay(currentRace, '2', '0', '0', false);
 				break;
 			case RaceEnum.FEROSS:
 				display =
-					getRandomNumber(0, 1) === 0
-						? generateDinozDisplay(currentRace, '1', '1', '0')
-						: generateDinozDisplay(currentRace, '2', '2', '0');
+					getRandomInteger(0, 1) === 0
+						? generateDinozDisplay(currentRace, '1', '1', '0', false)
+						: generateDinozDisplay(currentRace, '2', '2', '0', false);
 				break;
 			case RaceEnum.TOUFUFU:
-				display = generateDinozDisplay(currentRace, '0', '1', '0');
+				display = generateDinozDisplay(currentRace, '0', '1', '0', false);
 				break;
 			case RaceEnum.PTEROZ:
 			case RaceEnum.HIPPOCLAMP:
@@ -397,8 +392,8 @@ export async function createTournamentTestDinoz(playerId: string, name: string, 
 				break;
 		}
 	}
-	//TODO add a chance to get rare display (1%)
 
+	//TODO add a chance to get rare display (1%)
 	const newDinoz: Prisma.GameDinozCreateInput = {
 		name: name,
 		raceId: currentRace.raceId,
@@ -427,14 +422,15 @@ export async function createTournamentTestDinoz(playerId: string, name: string, 
 		}
 	});
 
-	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
-		skill => skill.raceId?.some(raceId => raceId === currentRace.raceId) && skill.isBaseSkill
-	);
-	await addMultipleSkillToDinoz(
-		dinoz.id,
-		skillsToAdd.map(skill => skill.id),
-		'FBTournament'
-	);
+	const raceSkills = currentRace.skills;
+	const demonSkills = activeTournament.demon ? (currentRace.demon?.skills ?? []) : [];
+
+	const skillsToAdd = {
+		...raceSkills,
+		...demonSkills
+	};
+
+	await addMultipleSkillToDinoz(dinoz.id, skillsToAdd, 'FBTournament');
 }
 
 export async function getFBTournamentFights(req: Request) {
