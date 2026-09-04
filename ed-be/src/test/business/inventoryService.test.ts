@@ -4,7 +4,9 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
-vi.mock('../../config/game.config.js', () => ({ default: { dinoz: { maxQuantity: 5, leaderBonus: 3 } } }));
+vi.mock('../../utils/gameConfig.js', () => ({
+	gameConfig: vi.fn()
+}));
 vi.mock('../../dao/dinozDao.js', () => ({
 	createDinoz: vi.fn(),
 	getActiveDinoz: vi.fn(),
@@ -60,6 +62,7 @@ import {
 } from '../../business/inventoryService.js';
 import { updateDinoz } from '../../dao/dinozDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { gameConfig } from '../../utils/gameConfig.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -216,6 +219,26 @@ describe('useItem - egg hatching', () => {
 		vi.mocked(dinozDao.createDinoz).mockResolvedValue({ id: 9 } as never);
 	});
 	it('hatches eggs of many kinds', async () => {
+		// Override config to allow hatching all eggs
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: {
+				maxLevel: 50,
+				maxQuantity: 100, // Here increase max active dinoz
+				leaderMessieBonus: 3,
+				initialMaxLevel: 50
+			},
+			shop: {
+				dinozNumber: 10,
+				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
+			},
+			general: {
+				initialMoney: 1000000,
+				dailyGridRewards: 10
+			}
+		});
 		let hatched = 0;
 		for (const eggId of EGG_IDS) {
 			vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(eggId) as never);
@@ -234,6 +257,25 @@ describe('useItem - egg hatching', () => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue(
 			Array.from({ length: 10 }, () => ({ player: { leader: false, messie: false } })) as never
 		);
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: {
+				maxLevel: 50,
+				maxQuantity: 10,
+				leaderMessieBonus: 3,
+				initialMaxLevel: 50
+			},
+			shop: {
+				dinozNumber: 10,
+				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
+			},
+			general: {
+				initialMoney: 1000000,
+				dailyGridRewards: 10
+			}
+		});
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(63) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '63' }))).rejects.toThrow('tooManyActiveDinoz');
 	});

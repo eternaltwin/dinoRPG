@@ -72,8 +72,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamRace: [
 			RaceEnum.PIGMOU,
 			RaceEnum.MOUEFFE,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.PTEROZ,
 			RaceEnum.ROCKY,
@@ -91,12 +89,10 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.SIRAIN,
 			RaceEnum.NUAGOZ,
 			RaceEnum.WINKS,
-			RaceEnum.WINKS_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.FEROSS,
 			RaceEnum.QUETZU,
 			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
 			RaceEnum.MAHAMUTI,
 			RaceEnum.SMOG
 		]
@@ -110,12 +106,10 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.PLANAILLE,
 			RaceEnum.NUAGOZ,
 			RaceEnum.CASTIVORE,
-			RaceEnum.PLANAILLE_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.PTEROZ,
 			RaceEnum.SANTAZ,
 			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
 			RaceEnum.SOUFFLET,
 			RaceEnum.SMOG,
 			RaceEnum.TOUFUFU
@@ -131,9 +125,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.PLANAILLE,
 			RaceEnum.NUAGOZ,
 			RaceEnum.WINKS,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.WINKS_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.ROCKY,
 			RaceEnum.TOUFUFU,
@@ -149,8 +140,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.GORILLOZ,
 			RaceEnum.WANWAN,
 			RaceEnum.CASTIVORE,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.FEROSS,
 			RaceEnum.TOUFUFU,
@@ -171,12 +160,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.NUAGOZ,
 			RaceEnum.WINKS,
 			RaceEnum.CASTIVORE,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.PTEROZ,
 			RaceEnum.ROCKY,
@@ -184,7 +167,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.SANTAZ,
 			RaceEnum.FEROSS,
 			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
 			RaceEnum.TOUFUFU,
 			RaceEnum.MAHAMUTI,
 			RaceEnum.SOUFFLET,
@@ -243,18 +225,4 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		raceMinimum: 1,
 		teamRace: [RaceEnum.HIPPOCLAMP]
 	}
-	// [formatName.DEMONS]: {
-	// 	name: 'demons',
-	// 	teamSize: 4,
-	// 	raceMinimum: 3,
-	// 	//levelLimit: 50,
-	// 	teamRace: [
-	// 		RaceEnum.GORILLOZ_DEMON,
-	// 		RaceEnum.WANWAN_DEMON,
-	// 		RaceEnum.PIGMOU_DEMON,
-	// 		RaceEnum.PLANAILLE_DEMON,
-	// 		RaceEnum.MOUEFFE_DEMON,
-	// 		RaceEnum.WINKS_DEMON
-	// 	]
-	// }
 };

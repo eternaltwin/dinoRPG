@@ -97,7 +97,7 @@
 			</div>
 			<div class="buttonLand" v-if="isMyAccount()">
 				<DZButton @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
-				<DZButton @click="option = false">{{ $t(`myAccount.options.retour`) }}</DZButton>
+				<DZButton @click="option = false">{{ $t(`button.return`) }}</DZButton>
 			</div>
 		</div>
 	</transition>

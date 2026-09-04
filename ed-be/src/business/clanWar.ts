@@ -47,6 +47,7 @@ import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 import { getRandomArrayElement } from '../utils/tools.js';
 import equal from 'fast-deep-equal';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export async function eventState() {
 	const currentWar = await prisma.clanEvent.findFirst({
@@ -1263,7 +1264,7 @@ export async function attackCastle(req: Request) {
 		// Take into account bonuses and apply rounding.
 		xp = calculateXPBonus(d, xp, player);
 
-		const max = getMaxXp(d);
+		const max = getMaxXp(d, gameConfig());
 		if (d.experience >= max) {
 			// No xp if the dinoz was already at max
 			levelup = true;
@@ -1326,7 +1327,7 @@ export async function attackCastle(req: Request) {
 		// Cannot apply defender xp bonuses without pulling in each Dinoz player data.
 		xp = Math.round(xp);
 
-		const max = getMaxXp(d);
+		const max = getMaxXp(d, gameConfig());
 		if (d.experience >= max) {
 			xp = 0;
 		}

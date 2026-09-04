@@ -721,6 +721,7 @@ exports.Prisma.FBTournamentScalarFieldEnum = {
   id: 'id',
   date: 'date',
   teamRace: 'teamRace',
+  demon: 'demon',
   levelLimit: 'levelLimit',
   cashPrice: 'cashPrice',
   nextRound: 'nextRound',
@@ -774,6 +775,8 @@ exports.Prisma.DungeonRunScalarFieldEnum = {
   opened: 'opened',
   scenarios: 'scenarios',
   gold: 'gold',
+  healed: 'healed',
+  healPending: 'healPending',
   createdAt: 'createdAt',
   playerId: 'playerId',
   dungeonId: 'dungeonId',
@@ -794,6 +797,7 @@ exports.Prisma.DungeonScalarFieldEnum = {
   placeEnd: 'placeEnd',
   condition: 'condition',
   monsterPool: 'monsterPool',
+  fightBackgrounds: 'fightBackgrounds',
   isActive: 'isActive'
 };
 

@@ -1,4 +1,3 @@
-import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
@@ -23,7 +22,6 @@ import {
 	Player
 } from '@drpg/prisma';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { GLOBAL } from '../context.js';
 import {
 	getAllDinozFromAccount,
@@ -64,6 +62,7 @@ import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -93,9 +92,10 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
-	if (!canLevelUp) {
-		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
+	// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+	const levelUpForbidden = tournament && dinozTournament && dinozSkills.level >= tournament.levelLimit;
+	if (levelUpForbidden) {
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed));
 	}
 
 	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
@@ -159,10 +159,11 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 		const dinozTournament = await isDinozInTournament(dinozId);
 
-		canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
+		// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+		canLevelUp = !(tournament && dinozTournament && dinozSkills.level >= tournament.levelLimit);
 	}
 	if (!canLevelUp) {
-		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed));
 	}
 
 	if (dinozSkills.canChangeName) {
@@ -260,7 +261,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
-	result.newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience ?? 0;
+	result.newMaxExperience = getMaxXp(dinozSkills, gameConfig());
 
 	// Update stat
 	await setSpecificStat(StatTracking.LVL_UP, dinozSkills.player.id, 1);
@@ -317,15 +318,11 @@ function getDinozLearnableSkills(
 	tryNumber: number,
 	event?: GameDinozUsage
 ) {
-	if (dinoz.level === gameConfig.dinoz.maxLevel) {
+	if (dinoz.level >= gameConfig().dinoz.maxLevel) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
-	const level = levelList.find(level => level.id === dinoz.level);
-	if (!level) {
-		throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
-	}
-	const maxExperience = level.experience;
+	const maxExperience = getMaxXp(dinoz, gameConfig());
 
 	if (dinoz.experience < maxExperience && !event) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't have enough experience`);
@@ -340,7 +337,16 @@ function getDinozLearnableSkills(
 		throw new ExpectedError(`tryNumber ${tryNumber} is invalid`);
 	}
 
-	const learnableElement = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
+	let learnableElement = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
+
+	// Override for demons if a level matches one of the guaranteed elements.
+	if (
+		dinoz.status.some(s => s.statusId === DinozStatusId.DEMON) &&
+		race.demon?.guaranteed_elements &&
+		race.demon.guaranteed_elements[dinoz.level + 1]
+	) {
+		learnableElement = race.demon.guaranteed_elements[dinoz.level + 1] as number;
+	}
 
 	return {
 		learnableSkills: getLearnableSkills(dinoz, learnableElement),
@@ -384,7 +390,7 @@ function getNewDinozDataFromLevelUp(
 	},
 	dinozRace: DinozRace
 ) {
-	const maxXp = getMaxXp(dinozSkills);
+	const maxXp = getMaxXp(dinozSkills, gameConfig());
 	const allLearnableSkills = getLearnableSkills(dinozSkills);
 
 	const allUnlockableSkills = getUnlockableSkills(dinozSkills);
@@ -406,7 +412,16 @@ function getNewDinozDataFromLevelUp(
 	};
 
 	// Elements
-	const nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
+	let nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
+
+	// Override for demons if the next level matches one of the guaranteed elements.
+	if (
+		dinozSkills.status.some(s => s.statusId === DinozStatusId.DEMON) &&
+		dinozRace.demon?.guaranteed_elements &&
+		dinozRace.demon.guaranteed_elements[dinoz.level]
+	) {
+		nextUpElementId = dinozRace.demon.guaranteed_elements[dinoz.level] as number;
+	}
 
 	switch (nextUpElementId) {
 		case ElementType.FIRE:
@@ -425,7 +440,7 @@ function getNewDinozDataFromLevelUp(
 			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
 			break;
 		default:
-			throw new ExpectedError(`Up type is not valid !`);
+			throw new ExpectedError(`Up type ${nextUpElementId} is not valid !`);
 	}
 
 	// Display

@@ -258,9 +258,9 @@
 			"war_defend": "Añade tu Dino a las líneas de defensa del castillo de tu clan.",
 			"war_remove": "Retira tu Dino de las líneas de defensa del castillo de tu clan.",
 			"war_attack": "Atacar el castillo enemigo.",
-			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
-			"dungeon": "Voir l'évolution de l'exploration actuelle...",
-			"demon_shop": "ATTENTION ! DANGER !"
+			"dungeon_enter": "Puedes entrar en este lugar subterráneo y peligroso. ¡No te vayas a perder!",
+			"dungeon": "Ver la evolución de la exploración actual.",
+			"demon_shop": "¡ATENCIÓN! ¡PELIGRO!"
 		},
 		"name": {
 			"fight": "Combatir",
@@ -297,9 +297,9 @@
 			"war_defend": "Defender tu castillo",
 			"war_remove": "Retirar de la defensa",
 			"war_attack": "Atacar el castillo",
-			"dungeon_enter": "Entrer",
-			"dungeon": "Accéder au Plan",
-			"demon_shop": "Boutique Démoniaque"
+			"dungeon_enter": "Entrar",
+			"dungeon": "Acceder al plano",
+			"demon_shop": "Tienda Demoniaca"
 		}
 	},
 	"button": {
@@ -318,7 +318,8 @@
 		"search": "Buscar",
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
-		"details": "Détails"
+		"details": "Detalles",
+		"return": "Retour"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -619,7 +620,7 @@
 			"lightning_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"air_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"void_sphere": "La Esfera Elemental enseña directamente a tu Dino una de las competencias esféricas.",
-			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoníaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
+			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoniaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
 			"treasure_coupon": "Un Bono del Tesoro vale 1.000 Monedas. Te permite participar en la Plaza del Mercado. Para pasarlo a monedas, úsalo desde la sección Inventario.",
 			"moueffe_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
 			"moueffe_egg_rare": "Este huevo extraño contiene un Dino excepcional",
@@ -1806,18 +1807,18 @@
 	},
 	"shop": {
 		"demon": {
-			"name": "Boutique Démoniaque",
-			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
-			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
-			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
-			"level": "Niv. {level}",
-			"sacrifice": "Sacrifier",
-			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
-			"sacrifice_title": "Sacrifice",
-			"buy_title": "Invocation",
-			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
-			"yourDemonTickets": "Vos Tickets Démons"
+			"name": "Tienda Demoniaca",
+			"sacrifice_help": "¡Bienvenidos a la Tienda Demoniaca! Aquí puedes **sacrificar** Dinos que se encuentren en el cementerio a cambio de **Tickets-Demonio** :demon_tk:. El número de tickets obtenidos depende del nivel del Dino. Un Dino sacrificado ya no podrá ser usado ni será visible en tu cuenta. && Para consultar la lista de Dinos Demonios, necesitas un mínimo de 30 :demon_tk:.",
+			"buy_help": "A cambio de **Tickets-Demonio** :demon_tk: puedes invocar a un Dino Demonio. Estos ya son adultos y ya poseen habilidades.",
+			"unsacrifice_help": "Puedes resucitar un Dino sacrificado por la misma cantidad de tickets obtenidos durante su sacrificio. El ritual de resurrección dura 24 horas.",
+			"level": "Nivel {level}",
+			"sacrifice": "Sacrificar",
+			"sacrifice_toast": "Has sacrificado a tu Dino como ofrenda y has obtenido {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrificios",
+			"buy_title": "Invocaciones",
+			"unsacrifice_title": "Resurrección",
+			"unsacrifice_toast": "Tu Dino va a ser resucitado y estará disponible en 24 horas.",
+			"yourDemonTickets": "Tus Tickets-Demonio"
 		},
 		"dinoz": {
 			"header": "Tienda de Dinos",
@@ -2678,7 +2679,7 @@
 		"default": "DinoRPG [ La actualidad en Dinoland ]",
 		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
 		"shop": "DinoRPG [ Tienda : {shop} ]",
-		"demon": "DinoRPG [ Boutique Démoniaque ]",
+		"demon": "DinoRPG [ Tienda Demoniaca ]",
 		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
 		"account": "DinoRPG [ Información personal ]",
 		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
@@ -3576,8 +3577,7 @@
 			"title": "Opciones de Mi Cuenta",
 			"fight": "Mostrar combates",
 			"todo": "No disponible",
-			"reset": "Eliminar la cuenta",
-			"retour": "Volver"
+			"reset": "Eliminar la cuenta"
 		},
 		"twinoidgoals": {
 			"name": "Estadísticas de DinoRPG",
@@ -3897,7 +3897,7 @@
 			"magnet": "¡El Rey de los Rokkys en persona te ha ofrecido este trozo de Magnetita Negativa! A saber los misteriosos poderes que esconde...",
 			"plume": "Esta pluma es un regalo de procedencia muy lejana. Permite editar la presentación de la ficha del jugador.",
 			"kaura": "Esta aura permite acceder a la Isla del Tótem. ¡Quizás encuentres allí a Kabukis que hayan sobrevivido al Gran Cataclismo!",
-			"demon": "Este antiguo pergamino te permite acceder a la Tienda Demoníaca en el Cementerio del Crepúsculo.",
+			"demon": "Este antiguo pergamino te permite acceder a la Tienda Demoniaca en el Cementerio del Crepúsculo.",
 			"pmi": "El Pequeño Misionario Ilustrado te da acceso en todo momento a la lista de misiones efectuadas por tu Dino y las que le quedan por hacer.",
 			"pda": "La PDA es una piedra producida con una tecnología especial que permite al maestro que la posea tener una visión general de todos sus Dinos. Lo del Diamantito es sólo para chulear.",
 			"fdjv1": "¡Este trofeo agradece a los jugadores que hicieron un largo viaje hasta el Festival de Videojuegos de 2010 para conocer a los titiriteros de sombras!",
@@ -4406,7 +4406,8 @@
 			"pteroz": "Teroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rokky",
-			"pira": "Piranta",
+			"pirhaloz": "Pirhaloz",
+			"pirhanoz": "Piranta",
 			"kazka": "Kaskadino",
 			"anguil": "Anguilos",
 			"korgon": "Korgon bromista",
@@ -4610,7 +4611,6 @@
 		"details": "Detalles",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "Los **Bonos del Tesoro** necesarios para compras en el Mercado de los Maestros se pueden obtener por el equivalente de **1** :ticket: **= 1000** :gold: del **Banco de Dinoland**",
-		"back": "Volver",
 		"bid": "Pujar",
 		"detail": "Ver detalles",
 		"yourTreasuryNotes": "Tus Bonos del Tesoro",
@@ -4655,10 +4655,10 @@
 		"followed": "Este Dino es el líder del grupo.",
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
-		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}",
-		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}.",
+		"unsacrificeCountdown": "El ritual para devolver a tu Dino de entre los muertos terminará en {time}.",
 		"restingAttackCountdown": "Tu Dino debe recuperarse durante {time} segundos más antes de poder realizar otra acción.",
-		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Tu Dino está explorando actualmente un laberinto. Sal del laberinto para poder ocuparte de él."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -4691,8 +4691,8 @@
 		"HPLost": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** perdió **{hpLost} :pv:**.",
 		"Death": "El Dino **{dinoz} ({dinozId})** de **{player} ({playerId})** murió.",
 		"Revive": "**{player} ({playerId})** revivió al Dino **{dinoz} ({dinozId})**.",
-		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
-		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Sacrifice": "**{player} ({playerId})** ha sacrificado a su Dino **{dinoz} ({dinozId})** por {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** ha des-sacrificado a su Dino **{dinoz} ({dinozId})** por {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** avanzó **{mission}** al **paso {step}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** terminó **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceló **{mission}** con Dino **{dinoz} ({dinozId})**.",
@@ -4713,7 +4713,6 @@
 		"welcome": "Bienvenido a tu Dojo",
 		"markAsRead": "Marcar como visto",
 		"noTournament": "Aún no hay suficientes Dinos para poder empezar un torneo, ¡vuelve más tarde una vez que hayas traído a tus amigos al juego!",
-		"return": "Regresar",
 		"accessTournament": "Accede al torneo",
 		"disclaimer": "**¡No hay forma de escapar!** && ¡La habilidad Agujero negro y el objeto Dimensión Paralela no se activan durante las batallas del torneo ni en desafíos futuros!",
 		"tidInProgress": "Las fases finales del torneo inter-dojo están en curso.",
@@ -5302,48 +5301,60 @@
 		"blockSender": "Bloquear remitente"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
-		"floor": "Etage {floor}",
+		"buttons": {
+			"up": "Bouger vers le haut",
+			"left": "Bouger vers la gauche",
+			"right": "Bouger vers la droite",
+			"down": "Bouger vers le bas",
+			"irma": "Utiliser une potion d'Irma pour continuer à avancer",
+			"stair_down": "Descendre les escaliers",
+			"stair_up": "Monter les escaliers",
+			"start": "Retourner à l'entrée du donjon",
+			"exit": "Sortir du donjon"
+		},
+		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
+		"floor": "Nivel {floor}",
 		"name": {
-			"katatombs": "les Katatombes"
+			"katatombs": "Las Katatumbas"
 		},
 		"katatombs": {
-			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
-			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
-			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
-			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
-			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
-			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+			"misc": "Nota de Mandrágora: He dejado una copia del Pergamino del Demonio en estas Katatumbas. Espero que los Maestros Dinos que lo encuentren no lo utilicen con malas intenciones, pues los Dinos-Demonio son muy poderosos.",
+			"napo": "Encuentras y abres un cofre aparentemente abandonado desde hace cientos de años. Está vacío pero, intrigado, ¡descubres un doble fondo en el que encuentras un Napodino de Oro!",
+			"potion": "Encuentras 3 Pociones de la Bruja Lola en un pequeño cofre. ¡Nunca viene mal!",
+			"demon": "Encuentras el Pergamino del Demonio. Indica el lugar de una extraña tienda de Dinos, llamada Tienda Demoniaca. Esta tienda se encuentra en la superficie del Cementerio del Crepúsculo. Tendrás que salir de las Katatumbas en primer lugar...",
+			"enter": "Te paseas por el cementerio y ves una tumba abierta... Una escalera desciende bajo la tierra y decides tomar este camino. Parece que son antiguas \"Katatumbas\"...",
+			"exit": "Sales de las Katatumbas. No se puede decir que el cementerio sea un lugar especialmente agradable, pero al menos sientes un soplo de aire fresco que cambia bastante del maloliente hedor de las Katatumbas."
 		},
 		"msg": {
-			"locked": "La porte des {name} est verrouillée.",
-			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
-			"key": "Vous trouvez la clé des {name} !",
-			"gold": "Vous trouvez {value} pièces d'or !",
-			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
+			"locked": "Para abrir esta puerta necesitas la llave \"{name}\".",
+			"opened": "La llave \"{name}\" gira en la cerradura: la puerta se abre con un chirrido siniestro...",
+			"key": "¡Has encontrado la llave \"{name}\"!",
+			"gold": "¡Encontraste {value} monedas de oro!",
+			"resumed": "Retomas tu exploración donde la habías dejado."
 		},
+		"doorNames": "{prefix} {sufix}",
 		"doorNames_prefix": [
-			"Arbres ",
-			"Dragons ",
-			"Calamars ",
-			"Gobelins ",
-			"Kabukis ",
-			"Roméos ",
-			"Magiciens ",
-			"Anges ",
-			"Démons "
+			"Árboles",
+			"Dragones",
+			"Calamares",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Magos",
+			"Ángeles",
+			"Demonios"
 		],
 		"doorNames_sufix": [
-			"Magiques",
-			"Morts",
-			"Vivants",
-			"Noirs",
-			"Enchantés",
-			"Enchanteurs",
-			"Rouges",
-			"en Plastique",
-			"en Mousse",
-			"Etincelants"
+			"Mágicos",
+			"Muertos",
+			"Vivos",
+			"Negros",
+			"Encantados",
+			"Encantadores",
+			"Rojos",
+			"de Plástico",
+			"de Espuma",
+			"Brillantes"
 		]
 	},
 	"scenario": {

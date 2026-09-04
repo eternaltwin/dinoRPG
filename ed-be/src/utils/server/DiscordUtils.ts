@@ -5,6 +5,7 @@ import { Logger } from '../../logger/index.js';
 import fs from 'fs';
 import { GLOBAL } from '../../context.js';
 import { Player } from '@drpg/prisma';
+import { removeIcons } from '../string.js';
 
 const DEFAULT_TIMEOUT = 5000;
 // Maximum accepted length for the embed title
@@ -278,6 +279,7 @@ ${error.stack}
 	}
 
 	public async sendNewsNotification(title: string, text: string, image: Uint8Array | undefined) {
+		text = removeIcons(text);
 		const embed = new EmbedBuilder()
 			.setColor(0x8b4513)
 			.setTitle(formatEmbedTitle(title))

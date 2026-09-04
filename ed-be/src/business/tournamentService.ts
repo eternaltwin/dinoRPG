@@ -10,6 +10,7 @@ import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { getLatestTournament } from '../dao/tournamentDao.js';
+import { invalidateTournamentCache } from '../utils/tournament.cache.js';
 
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
@@ -94,6 +95,9 @@ export async function createTournamentTeam(req: Request) {
 			dinoz: true
 		}
 	});
+
+	// Invalidate list of cached teams for this tournament
+	invalidateTournamentCache();
 
 	return;
 }
@@ -201,6 +205,9 @@ export async function deleteTournamentTeam(req: Request) {
 			id: myTeam.tournamentTeamId
 		}
 	});
+
+	// Invalidate list of cached teams for this tournament
+	invalidateTournamentCache();
 }
 
 export async function getTournamentTeam(req: Request) {

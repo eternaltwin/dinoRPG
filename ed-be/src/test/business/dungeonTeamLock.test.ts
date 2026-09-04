@@ -65,6 +65,7 @@ const dungeon = {
 	placeEnd: null,
 	condition: '{}',
 	monsterPool: '[]',
+	fightBackgrounds: '[]',
 	isActive: true
 };
 
@@ -81,12 +82,13 @@ describe('dungeon team lock', () => {
 			id: 1,
 			placeId: 1,
 			unavailableReason: 'resting', // busy for a reason other than being in a dungeon
+			fight: true,
 			followers: [],
 			leaderId: null
 		} as never);
 
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
-			'dungeon.unavailable'
+			'error.dinozNotAvailable'
 		);
 		expect(createRun).not.toHaveBeenCalled();
 		expect(updateMultipleDinoz).not.toHaveBeenCalled();
@@ -98,7 +100,8 @@ describe('dungeon team lock', () => {
 			id: 1,
 			placeId: 1,
 			unavailableReason: null,
-			followers: [{ id: 2, unavailableReason: null }],
+			fight: true,
+			followers: [{ id: 2, unavailableReason: null, fight: true }],
 			leaderId: null
 		} as never);
 		vi.mocked(createRun).mockResolvedValue({ id: 'run1' } as never);
@@ -120,12 +123,15 @@ describe('dungeon team lock', () => {
 			opened: '[]',
 			keys: '[]',
 			gold: '[]',
+			healed: '[]',
+			healPending: null,
 			scenarios: '[]'
 		} as never);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
 			placeId: 1,
 			unavailableReason: null,
+			fight: true,
 			followers: [],
 			leaderId: null
 		} as never);

@@ -966,6 +966,7 @@ model FBTournament {
   id           String         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   date         DateTime       @default(now()) @db.Timestamp(6)
   teamRace     String         @db.Text
+  demon        Boolean        @default(false)
   levelLimit   Int            @default(50)
   participants GameDinoz[]
   fights       FightArchive[]
@@ -1230,6 +1231,11 @@ model DungeonRun {
   scenarios String   @default("[]")
   // Cell keys ("l,x,y") of the gold piles this player has collected.
   gold      String   @default("[]")
+  // Cell keys ("l,x,y") of the healing cells this player has used up for good.
+  healed    String   @default("[]")
+  // The healing cell ("l,x,y") the party healed on and is still standing on: as
+  // many items as they like until they step off, which spends it into `healed`.
+  healPending String?
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   playerId  String   @db.Uuid
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
@@ -1275,6 +1281,9 @@ model Dungeon {
   // Monster[] pool this dungeon's teams are rolled from at (re)generation — distinct
   // from `monsters`, which holds the already-rolled MonsterTeam[] result.
   monsterPool String  @default("[]")
+  // Fight background keys (core/src/models/fight/FightBackgroundList.mts) this dungeon draws
+  // from at each fight; '[]' falls back to the placeStart place's own background.
+  fightBackgrounds String @default("[]")
   // Lets a dungeon be created (and its layout/pool tuned) without going live yet —
   // gates the dinoz-side enter action.
   isActive    Boolean @default(true)

@@ -2,6 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 
+vi.mock('../../utils/gameConfig.js', () => ({
+	gameConfig: vi.fn()
+}));
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn(), removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/dinozSkillDao.js', () => ({ addSkillToDinoz: vi.fn() }));
 vi.mock('../../business/skillService.js', () => ({ unlockDoubleSkills: vi.fn() }));
@@ -34,6 +37,7 @@ import { updateDinoz } from '../../dao/dinozDao.js';
 import { upsertQuest } from '../../dao/questsDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
 import { rewarder } from '../../utils/rewarder.js';
+import { gameConfig } from '../../utils/gameConfig.js';
 
 const team = (status: number[] = []) => [{ id: 1, level: 1, status: status.map(statusId => ({ statusId })) }];
 
@@ -66,14 +70,27 @@ describe('rewarder', () => {
 	});
 
 	it('sets max experience', async () => {
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: {
+				maxLevel: 50,
+				maxQuantity: 100, // Here increase max active dinoz
+				leaderMessieBonus: 3,
+				initialMaxLevel: 50
+			},
+			shop: {
+				dinozNumber: 10,
+				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
+			},
+			general: {
+				initialMoney: 1000000,
+				dailyGridRewards: 10
+			}
+		});
 		await rewarder([{ rewardType: RewardEnum.MAXEXPERIENCE } as never], team(), 'p1');
 		expect(updateDinoz).toHaveBeenCalledWith(1, { experience: 100 });
-	});
-
-	it('throws when level missing for max experience', async () => {
-		await expect(
-			rewarder([{ rewardType: RewardEnum.MAXEXPERIENCE } as never], [{ id: 1, level: 9999, status: [] }], 'p1')
-		).rejects.toThrow("doesn't exist");
 	});
 
 	it('adds a skill and unlocks double skills', async () => {

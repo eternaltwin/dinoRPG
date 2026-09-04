@@ -37,10 +37,10 @@ export class DinozActor {
 		this.onArrived = opts.onArrived;
 
 		this.sprite = new sdino({ data: opts.code, flip: 1, pflag: true }) as sdino & { flip(n: number): void };
-		// Scale the dino down to roughly two cells tall.
+		// sdino art is ~45px tall, so cell 45 renders it at native resolution — about one cell.
 		const target = renderer.cell * 2;
 		this.sprite.scale.set(target / 90);
-		this.sprite.zIndex = this.lead ? 1 : 0;
+		this.syncDepth();
 		renderer.actorLayer.addChild(this.sprite);
 	}
 
@@ -51,9 +51,18 @@ export class DinozActor {
 		}
 		const p = this.renderer.center(cell.x, cell.y);
 		this.sprite.position.set(p.x, p.y + this.renderer.cell * 0.25);
+		this.syncDepth();
 		if (this.lead) this.renderer.focus(this.sprite.x, this.sprite.y);
 		this.pos = { ...cell };
 		this.sprite.visible = this.pos.l === this.renderer.currentLevel;
+	}
+
+	/**
+	 * Depth on the renderer's ground plane: whoever stands lower on screen draws in front,
+	 * monsters included (see MazeRenderer#monsterAt). The leader takes ties over its followers.
+	 */
+	private syncDepth(): void {
+		this.sprite.zIndex = this.sprite.y + (this.lead ? 0.5 : 0);
 	}
 
 	/** The cell the dinoz currently occupies. */
@@ -131,6 +140,7 @@ export class DinozActor {
 		const b = this.renderer.center(to.x, to.y);
 		const yOff = this.renderer.cell * 0.25;
 		this.sprite.position.set(a.x + (b.x - a.x) * k, a.y + yOff + (b.y - a.y) * k);
+		this.syncDepth();
 		if (this.lead) this.renderer.focus(this.sprite.x, this.sprite.y);
 
 		if (this.t >= 1) {

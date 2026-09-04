@@ -4,7 +4,6 @@ import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
 import { auth } from '../dao/playerDao.js';
-import gameConfig from '../config/game.config.js';
 import { applySkillToDinoz, getRandomArrayElement } from '../utils/index.js';
 import { Request } from 'express';
 import {
@@ -44,6 +43,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { createLog } from '../dao/logDao.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Format Dinoz rows from getSacrificedDinozRequest as DinozShopFiche.
@@ -135,7 +135,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	if (demonTickets >= 30) {
 		// Expected number of Dinoz is based on game config plus some extra for the Belius reward.
 		const hasBelius = player.rewards.some(r => r.rewardId === Reward.BELIUS);
-		const totalDinoz = Math.round(gameConfig.demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
+		const totalDinoz = Math.round(gameConfig().demonShop.dinozNumber * (hasBelius ? 1.5 : 1));
 
 		// If the shop does not have the matching create N dinoz to fill the shop (based on game config)
 		if (player.demonShop.length === 0 || player.demonShop.length < totalDinoz) {
@@ -152,7 +152,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 				randomRace = getRandomArrayElement(availableRaces);
 
 				// Make a random display
-				randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0');
+				randomDisplay = generateDinozDisplay(randomRace, '0', '0', '0', true);
 
 				const seed = randomUUID();
 				// Build Dinoz so it can be used to auto level up.
@@ -160,17 +160,15 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 					playerId: player.id,
 					id: i, // Temp value
 					display: randomDisplay,
-					level: 1,
-					price: randomRace.price,
+					level: 1, // Will be updated to 10 through automatic skill selection
+					price: randomRace.demon!.price,
 					raceId: randomRace.raceId,
 					maxLife: 100,
-					// Elements are already fully declared by the race (no random draw needed), randomlyLevelUpDinoz
-					// builds these up to the race's target below.
-					nbrUpFire: 0,
-					nbrUpWood: 0,
-					nbrUpWater: 0,
-					nbrUpLightning: 0,
-					nbrUpAir: 0,
+					nbrUpFire: randomRace.nbrFire,
+					nbrUpWood: randomRace.nbrWood,
+					nbrUpWater: randomRace.nbrWater,
+					nbrUpLightning: randomRace.nbrLightning,
+					nbrUpAir: randomRace.nbrAir,
 					nextUpElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt),
 					nextUpAltElementId: getRandomUpElement(randomRace.upChance, seed + GLOBAL.config.salt + 'pdc'),
 					seed,
@@ -178,6 +176,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 					skills: [] as DinozSkill[],
 					unlockableSkills: [] as DinozSkill[]
 				};
+				// Add skills from base race
 				if (randomRace.skills) {
 					randomRace.skills.forEach(s => {
 						dinoz.skills.push({
@@ -187,19 +186,35 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 							skillId: s,
 							state: true
 						});
+						// Apply skill if it happens to have a passive effect.
 						const skillData = skillList[s];
 						if (skillData.effects) {
 							applySkillToDinoz(skillData.effects, dinoz);
 						}
 					});
 				}
-				const targetElements: ElementType[] = [
-					...Array(randomRace.nbrFire).fill(ElementType.FIRE),
-					...Array(randomRace.nbrWood).fill(ElementType.WOOD),
-					...Array(randomRace.nbrWater).fill(ElementType.WATER),
-					...Array(randomRace.nbrLightning).fill(ElementType.LIGHTNING),
-					...Array(randomRace.nbrAir).fill(ElementType.AIR)
-				];
+				// Add skills from base demon form
+				if (randomRace.demon?.skills) {
+					randomRace.demon.skills.forEach(s => {
+						dinoz.skills.push({
+							id: s,
+							dinozId: dinoz.id,
+							gameDinozId: null,
+							skillId: s,
+							state: true
+						});
+						// Apply skill if it happens to have a passive effect.
+						const skillData = skillList[s];
+						if (skillData.effects) {
+							applySkillToDinoz(skillData.effects, dinoz);
+						}
+					});
+				}
+
+				const targetElements = Object.values(randomRace.demon?.guaranteed_elements ?? {})
+					.filter((v): v is ElementType => v !== undefined)
+					.map(v => v);
+				// The following choses Dinoz skills randomly, increments its level and applies passive skills automatically.
 				randomlyLevelUpDinoz(dinoz, targetElements);
 				dinozArray.push(dinoz);
 			}
@@ -232,14 +247,13 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 			// Create the Dinoz
 			await createMultipleDemonDinoz(createCommand);
 			// Format the created Dinoz properly for the response
-			// nbrUp* already includes race + skill effects baked in at generation by randomlyLevelUpDinoz.
+			// nbrUp* already totals base and level ups done randomlyLevelUpDinoz.
 			listDinozShop = (await getDinozFromDemonShopRequest(player.id))
 				.map(d => {
 					const race = raceList[d.raceId as RaceEnum];
 					return {
 						id: d.id,
 						level: 10,
-						maxLife: 100,
 						display: d.display,
 						raceId: d.raceId,
 						nbrUpFire: d.nbrUpFire,
@@ -248,7 +262,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 						nbrUpLightning: d.nbrUpLightning,
 						nbrUpAir: d.nbrUpAir,
 						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
-						price: race.price
+						price: race.demon!.price
 					};
 				})
 				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
@@ -259,7 +273,6 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 					return {
 						id: d.id,
 						level: 10,
-						maxLife: 100,
 						display: d.display,
 						raceId: d.raceId,
 						nbrUpFire: d.nbrUpFire,
@@ -268,7 +281,7 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 						nbrUpLightning: d.nbrUpLightning,
 						nbrUpAir: d.nbrUpAir,
 						skills: d.skills.map(s => s.skillId).sort((s1, s2) => +s1 - +s2),
-						price: race.price
+						price: race.demon!.price
 					};
 				})
 				.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
@@ -332,15 +345,19 @@ export async function buyDemonDinoz(req: Request) {
 
 	const demonTickets = player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
 	const race = raceList[dinoz.raceId as RaceEnum];
+	const demon = race.demon;
+	if (!demon) {
+		throw new ExpectedError(translate('error.notADemon', authed));
+	}
 
-	if (demonTickets <= race.price) {
+	if (demonTickets <= demon.price) {
 		throw new ExpectedError(translate('error.notEnoughTickets', authed));
 	}
 
 	// -- DB updates
 	const promises = [];
 	// Update demon tickets stockpile
-	promises.push(decreaseItemQuantity(player.id, Item.DEMON_TICKET, race.price));
+	promises.push(decreaseItemQuantity(player.id, Item.DEMON_TICKET, demon.price));
 	// Update player ranking
 	promises.push(updatePoints(player.id, 10));
 	// Update player Dinoz count
@@ -401,7 +418,7 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	const ret = toDinozFiche(ficheData, createdDinoz.id, null);
+	const ret = toDinozFiche(ficheData, createdDinoz.id, null, gameConfig());
 
 	return ret;
 }

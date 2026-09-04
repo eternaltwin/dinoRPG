@@ -22,11 +22,11 @@ import { auth, getPlayerDinozShopRequest } from '../../dao/playerDao.js';
 import { createMultipleDinoz } from '../../dao/playerDinozShopDao.js';
 import { getRandomArrayElement, getRandomLetter } from '../../utils/index.js';
 import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
-import gameConfig from '../../config/game.config.js';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { gameConfig } from '../../utils/gameConfig.js';
 
 const mockAuth = vi.mocked(auth);
 const mockGetShop = vi.mocked(getPlayerDinozShopRequest);
@@ -86,11 +86,11 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 
 		expect(mockCreateMultiple).toHaveBeenCalledOnce();
 		const created = mockCreateMultiple.mock.calls[0][0];
-		expect(created).toHaveLength(gameConfig.shop.dinozNumber);
+		expect(created).toHaveLength(gameConfig().shop.dinozNumber);
 
 		// Race 0 of the base pool is Winks; display = swfLetter + 11 letters + '000' (16 chars).
 		const winks = raceList[RaceEnum.WINKS];
-		const expectedDisplay = winks.swfLetter + 'a'.repeat(11) + '000';
+		const expectedDisplay = winks.swfLetter + '0' + 'a'.repeat(11) + '000';
 		for (const dinoz of created) {
 			expect(dinoz.playerId).toBe('player-1');
 			expect(dinoz.raceId).toBe(winks.raceId);
@@ -149,7 +149,7 @@ describe('getDinozFromDinozShop - empty shop fills the shop', () => {
 			id: 'player-1',
 			dinozShop: [],
 			rewards: [{ rewardId: Reward.QUETZU }],
-			quetzuBought: gameConfig.shop.buyableQuetzu
+			quetzuBought: gameConfig().shop.buyableQuetzu
 		} as unknown as Awaited<ReturnType<typeof getPlayerDinozShopRequest>>);
 		await getDinozFromDinozShop(makeRequest());
 		expect(mockRandomArray.mock.calls[0][0]).not.toContain(raceList[RaceEnum.QUETZU]);

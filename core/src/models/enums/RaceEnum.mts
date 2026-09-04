@@ -1,12 +1,12 @@
 export enum RaceEnum {
 	MOUEFFE = 1,
-	MOUEFFE_DEMON = 2,
+	// RESERVED_A = 2, intentionally commented to avoid conflicts with historical data
 	PIGMOU = 3,
-	PIGMOU_DEMON = 4,
+	// RESERVED_B = 4, intentionally commented to avoid conflicts with historical data
 	WINKS = 5,
-	WINKS_DEMON = 6,
+	// RESERVED_C = 6, intentionally commented to avoid conflicts with historical data
 	PLANAILLE = 7,
-	PLANAILLE_DEMON = 8,
+	// RESERVED_D = 8, intentionally commented to avoid conflicts with historical data
 	CASTIVORE = 9,
 	ROCKY = 10,
 	PTEROZ = 11,
@@ -14,13 +14,13 @@ export enum RaceEnum {
 	SIRAIN = 13,
 	HIPPOCLAMP = 14,
 	GORILLOZ = 15,
-	GORILLOZ_DEMON = 16,
+	// RESERVED_E = 16, intentionally commented to avoid conflicts with historical data
 	WANWAN = 17,
-	WANWAN_DEMON = 18,
+	// RESERVED_F = 18, intentionally commented to avoid conflicts with historical data
 	SANTAZ = 19,
 	FEROSS = 20,
 	KABUKI = 21,
-	KABUKI_DEMON = 22,
+	// RESERVED_G = 22, intentionally commented to avoid conflicts with historical data
 	MAHAMUTI = 23,
 	SOUFFLET = 24,
 	TOUFUFU = 25,

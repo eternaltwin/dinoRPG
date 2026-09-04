@@ -59,6 +59,7 @@ import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
 import { DungeonItem } from './dungeon/types.js';
 import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
+import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -1149,6 +1150,12 @@ export async function getOngoingEvent(req: Request) {
 	return events.map(event => ({ ...event, config: JSON.parse(event.config) }));
 }
 
+/** Keeps only the keys the animation engine can actually render, dropping duplicates. */
+function checkFightBackgrounds(value: unknown): FightBackground[] {
+	if (!Array.isArray(value)) return [];
+	return [...new Set(value.filter((b): b is FightBackground => typeof b === 'string' && isFightBackground(b)))];
+}
+
 export async function createSeededDungeon(req: Request) {
 	const type = req.body.type ?? DungeonType.cavern;
 	const name = req.body.name;
@@ -1160,7 +1167,11 @@ export async function createSeededDungeon(req: Request) {
 		(m: string): m is Monster => m in monsterList
 	);
 	const existingForPool = bodyPool.length ? null : await getDungeonByName(name);
-	const pool = bodyPool.length ? bodyPool : existingForPool ? (JSON.parse(existingForPool.monsterPool) as string[]) : [];
+	const pool = bodyPool.length
+		? bodyPool
+		: existingForPool
+			? (JSON.parse(existingForPool.monsterPool) as string[])
+			: [];
 
 	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
 	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
@@ -1173,6 +1184,7 @@ export async function createSeededDungeon(req: Request) {
 		}
 	}
 	const isActive = req.body.isActive ?? true;
+	const fightBackgrounds = JSON.stringify(checkFightBackgrounds(req.body.fightBackgrounds));
 
 	const grid = req.body.grid;
 	if (grid) {
@@ -1198,7 +1210,8 @@ export async function createSeededDungeon(req: Request) {
 			placeEnd,
 			condition,
 			JSON.stringify(pool),
-			isActive
+			isActive,
+			fightBackgrounds
 		);
 		return { id: created.id, type: created.type };
 	}
@@ -1209,18 +1222,22 @@ export async function createSeededDungeon(req: Request) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
 		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
+		// The layout's IScenario items index this list, so it must travel with them: dropping it
+		// leaves every chest/scroll silent and drawn with decorateScenarios' fallback icon.
+		const scenarios = checkScenarios(req.body.scenarios);
 		const created = await createDungeon(
 			seal(codec.encode()),
 			type,
 			name,
 			monsterLevel,
 			monsters,
-			undefined,
+			JSON.stringify(scenarios),
 			placeStart,
 			placeEnd,
 			condition,
 			JSON.stringify(pool),
-			isActive
+			isActive,
+			fightBackgrounds
 		);
 		return { id: created.id, type: created.type };
 	}
@@ -1244,18 +1261,21 @@ export async function createSeededDungeon(req: Request) {
 	});
 	const encoded = new DungeonCodec().encode(d);
 	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
+	// OriginalGenerator scatters IScenario items numbered 0..n-1, which index this list.
+	const scenarios = checkScenarios(req.body.scenarios);
 	const created = await createDungeon(
 		seal(encoded),
 		type,
 		name,
 		monsterLevel,
 		monsters,
-		undefined,
+		JSON.stringify(scenarios),
 		placeStart,
 		placeEnd,
 		condition,
 		JSON.stringify(pool),
-		isActive
+		isActive,
+		fightBackgrounds
 	);
 	return { id: created.id, type: created.type };
 }
@@ -1274,7 +1294,9 @@ export async function updateDungeonAdmin(req: Request) {
 	const existing = await getDungeonById(id);
 	if (!existing) throw new ExpectedError(`Dungeon ${id} not found`);
 
-	const pool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter((m: string): m is Monster => m in monsterList);
+	const pool = (Array.isArray(req.body.pool) ? req.body.pool : []).filter(
+		(m: string): m is Monster => m in monsterList
+	);
 	const placeStart = req.body.placeStart != null && req.body.placeStart !== '' ? Number(req.body.placeStart) : null;
 	const placeEnd = req.body.placeEnd != null && req.body.placeEnd !== '' ? Number(req.body.placeEnd) : null;
 	let condition = existing.condition;
@@ -1285,7 +1307,8 @@ export async function updateDungeonAdmin(req: Request) {
 			throw new ExpectedError('Invalid condition JSON');
 		}
 	}
-	const scenarios = req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
+	const scenarios =
+		req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
 
 	return updateDungeonCatalog(id, {
 		name: req.body.name ?? existing.name,
@@ -1296,7 +1319,11 @@ export async function updateDungeonAdmin(req: Request) {
 		condition,
 		monsterPool: JSON.stringify(pool),
 		scenarios,
-		isActive: req.body.isActive ?? existing.isActive
+		isActive: req.body.isActive ?? existing.isActive,
+		fightBackgrounds:
+			req.body.fightBackgrounds != null
+				? JSON.stringify(checkFightBackgrounds(req.body.fightBackgrounds))
+				: existing.fightBackgrounds
 	});
 }
 

@@ -1,5 +1,3 @@
-import { GLOBAL } from '../context.js';
-
 const gameConfig: GameConfig = {
 	development: {
 		dinoz: {
@@ -41,7 +39,7 @@ const gameConfig: GameConfig = {
 	}
 };
 
-interface GameConfig {
+export interface GameConfig {
 	[envName: string]: {
 		dinoz: {
 			maxLevel: number;
@@ -63,6 +61,6 @@ interface GameConfig {
 	};
 }
 
-const env = GLOBAL.config.isProduction ? 'production' : 'development';
-
-export default gameConfig[env];
+export const getGameConfig = (env: string) => {
+	return gameConfig[env];
+};

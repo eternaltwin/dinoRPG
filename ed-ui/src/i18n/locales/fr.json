@@ -318,7 +318,8 @@
 		"search": "Rechercher",
 		"loading": "Chargement...",
 		"noResults": "Aucun résultat",
-		"details": "Détails"
+		"details": "Détails",
+		"return": "Retour"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -1812,11 +1813,11 @@
 			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
 			"level": "Niv. {level}",
 			"sacrifice": "Sacrifier",
-			"sacrifice_toast": "Vouz avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
 			"sacrifice_title": "Sacrifice",
 			"buy_title": "Invocation",
 			"unsacrifice_title": "Résurrection",
-			"unsacrifice_toast": "Votre Dinoz va être rescussité et sera disponible dans 24 heures.",
+			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
 			"yourDemonTickets": "Vos Tickets Démons"
 		},
 		"dinoz": {
@@ -2557,7 +2558,7 @@
 			"49": "Morceau d’Orbe Sombre",
 			"53": "Goutte d’éther",
 			"56": "Potion Anti-sedh",
-			"41": "Réincarnation",
+			"41": "Réincarné",
 			"42": "Renaissance",
 			"57": "Souvenir de Skully",
 			"48": "Clé de Sylvenoire",
@@ -3576,8 +3577,7 @@
 			"title": "Options du compte",
 			"fight": "Afficher les combats",
 			"todo": "Non disponible",
-			"reset": "Supprimer le compte",
-			"retour": "Retour"
+			"reset": "Supprimer le compte"
 		},
 		"twinoidgoals": {
 			"name": "Statistiques DinoRPG",
@@ -4406,7 +4406,8 @@
 			"pteroz": "Pteroz",
 			"hippo": "Hippoclamp | Hippoclamp | Hippoclamps",
 			"rocky": "Rocky | Rocky | Rockys",
-			"pira": "Pirhanoz",
+			"pirhaloz": "Pirhaloz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Anguilloz",
 			"korgon": "Korgon | Korgon | Korgons",
@@ -4610,7 +4611,6 @@
 		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
 		"bid": "Enchérir",
 		"detail": "Voir détails",
 		"yourTreasuryNotes": "Vos Bons du Trésor",
@@ -4658,7 +4658,7 @@
 		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
 		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
-		"dungeon": "Votre dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
@@ -4713,7 +4713,6 @@
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
@@ -5302,8 +5301,19 @@
 		"blockSender": "Bloquer l'expéditeur"
 	},
 	"dungeon": {
-		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
-		"floor": "Etage {floor}",
+		"buttons": {
+			"up": "Bouger vers le haut",
+			"left": "Bouger vers la gauche",
+			"right": "Bouger vers la droite",
+			"down": "Bouger vers le bas",
+			"irma": "Utiliser une potion d'Irma pour continuer à avancer",
+			"stair_down": "Descendre les escaliers",
+			"stair_up": "Monter les escaliers",
+			"start": "Retourner à l'entrée du donjon",
+			"exit": "Sortir du donjon"
+		},
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Étage {floor}",
 		"name": {
 			"katatombs": "les Katatombes"
 		},
@@ -5313,7 +5323,7 @@
 			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
 			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
 			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
-			"exit": "Vous ressortez des Katatombes... on ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
 		},
 		"msg": {
 			"locked": "La porte des {name} est verrouillée.",
@@ -5344,7 +5354,7 @@
 			"Rouges",
 			"en Plastique",
 			"en Mousse",
-			"Etincelants"
+			"Étincelants"
 		]
 	},
 	"scenario": {

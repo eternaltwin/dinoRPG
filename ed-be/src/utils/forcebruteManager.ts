@@ -35,7 +35,8 @@ class ForceBruteManager {
 		const endCreation = dayjs().add(2, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.fBTournament.create({
 			data: {
-				teamRace: tournamentFormat.toString(),
+				teamRace: tournamentFormat.race.toString(),
+				demon: tournamentFormat.demon ?? false,
 				levelLimit: this.level,
 				nextRound: endCreation
 			},

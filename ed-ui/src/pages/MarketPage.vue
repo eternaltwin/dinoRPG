@@ -20,7 +20,7 @@
 	<Transactions v-if="tab === 1" />
 	<Sell v-if="tab === 2" :changeTab="changeTab" />
 	<OfferHistory v-if="tab === 3" :changeTab="changeTab" />
-	<DZButton back @click="goBackToDinozPage">{{ $t('market.back') }}</DZButton>
+	<DZButton back @click="goBackToDinozPage">{{ $t('button.return') }}</DZButton>
 </template>
 
 <script lang="ts">
@@ -50,7 +50,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-
 			tab: 0
 		};
 	},

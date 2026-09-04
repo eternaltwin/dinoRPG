@@ -23,10 +23,12 @@ export type MonsterFiche = {
 	// PVE (aka monsters) is case by case
 	resilience: number;
 	groups?: groupMonster[];
+	// Default to 10 if not provided. Set it to a different value to override.
 	xp?: number;
+	// Flat bonus if within 5 levels of the monster's level
 	xpBonus?: number;
 	gold?: number;
-	// Chance of encountering this monster.
+	// Odds of encountering this monster.
 	odds: number;
 	level: number;
 	zones: MapZone[];
@@ -37,7 +39,7 @@ export type MonsterFiche = {
 	events?: GameEvent[];
 	noMove?: boolean;
 	display?: string;
-	// Changes the size of the monster sprite. 100 means unchanged.
+	// Changes the size of the sprite. 100 means unchanged.
 	size?: number;
 	// Gives a dark color to the monster if true.
 	dark?: boolean;

@@ -137,6 +137,8 @@ export default defineComponent({
 		async onBid(payload: { offerId: number; bidValue: number }) {
 			// Update treasury notes
 			this.treasuryNotes -= payload.bidValue;
+			// Refresh offers
+			await this.fetchOffers();
 		}
 	},
 	async mounted() {

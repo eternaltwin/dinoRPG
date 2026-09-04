@@ -47,7 +47,6 @@ import type { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, LogType, UnavailableReason } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { TemporaryStatus } from '../constants/index.js';
 import {
@@ -100,6 +99,7 @@ import { getRandomInteger, getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
@@ -113,12 +113,14 @@ import { finishDinozUnsacrifice } from './demonShopService.js';
 async function canLevelUpNow(
 	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & { status: Pick<DinozStatus, 'statusId'>[] }
 ) {
-	if (!canLevelUp(dinoz, gameConfig)) {
+	if (!canLevelUp(dinoz, gameConfig())) {
 		return false;
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinoz.id);
-	return !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
+	// The Dinoz cannot level up if a tournament is ongoing, the Dinoz is part of the tournament and has reached the level limit
+	const levelUpForbidden = tournament && dinozTournament && dinoz.level >= tournament.levelLimit;
+	return !levelUpForbidden;
 }
 
 /**
@@ -307,7 +309,8 @@ export async function getAvailableActions(
 		}
 	}
 
-	if (dinozPlace.dungeon) {
+	// If leader or solo, allow to enter the dungeon.
+	if (dinozPlace.dungeon && dinoz.leaderId === null) {
 		const dungeon = await getDungeonByPlaceStart(dinozPlace.placeId);
 		if (dungeon) {
 			if (checkCondition(JSON.parse(dungeon.condition) as Condition, player, dinoz.id)) {
@@ -499,7 +502,7 @@ export async function getDinozFiche(req: Request) {
 
 	const isInTournament = await isDinozInTournament(dinozId);
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, isInTournament ? currentTournament : null);
+	const ret = toDinozFiche(playerData, dinozId, isInTournament ? currentTournament : null, gameConfig());
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return ret;
@@ -591,21 +594,16 @@ export async function buyDinoz(req: Request) {
 		]
 	};
 
-	const skillsToAdd = Object.values(skillList).filter(
-		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
-	);
+	const skillsToAdd = race.skills ?? [];
 
 	// Add base skills to created dinoz
-	await addMultipleSkillToDinoz(
-		dinozCreated.id,
-		skillsToAdd.map(skill => skill.id)
-	);
+	await addMultipleSkillToDinoz(dinozCreated.id, skillsToAdd);
 
 	// Update player points and dinoz count
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
 
-	return toDinozFiche(newDinoz, dinozCreated.id, null);
+	return toDinozFiche(newDinoz, dinozCreated.id, null, gameConfig());
 }
 
 /**
@@ -1341,7 +1339,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id, null));
+	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id, null, gameConfig()));
 	if (leader.followers.length >= max) {
 		throw new ExpectedError(translate('maxFollowers', authed));
 	}
