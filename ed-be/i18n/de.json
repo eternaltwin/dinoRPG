@@ -365,11 +365,11 @@
 		"defending": "Dein Dinoz verteidigt eure Klanburg.",
 		"restingAttack": "Dein Dinoz erholt sich gerade von dem Kampf.",
 		"sacrificed": "Dein Dinoz wurde geopfert.",
-		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
-		"selling": "Votre Dinoz est en vente.",
-		"superdom": "Votre Dinoz est au superdom.",
-		"resting": "Votre Dinoz se repose.",
-		"dungeon": "Votre Dinoz explore un donjon."
+		"unsacrificing": "Dein Dinoz ist dabei, wiederbelebt zu werden.",
+		"selling": "Dein Dinoz wird verkauft.",
+		"superdom": "Dein Dinoz ist am SuperDom.",
+		"resting": "Dein Dinoz ruht sich aus.",
+		"dungeon": "Dein Dinoz erkundet ein Verlies."
 	},
 	"fb_tournament": {
 		"noOpponent": "Es gibt derzeit keine Gegner mehr, gegen die du kämpfen könntest."
