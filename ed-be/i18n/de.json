@@ -357,14 +357,14 @@
 		"wrongTeam": "In diesem Verlies befindet sich bereits eine andere Gruppe.",
 		"noRun": "Du hast dieses Verlies noch nie besucht.",
 		"notAtExit": "An dieser Stelle kannst du das Verlies nicht verlassen!",
-		"notHealing": "Vous ne pouvez pas utiliser un objet ici, il vous faut aller à une zone de soin."
+		"notHealing": "Du kannst diesen Gegenstand nur in einem Heilungsbereich verwenden."
 	},
 	"UnavailableReason": {
-		"frozen": "Votre Dinoz est congelé.",
-		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
-		"defending": "Votre Dinoz défend le château de votre clan.",
-		"restingAttack": "Votre Dinoz se remet de son combat.",
-		"sacrificed": "Votre Dinoz est sacrifié.",
+		"frozen": "Dein Dinoz ist eingefroren.",
+		"unfreezing": "Dein Dinoz ist dabei, aufgetaut zu werden.",
+		"defending": "Dein Dinoz verteidigt eure Klanburg.",
+		"restingAttack": "Dein Dinoz erholt sich gerade von dem Kampf.",
+		"sacrificed": "Dein Dinoz wurde geopfert.",
 		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
 		"selling": "Votre Dinoz est en vente.",
 		"superdom": "Votre Dinoz est au superdom.",
