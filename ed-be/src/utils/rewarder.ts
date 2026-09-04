@@ -22,6 +22,7 @@ import { translateTarget } from '../utils/server/translate.js';
 import { Lang } from '@drpg/prisma';
 import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { gameConfig } from './gameConfig.js';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -190,7 +191,10 @@ export function describeRewards(rewards: Rewarder[], lang: Lang): string {
 				interpolation: { escapeValue: false }
 			});
 		} else if (reward.rewardType === RewardEnum.GOLD) {
-			return translateTarget('dojo.goldReward', lang, { value: reward.value, interpolation: { escapeValue: false } });
+			return translateTarget('dojo.goldReward', lang, {
+				value: formatNumber(reward.value, '.'),
+				interpolation: { escapeValue: false }
+			});
 		} else {
 			console.error(`Reward type ${reward.rewardType} is not supported for describeReward.`);
 			return '???';
