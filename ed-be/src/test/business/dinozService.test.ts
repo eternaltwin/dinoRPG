@@ -968,12 +968,12 @@ describe('frozeDinoz', () => {
 
 describe('unfrozeDinoz', () => {
 	describe('input validation', () => {
-		it('frozeDinoz throws if Dinoz not found', async () => {
+		it('unfrozeDinoz throws if Dinoz not found', async () => {
 			vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue(null);
 			await expect(unfrozeDinoz(req({ id: '1' }))).rejects.toThrow('dinozNotFound');
 		});
 
-		it('frozeDinoz throws if Dinoz not owned', async () => {
+		it('unfrozeDinoz throws if Dinoz not owned', async () => {
 			vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({
 				placeId: 1,
 				leaderId: null,
@@ -1003,6 +1003,18 @@ describe('unfrozeDinoz', () => {
 				await expect(unfrozeDinoz(req({ id: '1' }))).rejects.toThrow('error.dinozNotAvailable');
 			}
 		});
+
+		it('unfrozeDinoz throws if too many active Dinoz', async () => {
+			vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue(
+				Array.from({ length: 20 }, () => ({ player: { leader: false, messie: false } })) as never
+			);
+			vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({
+				unavailableReason: UnavailableReason.frozen,
+				id: 1,
+				player: { id: 'p1' }
+			} as never);
+			await expect(unfrozeDinoz(req({ id: '1' }))).rejects.toThrow('tooManyActiveDinoz');
+		});
 	});
 
 	describe('processing validation', () => {
@@ -1014,7 +1026,10 @@ describe('unfrozeDinoz', () => {
 			} as never);
 			vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([] as never);
 			await unfrozeDinoz(req({ id: '1' }));
-			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.unfreezing });
+			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, {
+				unavailableReason: UnavailableReason.unfreezing, 
+				unavailableUntil: expect.any(Date)
+			});
 		});
 	});
 });
