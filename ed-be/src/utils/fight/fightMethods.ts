@@ -1047,10 +1047,20 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 	// Count monsters with M_RENFORT, of type reinforcement and same team as fighter
-	const renfortApplied = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
+	const renfortApplied = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_RENFORTS)
+	).length;
 
 	// Count monsters with M_WORM_CALL, of type reinforcement and same team as fighter
-	const wormCalls = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
+	const wormCalls = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_WORM_CALL)
+	).length;
 
 	// Initialize monster
 	const monster = initializeMonster(

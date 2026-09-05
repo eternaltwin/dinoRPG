@@ -27,18 +27,18 @@
 			</p>
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
-				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
-				help
+				:content="$t('hud.unfreezeCountdown', { time: timeUntilAvailable })"
+				timer
 			/>
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.restingAttack"
 				:content="$t('hud.restingAttackCountdown', { time: attackCountdown })"
-				help
+				timer
 			/>
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.unsacrificing"
 				:content="$t('hud.unsacrificeCountdown', { time: timeUntilAvailable })"
-				help
+				timer
 			/>
 			<DZDisclaimer
 				v-if="dinoz.unavailableReason === UnavailableReason.dungeon"
