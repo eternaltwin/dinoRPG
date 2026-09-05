@@ -4,10 +4,10 @@ icon:
   name: small_question
 ---
 
-# Nommer son Dinoz
+# Nombrar a tu Dino
 
-Une fois votre Dinoz acheté, il vous est demandé de lui donner un nom, par exemple ici :
+Una vez comprado tu Dino, se te pedirá que le pongas un nombre, por ejemplo:
 
-![Écran de nommage](@guide/name_fr)
+![Pantalla para nombrar](@guide/name_es)
 
-Choisissez le nom que vous préférez pour votre Dinoz, et votre Dinoz s'ajoutera au menu de gauche. En cliquant dessus, vous pourrez accéder à sa **Fiche**.
+Elige el nombre que prefieras para tu Dino, y tu Dino se añadirá al menú de la izquierda. Al hacer clic en él, podrás acceder a su **Ficha**.
