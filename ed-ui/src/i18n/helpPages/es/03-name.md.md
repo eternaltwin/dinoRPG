@@ -6,8 +6,8 @@ icon:
 
 # Nombrar a tu Dino
 
-Una vez comprado tu Dino, se te pedirá que le pongas un nombre, por ejemplo:
+Una vez comprado tu Dino, tienes que ponerle un nombre. Por ejemplo:
 
 ![Pantalla para nombrar](@guide/name_es)
 
-Elige el nombre que prefieras para tu Dino, y tu Dino se añadirá al menú de la izquierda. Al hacer clic en él, podrás acceder a su **Ficha**.
+Ponle el nombre que prefieras. Tu nuevo Dino aparecerá en el menú de la izquierda. Al hacer clic en él, podrás acceder a su **Ficha**.
