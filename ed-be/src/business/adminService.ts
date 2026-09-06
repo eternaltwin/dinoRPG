@@ -51,6 +51,9 @@ import { rollMonsters } from './dungeon/monsters.js';
 import { checkScenarios, scenariosFromStruct, structFromGrid } from './dungeon/gridImport.js';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
+import { rewarder } from '../utils/rewarder.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -216,11 +219,13 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 	const rewardList: number[] = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
-			await addMultipleRewardToPlayer(
+			await rewarder(
 				rewardList.map(reward => ({
-					playerId: req.params.id,
-					rewardId: +reward
-				}))
+					rewardType: RewardEnum.EPIC,
+					value: +reward
+				})),
+				[],
+				req.params.id
 			);
 
 			for (const reward of rewardList) {
@@ -254,10 +259,16 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
 	const items: { id: number; quantity: number }[] = req.body.items;
 	switch (req.body.operation) {
 		case 'increase':
+			const rewards: Rewarder[] = [];
 			for (const item of items) {
-				await increaseItemQuantity(req.params.id, item.id, item.quantity);
+				rewards.push({
+					rewardType: RewardEnum.ITEM,
+					value: item.id,
+					quantity: item.quantity
+				});
 				await createLog(LogType.AdminAddItem, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
+			await rewarder(rewards, [], req.params.id);
 			break;
 		case 'decrease':
 			for (const item of items) {
