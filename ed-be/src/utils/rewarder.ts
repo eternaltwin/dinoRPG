@@ -40,13 +40,11 @@ export async function rewarder(
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
 	playerId: string,
-	notify?: (RewardEnum.GOLD | RewardEnum.ITEM | RewardEnum.EPIC)[]
+	notify: (RewardEnum.GOLD | RewardEnum.ITEM | RewardEnum.EPIC)[] = [RewardEnum.GOLD, RewardEnum.ITEM, RewardEnum.EPIC]
 ): Promise<[Item, number][]> {
 	let nullableTeam = team.length === 0 ? [null] : team;
 
 	let actualRewards: [Item, number][] = [];
-
-	notify = notify ?? [RewardEnum.GOLD, RewardEnum.ITEM, RewardEnum.EPIC];
 
 	for (const dinoz of nullableTeam) {
 		let rewardsToNotify: Rewarder[] = [];
