@@ -26,8 +26,7 @@ import 'dayjs/locale/es.js';
 import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise, describeRewards } from './rewarder.js';
-import { createNotification } from '../dao/notificationDao.js';
-import { ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
+import { ClanEventType, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -476,19 +475,7 @@ class TournamentManager {
 				select: {
 					player: {
 						select: {
-							id: true,
-							dinoz: {
-								take: 1,
-								select: {
-									id: true,
-									level: true,
-									status: {
-										select: {
-											statusId: true
-										}
-									}
-								}
-							}
+							id: true
 						}
 					}
 				}
@@ -600,8 +587,7 @@ class TournamentManager {
 				}
 				if (rewards.length > 0) {
 					numRewardedPlayers += 1;
-					promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
-					promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, []));
+					promises.push(rewarder(rewards, [], dojo.player.id));
 				}
 			}
 		}
@@ -1312,18 +1298,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 				dojo: true,
 				player: {
 					select: {
-						dinoz: {
-							take: 1,
-							select: {
-								id: true,
-								level: true,
-								status: {
-									select: {
-										statusId: true
-									}
-								}
-							}
-						}
+						id: true
 					}
 				}
 			}
@@ -1333,8 +1308,8 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 			allRewarded
 				.filter(player => player.dojo >= floor.floor)
 				.forEach(player => {
-					if (!player.player || !player.player.dinoz || !player.playerId) return;
-					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId));
+					if (!player.player || !player.playerId) return;
+					promises.push(rewarder(floor.rewards, [], player.playerId));
 				});
 		});
 		LOGGER.log(`Rewarding ${allRewarded.length} players.`);

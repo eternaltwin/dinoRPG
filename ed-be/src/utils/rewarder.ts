@@ -25,6 +25,16 @@ import { gameConfig } from './gameConfig.js';
 import { formatNumber } from '@drpg/core/utils/string';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
+
+/**
+ * Reward an account or a group of dinoz and send notifications.
+ *
+ * @param rewards The list of rewards to apply.
+ * @param team 	The dinoz to be rewarded. If it is empty, the rewards would be apply to the account.
+ * @param playerId 	The player to be rewarded.
+ * @param notify An array of the type of rewards to be notify. By default, all notifyble types would be notified.
+ * @returns The items rewarded.
+ */
 export async function rewarder(
 	rewards: Rewarder[],
 	team: (Pick<Dinoz, 'id' | 'level'> & {
@@ -34,19 +44,21 @@ export async function rewarder(
 	notify?: (RewardEnum.GOLD | RewardEnum.ITEM | RewardEnum.EPIC)[],
 	missionLevel?: number
 ): Promise<[Item, number][]> {
-	if (!team.length) {
-		throw new ExpectedError('No player found');
-	}
+	let nullableTeam = team.length === 0 ? [null] : team;
 
 	let actualRewards: [Item, number][] = [];
 
 	notify = notify ?? [RewardEnum.GOLD, RewardEnum.ITEM, RewardEnum.EPIC];
 
-	for (const dinoz of team) {
+	for (const dinoz of nullableTeam) {
 		let rewardsToNotify: Rewarder[] = [];
 		for (const reward of rewards) {
 			switch (reward.rewardType) {
 				case RewardEnum.STATUS:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					if (reward.reverse) {
 						await removeStatusFromDinoz(dinoz.id, reward.value);
 					} else {
@@ -55,13 +67,25 @@ export async function rewarder(
 					}
 					break;
 				case RewardEnum.CHANGE_ELEMENT:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
 					break;
 				case RewardEnum.MAXEXPERIENCE:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					const maxExp = getMaxXp(dinoz, gameConfig());
 					await updateDinoz(dinoz.id, { experience: maxExp });
 					break;
 				case RewardEnum.SKILL:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					await addSkillToDinoz(dinoz.id, reward.value);
 
 					if (reward.value === skillList[Skill.COMPETENCE_DOUBLE].id) {
@@ -69,6 +93,10 @@ export async function rewarder(
 					}
 					break;
 				case RewardEnum.EXPERIENCE:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					await updateDinoz(dinoz.id, { experience: { increment: reward.value } });
 					await createLog(LogType.XPEarned, playerId, dinoz.id, reward.value);
 					break;
@@ -161,6 +189,10 @@ export async function rewarder(
 					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.scenario);
 					break;
 				case RewardEnum.TELEPORT:
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 					break;
 				case RewardEnum.REDIRECT:
@@ -208,7 +240,7 @@ export function describeRewards(rewards: Rewarder[], lang: Lang): string {
 				interpolation: { escapeValue: false }
 			});
 		} else {
-			console.error(`Reward type ${reward.rewardType} is not supported for describeReward.`);
+			LOGGER.error(`Reward type ${reward.rewardType} is not supported for describeReward.`);
 			return '???';
 		}
 	});
