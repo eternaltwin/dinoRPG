@@ -4,11 +4,11 @@ icon:
   name: fx_ccard
 ---
 
-# La Fiche du Dinoz
+# La Ficha del Dino
 
 La **Fiche** de votre Dinoz est l'endroit où vous pouvez à la fois voir l'**état** de votre Dinoz et effectuer un certain nombre d'**actions**. Elle se présente sous la forme suivante :
 
-![Fiche du Dinoz](@guide/card)
+![Ficha del Dino](@guide/card)
 
 Vous pouvez y apercevoir les informations suivantes :
 
