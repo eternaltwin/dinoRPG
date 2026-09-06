@@ -887,7 +887,17 @@ export async function resurrectDinoz(req: Request) {
 	const starQuest = dinozData.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 7);
 	if (starQuest && dinozData.placeId === PlaceEnum.JUNGLE_SAUVAGE) {
 		await upsertQuest(dinozData.player.id, Scenario.STAR, 8);
-		await increaseItemQuantity(dinozData.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
+		await rewarder(
+			[
+				{
+					rewardType: RewardEnum.ITEM,
+					value: Item.MAGIC_STAR,
+					quantity: 1
+				}
+			],
+			[],
+			dinozData.player.id
+		);
 		return {
 			category: ItemEffect.QUEST,
 			value: 'resurrect_star_found'
