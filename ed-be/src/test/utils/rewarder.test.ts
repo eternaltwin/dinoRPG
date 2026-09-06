@@ -48,10 +48,6 @@ beforeEach(() => {
 });
 
 describe('rewarder', () => {
-	it('throws when team is empty', async () => {
-		await expect(rewarder([], [], 'p1')).rejects.toThrow('No player found');
-	});
-
 	it('adds and removes status', async () => {
 		await rewarder([{ rewardType: RewardEnum.STATUS, value: 5 } as never], team(), 'p1');
 		expect(statusDao.addStatusToDinoz).toHaveBeenCalledWith(1, 5);
@@ -108,14 +104,16 @@ describe('rewarder', () => {
 		expect(updateDinoz).toHaveBeenCalledWith(1, { experience: { increment: 50 } });
 	});
 
-	it('grants gold with notification', async () => {
-		await rewarder([{ rewardType: RewardEnum.GOLD, value: 100 } as never], team(), 'p1', [RewardEnum.GOLD]);
+	it.for([true, false])('grants gold with notification (withDinoz: %s)', async (withDinoz: boolean) => {
+		await rewarder([{ rewardType: RewardEnum.GOLD, value: 100 } as never], withDinoz ? team() : [], 'p1', [
+			RewardEnum.GOLD
+		]);
 		expect(playerDao.addMoney).toHaveBeenCalledWith('p1', 100);
 		expect(createNotification).toHaveBeenCalled();
 	});
 
-	it('grants max item to a new and an existing item', async () => {
-		await rewarder([{ rewardType: RewardEnum.MAX_ITEM, value: 3 } as never], team(), 'p1');
+	it.for([true, false])('grants max item to a new and an existing item (withDinoz: %s)', async (withDinoz: boolean) => {
+		await rewarder([{ rewardType: RewardEnum.MAX_ITEM, value: 3 } as never], withDinoz ? team() : [], 'p1');
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
 			items: [{ itemId: 3, quantity: 2 }]
@@ -124,8 +122,10 @@ describe('rewarder', () => {
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
 	});
 
-	it('grants an item (new, increase, and decrease)', async () => {
-		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1', [RewardEnum.ITEM]);
+	it.for([true, false])('grants an item (new, increase, and decrease) (withDinoz: %s)', async (withDinoz: boolean) => {
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], withDinoz ? team() : [], 'p1', [
+			RewardEnum.ITEM
+		]);
 		expect(playerItemDao.insertItem).toHaveBeenCalled();
 		expect(createNotification).toHaveBeenCalled();
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
@@ -137,8 +137,10 @@ describe('rewarder', () => {
 		expect(playerItemDao.decreaseItemQuantity).toHaveBeenCalled();
 	});
 
-	it('grants an epic reward', async () => {
-		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1', [RewardEnum.EPIC]);
+	it.for([true, false])('grants an epic reward (withDinoz: %s)', async (withDinoz: boolean) => {
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], withDinoz ? team() : [], 'p1', [
+			RewardEnum.EPIC
+		]);
 		expect(addRewardToPlayer).toHaveBeenCalled();
 		expect(createNotification).toHaveBeenCalled();
 	});
@@ -149,8 +151,8 @@ describe('rewarder', () => {
 		expect(addRewardToPlayer).not.toHaveBeenCalled();
 	});
 
-	it('progresses a scenario', async () => {
-		await rewarder([{ rewardType: RewardEnum.SCENARIO, value: 2, step: 1 } as never], team(), 'p1');
+	it.for([true, false])('progresses a scenario (withDinoz: %s)', async (withDinoz: boolean) => {
+		await rewarder([{ rewardType: RewardEnum.SCENARIO, value: 2, step: 1 } as never], withDinoz ? team() : [], 'p1');
 		expect(upsertQuest).toHaveBeenCalledWith('p1', 2, 1);
 	});
 
