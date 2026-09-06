@@ -51,20 +51,20 @@ Diese Angriffe sind zeitlich begrenzt und wenn die Verteidiger innerhalb dieser 
 
 Wird die feindliche Burg zerstört, ist der Krieg gewonnen und im Gegenzug verliert ihr den Krieg, falls die eigene Burg fällt.
 
-Voici un exemple d'une attaque de Château :
+Hier ist ein Beispiel für einen Angriff auf eine Burg:
 
-![Exemple d'attaque de château](@guide/attack_castle)
+![Beispiel eines Burgangriffs](@guide/attack_castle)
 
-# La Défense
+# Verteidigung
 
-Lorsque votre Clan est attaqué, il est important de préparer une bonne défense afin de ne pas perdre la Guerre lancée par un clan adverse ou lorsque vous déclarez la guerre.
+Sollte euer Klan einen anderen Klan angreifen oder angegriffen werden, ist es wichtig, eine gute Verteidigung vorzubereiten, um den Krieg nicht zu verlieren.
 
-Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour que votre Château ne soit pas touché.
+Der Anführer des Klans sowie Mitglieder mit den entsprechenden Rechten können Dinoz hin und her schieben, und somit die Verteidigung justieren, um die beste Strategie auszuarbeiten, damit eure Burg nicht beschädigt wird.
 
-Voici un exemple d'une défense de Château :
+Hier ist ein Beispiel einer Burgverteidigung:
 
-![Exemple de défense de château](@guide/def_castle)
+![Beispiel einer Burgverteidigung](@guide/def_castle)
 
-# Le Percepteur
+# Der Steuereintreiber
 
-Le percepteur doit être payé avant de déclarer une attaque. Il passe toujours dans la demi-heure qui suis l'heure qu'il propose ! Par exemple, s'il dit qu'il passera de 16h24 à 17h50, vous pourrez payer de 16h à 16h30.
+Bevor ein Angriff gestartet werden kann, muss der Steuereintreiber bezahlt werden. Er kommt immer und bleibt für eine halbe Stunde um den genannten Zeitraum herum! Wenn er beispielsweise sagt, dass er zwischen 16:24 und 17:50 vorbeikommt, könnte er von 16:00 bis 16:30 bezahlt werden.
