@@ -53,11 +53,9 @@ import {
 	listDungeonsCatalog,
 	updateDungeonCatalog
 } from '../dao/dungeonRunDao.js';
-import { seal } from '../utils/dungeonCrypto.js';
+import { seal, unseal } from '../utils/dungeonCrypto.js';
 import { rollMonsters } from './dungeon/monsters.js';
-import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
-import { DungeonItem } from './dungeon/types.js';
-import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
+import { checkScenarioCoverage, checkScenarios, structFromGrid } from './dungeon/gridImport.js';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
 
@@ -1194,10 +1192,7 @@ export async function createSeededDungeon(req: Request) {
 		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
 		// Every chest/scroll (IScenario item) must point at one of the dungeon's scenario entries.
 		const scenarios = checkScenarios(req.body.scenarios);
-		for (const lvl of grid.levels as DungeonGridLevel[])
-			for (const it of lvl.items)
-				if (it.k === DungeonItem.IScenario && it.v >= scenarios.length)
-					throw new ExpectedError(`Invalid dungeon grid: scenario item v=${it.v} has no scenario entry`);
+		checkScenarioCoverage(d, scenarios);
 		const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 		const created = await createDungeon(
 			seal(encoded),
@@ -1225,6 +1220,7 @@ export async function createSeededDungeon(req: Request) {
 		// The layout's IScenario items index this list, so it must travel with them: dropping it
 		// leaves every chest/scroll silent and drawn with decorateScenarios' fallback icon.
 		const scenarios = checkScenarios(req.body.scenarios);
+		checkScenarioCoverage(codec.d, scenarios);
 		const created = await createDungeon(
 			seal(codec.encode()),
 			type,
@@ -1263,6 +1259,7 @@ export async function createSeededDungeon(req: Request) {
 	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 	// OriginalGenerator scatters IScenario items numbered 0..n-1, which index this list.
 	const scenarios = checkScenarios(req.body.scenarios);
+	checkScenarioCoverage(d, scenarios);
 	const created = await createDungeon(
 		seal(encoded),
 		type,
@@ -1307,8 +1304,19 @@ export async function updateDungeonAdmin(req: Request) {
 			throw new ExpectedError('Invalid condition JSON');
 		}
 	}
-	const scenarios =
-		req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
+	let scenarios = existing.scenarios;
+	if (req.body.scenarios != null) {
+		const rows = checkScenarios(req.body.scenarios);
+		const codec = new DungeonCodec();
+		// The sealed layout is the only record of how many entries the dungeon needs.
+		const layout = unseal({
+			cipher: Buffer.from(existing.cipher),
+			iv: Buffer.from(existing.iv),
+			tag: Buffer.from(existing.tag)
+		});
+		if (codec.decode(layout)) checkScenarioCoverage(codec.d, rows);
+		scenarios = JSON.stringify(rows);
+	}
 
 	return updateDungeonCatalog(id, {
 		name: req.body.name ?? existing.name,

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkScenarios, structFromGrid } from '../../business/dungeon/gridImport.js';
+import { checkScenarioCoverage, checkScenarios, structFromGrid } from '../../business/dungeon/gridImport.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from '../../business/dungeon/DungeonCodec.js';
@@ -99,6 +99,31 @@ describe('structFromGrid', () => {
 		g.levels[0].doors = [{ x: 5, y: 5, up: null, key: null }];
 		g.levels[0].items = [{ x: 5, y: 5, k: 1, v: 10 }];
 		expect(() => structFromGrid(g)).toThrow(/overlaps/);
+	});
+});
+
+describe('checkScenarioCoverage', () => {
+	/** A layout carrying two scenario items, numbered 0 and 1. */
+	function twoScenarioStruct() {
+		const g = blankGrid(1);
+		g.levels[0].items = [
+			{ x: 4, y: 4, k: 3, v: 0 },
+			{ x: 6, y: 6, k: 3, v: 1 }
+		];
+		return structFromGrid(g);
+	}
+
+	it('accepts a list covering every scenario item', () => {
+		expect(() =>
+			checkScenarioCoverage(twoScenarioStruct(), checkScenarios([{ text: 'a' }, { text: 'b' }]))
+		).not.toThrow();
+	});
+
+	it('rejects a layout whose scenario items have no entry — the import that silently stored []', () => {
+		expect(() => checkScenarioCoverage(twoScenarioStruct(), [])).toThrow(/scenario item v=0 has no scenario entry/);
+		expect(() => checkScenarioCoverage(twoScenarioStruct(), checkScenarios([{ text: 'a' }]))).toThrow(
+			/scenario item v=1 has no scenario entry/
+		);
 	});
 });
 
