@@ -23,6 +23,7 @@ export const playerStore = defineStore('playerStore', {
 			skipFight: false,
 			skipLevel: false,
 			autoReequipItems: false,
+			bypassGatheringGrid: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS

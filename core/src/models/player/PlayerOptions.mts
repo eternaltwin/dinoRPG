@@ -6,6 +6,7 @@ export interface PlayerOptions {
 	skipFight: boolean;
 	skipLevel: boolean;
 	autoReequipItems: boolean;
+	bypassGatheringGrid: boolean;
 	archivedSiteId: number | null;
 	shareArchivedData: boolean;
 	displayedNotifications: number;

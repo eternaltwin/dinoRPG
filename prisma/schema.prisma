@@ -290,6 +290,7 @@ model Player {
   skipFight              Boolean            @default(false)
   skipLevel              Boolean            @default(false)
   autoReequipItems       Boolean            @default(false)
+  bypassGatheringGrid    Boolean            @default(false)
   shareArchivedData      Boolean            @default(false)
   archivedSiteId         Int?
   displayedNotifications Int                @default(3)

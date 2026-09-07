@@ -107,6 +107,12 @@
 			<DZDisclaimer timer v-if="isSelling" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
+	<GatherRewardModal
+		v-if="fastGatherOver && fastGatherResult"
+		:rewards="fastGatherResult.rewards"
+		:ingredientsAtMaxQuantity="fastGatherResult.ingredientsAtMaxQuantity"
+		@close="closeFastGatherModal"
+	/>
 </template>
 
 <script lang="ts">
@@ -135,6 +141,8 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
+import GatherRewardModal from '../modal/GatherRewardModal.vue';
+import type { GatherResult } from '@drpg/core/models/gather/gatherResult';
 
 function formatCountdown(remainingMs: number): string {
 	const safeSeconds = Math.max(0, Math.floor(remainingMs / 1000));
@@ -169,7 +177,9 @@ export default defineComponent({
 			minutesBeforeHour: 60 - new Date().getMinutes(),
 			intervals: [] as number[],
 			mission: useDinozStore().getDinoz(+this.$route.params.id)?.missionHUD,
-			attackCountdown: 0 as number
+			attackCountdown: 0 as number,
+			fastGatherOver: false,
+			fastGatherResult: null as GatherResult | null
 		};
 	},
 	components: {
@@ -178,7 +188,8 @@ export default defineComponent({
 		NPCModal,
 		MissionRewardModal,
 		DZDisclaimer,
-		DZFollow
+		DZFollow,
+		GatherRewardModal
 	},
 	props: {
 		refreshDinoz: {
@@ -431,13 +442,22 @@ export default defineComponent({
 				case GatherType.ANNIV:
 				case GatherType.PARTY:
 				case Action.DAILY:
-					this.$router.push({
-						name: 'Gather',
-						params: {
-							dinozId: action.forDinoz ? action.forDinoz.toString() : this.dinozId.toString(),
-							type: action.name
+					{
+						const dId = action.forDinoz ? Number(action.forDinoz) : Number(this.$route.params.id);
+						const gType = String(action.name);
+
+						if (this.playerStore.getPlayerOptions.bypassGatheringGrid) {
+							await this.handleDirectGathering(dId, gType);
+						} else {
+							this.$router.push({
+								name: 'Gather',
+								params: {
+									dinozId: dId.toString(),
+									type: gType
+								}
+							});
 						}
-					});
+					}
 					break;
 				case Action.CONCENTRATE:
 					await DinozService.cancelConcentration(this.dinozId);
@@ -694,6 +714,66 @@ export default defineComponent({
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
+		},
+		async handleDirectGathering(dinozId: number, gatherType: string): Promise<void> {
+			try {
+				const gridContext = await DinozService.getGatherGrid(dinozId, gatherType);
+
+				if (!gridContext || !gridContext.grid || gridContext.gatherTurn <= 0) {
+					this.$toast.open({
+						message: this.$t('toast.gatherAlertError'),
+						type: 'error'
+					});
+					return;
+				}
+
+				const clickedBox: number[][] = [];
+				let availableTurns = gridContext.gatherTurn;
+
+				for (let rowNum = 0; rowNum < gridContext.grid.length; rowNum++) {
+					const row = gridContext.grid[rowNum];
+					for (let colNum = 0; colNum < row.length; colNum++) {
+						if (row[colNum] === 0) {
+							clickedBox.push([rowNum, colNum]);
+							availableTurns--;
+
+							if (availableTurns === 0) {
+								break;
+							}
+						}
+					}
+					if (availableTurns === 0) {
+						break;
+					}
+				}
+
+				const result = await DinozService.gatherWithDinoz(dinozId, gatherType, clickedBox);
+				if (result && result.rewards) {
+					this.fastGatherResult = result;
+					this.fastGatherOver = true;
+
+					await this.$refreshGold();
+				}
+
+				if (result?.isGridComplete) {
+					if (result.goldReward > 0) {
+						this.$toast.success(this.$t('toast.finishGrid'));
+					} else {
+						this.$toast.info(this.$t('toast.dailyGridRewardsFinished'));
+					}
+				}
+
+				await this.refreshDinoz();
+			} catch (e) {
+				this.$toast.open({
+					message: this.$t('toast.gatherAlertError'),
+					type: 'error'
+				});
+			}
+		},
+		closeFastGatherModal() {
+			this.fastGatherOver = false;
+			this.fastGatherResult = null;
 		}
 	},
 	computed: {

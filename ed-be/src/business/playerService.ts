@@ -69,6 +69,7 @@ export async function getCommonData(req: Request) {
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel,
 			autoReequipItems: playerCommonData.autoReequipItems,
+			bypassGatheringGrid: playerCommonData.bypassGatheringGrid,
 			archivedSiteId: playerCommonData.archivedSiteId,
 			shareArchivedData: playerCommonData.shareArchivedData,
 			displayedNotifications: playerCommonData.displayedNotifications
@@ -340,6 +341,9 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'autoReequipItems') {
 		await setPlayer(authed.id, { autoReequipItems: req.body.setting });
+	}
+	if (req.params.setting === 'bypassGatheringGrid') {
+		await setPlayer(authed.id, { bypassGatheringGrid: req.body.setting });
 	}
 	if (req.params.setting === 'archivedSiteId') {
 		await setPlayer(authed.id, { archivedSiteId: req.body.setting });
