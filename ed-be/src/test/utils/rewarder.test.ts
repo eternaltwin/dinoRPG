@@ -38,6 +38,7 @@ import { upsertQuest } from '../../dao/questsDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
 import { rewarder } from '../../utils/rewarder.js';
 import { gameConfig } from '../../utils/gameConfig.js';
+import { Reward } from '../../../../core/src/models/reward/RewardList.mjs';
 
 const team = (status: number[] = []) => [{ id: 1, level: 1, status: status.map(statusId => ({ statusId })) }];
 
@@ -196,6 +197,11 @@ describe('rewarder', () => {
 			RewardEnum.GOLD,
 			RewardEnum.EPIC
 		]);
+		expect(createNotification).not.toHaveBeenCalledOnce();
+	});
+
+	it('non displayed epic should not notify', async () => {
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: Reward.TIK }], team(), 'p1');
 		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 });

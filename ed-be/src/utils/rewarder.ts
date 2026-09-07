@@ -168,7 +168,7 @@ export async function rewarder(
 							player: { connect: { id: playerId } }
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
-						if (notify.includes(RewardEnum.EPIC) && rewardDetails.announced) {
+						if (notify.includes(RewardEnum.EPIC) && rewardDetails.displayed) {
 							rewardsToNotify.push(reward);
 						}
 					}
