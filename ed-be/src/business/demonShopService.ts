@@ -575,7 +575,7 @@ export async function unsacrificeDinoz(req: Request) {
 }
 
 // If a Dinoz is being unsacrificed, remove the unavailable reason.
-// This method is ran in a job.
+// This method is expected to be ran in a job.
 export async function finishDinozUnsacrifice(dinozId: number) {
 	const dinoz = await getDinozUnavailableReason(dinozId);
 

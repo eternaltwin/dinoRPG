@@ -1,4 +1,4 @@
-import { PlayerForConditionCheck } from '@drpg/core/constants';
+import { PlayerForConditionCheck, UNFREEZE_DURATION, UNFREEZE_DURATION_DEBUG } from '@drpg/core/constants';
 import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -62,6 +62,7 @@ import {
 	getDinozGatherData,
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
+	getDinozUnavailableReason,
 	getFollowingDinoz,
 	getIrmaUsageInfo,
 	getLeaderWithFollowers,
@@ -103,7 +104,7 @@ import { gameConfig } from '../utils/gameConfig.js';
 import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { LOGGER } from '../context.js';
+import { GLOBAL, LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import { finishDinozUnsacrifice } from './demonShopService.js';
 
@@ -1556,19 +1557,18 @@ export async function unfrozeDinoz(req: Request) {
 
 	const authed = await auth(req);
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
-	}
-
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
+
+	if (dinoz.player.id !== authed.id) {
+		throw new ExpectedError(translate('error.notYourDinoz', authed));
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.frozen) {
-		throw new ExpectedError('Dinoz is not frozen');
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	// Check if player can unfreeze the dinoz
@@ -1576,8 +1576,36 @@ export async function unfrozeDinoz(req: Request) {
 		throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 	}
 
+	// DB update
+	const duration = GLOBAL.config.isProduction ? UNFREEZE_DURATION : UNFREEZE_DURATION_DEBUG;
+	const endDate = new Date(Date.now() + duration);
 	await updateDinoz(dinozId, {
-		unavailableReason: UnavailableReason.unfreezing
+		unavailableReason: UnavailableReason.unfreezing,
+		unavailableUntil: endDate
+	});
+
+	// Schedule job
+	scheduleJob(`unfreeze_${dinoz.id}`, endDate, () => finishDinozUnfreeze(dinoz.id));
+}
+
+// If a Dinoz is being unfrozen, remove the unavailable reason.
+// This method is expected to be ran in a job.
+export async function finishDinozUnfreeze(dinozId: number) {
+	const dinoz = await getDinozUnavailableReason(dinozId);
+
+	if (!dinoz) {
+		LOGGER.error(`Dinoz ${dinozId} not found for unfreezing finish.`);
+		return;
+	}
+
+	if (dinoz.unavailableReason !== UnavailableReason.unfreezing) {
+		LOGGER.error(`Dinoz ${dinozId} unexpected unavailable reason (${dinoz.unavailableReason}) for unfreezing finish.`);
+		return;
+	}
+
+	await updateDinoz(dinozId, {
+		unavailableReason: null,
+		unavailableUntil: null
 	});
 }
 
@@ -1643,6 +1671,9 @@ export async function scheduleDinozEndOfUnavailability() {
 
 		// Else (valid unavailable reason with unexpired unavailable date) handle some specific unavailable reasons that are expected to have an end date.
 		switch (d.unavailableReason) {
+			case UnavailableReason.unfreezing:
+				scheduleJob(`unfreeze_${d.id}`, d.unavailableUntil, () => finishDinozUnfreeze(d.id));
+				break;
 			case UnavailableReason.unsacrificing:
 				scheduleJob(`unsacrifice_${d.id}`, d.unavailableUntil, () => finishDinozUnsacrifice(d.id));
 				break;
