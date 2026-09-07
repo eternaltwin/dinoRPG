@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Item } from '@drpg/core/models/item/ItemList';
 
 vi.mock('../../utils/gameConfig.js', () => ({
 	gameConfig: vi.fn()
@@ -202,8 +203,13 @@ describe('rewarder', () => {
 		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 
-	it('non displayed epic should not notify', async () => {
+	it('non displayed epics should not be notified', async () => {
 		await rewarder([{ rewardType: RewardEnum.EPIC, value: Reward.TIK }], team(), 'p1');
+		expect(createNotification).not.toHaveBeenCalledOnce();
+	});
+
+	it('decreasing on items should not be notified', async () => {
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: Item.MAGIC_STAR, quantity: 7, reverse: true }], team(), 'p1');
 		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 });

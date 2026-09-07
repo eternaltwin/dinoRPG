@@ -158,7 +158,7 @@ export async function rewarder(
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 						actualRewards.push([itemRewarded.itemId, reward.quantity]);
 					}
-					if (notify.includes(RewardEnum.ITEM) && showNotification) {
+					if (!reward.reverse && notify.includes(RewardEnum.ITEM) && showNotification) {
 						rewardsToNotify.push(reward);
 					}
 					break;
