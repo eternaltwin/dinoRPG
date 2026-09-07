@@ -352,12 +352,12 @@
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Tu Dino no está en la entrada del laberinto.",
 		"wrongTeam": "Otro grupo ya está explorando el laberinto.",
 		"noRun": "Nunca has visitado este laberinto.",
 		"notAtExit": "¡No puedes salir del laberinto por aquí!",
-		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación."
+		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación.",
+		"notFound": "Ce donjon n'existe pas."
 	},
 	"UnavailableReason": {
 		"frozen": "Tu Dino está congelado.",
