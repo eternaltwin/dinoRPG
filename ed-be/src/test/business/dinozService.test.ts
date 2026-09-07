@@ -8,11 +8,26 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 vi.mock('../../dao/dinozDao.js', () =>
 	Object.fromEntries(
 		[
-			'checkFrozenDinoz', 'checkRestDinoz', 'createDinoz', 'getActiveDinoz', 'getAvailableDinozToFollow',
-			'getCanDinozChangeName', 'getDinozFicheLiteRequest', 'getDinozFicheRequest', 'getDinozFightDataRequest',
-			'getDinozGatherData', 'getDinozSkillAndStatusRequest', 'getDinozSkillRequest', 'getFollowingDinoz',
-			'getIrmaUsageInfo', 'getLeaderWithFollowers', 'getManageData', 'isDinozInTournament', 'updateDinoz',
-			'updateMultipleDinoz', 'updateOrderData'
+			'checkFrozenDinoz',
+			'checkRestDinoz',
+			'createDinoz',
+			'getActiveDinoz',
+			'getAvailableDinozToFollow',
+			'getCanDinozChangeName',
+			'getDinozFicheLiteRequest',
+			'getDinozFicheRequest',
+			'getDinozFightDataRequest',
+			'getDinozGatherData',
+			'getDinozSkillAndStatusRequest',
+			'getDinozSkillRequest',
+			'getFollowingDinoz',
+			'getIrmaUsageInfo',
+			'getLeaderWithFollowers',
+			'getManageData',
+			'isDinozInTournament',
+			'updateDinoz',
+			'updateMultipleDinoz',
+			'updateOrderData'
 		].map(m => [m, vi.fn()])
 	)
 );
@@ -20,13 +35,28 @@ vi.mock('../../dao/dinozSkillDao.js', () => ({ addMultipleSkillToDinoz: vi.fn(),
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn(), removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn(), createLogForMultipleDinoz: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({
-	addMoney: vi.fn(), auth: vi.fn(), getPlayerCompletion: vi.fn(), ownsDinoz: vi.fn(),
-	removeDailyGridRewards: vi.fn(), removeMoney: vi.fn()
+	addMoney: vi.fn(),
+	auth: vi.fn(),
+	getPlayerCompletion: vi.fn(),
+	ownsDinoz: vi.fn(),
+	removeDailyGridRewards: vi.fn(),
+	removeMoney: vi.fn()
 }));
-vi.mock('../../dao/playerDinozShopDao.js', () => ({ deleteDinozInShopRequest: vi.fn(), getDinozShopDetailsRequest: vi.fn() }));
-vi.mock('../../dao/playerGatherDao.js', () => ({ createGrid: vi.fn(), getCommonGatherInfo: vi.fn(), updateGrid: vi.fn() }));
+vi.mock('../../dao/playerDinozShopDao.js', () => ({
+	deleteDinozInShopRequest: vi.fn(),
+	getDinozShopDetailsRequest: vi.fn()
+}));
+vi.mock('../../dao/playerGatherDao.js', () => ({
+	createGrid: vi.fn(),
+	getCommonGatherInfo: vi.fn(),
+	updateGrid: vi.fn()
+}));
 vi.mock('../../dao/playerIngredientDao.js', () => ({ increaseIngredientQuantity: vi.fn(), setIngredient: vi.fn() }));
-vi.mock('../../dao/playerItemDao.js', () => ({ decreaseItemQuantity: vi.fn(), increaseItemQuantity: vi.fn(), insertItem: vi.fn() }));
+vi.mock('../../dao/playerItemDao.js', () => ({
+	decreaseItemQuantity: vi.fn(),
+	increaseItemQuantity: vi.fn(),
+	insertItem: vi.fn()
+}));
 vi.mock('../../dao/playerRewardsDao.js', () => ({ getPlayerRewards: vi.fn() }));
 vi.mock('../../dao/questsDao.js', () => ({ upsertQuest: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ updateDinozCount: vi.fn(), updatePoints: vi.fn() }));
@@ -39,7 +69,9 @@ vi.mock('../../utils/rewarder.js', () => ({ rewarder: vi.fn() }));
 vi.mock('../../utils/tournamentManager.js', () => ({ default: { getCurrentTournamentState: vi.fn() } }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/fightService.js', () => ({
-	calculateFightVsMonsters: vi.fn(), fightMonstersAtPlace: vi.fn(), rewardFightVsMonsters: vi.fn()
+	calculateFightVsMonsters: vi.fn(),
+	fightMonstersAtPlace: vi.fn(),
+	rewardFightVsMonsters: vi.fn()
 }));
 vi.mock('../../business/missionsService.js', () => ({ getMissionAction: vi.fn() }));
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
@@ -52,16 +84,22 @@ vi.mock('@drpg/core/utils/GatherUtils', () => ({
 	initializeGatherGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 }),
 	saveGrid: vi.fn().mockReturnValue({ grid: [1, 2, 3, 4, 5], place: 1, type: 0 })
 }));
-vi.mock('../../utils/dinoz.js', () => ({
-	getNumberOfGatheringTries: vi.fn().mockReturnValue(3),
-	initializeDinoz: vi.fn().mockReturnValue({ name: 'new' }),
-	sanitizeGatherBoxes: vi.fn().mockReturnValue([0])
-}));
+vi.mock('../../utils/dinoz.js', async importOriginal => {
+	const actual = await importOriginal();
+	return {
+		...actual,
+		getNumberOfGatheringTries: vi.fn().mockReturnValue(3),
+		initializeDinoz: vi.fn().mockReturnValue({ name: 'new' }),
+		sanitizeGatherBoxes: vi.fn().mockReturnValue([0])
+	};
+});
 vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 	const actual = (await orig()) as Record<string, unknown>;
 	return {
 		...actual,
-		actualPlace: vi.fn().mockReturnValue({ placeId: 1, gather: undefined, specialGather: undefined, borderPlace: [2], name: 'P' }),
+		actualPlace: vi
+			.fn()
+			.mockReturnValue({ placeId: 1, gather: undefined, specialGather: undefined, borderPlace: [2], name: 'P' }),
 		isAlive: vi.fn().mockReturnValue(true),
 		canLevelUp: vi.fn().mockReturnValue(false),
 		getFollowableDinoz: vi.fn().mockReturnValue([]),
@@ -116,13 +154,44 @@ import {
 	unfrozeDinoz,
 	restDinoz
 } from '../../business/dinozService.js';
+import { Action } from '@drpg/core/models/dinoz/ActionList';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
 const baseDinoz = (overrides = {}) => ({
-	id: 1, level: 10, experience: 0, leaderId: null, fight: true, gather: true, remaining: 3,
-	maxLife: 100, unavailableReason: null, placeId: 1, life: 100,
-	missions: [], concentration: null, followers: [], status: [], skills: [],
+	id: 1,
+	level: 10,
+	experience: 0,
+	leaderId: null,
+	fight: true,
+	gather: true,
+	remaining: 3,
+	maxLife: 100,
+	unavailableReason: null,
+	placeId: 1,
+	life: 100,
+	missions: [],
+	concentration: null,
+	followers: [],
+	status: [],
+	skills: [],
+	...overrides
+});
+const baseTournament = (overrides = {}) => ({
+	id: '123',
+	phase: TournamentPhase.QUALIFICATION,
+	round: 0,
+	nextScheduledMatch: new Date(),
+	schedule: {
+		qualificationStart: new Date(),
+		qualificationEnd: new Date(),
+		poolsStart: new Date(),
+		finalsStart: new Date()
+	},
+	cashPrice: 0,
+	levelLimit: 10,
 	...overrides
 });
 const player = (overrides = {}) => ({ id: 'p1', clan: null, ...overrides }) as never;
@@ -138,33 +207,56 @@ beforeEach(() => {
 	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(null as never);
 	vi.mocked(DinozUtils.isAlive).mockReturnValue(true as never);
 	vi.mocked(DinozUtils.canLevelUp).mockReturnValue(false as never);
-	vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: undefined, specialGather: undefined, borderPlace: [2], name: 'P' } as never);
+	vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+		placeId: 1,
+		gather: undefined,
+		specialGather: undefined,
+		borderPlace: [2],
+		name: 'P'
+	} as never);
 	vi.mocked(checkCondition).mockReturnValue(false as never);
 });
 
 describe('getAvailableActions', () => {
 	it('returns [] when unfreezing', async () => {
-		expect(await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.unfreezing }) as never, player())).toEqual([]);
+		expect(
+			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.unfreezing }) as never, player())
+		).toEqual([]);
 	});
 	it('returns [] when resting attack', async () => {
-		expect(await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.restingAttack }) as never, player())).toEqual([]);
+		expect(
+			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.restingAttack }) as never, player())
+		).toEqual([]);
 	});
 	it('returns market when selling', async () => {
-		const result = await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.selling }) as never, player());
+		const result = await getAvailableActions(
+			baseDinoz({ unavailableReason: UnavailableReason.selling }) as never,
+			player()
+		);
 		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.MARKET);
 	});
 	it('returns stop-congel when frozen', async () => {
-		const result = await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.frozen }) as never, player());
+		const result = await getAvailableActions(
+			baseDinoz({ unavailableReason: UnavailableReason.frozen }) as never,
+			player()
+		);
 		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.STOP_CONGEL);
 	});
 	it('returns stop-rest when resting', async () => {
-		const result = await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.resting }) as never, player());
+		const result = await getAvailableActions(
+			baseDinoz({ unavailableReason: UnavailableReason.resting }) as never,
+			player()
+		);
 		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.STOP_REST);
 	});
 	it('returns resurrect when dead', async () => {
 		vi.mocked(DinozUtils.isAlive).mockReturnValue(false as never);
 		const result = await getAvailableActions(baseDinoz({ life: 0 }) as never, player());
-		expect(result.length).toBeGreaterThanOrEqual(1);
+		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.RESURRECT);
 	});
 	it('adds reincarnation for a high-level dead reincarnating dinoz', async () => {
 		vi.mocked(DinozUtils.isAlive).mockReturnValue(false as never);
@@ -173,39 +265,74 @@ describe('getAvailableActions', () => {
 			player()
 		);
 		expect(result.length).toBe(2);
+		expect(result.some(a => a.name === Action.REINCARNATION)).toBe(true);
 	});
-	it('builds actions for an alive free dinoz', async () => {
-		const result = await getAvailableActions(baseDinoz({ fight: true, gather: false, remaining: 3 }) as never, player());
-		expect(result.length).toBeGreaterThan(0);
+	it('free action refresh for Dinoz that used its gather', async () => {
+		const result = await getAvailableActions(
+			baseDinoz({ fight: true, gather: false, remaining: 3 }) as never,
+			player()
+		);
+		expect(result.some(a => a.name === Action.ACTION)).toBe(true);
 	});
 	it('adds unfollow & change-leader for a follower', async () => {
 		const result = await getAvailableActions(baseDinoz({ leaderId: 5 }) as never, player());
 		expect(result.length).toBeGreaterThanOrEqual(2);
+		expect(result.some(a => a.name === Action.UNFOLLOW)).toBe(true);
+		expect(result.some(a => a.name === Action.CHANGE_LEADER)).toBe(true);
 	});
 	it('adds disband for a leader', async () => {
-		const result = await getAvailableActions(baseDinoz({ followers: [{ id: 2, fight: true, remaining: 1, gather: true }] }) as never, player());
+		const result = await getAvailableActions(
+			baseDinoz({ followers: [{ id: 2, fight: true, remaining: 1, gather: true }] }) as never,
+			player()
+		);
 		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.DISBAND)).toBe(true);
 	});
 	it('returns concentrate when concentrating', async () => {
 		const result = await getAvailableActions(baseDinoz({ concentration: { id: 1 } }) as never, player());
-		expect(result.some(a => a.name)).toBe(true);
+		expect(result.some(a => a.name === Action.CONCENTRATE)).toBe(true);
 	});
 	it('adds irma when no remaining actions', async () => {
 		const result = await getAvailableActions(baseDinoz({ fight: false, remaining: 0 }) as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.IRMA);
 	});
 	it('adds level-up when allowed', async () => {
 		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
 		const result = await getAvailableActions(baseDinoz() as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.LEVEL_UP)).toBe(true);
+	});
+	it('adds level-up when Dinoz is not in tournament team despite reaching the level limit', async () => {
+		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(baseTournament());
+		vi.mocked(dinozDao.isDinozInTournament).mockResolvedValue(false);
+		const result = await getAvailableActions(baseDinoz() as never, player());
+		expect(result.some(a => a.name === Action.LEVEL_UP)).toBe(true);
+	});
+	it('no level-up if Dinoz has reached tournament max limit', async () => {
+		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(baseTournament());
+		vi.mocked(dinozDao.isDinozInTournament).mockResolvedValue(true);
+		const result = await getAvailableActions(baseDinoz() as never, player());
+		expect(result.some(a => a.name === Action.LEVEL_UP)).toBe(false);
+	});
+	it('adds level-up if Dinoz has not reached tournament max limit', async () => {
+		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(baseTournament());
+		vi.mocked(dinozDao.isDinozInTournament).mockResolvedValue(true);
+		const result = await getAvailableActions(baseDinoz({ level: 9 }) as never, player());
+		expect(result.some(a => a.name === Action.LEVEL_UP)).toBe(true);
 	});
 	it('adds market when at the market place', async () => {
 		const result = await getAvailableActions(baseDinoz({ placeId: PlaceEnum.PLACE_DU_MARCHE }) as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.MARKET)).toBe(true);
 	});
 	it('adds dig when holding a shovel', async () => {
-		const result = await getAvailableActions(baseDinoz({ status: [{ statusId: DinozStatusId.SHOVEL }] }) as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		const result = await getAvailableActions(
+			baseDinoz({ status: [{ statusId: DinozStatusId.SHOVEL }] }) as never,
+			player()
+		);
+		expect(result.some(a => a.name === Action.DIG)).toBe(true);
 	});
 
 	it('offers war defend at the clan castle place during a war', async () => {
@@ -221,7 +348,7 @@ describe('getAvailableActions', () => {
 			baseDinoz({ placeId: 1, fight: true, followers: [], leaderId: null }) as never,
 			warPlayer
 		);
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.WAR_DEFEND)).toBe(true);
 	});
 
 	it('offers war attack when an attacking war targets the dinoz place', async () => {
@@ -237,20 +364,24 @@ describe('getAvailableActions', () => {
 			baseDinoz({ placeId: 1, fight: true, followers: [], leaderId: null }) as never,
 			warPlayer
 		);
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.WAR_ATTACK)).toBe(true);
 	});
 
 	it('offers a mission action when one is available', async () => {
 		vi.mocked(getMissionAction).mockReturnValue(5 as never);
 		const result = await getAvailableActions(baseDinoz() as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.MISSION)).toBe(true);
 	});
 
 	it('offers a gather action when the place has a gather and condition passes', async () => {
-		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: 0, specialGather: undefined } as never);
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+			placeId: 1,
+			gather: GatherType.SEEK,
+			specialGather: undefined
+		} as never);
 		vi.mocked(checkCondition).mockReturnValue(true as never);
 		const result = await getAvailableActions(baseDinoz({ gather: true }) as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.SEEK)).toBe(true);
 		vi.mocked(checkCondition).mockReturnValue(false as never);
 	});
 
@@ -259,7 +390,7 @@ describe('getAvailableActions', () => {
 			baseDinoz({ placeId: PlaceEnum.FORCEBRUT, status: [{ statusId: DinozStatusId.TOURNA }] }) as never,
 			player()
 		);
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.FB_TOURNAMENT)).toBe(true);
 	});
 
 	it('offers the congel action at the gorges with the spelunking status', async () => {
@@ -267,17 +398,23 @@ describe('getAvailableActions', () => {
 			baseDinoz({ placeId: PlaceEnum.GORGES_PROFONDES, status: [{ statusId: DinozStatusId.FSPELE }] }) as never,
 			player()
 		);
-		expect(result.length).toBeGreaterThan(0);
+		expect(result.some(a => a.name === Action.CONGEL)).toBe(true);
 	});
 
 	it('offers follower gather actions when a follower can gather', async () => {
-		vi.mocked(DinozUtils.actualPlace).mockReturnValue({ placeId: 1, gather: 0, specialGather: undefined } as never);
+		vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+			placeId: 1,
+			gather: GatherType.SEEK,
+			specialGather: undefined
+		} as never);
 		vi.mocked(checkCondition).mockReturnValue(true as never);
 		const leader = baseDinoz({
 			followers: [{ id: 2, fight: true, remaining: 1, gather: true }]
 		});
 		const result = await getAvailableActions(leader as never, player());
-		expect(result.length).toBeGreaterThan(0);
+		const gather_result = result.find(a => a.name === Action.SEEK);
+		expect(gather_result).toBeDefined();
+		expect(gather_result?.forDinoz).toBe(2);
 		vi.mocked(checkCondition).mockReturnValue(false as never);
 	});
 });
@@ -320,7 +457,10 @@ describe('getDinozSkill', () => {
 describe('buyDinoz', () => {
 	beforeEach(() => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([] as never);
-		vi.mocked(getDinozShopDetailsRequest).mockResolvedValue({ player: { id: 'p1', money: 1000 }, display: 'd' } as never);
+		vi.mocked(getDinozShopDetailsRequest).mockResolvedValue({
+			player: { id: 'p1', money: 1000 },
+			display: 'd'
+		} as never);
 		vi.mocked(dinozDao.createDinoz).mockResolvedValue({ id: 9 } as never);
 	});
 	it('buys a dinoz', async () => {
@@ -346,16 +486,28 @@ describe('buyDinoz', () => {
 
 describe('setDinozName', () => {
 	it('renames a dinoz with a valid name', async () => {
-		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({ id: 1, player: { id: 'p1' }, canChangeName: true } as never);
+		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({
+			id: 1,
+			player: { id: 'p1' },
+			canChangeName: true
+		} as never);
 		await setDinozName(req({ id: '1' }, { newName: 'Rex' }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalled();
 	});
 	it('throws on invalid name', async () => {
-		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({ id: 1, player: { id: 'p1' }, canChangeName: true } as never);
+		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({
+			id: 1,
+			player: { id: 'p1' },
+			canChangeName: true
+		} as never);
 		await expect(setDinozName(req({ id: '1' }, { newName: '@@' }))).rejects.toThrow('OnlyLettersAndNumbers');
 	});
 	it('throws when cannot change name', async () => {
-		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({ id: 1, player: { id: 'p1' }, canChangeName: false } as never);
+		vi.mocked(dinozDao.getCanDinozChangeName).mockResolvedValue({
+			id: 1,
+			player: { id: 'p1' },
+			canChangeName: false
+		} as never);
 		await expect(setDinozName(req({ id: '1' }, { newName: 'Rex' }))).rejects.toThrow("Can't update");
 	});
 });
@@ -380,7 +532,11 @@ describe('setSkillState', () => {
 describe('resurrectDinoz', () => {
 	it('revives a dead dinoz', async () => {
 		vi.mocked(dinozDao.getDinozFicheLiteRequest).mockResolvedValue({
-			life: 0, experience: 10, placeId: PlaceEnum.DINOVILLE, name: 'd', followers: [],
+			life: 0,
+			experience: 10,
+			placeId: PlaceEnum.DINOVILLE,
+			name: 'd',
+			followers: [],
 			player: { id: 'p1', quests: [] }
 		} as never);
 		await resurrectDinoz(req({ id: '1' }));
@@ -388,7 +544,10 @@ describe('resurrectDinoz', () => {
 	});
 	it('throws when alive', async () => {
 		vi.mocked(dinozDao.getDinozFicheLiteRequest).mockResolvedValue({
-			life: 10, name: 'd', followers: [], player: { id: 'p1', quests: [] }
+			life: 10,
+			name: 'd',
+			followers: [],
+			player: { id: 'p1', quests: [] }
 		} as never);
 		await expect(resurrectDinoz(req({ id: '1' }))).rejects.toThrow('not dead');
 	});
@@ -428,19 +587,56 @@ describe('management & group endpoints', () => {
 
 	it('followDinoz links a dinoz to a leader', async () => {
 		vi.mocked(dinozDao.getDinozFicheRequest)
-			.mockResolvedValueOnce({ dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }] } as never)
-			.mockResolvedValueOnce({ dinoz: [{ id: 2, canChangeName: false, followers: [], skills: [], placeId: 1 }] } as never);
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }]
+			} as never)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 2, canChangeName: false, followers: [], skills: [], placeId: 1 }]
+			} as never);
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		await followDinoz(req({ id: '1', targetId: '2' }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { leader: { connect: { id: 2 } } });
 	});
 	it('followDinoz throws when following itself', async () => {
-		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue({ dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }] } as never);
+		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue({
+			dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }]
+		} as never);
 		await expect(followDinoz(req({ id: '1', targetId: '1' }))).rejects.toThrow('Cannot follow itself');
+	});
+	it('followDinoz throws when the dinoz is busy elsewhere', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest)
+			.mockResolvedValueOnce({
+				dinoz: [
+					{
+						id: 1,
+						canChangeName: false,
+						leaderId: null,
+						unavailableReason: 'dungeon',
+						followers: [],
+						skills: [],
+						placeId: 1
+					}
+				]
+			} as never)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 2, canChangeName: false, followers: [], skills: [], placeId: 1 }]
+			} as never);
+		await expect(followDinoz(req({ id: '1', targetId: '2' }))).rejects.toThrow('UnavailableReason.dungeon');
+	});
+	it('followDinoz throws when the leader is busy elsewhere', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 1, canChangeName: false, leaderId: null, followers: [], skills: [], placeId: 1 }]
+			} as never)
+			.mockResolvedValueOnce({
+				dinoz: [{ id: 2, canChangeName: false, unavailableReason: 'dungeon', followers: [], skills: [], placeId: 1 }]
+			} as never);
+		await expect(followDinoz(req({ id: '1', targetId: '2' }))).rejects.toThrow('UnavailableReason.dungeon');
 	});
 
 	it('unfollowDinoz disconnects the leader', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getFollowingDinoz).mockResolvedValue({ unavailableReason: null } as never);
 		await unfollowDinoz(req({ id: '1' }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { leader: { disconnect: true } });
 	});
@@ -448,12 +644,26 @@ describe('management & group endpoints', () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(false as never);
 		await expect(unfollowDinoz(req({ id: '1' }))).rejects.toThrow('does not own');
 	});
+	it('unfollowDinoz throws when the dinoz is busy elsewhere', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getFollowingDinoz).mockResolvedValue({ unavailableReason: 'dungeon' } as never);
+		await expect(unfollowDinoz(req({ id: '1' }))).rejects.toThrow('UnavailableReason.dungeon');
+	});
 
 	it('changeLeaderDinoz promotes a follower', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		vi.mocked(dinozDao.getLeaderWithFollowers).mockResolvedValue({ id: 5, followers: [{ id: 1 }] } as never);
 		await changeLeaderDinoz(req({ id: '1' }));
 		expect(prisma.dinoz.updateMany).toHaveBeenCalled();
+	});
+	it('changeLeaderDinoz throws when the current leader is busy elsewhere', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getLeaderWithFollowers).mockResolvedValue({
+			id: 5,
+			unavailableReason: 'dungeon',
+			followers: [{ id: 1 }]
+		} as never);
+		await expect(changeLeaderDinoz(req({ id: '1' }))).rejects.toThrow('UnavailableReason.dungeon');
 	});
 
 	it('disband releases followers', async () => {
@@ -468,7 +678,11 @@ describe('useIrma', () => {
 	it('refreshes actions and consumes potions', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
-			id: 1, fight: false, gather: false, remaining: 0, followers: [],
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 0,
+			followers: [],
 			player: { id: 'p1', items: [{ itemId: 1, quantity: 5 }] }
 		} as never);
 		const result = await useIrma(req({ id: '1' }));
@@ -477,7 +691,11 @@ describe('useIrma', () => {
 	it('throws when not enough irma', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
-			id: 1, fight: false, gather: false, remaining: 0, followers: [],
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 0,
+			followers: [],
 			player: { id: 'p1', items: [] }
 		} as never);
 		await expect(useIrma(req({ id: '1' }))).rejects.toThrow('notEnoughIrma');
@@ -591,7 +809,9 @@ describe('gather', () => {
 	});
 
 	it('gatherWithDinoz grants item and ingredient rewards', async () => {
-		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [-1, -1, -1, -1, -1], place: 1, type: 0 }] as never);
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([
+			{ id: 'g1', grid: [-1, -1, -1, -1, -1], place: 1, type: 0 }
+		] as never);
 		vi.mocked(discoverBox).mockReturnValue({
 			rewards: { item: [{ id: 3, maxQuantity: 10, price: 5 }], ingredients: [{ ingredientId: 1, maxQuantity: 10 }] },
 			ingredientsAtMaxQuantity: [],
@@ -615,14 +835,25 @@ describe('froze/unfroze/rest', () => {
 	it('frozeDinoz freezes a dinoz at the gorges', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 		vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({
-			placeId: PlaceEnum.GORGES_PROFONDES, leaderId: null, followers: [], unavailableReason: null
+			placeId: PlaceEnum.GORGES_PROFONDES,
+			leaderId: null,
+			followers: [],
+			unavailableReason: null
 		} as never);
 		await frozeDinoz(req({ id: '1' }));
-		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, expect.objectContaining({ unavailableReason: UnavailableReason.frozen }));
+		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(
+			1,
+			expect.objectContaining({ unavailableReason: UnavailableReason.frozen })
+		);
 	});
 	it('frozeDinoz throws when not at the right place', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
-		vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({ placeId: 1, leaderId: null, followers: [], unavailableReason: null } as never);
+		vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({
+			placeId: 1,
+			leaderId: null,
+			followers: [],
+			unavailableReason: null
+		} as never);
 		await expect(frozeDinoz(req({ id: '1' }))).rejects.toThrow('dinozWrongLocation');
 	});
 	it('unfrozeDinoz starts unfreezing', async () => {

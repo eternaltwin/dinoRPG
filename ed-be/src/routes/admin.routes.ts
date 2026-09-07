@@ -11,10 +11,14 @@ import {
 	getJobs,
 	getMultiIps,
 	getOngoingEvent,
+	createSeededDungeon,
+	listDungeons,
+	getDungeonAdmin,
+	updateDungeonAdmin,
+	deleteDungeonAdmin,
 	givePlayerEpicReward,
-	listAllDinozFromPlayer,
-	listAllPlayerInformationForAdminDashboard,
-	listOneDinozFromPlayer,
+	getPlayerData,
+	getDinozDataFromPlayer,
 	listPlayerBehindIp,
 	modifyPlayerIngredients,
 	modifyPlayerItems,
@@ -241,24 +245,6 @@ routes.put(
 );
 
 routes.get(
-	`${commonPath}/playerdinoz/:id`,
-	param('id').exists().isString(),
-	checkRole([AdminRole.ADMIN]),
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			const response = await listAllDinozFromPlayer(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
-	}
-);
-
-routes.get(
 	`${commonPath}/dinoz/:id`,
 
 	param('id').exists().isNumeric(),
@@ -269,7 +255,7 @@ routes.get(
 		}
 
 		try {
-			const response = await listOneDinozFromPlayer(req);
+			const response = await getDinozDataFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
@@ -319,7 +305,7 @@ routes.get(
 		}
 
 		try {
-			const response = await listAllPlayerInformationForAdminDashboard(req);
+			const response = await getPlayerData(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
@@ -857,6 +843,51 @@ routes.put(`${commonPath}/event/start`, checkRole([AdminRole.ADMIN]), async (req
 	try {
 		const response = await startClanWarEvent(req);
 		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.post(`${commonPath}/dungeon`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await createSeededDungeon(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/dungeon`, checkRole([AdminRole.ADMIN]), async (_req: Request, res: Response) => {
+	try {
+		const response = await listDungeons();
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await getDungeonAdmin(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		const response = await updateDungeonAdmin(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.delete(`${commonPath}/dungeon/:id`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
+	try {
+		await deleteDungeonAdmin(req);
+		return res.status(200).send({ ok: true });
 	} catch (err) {
 		sendError(res, err);
 	}

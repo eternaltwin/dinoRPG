@@ -27,9 +27,5 @@ export const FB_TOURNAMENT: Readonly<Record<string, NpcData>> = {
 	no: {
 		stepName: 'no',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

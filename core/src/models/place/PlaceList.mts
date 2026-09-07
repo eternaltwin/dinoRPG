@@ -30,6 +30,7 @@ export const placeList: Record<
 		bottom?: number;
 		itinerant?: boolean;
 		warPlace?: boolean;
+		dungeon?: boolean;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -169,7 +170,8 @@ export const placeList: Record<
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 's_graveyard',
-		top: 110
+		top: 110,
+		dungeon: true
 	},
 	[PlaceEnum.GO_TO_DINOPLAZA]: {
 		placeId: PlaceEnum.GO_TO_DINOPLAZA,
@@ -718,7 +720,7 @@ export const placeList: Record<
 		name: 'sport',
 		borderPlace: [66, 69],
 		map: MapZone.STEPPE,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.SEEK
 	},
 	[PlaceEnum.APPROCHER_SYPHON]: {
 		placeId: PlaceEnum.APPROCHER_SYPHON,
@@ -992,7 +994,8 @@ export const placeList: Record<
 		conditions: {
 			[ConditionEnum.CURRENT_MISSION]: MissionID.TODO //'roid'
 		},
-		map: MapZone.DARKWORLD
+		map: MapZone.DARKWORLD,
+		gather: GatherType.CUEILLE4
 	},
 	[PlaceEnum.TOUR_SOMBRE_ENTREE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_ENTREE,

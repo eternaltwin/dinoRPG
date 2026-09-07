@@ -20,9 +20,9 @@ export type GatherData =
 				| GatherType.FISH;
 			size: number;
 			minimumClick: number;
-			condition: Condition; //Skill needed
-			apparence: string; //skin
-			items: GatherItems[];
+			condition: Condition; // Conditions needed
+			apparence: string; // Skin
+			items: Readonly<Partial<Record<number, GatherItems>>>; // Each item entry must be matched with a unique number for stable identification
 	  }
 	| {
 			action: Action;
@@ -36,8 +36,8 @@ export type GatherData =
 				| GatherType.DAILY;
 			size: number;
 			minimumClick: number;
-			condition: Condition; //Skill needed
-			apparence: string; //skin
-			items: GatherItems[];
+			condition: Condition; // Conditions needed
+			apparence: string; // Skin
+			items: Readonly<Partial<Record<number, GatherItems>>>; // Each item entry must be matched with a unique number for stable identification
 			cost: ItemFiche;
 	  };

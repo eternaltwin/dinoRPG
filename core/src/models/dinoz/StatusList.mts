@@ -14,9 +14,9 @@ export enum DinozStatusId {
 	NENUPHAR_LEAF = 13,
 	CHUTES = 14, //NOT NEEDED
 	JVBZ = 15,
-	QWOOD = 16,
-	QWHY = 17,
-	QTAME = 18,
+	QWOOD = 16, // Dian Korgsey special
+	QWHY = 17, // Dian Korgsey special
+	QTAME = 18, // Dian Korgsey special
 	DIAN = 19,
 	GRDMIS = 20,
 	HUMISS = 21,
@@ -67,7 +67,7 @@ export enum DinozStatusId {
 	CATCHING_GLOVE = 66,
 	JOVEBOZE = 67,
 	SPHERE = 68,
-	FRETURN = 69, //HACK TO RETALK WITH A NPC IF THERE IS CONDITION UNMET
+	DEPRECATED = 69,
 	WEIRD_SWAMP_SEEN = 70,
 	SWAMP_MONSTERS_KNOWN = 71,
 	SWAMP_BUOY = 72,

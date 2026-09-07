@@ -1,4 +1,5 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { getNewLevelLimits } from '../business/tournamentService.js';
@@ -13,35 +14,32 @@ import {
 	TournamentSchedule,
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
-import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
-import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { addMoney } from '../dao/playerDao.js';
-import { DISCORD, LOGGER } from '../context.js';
+import { LOGGER } from '../context.js';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import dayjs from 'dayjs';
-import { createNews } from '../dao/newsDao.js';
 import { translateTarget } from './server/translate.js';
 import 'dayjs/locale/de.js';
 import 'dayjs/locale/fr.js';
 import 'dayjs/locale/es.js';
 import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
-import { rewarder, RewarderPromise } from './rewarder.js';
+import { rewarder, RewarderPromise, describeRewards } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { $Enums, ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
+import { ClanEventType, NotificationSeverity, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
-import NewsType = $Enums.NewsType;
+import { Lang, NewsType } from '@drpg/prisma';
 import { FightRules } from '@drpg/core/models/fight/FightConfiguration';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { invalidateTournamentCache } from './tournament.cache.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReason } from '@drpg/prisma';
 import { nextMonday } from './date.js';
+import { createTranslatedNews } from '../business/newsService.js';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -49,6 +47,7 @@ class TournamentManager {
 	private readonly TEAMS_PER_POOL = this.QUALIFIED_TEAMS / this.NUMBER_OF_POOLS;
 	private readonly MATCHES_PER_POOL = this.TEAMS_PER_POOL / 2;
 	private readonly NEXT_TOURNAMENT_DELAY_MS = 1000;
+	private readonly NUM_ROUNDS = 8;
 
 	constructor(
 		private tournamentId: string,
@@ -403,9 +402,6 @@ class TournamentManager {
 			},
 			select: {
 				fights: {
-					orderBy: {
-						tournamentStep: 'desc'
-					},
 					select: {
 						tournamentTeamLeft: {
 							select: {
@@ -418,210 +414,193 @@ class TournamentManager {
 							}
 						},
 						metadata: true,
+						id: true,
 						result: true
 					}
 				},
 				cashPrice: true
 			}
 		});
-		const allTournamentParticipants = tournament.fights;
-		const ranking = new Set<string>();
-		// Get winners from all match from finals to pool
-		// This should order by ranking
-		allTournamentParticipants.forEach(match => {
-			if (
-				match.tournamentTeamLeft &&
-				match.tournamentTeamLeft.dojoId &&
-				match.tournamentTeamRight &&
-				match.tournamentTeamRight.dojoId
-			) {
-				ranking.add(match.result ? match.tournamentTeamLeft.dojoId : match.tournamentTeamRight.dojoId);
-			}
-		});
-		// Fill with all losers from first round
-		allTournamentParticipants.forEach(match => {
+		const allTournamentFights = tournament.fights;
+		const lastRound = new Map<string, number>();
+		allTournamentFights.forEach(match => {
 			const metadata = JSON.parse(match.metadata as string) as MetaData;
-			if (metadata.round === 0) {
-				if (
-					match.tournamentTeamLeft &&
-					match.tournamentTeamLeft.dojoId &&
-					match.tournamentTeamRight &&
-					match.tournamentTeamRight.dojoId
-				) {
-					ranking.add(match.result ? match.tournamentTeamRight.dojoId : match.tournamentTeamLeft.dojoId);
+			// Byes in the left or right of the fight would be treated as null
+			const leftDojoId = match.tournamentTeamLeft?.dojoId ?? null;
+			const rightDojoId = match.tournamentTeamRight?.dojoId ?? null;
+			if (match.result) {
+				if (rightDojoId) lastRound.set(rightDojoId, metadata.round);
+			} else {
+				if (leftDojoId) lastRound.set(leftDojoId, metadata.round);
+			}
+
+			// Special case: the winner of the tournament
+			if (metadata.round === this.NUM_ROUNDS - 1) {
+				if (match.result) {
+					if (leftDojoId) lastRound.set(leftDojoId, metadata.round + 1);
+				} else {
+					if (rightDojoId) lastRound.set(rightDojoId, metadata.round + 1);
 				}
+			}
+			if (metadata.round >= this.NUM_ROUNDS) {
+				throw new Error(
+					`Fight ${match.id} has round ${metadata.round} greater than or equal to the maximum number of rounds`
+				);
 			}
 		});
 
-		const players: string[] = [];
-		for (const dojo of ranking) {
-			const player = await prisma.dojo.findUnique({
+		/**
+		 * Cash price distribution:
+		 * 1st: 12% (total 12%)
+		 * 2nd: 10% (total 22%)
+		 * 3rd: 8% (total 30%)
+		 * 4th: 6% (total 36%)
+		 * 5-8th: 4% (total 52%)
+		 * 9-16th: 2% (total 68%)
+		 * 17-32th: 1% (total 84%)
+		 * 33-64th: 0.5% (total 100%)
+		 * */
+
+		let numRewardedPlayers = 0;
+		const promises = [];
+		for (const [dojoId, round] of lastRound) {
+			const dojo = await prisma.dojo.findUnique({
 				where: {
-					id: dojo
+					id: dojoId
 				},
 				select: {
-					playerId: true
+					player: {
+						select: {
+							id: true,
+							dinoz: {
+								take: 1,
+								select: {
+									id: true,
+									level: true,
+									status: {
+										select: {
+											statusId: true
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			});
-			if (player) players.push(player.playerId);
-		}
-
-		let index = 1;
-
-		const promises = [];
-		for (const playerId of players) {
-			if (index === 1) {
-				//Zen medal
-				promises.push(
-					addRewardToPlayer({
-						rewardId: Reward.TID1,
-						player: { connect: { id: playerId } }
-					})
-				);
-				// Dinoz egg (rare)
-				promises.push(increaseItemQuantity(playerId, Item.TOUFUFU_BABY_RARE, 1));
-				// Legendary box
-				promises.push(increaseItemQuantity(playerId, Item.BOX_LEGENDARY, 1));
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.12)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.EPIC,
-								value: Reward.TID1
-							},
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.12)
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.TOUFUFU_BABY_RARE,
-								quantity: 1
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.BOX_LEGENDARY,
-								quantity: 1
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
-			} else if (index <= 4) {
-				// Dinoz egg (rare)
-				promises.push(increaseItemQuantity(playerId, Item.TOUFUFU_BABY, 1));
-				// Epic box
-				promises.push(increaseItemQuantity(playerId, Item.BOX_EPIC, 1));
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.06)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.06)
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.TOUFUFU_BABY,
-								quantity: 1
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.BOX_EPIC,
-								quantity: 1
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
-			} else if (index <= 8) {
-				// Rare box
-				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0375)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0375)
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.BOX_RARE,
-								quantity: 1
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
-			} else if (index <= 16) {
-				// Rare box
-				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.01875)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.01875)
-							},
-							{
-								rewardType: RewardEnum.ITEM,
-								value: Item.BOX_RARE,
-								quantity: 1
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
-			} else if (index <= 32) {
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0075)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0075)
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
-			} else {
-				// Cash price
-				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0025)));
-				//Notification
-				promises.push(
-					createNotification(
-						playerId,
-						JSON.stringify([
-							{
-								rewardType: RewardEnum.GOLD,
-								value: Math.floor(tournament.cashPrice * 0.0025)
-							}
-						]),
-						NotificationSeverity.reward
-					)
-				);
+			if (dojo) {
+				let rewards = [] as Rewarder[];
+				if (round === 8) {
+					// Winner
+					rewards = [
+						{
+							rewardType: RewardEnum.EPIC,
+							value: Reward.TID1 // Zen medal
+						},
+						{
+							rewardType: RewardEnum.GOLD,
+							value: Math.floor(tournament.cashPrice * 0.12)
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.TOUFUFU_BABY_RARE,
+							quantity: 1,
+							notify: false
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.BOX_LEGENDARY,
+							quantity: 1,
+							notify: false
+						}
+					];
+				} else if (round >= 4) {
+					// Finalists
+					let cashPriceReward;
+					if (round === 7) {
+						// Second place
+						cashPriceReward = Math.floor(tournament.cashPrice * 0.1);
+					} else if (round === 6) {
+						// Third place
+						cashPriceReward = Math.floor(tournament.cashPrice * 0.08);
+					} else {
+						// Fourth place
+						cashPriceReward = Math.floor(tournament.cashPrice * 0.06);
+					}
+					rewards = [
+						{
+							rewardType: RewardEnum.GOLD,
+							value: cashPriceReward
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.TOUFUFU_BABY,
+							quantity: 1,
+							notify: false
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.BOX_EPIC,
+							quantity: 1,
+							notify: false
+						}
+					];
+				} else if (round === 3) {
+					// Final of group
+					rewards = [
+						{
+							rewardType: RewardEnum.GOLD,
+							value: Math.floor(tournament.cashPrice * 0.04)
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.BOX_RARE,
+							quantity: 1,
+							notify: false
+						}
+					];
+				} else if (round === 2) {
+					// Semifinals of group
+					rewards = [
+						{
+							rewardType: RewardEnum.GOLD,
+							value: Math.floor(tournament.cashPrice * 0.02)
+						},
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.BOX_RARE,
+							quantity: 1,
+							notify: false
+						}
+					];
+				} else if (round === 1) {
+					// Quarterfinals of group
+					rewards = [
+						{
+							rewardType: RewardEnum.GOLD,
+							value: Math.floor(tournament.cashPrice * 0.01)
+						}
+					];
+				} else if (round === 0) {
+					rewards = [
+						{
+							rewardType: RewardEnum.GOLD,
+							value: Math.floor(tournament.cashPrice * 0.005)
+						}
+					];
+				} else {
+					LOGGER.error(
+						`Tournament ${this.tournamentId} (round ${round}): Player ${dojo.player.id} has not been rewarded`
+					);
+				}
+				if (rewards.length > 0) {
+					numRewardedPlayers += 1;
+					promises.push(createNotification(dojo.player.id, JSON.stringify(rewards), NotificationSeverity.reward));
+					promises.push(rewarder(rewards, dojo.player.dinoz, dojo.player.id, false));
+				}
 			}
-			index++;
 		}
+
 		Promise.all(promises);
 
 		const nextTournament = this.getMatchTimes().find(t => t.round === 8);
@@ -629,7 +608,7 @@ class TournamentManager {
 			LOGGER.error('Cannot find next time for a tournament');
 			throw new Error('Cannot find next time for a tournament');
 		}
-		LOGGER.log(`Rewarded ${ranking.size} player. initializeTournament is planned for ${nextTournament.time}`);
+		LOGGER.log(`Rewarded ${numRewardedPlayers} players. initializeTournament is planned for ${nextTournament.time}`);
 		await prisma.tournament.update({
 			where: {
 				id: this.tournamentId
@@ -671,86 +650,46 @@ class TournamentManager {
 		});
 		const total = await prisma.tournament.count();
 
-		const frTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
-			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'fr', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'fr', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
-			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const esTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
-			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'es', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'es', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
-			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const enTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
-			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'en', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'en', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
-			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit }),
-			number: romanize(total)
-		};
-		const deTrad = {
-			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
-			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM HH:mm'),
-			rule1: translateTarget('dojo.teamSize', 'de', {
-				nb: teamSize,
-				races: raceMinimum,
-				context: raceMinimum === 1 ? 'singleRace' : undefined
-			}),
-			rule2: translateTarget('dojo.raceLimit', 'de', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
-			}),
-			rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
-			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit }),
-			number: romanize(total)
-		};
+		const newsParams = {} as Record<Lang, Record<string, unknown>>;
+		const sortedQualifRewards = [...tournamentQualifRewards].sort((a, b) => a.floor - b.floor);
+		for (const lang of Object.values(Lang)) {
+			const qualificationRewards = sortedQualifRewards.reduce((acc, milestoneRewards) => {
+				const translatedRewards = translateTarget(`dojo.qualificationMilestone`, lang, {
+					points: milestoneRewards.floor,
+					rewards: describeRewards(milestoneRewards.rewards, lang),
+					interpolation: { escapeValue: false }
+				});
+				return `${acc}- ${translatedRewards}\n`;
+			}, '');
 
-		const news = await createNews({
-			title: newTournament.id,
-			// image: req.file?.buffer,
-			type: NewsType.tid_start,
-			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
-			englishTitle: translateTarget('dojo.newsTitle', 'en'),
-			spanishTitle: translateTarget('dojo.newsTitle', 'es'),
-			germanTitle: translateTarget('dojo.newsTitle', 'de'),
-			frenchText: translateTarget('dojo.newsCorpus', 'fr', frTrad),
-			englishText: translateTarget('dojo.newsCorpus', 'en', enTrad),
-			spanishText: translateTarget('dojo.newsCorpus', 'es', esTrad),
-			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
-		});
-		if (news.frenchTitle && news.frenchText) {
-			DISCORD.sendNewsNotification(news.frenchTitle, news.frenchText, undefined);
-		} else {
-			LOGGER.error(`Tournament News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
+			newsParams[lang] = {
+				type: translateTarget(`tournament.${tournamentFormat.name}`, lang),
+				endQualif: dayjs(endQualif).locale(lang).format('ddd DD MMMM HH:mm'),
+				rule1: translateTarget('dojo.teamSize', lang, {
+					nb: teamSize,
+					races: raceMinimum,
+					context: raceMinimum === 1 ? 'singleRace' : undefined
+				}),
+				rule2: translateTarget('dojo.raceLimit', lang, {
+					races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, lang))
+				}),
+				rule3: translateTarget(poison ? 'dojo.poison' : 'dojo.nopoison', lang),
+				rule4: translateTarget('dojo.levelLimit', lang, { level: levelLimit }),
+				number: romanize(total),
+				qualificationRewards: qualificationRewards,
+				interpolation: { escapeValue: false }
+			};
 		}
 
+		await createTranslatedNews(
+			newTournament.id,
+			NewsType.tid_start,
+			'dojo.newsTitle',
+			{} as Record<Lang, Record<string, unknown>>,
+			'dojo.newsCorpus',
+			newsParams,
+			true
+		);
 		const tournamentManager = new TournamentManager(newTournament.id, newTournamentStartDate);
 		scheduleJob(`tournament_${newTournament.id}`, endQualif, () => tournamentManager.generateNextRound(prisma));
 		LOGGER.log(`initializeTournament is over. GenerateNextRound for 1st round is planned for ${endQualif}.`);
@@ -1324,7 +1263,11 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 		}
 		if (currentState.round === 7) {
 			// Tournament is over, reward
-			await this.rewardTournament(prisma);
+			try {
+				await this.rewardTournament(prisma);
+			} catch (error) {
+				LOGGER.error('Error while rewarding tournament', error);
+			}
 			return;
 		}
 

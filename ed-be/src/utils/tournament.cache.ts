@@ -8,7 +8,6 @@ let cache: TournamentCacheData | undefined = undefined; // undefined = jamais ch
 
 export function invalidateTournamentCache() {
 	cache = undefined;
-	LOGGER.log(`Cache clear`);
 }
 
 export async function getActiveTeamsCached(prisma: PismaClientLocal) {

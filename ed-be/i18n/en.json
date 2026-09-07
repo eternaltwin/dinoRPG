@@ -10,20 +10,20 @@
 	"dead": "Your Dinoz is dead.",
 	"missingStatus": "One of your Dinoz doesn't fulfill the requirements to do this action.",
 	"noMovement": "Today, the swamp is flooded ! You can't move there. You'll have to wait tomorrow to get out of this quagmire.",
-	"shovelMine": "You aren't going to dig right next to the miner !?!",
-	"notEnoughIrma": "You don't have enough Irma potion.",
+	"shovelMine": "You wouldn't dig next to the Miner, would you?!",
+	"notEnoughIrma": "You don't have enough Irma's potion.",
 	"alreadyClaimed": "You already received the prize.",
 	"needToDoAllAction": "You still have fights to do.",
 	"noBruteFound": "No brute found.",
 	"noFight": "Today, the swamp is surrounded by a thick fog. You won't find any monsters to fight.",
 	"notEnoughItem": "You don't have enough of this item.",
-	"backpackFull": "There aren't any free space in the backpack of this dinoz.",
+	"backpackFull": "There aren't any free space in the backpack of this Dinoz.",
 	"NotCursed": "Your Dinoz isn't cursed.",
 	"wrongQuantity": "Invalid quantity",
 	"notEnoughStorage": "You don't have enough space.",
 	"invalidOffer": "Invalid offer",
 	"bidIsLower": "Your bid is lower than the previous one.",
-	"notEnoughTickets": "You don't have enough tickets.",
+	"notEnoughTickets": "You don't have enough treasury notes.",
 	"tooShortMessage": "Your message is too short.",
 	"existingNameClan": "An existing clan already has this name.",
 	"noDinozAtMarket": "You have no Dinoz at the market.",
@@ -33,23 +33,22 @@
 	"noClan": "You do not belong to a clan.",
 	"banPending": "You have a pending ban request.",
 	"AlreadyAtMaxHealth": "Your Dinoz is already at max health.",
-	"DinozIsDead": "Your dinoz is dead.",
+	"DinozIsDead": "Your Dinoz is dead.",
 	"DinozNotDead": "Your Dinoz is not dead.",
 	"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
-	"maxQuantityInventory": "You already too many of this item in your inventory.",
-	"cannotClaim": "You cannot claim your offer.",
-	"tooMuchDinoz": "You have reached the maximum of active Dinoz.",
+	"maxQuantityInventory": "You already have too many of this item in your inventory.",
+	"cannotClaim": "You cannot currently claim your earnings.",
 	"tooMuchIngredient": "You have an ingredient that will overflow the maximum limit.",
 	"tooMuchItem": "You have an item that will overflow the maximum limit.",
 	"equipedItems": "You cannot sell a Dinoz with equipped items.",
-	"offerInProgress": "You cannot cancel an offer with an ongoing offer.",
+	"offerInProgress": "You cannot cancel an offer with an ongoing bid.",
 	"maxFollowers": "You reached the maximum number of Dinoz in the group",
 	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"playerNotFound": "The player {{id}} was not found.",
 	"archivedPlayerNotFound": "The archive for player {{id}} was not found.",
 	"dinozNotFound": "The Dinoz {{id}} was not found.",
 	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
-	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
+	"reincarnationNotPossible": "A Dinoz needs to be level 40 or higher to reincarnate.",
 	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
 	"clanWar": {
 		"noCastle": "Your clan has not built a castle.",
@@ -65,11 +64,18 @@
 		"alreadyInDefense": "Your Dinoz is already part of the castle defense.",
 		"sameClan": "You cannot declare war to your own clan.",
 		"castleAlreadyBuilt": "The castle of your clan is already built.",
-		"notInDefense": "This Dinoz is part of the castle's defense."
+		"notInDefense": "This Dinoz is not part of the castle's defense.",
+		"outdatedDefense": "Obsolete Defense"
 	},
 	"error": {
+		"notYourDinoz": "This Dinoz is not yours.",
+		"noDinozAtCemetary": "None of your Dinoz is at the cemetery.",
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
-		"notYourDinoz": "This is not your Dinoz."
+		"dinozInventoryNotEmpty": "Your Dinoz must remove its equipment.",
+		"dinozNotAvailable": "Your Dinoz is not available to perform this action.",
+		"notEnoughTickets": "You don't have enough tickets to perform this action.",
+		"noShopAccess": "You do not meet the requirements to access this shop.",
+		"tooManyItems": "You have too many items to perform this action."
 	},
 	"fb": {
 		"error": {
@@ -240,14 +246,17 @@
 		"dinozTooHighLevel": "A Dinoz is above the maximum level authorized.",
 		"wrongRace": "A race of your team is not authorized in this tournament.",
 		"alreadyRegistered": "You already have a team registered for this tournament.",
-		"teamSize": "The teams must be composed of {{nb}} members with a least {{races}} different races.",
+		"teamSize": "The teams must be composed of {{nb}} members with at least {{races}} different races.",
 		"teamSize_singleRace": "The team must be formed of {{nb}} members.",
 		"raceLimit": "The authorized races to participate are {{races}}.",
 		"levelLimit": "The maximum level limit is set to {{level}}.",
 		"poison": "Poison is enabled.",
 		"nopoison": "Poison is disabled.",
+		"goldReward": "{{value}} gold :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} points**: {{rewards}}.",
 		"newsTitle": "New Inter Dojo Tournament",
-		"newsCorpus": "# Tournament {{number}}\n## Archetype {{type}}\nThe qualification phase will last until {{endQualif}}. The rules to create a team are:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Rewards\nThe rewards are the following:\n- First place gets: a rare Tofufu egg, a legendary box and 12% of the cash prize.\n- Second, third and fourth places get: a Tofufu egg, an epic box and 6% of the cash prize each.\n- 5th to 8th place get: a rare box and 3.75% of the cash prize each.\n- 9th to 16th places get: a rare box and 1.875% of the cash prize each.\n- Those with only with one win get: 0.75% of the cash prize each.\n- The others qualified get: 0.25% of the cash prize.\n# Rewards for Qualifiers\nDo not forget there are rewards for reaching 500, 750, 1000, 1200, 1300 and 1400 points during qualifications!\n\nHappy tournament to all!"
+		"newsCorpus": "# Tournament {{number}}\n## Archetype {{type}}\nThe qualification phase will last until {{endQualif}}. The rules to create a team are:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Rewards\nThe rewards are the following:\n- First place gets: a rare Tofufu egg, a legendary box and 12% of the cash prize.\n- Second, third and fourth places get: a Tofufu egg, an epic box and respectively 10%, 8% and 6% of the cash prize.\n- 5th to 8th place get: a rare box and 4% of the cash prize each.\n- 9th to 16th places get: a rare box and 2% of the cash prize each.\n- Those with only one win get: 1% of the cash prize each.\n- The others qualified get: 0.5% of the cash prize.\n# Rewards for Qualifiers\nDo not forget that there are rewards for players who reach certain point milestones by the end of the qualifiers! These rewards are cumulative each time a player reaches a new point milestone.\n{{qualificationRewards}}\n\nHappy tournament to all!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -286,6 +295,17 @@
 		"4": "Fourth",
 		"5": "Fifth"
 	},
+	"item": {
+		"name": {
+			"void_sphere": "Void Sphere | Void Spheres",
+			"souffet_egg": "Etherwasp Egg | Etherwasp Eggs",
+			"toufufu_baby": "Baby Tofufu | Tofufu Babies",
+			"toufufu_baby_rare": "Rare Baby Tofufu | Rare Tofufu Babies",
+			"golden_napodino": "Golden Napodino | Golden Napodinos",
+			"box_epic": "Epic Box | Epic Boxes",
+			"box_legendary": "Legendary Box | Legendary Boxes"
+		}
+	},
 	"reward": {
 		"perle": "Fountain Pearl",
 		"pteroz": "Pteroz Trophy",
@@ -297,7 +317,7 @@
 		"vener": "Venerable's Eye",
 		"taurus": "Taurus the magnificent",
 		"belius": "Belius the illustrious",
-		"scorp": "Starship Scorpius",
+		"scorp": "Ironclad Scorpius",
 		"msg": "Official Dinoland Stamps",
 		"magnet": "Negative Lodestone Shard",
 		"plume": "Sidereal Feather",
@@ -318,7 +338,7 @@
 		"water": "water prone races",
 		"wood": "wood prone races",
 		"air": "air prone races",
-		"lightning": "lightning races",
+		"lightning": "lightning prone races",
 		"ffa": "all races",
 		"bipede": "all biped races",
 		"quadrupede": "all quadruped races",
@@ -331,12 +351,25 @@
 		"dinoz": "$t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Your Dinoz is not at the entrance of the dungeon.",
+		"wrongTeam": "A group is already exploring this dungeon.",
+		"noRun": "You have never visited this dungeon.",
+		"notAtExit": "You cannot leave the dungeon from here!",
+		"notHealing": "You cannot use this item here, you must go to a healing zone."
+	},
 	"UnavailableReason": {
-		"frozen": "You Dinoz is frozen",
-		"sacrificed": "Your Dinoz is sacrificed",
-		"selling": "Your Dinoz is in auction",
-		"superdom": "Your Dinoz is at the Superdom",
-		"resting": "Your Dinoz is resting"
+		"frozen": "Your Dinoz is frozen.",
+		"unfreezing": "Your Dinoz is being unfrozen.",
+		"defending": "Your Dinoz is defending your Clan castle.",
+		"restingAttack": "Your Dinoz is recovering from its fight.",
+		"sacrificed": "Your Dinoz is sacrificed.",
+		"unsacrificing": "Your Dinoz is being resurrected.",
+		"selling": "Your Dinoz is in auction.",
+		"superdom": "Your Dinoz is at the Superdom.",
+		"resting": "Your Dinoz is resting.",
+		"dungeon": "Your Dinoz is exploring a dungeon."
 	},
 	"fb_tournament": {
 		"noOpponent": "There is no one to fight at the moment"

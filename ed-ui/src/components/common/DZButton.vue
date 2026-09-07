@@ -44,10 +44,29 @@ export default defineComponent({
 	justify-content: center;
 	font-size: 9pt;
 	font-variant: small-caps;
-	line-height: 7pt;
 	cursor: pointer;
 	text-decoration: none;
-	min-height: 28px;
+
+	&.tiny {
+		padding: 2px 4x;
+		color: #ffee92;
+		font-size: 7.5pt;
+		font-variant: normal;
+		border: 1px solid #ffee92;
+		outline: 1px solid #bc683c;
+		background-color: #d65536;
+		cursor: pointer;
+		display: inline;
+		min-width: 60px;
+		height: 14px;
+		text-align: center;
+		text-transform: uppercase;
+
+		&:hover {
+			color: white;
+			background-color: #b0dd00;
+		}
+	}
 
 	&.small {
 		border-color: #c5482c;
@@ -56,6 +75,8 @@ export default defineComponent({
 		background-color: #c5482c;
 		color: #ffee92;
 		padding: 2px 4px;
+		line-height: 7pt;
+		min-height: 28px;
 
 		&:hover {
 			background-color: #ffee92;
@@ -64,6 +85,7 @@ export default defineComponent({
 	}
 
 	&.normal {
+		line-height: 7pt;
 		min-width: 95px;
 		height: 28px;
 		color: #fff1ad;

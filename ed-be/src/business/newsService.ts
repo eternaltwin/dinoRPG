@@ -21,6 +21,8 @@ import dayjs from 'dayjs';
 import { scheduleJob } from 'node-schedule';
 import { LOGGER } from '../context.js';
 import { returnCode } from '@drpg/core/models/enums/returnCode';
+import { Lang, NewsType } from '@drpg/prisma';
+import { translateTarget } from '../utils/server/translate.js';
 
 /**
  * @summary Create a news
@@ -51,6 +53,47 @@ export async function postNews(req: Request) {
 	});
 	DISCORD.sendNewsNotification(req.body.frenchTitle, req.body.frenchText, req.file?.buffer);
 	return news;
+}
+
+/**
+ * Creates the news in all languages.
+ *
+ * @param title - The title of the news.
+ * @param type - The type of the news.
+ * @param titleKey - The key for translating the title.
+ * @param titleParams - The parameters for translating the title.
+ * @param bodyKey - The key for translating the body.
+ * @param bodyParams - The parameters for translating the body.
+ * @param publishOnDiscord - Whether to publish the news (in french) on Discord.
+ */
+export async function createTranslatedNews(
+	title: string,
+	type: NewsType,
+	titleKey: string,
+	titleParams: Record<Lang, Record<string, unknown>>,
+	bodyKey: string,
+	bodyParams: Record<Lang, Record<string, unknown>>,
+	publishOnDiscord: boolean = false
+): Promise<void> {
+	const news = await createNews({
+		title: title,
+		type: type,
+		frenchTitle: translateTarget(titleKey, Lang.fr, titleParams[Lang.fr]),
+		englishTitle: translateTarget(titleKey, Lang.en, titleParams[Lang.en]),
+		spanishTitle: translateTarget(titleKey, Lang.es, titleParams[Lang.es]),
+		germanTitle: translateTarget(titleKey, Lang.de, titleParams[Lang.de]),
+		frenchText: translateTarget(bodyKey, Lang.fr, bodyParams[Lang.fr]),
+		englishText: translateTarget(bodyKey, Lang.en, bodyParams[Lang.en]),
+		spanishText: translateTarget(bodyKey, Lang.es, bodyParams[Lang.es]),
+		germanText: translateTarget(bodyKey, Lang.de, bodyParams[Lang.de])
+	});
+	if (publishOnDiscord) {
+		if (news.frenchTitle && news.frenchText) {
+			DISCORD.sendNewsNotification(news.frenchTitle, news.frenchText, undefined);
+		} else {
+			LOGGER.error(`${type} News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
+		}
+	}
 }
 
 export async function createPoll(req: Request) {

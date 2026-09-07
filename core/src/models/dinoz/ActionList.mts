@@ -7,7 +7,8 @@ export enum Action {
 	CHANGE_LEADER = 'change_leader',
 	DISBAND = 'disband',
 	SHOP = 'shop',
-	ITINERANTSHOP = 'itinerant_shop',
+	DEMON_SHOP = 'demon_shop',
+	ITINERANT_SHOP = 'itinerant_shop',
 	LEVEL_UP = 'levelup',
 	NPC = 'npc',
 	RESURRECT = 'resurrect',
@@ -34,7 +35,9 @@ export enum Action {
 	FB_TOURNAMENT = 'fb_tournament',
 	WAR_DEFEND = 'war_defend',
 	WAR_REMOVE = 'war_remove',
-	WAR_ATTACK = 'war_attack'
+	WAR_ATTACK = 'war_attack',
+	DUNGEON_ENTER = 'dungeon_enter',
+	DUNGEON = 'dungeon'
 }
 
 export interface ActionFiche {
@@ -71,8 +74,12 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		name: Action.SHOP,
 		imgName: 'act_shop'
 	},
-	[Action.ITINERANTSHOP]: {
-		name: Action.ITINERANTSHOP,
+	[Action.DEMON_SHOP]: {
+		name: Action.DEMON_SHOP,
+		imgName: 'act_demon_shop'
+	},
+	[Action.ITINERANT_SHOP]: {
+		name: Action.ITINERANT_SHOP,
 		imgName: 'act_shop'
 	},
 	[Action.LEVEL_UP]: {
@@ -187,5 +194,13 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.WAR_ATTACK]: {
 		name: Action.WAR_ATTACK,
 		imgName: 'act_castle_war'
+	},
+	[Action.DUNGEON_ENTER]: {
+		name: Action.DUNGEON_ENTER,
+		imgName: 'act_dungeon'
+	},
+	[Action.DUNGEON]: {
+		name: Action.DUNGEON,
+		imgName: 'act_dungeon'
 	}
 };

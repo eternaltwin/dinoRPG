@@ -40,12 +40,12 @@ import { LOGGER } from '../context.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import { createLog } from '../dao/logDao.js';
-import gameConfig from '../config/game.config.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
 import { computeUSkillsForPlayer } from './skillService.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
 import dayjs from 'dayjs';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * Get the list of current offers
@@ -55,7 +55,11 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 
 	const player = await getDinozPlaces(authed.id);
 
-	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+	if (!player) {
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+	}
+
+	if (!player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
 		throw new ExpectedError(translate('noDinozAtMarket'));
 	}
 
@@ -192,7 +196,7 @@ export async function createOffer(req: Request) {
 	const availableItems = await getPlayerItems(authed.id);
 	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {
@@ -239,7 +243,6 @@ export async function createOffer(req: Request) {
 
 	// Schedule offer expiration
 	scheduleJob(`offer_${offer.id.toString()}`, offer.endDate, () => expireOffer(offer.id));
-	// LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
 /**
@@ -555,12 +558,12 @@ export async function checkRefund(
 
 	if (dinoz) {
 		const maxDinoz =
-			gameConfig.dinoz.maxQuantity +
-			(refund.leader ? 3 : 0) +
-			(refund.messie ? 3 : 0) +
+			gameConfig().dinoz.maxQuantity +
+			(refund.leader ? gameConfig().dinoz.leaderMessieBonus : 0) +
+			(refund.messie ? gameConfig().dinoz.leaderMessieBonus : 0) +
 			(dinoz.playerId === playerId ? 1 : 0);
 		if (refund._count.dinoz + 1 > maxDinoz) {
-			return 'tooMuchDinoz';
+			return 'tooManyActiveDinoz';
 		}
 	}
 
@@ -611,11 +614,11 @@ export async function checkRefund(
 			};
 		});
 
-	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchIngredient';
+	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
+		return 'tooManyIngredients';
 	}
-	if (itemWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchItem';
+	if (itemWithMaxQuantity.some(i => i.futureQuantity > i.maxQuantity)) {
+		return 'tooManyItems';
 	}
 	return true;
 }

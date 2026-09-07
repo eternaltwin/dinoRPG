@@ -73,6 +73,7 @@ describe('getCommonData', () => {
 			skipFight: false,
 			skipLevel: false,
 			autoReequipItems: false,
+			bypassGatheringGrid: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: 3,
@@ -90,7 +91,7 @@ describe('getCommonData', () => {
 
 	it('throws when the player does not exist', async () => {
 		vi.mocked(playerDao.getCommonDataRequest).mockResolvedValue(null as never);
-		await expect(getCommonData(req())).rejects.toThrow("doesn't exist");
+		await expect(getCommonData(req())).rejects.toThrow('playerNotFound');
 	});
 });
 
@@ -155,7 +156,9 @@ describe('getArchivedData', () => {
 	});
 
 	it('returns empty when no twinoid link', async () => {
-		vi.mocked(fetch as never).mockResolvedValue({ json: vi.fn().mockResolvedValue({ links: { twinoid: {} } }) } as never);
+		vi.mocked(fetch as never).mockResolvedValue({
+			json: vi.fn().mockResolvedValue({ links: { twinoid: {} } })
+		} as never);
 		vi.mocked(playerDao.getPlayerArchivedSiteId).mockResolvedValue(null as never);
 		expect(await getArchivedData(req({ id: 'p2' }))).toEqual([]);
 	});
@@ -170,7 +173,7 @@ describe('setCustomText', () => {
 
 	it('throws when player missing', async () => {
 		vi.mocked(playerDao.getPlayerRewardsRequest).mockResolvedValue(null as never);
-		await expect(setCustomText(req({}, { message: 'hi there' }))).rejects.toThrow("doesn't exist");
+		await expect(setCustomText(req({}, { message: 'hi there' }))).rejects.toThrow('playerNotFound');
 	});
 
 	it('throws when player lacks PLUME', async () => {
@@ -225,6 +228,7 @@ describe('resetAccount', () => {
 		targetedCases: [],
 		LeftFightArchives: [],
 		RightFightArchives: [],
+		createdDate: new Date('2021-09-01T00:00:00Z'),
 		...overrides
 	});
 
@@ -239,6 +243,12 @@ describe('resetAccount', () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(null as never);
 		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(null as never);
 		await expect(resetAccount(req())).rejects.toThrow('No player found');
+	});
+
+	it('throws when account is too young', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(null as never);
+		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(deletable({ createdDate: new Date() }) as never);
+		await expect(resetAccount(req())).rejects.toThrow('error.playerTooYoung');
 	});
 
 	it('throws when bids ongoing', async () => {
@@ -269,18 +279,19 @@ describe('resetAccount', () => {
 
 	it('throws when qualified for ongoing tournament', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue({ id: 5 } as never);
-		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(
-			deletable({ LeftFightArchives: [{ id: 1 }] }) as never
-		);
+		vi.mocked(playerDao.checkBeforeDeletion).mockResolvedValue(deletable({ LeftFightArchives: [{ id: 1 }] }) as never);
 		await expect(resetAccount(req())).rejects.toThrow('ongoingDojoTournament');
 	});
 });
 
 describe('updatePlayerSettings', () => {
-	it.each(['skipLevel', 'skipFight', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])('updates %s', async setting => {
-		await updatePlayerSettings(req({ setting }, { setting: true }));
-		expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
-	});
+	it.each(['skipLevel', 'skipFight', 'bypassGatheringGrid', 'autoReequipItems', 'archivedSiteId', 'shareArchivedData'])(
+		'updates %s',
+		async setting => {
+			await updatePlayerSettings(req({ setting }, { setting: true }));
+			expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
+		}
+	);
 
 	it('updates displayedNotifications when valid', async () => {
 		await updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 5 }));
@@ -288,8 +299,8 @@ describe('updatePlayerSettings', () => {
 	});
 
 	it('throws for invalid displayedNotifications', async () => {
-		await expect(
-			updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 0 }))
-		).rejects.toThrow('Invalid number');
+		await expect(updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 0 }))).rejects.toThrow(
+			'Invalid number'
+		);
 	});
 });

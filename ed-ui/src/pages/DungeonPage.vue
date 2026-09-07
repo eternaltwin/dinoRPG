@@ -1,0 +1,718 @@
+<template>
+	<DZDisclaimer
+		round
+		help
+		:content="$t('dungeon.disclaimer', { dinoz: currentDinoz?.name, dungeonName: $t(`dungeon.name.${dungeonId}`) })"
+	/>
+	<div class="dungeon-page">
+		<div ref="stageEl" class="stage">
+			<div class="dpad">
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn up" @click="tryMove(0, -1)">
+						<img :src="arrowIcon" alt="up" />
+					</button>
+					<template #content>
+						{{ $t(`dungeon.buttons.up`) }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn left" @click="tryMove(-1, 0)">
+						<img :src="arrowIcon" alt="left" />
+					</button>
+					<template #content>
+						{{ $t(`dungeon.buttons.left`) }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn right" @click="tryMove(1, 0)">
+						<img :src="arrowIcon" alt="right" />
+					</button>
+					<template #content>
+						{{ $t(`dungeon.buttons.right`) }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="!needIrma" class="btn down" @click="tryMove(0, 1)">
+						<img :src="arrowIcon" alt="down" />
+					</button>
+					<template #content>
+						{{ $t(`dungeon.buttons.down`) }}
+					</template>
+				</Tippy>
+				<Tippy theme="small">
+					<button v-if="needIrma || buttonIcon !== ''" class="btn center" @click="action()">
+						<img :src="getImgURL('dungeon', `interf_${actionImg}`, true)" :alt="actionImg" />
+					</button>
+					<template #content>
+						{{ $t(`dungeon.buttons.${actionImg}`) }}
+					</template>
+				</Tippy>
+			</div>
+			<span class="floor">{{ $t(`dungeon.floor`, { floor: currentLevel }) }}</span>
+		</div>
+		<div class="toolbar">
+			<button @click="toggleDebug">Wall debug: {{ wallDebug ? 'ON' : 'OFF' }}</button>
+		</div>
+	</div>
+	<DZButton back class="returnButton" @click="goBack()">{{ $t('button.return') }}</DZButton>
+</template>
+
+<script lang="ts">
+/**
+ * Fog-of-war maze client. The layout stays encrypted on the backend: entering returns only
+ * the cells around the entrance, and every step is validated server-side and answered with
+ * the newly revealed cells. Rendered with Pixi.js from the dungeon tileset in src/assets.
+ */
+import { defineComponent } from 'vue';
+import { DinozService, DungeonService } from '../services/index.js';
+import { ARROWS, KEY_SKIN_COUNT, MAX_STEPS, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
+import type { Cell, MoveResult, MoveStep, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
+import { assetUrl, loadDungeonAssets, pad2, skinAssetNames } from '../utils/dungeon/dungeonAssets.js';
+import { MazeRenderer } from '../utils/dungeon/MazeRenderer.js';
+import { DinozActor } from '../utils/dungeon/DinozActor.js';
+import { sessionStore, useDinozStore, playerStore } from '../store';
+import { errorHandler } from '../utils';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import DZButton from '../components/common/DZButton.vue';
+
+// ── page state & control loop ─────────────────────────────────────────────────
+// At module scope on purpose: Pixi objects must stay out of Vue's reactivity (deep proxies
+// wreck them) and the page mounts once at a time. All reset in mounted/beforeUnmount.
+
+let renderer: MazeRenderer | null = null;
+let actor: DinozActor | null = null;
+// The rest of the party, conga-line style: each confirmed leader move sends follower i to
+// the cell the leader held i+1 moves ago. `trail` is that history, newest first.
+const followers: DinozActor[] = [];
+const trail: Cell[] = [];
+// Locked-door cells → key id, so door and key can share a flavor name.
+const doorKeys = new Map<string, number>();
+const walls = new Set<string>();
+// Cells revealed as walkable. The server reveals the whole 3×3 block around every cell
+// entered, so the dinoz's four neighbours are always in here — which is what lets a plain
+// step be predicted instead of awaited.
+const floors = new Set<string>();
+// Last server-confirmed cell — what we snap back to if a prediction was wrong.
+let confirmed: Cell = { l: 0, x: 0, y: 0 };
+// Steps taken locally but not yet acknowledged. One request in flight; whatever piles up
+// behind it ships as the next batch, so a dash is ~1 request.
+const pending: MoveStep[] = [];
+let inflight = false;
+// An unpredictable step (stair, fight, pickup) is in flight; nothing may be predicted on
+// top of it, since its result can change the level under us.
+let blocking = false;
+let rafId = 0;
+// The cell the action button is currently armed for; the button, not the step, traverses stairs.
+let stairShownFor: string | null = null;
+/** Cells walked per second — the actor's tween speed, and the movement cadence. */
+const WALK_SPEED = 5;
+/**
+ * How long a key must stay down before the frame loop repeats it: a tap is one cell. Set to
+ * exactly one cell's walk so the repeat picks up as the first cell lands.
+ * ponytail: raise it if a deliberate slow press still reads as two cells.
+ */
+const REPEAT_DELAY = 1000 / WALK_SPEED;
+// Held keys are repeated by our own frame loop; the OS key-repeat pauses ~500ms first.
+const held: string[] = [];
+let heldSince = 0;
+// Set in mounted/cleared in beforeUnmount so the module-scope key handlers (stable refs,
+// needed for add/removeEventListener) can reach tryMove.
+let triggerMove: ((dx: number, dy: number) => void) | null = null;
+// Flag to avoid building and mounting will unmounting is happening.
+let unmounting = false;
+
+const iconKey = (c: Cell): string => `${c.l},${c.x},${c.y}`;
+
+/**
+ * Icons with no server-side effect on entry, so the step can be predicted. Stairs count:
+ * walking onto one does nothing, only the action button's dl move traverses it. Anything
+ * absent (monster, closed door, key, gold, scroll, chest) is left to the server.
+ */
+const INERT = new Set(['start', 'exit', 'heal', 'stair_up', 'stair_down', 'door_v_open', 'door_h_open']);
+
+export default defineComponent({
+	name: 'DungeonPage',
+	components: { DZDisclaimer, DZButton },
+	props: {
+		dinozId: { type: Number, required: true }
+	},
+	data() {
+		return {
+			wallDebug: false,
+			buttonIcon: '' as string,
+			arrowIcon: assetUrl('interf_arrow'),
+			sessionStore: sessionStore(),
+			playerStore: playerStore(),
+			currentLevel: 0,
+			// Revealed entities, keyed "l,x,y" — drives the stair button.
+			icons: new Map<string, string>(),
+			// Predicted position: runs ahead of `confirmed` by `pending.length` steps, so input never
+			// waits on the network.
+			cursor: { l: 0, x: 0, y: 0 } as Cell,
+			run: sessionStore().getDungeonRun
+		};
+	},
+	computed: {
+		actionImg(): string {
+			if (this.needIrma) {
+				return 'irma';
+			} else {
+				const icon = this.icons.get(iconKey(this.cursor));
+				return icon ?? '';
+			}
+		},
+		needIrma(): boolean {
+			const leader = useDinozStore().getDinoz(this.dinozId);
+			// Leader cannot fight or a follower cannot fight then irma needed.
+			if (leader && (!leader.fight || leader.followers.some(d => !d.fight))) return true;
+			// Default to false. Irma not needed.
+			return false;
+		},
+		currentDinoz() {
+			return useDinozStore().getDinoz(this.dinozId);
+		},
+		dungeonId(): string {
+			return this.$route.params.id as string;
+		}
+	},
+	methods: {
+		/** `origin` is the player's cell after the move; it orients the fade-fx. See MazeRenderer#applyReveal. */
+		record(reveal: RevealedCell[], origin?: Cell): void {
+			for (const c of reveal) {
+				// Re-sent cells can lose their icon (key picked up, monster beaten).
+				if (c.icon) this.icons.set(`${c.l},${c.x},${c.y}`, c.icon);
+				else this.icons.delete(`${c.l},${c.x},${c.y}`);
+				if (c.key != null) doorKeys.set(`${c.l},${c.x},${c.y}`, c.key);
+				if (c.floor) {
+					floors.add(`${c.l},${c.x},${c.y}`);
+				} else {
+					walls.add(`${c.l},${c.x},${c.y}`);
+					floors.delete(`${c.l},${c.x},${c.y}`);
+				}
+			}
+			renderer?.applyReveal(reveal, origin);
+		},
+		/** Can we move onto this cell without asking? Only if it is known floor and inert. */
+		predictable(k: string): boolean {
+			if (!floors.has(k)) return false; // unknown or wall
+			const icon = this.icons.get(k);
+			return !icon || INERT.has(icon);
+		},
+		onKeyDown(e: KeyboardEvent): void {
+			const d = ARROWS[e.key];
+			if (!d) return;
+			e.preventDefault();
+			if (held.includes(e.key)) return;
+			held.push(e.key);
+			// A fresh press (direction change included) restarts the repeat delay.
+			heldSince = performance.now();
+			// A message box blocks movement; let the key that would've moved us dismiss it.
+			if (renderer?.messageOpen) {
+				renderer.closeMessage();
+				return;
+			}
+			// Fire the first step now rather than on the next rAF tick: a quick tap's keydown+keyup
+			// can both land inside one frame gap, where the loop's poll would never see it.
+			triggerMove?.(d[0], d[1]);
+		},
+		onKeyUp(e: KeyboardEvent): void {
+			const i = held.indexOf(e.key);
+			if (i >= 0) held.splice(i, 1);
+		},
+		/** djb2 of the dungeon id — seeds anything that must stay stable across refreshes. */
+		dungeonHash(): number {
+			let h = 5381;
+			for (const ch of this.dungeonId) h = (h * 33 + ch.charCodeAt(0)) | 0;
+			return h;
+		},
+		/** Flavor name shared by a door and its key, seeded by dungeonId + key id. */
+		doorName(keyId: number): string {
+			// 9 and 10 entries in fr.json dungeon.doorNames_prefix/_sufix — keep those in sync.
+			const seed = this.dungeonHash() + keyId;
+			const doorName = this.$t(`dungeon.doorNames`, {
+				prefix: this.$t(`dungeon.doorNames_prefix.${((seed % 9) + 9) % 9}`),
+				sufix: this.$t(`dungeon.doorNames_sufix.${((seed % 10) + 10) % 10}`)
+			});
+			return doorName;
+		},
+		toggleDebug(): void {
+			this.wallDebug = !this.wallDebug;
+			renderer?.setDebug(this.wallDebug);
+		},
+		/**
+		 * Take one step. A plain step onto known floor is walked now and confirmed in the
+		 * background, since the neighbours are always already revealed. Anything with a
+		 * server-side effect (fight, locked door, pickup, stair) waits for the real answer.
+		 */
+		tryMove(dx: number, dy: number, dl = 0): void {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (!currentDinoz || !currentDinoz.fight || !actor) {
+				return;
+			}
+			const at = `${this.cursor.l},${this.cursor.x + dx},${this.cursor.y + dy}`;
+			// Known wall: the server would just say no, skip the round-trip.
+			if (dl === 0 && walls.has(at)) return;
+			if (dl === 0 && !blocking && this.predictable(at)) {
+				this.advance({ l: this.cursor.l, x: this.cursor.x + dx, y: this.cursor.y + dy });
+				pending.push({ dx, dy, dl });
+				this.flush();
+				return;
+			}
+			// Event cell or stair: the server decides. Drain the queue first so its cursor is
+			// where we think it is, then send this alone; the frame loop re-offers it.
+			if (inflight || pending.length > 0) return;
+			blocking = true;
+			pending.push({ dx, dy, dl });
+			this.flush();
+		},
+		/** Walk the dinoz onto `cell` and drag the follower conga line along behind it. */
+		advance(cell: Cell): void {
+			this.cursor = { ...cell };
+			actor?.enqueue(this.cursor);
+			trail.unshift({ ...this.cursor });
+			if (trail.length > followers.length + 1) trail.pop();
+			// The first enqueue each follower gets is its own cell: a walk-in-place beat that
+			// staggers the line's start.
+			followers.forEach((f, i) => trail[i + 1] && f.enqueue({ ...trail[i + 1] }));
+		},
+		/**
+		 * Ship the queued steps. One request in flight: whatever is walked while it's out
+		 * coalesces into the next batch, so a dash costs one round-trip, not one per cell.
+		 */
+		async flush(): Promise<void> {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (inflight || pending.length === 0 || !currentDinoz) return;
+			inflight = true;
+			const batch = pending.splice(0, MAX_STEPS);
+			try {
+				this.applyResult(await DungeonService.moveDinoz(this.dungeonId, batch, currentDinoz.id), batch);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				this.snapBack(confirmed);
+			} finally {
+				inflight = false;
+				blocking = false;
+				if (pending.length > 0) this.flush();
+			}
+		},
+		/** Fold a confirmed batch back in: reveals, messages, then reconcile our guess. */
+		applyResult(move: MoveResult, batch: MoveStep[]): void {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (move.fight && currentDinoz) {
+				this.sessionStore.setFightResult(move.fight);
+				this.$router.push({
+					name: 'Fight',
+					params: { dinozId: currentDinoz.id.toString() }
+				});
+			}
+			// What the entered cell held before this step's re-reveal clears it: the pickup to announce.
+			const entered = this.icons.get(iconKey(move.pos));
+			this.record(move.reveal, move.pos);
+			if (move.applied > 0) {
+				if (entered === 'door_v' || entered === 'door_h') {
+					const name = this.doorName(doorKeys.get(iconKey(move.pos)) ?? 0);
+					renderer?.showMessage(this.$t('dungeon.msg.opened', { name }), `item_door_h_open`);
+				} else if (entered?.startsWith('key_')) {
+					const v = Number(entered.slice(4));
+					renderer?.showMessage(
+						this.$t('dungeon.msg.key', { name: this.doorName(v) }),
+						`item_key_${pad2(((v - 1) % KEY_SKIN_COUNT) + 1)}`
+					);
+				}
+				if (move.scenario) {
+					renderer?.showMessage(this.$t(move.scenario.text), entered === 'scroll' ? 'item_scroll' : 'item_chest');
+				}
+				if (move.gold) {
+					renderer?.showMessage(this.$t('dungeon.msg.gold', { value: move.gold }), 'item_gold');
+					this.playerStore.addMoney(move.gold);
+				}
+			}
+			confirmed = { ...move.pos };
+			if (!move.ok) {
+				// The step after the last applied one was refused: a still-locked door, or a
+				// wall if we ever mispredicted.
+				const step = batch[move.applied];
+				if (step && step.dl === 0) {
+					const at = `${move.pos.l},${move.pos.x + step.dx},${move.pos.y + step.dy}`;
+					const blocked = this.icons.get(at);
+					if (blocked === 'door_v' || blocked === 'door_h')
+						renderer?.showMessage(this.$t('dungeon.msg.locked', { name: this.doorName(doorKeys.get(at) ?? 0) }));
+				}
+				this.snapBack(move.pos);
+			} else if (move.applied < batch.length) {
+				// Stopped early on an event cell; the cursor is still valid, so requeue the tail.
+				pending.unshift(...batch.slice(move.applied));
+			} else if (move.applied > 0) {
+				// Walk the party onto the cell the server named. A blocking step was never walked
+				// locally, so it only moves the dinoz now.
+				if (iconKey(this.cursor) !== iconKey(move.pos) && pending.length === 0) this.advance(move.pos);
+			}
+		},
+		/** The server is the authority: drop our guesses and re-seat the party on its cell. */
+		snapBack(pos: Cell): void {
+			pending.length = 0;
+			this.cursor = { ...pos };
+			// placeAt re-seats the sprite; takeControl resets its queued path.
+			actor?.placeAt({ ...pos });
+			actor?.takeControl();
+			trail.length = 0;
+			trail.push({ ...pos });
+			followers.forEach(f => {
+				f.placeAt({ ...pos });
+				f.takeControl();
+			});
+		},
+		/**
+		 * Leader idle: send each follower its whole remaining trail at once so it walks a
+		 * continuous path onto the leader's cell. Feeding cell-by-cell would drain them to
+		 * 'stand' between cells and eat the walk animation.
+		 */
+		catchUp(): void {
+			if (followers.some(f => f.pending > 0)) return;
+			const at = (c: Cell): boolean => c.l === this.cursor.l && c.x === this.cursor.x && c.y === this.cursor.y;
+			if (trail.every(at)) return; // everyone is stacked
+			followers.forEach((f, i) => {
+				// Follower i sits at trail[i+1]; retrace trail[i]‥trail[0] (= the leader).
+				let prev = f.cell;
+				for (let j = Math.min(i, trail.length - 1); j >= 0; j--) {
+					const t = trail[j];
+					if (t.l === prev.l && t.x === prev.x && t.y === prev.y) continue;
+					f.enqueue({ ...t });
+					prev = t;
+				}
+			});
+			for (let i = 0; i < trail.length; i++) trail[i] = { ...this.cursor };
+		},
+		updateButton(): void {
+			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
+			if (!currentDinoz) {
+				return;
+			}
+			// The button acts on the cell under the dinoz, so only a server-confirmed one arms it.
+			if (!actor || inflight || pending.length > 0 || actor.pending > 0) return this.hideButton();
+			const k = iconKey(actor.cell);
+			const icon = this.icons.get(k);
+			if (!icon) return this.hideButton();
+			if (k === stairShownFor) return;
+			stairShownFor = k;
+			if (icon === 'stair_down' || icon === 'stair_up' || icon === 'start' || icon === 'exit') {
+				this.buttonIcon = icon;
+			} else {
+				this.buttonIcon = '';
+			}
+		},
+		hideButton(): void {
+			if (stairShownFor === null) return;
+			stairShownFor = null;
+			this.buttonIcon = '';
+		},
+		async action(): Promise<void> {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			if (!currentDinoz) {
+				console.warn('Current Dinoz not found');
+				return;
+			}
+			if (this.needIrma) {
+				// Handle irma potion if needed and that's all.
+				try {
+					const toast = await DinozService.useIrma(currentDinoz.id);
+					if (toast.category === ItemEffect.ACTION && toast.value > 0) {
+						const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
+						this.$toast.open({
+							message: message,
+							type: 'info'
+						});
+					}
+					await useDinozStore().refreshDinozFiche(currentDinoz.id);
+				} catch (e) {
+					errorHandler.handle(e, this.$toast);
+				}
+			} else {
+				// Otherwise, handle whatever the current icon is.
+				const icon = this.icons.get(iconKey(this.cursor));
+				if (icon === 'stair_up') this.tryMove(0, 0, 1);
+				else if (icon === 'stair_down') this.tryMove(0, 0, -1);
+				else if (icon === 'start' || icon === 'exit') {
+					try {
+						await DungeonService.exitDungeon(this.dungeonId, currentDinoz.id);
+					} catch (err) {
+						errorHandler.handle(err, this.$toast);
+						return;
+					}
+					await useDinozStore().refreshDinozFiche(currentDinoz.id);
+					this.$router.push({
+						name: 'DinozPage',
+						params: { id: currentDinoz.id.toString() }
+					});
+				}
+			}
+		},
+		/** Build the maze from the run DinozActions already fetched via DungeonService.enterDungeon(). */
+		async build(): Promise<void> {
+			const currentDinoz = useDinozStore().getCurrentDinoz;
+			// enterDungeon() runs in DinozActions.launch() before routing here, so its errors
+			// (team already in a dungeon, …) never reach this page.
+			if (!currentDinoz) {
+				this.$router.go(-1);
+				return;
+			}
+			if (this.run === undefined) {
+				return;
+			}
+			this.sessionStore.setDungeonRun(undefined);
+			this.currentLevel = -this.run.pos.l - 1;
+			useDinozStore().setCurrentDinozId(this.dinozId);
+
+			this.icons.clear();
+			doorKeys.clear();
+			walls.clear();
+			floors.clear();
+			pending.length = 0;
+			inflight = false;
+			blocking = false;
+			this.hideButton();
+
+			const skins: Skin[] = SKINS.filter(s => s.name === this.run?.skin);
+			// Lazy-load only this run's tiles now that the server told us the skin.
+			await loadDungeonAssets(skins.flatMap(skinAssetNames));
+
+			if (unmounting) return; // page was left while assets/build were in flight
+
+			// cell 45 renders the dino at native resolution; the 500×350 viewport scrolls.
+			renderer = new MazeRenderer(
+				this.$refs.stageEl as HTMLDivElement,
+				{ width: this.run.width, height: this.run.height, levels: this.run.levels },
+				{ cell: 45, skins, view: { w: 500, h: 350 }, noiseSeed: this.dungeonHash() }
+			);
+			renderer.setDebug(this.wallDebug);
+			if (this.run.run.message) {
+				this.$toast.open({
+					message: this.$t(this.run.run.message),
+					type: 'info'
+				});
+			}
+
+			this.record(this.run.reveal, this.run.pos);
+			// applyReveal() only flags the level dirty for the ticker, and showLevel() only
+			// rebuilds the scene graph — the cacheAsBitmap bake and the pixels wait for a
+			// render() pass. Force both, or the canvas sits on plain fog until something
+			// else happens to render.
+			renderer.showLevel(renderer.currentLevel);
+			try {
+				renderer.app.render();
+			} catch (err) {
+				console.error('DungeonPage: initial render failed', err);
+			}
+			actor = new DinozActor(renderer, {
+				code: currentDinoz.display,
+				speed: WALK_SPEED,
+				onLevelChange: l => renderer?.showLevel(l)
+			});
+			actor.placeAt({ ...this.run.pos });
+			actor.takeControl();
+			this.cursor = { ...this.run.pos };
+			confirmed = { ...this.run.pos };
+			trail.length = 0;
+			trail.push({ ...this.run.pos });
+			for (const d of useDinozStore()
+				.getDinozParty(currentDinoz.id)
+				.filter(p => p.id !== currentDinoz.id)) {
+				const f = new DinozActor(renderer, { code: d.display, speed: WALK_SPEED, lead: false });
+				f.placeAt({ ...this.run.pos });
+				f.takeControl();
+				followers.push(f);
+			}
+		},
+		goBack(): void {
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: useDinozStore().currentDinozId }
+			});
+		}
+	},
+	async mounted() {
+		unmounting = false;
+		await this.build();
+		if (unmounting) return; // navigated away mid-build; nothing left to wire up
+
+		triggerMove = (dx, dy) => this.tryMove(dx, dy);
+		window.addEventListener('keydown', this.onKeyDown);
+		window.addEventListener('keyup', this.onKeyUp);
+
+		const frame = (): void => {
+			// Scroll and moves freeze while a message box is up.
+			if (actor && !renderer?.messageOpen) {
+				// Auto-repeat a held key: the keydown fired its own step, so this only takes
+				// over past REPEAT_DELAY. It then feeds the next step while the current one is
+				// on its last queued segment, so the walk never drains to 'stand' between cells.
+				if (held.length > 0 && performance.now() - heldSince >= REPEAT_DELAY && actor.pending <= 1) {
+					const d = ARROWS[held[held.length - 1]];
+					this.tryMove(d[0], d[1]);
+				} else if (held.length === 0 && actor.pending === 0 && !inflight && pending.length === 0) {
+					this.catchUp();
+				}
+			}
+			this.updateButton();
+			rafId = requestAnimationFrame(frame);
+		};
+		rafId = requestAnimationFrame(frame);
+	},
+	beforeUnmount() {
+		unmounting = true;
+		cancelAnimationFrame(rafId);
+		triggerMove = null;
+		window.removeEventListener('keydown', this.onKeyDown);
+		window.removeEventListener('keyup', this.onKeyUp);
+		actor?.destroy();
+		for (const f of followers) f.destroy();
+		followers.length = 0;
+		trail.length = 0;
+		renderer?.destroy();
+		actor = null;
+		renderer = null;
+		this.icons.clear();
+		doorKeys.clear();
+		walls.clear();
+		floors.clear();
+		held.length = 0;
+		heldSince = 0;
+		pending.length = 0;
+		inflight = false;
+		blocking = false;
+		stairShownFor = null;
+	}
+});
+</script>
+
+<style scoped lang="scss">
+.dungeon-page {
+	padding: 12px;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+	flex-wrap: wrap;
+
+	button {
+		background: #2b2f3a;
+		color: #e6e6ea;
+		border: 1px solid #3a3f4d;
+		border-radius: 6px;
+		padding: 7px 12px;
+		font-size: 13px;
+		cursor: pointer;
+
+		&:hover {
+			background: #353a47;
+		}
+	}
+}
+
+.stage {
+	display: inline-block;
+	position: relative;
+	border: 1px solid #1b1e26;
+	border-radius: 8px;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.dpad {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	z-index: 1;
+	width: 92px;
+	height: 92px;
+
+	.btn {
+		position: absolute;
+		top: auto;
+		right: auto;
+		background: transparent;
+		border: none;
+
+		&:hover {
+			background: transparent;
+			filter: drop-shadow(0 0 2px #ffec4f) drop-shadow(0 0 6px #fff44f) drop-shadow(0 0 12px rgba(255, 244, 79, 0.6));
+			border: none;
+		}
+	}
+
+	// interf_arrow.png points right; rotate it rather than ship 4 assets
+	.up {
+		top: 0;
+		left: 26px;
+		img {
+			transform: rotate(-90deg);
+		}
+	}
+	.down {
+		top: 52px;
+		left: 26px;
+		img {
+			transform: rotate(90deg);
+		}
+	}
+	.left {
+		top: 26px;
+		left: 0;
+		img {
+			transform: rotate(180deg);
+		}
+	}
+	.right {
+		top: 26px;
+		left: 52px;
+	}
+	.center {
+		top: 26px;
+		left: 26px;
+		img {
+			width: 22px;
+			height: auto;
+		}
+	}
+}
+
+.floor {
+	position: absolute;
+	bottom: 12px;
+	left: 8px;
+}
+
+.btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px;
+	background: rgba(20, 22, 30, 0.85);
+	border: 1px solid #6b5fa8;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+
+	// No hover-frame asset, so highlight instead
+	&:hover {
+		background: rgba(35, 30, 55, 0.9);
+		border-color: #8f7fd6;
+	}
+
+	img {
+		image-rendering: pixelated;
+	}
+}
+.returnButton {
+	width: fit-content;
+}
+</style>

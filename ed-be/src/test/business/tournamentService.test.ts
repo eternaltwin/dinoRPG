@@ -18,6 +18,7 @@ vi.mock('../../dao/tournamentDao.js', () => ({ getLatestTournament: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../utils/tournamentManager.js', () => ({ default: { getCurrentTournamentState: vi.fn() } }));
 vi.mock('../../utils/fight/weightedRandom.js', () => ({ default: vi.fn() }));
+vi.mock('../../utils/tournament.cache.js', () => ({ invalidateTournamentCache: vi.fn() }));
 
 import { prisma } from '../../prisma.js';
 import * as playerDao from '../../dao/playerDao.js';
@@ -36,13 +37,16 @@ import {
 	tournamentsHistory,
 	getNewLevelLimits
 } from '../../business/tournamentService.js';
+import { invalidateTournamentCache } from '../../utils/tournament.cache.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
-	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ phase: TournamentPhase.QUALIFICATION } as never);
+	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+		phase: TournamentPhase.QUALIFICATION
+	} as never);
 });
 
 const latest = (overrides = {}) => ({
@@ -69,10 +73,13 @@ describe('createTournamentTeam', () => {
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
 		await createTournamentTeam(req({}, { team: [1, 2] }));
 		expect(prisma.tournamentTeam.create).toHaveBeenCalled();
+		expect(invalidateTournamentCache).toHaveBeenCalled();
 	});
 
 	it('throws when not in qualification phase', async () => {
-		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({ phase: TournamentPhase.FINALS } as never);
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+			phase: TournamentPhase.FINALS
+		} as never);
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('qualificationOver');
 	});
 
@@ -120,9 +127,13 @@ describe('createTournamentTeam', () => {
 
 	it('throws when not enough race diversity', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest({ raceMinimum: 2, teamRace: '1' }) as never);
-		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
-			{ Dojo: { id: 'd1', tournamentTeamId: null }, dinoz: [{ id: 1, raceId: 1, level: 20 }, { id: 2, raceId: 1, level: 20 }] } as never
-		);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			Dojo: { id: 'd1', tournamentTeamId: null },
+			dinoz: [
+				{ id: 1, raceId: 1, level: 20 },
+				{ id: 2, raceId: 1, level: 20 }
+			]
+		} as never);
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('notEnoughDiversity');
 	});
 });
@@ -132,6 +143,7 @@ describe('deleteTournamentTeam', () => {
 		vi.mocked(prisma.dojo.findUnique).mockResolvedValue({ tournamentTeamId: 7 } as never);
 		await deleteTournamentTeam(req());
 		expect(prisma.tournamentTeam.delete).toHaveBeenCalledWith({ where: { id: 7 } });
+		expect(invalidateTournamentCache).toHaveBeenCalled();
 	});
 	it('throws when no team', async () => {
 		vi.mocked(prisma.dojo.findUnique).mockResolvedValue({ tournamentTeamId: null } as never);
@@ -169,8 +181,18 @@ describe('tournamentInfo', () => {
 describe('getTournamentFightsToShow', () => {
 	it('marks bye fights as watched and limits to most advanced step', async () => {
 		const fights = [
-			{ id: 1, metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 1 }, tournamentTeamLeft: {}, tournamentTeamRight: {} },
-			{ id: 2, metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 2 }, tournamentTeamLeft: {}, tournamentTeamRight: null }
+			{
+				id: 1,
+				metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 1 },
+				tournamentTeamLeft: {},
+				tournamentTeamRight: {}
+			},
+			{
+				id: 2,
+				metadata: { phase: TournamentPhase.QUALIFICATION, poolNumber: 0, round: 2 },
+				tournamentTeamLeft: {},
+				tournamentTeamRight: null
+			}
 		];
 		vi.mocked(getViewedTournamentFight).mockResolvedValue([] as never);
 		const result = await getTournamentFightsToShow(fights as never, 'p1', TournamentPhase.QUALIFICATION, 0);

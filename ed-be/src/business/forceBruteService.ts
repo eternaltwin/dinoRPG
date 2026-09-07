@@ -6,17 +6,15 @@ import { $Enums, Prisma } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import dayjs from 'dayjs';
-import { getRandomUpElement } from '../utils/dinoz.js';
+import { generateDinozDisplay, getRandomUpElement } from '../utils/dinoz.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { randomUUID } from 'crypto';
 import { getLetter, getRandomInteger, getRandomNumber } from '../utils/index.js';
-import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { archiveFight, viewFight } from '../dao/archiveDao.js';
-import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
 	TournamentNameMiddle,
@@ -41,6 +39,7 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -191,6 +190,7 @@ export async function createTournamentDinoz(req: Request) {
 		select: {
 			levelLimit: true,
 			teamRace: true,
+			demon: true,
 			id: true
 		}
 	});
@@ -233,48 +233,42 @@ export async function createTournamentDinoz(req: Request) {
 	const seed = randomUUID();
 	const currentRace = raceList[+activeTournament.teamRace as RaceEnum];
 
-	let display = generateDinozDisplay(currentRace, '0', '0', '0');
-	if (Math.random() * 100 <= 1) {
+	let display = generateDinozDisplay(currentRace, '0', '0', '0', activeTournament.demon);
+	// 1% chance for rare format, except for demons
+	if (!activeTournament.demon && Math.random() * 100 <= 1) {
 		switch (currentRace.raceId) {
 			case RaceEnum.MOUEFFE:
-			case RaceEnum.MOUEFFE_DEMON:
 			case RaceEnum.WINKS:
-			case RaceEnum.WINKS_DEMON:
 			case RaceEnum.PLANAILLE:
-			case RaceEnum.PLANAILLE_DEMON:
 			case RaceEnum.GORILLOZ:
-			case RaceEnum.GORILLOZ_DEMON:
 			case RaceEnum.SANTAZ:
 			case RaceEnum.MAHAMUTI:
 			case RaceEnum.QUETZU:
 			case RaceEnum.TRICERAGNON:
 			case RaceEnum.PIGMOU:
-			case RaceEnum.PIGMOU_DEMON:
 			case RaceEnum.SIRAIN:
 			case RaceEnum.KABUKI:
-			case RaceEnum.KABUKI_DEMON:
-				display = generateDinozDisplay(currentRace, '1', '1', '0');
+				display = generateDinozDisplay(currentRace, '1', '1', '0', false);
 				break;
 			case RaceEnum.CASTIVORE:
-				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0');
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomInteger(0, 1)), '0', false);
 				break;
 			case RaceEnum.ROCKY:
 			case RaceEnum.NUAGOZ:
 			case RaceEnum.SMOG:
-				display = generateDinozDisplay(currentRace, '1', '0', '0');
+				display = generateDinozDisplay(currentRace, '1', '0', '0', false);
 				break;
 			case RaceEnum.WANWAN:
-			case RaceEnum.WANWAN_DEMON:
-				display = generateDinozDisplay(currentRace, '2', '0', '0');
+				display = generateDinozDisplay(currentRace, '2', '0', '0', false);
 				break;
 			case RaceEnum.FEROSS:
 				display =
 					getRandomInteger(0, 1) === 0
-						? generateDinozDisplay(currentRace, '1', '1', '0')
-						: generateDinozDisplay(currentRace, '2', '2', '0');
+						? generateDinozDisplay(currentRace, '1', '1', '0', false)
+						: generateDinozDisplay(currentRace, '2', '2', '0', false);
 				break;
 			case RaceEnum.TOUFUFU:
-				display = generateDinozDisplay(currentRace, '0', '1', '0');
+				display = generateDinozDisplay(currentRace, '0', '1', '0', false);
 				break;
 			case RaceEnum.PTEROZ:
 			case RaceEnum.HIPPOCLAMP:
@@ -312,14 +306,15 @@ export async function createTournamentDinoz(req: Request) {
 		}
 	});
 
-	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
-		skill => skill.raceId?.some(raceId => raceId === currentRace.raceId) && skill.isBaseSkill
-	);
-	await addMultipleSkillToDinoz(
-		dinoz.id,
-		skillsToAdd.map(skill => skill.id),
-		'FBTournament'
-	);
+	const raceSkills = currentRace.skills;
+	const demonSkills = activeTournament.demon ? (currentRace.demon?.skills ?? []) : [];
+
+	const skillsToAdd = {
+		...raceSkills,
+		...demonSkills
+	};
+
+	await addMultipleSkillToDinoz(dinoz.id, skillsToAdd, 'FBTournament');
 }
 
 export async function getFBTournamentFights(req: Request) {
@@ -666,7 +661,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
 
-	let gold = (getRandomNumber(0, 36) + 43) * 10;
+	let gold = (getRandomNumber(0, 36) + 33) * 10;
 
 	gold = Math.round(gold * goldMultiplier);
 
@@ -677,7 +672,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		await addMoney(authed.id, gold);
 		xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
 		xp = calculateXPBonus(dinoz, xp, dinoz.player);
-		const max = getMaxXp(dinoz);
+		const max = getMaxXp(dinoz, gameConfig());
 
 		if (dinoz.experience >= max) {
 			// No xp if the dinoz was already at max
@@ -687,6 +682,9 @@ export async function fightFBTournamentOpponent(req: Request) {
 			// Else, allow xp overflow (should happen only once) and raise levelup flag
 			levelup = true;
 		}
+
+		// Don't show level up if Dinoz is at max level.
+		if (dinoz.level >= gameConfig().dinoz.maxLevel) levelup = false;
 	}
 
 	await updateDinoz(dinoz.id, {

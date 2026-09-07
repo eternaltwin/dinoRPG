@@ -10,7 +10,9 @@ export const UnavailableReason: {
   readonly resting: 'resting';
   readonly unfreezing: 'unfreezing';
   readonly defending: 'defending';
-  readonly restingAttack: 'restingAttack'
+  readonly restingAttack: 'restingAttack';
+  readonly dungeon: 'dungeon';
+  readonly unsacrificing: 'unsacrificing'
 };
 
 export namespace UnavailableReason {
@@ -21,7 +23,9 @@ export namespace UnavailableReason {
   export type resting = 'resting';
   export type unfreezing = 'unfreezing';
   export type defending = 'defending';
-  export type restingAttack = 'restingAttack'
+  export type restingAttack = 'restingAttack';
+  export type dungeon = 'dungeon';
+  export type unsacrificing = 'unsacrificing'
 }
 
 export type UnavailableReason = typeof UnavailableReason[keyof typeof UnavailableReason];
@@ -114,6 +118,8 @@ export const LogType: {
   readonly Fight: 'Fight';
   readonly Death: 'Death';
   readonly Revive: 'Revive';
+  readonly Sacrifice: 'Sacrifice';
+  readonly Unsacrifice: 'Unsacrifice';
   readonly MissionStep: 'MissionStep';
   readonly MissionFinished: 'MissionFinished';
   readonly MissionCanceled: 'MissionCanceled';
@@ -173,6 +179,8 @@ export namespace LogType {
   export type Fight = 'Fight';
   export type Death = 'Death';
   export type Revive = 'Revive';
+  export type Sacrifice = 'Sacrifice';
+  export type Unsacrifice = 'Unsacrifice';
   export type MissionStep = 'MissionStep';
   export type MissionFinished = 'MissionFinished';
   export type MissionCanceled = 'MissionCanceled';
@@ -374,6 +382,30 @@ export namespace ServerAction {
 
 export type ServerAction = typeof ServerAction[keyof typeof ServerAction];
 
+export const DungeonType: {
+  readonly cavern: 'cavern';
+  readonly crypt: 'crypt';
+  readonly egypt: 'egypt';
+  readonly forest: 'forest';
+  readonly hell: 'hell';
+  readonly ruin: 'ruin';
+  readonly sewer: 'sewer';
+  readonly stone: 'stone'
+};
+
+export namespace DungeonType {
+  export type cavern = 'cavern';
+  export type crypt = 'crypt';
+  export type egypt = 'egypt';
+  export type forest = 'forest';
+  export type hell = 'hell';
+  export type ruin = 'ruin';
+  export type sewer = 'sewer';
+  export type stone = 'stone'
+}
+
+export type DungeonType = typeof DungeonType[keyof typeof DungeonType];
+
 export const $Enums: {
   readonly UnavailableReason: typeof UnavailableReason;
   readonly NewsType: typeof NewsType;
@@ -388,5 +420,6 @@ export const $Enums: {
   readonly NotificationSeverity: typeof NotificationSeverity;
   readonly GameDinozUsage: typeof GameDinozUsage;
   readonly EventType: typeof EventType;
-  readonly ServerAction: typeof ServerAction
+  readonly ServerAction: typeof ServerAction;
+  readonly DungeonType: typeof DungeonType
 };

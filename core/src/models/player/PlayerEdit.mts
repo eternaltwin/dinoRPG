@@ -1,4 +1,4 @@
-import { AdminRoleFront } from '../enums/AdminRoleFront.mjs';
+import { AdminRole } from '@drpg/prisma/enums';
 
 export interface PlayerEdit {
 	customText?: string;
@@ -29,5 +29,5 @@ export interface PlayerEdit {
 	teacher?: boolean;
 	messie?: boolean;
 	matelasseur?: boolean;
-	role?: AdminRoleFront;
+	role?: AdminRole;
 }

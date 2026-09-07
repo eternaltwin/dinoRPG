@@ -6,8 +6,10 @@ import { Reward } from '../../reward/RewardList.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const RODEUR: Readonly<Record<string, NpcData>> = {
+	// Dialog for rice mission
 	begin: {
 		stepName: 'begin',
+		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
@@ -20,7 +22,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	talk: {
 		stepName: 'talk',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF }
+			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ }
 		},
 		nextStep: ['go', 'yes']
 	},
@@ -31,7 +33,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	talk2: {
 		stepName: 'talk2',
 		condition: {
-			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF
+			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ
 		},
 		nextStep: []
 	},
@@ -53,8 +55,10 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 			}
 		]
 	},
+	// Dialog for second rice mission
 	begin_2: {
 		stepName: 'begin_2',
+		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
@@ -105,8 +109,10 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 			}
 		]
 	},
+	// Final dialog to get tik bracelet
 	begin_3: {
 		stepName: 'begin_3',
+		// Because there are multiple initial steps, the specific conditions must be duplicated with the NPC conditions
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
@@ -119,6 +125,9 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	next_2: {
 		stepName: 'next_2',
 		nextStep: [],
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK }
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
@@ -130,9 +139,5 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 				value: Reward.TIK
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

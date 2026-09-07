@@ -48,29 +48,6 @@ const routes: Router = Router();
 
 const commonPath = apiRoutes.clanRoutes;
 
-/**
- * @openapi
- * /api/v1/clan/all/{page}:
- *   get:
- *     summary: Get list of all clans
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: page
- *         type: string
- *         required: true
- *         description: Number of the page to display
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/all/:page`,
 	[param('page').exists().toInt().isNumeric()],
@@ -88,34 +65,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/ranking/{type}/{page}:
- *   get:
- *     summary: Get ranking page of clan
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: page
- *         type: string
- *         required: true
- *         description: Number of the page to display
- *       - in: path
- *         name: type
- *         type: string
- *         required: true
- *         description: Kind of clan ranking needed
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/ranking/:type/:page`,
 	[param('page').exists().toInt().isNumeric(), param('type').exists()],
@@ -133,23 +82,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/search/{name}/{page}:
- *   get:
- *     summary: Search clan by name
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/search/:name/:page`,
 	[param('name').exists().isString(), param('page').exists().toInt().isNumeric()],
@@ -182,23 +114,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}:
- *   get:
- *     summary: Get clan by id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -211,23 +126,6 @@ routes.get(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], asyn
 	}
 });
 
-/**
- * @openapi
- * /api/v1/clan/{id}/members:
- *   get:
- *     summary: Get clan members list by clan id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/members`,
 	[param('id').exists().toInt().isNumeric()],
@@ -244,42 +142,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan:
- *   post:
- *     summary: Create new clan
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- * 	   parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - name
- *             - description
- *             - lang
- *           properties:
- *             name:
- *               type: string
- *               description: Name for the clan to create
- *             description:
- *               type: string
- *               description: Description for the clan to create
- *             language:
- *               type: string
- *               description: Language for the clan to create
- *     responses:
- *       201:
- *         description: Successfully created
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}`,
 	[body('name').exists().isString(), body('description').exists().isString(), body('languages').exists().isArray()],
@@ -296,23 +158,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/join:
- *   post:
- *     summary: Request to join clan
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       201:
- *         description: Successfully created
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/:id/join`,
 	[param('id').exists().toInt().isNumeric()],
@@ -329,23 +174,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/requests:
- *   post:
- *     summary: get clan requests list
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/requests`,
 	[param('id').exists().toInt().isNumeric()],
@@ -362,23 +190,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}:
- *   delete:
- *     summary: Delete clan by id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfully deleted
- *       500:
- *         description: Error
- */
 routes.delete(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -391,34 +202,6 @@ routes.delete(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], a
 	}
 });
 
-/**
- * @openapi
- * /api/v1/clan/{id}/edit/banner:
- *   put:
- *     summary: Update clan banner by clan id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- * 	   parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - name
- *           properties:
- *             image:
- *               type: string
- *               description: Image (buffer) for the clan banner
- *     responses:
- *       200:
- *         description: Successfully modified
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:id/edit/banner`,
 	[multer().single('file'), param('id').exists().toInt().isNumeric()],
@@ -436,34 +219,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/edit/lang:
- *   put:
- *     summary: Update clan lang by clan id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- * 	   parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - language
- *           properties:
- *             language:
- *               type: string
- *               description: Language for the clan
- *     responses:
- *       200:
- *         description: Successfully modified
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:id/edit/langs`,
 	[body('languages').exists().isArray()],
@@ -481,23 +236,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/banner:
- *   get:
- *     summary: Get clan banner by clan id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/banner`,
 	[param('id').exists().toInt().isNumeric()],
@@ -517,23 +255,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/request/{id}:
- *   delete:
- *     summary: Deny join request
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfully denied
- *       500:
- *         description: Error
- */
 routes.delete(
 	`${commonPath}/request/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -550,23 +271,6 @@ routes.delete(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/request/self:
- *   get:
- *     summary: Get player current clan join request if there is one
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfully found request
- *       500:
- *         description: Error
- */
 routes.get(`${commonPath}/request/self`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -582,23 +286,6 @@ routes.get(`${commonPath}/request/self`, async (req: Request, res: Response) => 
 	}
 });
 
-/**
- * @openapi
- * /api/v1/clan/request/{id}:
- *   post:
- *     summary: Accept join request
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfully denied
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/request/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -615,23 +302,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/member/{memberId}:
- *   get:
- *     summary: Get clan member
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:clanId/member/:memberId`,
 	[param('clanId').exists().toInt().isNumeric(), param('memberId').exists().toInt().isNumeric()],
@@ -648,23 +318,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/member/{memberId}:
- *   put:
- *     summary: Update clan member
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:clanId/member`,
 	[param('clanId').exists().toInt().isNumeric(), body('clanMember').exists()],
@@ -681,23 +334,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/member/{memberId}:
- *   delete:
- *     summary: exclude a clan member
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.delete(
 	`${commonPath}/:clanId/member/:id`,
 	[param('clanId').exists().toInt().isNumeric(), param('id').exists().toInt().isNumeric()],
@@ -714,23 +350,6 @@ routes.delete(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/member/self:
- *   delete:
- *     summary: leave the player's self clan
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.delete(`${commonPath}/member/self`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -743,23 +362,6 @@ routes.delete(`${commonPath}/member/self`, async (req: Request, res: Response) =
 	}
 });
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/pages:
- *   get:
- *     summary: Get clan pages list
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:clanId/pages`,
 	[param('clanId').exists().toInt().isNumeric()],
@@ -776,23 +378,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/page/:id:
- *   get:
- *     summary: Get clan page by id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/page/:id`,
 	[param('id').exists().toInt().isNumeric()],
@@ -809,34 +394,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/page:
- *   post:
- *     summary: Create new clan page
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- * 	   parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           required:
- *             - name
- *           properties:
- *             name:
- *               type: string
- *               description: Name for the new page
- *     responses:
- *       201:
- *         description: Successfully created
- *       500:
- *         description: Error
- */
 routes.post(
 	`${commonPath}/page`,
 	[
@@ -858,23 +415,6 @@ routes.post(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/page/:id:
- *   delete:
- *     summary: Delete clan page by id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.delete(
 	`${commonPath}/:clanId/page/:pageId`,
 	[param('clanId').exists().toInt().isNumeric(), param('pageId').exists().toInt().isNumeric()],
@@ -891,23 +431,6 @@ routes.delete(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/page/:id:
- *   put:
- *     summary: Update clan page
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:clanId/page/:id`,
 	[
@@ -930,23 +453,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/messages:
- *   get:
- *     summary: Get clan messages list
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/messages/:page`,
 	[param('id').exists().toInt().isNumeric(), param('page').exists().toInt().isNumeric()],
@@ -963,23 +469,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/history:
- *   get:
- *     summary: Get clan history
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/history/:page`,
 	[param('id').exists().toInt().isNumeric(), param('page').exists().toInt().isNumeric()],
@@ -996,23 +485,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{clanId}/hasRight/{right}:
- *   get:
- *     summary: Get if player has right
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:clanId/hasRight/:right`,
 	[param('clanId').exists().toInt().isNumeric(), param('right').exists().isString()],
@@ -1029,23 +501,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/messagesCount:
- *   get:
- *     summary: Get clan messages total count
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/messagesCount`,
 	[param('id').exists().toInt().isNumeric()],
@@ -1062,23 +517,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/historyCount:
- *   get:
- *     summary: Get clan history total count
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/historyCount`,
 	[param('id').exists().toInt().isNumeric()],
@@ -1095,23 +533,6 @@ routes.get(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/give:
- *   get:
- *     summary: Give to clan a set of ingredients
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.put(
 	`${commonPath}/:id/give`,
 	[param('id').exists().toInt().isNumeric(), body('ingredients').exists()],
@@ -1128,23 +549,6 @@ routes.put(
 	}
 );
 
-/**
- * @openapi
- * /api/v1/clan/{id}/treasure:
- *   get:
- *     summary: Get clan treasure details
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfull Operation
- *       500:
- *         description: Error
- */
 routes.get(
 	`${commonPath}/:id/treasure`,
 	[param('id').exists().toInt().isNumeric()],

@@ -49,8 +49,11 @@ import {
 	getNewsIllustration,
 	getNewsCreatedDate,
 	selectPollOption,
-	toggleLikeNews
+	toggleLikeNews,
+	createTranslatedNews
 } from '../../business/newsService.js';
+import { Lang, NewsType } from '@drpg/prisma';
+import { DISCORD } from '../../context.js';
 
 const req = (params = {}, body = {}, file?: unknown) => makeRequest({ params, body, file } as never);
 
@@ -63,9 +66,42 @@ beforeEach(() => {
 describe('postNews', () => {
 	it('creates a news and sends a discord notification', async () => {
 		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1 } as never);
-		const result = await postNews(req({ title: 't' }, { frenchTitle: 'fr', frenchText: 'txt' }, { buffer: Buffer.from('x') }));
+		const result = await postNews(
+			req({ title: 't' }, { frenchTitle: 'fr', frenchText: 'txt' }, { buffer: Buffer.from('x') })
+		);
 		expect(newsDao.createNews).toHaveBeenCalled();
 		expect(result).toEqual({ id: 1 });
+	});
+});
+
+describe('createTranslatedNews', () => {
+	it('creates translated news and sends a discord notification', async () => {
+		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1, frenchTitle: 'test', frenchText: 'test' } as never);
+		await createTranslatedNews(
+			't',
+			NewsType.announce,
+			'newsTitle',
+			{ [Lang.fr]: {} } as Record<Lang, Record<string, unknown>>,
+			'newsCorpus',
+			{ [Lang.es]: {} } as Record<Lang, Record<string, unknown>>,
+			false
+		);
+		expect(newsDao.createNews).toHaveBeenCalled();
+		expect(DISCORD.sendNewsNotification).not.toHaveBeenCalled();
+	});
+	it('creates translated news without a discord notification', async () => {
+		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 1, frenchTitle: 'test', frenchText: 'test' } as never);
+		await createTranslatedNews(
+			't',
+			NewsType.announce,
+			'newsTitle',
+			{} as Record<Lang, Record<string, unknown>>,
+			'newsCorpus',
+			{} as Record<Lang, Record<string, unknown>>,
+			true
+		);
+		expect(newsDao.createNews).toHaveBeenCalled();
+		expect(DISCORD.sendNewsNotification).toHaveBeenCalled();
 	});
 });
 
@@ -102,7 +138,10 @@ describe('createPoll', () => {
 					frenchTitle: 'fr',
 					frenchText: 'txt',
 					endDate: '2030-01-01',
-					options: JSON.stringify([{ optionText: 'a', orderIndex: 0 }, { optionText: 'b', orderIndex: 1 }])
+					options: JSON.stringify([
+						{ optionText: 'a', orderIndex: 0 },
+						{ optionText: 'b', orderIndex: 1 }
+					])
 				}
 			)
 		);
@@ -112,7 +151,9 @@ describe('createPoll', () => {
 	it('throws when fewer than 2 options', async () => {
 		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 5 } as never);
 		await expect(
-			createPoll(req({ title: 't' }, { frenchTitle: 'fr', frenchText: 'txt', options: JSON.stringify([{ optionText: 'a' }]) }))
+			createPoll(
+				req({ title: 't' }, { frenchTitle: 'fr', frenchText: 'txt', options: JSON.stringify([{ optionText: 'a' }]) })
+			)
 		).rejects.toThrow('No enough options');
 	});
 
@@ -120,7 +161,10 @@ describe('createPoll', () => {
 		vi.mocked(newsDao.createNews).mockResolvedValue({ id: 5 } as never);
 		await expect(
 			createPoll(
-				req({ title: 't' }, { frenchTitle: 'fr', frenchText: 'txt', options: JSON.stringify([{ optionText: '  ' }, { optionText: 'b' }]) })
+				req(
+					{ title: 't' },
+					{ frenchTitle: 'fr', frenchText: 'txt', options: JSON.stringify([{ optionText: '  ' }, { optionText: 'b' }]) }
+				)
 			)
 		).rejects.toThrow('empty');
 	});

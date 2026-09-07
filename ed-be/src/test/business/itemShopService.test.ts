@@ -62,7 +62,9 @@ describe('getItemsFromShop', () => {
 		await expect(getItemsFromShop(req({ shopId: '1' }))).rejects.toThrow("doesn't exist");
 	});
 	it('throws when no dinoz at a placed shop', async () => {
-		vi.mocked(playerDao.getPlayerShopItemsDataRequest).mockResolvedValue(playerData({ dinoz: [{ placeId: 1, status: [] }] }) as never);
+		vi.mocked(playerDao.getPlayerShopItemsDataRequest).mockResolvedValue(
+			playerData({ dinoz: [{ placeId: 1, status: [] }] }) as never
+		);
 		await expect(getItemsFromShop(req({ shopId: '2' }))).rejects.toThrow('shop');
 	});
 });
@@ -88,7 +90,7 @@ describe('buyItem', () => {
 	});
 	it('throws when player missing', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(null as never);
-		await expect(buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '1' }))).rejects.toThrow("doesn't exist");
+		await expect(buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '1' }))).rejects.toThrow('playerNotFound');
 	});
 	it('throws when shop missing', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);
@@ -96,7 +98,9 @@ describe('buyItem', () => {
 	});
 	it('throws when item not sold in shop', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);
-		await expect(buyItem(req({ shopId: '1' }, { itemId: '999', quantity: '1' }))).rejects.toThrow('does not exist in the shop');
+		await expect(buyItem(req({ shopId: '1' }, { itemId: '999', quantity: '1' }))).rejects.toThrow(
+			'does not exist in the shop'
+		);
 	});
 	it('throws when not enough money', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData({ money: 0 }) as never);

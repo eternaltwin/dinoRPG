@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Dein Dinoz kann keine weiteren magischen Gegenstände ausrüsten.",
 	"maxQuantityInventory": "Dein Inventar ist bereits vollends mit diesem Gegenstand gefüllt.",
 	"cannotClaim": "Du kannst deinen Gewinn derzeit nicht einsammeln.",
-	"tooMuchDinoz": "Du hast bereits die maximale Anzahl an aktiven Dinoz erreicht.",
 	"tooMuchIngredient": "Du hast eine Zutat, die dabei ist, die Obergrenze zu überschreiten.",
 	"tooMuchItem": "Du hast einen Gegenstand, der dabei ist, die Obergrenze zu überschreiten.",
 	"equipedItems": "Du kannst einen Dinoz mit ausgerüsteten Gegenständen nicht verkaufen.",
@@ -63,13 +62,20 @@
 		"repairStackFull": "Es können keine weiteren Reparatur-Dinoz zugewiesen werden.",
 		"notEnoughIngredientsForRepair": "Der Klanschatzkammer mangelt es an Zutaten für diese Reparatur.",
 		"alreadyInDefense": "Dein Dinoz ist bereits Teil der Burgverteidigung.",
-		"sameClan": "Vous ne pouvez pas déclarer la guerre à votre propre clan.",
-		"castleAlreadyBuilt": "Le château de votre clan est déjà construit.",
-		"notInDefense": "Ce Dinoz ne fait pas partie de la défense du château."
+		"sameClan": "Du kannst dem eigenen Klan keinen Krieg erklären.",
+		"castleAlreadyBuilt": "Die Burg deines Klans ist bereits errichtet.",
+		"notInDefense": "Dieser Dinoz ist nicht Teil der Burgverteidigung.",
+		"outdatedDefense": "Verteidigung veraltet"
 	},
 	"error": {
+		"notYourDinoz": "Dieser Dinoz gehört dir nicht.",
+		"noDinozAtCemetary": "Keiner deiner Dinoz ist auf dem Friedhof.",
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
-		"notYourDinoz": "Dieser Dinoz gehört dir nicht"
+		"dinozInventoryNotEmpty": "Dein Dinoz muss seine Ausrüstung ablegen.",
+		"dinozNotAvailable": "Dein Dinoz steht für diese Aktion nicht zur Verfügung.",
+		"notEnoughTickets": "Du hast nicht genügend Gutscheine, um diese Aktion auszuführen.",
+		"noShopAccess": "Du erfüllst nicht die Bedingungen, um dieses Geschäft aufzusuchen.",
+		"tooManyItems": "Du hast zu viele Gegenstände, um diesen Vorgang durchzuführen."
 	},
 	"fb": {
 		"error": {
@@ -235,19 +241,22 @@
 		"archiveNotFound": "Archiv nicht gefunden",
 		"inexistantOpponent": "Gegner nicht gefunden",
 		"notFightedOpponent": "Dieser Gegner wurde bereits bezwungen",
-		"qualificationOver": "La phase de qualification est terminée.",
-		"dinozTooLowLevel": "Un Dinoz n'a pas le niveau requis (niveau 10 minimum).",
-		"dinozTooHighLevel": "Un Dinoz dépasse le niveau maximum autorisé.",
-		"wrongRace": "Une race de votre équipe n'est pas autorisée pour ce tournoi.",
-		"alreadyRegistered": "Vous avez déjà une équipe inscrite pour ce tournoi.",
+		"qualificationOver": "Die Qualifikationsphase ist vorbei.",
+		"dinozTooLowLevel": "Ein Dinoz hat nicht die erforderliche Mindeststufe (mindestens 10).",
+		"dinozTooHighLevel": "Ein Dinoz überschreitet die zugelassene Höchststufe.",
+		"wrongRace": "Eine Rasse innerhalb deiner Mannschaft ist zu diesem Turnier nicht zugelassen.",
+		"alreadyRegistered": "Du hast für dieses Turnier bereits eine angemeldete Mannschaft.",
 		"teamSize": "Mannschaften bestehen aus {{nb}} Mitgliedern mindestens {{races}} verschiedener Rassen.",
 		"teamSize_singleRace": "Die Mannschaften bestehen aus {{nb}} Mitgliedern.",
 		"raceLimit": "Die für die Teilnahme gestatteten Rassen sind:{{races}}.",
 		"levelLimit": "Die Höchststufe ist auf {{level}} begrenzt",
 		"poison": "Vergiftung ist eingeschaltet",
 		"nopoison": "Vergiftung ist ausgeschaltet",
+		"goldReward": "{{value}} Goldstücke :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} Punkte**: {{rewards}}.",
 		"newsTitle": "Neues Inter-Dojo Turnier",
-		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox und 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 3,75% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 1,875% des Preisgeldes.\n- Für diejenigen, die nur einen Sieg errungen haben, jeweils 0,75% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,25% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die die Meilensteine von 500, 750, 1000, 1200, 1300 und 1400 Punkten erreicht haben, Belohnungen erhalten werden!\n\nWir wünschen allen ein gutes Turnier!"
+		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die bestimmte Punktemeilensteine erreicht haben, Belohnungen erhalten werden! Diese sind beim Erreichen jedes weiteren Punktemeilensteins kumulativ.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
 	},
 	"race": {
 		"1": "Möffe",
@@ -285,6 +294,17 @@
 		"3": "Dritter",
 		"4": "Vierter",
 		"5": "Fünfter"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Leerensphäre | Leerensphären",
+			"souffet_egg": "Wespel-Ei | Wespel-Eier",
+			"toufufu_baby": "Tofufu-Junges | Tofufu-Jungen",
+			"toufufu_baby_rare": "Seltenes Tofufu-Junges | Seltene Tofufu-Jungen",
+			"golden_napodino": "Gold-Napodino | Gold-Napodinos",
+			"box_epic": "Epische Geschenkbox | Epische Geschenkboxen",
+			"box_legendary": "Legendäre Geschenkbox | Legendäre Geschenkboxen"
+		}
 	},
 	"reward": {
 		"perle": "Perle aus dem Brunnen",
@@ -331,12 +351,25 @@
 		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** die Stufe {{level}} erreicht hat!",
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Dein Dinoz ist nicht am Eingang zum Verlies.",
+		"wrongTeam": "In diesem Verlies befindet sich bereits eine andere Gruppe.",
+		"noRun": "Du hast dieses Verlies noch nie besucht.",
+		"notAtExit": "An dieser Stelle kannst du das Verlies nicht verlassen!",
+		"notHealing": "Du kannst diesen Gegenstand nur in einem Heilungsbereich verwenden."
+	},
 	"UnavailableReason": {
 		"frozen": "Dein Dinoz ist eingefroren.",
+		"unfreezing": "Dein Dinoz ist dabei, aufgetaut zu werden.",
+		"defending": "Dein Dinoz verteidigt eure Klanburg.",
+		"restingAttack": "Dein Dinoz erholt sich gerade von dem Kampf.",
 		"sacrificed": "Dein Dinoz wurde geopfert.",
+		"unsacrificing": "Dein Dinoz ist dabei, wiederbelebt zu werden.",
 		"selling": "Dein Dinoz wird verkauft.",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Dein Dinoz ruht sich aus."
+		"superdom": "Dein Dinoz ist am SuperDom.",
+		"resting": "Dein Dinoz ruht sich aus.",
+		"dungeon": "Dein Dinoz erkundet ein Verlies."
 	},
 	"fb_tournament": {
 		"noOpponent": "Es gibt derzeit keine Gegner mehr, gegen die du kämpfen könntest."

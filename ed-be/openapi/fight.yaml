@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG Fight API
+  version: '1.0'
+  description: Endpoints for launching a fight and replaying an archived fight.
+paths:
+  /api/v1/fight:
+    put:
+      summary: Process a fight for a dinoz
+      description: >
+        Authenticates the caller, resolves the dinoz's team, and processes a fight
+        (either a special movement-triggered encounter or a regular monster fight
+        at the dinoz's current place). Consumes the team's fight action and updates
+        kill tracking stats.
+      tags:
+        - Fight
+      security:
+        - authHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - dinozId
+              properties:
+                dinozId:
+                  type: integer
+                  description: ID of the dinoz that launches the fight.
+      responses:
+        '200':
+          description: Result of the fight.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FightResult'
+        '400':
+          description: Validation error (e.g. missing/non-numeric dinozId).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Fight could not be processed (expected domain errors such as "not
+            logged in", dinoz not found/owned, dinoz not fightable, missing
+            team member, etc., as well as unexpected server errors). The
+            response body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/fight/{archiveId}:
+    get:
+      summary: Replay an archived fight
+      description: Fetches a previously archived fight by its ID and returns its full replay data.
+      tags:
+        - Fight
+      parameters:
+        - in: path
+          name: archiveId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID of the archived fight.
+      responses:
+        '200':
+          description: Replay data for the archived fight.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FightReplay'
+        '400':
+          description: Validation error (archiveId is not a valid UUID).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: >
+            Replay could not be found or another error occurred. The response
+            body is a plain-text error message.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    authHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: >
+        Custom "playerId:token" style authorization header (not a standard
+        bearer token) checked by the backend's own auth() function.
+  schemas:
+    ValidationErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: object
+          description: express-validator Result object describing the failed validation(s).
+    FighterRecap:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          description: Fighter type (e.g. dinoz or monster).
+        name:
+          type: string
+        level:
+          type: integer
+        display:
+          type: string
+          nullable: true
+        survived:
+          type: boolean
+        attacker:
+          type: boolean
+        maxHp:
+          type: integer
+        startingHp:
+          type: integer
+        energy:
+          type: integer
+        maxEnergy:
+          type: integer
+        energyRecovery:
+          type: integer
+        dark:
+          type: boolean
+        size:
+          type: integer
+    FightResult:
+      type: object
+      description: Outcome of a processed fight.
+      properties:
+        fighters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FighterRecap'
+        goldEarned:
+          type: integer
+        xpEarned:
+          type: integer
+        levelUp:
+          type: boolean
+        totalHpLost:
+          type: integer
+        result:
+          type: boolean
+          description: Whether the attacking side (the dinoz's team) won.
+        history:
+          type: array
+          items:
+            type: object
+          description: Step-by-step fight log.
+        hpLost:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              hpLost:
+                type: integer
+        itemsUsed:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              itemsUsed:
+                type: array
+                items:
+                  type: integer
+        place:
+          type: integer
+          description: PlaceEnum value where the fight happened.
+        startText:
+          type: object
+          nullable: true
+        endText:
+          type: object
+          nullable: true
+        itemWon:
+          type: integer
+          nullable: true
+        statusReward:
+          type: integer
+          nullable: true
+        autoReequipped:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              itemId:
+                type: integer
+              count:
+                type: integer
+        missingReequip:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              itemId:
+                type: integer
+              count:
+                type: integer
+    FightReplay:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fighters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FighterRecap'
+        history:
+          type: array
+          items:
+            type: object
+        result:
+          type: boolean
+        seed:
+          type: string
+        leftPlayer:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        rightPlayer:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        metadata:
+          type: object
+          properties:
+            placeId:
+              type: integer
+            rightClanName:
+              type: string

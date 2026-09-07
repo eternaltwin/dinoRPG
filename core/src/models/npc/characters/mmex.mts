@@ -1,6 +1,7 @@
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
+import { Skill } from '../../dinoz/SkillList.mjs';
 
 export const MMEX: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -40,89 +41,95 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn',
 		nextStep: ['learn1', 'learn2', 'learn3', 'learn4', 'learn5', 'no'],
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.SKILL]: 61119 }
+			[Operator.NOT]: { [ConditionEnum.SKILL]: Skill.COMPETENCE_DOUBLE }
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn1: {
 		stepName: 'learn1',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11305 }, { [ConditionEnum.SKILL]: 41303 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.KAMIKAZE }, { [ConditionEnum.SKILL]: Skill.VOIE_DE_KAOS }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn1bis: {
 		stepName: 'learn1bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11310 }, { [ConditionEnum.SKILL]: 51306 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.VENGEANCE }, { [ConditionEnum.SKILL]: Skill.TALON_DACHILLE }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn2: {
 		stepName: 'learn2',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11308 }, { [ConditionEnum.SKILL]: 21303 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.WAIKIKIDO }, { [ConditionEnum.SKILL]: Skill.COCON }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn2bis: {
 		stepName: 'learn2bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11311 }, { [ConditionEnum.SKILL]: 31301 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.COMBUSTION }, { [ConditionEnum.SKILL]: Skill.ZERO_ABSOLU }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn3: {
 		stepName: 'learn3',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 21301 }, { [ConditionEnum.SKILL]: 41306 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.ETAT_PRIMAL }, { [ConditionEnum.SKILL]: Skill.VOIE_DE_GAIA }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn3bis: {
 		stepName: 'learn3bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 31304 }, { [ConditionEnum.SKILL]: 51312 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.SAPEUR }, { [ConditionEnum.SKILL]: Skill.FORME_VAPOREUSE }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn4: {
 		stepName: 'learn4',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 31311 }, { [ConditionEnum.SKILL]: 21309 }]
+			[Operator.AND]: [
+				{ [ConditionEnum.SKILL]: Skill.CLONE_AQUEUX },
+				{ [ConditionEnum.SKILL]: Skill.RESISTANCE_A_LA_MAGIE }
+			]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn4bis: {
 		stepName: 'learn4bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 51302 }, { [ConditionEnum.SKILL]: 41305 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.ELASTICITE }, { [ConditionEnum.SKILL]: Skill.ADRENALINE }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn5: {
 		stepName: 'learn5',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 41301 }, { [ConditionEnum.SKILL]: 31308 }]
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: Skill.FOUDRE }, { [ConditionEnum.SKILL]: Skill.MARECAGE }]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	learn5bis: {
 		stepName: 'learn5bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SKILL]: 51310 }, { [ConditionEnum.SKILL]: 21304 }]
+			[Operator.AND]: [
+				{ [ConditionEnum.SKILL]: Skill.PAUME_EJECTABLE },
+				{ [ConditionEnum.SKILL]: Skill.INSTINCT_SAUVAGE }
+			]
 		},
-		target: 'dolearn'
+		redirect: 'dolearn'
 	},
 	dolearn: {
 		stepName: 'dolearn',
@@ -130,7 +137,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.SKILL,
-				value: 61119
+				value: Skill.COMPETENCE_DOUBLE
 			}
 		]
 	},
@@ -142,7 +149,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'already',
 		nextStep: [],
 		condition: {
-			[ConditionEnum.SKILL]: 61119
+			[ConditionEnum.SKILL]: Skill.COMPETENCE_DOUBLE
 		}
 	},
 	missions: {
@@ -154,9 +161,5 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 				service: [ServiceEnum.MISSIONS]
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

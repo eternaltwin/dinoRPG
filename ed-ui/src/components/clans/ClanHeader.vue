@@ -83,10 +83,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
-import { API_BASE, utils } from '../../utils';
+import { API_BASE } from '../../utils';
 import DZUser from '../common/DZUser.vue';
 import { clanStore } from '../../store/clanStore';
 import Flags from '../common/Flags.vue';
+import { formatNumber } from '@drpg/core/utils/string';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
@@ -103,7 +104,7 @@ export default defineComponent({
 	components: { Flags, DZUser },
 	methods: {
 		moneyLint(quantity: number): string {
-			return utils.beautifulNumber(quantity.toString());
+			return formatNumber(quantity);
 		},
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });

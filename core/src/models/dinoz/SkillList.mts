@@ -372,7 +372,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 7 }
@@ -387,7 +386,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20,
@@ -404,7 +402,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 1 },
@@ -423,7 +420,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
 		probability: 25,
@@ -439,7 +435,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GRIFFES_ENFLAMMEES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10,
@@ -454,7 +449,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FORCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SANG_CHAUD]: {
@@ -466,7 +460,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COLERE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 4 }
@@ -481,7 +474,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COLERE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 3 },
@@ -505,7 +497,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GRIFFES_ENFLAMMEES],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ARTS_MARTIAUX]: {
@@ -517,7 +508,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FORCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
@@ -536,7 +526,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.BRASERO],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
 		probability: 10,
@@ -557,7 +546,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FORCE],
 		raceId: [RaceEnum.QUETZU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: -2 },
@@ -573,7 +561,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ARTS_MARTIAUX],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
 			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 5 }
@@ -588,7 +575,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SANG_CHAUD],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 },
@@ -604,7 +590,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHASSEUR_DE_GOUPIGNON],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 5,
@@ -619,7 +604,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SANG_CHAUD],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5
@@ -633,7 +617,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHARGE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5,
@@ -653,7 +636,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHASSEUR_DE_GOUPIGNON],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BOULE_DE_FEU]: {
@@ -665,7 +647,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SOUFFLE_ARDENT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 15,
@@ -680,7 +661,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ARTS_MARTIAUX],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.1 },
@@ -697,7 +677,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FURIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
@@ -712,7 +691,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FURIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.05 }
@@ -727,7 +705,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SOUFFLE_ARDENT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -741,7 +718,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ARTS_MARTIAUX],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 15,
@@ -759,7 +735,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DETONATION],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.BOUDDHA]: {
@@ -772,7 +747,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CONCENTRATION, Skill.ARTS_MARTIAUX, Skill.EVEIL, Skill.INVOCATEUR],
 		raceId: [RaceEnum.HIPPOCLAMP],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -791,7 +765,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PROPULSION_DIVINE],
 		raceId: [RaceEnum.QUETZU],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CHASSEUR_DE_DRAGON]: {
@@ -803,7 +776,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHASSEUR_DE_GEANT],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BELIER]: {
@@ -815,7 +787,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.KAMIKAZE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.TORCHE]: {
@@ -827,7 +798,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COMBUSTION],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SELF_CONTROL]: {
@@ -839,7 +809,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SIESTE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -3 }
@@ -854,7 +823,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.KAMIKAZE, Skill.VOIE_DE_KAOS, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 6 }
@@ -869,7 +837,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENGEANCE, Skill.TALON_DACHILLE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.COUNTER]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -884,7 +851,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AURA_INCANDESCENTE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 7,
@@ -899,7 +865,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VIGILANCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ARMURE_DE_BASALTE]: {
@@ -911,7 +876,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.WAIKIKIDO, Skill.COCON, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.15 }
@@ -926,7 +890,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COMBUSTION, Skill.ZERO_ABSOLU, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
@@ -943,7 +906,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_FATAL, Skill.PAUME_CHALUMEAU, Skill.INVOCATEUR],
 		raceId: [RaceEnum.FEROSS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -961,8 +923,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COULEE_DE_LAVE, Skill.PUREE_SALVATRICE, Skill.INVOCATEUR],
-		raceId: [RaceEnum.MOUEFFE, RaceEnum.MOUEFFE_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.MOUEFFE],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -980,8 +941,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.BOULE_DE_FEU, Skill.HERITAGE_FAROE, Skill.INVOCATEUR],
-		raceId: [RaceEnum.PIGMOU, RaceEnum.PIGMOU_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.PIGMOU],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -999,12 +959,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SELF_CONTROL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 6 },
-			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 },
 			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.EQUAL, value: 0 }
 		}
 	},
@@ -1017,7 +975,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.3 }
@@ -1032,7 +989,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.PROTEINES_DINOZIENNES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 15
@@ -1046,7 +1002,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.PROTEINES_DINOZIENNES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 10
@@ -1060,7 +1015,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.EXTENUATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 },
@@ -1076,7 +1030,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ROUGE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 10,
@@ -1094,7 +1047,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CARAPACE_DE_MAGMA],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.3 }
@@ -1109,7 +1061,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CARAPACE_DE_MAGMA],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.JOKER]: {
@@ -1121,7 +1072,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CRI_DE_GUERRE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ARMURE_DE_FEU]: {
@@ -1133,7 +1083,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CRI_DE_GUERRE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
@@ -1148,7 +1097,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.FIEVRE_BRULANTE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 20,
@@ -1165,7 +1113,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BENEDICTION_DARTEMIS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -1179,7 +1126,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BENEDICTION_DARTEMIS],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ACCLAMATION_FRATERNELLE]: {
@@ -1191,7 +1137,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.JOKER],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
 		probability: 15
@@ -1205,7 +1150,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ARMURE_DE_FEU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
@@ -1221,7 +1165,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.05 }
@@ -1236,7 +1179,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
@@ -1251,7 +1193,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
 			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 2 }
@@ -1266,7 +1207,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 3,
 		probability: 15,
@@ -1282,7 +1222,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CARAPACE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 20,
@@ -1297,7 +1236,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAUVAGERIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 15
@@ -1311,7 +1249,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CARAPACE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
@@ -1326,7 +1263,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAUVAGERIE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.FOUILLE]: {
@@ -1338,7 +1274,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ENDURANCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CROISSANCE]: {
@@ -1350,7 +1285,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ENDURANCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 },
@@ -1370,7 +1304,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.LANCEUR_DE_GLAND],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.ETAT_PRIMAL]: {
@@ -1382,7 +1315,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VIGNES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 10,
@@ -1399,7 +1331,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOUILLE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.COCON]: {
@@ -1411,7 +1342,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CROISSANCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: { operator: MathOperator.ADD, value: 2 }
@@ -1426,7 +1356,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.RENFORTS_KORGON],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
@@ -1441,7 +1370,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CROISSANCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 15 }
@@ -1456,7 +1384,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.RENFORTS_KORGON],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 }
@@ -1471,7 +1398,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VIGNES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 10,
@@ -1486,7 +1412,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TENACITE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
@@ -1501,7 +1426,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TENACITE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 50,
@@ -1518,7 +1442,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SYMPATIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.HERITAGE_FAROE]: {
@@ -1530,7 +1453,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SYMPATIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 12 },
@@ -1546,7 +1468,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOUILLE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.GROSSE_BEIGNE]: {
@@ -1558,7 +1479,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GRATTEUR],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 4,
 		probability: 10,
@@ -1575,7 +1495,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.HERITAGE_FAROE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 20
@@ -1589,7 +1508,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHARISME],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.INGENIEUR]: {
@@ -1601,7 +1519,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.INSTINCT_SAUVAGE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.GEANT]: {
@@ -1613,7 +1530,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COCON],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
@@ -1634,7 +1550,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PRINTEMPS_PRECOCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ARCHEOLOGUE]: {
@@ -1646,7 +1561,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DETECTIVE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BENEDICTION_DES_FEES]: {
@@ -1658,8 +1572,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COEUR_ARDENT, Skill.ETAT_PRIMAL, Skill.INVOCATEUR],
-		raceId: [RaceEnum.GORILLOZ, RaceEnum.GORILLOZ_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.GORILLOZ],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -1677,7 +1590,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ETAT_PRIMAL, Skill.VOIE_DE_GAIA, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: {
@@ -1702,7 +1614,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.INSTINCT_SAUVAGE, Skill.VENT_VIF, Skill.INVOCATEUR],
 		raceId: [RaceEnum.CASTIVORE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -1720,7 +1631,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GEANT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
@@ -1741,7 +1651,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -1756,7 +1665,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SOURCE_DE_VIE]: {
@@ -1768,7 +1676,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.OXYGENATION_MUSCULAIRE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.VIDE_ENERGETIQUE]: {
@@ -1780,7 +1687,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.OXYGENATION_MUSCULAIRE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BOUCLIER_DINOZ]: {
@@ -1792,7 +1698,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.VERT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 9,
 		probability: 10,
@@ -1809,7 +1714,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.VERT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 0.85 }
@@ -1824,7 +1728,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.SOURCE_DE_VIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 10
@@ -1838,7 +1741,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.VIDE_ENERGETIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
 		probability: 10
@@ -1852,7 +1754,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BOUCLIER_DINOZ],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.PEAU_DE_FER]: {
@@ -1864,7 +1765,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ACIDE_LACTIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 }
@@ -1879,7 +1779,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.LANCER_DE_ROCHE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.COURANT_DE_VIE]: {
@@ -1891,7 +1790,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.COURBATURES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_DEFENSE]: { operator: MathOperator.ADD, value: 20 },
@@ -1907,7 +1805,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.FORCE_CONTROL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 10
@@ -1921,7 +1818,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.PEAU_DE_FER],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 20 }
@@ -1936,7 +1832,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CHAMPOLLION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 5,
@@ -1951,7 +1846,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CHAMPOLLION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 100 }
@@ -1966,7 +1860,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.COURANT_DE_VIE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.AMAZONIE]: {
@@ -1978,7 +1871,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BERSERK],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 20,
@@ -1995,7 +1887,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.RIVIERE_DE_VIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -2010,7 +1901,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 25,
@@ -2025,7 +1915,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 4 }
@@ -2040,7 +1929,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 }
@@ -2055,7 +1943,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 10 }
@@ -2070,7 +1957,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CANON_A_EAU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10,
@@ -2085,7 +1971,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CANON_A_EAU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 40,
@@ -2101,7 +1986,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PERCEPTION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 7,
@@ -2124,7 +2008,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PERCEPTION],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.POCHE_VENTRALE]: {
@@ -2136,7 +2019,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MUTATION],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.KARATE_SOUS_MARIN]: {
@@ -2148,7 +2030,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MUTATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 10 }
@@ -2164,7 +2045,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MUTATION],
 		raceId: [RaceEnum.QUETZU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.1 }
@@ -2179,7 +2059,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VITALITE],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 4,
 		probability: 8,
@@ -2195,7 +2074,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GEL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 25 }
@@ -2210,7 +2088,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GEL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -2224,7 +2101,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DOUCHE_ECOSSAISE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SAPEUR]: {
@@ -2236,7 +2112,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DOUCHE_ECOSSAISE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.COUP_FATAL]: {
@@ -2248,7 +2123,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_SOURNOIS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 2,
@@ -2271,7 +2145,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_SOURNOIS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 10 }
@@ -2286,7 +2159,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.APPRENTI_PECHEUR],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MARECAGE]: {
@@ -2298,7 +2170,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.APPRENTI_PECHEUR],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
 		probability: 15,
@@ -2313,7 +2184,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.POCHE_VENTRALE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 100 }
@@ -2328,7 +2198,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.POCHE_VENTRALE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CLONE_AQUEUX]: {
@@ -2340,7 +2209,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.KARATE_SOUS_MARIN],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15
@@ -2354,7 +2222,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.KARATE_SOUS_MARIN],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.DELUGE]: {
@@ -2366,7 +2233,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MOIGNONS_LIQUIDES],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 5,
 		probability: 5,
@@ -2382,7 +2248,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ECAILLES_LUMINESCENTES],
 		raceId: [RaceEnum.QUETZU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 },
@@ -2398,7 +2263,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PETRIFICATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20,
@@ -2413,7 +2277,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAPEUR],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN_AVANCE]: {
@@ -2425,7 +2288,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ENTRAINEMENT_SOUS_MARIN],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 20 }
@@ -2440,7 +2302,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PECHEUR_CONFIRME],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CUISINIER]: {
@@ -2452,7 +2313,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SUMO],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SANG_ACIDE]: {
@@ -2464,7 +2324,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GRIFFES_EMPOISONNEES],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BULLE]: {
@@ -2476,7 +2335,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAPEUR, Skill.FORME_VAPOREUSE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		visualEffect: SkillVisualEffect.ATTACH,
 		fx: 'fxBubble'
@@ -2490,7 +2348,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CLONE_AQUEUX, Skill.RESISTANCE_A_LA_MAGIE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
@@ -2510,7 +2367,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENGEANCE, Skill.SANS_PITIE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.SIRAIN],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -2528,7 +2384,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ENTRAINEMENT_SOUS_MARIN_AVANCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ELEMENT]: { operator: MathOperator.ADD, value: 5 }
@@ -2544,7 +2399,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SANG_ACIDE, Skill.TORNADE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.MAHAMUTI],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -2562,7 +2416,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: { operator: MathOperator.MULTIPLY, value: 2 }
@@ -2577,7 +2430,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.EAU_DIVINE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 30 },
@@ -2598,7 +2450,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.EAU_DIVINE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MUE_ACQUEUSE]: {
@@ -2610,7 +2461,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.RADIATIONS_GAMMA],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
@@ -2625,7 +2475,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.RADIATIONS_GAMMA],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.5 },
@@ -2641,7 +2490,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BLEU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15
@@ -2655,7 +2503,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MUE_ACQUEUSE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
@@ -2670,7 +2517,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MUE_ACQUEUSE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CLEPTOMANE]: {
@@ -2682,7 +2528,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CARAPACE_BLINDEE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ABYSSE]: {
@@ -2694,7 +2539,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.DIETE_CHROMATIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 20,
@@ -2711,7 +2555,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.DIETE_CHROMATIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 10
@@ -2725,7 +2568,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.EFFLUVE_APHRODISIAQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
@@ -2740,7 +2582,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.NEMO],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15,
@@ -2760,7 +2601,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CLEPTOMANE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_TESLA]: {
@@ -2772,7 +2612,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ABYSSE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -2786,7 +2625,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BANNI_DES_DIEUX],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 80 }
@@ -2802,7 +2640,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.FOCUS]: {
@@ -2814,7 +2651,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
@@ -2830,7 +2666,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.SPEED]: { operator: MathOperator.MULTIPLY, value: 0.85 }
@@ -2845,7 +2680,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 5 }
@@ -2860,7 +2694,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOCUS],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ATTAQUE_ECLAIR]: {
@@ -2872,7 +2705,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CELERITE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.6 }
@@ -2887,7 +2719,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.INTELLIGENCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.COUP_DOUBLE]: {
@@ -2899,7 +2730,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CELERITE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -2914,7 +2744,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOCUS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: { operator: MathOperator.ADD, value: 2 }
@@ -2929,7 +2758,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.INTELLIGENCE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ECLAIR_SINUEUX]: {
@@ -2941,7 +2769,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.REFLEX],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 3,
 		probability: 10,
@@ -2956,7 +2783,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -2971,7 +2797,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PARATONNERRE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.VOIE_DE_KAOS]: {
@@ -2983,7 +2808,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CONCENTRATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 6 },
@@ -2999,7 +2823,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ADRENALINE]: {
@@ -3011,7 +2834,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PREMIERS_SOINS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.5 }
@@ -3026,7 +2848,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CONCENTRATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
 			[Stat.WOOD_DEFENSE]: { operator: MathOperator.ADD, value: 3 },
@@ -3042,7 +2863,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PREMIERS_SOINS],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.DANSE_FOUDROYANTE]: {
@@ -3054,7 +2874,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COUP_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 10,
@@ -3073,7 +2892,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ATTAQUE_ECLAIR],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: 7 }
@@ -3088,7 +2906,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.REGENERESCENCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 15,
@@ -3105,7 +2922,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.REGENERESCENCE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
@@ -3124,7 +2940,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PARATONNERRE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
@@ -3143,7 +2958,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ECLAIR_SINUEUX],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		visualEffect: SkillVisualEffect.ATTACH,
 		fx: 'fxSurvivor'
@@ -3157,7 +2971,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VOIE_DE_GAIA],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 10,
@@ -3172,7 +2985,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MEDECINE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BENEDICTION]: {
@@ -3184,7 +2996,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PUREE_SALVATRICE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 25
@@ -3198,7 +3009,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VOIE_DE_KAOS],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 5,
@@ -3213,7 +3023,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FISSION_ELEMENTAIRE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.REINCARNATION]: {
@@ -3225,7 +3034,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PLAN_DE_CARRIERE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SURCHARGE]: {
@@ -3237,7 +3045,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ELASTICITE, Skill.ADRENALINE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: { operator: MathOperator.MULTIPLY, value: 1.15 }
@@ -3252,7 +3059,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOUDRE, Skill.MARECAGE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.GOLEM]: {
@@ -3265,7 +3071,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FISSION_ELEMENTAIRE, Skill.AURA_INCANDESCENTE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.ROCKY],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -3283,8 +3088,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOUDRE, Skill.ELASTICITE, Skill.INVOCATEUR],
-		raceId: [RaceEnum.PLANAILLE, RaceEnum.PLANAILLE_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.PLANAILLE],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -3303,7 +3107,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.FOUDRE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.QUETZU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -3322,7 +3125,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CHARISME, Skill.DANSE_FOUDROYANTE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.TOUFUFU],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -3340,7 +3142,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CREPUSCULE_FLAMBOYANT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
@@ -3356,7 +3157,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AUBE_FEUILLUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
@@ -3372,7 +3172,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.BENEDICTION],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SOUTIEN_MORAL]: {
@@ -3384,7 +3183,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.1 }
@@ -3399,7 +3197,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.SOUTIEN_MORAL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -3414,7 +3211,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.SOUTIEN_MORAL],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MORSURE_DU_SOLEIL]: {
@@ -3426,7 +3222,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.STIMULATION_CARDIAQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -3440,7 +3235,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.JAUNE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 10
@@ -3454,7 +3248,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MORSURE_DU_SOLEIL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: { operator: MathOperator.ADD, value: 50 },
@@ -3470,7 +3263,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MORSURE_DU_SOLEIL],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.BARRIERE_ELECTRIFIEE]: {
@@ -3482,7 +3274,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CRAMPE_CHRONIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
@@ -3497,7 +3288,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.CRAMPE_CHRONIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_AERIEN]: {
@@ -3509,7 +3299,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BATTERIE_SUPPLEMENTAIRE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -3523,7 +3312,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.EINSTEIN],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 20,
@@ -3540,7 +3328,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BARRIERE_ELECTRIFIEE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
@@ -3555,7 +3342,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ORACLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -3570,7 +3356,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 5 }
@@ -3585,7 +3370,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MISTRAL]: {
@@ -3597,7 +3381,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 15,
@@ -3612,7 +3395,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
 		probability: 15,
@@ -3627,8 +3409,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		raceId: [RaceEnum.PTEROZ, RaceEnum.PLANAILLE, RaceEnum.PLANAILLE_DEMON, RaceEnum.NUAGOZ, RaceEnum.SOUFFLET],
-		isBaseSkill: false,
+		raceId: [RaceEnum.PTEROZ, RaceEnum.PLANAILLE, RaceEnum.NUAGOZ, RaceEnum.SOUFFLET],
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30
@@ -3642,7 +3423,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AGILITE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 }
@@ -3657,7 +3437,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AGILITE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ANALYSE]: {
@@ -3669,7 +3448,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.STRATEGIE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.CUEILLETTE]: {
@@ -3681,7 +3459,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.STRATEGIE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.TAICHI]: {
@@ -3693,7 +3470,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MISTRAL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 15 },
@@ -3709,7 +3485,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MISTRAL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
 		probability: 3,
@@ -3724,7 +3499,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AIGUILLON],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.DISQUE_VACUUM]: {
@@ -3736,7 +3510,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ESQUIVE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 7,
@@ -3751,7 +3524,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ESQUIVE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 10 }
@@ -3769,7 +3541,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAUT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
 		probability: 20,
@@ -3788,7 +3559,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SAUT],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 2 },
@@ -3805,7 +3575,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ANALYSE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.TALON_DACHILLE]: {
@@ -3817,7 +3586,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ANALYSE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 2 },
@@ -3836,7 +3604,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CUEILLETTE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 10,
@@ -3852,7 +3619,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CUEILLETTE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.EVEIL]: {
@@ -3864,7 +3630,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TAICHI],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
@@ -3879,7 +3644,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TAICHI],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 15,
@@ -3899,7 +3663,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TORNADE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 15
@@ -3913,7 +3676,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.TORNADE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.HYPNOSE]: {
@@ -3925,7 +3687,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AURA_PUANTE],
-		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 7,
 		probability: 5,
@@ -3949,7 +3710,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PAUME_EJECTABLE, Skill.INSTINCT_SAUVAGE, Skill.COMPETENCE_DOUBLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 20,
@@ -3964,7 +3724,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DISQUE_VACUUM],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 3,
@@ -3979,7 +3738,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ATTAQUE_PLONGEANTE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.HALEINE_FETIVE]: {
@@ -3991,7 +3749,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.NUAGE_TOXIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MEDITATION_SOLITAIRE]: {
@@ -4003,7 +3760,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.EVEIL],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
@@ -4021,7 +3777,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.EVEIL],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SOUFFLE_DE_VIE]: {
@@ -4033,7 +3788,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENT_VIF],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
@@ -4045,8 +3799,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COMBUSTION, Skill.EVEIL, Skill.INVOCATEUR],
-		raceId: [RaceEnum.KABUKI, RaceEnum.KABUKI_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.KABUKI],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4065,7 +3818,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DANSE_FOUDROYANTE, Skill.DISQUE_VACUUM, Skill.INVOCATEUR],
 		raceId: [RaceEnum.NUAGOZ],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4086,7 +3838,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MEDITATION_SOLITAIRE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
@@ -4105,7 +3856,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SOUFFLE_ARDENT, Skill.HALEINE_FETIVE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.PTEROZ],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4124,7 +3874,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.HALEINE_FETIVE, Skill.TENACITE, Skill.COUP_SOURNOIS, Skill.INVOCATEUR],
 		raceId: [RaceEnum.SANTAZ],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4142,7 +3891,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MEDITATION_TRANSCENDANTALE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MAITRISE_CORPORELLE]: {
@@ -4154,7 +3902,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 1.25 }
@@ -4169,7 +3916,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MAITRISE_CORPORELLE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.ANAEROBIE]: {
@@ -4181,7 +3927,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.MAITRISE_CORPORELLE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 0.75 }
@@ -4196,7 +3941,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BLANC],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.FLAGELLATION]: {
@@ -4208,7 +3952,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BLANC],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY_RECOVERY]: { operator: MathOperator.MULTIPLY, value: 0.85 }
@@ -4223,7 +3966,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ANAEROBIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 20 }
@@ -4238,7 +3980,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.ANAEROBIE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: { operator: MathOperator.ADD, value: 20 }
@@ -4253,7 +3994,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.DOUBLE_FACE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 20,
@@ -4270,7 +4010,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.FLAGELLATION],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.5 }
@@ -4285,7 +4024,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.SOUFFLE_DANGE],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SURPLIS_DHADES]: {
@@ -4297,7 +4035,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.OURAGAN],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.RECEPTABLE_THERMIQUE]: {
@@ -4309,7 +4046,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.OURAGAN],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
 		probability: 15
@@ -4323,7 +4059,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.OURANOS],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.SYLPHIDES]: {
@@ -4335,7 +4070,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.TWINOID_500MG],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 10,
@@ -4350,7 +4084,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.LONDUHAUT],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.MUTINERIE]: {
@@ -4362,7 +4095,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.RECEPTABLE_THERMIQUE],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 10,
@@ -4379,7 +4111,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.SURPLIS_DHADES],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 15,
@@ -4395,7 +4126,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		isBaseSkill: false,
+		unlockedFrom: [],
 		isSphereSkill: false
 	},
 	[Skill.LIMITE_BRISEE]: {
@@ -4406,7 +4137,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		isBaseSkill: false,
+		unlockedFrom: [],
 		isSphereSkill: false
 	},
 	[Skill.INVOCATEUR]: {
@@ -4417,7 +4148,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		isBaseSkill: false,
+		unlockedFrom: [],
 		isSphereSkill: false
 	},
 	[Skill.FRENESIE_COLLECTIVE]: {
@@ -4428,8 +4159,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.WANWAN_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false,
 		priority: 5,
 		probability: 5,
@@ -4446,8 +4176,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.WINKS],
-		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: { operator: MathOperator.MULTIPLY, value: 1.05 }
@@ -4461,8 +4191,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.PIGMOU],
-		isBaseSkill: true,
 		isSphereSkill: false
 	},
 	[Skill.ROCK]: {
@@ -4473,8 +4203,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.ROCKY],
-		isBaseSkill: true,
 		isSphereSkill: false
 	},
 	[Skill.PIETINEMENT]: {
@@ -4485,8 +4215,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.SANTAZ],
-		isBaseSkill: true,
 		isSphereSkill: false
 	},
 	[Skill.CUIRASSE]: {
@@ -4497,8 +4227,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.FEROSS],
-		isBaseSkill: true,
 		isSphereSkill: false
 	},
 	[Skill.INSAISISSABLE]: {
@@ -4509,8 +4239,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.KABUKI, RaceEnum.KABUKI_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
+		raceId: [RaceEnum.KABUKI],
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: { operator: MathOperator.MULTIPLY, value: 1.1 }
@@ -4524,8 +4254,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.TOUFUFU],
-		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
 			[Stat.SUPER_EVASION]: { operator: MathOperator.MULTIPLY, value: 1.15 }
@@ -4539,8 +4269,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.SOUFFLET],
-		isBaseSkill: true,
 		isSphereSkill: false
 	},
 	[Skill.GROS_COSTAUD]: {
@@ -4551,8 +4281,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.GORILLOZ_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: { operator: MathOperator.ADD, value: 5 },
@@ -4570,8 +4299,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.KABUKI_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false
 	},
 	[Skill.ECRASEMENT]: {
@@ -4582,8 +4310,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.MAHAMUTI],
-		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 25,
@@ -4597,8 +4325,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.MOUEFFE_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false
 	},
 	[Skill.CHARGE_PIGMOU]: {
@@ -4609,8 +4336,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.PIGMOU_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false,
 		priority: 2,
 		probability: 20,
@@ -4629,8 +4355,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.PLANAILLE_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: { operator: MathOperator.MULTIPLY, value: 1.25 },
@@ -4645,8 +4370,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
+		unlockedFrom: [],
 		raceId: [RaceEnum.TRICERAGNON],
-		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15,
@@ -4664,8 +4389,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		raceId: [RaceEnum.WINKS_DEMON],
-		isBaseSkill: true,
+		unlockedFrom: [],
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: { operator: MathOperator.ADD, value: 6 },
@@ -4685,7 +4409,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ARCHANGE_CORROSIF, Skill.FORME_VAPOREUSE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.SMOG],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4704,7 +4427,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PRINTEMPS_PRECOCE, Skill.VENT_VIF, Skill.INVOCATEUR],
 		raceId: [RaceEnum.SOUFFLET],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4723,7 +4445,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.RECEPTACLE_ROCHEUX, Skill.AMAZONIE, Skill.INVOCATEUR],
 		raceId: [RaceEnum.TRICERAGNON],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
 		probability: 15,
@@ -4741,8 +4462,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GARDE_FORESTIER, Skill.CUEILLETTE, Skill.INVOCATEUR],
-		raceId: [RaceEnum.WANWAN, RaceEnum.WANWAN_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.WANWAN],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4760,8 +4480,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.ADRENALINE, Skill.MAITRE_PECHEUR, Skill.INVOCATEUR],
-		raceId: [RaceEnum.WINKS, RaceEnum.WINKS_DEMON],
-		isBaseSkill: false,
+		raceId: [RaceEnum.WINKS],
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
@@ -4779,7 +4498,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.VEILLEUSE]: {
@@ -4791,7 +4509,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.GROS_DORMEUR],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.MATELASSEUR]: {
@@ -4803,7 +4520,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VEILLEUSE],
-		isBaseSkill: false,
 		isSphereSkill: true
 	},
 	[Skill.M_RENFORTS]: {
@@ -4814,7 +4530,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -4827,7 +4542,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 25
@@ -4840,7 +4554,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 60,
@@ -4858,7 +4571,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_FLIGHT]: {
@@ -4869,7 +4581,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 60
@@ -4882,7 +4593,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
@@ -4900,7 +4610,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_PROTECTION]: {
@@ -4911,7 +4620,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_COMET]: {
@@ -4922,7 +4630,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
@@ -4936,7 +4643,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -4950,7 +4656,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 15,
@@ -4968,7 +4673,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 50
@@ -4981,7 +4685,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_STINGER]: {
@@ -4992,7 +4695,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20
@@ -5005,7 +4707,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_WORM_2]: {
@@ -5016,7 +4717,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -5030,7 +4730,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_INSTANT_FLEE]: {
@@ -5041,7 +4740,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 100
@@ -5054,7 +4752,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -5067,7 +4764,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 20,
@@ -5086,7 +4782,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 0
@@ -5099,7 +4794,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30
@@ -5112,7 +4806,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15
@@ -5125,7 +4818,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_ELEMENTAL_DISCIPLE]: {
@@ -5136,7 +4828,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5149,7 +4840,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5162,7 +4852,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5175,7 +4864,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_HEAL_GROUP]: {
@@ -5186,7 +4874,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5199,7 +4886,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5212,7 +4898,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 50,
@@ -5228,7 +4913,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_INFINITE_REINFORCEMENTS]: {
@@ -5239,7 +4923,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	// Note: name on MT's code is frutox
@@ -5251,7 +4934,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 60,
@@ -5267,7 +4949,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20
@@ -5280,7 +4961,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 10
@@ -5293,7 +4973,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 30
@@ -5306,7 +4985,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 60
@@ -5319,7 +4997,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 25
@@ -5332,7 +5009,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5345,7 +5021,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_GRIZOU]: {
@@ -5356,7 +5031,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -5370,7 +5044,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: { operator: MathOperator.ADD, value: -30 },
@@ -5385,7 +5058,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5,
@@ -5394,7 +5066,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		}
 	}
 };
-
 export const uSkillsToPlayerFieldMap: Map<
 	Skill,
 	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'

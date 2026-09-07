@@ -23,6 +23,7 @@ import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketServerCustom';
 import { IncomingMessage } from 'http';
+import { flushAllRuns } from './dao/dungeonRunDao.js';
 import { checkBans } from './cron/checkBans.js';
 import TournamentManager from './utils/tournamentManager.js';
 import { prisma } from './prisma.js';
@@ -30,6 +31,7 @@ import { resumeTournaments } from './business/forceBruteService.js';
 import { scheduleAtStart } from './business/scheduleService.js';
 import { schedulePollExpiration } from './business/newsService.js';
 import { scheduleWarExpiration } from './business/clanWar.js';
+import { scheduleDinozEndOfUnavailability } from './business/dinozService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -61,6 +63,16 @@ export function main(cx: ServerContext) {
 	app.use(lockMiddleware);
 	app.use(readyCheck);
 
+	// Dungeon runs are write-back cached (dungeonRunDao), so a shutdown that skips
+	// this rewinds every in-progress run by up to FLUSH_MS of movement.
+	for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+		process.once(signal, () => {
+			flushAllRuns()
+				.catch((error: Error) => cx.logger.error(`Failed to flush dungeon runs on ${signal}: ${error}`))
+				.finally(() => process.exit(0));
+		});
+	}
+
 	app.listen(port, () => {
 		cx.logger.info(`Server listening on port ${port}`);
 
@@ -85,6 +97,7 @@ export function main(cx: ServerContext) {
 	itinerantMerchant().start();
 	checkBans().start();
 
+	scheduleDinozEndOfUnavailability();
 	scheduleOffersExpiration();
 	scheduleEndedOffersExpiration();
 	schedulePollExpiration();

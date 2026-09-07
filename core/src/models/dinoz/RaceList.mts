@@ -4,12 +4,33 @@
 import { DinozRace } from './DinozRace.mjs';
 import { Skill } from './SkillList.mjs';
 import { RaceEnum } from '../enums/RaceEnum.mjs';
+import { ConditionEnum } from '../enums/Parser.mjs';
+import { Reward } from '../reward/RewardList.mjs';
+import { ElementType } from '../enums/ElementType.mjs';
 
 export const raceList: Record<RaceEnum, DinozRace> = {
 	[RaceEnum.MOUEFFE]: {
 		raceId: RaceEnum.MOUEFFE,
-		isDemon: false,
 		name: 'moueffe',
+		demon: {
+			condition: {
+				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
+			},
+			price: 600,
+			skills: [Skill.FORCE_DE_LUMIERE],
+			// 4 fire, 2 wood, 1 water, 1 lightning, 1 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.FIRE,
+				[4]: ElementType.FIRE,
+				[5]: ElementType.FIRE,
+				[6]: ElementType.WOOD,
+				[7]: ElementType.WOOD,
+				[8]: ElementType.WATER,
+				[9]: ElementType.LIGHTNING,
+				[10]: ElementType.AIR
+			}
+		},
 		nbrFire: 2,
 		nbrWood: 0,
 		nbrWater: 0,
@@ -23,32 +44,27 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 3
 		},
 		price: 16000,
-		swfLetter: '00'
-	},
-	[RaceEnum.MOUEFFE_DEMON]: {
-		raceId: RaceEnum.MOUEFFE_DEMON,
-		isDemon: true,
-		name: 'moueffe_demon',
-		nbrFire: 2,
-		nbrWood: 0,
-		nbrWater: 0,
-		nbrLightning: 0,
-		nbrAir: 0,
-		upChance: {
-			fire: 10,
-			wood: 4,
-			water: 2,
-			lightning: 1,
-			air: 3
-		},
-		price: 600,
-		swfLetter: '0A',
-		skillId: [Skill.FORCE_DE_LUMIERE]
+		swfLetter: '0'
 	},
 	[RaceEnum.PIGMOU]: {
 		raceId: RaceEnum.PIGMOU,
-		isDemon: false,
 		name: 'pigmou',
+		demon: {
+			price: 800,
+			skills: [Skill.CHARGE_PIGMOU],
+			// 5 fire, 1 wood, 2 water, 1 lightning, 0 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.FIRE,
+				[4]: ElementType.FIRE,
+				[5]: ElementType.FIRE,
+				[6]: ElementType.FIRE,
+				[7]: ElementType.WOOD,
+				[8]: ElementType.WATER,
+				[9]: ElementType.WATER,
+				[10]: ElementType.LIGHTNING
+			}
+		},
 		nbrFire: 2,
 		nbrWood: 0,
 		nbrWater: 0,
@@ -62,33 +78,28 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 1
 		},
 		price: 20000,
-		swfLetter: '10',
-		skillId: [Skill.CHARGE_CORNUE]
-	},
-	[RaceEnum.PIGMOU_DEMON]: {
-		raceId: RaceEnum.PIGMOU_DEMON,
-		isDemon: true,
-		name: 'pigmou_demon',
-		nbrFire: 2,
-		nbrWood: 0,
-		nbrWater: 0,
-		nbrLightning: 0,
-		nbrAir: 0,
-		upChance: {
-			fire: 12,
-			wood: 3,
-			water: 2,
-			lightning: 2,
-			air: 1
-		},
-		price: 800,
-		swfLetter: '1A',
-		skillId: [Skill.CHARGE_PIGMOU]
+		swfLetter: '1',
+		skills: [Skill.CHARGE_CORNUE]
 	},
 	[RaceEnum.WINKS]: {
 		raceId: RaceEnum.WINKS,
-		isDemon: false,
 		name: 'winks',
+		demon: {
+			price: 700,
+			skills: [Skill.DUR_A_CUIRE],
+			// 0 fire, 1 wood, 4 water, 3 lightning, 1 air
+			guaranteed_elements: {
+				[2]: ElementType.WOOD,
+				[3]: ElementType.WATER,
+				[4]: ElementType.WATER,
+				[5]: ElementType.WATER,
+				[6]: ElementType.WATER,
+				[7]: ElementType.LIGHTNING,
+				[8]: ElementType.LIGHTNING,
+				[9]: ElementType.LIGHTNING,
+				[10]: ElementType.AIR
+			}
+		},
 		nbrFire: 0,
 		nbrWood: 0,
 		nbrWater: 1,
@@ -102,33 +113,31 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 2
 		},
 		price: 20000,
-		swfLetter: '20',
-		skillId: [Skill.COQUE]
-	},
-	[RaceEnum.WINKS_DEMON]: {
-		raceId: RaceEnum.WINKS_DEMON,
-		isDemon: true,
-		name: 'winks_demon',
-		nbrFire: 0,
-		nbrWood: 0,
-		nbrWater: 1,
-		nbrLightning: 1,
-		nbrAir: 0,
-		upChance: {
-			fire: 1,
-			wood: 2,
-			water: 9,
-			lightning: 6,
-			air: 2
-		},
-		price: 700,
-		swfLetter: '2A',
-		skillId: [Skill.DUR_A_CUIRE]
+		swfLetter: '2',
+		skills: [Skill.COQUE]
 	},
 	[RaceEnum.PLANAILLE]: {
 		raceId: RaceEnum.PLANAILLE,
-		isDemon: false,
 		name: 'planaille',
+		demon: {
+			price: 700,
+			condition: {
+				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
+			},
+			skills: [Skill.FORCE_DES_TENEBRES],
+			// 1 fire, 0 wood, 1 water, 5 lightning, 2 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.WATER,
+				[4]: ElementType.LIGHTNING,
+				[5]: ElementType.LIGHTNING,
+				[6]: ElementType.LIGHTNING,
+				[7]: ElementType.LIGHTNING,
+				[8]: ElementType.LIGHTNING,
+				[9]: ElementType.AIR,
+				[10]: ElementType.AIR
+			}
+		},
 		nbrFire: 0,
 		nbrWood: 0,
 		nbrWater: 0,
@@ -142,31 +151,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 4
 		},
 		price: 16000,
-		swfLetter: '30'
-	},
-	[RaceEnum.PLANAILLE_DEMON]: {
-		raceId: RaceEnum.PLANAILLE_DEMON,
-		isDemon: true,
-		name: 'planaille_demon',
-		nbrFire: 0,
-		nbrWood: 0,
-		nbrWater: 0,
-		nbrLightning: 5,
-		nbrAir: 0,
-		upChance: {
-			fire: 2,
-			wood: 2,
-			water: 2,
-			lightning: 10,
-			air: 4
-		},
-		price: 700,
-		swfLetter: '3A',
-		skillId: [Skill.FORCE_DES_TENEBRES]
+		swfLetter: '3'
 	},
 	[RaceEnum.CASTIVORE]: {
 		raceId: RaceEnum.CASTIVORE,
-		isDemon: false,
 		name: 'castivore',
 		nbrFire: 0,
 		nbrWood: 1,
@@ -181,11 +169,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 5
 		},
 		price: 16000,
-		swfLetter: '40'
+		swfLetter: '4'
 	},
 	[RaceEnum.ROCKY]: {
 		raceId: RaceEnum.ROCKY,
-		isDemon: false,
 		name: 'rocky',
 		nbrFire: 0,
 		nbrWood: 0,
@@ -200,12 +187,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 1
 		},
 		price: 18000,
-		swfLetter: '50',
-		skillId: [Skill.ROCK]
+		swfLetter: '5',
+		skills: [Skill.ROCK]
 	},
 	[RaceEnum.PTEROZ]: {
 		raceId: RaceEnum.PTEROZ,
-		isDemon: false,
 		name: 'pteroz',
 		nbrFire: 0,
 		nbrWood: 0,
@@ -220,11 +206,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 6
 		},
 		price: 22000,
-		swfLetter: '60'
+		swfLetter: '6'
 	},
 	[RaceEnum.NUAGOZ]: {
 		raceId: RaceEnum.NUAGOZ,
-		isDemon: false,
 		name: 'nuagoz',
 		nbrFire: 0,
 		nbrWood: 0,
@@ -239,11 +224,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 6
 		},
 		price: 16000,
-		swfLetter: '70'
+		swfLetter: '7'
 	},
 	[RaceEnum.SIRAIN]: {
 		raceId: RaceEnum.SIRAIN,
-		isDemon: false,
 		name: 'sirain',
 		nbrFire: 0,
 		nbrWood: 0,
@@ -258,11 +242,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 2
 		},
 		price: 16000,
-		swfLetter: '80'
+		swfLetter: '8'
 	},
 	[RaceEnum.HIPPOCLAMP]: {
 		raceId: RaceEnum.HIPPOCLAMP,
-		isDemon: false,
 		name: 'hippoclamp',
 		nbrFire: 1,
 		nbrWood: 1,
@@ -277,12 +260,27 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 4
 		},
 		price: 28000,
-		swfLetter: '90'
+		swfLetter: '9'
 	},
 	[RaceEnum.GORILLOZ]: {
 		raceId: RaceEnum.GORILLOZ,
-		isDemon: false,
 		name: 'gorilloz',
+		demon: {
+			price: 700,
+			skills: [Skill.GROS_COSTAUD],
+			// 1 fire, 6 wood, 1 water, 1 lightning, 0 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.WOOD,
+				[4]: ElementType.WOOD,
+				[5]: ElementType.WOOD,
+				[6]: ElementType.WOOD,
+				[7]: ElementType.WOOD,
+				[8]: ElementType.WOOD,
+				[9]: ElementType.WATER,
+				[10]: ElementType.LIGHTNING
+			}
+		},
 		nbrFire: 0,
 		nbrWood: 2,
 		nbrWater: 0,
@@ -296,32 +294,27 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 1
 		},
 		price: 16000,
-		swfLetter: 'A0'
-	},
-	[RaceEnum.GORILLOZ_DEMON]: {
-		raceId: RaceEnum.GORILLOZ_DEMON,
-		isDemon: true,
-		name: 'gorilloz_demon',
-		nbrFire: 0,
-		nbrWood: 2,
-		nbrWater: 0,
-		nbrLightning: 0,
-		nbrAir: 0,
-		upChance: {
-			fire: 3,
-			wood: 13,
-			water: 1,
-			lightning: 2,
-			air: 1
-		},
-		price: 700,
-		swfLetter: 'AA',
-		skillId: [Skill.GROS_COSTAUD]
+		swfLetter: 'A'
 	},
 	[RaceEnum.WANWAN]: {
 		raceId: RaceEnum.WANWAN,
-		isDemon: false,
 		name: 'wanwan',
+		demon: {
+			price: 900,
+			skills: [Skill.FRENESIE_COLLECTIVE],
+			// 1 fire, 2 wood, 1 water, 4 lightning, 1 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.WOOD,
+				[4]: ElementType.WOOD,
+				[5]: ElementType.WATER,
+				[6]: ElementType.LIGHTNING,
+				[7]: ElementType.LIGHTNING,
+				[8]: ElementType.LIGHTNING,
+				[9]: ElementType.LIGHTNING,
+				[10]: ElementType.AIR
+			}
+		},
 		nbrFire: 0,
 		nbrWood: 1,
 		nbrWater: 0,
@@ -335,31 +328,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 2
 		},
 		price: 19000,
-		swfLetter: 'B0'
-	},
-	[RaceEnum.WANWAN_DEMON]: {
-		raceId: RaceEnum.WANWAN_DEMON,
-		isDemon: true,
-		name: 'wanwan_demon',
-		nbrFire: 0,
-		nbrWood: 1,
-		nbrWater: 0,
-		nbrLightning: 1,
-		nbrAir: 0,
-		upChance: {
-			fire: 3,
-			wood: 6,
-			water: 1,
-			lightning: 8,
-			air: 2
-		},
-		price: 900,
-		swfLetter: 'BA',
-		skillId: [Skill.FRENESIE_COLLECTIVE]
+		swfLetter: 'B'
 	},
 	[RaceEnum.SANTAZ]: {
 		raceId: RaceEnum.SANTAZ,
-		isDemon: false,
 		name: 'santaz',
 		nbrFire: 1,
 		nbrWood: 0,
@@ -374,12 +346,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 12
 		},
 		price: 35000,
-		swfLetter: 'C0',
-		skillId: [Skill.PIETINEMENT]
+		swfLetter: 'C',
+		skills: [Skill.PIETINEMENT]
 	},
 	[RaceEnum.FEROSS]: {
 		raceId: RaceEnum.FEROSS,
-		isDemon: false,
 		name: 'feross',
 		nbrFire: 1,
 		nbrWood: 1,
@@ -394,13 +365,31 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 1
 		},
 		price: 35000,
-		swfLetter: 'D0',
-		skillId: [Skill.CUIRASSE]
+		swfLetter: 'D',
+		skills: [Skill.CUIRASSE]
 	},
 	[RaceEnum.KABUKI]: {
 		raceId: RaceEnum.KABUKI,
-		isDemon: false,
 		name: 'kabuki',
+		demon: {
+			price: 800,
+			condition: {
+				[ConditionEnum.PLAYER_EPIC]: Reward.BELIUS
+			},
+			skills: [Skill.ORIGINE_CAUSHEMESHENNE],
+			// 1 fire, 0 wood, 3 water, 1 lightning, 4 air
+			guaranteed_elements: {
+				[2]: ElementType.FIRE,
+				[3]: ElementType.WATER,
+				[4]: ElementType.WATER,
+				[5]: ElementType.WATER,
+				[6]: ElementType.LIGHTNING,
+				[7]: ElementType.AIR,
+				[8]: ElementType.AIR,
+				[9]: ElementType.AIR,
+				[10]: ElementType.AIR
+			}
+		},
 		nbrFire: 0,
 		nbrWood: 0,
 		nbrWater: 1,
@@ -414,32 +403,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 8
 		},
 		price: 35000,
-		swfLetter: 'E0',
-		skillId: [Skill.INSAISISSABLE]
-	},
-	[RaceEnum.KABUKI_DEMON]: {
-		raceId: RaceEnum.KABUKI_DEMON,
-		isDemon: true,
-		name: 'kabuki_demon',
-		nbrFire: 0,
-		nbrWood: 0,
-		nbrWater: 1,
-		nbrLightning: 0,
-		nbrAir: 3,
-		upChance: {
-			fire: 2,
-			wood: 2,
-			water: 6,
-			lightning: 2,
-			air: 8
-		},
-		price: 800,
-		swfLetter: 'EA',
-		skillId: [Skill.INSAISISSABLE, Skill.ORIGINE_CAUSHEMESHENNE]
+		swfLetter: 'E',
+		skills: [Skill.INSAISISSABLE]
 	},
 	[RaceEnum.MAHAMUTI]: {
 		raceId: RaceEnum.MAHAMUTI,
-		isDemon: false,
 		name: 'mahamuti',
 		nbrFire: 0,
 		nbrWood: 2,
@@ -454,12 +422,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 1
 		},
 		price: 35000,
-		swfLetter: 'F0',
-		skillId: [Skill.ECRASEMENT]
+		swfLetter: 'F',
+		skills: [Skill.ECRASEMENT]
 	},
 	[RaceEnum.SOUFFLET]: {
 		raceId: RaceEnum.SOUFFLET,
-		isDemon: false,
 		name: 'soufflet',
 		nbrFire: 0,
 		nbrWood: 1,
@@ -474,12 +441,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 8
 		},
 		price: 35000,
-		swfLetter: 'G0',
-		skillId: [Skill.NAPOMAGICIEN]
+		swfLetter: 'G',
+		skills: [Skill.NAPOMAGICIEN]
 	},
 	[RaceEnum.TOUFUFU]: {
 		raceId: RaceEnum.TOUFUFU,
-		isDemon: false,
 		name: 'toufufu',
 		nbrFire: 0,
 		nbrWood: 2,
@@ -494,12 +460,11 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 5
 		},
 		price: 35000,
-		swfLetter: 'H0',
-		skillId: [Skill.DEPLACEMENT_INSTANTANE]
+		swfLetter: 'H',
+		skills: [Skill.DEPLACEMENT_INSTANTANE]
 	},
 	[RaceEnum.QUETZU]: {
 		raceId: RaceEnum.QUETZU,
-		isDemon: false,
 		name: 'quetzu',
 		nbrFire: 2,
 		nbrWood: 0,
@@ -514,11 +479,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 0
 		},
 		price: 35000,
-		swfLetter: 'I0'
+		swfLetter: 'I'
 	},
 	[RaceEnum.SMOG]: {
 		raceId: RaceEnum.SMOG,
-		isDemon: false,
 		name: 'smog',
 		nbrFire: 1,
 		nbrWood: 0,
@@ -533,11 +497,10 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 6
 		},
 		price: 35000,
-		swfLetter: 'J0'
+		swfLetter: 'J'
 	},
 	[RaceEnum.TRICERAGNON]: {
 		raceId: RaceEnum.TRICERAGNON,
-		isDemon: false,
 		name: 'triceragnon',
 		nbrFire: 2,
 		nbrWood: 2,
@@ -552,9 +515,9 @@ export const raceList: Record<RaceEnum, DinozRace> = {
 			air: 2
 		},
 		price: 35000,
-		swfLetter: 'K0',
-		skillId: [Skill.BIGMAGNON]
+		swfLetter: 'K',
+		skills: [Skill.BIGMAGNON]
 	}
 };
 
-// 28 races en tout
+// 21 races en tout + 7 variantes démons = 28 races

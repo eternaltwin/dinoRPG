@@ -20,7 +20,7 @@
 		</div>
 		<img :src="`${API_BASE}/news/${news.id}/illustration`" :alt="news.title" onerror="this.style.display='none'" />
 		<div class="markdown" v-if="news.text">
-			<Markdown :source="news.text" />
+			<Markdown :source="formatContent(news.text)" :html="true" />
 		</div>
 		<div class="missingText" v-else>
 			{{ $t('news.noTranslation') }}
@@ -436,7 +436,6 @@ export default defineComponent({
 			border-radius: 10px;
 			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 			transition: all 0.3s ease;
-			margin: 15px 0;
 			position: relative;
 			z-index: 1;
 

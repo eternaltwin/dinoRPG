@@ -1,0 +1,552 @@
+openapi: 3.0.3
+info:
+  title: DinoRPG News API
+  description: >
+    Routes exposed by ed-be/src/routes/news.routes.ts. All routes are mounted
+    under the base path returned by apiRoutes.newsRoute (/api/v1/news).
+
+    Note on error handling: every handler in this file catches business-layer
+    errors and forwards them to sendError(), which always responds with HTTP
+    500 (even for "expected" domain errors such as "not logged in" or "poll
+    not found") - there is no distinct 401/403/404 status in this file.
+    Likewise the checkRole admin-gate middleware responds 500 ("Not admin !")
+    rather than 403 when the caller lacks the required role. The only status
+    this file sets explicitly besides 200/500 is 400, for express-validator
+    failures.
+  version: 1.0.0
+tags:
+  - name: News
+    description: Public/player-facing news and poll endpoints
+  - name: Admin
+    description: Admin-only news management endpoints
+servers:
+  - url: /
+paths:
+  /api/v1/news/create/{title}:
+    put:
+      operationId: createNews
+      summary: Create a news article
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: title
+          required: true
+          schema:
+            type: string
+          description: Internal title/slug of the news
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: News illustration image
+                frenchText:
+                  type: string
+                  nullable: true
+                englishText:
+                  type: string
+                  nullable: true
+                spanishText:
+                  type: string
+                  nullable: true
+                germanText:
+                  type: string
+                  nullable: true
+                frenchTitle:
+                  type: string
+                  nullable: true
+                englishTitle:
+                  type: string
+                  nullable: true
+                spanishTitle:
+                  type: string
+                  nullable: true
+                germanTitle:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: The created news record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/News'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/createPoll/{title}:
+    put:
+      operationId: createPoll
+      summary: Create a news article with an attached poll
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: title
+          required: true
+          schema:
+            type: string
+          description: Internal title/slug of the news
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: News illustration image
+                frenchText:
+                  type: string
+                  nullable: true
+                englishText:
+                  type: string
+                  nullable: true
+                spanishText:
+                  type: string
+                  nullable: true
+                germanText:
+                  type: string
+                  nullable: true
+                frenchTitle:
+                  type: string
+                  nullable: true
+                englishTitle:
+                  type: string
+                  nullable: true
+                spanishTitle:
+                  type: string
+                  nullable: true
+                germanTitle:
+                  type: string
+                  nullable: true
+                options:
+                  type: string
+                  description: >-
+                    JSON-encoded array of poll options, e.g.
+                    [{"optionText":"Yes","orderIndex":0}]. Must contain at
+                    least 2 non-empty options.
+                endDate:
+                  type: string
+                  format: date
+                  nullable: true
+                  description: Poll expiry date; defaults to one week from creation
+      responses:
+        '200':
+          description: Poll created (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/page/{page}:
+    get:
+      operationId: getNewsPage
+      summary: Get a page of news (10 per page), localized to the caller's language
+      tags:
+        - News
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - in: path
+          name: page
+          required: true
+          schema:
+            type: integer
+          description: 1-based page number
+      responses:
+        '200':
+          description: A batch of news items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsListItem'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/all:
+    get:
+      operationId: getAllNews
+      summary: List all news (id + title only)
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: All news, ordered by id descending
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/{id}:
+    get:
+      operationId: getNewsAdmin
+      summary: Get full details of a single news article (all languages)
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The news record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/News'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/update/{id}:
+    put:
+      operationId: updateNews
+      summary: Update an existing news article
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Replacement illustration image
+                frenchText:
+                  type: string
+                  nullable: true
+                englishText:
+                  type: string
+                  nullable: true
+                spanishText:
+                  type: string
+                  nullable: true
+                germanText:
+                  type: string
+                  nullable: true
+                frenchTitle:
+                  type: string
+                  nullable: true
+                englishTitle:
+                  type: string
+                  nullable: true
+                spanishTitle:
+                  type: string
+                  nullable: true
+                germanTitle:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: News updated (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/delete/{id}:
+    delete:
+      operationId: deleteNews
+      summary: Delete a news article
+      tags:
+        - Admin
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: News deleted (empty body)
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/poll/{id}/{option}:
+    put:
+      operationId: selectPollOption
+      summary: Vote (or change vote) for a poll option attached to a news article
+      description: >-
+        Requires a bearer token; the poll must exist, be active, and the
+        option must belong to it, otherwise an error is thrown (surfaced as
+        HTTP 500 - see file-level note).
+      tags:
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Poll id
+        - in: path
+          name: option
+          required: true
+          schema:
+            type: integer
+          description: Poll option id
+      responses:
+        '200':
+          description: Vote recorded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: returnCode.OK on success
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/{id}/illustration:
+    get:
+      operationId: getNewsIllustration
+      summary: Get the raw illustration image for a news article
+      tags:
+        - News
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The image bytes (may be empty if the news has no illustration)
+          content:
+            image/webp:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+  /api/v1/news/{id}/like:
+    post:
+      operationId: toggleLikeNews
+      summary: Toggle the caller's like on a news article
+      description: Requires a bearer token (checked inside the business layer).
+      tags:
+        - News
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated like state
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  newsId:
+                    type: integer
+                  likes:
+                    type: integer
+                    description: Total like count after the toggle
+                  likedByMe:
+                    type: boolean
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Player token; player id and token are extracted from the
+        Authorization header (see dao/playerDao.ts auth()/noStrictAuth()).
+  responses:
+    ValidationError:
+      description: express-validator found invalid/missing parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+    Error:
+      description: >-
+        Any thrown error (validation, ExpectedError, or unexpected), always
+        returned with status 500 and a plain-text message by sendError().
+      content:
+        text/plain:
+          schema:
+            type: string
+  schemas:
+    News:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        frenchTitle:
+          type: string
+          nullable: true
+        frenchText:
+          type: string
+          nullable: true
+        englishTitle:
+          type: string
+          nullable: true
+        englishText:
+          type: string
+          nullable: true
+        spanishTitle:
+          type: string
+          nullable: true
+        spanishText:
+          type: string
+          nullable: true
+        germanTitle:
+          type: string
+          nullable: true
+        germanText:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: byte
+          nullable: true
+    NewsListItem:
+      type: object
+      description: >-
+        A news item localized to the caller's language, as returned by
+        GET /api/v1/news/page/{page}.
+      properties:
+        id:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        title:
+          type: string
+        type:
+          type: string
+        text:
+          type: string
+          nullable: true
+          description: News body in the caller's language
+        hide:
+          type: boolean
+        totalVote:
+          type: integer
+          description: Total number of votes on the attached poll, if any
+        poll:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            isActive:
+              type: boolean
+            endDate:
+              type: string
+              format: date-time
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  optionText:
+                    type: string
+            votes:
+              type: array
+              items:
+                type: object
+                properties:
+                  playerId:
+                    type: string
+                  pollOptionId:
+                    type: integer
+        likedBy:
+          type: array
+          items:
+            type: object
+            properties:
+              playerId:
+                type: string

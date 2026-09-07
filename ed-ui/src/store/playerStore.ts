@@ -2,14 +2,13 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { Notification } from '@drpg/core/models/notifications/notification';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
+import { DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS } from '@drpg/core/constants';
+import { NotificationSeverity, AdminRole } from '@drpg/prisma/enums';
 import { defineStore } from 'pinia';
 import { PlayerService } from '../services';
-import { AdminRoleFront } from '@drpg/core/models/enums/AdminRoleFront';
 import { useDinozStore } from './dinozStore';
 import { setCookie } from '../utils/cookies';
-import { NotificationSeverity } from '@drpg/prisma/enums';
 import { clanStore } from './clanStore';
-import { DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS } from '@drpg/core/constants';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -24,17 +23,19 @@ export const playerStore = defineStore('playerStore', {
 			skipFight: false,
 			skipLevel: false,
 			autoReequipItems: false,
+			bypassGatheringGrid: false,
 			archivedSiteId: null,
 			shareArchivedData: false,
 			displayedNotifications: DEFAULT_SIMULTANEOUS_DISPLAYED_NOTIFICATIONS
 		},
-		role: AdminRoleFront.PLAYER,
+		role: AdminRole.PLAYER,
 		priest: false,
 		shopkeeper: false,
 		sortOption: 'default',
 		notificationCounter: 0,
 		notifications: [],
-		discoveredSkills: []
+		discoveredSkills: [],
+		tosAccepted: false
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
@@ -48,7 +49,8 @@ export const playerStore = defineStore('playerStore', {
 		getRole: (state: StorePlayer) => state.role,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
 		getNotifications: (state: StorePlayer) => state.notifications,
-		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills
+		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills,
+		getTosAccepted: (state: StorePlayer) => state.tosAccepted
 	},
 	actions: {
 		setMoney(money: number): void {
@@ -66,7 +68,7 @@ export const playerStore = defineStore('playerStore', {
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;
 		},
-		setRole(role: AdminRoleFront): void {
+		setRole(role: AdminRole): void {
 			this.role = role;
 		},
 		setPriest(priest: boolean): void {
@@ -95,6 +97,9 @@ export const playerStore = defineStore('playerStore', {
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;
 		},
+		setTosAccepted(tosAccepted: boolean): void {
+			this.tosAccepted = tosAccepted;
+		},
 		async update() {
 			const commonData = await PlayerService.getLoggedInData();
 			// Set cookies
@@ -110,8 +115,9 @@ export const playerStore = defineStore('playerStore', {
 			this.setPlayerId(commonData.id);
 			this.setPlayerName(commonData.name);
 			this.setPlayerOptions(commonData.playerOptions);
-			this.setRole(commonData.role as AdminRoleFront);
+			this.setRole(commonData.role as AdminRole);
 			this.setDiscoveredSkills(commonData.discoveredSkills);
+			this.setTosAccepted(commonData.tosAccepted);
 			useDinozStore().setDinozList(commonData.dinoz);
 			clanStore().setClanEvent(commonData.clanEvent);
 		}

@@ -48,7 +48,8 @@ import {
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
-	getMultiElementalAttack
+	getMultiElementalAttack,
+	powerOf
 } from './getDamage.js';
 import {
 	cloneDinoz,
@@ -1045,11 +1046,11 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Count monsters
 	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
-	// Count monsters with M_RENFORT
-	const renfortApplied = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
+	// Count monsters with M_RENFORT, of type reinforcement and same team as fighter
+	const renfortApplied = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
 
-	// Count monsters with M_WORM_CALL
-	const wormCalls = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
+	// Count monsters with M_WORM_CALL, of type reinforcement and same team as fighter
+	const wormCalls = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
 
 	// Initialize monster
 	const monster = initializeMonster(
@@ -1309,7 +1310,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					throw new Error(`Fighter already has shielded status`);
 				}
 
-				addStatus(fightData, fighter, FightStatus.SHIELDED);
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.LONG);
 				break;
 			}
 			case Skill.BENEDICTION: {
@@ -1405,8 +1406,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				addSkillFx(fightData, fighter.id, event.id, [opponent.id]);
 
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
-					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					// Increase the opponent's time based on fighter's wood element
+					opponent.time += powerOf(fightData.rng, fighter, [[ElementType.WOOD, 2]]) * TIME_FACTOR;
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
@@ -1836,7 +1837,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor *= 1.05;
+				// Use condition checked prior and defined in ITEM details so the ITEM is not used if the fighter already has the status.
+				// Still check and throw an error just in case.
+				if (hasStatus(fighter, FightStatus.SHIELDED)) {
+					LOGGER.error('`Already has shielded status` in `activateEvent`.', {
+						fightData: fightData,
+						item: event
+					});
+					throw new Error(`Fighter already has shielded status`);
+				}
+
+				addStatus(fightData, fighter, FightStatus.SHIELDED, FightStatusLength.MEDIUM);
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -2025,7 +2036,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.PIRHANOZ_IN_BAG: {
-				createMonster(fightData, fighter, monsterList.PIRA);
+				createMonster(fightData, fighter, monsterList.PIRHANOZ);
 				break;
 			}
 			case Item.AMAZON: {
@@ -3909,7 +3920,7 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 		fx
 	});
 
-	// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
+	// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurrection skills.
 	if (fighter.hp < 0) {
 		fighter.hp = 0;
 	}
@@ -4293,7 +4304,7 @@ const attackTarget = (
 		target.hp -= damage;
 
 		// Set hp minimum to 0.
-		// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurection skills.
+		// Note: This is not in MT's code but it is there to avoid fighters with negative HP which can impact resurrection skills.
 		if (target.hp < 0) {
 			target.hp = 0;
 		}

@@ -18,7 +18,7 @@
 			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
 	</tr>
-	<DZButton @click="goBack()">{{ $t('myAccount.options.retour') }}</DZButton>
+	<DZButton @click="goBack()">{{ $t('button.return') }}</DZButton>
 </template>
 
 <script lang="ts">

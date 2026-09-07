@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { getCookie } from '../utils/cookies.js';
-import { useMenuStore } from '../store';
+import { useMenuStore, playerStore } from '../store';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,9 +21,20 @@ const router = createRouter({
 					component: () => import('../pages/ReplayFight.vue')
 				},
 				{
+					path: '/dungeon/:id',
+					name: 'Dungeon',
+					component: () => import('../pages/DungeonPage.vue'),
+					props: route => ({ dinozId: Number(route.query.dinozId) })
+				},
+				{
 					path: '/forum',
 					name: 'Forum',
 					component: () => import('../pages/ForumPage.vue')
+				},
+				{
+					path: '/terms',
+					name: 'Terms',
+					component: () => import('../pages/TermsPage.vue')
 				},
 				{
 					path: '/forum/:threadId/:page',
@@ -73,6 +84,11 @@ const router = createRouter({
 					path: '/shop/dinoz',
 					name: 'DinozShopPage',
 					component: () => import('../pages/DinozShopPage.vue')
+				},
+				{
+					path: '/demonShop',
+					name: 'DemonShopPage',
+					component: () => import('../pages/DemonShopPage.vue')
 				},
 				{
 					path: '/player/:id',
@@ -206,6 +222,16 @@ const router = createRouter({
 							path: 'event',
 							name: 'EventCreation',
 							component: () => import('../components/admin/EventCreation.vue')
+						},
+						{
+							path: 'dungeon',
+							name: 'DungeonEdit',
+							component: () => import('../components/admin/DungeonEdit.vue')
+						},
+						{
+							path: 'dungeon-builder',
+							name: 'DungeonBuilder',
+							component: () => import('../components/admin/DungeonBuilder.vue')
 						},
 						{
 							path: 'logs',
@@ -488,6 +514,11 @@ router.beforeEach(to => {
 		// route to MainPage if logged and trying to go to AuthPage (it's the case when user just login)
 		if (to.name == 'AuthenticationPage') {
 			return { name: 'MainPage' };
+		}
+		// once player data has been fetched this session, block navigation away from the ToS page until accepted
+		const player = playerStore();
+		if (player.playerId && !player.getTosAccepted && to.name !== 'Terms') {
+			return { name: 'Terms' };
 		}
 	}
 	useMenuStore().setTwinoMenuOpened(false);

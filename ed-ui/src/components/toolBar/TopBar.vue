@@ -95,7 +95,7 @@ export default defineComponent({
 			useMenuStore().setDinozMenuOpened(true);
 		},
 		async startSseForNotification(retryCount = 0): Promise<void> {
-			if (!this.playerStore.getPlayerId) {
+			if (!this.playerStore.getPlayerId || !this.playerStore.getTosAccepted) {
 				this.eventSource?.close();
 				if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
 				return;
@@ -166,6 +166,9 @@ export default defineComponent({
 			this.notification = notification;
 		},
 		'playerStore.getPlayerId': function () {
+			this.startSseForNotification();
+		},
+		'playerStore.getTosAccepted': function () {
 			this.startSseForNotification();
 		}
 	},

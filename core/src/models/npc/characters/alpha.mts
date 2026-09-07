@@ -90,9 +90,5 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 				value: 1
 			}
 		]
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

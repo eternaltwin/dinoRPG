@@ -85,7 +85,8 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { ClanService, PlayerService } from '../../services';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
-import { formatNumber, formatText } from '../../utils/formatText';
+import { formatNumber } from '@drpg/core/utils/string';
+import { formatText } from '../../utils/formatText';
 import ClanJoinRequest from './ClanJoinRequest.vue';
 import { SelectOption } from '../../components/common/DZSelect.vue';
 

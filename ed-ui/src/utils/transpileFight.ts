@@ -26,11 +26,15 @@ import {
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Boss, bossList } from '@drpg/core/models/fight/BossList';
 
-export function resolveFightingPlace(placeId: number) {
+/**
+ * @param background Overrides the place's own background — a dungeon draws one per fight out of
+ * its `fightBackgrounds` pool and sends it back on the FightResult.
+ */
+export function resolveFightingPlace(placeId: number, background?: string) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
 	if (!place) return;
 	return {
-		bg: place.background,
+		bg: background ?? place.background,
 		top: place.top ?? 120,
 		bottom: place.bottom ?? 0,
 		right: 0,
@@ -180,7 +184,7 @@ export function transpileFight(
 	endText?: FightText,
 	dojo?: boolean
 ) {
-	const history: transpiled[] = [];
+	let history: transpiled[] = [];
 	// Basic tracking of active fighters, this may not cover all cases.
 	const activeFighters: FighterRecap[] = [];
 	// ID of the previous fighter that played a turn
@@ -195,12 +199,7 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
-	if (startText) {
-		history.push({
-			action: DinoAction.TEXT,
-			message: t(`quest.${startText.text}`)
-		});
-	}
+
 	for (let i = 0; i < fight.length; i++) {
 		const step = fight[i];
 
@@ -223,6 +222,8 @@ export function transpileFight(
 				break;
 			case 'prepare':
 				// Prepare all Dinoz that participate in the fight
+				// eslint-disable-next-line no-case-declarations
+				const arrivalText: transpiled[] = [];
 				step.dinozList.forEach(d => {
 					myFighter = fighters.find(f => f.id === d.fid);
 					if (!myFighter) {
@@ -265,7 +266,7 @@ export function transpileFight(
 					if (myFighter.type === 'monster') {
 						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
 						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
-							history.push({
+							arrivalText.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedMonster.text.entrance}`)
@@ -274,7 +275,7 @@ export function transpileFight(
 					} else if (myFighter.type === 'boss') {
 						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
 						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
-							history.push({
+							arrivalText.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedBoss.text.entrance}`)
@@ -302,6 +303,17 @@ export function transpileFight(
 				history.push({
 					action: DinoAction.DISPLAY
 				});
+
+				// Display start text *after* the display
+				if (startText) {
+					history.push({
+						action: DinoAction.TEXT,
+						message: t(`quest.${startText.text}`)
+					});
+				}
+
+				// Then show the text of each fighters arriving
+				history = history.concat(arrivalText);
 
 				// Introduce the other fighters to the scene
 				step.monsterList.forEach(m => {

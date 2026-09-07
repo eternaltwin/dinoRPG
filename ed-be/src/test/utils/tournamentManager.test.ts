@@ -1,7 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import dayjs from 'dayjs';
 
-vi.mock('../../context.js', () => ({ LOGGER: { log: vi.fn(), error: vi.fn() }, DISCORD: { sendNewsNotification: vi.fn() } }));
+vi.mock('../../context.js', () => ({
+	LOGGER: { log: vi.fn(), error: vi.fn() },
+	DISCORD: { sendNewsNotification: vi.fn() }
+}));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
 vi.mock('../../business/tournamentService.js', () => ({ getNewLevelLimits: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozForDojoFight: vi.fn(), selectDinozForDojoFight: vi.fn() }));
@@ -62,7 +65,13 @@ describe('getCurrentState', () => {
 describe('getCurrentTournament / getCurrentTournamentState', () => {
 	it('returns the full tournament state', async () => {
 		const prisma = mockPrisma();
-		const t = { id: 't1', date: dayjs().subtract(1, 'day').toDate(), cashPrice: 100, levelLimit: 30, nextRound: new Date() };
+		const t = {
+			id: 't1',
+			date: dayjs().subtract(1, 'day').toDate(),
+			cashPrice: 100,
+			levelLimit: 30,
+			nextRound: new Date()
+		};
 		prisma.tournament.findFirst.mockResolvedValue(t);
 		prisma.tournament.findUnique.mockResolvedValue(t);
 		prisma.fightArchive.findFirst.mockResolvedValue(null);
@@ -92,7 +101,10 @@ describe('postponeNextTournamentIfPending', () => {
 		prisma.tournament.findFirst.mockResolvedValue(t);
 		prisma.tournament.findUnique.mockResolvedValue(t);
 		prisma.fightArchive.findFirst.mockResolvedValue({ tournamentStep: 7 });
-		const result = await TournamentManager.postponeNextTournamentIfPending(prisma as never, dayjs().add(5, 'day').toDate());
+		const result = await TournamentManager.postponeNextTournamentIfPending(
+			prisma as never,
+			dayjs().add(5, 'day').toDate()
+		);
 		expect(result).toBe(true);
 		expect(prisma.tournament.update).toHaveBeenCalled();
 	});
@@ -102,14 +114,22 @@ describe('postponeNextTournamentIfPending', () => {
 		prisma.tournament.findFirst.mockResolvedValue(t);
 		prisma.tournament.findUnique.mockResolvedValue(t);
 		prisma.fightArchive.findFirst.mockResolvedValue({ tournamentStep: 1 });
-		expect(await TournamentManager.postponeNextTournamentIfPending(prisma as never, dayjs().add(5, 'day').toDate())).toBe(false);
+		expect(
+			await TournamentManager.postponeNextTournamentIfPending(prisma as never, dayjs().add(5, 'day').toDate())
+		).toBe(false);
 	});
 });
 
 describe('getActiveTeams', () => {
 	it('returns winners from the previous round', async () => {
 		const prisma = mockPrisma();
-		const t = { id: 't1', date: dayjs().subtract(20, 'day').toDate(), cashPrice: 0, levelLimit: 30, nextRound: new Date() };
+		const t = {
+			id: 't1',
+			date: dayjs().subtract(20, 'day').toDate(),
+			cashPrice: 0,
+			levelLimit: 30,
+			nextRound: new Date()
+		};
 		prisma.tournament.findFirst.mockResolvedValue(t);
 		prisma.tournament.findUnique.mockResolvedValue(t);
 		prisma.fightArchive.findFirst.mockResolvedValue({ tournamentStep: 2 });

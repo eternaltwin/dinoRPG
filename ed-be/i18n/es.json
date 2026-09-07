@@ -38,7 +38,6 @@
 	"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
 	"maxQuantityInventory": "Ya tienes lo máximo permitido de este objeto en tu inventario",
 	"cannotClaim": "Actualmente no puedes recibir lo que ganaste.",
-	"tooMuchDinoz": "Ya has alcanzado el máximo de Dinos activos.",
 	"tooMuchIngredient": "Tienes un ingrediente que podría superar el límite máximo.",
 	"tooMuchItem": "Tienes un objeto que podría superar el límite máximo.",
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
@@ -65,11 +64,18 @@
 		"alreadyInDefense": "Tu Dino ya forma parte de la defensa del castillo.",
 		"sameClan": "No puedes declarar la guerra a tu propio clan.",
 		"castleAlreadyBuilt": "El castillo de tu clan ya está construido.",
-		"notInDefense": "Este Dino no forma parte de la defensa del castillo."
+		"notInDefense": "Este Dino no forma parte de la defensa del castillo.",
+		"outdatedDefense": "Defensa desactualizada"
 	},
 	"error": {
+		"notYourDinoz": "Este Dino no es tuyo.",
+		"noDinozAtCemetary": "Ninguno de tus Dinos está en el cementerio.",
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
-		"notYourDinoz": "Este Dino no es tuyo"
+		"dinozInventoryNotEmpty": "Tu Dino debe vaciar su inventario.",
+		"dinozNotAvailable": "Tu Dino no está disponible para realizar esta acción.",
+		"notEnoughTickets": "No tienes suficientes tickets para realizar esta acción.",
+		"noShopAccess": "No cumples las condiciones para acceder a esta tienda.",
+		"tooManyItems": "Tienes demasiados objetos para realizar esta operación."
 	},
 	"fb": {
 		"error": {
@@ -246,8 +252,11 @@
 		"levelLimit": "El límite de nivel máximo está fijado en {{level}}.",
 		"poison": "El veneno está activado.",
 		"nopoison": "El veneno está desactivado.",
+		"goldReward": "{{value}} monedas de oro :gold:",
+		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
+		"qualificationMilestone": "**{{points}} puntos**: {{rewards}}.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 6% del premio en oro cada uno.\n- Para los puestos del 5 al 8, una caja rara y 3.75% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 1.875% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 0.75% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.25% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para las personas que alcancen los hitos de 500, 750, 1000, 1200, 1300 y 1400 puntos al final de las clasificatorias!\n\n¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -285,6 +294,17 @@
 		"3": "Tercer",
 		"4": "Cuarto",
 		"5": "Quinto"
+	},
+	"item": {
+		"name": {
+			"void_sphere": "Esfera de Vacío | Esferas de Vacío",
+			"souffet_egg": "Huevo de Visper | Huevos de Visper",
+			"toufufu_baby": "Bebé Tufufu | Bebés Tufufu",
+			"toufufu_baby_rare": "Bebé Tufufu raro | Bebés Tufufu raros",
+			"golden_napodino": "Napodino de oro | Napodinos de oro",
+			"box_epic": "Caja épica | Cajas épicas",
+			"box_legendary": "Caja legendaria | Cajas legendarias"
+		}
 	},
 	"reward": {
 		"perle": "Perla de la Fuente",
@@ -331,12 +351,25 @@
 		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
+	"dungeon": {
+		"inexistent": "Ce donjon n'existe pas.",
+		"wrongPlace": "Tu Dino no está en la entrada del laberinto.",
+		"wrongTeam": "Otro grupo ya está explorando el laberinto.",
+		"noRun": "Nunca has visitado este laberinto.",
+		"notAtExit": "¡No puedes salir del laberinto por aquí!",
+		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación."
+	},
 	"UnavailableReason": {
-		"frozen": "Tu Dino está congelado",
-		"sacrificed": "Tu Dino está sacrificado",
-		"selling": "Tu Dino está en venta",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Tu Dino está descansando"
+		"frozen": "Tu Dino está congelado.",
+		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
+		"defending": "Votre Dinoz défend le château de votre clan.",
+		"restingAttack": "Votre Dinoz se remet de son combat.",
+		"sacrificed": "Tu Dino está sacrificado.",
+		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
+		"selling": "Tu Dino está en venta.",
+		"superdom": "Tu Dino está en el domo de Sulaflota.",
+		"resting": "Tu Dino está descansando.",
+		"dungeon": "Tu Dino está explorando un laberinto."
 	},
 	"fb_tournament": {
 		"noOpponent": "Ya no queda nadie con quien combatir por el momento."

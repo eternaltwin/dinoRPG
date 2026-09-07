@@ -6,12 +6,12 @@
 				theme="normal"
 				tag="img"
 				v-if="item"
-				:src="getImgURL('item', `item_${itemNameList[item]}`)"
-				:alt="itemNameList[item]"
+				:src="getImgURL('item', `item_${itemList[item].name}`)"
+				:alt="itemList[item].name"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
-					<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
+					<h1 v-html="formatContent($t(`item.name.${itemList[item].name}`))" />
+					<p v-html="formatContent($t(`item.description.${itemList[item].name}`))" />
 				</template>
 			</Tippy>
 			<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils';
 import { InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
@@ -35,8 +35,8 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 export default defineComponent({
 	name: 'DinozEquip',
 	computed: {
-		itemNameList() {
-			return itemNameList;
+		itemList() {
+			return itemList;
 		},
 		getInventory(): number[] {
 			const dinoz: DinozFiche = useDinozStore().getCurrentDinoz;

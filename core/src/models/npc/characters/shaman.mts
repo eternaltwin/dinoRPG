@@ -126,9 +126,5 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 			}
 		],
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

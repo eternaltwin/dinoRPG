@@ -6,15 +6,44 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 vi.mock('../../dao/clansDao.js', () =>
 	Object.fromEntries(
 		[
-			'acceptPlayerJoinRequest', 'clanJoinRequest', 'createClanPageRequest', 'createClanRequest', 'deleteClanPageRequest',
-			'deleteClanRequest', 'denyPlayerJoinRequest', 'excludeClanMemberRequest', 'getAllClansRequest', 'getClanBannerRequest',
-			'getClanHistoryCountRequest', 'getClanHistoryRequest', 'getClanMemberRequest', 'getClanMembersListRequest',
-			'getClanMessagesCountRequest', 'getClanMessagesRequest', 'getClanPageRequest', 'getClanPagesListRequest',
-			'getClanRequestPrivate', 'getClanRequestPublic', 'getEventRankingClansRequest', 'getFullClanTreasure',
-			'getPlayerJoinListRequest', 'getPlayerJoinRequest', 'getRankingClansRequest', 'getRankingWarClansRequest',
-			'joinClanRequest', 'leaveClanSelfRequest', 'playerHasRightRequest', 'searchClansByName', 'searchClansByNameRequest',
-			'updateClanBannerRequest', 'updateClanContribution', 'updateClanLanguagesRequest', 'updateClanMemberRequest',
-			'updateClanPageRequest', 'updateClanTreasure', 'upsertClanIngredients'
+			'acceptPlayerJoinRequest',
+			'clanJoinRequest',
+			'createClanPageRequest',
+			'createClanRequest',
+			'deleteClanPageRequest',
+			'deleteClanRequest',
+			'denyPlayerJoinRequest',
+			'excludeClanMemberRequest',
+			'getAllClansRequest',
+			'getClanBannerRequest',
+			'getClanHistoryCountRequest',
+			'getClanHistoryRequest',
+			'getClanMemberRequest',
+			'getClanMembersListRequest',
+			'getClanMessagesCountRequest',
+			'getClanMessagesRequest',
+			'getClanPageRequest',
+			'getClanPagesListRequest',
+			'getClanRequestPrivate',
+			'getClanRequestPublic',
+			'getEventRankingClansRequest',
+			'getFullClanTreasure',
+			'getPlayerJoinListRequest',
+			'getPlayerJoinRequest',
+			'getRankingClansRequest',
+			'getRankingWarClansRequest',
+			'joinClanRequest',
+			'leaveClanSelfRequest',
+			'playerHasRightRequest',
+			'searchClansByName',
+			'searchClansByNameRequest',
+			'updateClanBannerRequest',
+			'updateClanContribution',
+			'updateClanLanguagesRequest',
+			'updateClanMemberRequest',
+			'updateClanPageRequest',
+			'updateClanTreasure',
+			'upsertClanIngredients'
 		].map(m => [m, vi.fn()])
 	)
 );
@@ -122,7 +151,12 @@ describe('join flow', () => {
 	it('acceptJoinRequest accepts', async () => {
 		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, clan: { _count: { members: 1 } } } as never);
 		vi.mocked(clansDao.acceptPlayerJoinRequest).mockResolvedValue({
-			id: 1, dateJoin: new Date(), rights: 0, donation: 0, player: {}, clan: {}
+			id: 1,
+			dateJoin: new Date(),
+			rights: 0,
+			donation: 0,
+			player: {},
+			clan: {}
 		} as never);
 		const result = await svc.acceptJoinRequest(req({ id: '1' }));
 		expect(result.id).toBe(1);
@@ -229,9 +263,13 @@ describe('pages, leave, banner, messages, history', () => {
 		vi.mocked(clansDao.createClanPageRequest).mockResolvedValue({ id: 1 } as never);
 		vi.mocked(clansDao.deleteClanPageRequest).mockResolvedValue({ id: 1 } as never);
 		vi.mocked(clansDao.updateClanPageRequest).mockResolvedValue({ id: 1 } as never);
-		expect(await svc.createClanPage(req({}, { clanId: '1', name: 'n', content: 'c', isPublic: true }))).toEqual({ id: 1 });
+		expect(await svc.createClanPage(req({}, { clanId: '1', name: 'n', content: 'c', isPublic: true }))).toEqual({
+			id: 1
+		});
 		expect(await svc.deleteClanPage(req({ clanId: '1', pageId: '2' }))).toEqual({ id: 1 });
-		expect(await svc.updateClanPage(req({ clanId: '1', id: '2' }, { name: 'n', content: 'c', isPublic: false }))).toEqual({ id: 1 });
+		expect(
+			await svc.updateClanPage(req({ clanId: '1', id: '2' }, { name: 'n', content: 'c', isPublic: false }))
+		).toEqual({ id: 1 });
 	});
 	it('createClanPage throws without right', async () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
@@ -260,7 +298,9 @@ describe('pages, leave, banner, messages, history', () => {
 describe('ingredients & treasure', () => {
 	it('giveClanIngredients donates valid ingredients', async () => {
 		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({ ingredients: [{ ingredientId: 1, quantity: 10 }] } as never);
+		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({
+			ingredients: [{ ingredientId: 1, quantity: 10 }]
+		} as never);
 		await svc.giveClanIngredients(req({ id: '1' }, { ingredients: [{ itemId: 1, quantity: 5 }] }));
 		expect(clansDao.updateClanTreasure).toHaveBeenCalled();
 	});

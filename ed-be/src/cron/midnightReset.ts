@@ -50,6 +50,9 @@ const midnightReset = async () => {
 				// Dinoz shop
 				await tx.playerDinozShop.deleteMany();
 
+				// Demon shop
+				await tx.playerDemonShop.deleteMany();
+
 				// Dojo things
 				await tx.dojoOpponents.deleteMany();
 				await tx.dojoTeam.deleteMany();

@@ -20,7 +20,6 @@
 <script lang="ts">
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { defineComponent } from 'vue';
@@ -31,63 +30,7 @@ import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
-
-const LogTypes = [
-	'ItemUsed',
-	'ItemBought',
-	'IngredientSold',
-	'GoldWon',
-	'GoldLost',
-	'Move',
-	'LevelUp',
-	'Fight',
-	'XPEarned',
-	'HPLost',
-	'Death',
-	'Revive',
-	'MissionStep',
-	'MissionFinished',
-	'MissionCanceled',
-	'Gather',
-	'GridFinished',
-	'CreateDinoz',
-	'ChangeDinozOrder',
-	'PlayerCreated',
-	'PlayerConnected',
-	'OfferNew',
-	'OfferBid',
-	'OfferCancelled',
-	'OfferExpired',
-	'OfferWon',
-	'LBDone',
-	'AdminUpdateDinoz',
-	'AdminAddStatus',
-	'AdminRemoveStatus',
-	'AdminAddSkill',
-	'AdminRemoveSkill',
-	'AdminAddUnlockableSkill',
-	'AdminRemoveUnlockableSkill',
-	'AdminAddMoney',
-	'AdminRemoveMoney',
-	'AdminAddReward',
-	'AdminRemoveReward',
-	'AdminAddItem',
-	'AdminRemoveItem',
-	'AdminAddIngredient',
-	'AdminRemoveIngredient',
-	'AdminUpdateQuest',
-	'AdminUpdatePlayer',
-	'AdminUpdateSecret',
-	'ClanWarCastleBuilt',
-	'ClanWarDeclared',
-	'ClanWarForfeited',
-	'ClanWarDefenderAdded',
-	'ClanWarDefenderRemoved',
-	'ClanWarDefenseOrderUpdated',
-	'ClanWarCastleAttacked',
-	'ClanWarCastleRepaired',
-	'ClanWarResolved'
-] as const;
+import { LogTypes } from '../../utils/logs.js';
 
 const getLogPropsForTranslation = (
 	$t: (key: string, options?: Record<string, string>) => string,
@@ -101,13 +44,13 @@ const getLogPropsForTranslation = (
 	switch (log.type) {
 		case 'ItemUsed':
 			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
+				item: $t(`item.name.${itemList[+log.values[0]].name}`),
 				quantity: log.values[1]
 			};
 			break;
 		case 'ItemBought':
 			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
+				item: $t(`item.name.${itemList[+log.values[0]].name}`),
 				quantity: log.values[1],
 				total: log.values[2]
 			};
@@ -163,6 +106,16 @@ const getLogPropsForTranslation = (
 			break;
 		case 'Revive':
 			values = {};
+			break;
+		case 'Sacrifice':
+			values = {
+				tickets: log.values[0]
+			};
+			break;
+		case 'Unsacrifice':
+			values = {
+				tickets: log.values[0]
+			};
 			break;
 		case 'MissionStep':
 			values = {

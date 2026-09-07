@@ -8,7 +8,6 @@ import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/p
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Dinoz, DinozStatus, LogType, NotificationSeverity, PantheonMotif } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
@@ -19,6 +18,11 @@ import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { getItemMaxQuantity } from '../business/inventoryService.js';
+import { translateTarget } from '../utils/server/translate.js';
+import { Lang } from '@drpg/prisma';
+import { getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { gameConfig } from './gameConfig.js';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -52,11 +56,7 @@ export async function rewarder(
 					await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
 					break;
 				case RewardEnum.MAXEXPERIENCE:
-					const level = levelList.find(level => level.id === dinoz.level);
-					if (!level) {
-						throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
-					}
-					const maxExp = level.experience;
+					const maxExp = getMaxXp(dinoz, gameConfig());
 					await updateDinoz(dinoz.id, { experience: maxExp });
 					break;
 				case RewardEnum.SKILL:
@@ -165,4 +165,40 @@ export async function rewarder(
 	}
 
 	return actualRewards;
+}
+
+/**
+ * Describes a list of rewards in a human-readable format, taking into account the language and pluralization rules.
+ *
+ * @param rewards The list of rewards to describe.
+ * @param lang The language for the translation.
+ * @returns The description of the rewards in the specified language.
+ */
+export function describeRewards(rewards: Rewarder[], lang: Lang): string {
+	const formatter = new Intl.ListFormat(lang);
+	const translatedRewards = rewards.map(reward => {
+		if (reward.rewardType === RewardEnum.ITEM) {
+			const translation = translateTarget(
+				`item.name.${itemList[reward.value as Item].name.toLocaleLowerCase()}`,
+				lang,
+				{ interpolation: { escapeValue: false } },
+				reward.quantity
+			);
+			return translateTarget('dojo.itemReward', lang, {
+				itemId: reward.value,
+				item: translation,
+				quantity: reward.quantity,
+				interpolation: { escapeValue: false }
+			});
+		} else if (reward.rewardType === RewardEnum.GOLD) {
+			return translateTarget('dojo.goldReward', lang, {
+				value: formatNumber(reward.value, '.'),
+				interpolation: { escapeValue: false }
+			});
+		} else {
+			console.error(`Reward type ${reward.rewardType} is not supported for describeReward.`);
+			return '???';
+		}
+	});
+	return formatter.format(translatedRewards);
 }

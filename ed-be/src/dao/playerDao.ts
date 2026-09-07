@@ -9,7 +9,6 @@ import { VERSION } from '@drpg/core/version';
 import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import type { Request } from 'express';
-import gameConfig from '../config/game.config.js';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
@@ -19,6 +18,7 @@ import { increaseItemQuantity } from './playerItemDao.js';
 import { updateCompletion } from './rankingDao.js';
 import { setSpecificStat } from './trackingDao.js';
 import { withSpan } from '../utils/server/tracing.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return withSpan(createPlayer.name, async () => {
@@ -38,11 +38,13 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 				skipFight: true,
 				skipLevel: true,
 				autoReequipItems: true,
+				bypassGatheringGrid: true,
 				archivedSiteId: true,
 				shareArchivedData: true,
 				displayedNotifications: true,
 				ClanMember: { select: { clanId: true } },
 				discoveredSkills: true,
+				tosAccepted: true,
 				notifications: {
 					select: { id: true, message: true, severity: true, link: true, date: true },
 					where: { read: false }
@@ -61,6 +63,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 						order: true,
 						raceId: true,
 						unavailableReason: true,
+						unavailableUntil: true,
 						missions: true,
 						nbrUpFire: true,
 						nbrUpWood: true,
@@ -131,7 +134,7 @@ export function extractIdFromAuthorization(request: Request) {
 }
 
 export type Auth = Awaited<ReturnType<typeof auth>>;
-export async function auth(request: Request, banByPass = false) {
+export async function auth(request: Request, banByPass = false, tosByPass = false) {
 	return withSpan(auth.name, async () => {
 		const {
 			headers: { authorization }
@@ -164,7 +167,8 @@ export async function auth(request: Request, banByPass = false) {
 				lastLogin: true,
 				matelasseur: true,
 				lastVersionSeen: true,
-				clanId: true
+				clanId: true,
+				tosAccepted: true
 			}
 		});
 
@@ -178,6 +182,10 @@ export async function auth(request: Request, banByPass = false) {
 
 		if (user.banCase && !banByPass) {
 			throw new ExpectedError('Action forbidden: you have been banned');
+		}
+
+		if (!user.tosAccepted && !tosByPass) {
+			throw new ExpectedError('Terms of service not accepted');
 		}
 
 		// Check if it's the first login of the day
@@ -197,7 +205,7 @@ export async function auth(request: Request, banByPass = false) {
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig.general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards
 			});
 
 			const playerDinozData = await prisma.dinoz.findMany({
@@ -346,7 +354,7 @@ export async function noStrictAuth(request: Request, banByPass = false) {
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig.general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards
 			});
 			const playerDinozData = await prisma.dinoz.findMany({
 				where: {
@@ -468,7 +476,8 @@ export async function checkBeforeDeletion(playerId: string, tournamentId?: strin
 				}
 			},
 			ClanMember: true,
-			targetedCases: true
+			targetedCases: true,
+			createdDate: true
 		};
 		if (tournamentId) {
 			const tournamentFilter = {
@@ -662,10 +671,12 @@ export async function getCommonDataRequest(playerId: string) {
 					skipFight: true,
 					skipLevel: true,
 					autoReequipItems: true,
+					bypassGatheringGrid: true,
 					archivedSiteId: true,
 					shareArchivedData: true,
 					displayedNotifications: true,
 					discoveredSkills: true,
+					tosAccepted: true,
 					ClanMember: { select: { clanId: true } },
 					notifications: {
 						select: { id: true, message: true, severity: true, link: true, date: true },
@@ -700,6 +711,7 @@ export async function getCommonDataRequest(playerId: string) {
 					order: true,
 					raceId: true,
 					unavailableReason: true,
+					unavailableUntil: true,
 					missions: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
@@ -768,8 +780,8 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 	});
 }
 
-export async function getAllInformationFromPlayer(playerId: string) {
-	return withSpan(getAllInformationFromPlayer.name, async () => {
+export async function getPlayerInfoForAdmin(playerId: string) {
+	return withSpan(getPlayerInfoForAdmin.name, async () => {
 		const player = await prisma.player.findUnique({
 			where: {
 				id: playerId
@@ -779,7 +791,13 @@ export async function getAllInformationFromPlayer(playerId: string) {
 				items: true,
 				ingredients: true,
 				rewards: true,
-				quests: true
+				quests: true,
+				dinoz: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
 			}
 		});
 
@@ -1001,6 +1019,7 @@ export async function getPlayerDinozShopRequest(playerId: string) {
 						display: true
 					}
 				},
+				quetzuBought: true,
 				rewards: true
 			}
 		});

@@ -134,6 +134,21 @@ export type UsernameHistory = $Result.DefaultSelection<Prisma.$UsernameHistoryPa
  */
 export type PlayerDinozShop = $Result.DefaultSelection<Prisma.$PlayerDinozShopPayload>
 /**
+ * Model PlayerDemonShop
+ * 
+ */
+export type PlayerDemonShop = $Result.DefaultSelection<Prisma.$PlayerDemonShopPayload>
+/**
+ * Model DemonSkill
+ * 
+ */
+export type DemonSkill = $Result.DefaultSelection<Prisma.$DemonSkillPayload>
+/**
+ * Model DemonSkillUnlockable
+ * 
+ */
+export type DemonSkillUnlockable = $Result.DefaultSelection<Prisma.$DemonSkillUnlockablePayload>
+/**
  * Model PlayerGather
  * 
  */
@@ -328,6 +343,16 @@ export type Events = $Result.DefaultSelection<Prisma.$EventsPayload>
  * 
  */
 export type ServerState = $Result.DefaultSelection<Prisma.$ServerStatePayload>
+/**
+ * Model DungeonRun
+ * 
+ */
+export type DungeonRun = $Result.DefaultSelection<Prisma.$DungeonRunPayload>
+/**
+ * Model Dungeon
+ * 
+ */
+export type Dungeon = $Result.DefaultSelection<Prisma.$DungeonPayload>
 
 /**
  * Enums
@@ -359,7 +384,9 @@ export const UnavailableReason: {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon',
+  unsacrificing: 'unsacrificing'
 };
 
 export type UnavailableReason = (typeof UnavailableReason)[keyof typeof UnavailableReason]
@@ -442,6 +469,8 @@ export const LogType: {
   Fight: 'Fight',
   Death: 'Death',
   Revive: 'Revive',
+  Sacrifice: 'Sacrifice',
+  Unsacrifice: 'Unsacrifice',
   MissionStep: 'MissionStep',
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',
@@ -546,6 +575,20 @@ export const ClanEventType: {
 
 export type ClanEventType = (typeof ClanEventType)[keyof typeof ClanEventType]
 
+
+export const DungeonType: {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
+export type DungeonType = (typeof DungeonType)[keyof typeof DungeonType]
+
 }
 
 export type ServerAction = $Enums.ServerAction
@@ -603,6 +646,10 @@ export const EventType: typeof $Enums.EventType
 export type ClanEventType = $Enums.ClanEventType
 
 export const ClanEventType: typeof $Enums.ClanEventType
+
+export type DungeonType = $Enums.DungeonType
+
+export const DungeonType: typeof $Enums.DungeonType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -968,6 +1015,36 @@ export class PrismaClient<
     * ```
     */
   get playerDinozShop(): Prisma.PlayerDinozShopDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.playerDemonShop`: Exposes CRUD operations for the **PlayerDemonShop** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlayerDemonShops
+    * const playerDemonShops = await prisma.playerDemonShop.findMany()
+    * ```
+    */
+  get playerDemonShop(): Prisma.PlayerDemonShopDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.demonSkill`: Exposes CRUD operations for the **DemonSkill** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DemonSkills
+    * const demonSkills = await prisma.demonSkill.findMany()
+    * ```
+    */
+  get demonSkill(): Prisma.DemonSkillDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.demonSkillUnlockable`: Exposes CRUD operations for the **DemonSkillUnlockable** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DemonSkillUnlockables
+    * const demonSkillUnlockables = await prisma.demonSkillUnlockable.findMany()
+    * ```
+    */
+  get demonSkillUnlockable(): Prisma.DemonSkillUnlockableDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.playerGather`: Exposes CRUD operations for the **PlayerGather** model.
@@ -1358,6 +1435,26 @@ export class PrismaClient<
     * ```
     */
   get serverState(): Prisma.ServerStateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dungeonRun`: Exposes CRUD operations for the **DungeonRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DungeonRuns
+    * const dungeonRuns = await prisma.dungeonRun.findMany()
+    * ```
+    */
+  get dungeonRun(): Prisma.DungeonRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dungeon`: Exposes CRUD operations for the **Dungeon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dungeons
+    * const dungeons = await prisma.dungeon.findMany()
+    * ```
+    */
+  get dungeon(): Prisma.DungeonDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1822,6 +1919,9 @@ export namespace Prisma {
     DojoChallengeHistory: 'DojoChallengeHistory',
     UsernameHistory: 'UsernameHistory',
     PlayerDinozShop: 'PlayerDinozShop',
+    PlayerDemonShop: 'PlayerDemonShop',
+    DemonSkill: 'DemonSkill',
+    DemonSkillUnlockable: 'DemonSkillUnlockable',
     PlayerGather: 'PlayerGather',
     PlayerIngredient: 'PlayerIngredient',
     PlayerItem: 'PlayerItem',
@@ -1860,7 +1960,9 @@ export namespace Prisma {
     FBTournament: 'FBTournament',
     GameDinoz: 'GameDinoz',
     Events: 'Events',
-    ServerState: 'ServerState'
+    ServerState: 'ServerState',
+    DungeonRun: 'DungeonRun',
+    Dungeon: 'Dungeon'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1879,7 +1981,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3656,6 +3758,228 @@ export namespace Prisma {
           count: {
             args: Prisma.PlayerDinozShopCountArgs<ExtArgs>
             result: $Utils.Optional<PlayerDinozShopCountAggregateOutputType> | number
+          }
+        }
+      }
+      PlayerDemonShop: {
+        payload: Prisma.$PlayerDemonShopPayload<ExtArgs>
+        fields: Prisma.PlayerDemonShopFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlayerDemonShopFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlayerDemonShopFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          findFirst: {
+            args: Prisma.PlayerDemonShopFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlayerDemonShopFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          findMany: {
+            args: Prisma.PlayerDemonShopFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>[]
+          }
+          create: {
+            args: Prisma.PlayerDemonShopCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          createMany: {
+            args: Prisma.PlayerDemonShopCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PlayerDemonShopCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>[]
+          }
+          delete: {
+            args: Prisma.PlayerDemonShopDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          update: {
+            args: Prisma.PlayerDemonShopUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlayerDemonShopDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlayerDemonShopUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PlayerDemonShopUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>[]
+          }
+          upsert: {
+            args: Prisma.PlayerDemonShopUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerDemonShopPayload>
+          }
+          aggregate: {
+            args: Prisma.PlayerDemonShopAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePlayerDemonShop>
+          }
+          groupBy: {
+            args: Prisma.PlayerDemonShopGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PlayerDemonShopGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlayerDemonShopCountArgs<ExtArgs>
+            result: $Utils.Optional<PlayerDemonShopCountAggregateOutputType> | number
+          }
+        }
+      }
+      DemonSkill: {
+        payload: Prisma.$DemonSkillPayload<ExtArgs>
+        fields: Prisma.DemonSkillFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DemonSkillFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DemonSkillFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          findFirst: {
+            args: Prisma.DemonSkillFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DemonSkillFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          findMany: {
+            args: Prisma.DemonSkillFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>[]
+          }
+          create: {
+            args: Prisma.DemonSkillCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          createMany: {
+            args: Prisma.DemonSkillCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DemonSkillCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>[]
+          }
+          delete: {
+            args: Prisma.DemonSkillDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          update: {
+            args: Prisma.DemonSkillUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          deleteMany: {
+            args: Prisma.DemonSkillDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DemonSkillUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DemonSkillUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>[]
+          }
+          upsert: {
+            args: Prisma.DemonSkillUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillPayload>
+          }
+          aggregate: {
+            args: Prisma.DemonSkillAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDemonSkill>
+          }
+          groupBy: {
+            args: Prisma.DemonSkillGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DemonSkillGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DemonSkillCountArgs<ExtArgs>
+            result: $Utils.Optional<DemonSkillCountAggregateOutputType> | number
+          }
+        }
+      }
+      DemonSkillUnlockable: {
+        payload: Prisma.$DemonSkillUnlockablePayload<ExtArgs>
+        fields: Prisma.DemonSkillUnlockableFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DemonSkillUnlockableFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DemonSkillUnlockableFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          findFirst: {
+            args: Prisma.DemonSkillUnlockableFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DemonSkillUnlockableFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          findMany: {
+            args: Prisma.DemonSkillUnlockableFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>[]
+          }
+          create: {
+            args: Prisma.DemonSkillUnlockableCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          createMany: {
+            args: Prisma.DemonSkillUnlockableCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DemonSkillUnlockableCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>[]
+          }
+          delete: {
+            args: Prisma.DemonSkillUnlockableDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          update: {
+            args: Prisma.DemonSkillUnlockableUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          deleteMany: {
+            args: Prisma.DemonSkillUnlockableDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DemonSkillUnlockableUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DemonSkillUnlockableUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>[]
+          }
+          upsert: {
+            args: Prisma.DemonSkillUnlockableUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemonSkillUnlockablePayload>
+          }
+          aggregate: {
+            args: Prisma.DemonSkillUnlockableAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDemonSkillUnlockable>
+          }
+          groupBy: {
+            args: Prisma.DemonSkillUnlockableGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DemonSkillUnlockableGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DemonSkillUnlockableCountArgs<ExtArgs>
+            result: $Utils.Optional<DemonSkillUnlockableCountAggregateOutputType> | number
           }
         }
       }
@@ -6545,6 +6869,154 @@ export namespace Prisma {
           }
         }
       }
+      DungeonRun: {
+        payload: Prisma.$DungeonRunPayload<ExtArgs>
+        fields: Prisma.DungeonRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DungeonRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DungeonRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          findFirst: {
+            args: Prisma.DungeonRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DungeonRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          findMany: {
+            args: Prisma.DungeonRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          create: {
+            args: Prisma.DungeonRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          createMany: {
+            args: Prisma.DungeonRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DungeonRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          delete: {
+            args: Prisma.DungeonRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          update: {
+            args: Prisma.DungeonRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.DungeonRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DungeonRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DungeonRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.DungeonRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonRunPayload>
+          }
+          aggregate: {
+            args: Prisma.DungeonRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDungeonRun>
+          }
+          groupBy: {
+            args: Prisma.DungeonRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DungeonRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DungeonRunCountArgs<ExtArgs>
+            result: $Utils.Optional<DungeonRunCountAggregateOutputType> | number
+          }
+        }
+      }
+      Dungeon: {
+        payload: Prisma.$DungeonPayload<ExtArgs>
+        fields: Prisma.DungeonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DungeonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DungeonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          findFirst: {
+            args: Prisma.DungeonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DungeonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          findMany: {
+            args: Prisma.DungeonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          create: {
+            args: Prisma.DungeonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          createMany: {
+            args: Prisma.DungeonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DungeonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          delete: {
+            args: Prisma.DungeonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          update: {
+            args: Prisma.DungeonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          deleteMany: {
+            args: Prisma.DungeonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DungeonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DungeonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>[]
+          }
+          upsert: {
+            args: Prisma.DungeonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DungeonPayload>
+          }
+          aggregate: {
+            args: Prisma.DungeonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDungeon>
+          }
+          groupBy: {
+            args: Prisma.DungeonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DungeonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DungeonCountArgs<ExtArgs>
+            result: $Utils.Optional<DungeonCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6653,6 +7125,9 @@ export namespace Prisma {
     dojoChallengeHistory?: DojoChallengeHistoryOmit
     usernameHistory?: UsernameHistoryOmit
     playerDinozShop?: PlayerDinozShopOmit
+    playerDemonShop?: PlayerDemonShopOmit
+    demonSkill?: DemonSkillOmit
+    demonSkillUnlockable?: DemonSkillUnlockableOmit
     playerGather?: PlayerGatherOmit
     playerIngredient?: PlayerIngredientOmit
     playerItem?: PlayerItemOmit
@@ -6692,6 +7167,8 @@ export namespace Prisma {
     gameDinoz?: GameDinozOmit
     events?: EventsOmit
     serverState?: ServerStateOmit
+    dungeonRun?: DungeonRunOmit
+    dungeon?: DungeonOmit
   }
 
   /* Types for Logging */
@@ -7164,6 +7641,7 @@ export namespace Prisma {
     dinoz: number
     playerTracking: number
     dinozShop: number
+    demonShop: number
     gathers: number
     ingredients: number
     items: number
@@ -7178,6 +7656,7 @@ export namespace Prisma {
     pollVotes: number
     Events: number
     dinozBuilds: number
+    dungeonRuns: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7198,6 +7677,7 @@ export namespace Prisma {
     dinoz?: boolean | PlayerCountOutputTypeCountDinozArgs
     playerTracking?: boolean | PlayerCountOutputTypeCountPlayerTrackingArgs
     dinozShop?: boolean | PlayerCountOutputTypeCountDinozShopArgs
+    demonShop?: boolean | PlayerCountOutputTypeCountDemonShopArgs
     gathers?: boolean | PlayerCountOutputTypeCountGathersArgs
     ingredients?: boolean | PlayerCountOutputTypeCountIngredientsArgs
     items?: boolean | PlayerCountOutputTypeCountItemsArgs
@@ -7212,6 +7692,7 @@ export namespace Prisma {
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
     Events?: boolean | PlayerCountOutputTypeCountEventsArgs
     dinozBuilds?: boolean | PlayerCountOutputTypeCountDinozBuildsArgs
+    dungeonRuns?: boolean | PlayerCountOutputTypeCountDungeonRunsArgs
   }
 
   // Custom InputTypes
@@ -7347,6 +7828,13 @@ export namespace Prisma {
   /**
    * PlayerCountOutputType without action
    */
+  export type PlayerCountOutputTypeCountDemonShopArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerDemonShopWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
   export type PlayerCountOutputTypeCountGathersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PlayerGatherWhereInput
   }
@@ -7442,6 +7930,13 @@ export namespace Prisma {
     where?: DinozBuildWhereInput
   }
 
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountDungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
+  }
+
 
   /**
    * Count Type DojoCountOutputType
@@ -7489,6 +7984,46 @@ export namespace Prisma {
    */
   export type DojoCountOutputTypeCountDojoOpponentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DojoOpponentsWhereInput
+  }
+
+
+  /**
+   * Count Type PlayerDemonShopCountOutputType
+   */
+
+  export type PlayerDemonShopCountOutputType = {
+    skills: number
+    unlockableSkills: number
+  }
+
+  export type PlayerDemonShopCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skills?: boolean | PlayerDemonShopCountOutputTypeCountSkillsArgs
+    unlockableSkills?: boolean | PlayerDemonShopCountOutputTypeCountUnlockableSkillsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PlayerDemonShopCountOutputType without action
+   */
+  export type PlayerDemonShopCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShopCountOutputType
+     */
+    select?: PlayerDemonShopCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PlayerDemonShopCountOutputType without action
+   */
+  export type PlayerDemonShopCountOutputTypeCountSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemonSkillWhereInput
+  }
+
+  /**
+   * PlayerDemonShopCountOutputType without action
+   */
+  export type PlayerDemonShopCountOutputTypeCountUnlockableSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemonSkillUnlockableWhereInput
   }
 
 
@@ -8024,6 +8559,37 @@ export namespace Prisma {
    */
   export type GameDinozCountOutputTypeCountFightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightArchiveWhereInput
+  }
+
+
+  /**
+   * Count Type DungeonCountOutputType
+   */
+
+  export type DungeonCountOutputType = {
+    dungeonRuns: number
+  }
+
+  export type DungeonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dungeonRuns?: boolean | DungeonCountOutputTypeCountDungeonRunsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DungeonCountOutputType without action
+   */
+  export type DungeonCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonCountOutputType
+     */
+    select?: DungeonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DungeonCountOutputType without action
+   */
+  export type DungeonCountOutputTypeCountDungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
   }
 
 
@@ -9179,6 +9745,7 @@ export namespace Prisma {
     remaining: number | null
     FBTournamentStep: number | null
     unavailableReason: $Enums.UnavailableReason | null
+    unavailableUntil: Date | null
     seed: string | null
     playerId: string | null
     buildId: string | null
@@ -9213,6 +9780,7 @@ export namespace Prisma {
     remaining: number | null
     FBTournamentStep: number | null
     unavailableReason: $Enums.UnavailableReason | null
+    unavailableUntil: Date | null
     seed: string | null
     playerId: string | null
     buildId: string | null
@@ -9247,6 +9815,7 @@ export namespace Prisma {
     remaining: number
     FBTournamentStep: number
     unavailableReason: number
+    unavailableUntil: number
     seed: number
     playerId: number
     buildId: number
@@ -9329,6 +9898,7 @@ export namespace Prisma {
     remaining?: true
     FBTournamentStep?: true
     unavailableReason?: true
+    unavailableUntil?: true
     seed?: true
     playerId?: true
     buildId?: true
@@ -9363,6 +9933,7 @@ export namespace Prisma {
     remaining?: true
     FBTournamentStep?: true
     unavailableReason?: true
+    unavailableUntil?: true
     seed?: true
     playerId?: true
     buildId?: true
@@ -9397,6 +9968,7 @@ export namespace Prisma {
     remaining?: true
     FBTournamentStep?: true
     unavailableReason?: true
+    unavailableUntil?: true
     seed?: true
     playerId?: true
     buildId?: true
@@ -9518,6 +10090,7 @@ export namespace Prisma {
     remaining: number
     FBTournamentStep: number
     unavailableReason: $Enums.UnavailableReason | null
+    unavailableUntil: Date | null
     seed: string
     playerId: string
     buildId: string | null
@@ -9571,12 +10144,14 @@ export namespace Prisma {
     remaining?: boolean
     FBTournamentStep?: boolean
     unavailableReason?: boolean
+    unavailableUntil?: boolean
     seed?: boolean
     playerId?: boolean
     buildId?: boolean
     castle?: boolean | Dinoz$castleArgs<ExtArgs>
     build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    dungeonRun?: boolean | Dinoz$dungeonRunArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
@@ -9627,6 +10202,7 @@ export namespace Prisma {
     remaining?: boolean
     FBTournamentStep?: boolean
     unavailableReason?: boolean
+    unavailableUntil?: boolean
     seed?: boolean
     playerId?: boolean
     buildId?: boolean
@@ -9666,6 +10242,7 @@ export namespace Prisma {
     remaining?: boolean
     FBTournamentStep?: boolean
     unavailableReason?: boolean
+    unavailableUntil?: boolean
     seed?: boolean
     playerId?: boolean
     buildId?: boolean
@@ -9705,16 +10282,18 @@ export namespace Prisma {
     remaining?: boolean
     FBTournamentStep?: boolean
     unavailableReason?: boolean
+    unavailableUntil?: boolean
     seed?: boolean
     playerId?: boolean
     buildId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "castleId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId" | "buildId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "castleId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "unavailableUntil" | "seed" | "playerId" | "buildId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     castle?: boolean | Dinoz$castleArgs<ExtArgs>
     build?: boolean | Dinoz$buildArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    dungeonRun?: boolean | Dinoz$dungeonRunArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
@@ -9756,6 +10335,7 @@ export namespace Prisma {
       castle: Prisma.$ClanCastlePayload<ExtArgs> | null
       build: Prisma.$DinozBuildPayload<ExtArgs> | null
       catches: Prisma.$DinozCatchPayload<ExtArgs>[]
+      dungeonRun: Prisma.$DungeonRunPayload<ExtArgs> | null
       logs: Prisma.$LogPayload<ExtArgs>[]
       Moderation: Prisma.$ModerationPayload<ExtArgs>[]
       offers: Prisma.$OfferPayload<ExtArgs>[]
@@ -9804,6 +10384,7 @@ export namespace Prisma {
       remaining: number
       FBTournamentStep: number
       unavailableReason: $Enums.UnavailableReason | null
+      unavailableUntil: Date | null
       seed: string
       playerId: string
       buildId: string | null
@@ -10204,6 +10785,7 @@ export namespace Prisma {
     castle<T extends Dinoz$castleArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$castleArgs<ExtArgs>>): Prisma__ClanCastleClient<$Result.GetResult<Prisma.$ClanCastlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     build<T extends Dinoz$buildArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$buildArgs<ExtArgs>>): Prisma__DinozBuildClient<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dungeonRun<T extends Dinoz$dungeonRunArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$dungeonRunArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Moderation<T extends Dinoz$ModerationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$ModerationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     offers<T extends Dinoz$offersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10279,6 +10861,7 @@ export namespace Prisma {
     readonly remaining: FieldRef<"Dinoz", 'Int'>
     readonly FBTournamentStep: FieldRef<"Dinoz", 'Int'>
     readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
+    readonly unavailableUntil: FieldRef<"Dinoz", 'DateTime'>
     readonly seed: FieldRef<"Dinoz", 'String'>
     readonly playerId: FieldRef<"Dinoz", 'String'>
     readonly buildId: FieldRef<"Dinoz", 'String'>
@@ -10746,6 +11329,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.dungeonRun
+   */
+  export type Dinoz$dungeonRunArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
   }
 
   /**
@@ -27132,11 +27734,13 @@ export namespace Prisma {
     skipFight: boolean | null
     skipLevel: boolean | null
     autoReequipItems: boolean | null
+    bypassGatheringGrid: boolean | null
     shareArchivedData: boolean | null
     archivedSiteId: number | null
     displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
+    tosAccepted: boolean | null
     id: string | null
   }
 
@@ -27166,11 +27770,13 @@ export namespace Prisma {
     skipFight: boolean | null
     skipLevel: boolean | null
     autoReequipItems: boolean | null
+    bypassGatheringGrid: boolean | null
     shareArchivedData: boolean | null
     archivedSiteId: number | null
     displayedNotifications: number | null
     banCaseId: number | null
     lastVersionSeen: string | null
+    tosAccepted: boolean | null
     id: string | null
   }
 
@@ -27200,12 +27806,14 @@ export namespace Prisma {
     skipFight: number
     skipLevel: number
     autoReequipItems: number
+    bypassGatheringGrid: number
     shareArchivedData: number
     archivedSiteId: number
     displayedNotifications: number
     banCaseId: number
     discoveredSkills: number
     lastVersionSeen: number
+    tosAccepted: number
     id: number
     _all: number
   }
@@ -27259,11 +27867,13 @@ export namespace Prisma {
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
+    bypassGatheringGrid?: true
     shareArchivedData?: true
     archivedSiteId?: true
     displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
   }
 
@@ -27293,11 +27903,13 @@ export namespace Prisma {
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
+    bypassGatheringGrid?: true
     shareArchivedData?: true
     archivedSiteId?: true
     displayedNotifications?: true
     banCaseId?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
   }
 
@@ -27327,12 +27939,14 @@ export namespace Prisma {
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
+    bypassGatheringGrid?: true
     shareArchivedData?: true
     archivedSiteId?: true
     displayedNotifications?: true
     banCaseId?: true
     discoveredSkills?: true
     lastVersionSeen?: true
+    tosAccepted?: true
     id?: true
     _all?: true
   }
@@ -27449,12 +28063,14 @@ export namespace Prisma {
     skipFight: boolean
     skipLevel: boolean
     autoReequipItems: boolean
+    bypassGatheringGrid: boolean
     shareArchivedData: boolean
     archivedSiteId: number | null
     displayedNotifications: number
     banCaseId: number | null
     discoveredSkills: number[]
     lastVersionSeen: string
+    tosAccepted: boolean
     id: string
     _count: PlayerCountAggregateOutputType | null
     _avg: PlayerAvgAggregateOutputType | null
@@ -27503,12 +28119,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
     displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -27532,6 +28150,7 @@ export namespace Prisma {
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
     playerTracking?: boolean | Player$playerTrackingArgs<ExtArgs>
     dinozShop?: boolean | Player$dinozShopArgs<ExtArgs>
+    demonShop?: boolean | Player$demonShopArgs<ExtArgs>
     gathers?: boolean | Player$gathersArgs<ExtArgs>
     ingredients?: boolean | Player$ingredientsArgs<ExtArgs>
     items?: boolean | Player$itemsArgs<ExtArgs>
@@ -27548,6 +28167,7 @@ export namespace Prisma {
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
+    dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -27577,12 +28197,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
     displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -27614,12 +28236,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
     displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
     clan?: boolean | Player$clanArgs<ExtArgs>
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -27651,16 +28275,18 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: boolean
     displayedNotifications?: boolean
     banCaseId?: boolean
     discoveredSkills?: boolean
     lastVersionSeen?: boolean
+    tosAccepted?: boolean
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "autoReequipItems" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "autoReequipItems" | "bypassGatheringGrid" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "tosAccepted" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -27684,6 +28310,7 @@ export namespace Prisma {
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
     playerTracking?: boolean | Player$playerTrackingArgs<ExtArgs>
     dinozShop?: boolean | Player$dinozShopArgs<ExtArgs>
+    demonShop?: boolean | Player$demonShopArgs<ExtArgs>
     gathers?: boolean | Player$gathersArgs<ExtArgs>
     ingredients?: boolean | Player$ingredientsArgs<ExtArgs>
     items?: boolean | Player$itemsArgs<ExtArgs>
@@ -27700,6 +28327,7 @@ export namespace Prisma {
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
+    dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27736,6 +28364,7 @@ export namespace Prisma {
       banCase: Prisma.$ModerationPayload<ExtArgs> | null
       playerTracking: Prisma.$PlayerTrackingPayload<ExtArgs>[]
       dinozShop: Prisma.$PlayerDinozShopPayload<ExtArgs>[]
+      demonShop: Prisma.$PlayerDemonShopPayload<ExtArgs>[]
       gathers: Prisma.$PlayerGatherPayload<ExtArgs>[]
       ingredients: Prisma.$PlayerIngredientPayload<ExtArgs>[]
       items: Prisma.$PlayerItemPayload<ExtArgs>[]
@@ -27752,6 +28381,7 @@ export namespace Prisma {
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
       Events: Prisma.$EventsPayload<ExtArgs>[]
       dinozBuilds: Prisma.$DinozBuildPayload<ExtArgs>[]
+      dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -27779,12 +28409,14 @@ export namespace Prisma {
       skipFight: boolean
       skipLevel: boolean
       autoReequipItems: boolean
+      bypassGatheringGrid: boolean
       shareArchivedData: boolean
       archivedSiteId: number | null
       displayedNotifications: number
       banCaseId: number | null
       discoveredSkills: number[]
       lastVersionSeen: string
+      tosAccepted: boolean
       id: string
     }, ExtArgs["result"]["player"]>
     composites: {}
@@ -28202,6 +28834,7 @@ export namespace Prisma {
     banCase<T extends Player$banCaseArgs<ExtArgs> = {}>(args?: Subset<T, Player$banCaseArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     playerTracking<T extends Player$playerTrackingArgs<ExtArgs> = {}>(args?: Subset<T, Player$playerTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinozShop<T extends Player$dinozShopArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    demonShop<T extends Player$demonShopArgs<ExtArgs> = {}>(args?: Subset<T, Player$demonShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     gathers<T extends Player$gathersArgs<ExtArgs> = {}>(args?: Subset<T, Player$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ingredients<T extends Player$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Player$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends Player$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Player$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -28218,6 +28851,7 @@ export namespace Prisma {
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinozBuilds<T extends Player$dinozBuildsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozBuildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dungeonRuns<T extends Player$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28272,12 +28906,14 @@ export namespace Prisma {
     readonly skipFight: FieldRef<"Player", 'Boolean'>
     readonly skipLevel: FieldRef<"Player", 'Boolean'>
     readonly autoReequipItems: FieldRef<"Player", 'Boolean'>
+    readonly bypassGatheringGrid: FieldRef<"Player", 'Boolean'>
     readonly shareArchivedData: FieldRef<"Player", 'Boolean'>
     readonly archivedSiteId: FieldRef<"Player", 'Int'>
     readonly displayedNotifications: FieldRef<"Player", 'Int'>
     readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly lastVersionSeen: FieldRef<"Player", 'String'>
+    readonly tosAccepted: FieldRef<"Player", 'Boolean'>
     readonly id: FieldRef<"Player", 'String'>
   }
     
@@ -29187,6 +29823,30 @@ export namespace Prisma {
   }
 
   /**
+   * Player.demonShop
+   */
+  export type Player$demonShopArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    where?: PlayerDemonShopWhereInput
+    orderBy?: PlayerDemonShopOrderByWithRelationInput | PlayerDemonShopOrderByWithRelationInput[]
+    cursor?: PlayerDemonShopWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PlayerDemonShopScalarFieldEnum | PlayerDemonShopScalarFieldEnum[]
+  }
+
+  /**
    * Player.gathers
    */
   export type Player$gathersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29558,6 +30218,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
+  }
+
+  /**
+   * Player.dungeonRuns
+   */
+  export type Player$dungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    cursor?: DungeonRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
   }
 
   /**
@@ -37445,6 +38129,3473 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PlayerDinozShopInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PlayerDemonShop
+   */
+
+  export type AggregatePlayerDemonShop = {
+    _count: PlayerDemonShopCountAggregateOutputType | null
+    _avg: PlayerDemonShopAvgAggregateOutputType | null
+    _sum: PlayerDemonShopSumAggregateOutputType | null
+    _min: PlayerDemonShopMinAggregateOutputType | null
+    _max: PlayerDemonShopMaxAggregateOutputType | null
+  }
+
+  export type PlayerDemonShopAvgAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+  }
+
+  export type PlayerDemonShopSumAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+  }
+
+  export type PlayerDemonShopMinAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    display: string | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    seed: string | null
+    playerId: string | null
+  }
+
+  export type PlayerDemonShopMaxAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    display: string | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    seed: string | null
+    playerId: string | null
+  }
+
+  export type PlayerDemonShopCountAggregateOutputType = {
+    id: number
+    raceId: number
+    display: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed: number
+    playerId: number
+    _all: number
+  }
+
+
+  export type PlayerDemonShopAvgAggregateInputType = {
+    id?: true
+    raceId?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+  }
+
+  export type PlayerDemonShopSumAggregateInputType = {
+    id?: true
+    raceId?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+  }
+
+  export type PlayerDemonShopMinAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    seed?: true
+    playerId?: true
+  }
+
+  export type PlayerDemonShopMaxAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    seed?: true
+    playerId?: true
+  }
+
+  export type PlayerDemonShopCountAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    seed?: true
+    playerId?: true
+    _all?: true
+  }
+
+  export type PlayerDemonShopAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerDemonShop to aggregate.
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerDemonShops to fetch.
+     */
+    orderBy?: PlayerDemonShopOrderByWithRelationInput | PlayerDemonShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlayerDemonShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerDemonShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerDemonShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlayerDemonShops
+    **/
+    _count?: true | PlayerDemonShopCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PlayerDemonShopAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PlayerDemonShopSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlayerDemonShopMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlayerDemonShopMaxAggregateInputType
+  }
+
+  export type GetPlayerDemonShopAggregateType<T extends PlayerDemonShopAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayerDemonShop]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlayerDemonShop[P]>
+      : GetScalarType<T[P], AggregatePlayerDemonShop[P]>
+  }
+
+
+
+
+  export type PlayerDemonShopGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerDemonShopWhereInput
+    orderBy?: PlayerDemonShopOrderByWithAggregationInput | PlayerDemonShopOrderByWithAggregationInput[]
+    by: PlayerDemonShopScalarFieldEnum[] | PlayerDemonShopScalarFieldEnum
+    having?: PlayerDemonShopScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlayerDemonShopCountAggregateInputType | true
+    _avg?: PlayerDemonShopAvgAggregateInputType
+    _sum?: PlayerDemonShopSumAggregateInputType
+    _min?: PlayerDemonShopMinAggregateInputType
+    _max?: PlayerDemonShopMaxAggregateInputType
+  }
+
+  export type PlayerDemonShopGroupByOutputType = {
+    id: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed: string
+    playerId: string | null
+    _count: PlayerDemonShopCountAggregateOutputType | null
+    _avg: PlayerDemonShopAvgAggregateOutputType | null
+    _sum: PlayerDemonShopSumAggregateOutputType | null
+    _min: PlayerDemonShopMinAggregateOutputType | null
+    _max: PlayerDemonShopMaxAggregateOutputType | null
+  }
+
+  type GetPlayerDemonShopGroupByPayload<T extends PlayerDemonShopGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlayerDemonShopGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlayerDemonShopGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlayerDemonShopGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayerDemonShopGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlayerDemonShopSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    seed?: boolean
+    playerId?: boolean
+    skills?: boolean | PlayerDemonShop$skillsArgs<ExtArgs>
+    unlockableSkills?: boolean | PlayerDemonShop$unlockableSkillsArgs<ExtArgs>
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+    _count?: boolean | PlayerDemonShopCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerDemonShop"]>
+
+  export type PlayerDemonShopSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    seed?: boolean
+    playerId?: boolean
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+  }, ExtArgs["result"]["playerDemonShop"]>
+
+  export type PlayerDemonShopSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    seed?: boolean
+    playerId?: boolean
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+  }, ExtArgs["result"]["playerDemonShop"]>
+
+  export type PlayerDemonShopSelectScalar = {
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    seed?: boolean
+    playerId?: boolean
+  }
+
+  export type PlayerDemonShopOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "raceId" | "display" | "nextUpElementId" | "nextUpAltElementId" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "seed" | "playerId", ExtArgs["result"]["playerDemonShop"]>
+  export type PlayerDemonShopInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skills?: boolean | PlayerDemonShop$skillsArgs<ExtArgs>
+    unlockableSkills?: boolean | PlayerDemonShop$unlockableSkillsArgs<ExtArgs>
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+    _count?: boolean | PlayerDemonShopCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PlayerDemonShopIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+  }
+  export type PlayerDemonShopIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDemonShop$playerArgs<ExtArgs>
+  }
+
+  export type $PlayerDemonShopPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlayerDemonShop"
+    objects: {
+      skills: Prisma.$DemonSkillPayload<ExtArgs>[]
+      unlockableSkills: Prisma.$DemonSkillUnlockablePayload<ExtArgs>[]
+      player: Prisma.$PlayerPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      raceId: number
+      display: string
+      nextUpElementId: number
+      nextUpAltElementId: number
+      nbrUpFire: number
+      nbrUpWood: number
+      nbrUpWater: number
+      nbrUpLightning: number
+      nbrUpAir: number
+      seed: string
+      playerId: string | null
+    }, ExtArgs["result"]["playerDemonShop"]>
+    composites: {}
+  }
+
+  type PlayerDemonShopGetPayload<S extends boolean | null | undefined | PlayerDemonShopDefaultArgs> = $Result.GetResult<Prisma.$PlayerDemonShopPayload, S>
+
+  type PlayerDemonShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PlayerDemonShopFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: PlayerDemonShopCountAggregateInputType | true
+    }
+
+  export interface PlayerDemonShopDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlayerDemonShop'], meta: { name: 'PlayerDemonShop' } }
+    /**
+     * Find zero or one PlayerDemonShop that matches the filter.
+     * @param {PlayerDemonShopFindUniqueArgs} args - Arguments to find a PlayerDemonShop
+     * @example
+     * // Get one PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PlayerDemonShopFindUniqueArgs>(args: SelectSubset<T, PlayerDemonShopFindUniqueArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PlayerDemonShop that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PlayerDemonShopFindUniqueOrThrowArgs} args - Arguments to find a PlayerDemonShop
+     * @example
+     * // Get one PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PlayerDemonShopFindUniqueOrThrowArgs>(args: SelectSubset<T, PlayerDemonShopFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerDemonShop that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopFindFirstArgs} args - Arguments to find a PlayerDemonShop
+     * @example
+     * // Get one PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PlayerDemonShopFindFirstArgs>(args?: SelectSubset<T, PlayerDemonShopFindFirstArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerDemonShop that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopFindFirstOrThrowArgs} args - Arguments to find a PlayerDemonShop
+     * @example
+     * // Get one PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PlayerDemonShopFindFirstOrThrowArgs>(args?: SelectSubset<T, PlayerDemonShopFindFirstOrThrowArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PlayerDemonShops that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlayerDemonShops
+     * const playerDemonShops = await prisma.playerDemonShop.findMany()
+     * 
+     * // Get first 10 PlayerDemonShops
+     * const playerDemonShops = await prisma.playerDemonShop.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const playerDemonShopWithIdOnly = await prisma.playerDemonShop.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PlayerDemonShopFindManyArgs>(args?: SelectSubset<T, PlayerDemonShopFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PlayerDemonShop.
+     * @param {PlayerDemonShopCreateArgs} args - Arguments to create a PlayerDemonShop.
+     * @example
+     * // Create one PlayerDemonShop
+     * const PlayerDemonShop = await prisma.playerDemonShop.create({
+     *   data: {
+     *     // ... data to create a PlayerDemonShop
+     *   }
+     * })
+     * 
+     */
+    create<T extends PlayerDemonShopCreateArgs>(args: SelectSubset<T, PlayerDemonShopCreateArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PlayerDemonShops.
+     * @param {PlayerDemonShopCreateManyArgs} args - Arguments to create many PlayerDemonShops.
+     * @example
+     * // Create many PlayerDemonShops
+     * const playerDemonShop = await prisma.playerDemonShop.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PlayerDemonShopCreateManyArgs>(args?: SelectSubset<T, PlayerDemonShopCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PlayerDemonShops and returns the data saved in the database.
+     * @param {PlayerDemonShopCreateManyAndReturnArgs} args - Arguments to create many PlayerDemonShops.
+     * @example
+     * // Create many PlayerDemonShops
+     * const playerDemonShop = await prisma.playerDemonShop.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PlayerDemonShops and only return the `id`
+     * const playerDemonShopWithIdOnly = await prisma.playerDemonShop.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PlayerDemonShopCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerDemonShopCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PlayerDemonShop.
+     * @param {PlayerDemonShopDeleteArgs} args - Arguments to delete one PlayerDemonShop.
+     * @example
+     * // Delete one PlayerDemonShop
+     * const PlayerDemonShop = await prisma.playerDemonShop.delete({
+     *   where: {
+     *     // ... filter to delete one PlayerDemonShop
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PlayerDemonShopDeleteArgs>(args: SelectSubset<T, PlayerDemonShopDeleteArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PlayerDemonShop.
+     * @param {PlayerDemonShopUpdateArgs} args - Arguments to update one PlayerDemonShop.
+     * @example
+     * // Update one PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PlayerDemonShopUpdateArgs>(args: SelectSubset<T, PlayerDemonShopUpdateArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PlayerDemonShops.
+     * @param {PlayerDemonShopDeleteManyArgs} args - Arguments to filter PlayerDemonShops to delete.
+     * @example
+     * // Delete a few PlayerDemonShops
+     * const { count } = await prisma.playerDemonShop.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PlayerDemonShopDeleteManyArgs>(args?: SelectSubset<T, PlayerDemonShopDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerDemonShops.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlayerDemonShops
+     * const playerDemonShop = await prisma.playerDemonShop.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PlayerDemonShopUpdateManyArgs>(args: SelectSubset<T, PlayerDemonShopUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerDemonShops and returns the data updated in the database.
+     * @param {PlayerDemonShopUpdateManyAndReturnArgs} args - Arguments to update many PlayerDemonShops.
+     * @example
+     * // Update many PlayerDemonShops
+     * const playerDemonShop = await prisma.playerDemonShop.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PlayerDemonShops and only return the `id`
+     * const playerDemonShopWithIdOnly = await prisma.playerDemonShop.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PlayerDemonShopUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerDemonShopUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PlayerDemonShop.
+     * @param {PlayerDemonShopUpsertArgs} args - Arguments to update or create a PlayerDemonShop.
+     * @example
+     * // Update or create a PlayerDemonShop
+     * const playerDemonShop = await prisma.playerDemonShop.upsert({
+     *   create: {
+     *     // ... data to create a PlayerDemonShop
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlayerDemonShop we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PlayerDemonShopUpsertArgs>(args: SelectSubset<T, PlayerDemonShopUpsertArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PlayerDemonShops.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopCountArgs} args - Arguments to filter PlayerDemonShops to count.
+     * @example
+     * // Count the number of PlayerDemonShops
+     * const count = await prisma.playerDemonShop.count({
+     *   where: {
+     *     // ... the filter for the PlayerDemonShops we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlayerDemonShopCountArgs>(
+      args?: Subset<T, PlayerDemonShopCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlayerDemonShopCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlayerDemonShop.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlayerDemonShopAggregateArgs>(args: Subset<T, PlayerDemonShopAggregateArgs>): Prisma.PrismaPromise<GetPlayerDemonShopAggregateType<T>>
+
+    /**
+     * Group by PlayerDemonShop.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerDemonShopGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlayerDemonShopGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlayerDemonShopGroupByArgs['orderBy'] }
+        : { orderBy?: PlayerDemonShopGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlayerDemonShopGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayerDemonShopGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlayerDemonShop model
+   */
+  readonly fields: PlayerDemonShopFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlayerDemonShop.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlayerDemonShopClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    skills<T extends PlayerDemonShop$skillsArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDemonShop$skillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    unlockableSkills<T extends PlayerDemonShop$unlockableSkillsArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDemonShop$unlockableSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    player<T extends PlayerDemonShop$playerArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDemonShop$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PlayerDemonShop model
+   */ 
+  interface PlayerDemonShopFieldRefs {
+    readonly id: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly raceId: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly display: FieldRef<"PlayerDemonShop", 'String'>
+    readonly nextUpElementId: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nextUpAltElementId: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nbrUpFire: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nbrUpWood: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nbrUpWater: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nbrUpLightning: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly nbrUpAir: FieldRef<"PlayerDemonShop", 'Int'>
+    readonly seed: FieldRef<"PlayerDemonShop", 'String'>
+    readonly playerId: FieldRef<"PlayerDemonShop", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PlayerDemonShop findUnique
+   */
+  export type PlayerDemonShopFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerDemonShop to fetch.
+     */
+    where: PlayerDemonShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop findUniqueOrThrow
+   */
+  export type PlayerDemonShopFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerDemonShop to fetch.
+     */
+    where: PlayerDemonShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop findFirst
+   */
+  export type PlayerDemonShopFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerDemonShop to fetch.
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerDemonShops to fetch.
+     */
+    orderBy?: PlayerDemonShopOrderByWithRelationInput | PlayerDemonShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerDemonShops.
+     */
+    cursor?: PlayerDemonShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerDemonShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerDemonShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerDemonShops.
+     */
+    distinct?: PlayerDemonShopScalarFieldEnum | PlayerDemonShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop findFirstOrThrow
+   */
+  export type PlayerDemonShopFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerDemonShop to fetch.
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerDemonShops to fetch.
+     */
+    orderBy?: PlayerDemonShopOrderByWithRelationInput | PlayerDemonShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerDemonShops.
+     */
+    cursor?: PlayerDemonShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerDemonShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerDemonShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerDemonShops.
+     */
+    distinct?: PlayerDemonShopScalarFieldEnum | PlayerDemonShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop findMany
+   */
+  export type PlayerDemonShopFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerDemonShops to fetch.
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerDemonShops to fetch.
+     */
+    orderBy?: PlayerDemonShopOrderByWithRelationInput | PlayerDemonShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlayerDemonShops.
+     */
+    cursor?: PlayerDemonShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerDemonShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerDemonShops.
+     */
+    skip?: number
+    distinct?: PlayerDemonShopScalarFieldEnum | PlayerDemonShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop create
+   */
+  export type PlayerDemonShopCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlayerDemonShop.
+     */
+    data: XOR<PlayerDemonShopCreateInput, PlayerDemonShopUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop createMany
+   */
+  export type PlayerDemonShopCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlayerDemonShops.
+     */
+    data: PlayerDemonShopCreateManyInput | PlayerDemonShopCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PlayerDemonShop createManyAndReturn
+   */
+  export type PlayerDemonShopCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * The data used to create many PlayerDemonShops.
+     */
+    data: PlayerDemonShopCreateManyInput | PlayerDemonShopCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerDemonShop update
+   */
+  export type PlayerDemonShopUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlayerDemonShop.
+     */
+    data: XOR<PlayerDemonShopUpdateInput, PlayerDemonShopUncheckedUpdateInput>
+    /**
+     * Choose, which PlayerDemonShop to update.
+     */
+    where: PlayerDemonShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop updateMany
+   */
+  export type PlayerDemonShopUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlayerDemonShops.
+     */
+    data: XOR<PlayerDemonShopUpdateManyMutationInput, PlayerDemonShopUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerDemonShops to update
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * Limit how many PlayerDemonShops to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerDemonShop updateManyAndReturn
+   */
+  export type PlayerDemonShopUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * The data used to update PlayerDemonShops.
+     */
+    data: XOR<PlayerDemonShopUpdateManyMutationInput, PlayerDemonShopUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerDemonShops to update
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * Limit how many PlayerDemonShops to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerDemonShop upsert
+   */
+  export type PlayerDemonShopUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlayerDemonShop to update in case it exists.
+     */
+    where: PlayerDemonShopWhereUniqueInput
+    /**
+     * In case the PlayerDemonShop found by the `where` argument doesn't exist, create a new PlayerDemonShop with this data.
+     */
+    create: XOR<PlayerDemonShopCreateInput, PlayerDemonShopUncheckedCreateInput>
+    /**
+     * In case the PlayerDemonShop was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlayerDemonShopUpdateInput, PlayerDemonShopUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop delete
+   */
+  export type PlayerDemonShopDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+    /**
+     * Filter which PlayerDemonShop to delete.
+     */
+    where: PlayerDemonShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerDemonShop deleteMany
+   */
+  export type PlayerDemonShopDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerDemonShops to delete
+     */
+    where?: PlayerDemonShopWhereInput
+    /**
+     * Limit how many PlayerDemonShops to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerDemonShop.skills
+   */
+  export type PlayerDemonShop$skillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    where?: DemonSkillWhereInput
+    orderBy?: DemonSkillOrderByWithRelationInput | DemonSkillOrderByWithRelationInput[]
+    cursor?: DemonSkillWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DemonSkillScalarFieldEnum | DemonSkillScalarFieldEnum[]
+  }
+
+  /**
+   * PlayerDemonShop.unlockableSkills
+   */
+  export type PlayerDemonShop$unlockableSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    where?: DemonSkillUnlockableWhereInput
+    orderBy?: DemonSkillUnlockableOrderByWithRelationInput | DemonSkillUnlockableOrderByWithRelationInput[]
+    cursor?: DemonSkillUnlockableWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DemonSkillUnlockableScalarFieldEnum | DemonSkillUnlockableScalarFieldEnum[]
+  }
+
+  /**
+   * PlayerDemonShop.player
+   */
+  export type PlayerDemonShop$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
+  }
+
+  /**
+   * PlayerDemonShop without action
+   */
+  export type PlayerDemonShopDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerDemonShop
+     */
+    select?: PlayerDemonShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerDemonShop
+     */
+    omit?: PlayerDemonShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerDemonShopInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DemonSkill
+   */
+
+  export type AggregateDemonSkill = {
+    _count: DemonSkillCountAggregateOutputType | null
+    _avg: DemonSkillAvgAggregateOutputType | null
+    _sum: DemonSkillSumAggregateOutputType | null
+    _min: DemonSkillMinAggregateOutputType | null
+    _max: DemonSkillMaxAggregateOutputType | null
+  }
+
+  export type DemonSkillAvgAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillSumAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillMinAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillMaxAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillCountAggregateOutputType = {
+    id: number
+    skillId: number
+    dinozId: number
+    _all: number
+  }
+
+
+  export type DemonSkillAvgAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillSumAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillMinAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillMaxAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillCountAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+    _all?: true
+  }
+
+  export type DemonSkillAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemonSkill to aggregate.
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkills to fetch.
+     */
+    orderBy?: DemonSkillOrderByWithRelationInput | DemonSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DemonSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DemonSkills
+    **/
+    _count?: true | DemonSkillCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DemonSkillAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DemonSkillSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DemonSkillMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DemonSkillMaxAggregateInputType
+  }
+
+  export type GetDemonSkillAggregateType<T extends DemonSkillAggregateArgs> = {
+        [P in keyof T & keyof AggregateDemonSkill]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDemonSkill[P]>
+      : GetScalarType<T[P], AggregateDemonSkill[P]>
+  }
+
+
+
+
+  export type DemonSkillGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemonSkillWhereInput
+    orderBy?: DemonSkillOrderByWithAggregationInput | DemonSkillOrderByWithAggregationInput[]
+    by: DemonSkillScalarFieldEnum[] | DemonSkillScalarFieldEnum
+    having?: DemonSkillScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DemonSkillCountAggregateInputType | true
+    _avg?: DemonSkillAvgAggregateInputType
+    _sum?: DemonSkillSumAggregateInputType
+    _min?: DemonSkillMinAggregateInputType
+    _max?: DemonSkillMaxAggregateInputType
+  }
+
+  export type DemonSkillGroupByOutputType = {
+    id: number
+    skillId: number
+    dinozId: number
+    _count: DemonSkillCountAggregateOutputType | null
+    _avg: DemonSkillAvgAggregateOutputType | null
+    _sum: DemonSkillSumAggregateOutputType | null
+    _min: DemonSkillMinAggregateOutputType | null
+    _max: DemonSkillMaxAggregateOutputType | null
+  }
+
+  type GetDemonSkillGroupByPayload<T extends DemonSkillGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DemonSkillGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DemonSkillGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DemonSkillGroupByOutputType[P]>
+            : GetScalarType<T[P], DemonSkillGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DemonSkillSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkill"]>
+
+  export type DemonSkillSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkill"]>
+
+  export type DemonSkillSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkill"]>
+
+  export type DemonSkillSelectScalar = {
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+  }
+
+  export type DemonSkillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "dinozId", ExtArgs["result"]["demonSkill"]>
+  export type DemonSkillInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+  export type DemonSkillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+  export type DemonSkillIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+
+  export type $DemonSkillPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DemonSkill"
+    objects: {
+      dinoz: Prisma.$PlayerDemonShopPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      skillId: number
+      dinozId: number
+    }, ExtArgs["result"]["demonSkill"]>
+    composites: {}
+  }
+
+  type DemonSkillGetPayload<S extends boolean | null | undefined | DemonSkillDefaultArgs> = $Result.GetResult<Prisma.$DemonSkillPayload, S>
+
+  type DemonSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DemonSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DemonSkillCountAggregateInputType | true
+    }
+
+  export interface DemonSkillDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DemonSkill'], meta: { name: 'DemonSkill' } }
+    /**
+     * Find zero or one DemonSkill that matches the filter.
+     * @param {DemonSkillFindUniqueArgs} args - Arguments to find a DemonSkill
+     * @example
+     * // Get one DemonSkill
+     * const demonSkill = await prisma.demonSkill.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DemonSkillFindUniqueArgs>(args: SelectSubset<T, DemonSkillFindUniqueArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DemonSkill that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DemonSkillFindUniqueOrThrowArgs} args - Arguments to find a DemonSkill
+     * @example
+     * // Get one DemonSkill
+     * const demonSkill = await prisma.demonSkill.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DemonSkillFindUniqueOrThrowArgs>(args: SelectSubset<T, DemonSkillFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemonSkill that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillFindFirstArgs} args - Arguments to find a DemonSkill
+     * @example
+     * // Get one DemonSkill
+     * const demonSkill = await prisma.demonSkill.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DemonSkillFindFirstArgs>(args?: SelectSubset<T, DemonSkillFindFirstArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemonSkill that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillFindFirstOrThrowArgs} args - Arguments to find a DemonSkill
+     * @example
+     * // Get one DemonSkill
+     * const demonSkill = await prisma.demonSkill.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DemonSkillFindFirstOrThrowArgs>(args?: SelectSubset<T, DemonSkillFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DemonSkills that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DemonSkills
+     * const demonSkills = await prisma.demonSkill.findMany()
+     * 
+     * // Get first 10 DemonSkills
+     * const demonSkills = await prisma.demonSkill.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const demonSkillWithIdOnly = await prisma.demonSkill.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DemonSkillFindManyArgs>(args?: SelectSubset<T, DemonSkillFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DemonSkill.
+     * @param {DemonSkillCreateArgs} args - Arguments to create a DemonSkill.
+     * @example
+     * // Create one DemonSkill
+     * const DemonSkill = await prisma.demonSkill.create({
+     *   data: {
+     *     // ... data to create a DemonSkill
+     *   }
+     * })
+     * 
+     */
+    create<T extends DemonSkillCreateArgs>(args: SelectSubset<T, DemonSkillCreateArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DemonSkills.
+     * @param {DemonSkillCreateManyArgs} args - Arguments to create many DemonSkills.
+     * @example
+     * // Create many DemonSkills
+     * const demonSkill = await prisma.demonSkill.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DemonSkillCreateManyArgs>(args?: SelectSubset<T, DemonSkillCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DemonSkills and returns the data saved in the database.
+     * @param {DemonSkillCreateManyAndReturnArgs} args - Arguments to create many DemonSkills.
+     * @example
+     * // Create many DemonSkills
+     * const demonSkill = await prisma.demonSkill.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DemonSkills and only return the `id`
+     * const demonSkillWithIdOnly = await prisma.demonSkill.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DemonSkillCreateManyAndReturnArgs>(args?: SelectSubset<T, DemonSkillCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DemonSkill.
+     * @param {DemonSkillDeleteArgs} args - Arguments to delete one DemonSkill.
+     * @example
+     * // Delete one DemonSkill
+     * const DemonSkill = await prisma.demonSkill.delete({
+     *   where: {
+     *     // ... filter to delete one DemonSkill
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DemonSkillDeleteArgs>(args: SelectSubset<T, DemonSkillDeleteArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DemonSkill.
+     * @param {DemonSkillUpdateArgs} args - Arguments to update one DemonSkill.
+     * @example
+     * // Update one DemonSkill
+     * const demonSkill = await prisma.demonSkill.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DemonSkillUpdateArgs>(args: SelectSubset<T, DemonSkillUpdateArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DemonSkills.
+     * @param {DemonSkillDeleteManyArgs} args - Arguments to filter DemonSkills to delete.
+     * @example
+     * // Delete a few DemonSkills
+     * const { count } = await prisma.demonSkill.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DemonSkillDeleteManyArgs>(args?: SelectSubset<T, DemonSkillDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemonSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DemonSkills
+     * const demonSkill = await prisma.demonSkill.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DemonSkillUpdateManyArgs>(args: SelectSubset<T, DemonSkillUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemonSkills and returns the data updated in the database.
+     * @param {DemonSkillUpdateManyAndReturnArgs} args - Arguments to update many DemonSkills.
+     * @example
+     * // Update many DemonSkills
+     * const demonSkill = await prisma.demonSkill.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DemonSkills and only return the `id`
+     * const demonSkillWithIdOnly = await prisma.demonSkill.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DemonSkillUpdateManyAndReturnArgs>(args: SelectSubset<T, DemonSkillUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DemonSkill.
+     * @param {DemonSkillUpsertArgs} args - Arguments to update or create a DemonSkill.
+     * @example
+     * // Update or create a DemonSkill
+     * const demonSkill = await prisma.demonSkill.upsert({
+     *   create: {
+     *     // ... data to create a DemonSkill
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DemonSkill we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DemonSkillUpsertArgs>(args: SelectSubset<T, DemonSkillUpsertArgs<ExtArgs>>): Prisma__DemonSkillClient<$Result.GetResult<Prisma.$DemonSkillPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DemonSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillCountArgs} args - Arguments to filter DemonSkills to count.
+     * @example
+     * // Count the number of DemonSkills
+     * const count = await prisma.demonSkill.count({
+     *   where: {
+     *     // ... the filter for the DemonSkills we want to count
+     *   }
+     * })
+    **/
+    count<T extends DemonSkillCountArgs>(
+      args?: Subset<T, DemonSkillCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DemonSkillCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DemonSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DemonSkillAggregateArgs>(args: Subset<T, DemonSkillAggregateArgs>): Prisma.PrismaPromise<GetDemonSkillAggregateType<T>>
+
+    /**
+     * Group by DemonSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DemonSkillGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DemonSkillGroupByArgs['orderBy'] }
+        : { orderBy?: DemonSkillGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DemonSkillGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemonSkillGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DemonSkill model
+   */
+  readonly fields: DemonSkillFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DemonSkill.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DemonSkillClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dinoz<T extends PlayerDemonShopDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDemonShopDefaultArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DemonSkill model
+   */ 
+  interface DemonSkillFieldRefs {
+    readonly id: FieldRef<"DemonSkill", 'Int'>
+    readonly skillId: FieldRef<"DemonSkill", 'Int'>
+    readonly dinozId: FieldRef<"DemonSkill", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DemonSkill findUnique
+   */
+  export type DemonSkillFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkill to fetch.
+     */
+    where: DemonSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill findUniqueOrThrow
+   */
+  export type DemonSkillFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkill to fetch.
+     */
+    where: DemonSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill findFirst
+   */
+  export type DemonSkillFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkill to fetch.
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkills to fetch.
+     */
+    orderBy?: DemonSkillOrderByWithRelationInput | DemonSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemonSkills.
+     */
+    cursor?: DemonSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkills.
+     */
+    distinct?: DemonSkillScalarFieldEnum | DemonSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill findFirstOrThrow
+   */
+  export type DemonSkillFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkill to fetch.
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkills to fetch.
+     */
+    orderBy?: DemonSkillOrderByWithRelationInput | DemonSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemonSkills.
+     */
+    cursor?: DemonSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkills.
+     */
+    distinct?: DemonSkillScalarFieldEnum | DemonSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill findMany
+   */
+  export type DemonSkillFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkills to fetch.
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkills to fetch.
+     */
+    orderBy?: DemonSkillOrderByWithRelationInput | DemonSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DemonSkills.
+     */
+    cursor?: DemonSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkills.
+     */
+    skip?: number
+    distinct?: DemonSkillScalarFieldEnum | DemonSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill create
+   */
+  export type DemonSkillCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DemonSkill.
+     */
+    data: XOR<DemonSkillCreateInput, DemonSkillUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill createMany
+   */
+  export type DemonSkillCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DemonSkills.
+     */
+    data: DemonSkillCreateManyInput | DemonSkillCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemonSkill createManyAndReturn
+   */
+  export type DemonSkillCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * The data used to create many DemonSkills.
+     */
+    data: DemonSkillCreateManyInput | DemonSkillCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DemonSkill update
+   */
+  export type DemonSkillUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DemonSkill.
+     */
+    data: XOR<DemonSkillUpdateInput, DemonSkillUncheckedUpdateInput>
+    /**
+     * Choose, which DemonSkill to update.
+     */
+    where: DemonSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill updateMany
+   */
+  export type DemonSkillUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DemonSkills.
+     */
+    data: XOR<DemonSkillUpdateManyMutationInput, DemonSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which DemonSkills to update
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * Limit how many DemonSkills to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemonSkill updateManyAndReturn
+   */
+  export type DemonSkillUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * The data used to update DemonSkills.
+     */
+    data: XOR<DemonSkillUpdateManyMutationInput, DemonSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which DemonSkills to update
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * Limit how many DemonSkills to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DemonSkill upsert
+   */
+  export type DemonSkillUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DemonSkill to update in case it exists.
+     */
+    where: DemonSkillWhereUniqueInput
+    /**
+     * In case the DemonSkill found by the `where` argument doesn't exist, create a new DemonSkill with this data.
+     */
+    create: XOR<DemonSkillCreateInput, DemonSkillUncheckedCreateInput>
+    /**
+     * In case the DemonSkill was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DemonSkillUpdateInput, DemonSkillUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill delete
+   */
+  export type DemonSkillDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+    /**
+     * Filter which DemonSkill to delete.
+     */
+    where: DemonSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkill deleteMany
+   */
+  export type DemonSkillDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemonSkills to delete
+     */
+    where?: DemonSkillWhereInput
+    /**
+     * Limit how many DemonSkills to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemonSkill without action
+   */
+  export type DemonSkillDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkill
+     */
+    select?: DemonSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkill
+     */
+    omit?: DemonSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DemonSkillUnlockable
+   */
+
+  export type AggregateDemonSkillUnlockable = {
+    _count: DemonSkillUnlockableCountAggregateOutputType | null
+    _avg: DemonSkillUnlockableAvgAggregateOutputType | null
+    _sum: DemonSkillUnlockableSumAggregateOutputType | null
+    _min: DemonSkillUnlockableMinAggregateOutputType | null
+    _max: DemonSkillUnlockableMaxAggregateOutputType | null
+  }
+
+  export type DemonSkillUnlockableAvgAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillUnlockableSumAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillUnlockableMinAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillUnlockableMaxAggregateOutputType = {
+    id: number | null
+    skillId: number | null
+    dinozId: number | null
+  }
+
+  export type DemonSkillUnlockableCountAggregateOutputType = {
+    id: number
+    skillId: number
+    dinozId: number
+    _all: number
+  }
+
+
+  export type DemonSkillUnlockableAvgAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillUnlockableSumAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillUnlockableMinAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillUnlockableMaxAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+  }
+
+  export type DemonSkillUnlockableCountAggregateInputType = {
+    id?: true
+    skillId?: true
+    dinozId?: true
+    _all?: true
+  }
+
+  export type DemonSkillUnlockableAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemonSkillUnlockable to aggregate.
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkillUnlockables to fetch.
+     */
+    orderBy?: DemonSkillUnlockableOrderByWithRelationInput | DemonSkillUnlockableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DemonSkillUnlockableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkillUnlockables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkillUnlockables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DemonSkillUnlockables
+    **/
+    _count?: true | DemonSkillUnlockableCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DemonSkillUnlockableAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DemonSkillUnlockableSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DemonSkillUnlockableMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DemonSkillUnlockableMaxAggregateInputType
+  }
+
+  export type GetDemonSkillUnlockableAggregateType<T extends DemonSkillUnlockableAggregateArgs> = {
+        [P in keyof T & keyof AggregateDemonSkillUnlockable]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDemonSkillUnlockable[P]>
+      : GetScalarType<T[P], AggregateDemonSkillUnlockable[P]>
+  }
+
+
+
+
+  export type DemonSkillUnlockableGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemonSkillUnlockableWhereInput
+    orderBy?: DemonSkillUnlockableOrderByWithAggregationInput | DemonSkillUnlockableOrderByWithAggregationInput[]
+    by: DemonSkillUnlockableScalarFieldEnum[] | DemonSkillUnlockableScalarFieldEnum
+    having?: DemonSkillUnlockableScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DemonSkillUnlockableCountAggregateInputType | true
+    _avg?: DemonSkillUnlockableAvgAggregateInputType
+    _sum?: DemonSkillUnlockableSumAggregateInputType
+    _min?: DemonSkillUnlockableMinAggregateInputType
+    _max?: DemonSkillUnlockableMaxAggregateInputType
+  }
+
+  export type DemonSkillUnlockableGroupByOutputType = {
+    id: number
+    skillId: number
+    dinozId: number
+    _count: DemonSkillUnlockableCountAggregateOutputType | null
+    _avg: DemonSkillUnlockableAvgAggregateOutputType | null
+    _sum: DemonSkillUnlockableSumAggregateOutputType | null
+    _min: DemonSkillUnlockableMinAggregateOutputType | null
+    _max: DemonSkillUnlockableMaxAggregateOutputType | null
+  }
+
+  type GetDemonSkillUnlockableGroupByPayload<T extends DemonSkillUnlockableGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DemonSkillUnlockableGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DemonSkillUnlockableGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DemonSkillUnlockableGroupByOutputType[P]>
+            : GetScalarType<T[P], DemonSkillUnlockableGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DemonSkillUnlockableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkillUnlockable"]>
+
+  export type DemonSkillUnlockableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkillUnlockable"]>
+
+  export type DemonSkillUnlockableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demonSkillUnlockable"]>
+
+  export type DemonSkillUnlockableSelectScalar = {
+    id?: boolean
+    skillId?: boolean
+    dinozId?: boolean
+  }
+
+  export type DemonSkillUnlockableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "dinozId", ExtArgs["result"]["demonSkillUnlockable"]>
+  export type DemonSkillUnlockableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+  export type DemonSkillUnlockableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+  export type DemonSkillUnlockableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | PlayerDemonShopDefaultArgs<ExtArgs>
+  }
+
+  export type $DemonSkillUnlockablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DemonSkillUnlockable"
+    objects: {
+      dinoz: Prisma.$PlayerDemonShopPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      skillId: number
+      dinozId: number
+    }, ExtArgs["result"]["demonSkillUnlockable"]>
+    composites: {}
+  }
+
+  type DemonSkillUnlockableGetPayload<S extends boolean | null | undefined | DemonSkillUnlockableDefaultArgs> = $Result.GetResult<Prisma.$DemonSkillUnlockablePayload, S>
+
+  type DemonSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DemonSkillUnlockableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DemonSkillUnlockableCountAggregateInputType | true
+    }
+
+  export interface DemonSkillUnlockableDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DemonSkillUnlockable'], meta: { name: 'DemonSkillUnlockable' } }
+    /**
+     * Find zero or one DemonSkillUnlockable that matches the filter.
+     * @param {DemonSkillUnlockableFindUniqueArgs} args - Arguments to find a DemonSkillUnlockable
+     * @example
+     * // Get one DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DemonSkillUnlockableFindUniqueArgs>(args: SelectSubset<T, DemonSkillUnlockableFindUniqueArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DemonSkillUnlockable that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DemonSkillUnlockableFindUniqueOrThrowArgs} args - Arguments to find a DemonSkillUnlockable
+     * @example
+     * // Get one DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DemonSkillUnlockableFindUniqueOrThrowArgs>(args: SelectSubset<T, DemonSkillUnlockableFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemonSkillUnlockable that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableFindFirstArgs} args - Arguments to find a DemonSkillUnlockable
+     * @example
+     * // Get one DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DemonSkillUnlockableFindFirstArgs>(args?: SelectSubset<T, DemonSkillUnlockableFindFirstArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemonSkillUnlockable that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableFindFirstOrThrowArgs} args - Arguments to find a DemonSkillUnlockable
+     * @example
+     * // Get one DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DemonSkillUnlockableFindFirstOrThrowArgs>(args?: SelectSubset<T, DemonSkillUnlockableFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DemonSkillUnlockables that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DemonSkillUnlockables
+     * const demonSkillUnlockables = await prisma.demonSkillUnlockable.findMany()
+     * 
+     * // Get first 10 DemonSkillUnlockables
+     * const demonSkillUnlockables = await prisma.demonSkillUnlockable.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const demonSkillUnlockableWithIdOnly = await prisma.demonSkillUnlockable.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DemonSkillUnlockableFindManyArgs>(args?: SelectSubset<T, DemonSkillUnlockableFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DemonSkillUnlockable.
+     * @param {DemonSkillUnlockableCreateArgs} args - Arguments to create a DemonSkillUnlockable.
+     * @example
+     * // Create one DemonSkillUnlockable
+     * const DemonSkillUnlockable = await prisma.demonSkillUnlockable.create({
+     *   data: {
+     *     // ... data to create a DemonSkillUnlockable
+     *   }
+     * })
+     * 
+     */
+    create<T extends DemonSkillUnlockableCreateArgs>(args: SelectSubset<T, DemonSkillUnlockableCreateArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DemonSkillUnlockables.
+     * @param {DemonSkillUnlockableCreateManyArgs} args - Arguments to create many DemonSkillUnlockables.
+     * @example
+     * // Create many DemonSkillUnlockables
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DemonSkillUnlockableCreateManyArgs>(args?: SelectSubset<T, DemonSkillUnlockableCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DemonSkillUnlockables and returns the data saved in the database.
+     * @param {DemonSkillUnlockableCreateManyAndReturnArgs} args - Arguments to create many DemonSkillUnlockables.
+     * @example
+     * // Create many DemonSkillUnlockables
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DemonSkillUnlockables and only return the `id`
+     * const demonSkillUnlockableWithIdOnly = await prisma.demonSkillUnlockable.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DemonSkillUnlockableCreateManyAndReturnArgs>(args?: SelectSubset<T, DemonSkillUnlockableCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DemonSkillUnlockable.
+     * @param {DemonSkillUnlockableDeleteArgs} args - Arguments to delete one DemonSkillUnlockable.
+     * @example
+     * // Delete one DemonSkillUnlockable
+     * const DemonSkillUnlockable = await prisma.demonSkillUnlockable.delete({
+     *   where: {
+     *     // ... filter to delete one DemonSkillUnlockable
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DemonSkillUnlockableDeleteArgs>(args: SelectSubset<T, DemonSkillUnlockableDeleteArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DemonSkillUnlockable.
+     * @param {DemonSkillUnlockableUpdateArgs} args - Arguments to update one DemonSkillUnlockable.
+     * @example
+     * // Update one DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DemonSkillUnlockableUpdateArgs>(args: SelectSubset<T, DemonSkillUnlockableUpdateArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DemonSkillUnlockables.
+     * @param {DemonSkillUnlockableDeleteManyArgs} args - Arguments to filter DemonSkillUnlockables to delete.
+     * @example
+     * // Delete a few DemonSkillUnlockables
+     * const { count } = await prisma.demonSkillUnlockable.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DemonSkillUnlockableDeleteManyArgs>(args?: SelectSubset<T, DemonSkillUnlockableDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemonSkillUnlockables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DemonSkillUnlockables
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DemonSkillUnlockableUpdateManyArgs>(args: SelectSubset<T, DemonSkillUnlockableUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemonSkillUnlockables and returns the data updated in the database.
+     * @param {DemonSkillUnlockableUpdateManyAndReturnArgs} args - Arguments to update many DemonSkillUnlockables.
+     * @example
+     * // Update many DemonSkillUnlockables
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DemonSkillUnlockables and only return the `id`
+     * const demonSkillUnlockableWithIdOnly = await prisma.demonSkillUnlockable.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DemonSkillUnlockableUpdateManyAndReturnArgs>(args: SelectSubset<T, DemonSkillUnlockableUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DemonSkillUnlockable.
+     * @param {DemonSkillUnlockableUpsertArgs} args - Arguments to update or create a DemonSkillUnlockable.
+     * @example
+     * // Update or create a DemonSkillUnlockable
+     * const demonSkillUnlockable = await prisma.demonSkillUnlockable.upsert({
+     *   create: {
+     *     // ... data to create a DemonSkillUnlockable
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DemonSkillUnlockable we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DemonSkillUnlockableUpsertArgs>(args: SelectSubset<T, DemonSkillUnlockableUpsertArgs<ExtArgs>>): Prisma__DemonSkillUnlockableClient<$Result.GetResult<Prisma.$DemonSkillUnlockablePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DemonSkillUnlockables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableCountArgs} args - Arguments to filter DemonSkillUnlockables to count.
+     * @example
+     * // Count the number of DemonSkillUnlockables
+     * const count = await prisma.demonSkillUnlockable.count({
+     *   where: {
+     *     // ... the filter for the DemonSkillUnlockables we want to count
+     *   }
+     * })
+    **/
+    count<T extends DemonSkillUnlockableCountArgs>(
+      args?: Subset<T, DemonSkillUnlockableCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DemonSkillUnlockableCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DemonSkillUnlockable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DemonSkillUnlockableAggregateArgs>(args: Subset<T, DemonSkillUnlockableAggregateArgs>): Prisma.PrismaPromise<GetDemonSkillUnlockableAggregateType<T>>
+
+    /**
+     * Group by DemonSkillUnlockable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemonSkillUnlockableGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DemonSkillUnlockableGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DemonSkillUnlockableGroupByArgs['orderBy'] }
+        : { orderBy?: DemonSkillUnlockableGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DemonSkillUnlockableGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemonSkillUnlockableGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DemonSkillUnlockable model
+   */
+  readonly fields: DemonSkillUnlockableFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DemonSkillUnlockable.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DemonSkillUnlockableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dinoz<T extends PlayerDemonShopDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDemonShopDefaultArgs<ExtArgs>>): Prisma__PlayerDemonShopClient<$Result.GetResult<Prisma.$PlayerDemonShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DemonSkillUnlockable model
+   */ 
+  interface DemonSkillUnlockableFieldRefs {
+    readonly id: FieldRef<"DemonSkillUnlockable", 'Int'>
+    readonly skillId: FieldRef<"DemonSkillUnlockable", 'Int'>
+    readonly dinozId: FieldRef<"DemonSkillUnlockable", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DemonSkillUnlockable findUnique
+   */
+  export type DemonSkillUnlockableFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkillUnlockable to fetch.
+     */
+    where: DemonSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable findUniqueOrThrow
+   */
+  export type DemonSkillUnlockableFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkillUnlockable to fetch.
+     */
+    where: DemonSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable findFirst
+   */
+  export type DemonSkillUnlockableFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkillUnlockable to fetch.
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkillUnlockables to fetch.
+     */
+    orderBy?: DemonSkillUnlockableOrderByWithRelationInput | DemonSkillUnlockableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemonSkillUnlockables.
+     */
+    cursor?: DemonSkillUnlockableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkillUnlockables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkillUnlockables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkillUnlockables.
+     */
+    distinct?: DemonSkillUnlockableScalarFieldEnum | DemonSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable findFirstOrThrow
+   */
+  export type DemonSkillUnlockableFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkillUnlockable to fetch.
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkillUnlockables to fetch.
+     */
+    orderBy?: DemonSkillUnlockableOrderByWithRelationInput | DemonSkillUnlockableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemonSkillUnlockables.
+     */
+    cursor?: DemonSkillUnlockableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkillUnlockables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkillUnlockables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkillUnlockables.
+     */
+    distinct?: DemonSkillUnlockableScalarFieldEnum | DemonSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable findMany
+   */
+  export type DemonSkillUnlockableFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter, which DemonSkillUnlockables to fetch.
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemonSkillUnlockables to fetch.
+     */
+    orderBy?: DemonSkillUnlockableOrderByWithRelationInput | DemonSkillUnlockableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DemonSkillUnlockables.
+     */
+    cursor?: DemonSkillUnlockableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemonSkillUnlockables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemonSkillUnlockables.
+     */
+    skip?: number
+    distinct?: DemonSkillUnlockableScalarFieldEnum | DemonSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable create
+   */
+  export type DemonSkillUnlockableCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DemonSkillUnlockable.
+     */
+    data: XOR<DemonSkillUnlockableCreateInput, DemonSkillUnlockableUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable createMany
+   */
+  export type DemonSkillUnlockableCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DemonSkillUnlockables.
+     */
+    data: DemonSkillUnlockableCreateManyInput | DemonSkillUnlockableCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemonSkillUnlockable createManyAndReturn
+   */
+  export type DemonSkillUnlockableCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * The data used to create many DemonSkillUnlockables.
+     */
+    data: DemonSkillUnlockableCreateManyInput | DemonSkillUnlockableCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DemonSkillUnlockable update
+   */
+  export type DemonSkillUnlockableUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DemonSkillUnlockable.
+     */
+    data: XOR<DemonSkillUnlockableUpdateInput, DemonSkillUnlockableUncheckedUpdateInput>
+    /**
+     * Choose, which DemonSkillUnlockable to update.
+     */
+    where: DemonSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable updateMany
+   */
+  export type DemonSkillUnlockableUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DemonSkillUnlockables.
+     */
+    data: XOR<DemonSkillUnlockableUpdateManyMutationInput, DemonSkillUnlockableUncheckedUpdateManyInput>
+    /**
+     * Filter which DemonSkillUnlockables to update
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * Limit how many DemonSkillUnlockables to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemonSkillUnlockable updateManyAndReturn
+   */
+  export type DemonSkillUnlockableUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * The data used to update DemonSkillUnlockables.
+     */
+    data: XOR<DemonSkillUnlockableUpdateManyMutationInput, DemonSkillUnlockableUncheckedUpdateManyInput>
+    /**
+     * Filter which DemonSkillUnlockables to update
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * Limit how many DemonSkillUnlockables to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DemonSkillUnlockable upsert
+   */
+  export type DemonSkillUnlockableUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DemonSkillUnlockable to update in case it exists.
+     */
+    where: DemonSkillUnlockableWhereUniqueInput
+    /**
+     * In case the DemonSkillUnlockable found by the `where` argument doesn't exist, create a new DemonSkillUnlockable with this data.
+     */
+    create: XOR<DemonSkillUnlockableCreateInput, DemonSkillUnlockableUncheckedCreateInput>
+    /**
+     * In case the DemonSkillUnlockable was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DemonSkillUnlockableUpdateInput, DemonSkillUnlockableUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable delete
+   */
+  export type DemonSkillUnlockableDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
+    /**
+     * Filter which DemonSkillUnlockable to delete.
+     */
+    where: DemonSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DemonSkillUnlockable deleteMany
+   */
+  export type DemonSkillUnlockableDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemonSkillUnlockables to delete
+     */
+    where?: DemonSkillUnlockableWhereInput
+    /**
+     * Limit how many DemonSkillUnlockables to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemonSkillUnlockable without action
+   */
+  export type DemonSkillUnlockableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemonSkillUnlockable
+     */
+    select?: DemonSkillUnlockableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemonSkillUnlockable
+     */
+    omit?: DemonSkillUnlockableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemonSkillUnlockableInclude<ExtArgs> | null
   }
 
 
@@ -78324,6 +82475,7 @@ export namespace Prisma {
     id: string | null
     date: Date | null
     teamRace: string | null
+    demon: boolean | null
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
@@ -78334,6 +82486,7 @@ export namespace Prisma {
     id: string | null
     date: Date | null
     teamRace: string | null
+    demon: boolean | null
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
@@ -78344,6 +82497,7 @@ export namespace Prisma {
     id: number
     date: number
     teamRace: number
+    demon: number
     levelLimit: number
     cashPrice: number
     nextRound: number
@@ -78368,6 +82522,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -78378,6 +82533,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -78388,6 +82544,7 @@ export namespace Prisma {
     id?: true
     date?: true
     teamRace?: true
+    demon?: true
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
@@ -78485,6 +82642,7 @@ export namespace Prisma {
     id: string
     date: Date
     teamRace: string
+    demon: boolean
     levelLimit: number
     cashPrice: number
     nextRound: Date
@@ -78514,6 +82672,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -78527,6 +82686,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -78537,6 +82697,7 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
@@ -78547,13 +82708,14 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     teamRace?: boolean
+    demon?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
     winnerId?: boolean
   }
 
-  export type FBTournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound" | "winnerId", ExtArgs["result"]["fBTournament"]>
+  export type FBTournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamRace" | "demon" | "levelLimit" | "cashPrice" | "nextRound" | "winnerId", ExtArgs["result"]["fBTournament"]>
   export type FBTournamentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | FBTournament$participantsArgs<ExtArgs>
     fights?: boolean | FBTournament$fightsArgs<ExtArgs>
@@ -78572,6 +82734,7 @@ export namespace Prisma {
       id: string
       date: Date
       teamRace: string
+      demon: boolean
       levelLimit: number
       cashPrice: number
       nextRound: Date
@@ -79004,6 +83167,7 @@ export namespace Prisma {
     readonly id: FieldRef<"FBTournament", 'String'>
     readonly date: FieldRef<"FBTournament", 'DateTime'>
     readonly teamRace: FieldRef<"FBTournament", 'String'>
+    readonly demon: FieldRef<"FBTournament", 'Boolean'>
     readonly levelLimit: FieldRef<"FBTournament", 'Int'>
     readonly cashPrice: FieldRef<"FBTournament", 'Int'>
     readonly nextRound: FieldRef<"FBTournament", 'DateTime'>
@@ -83130,6 +87294,2548 @@ export namespace Prisma {
 
 
   /**
+   * Model DungeonRun
+   */
+
+  export type AggregateDungeonRun = {
+    _count: DungeonRunCountAggregateOutputType | null
+    _avg: DungeonRunAvgAggregateOutputType | null
+    _sum: DungeonRunSumAggregateOutputType | null
+    _min: DungeonRunMinAggregateOutputType | null
+    _max: DungeonRunMaxAggregateOutputType | null
+  }
+
+  export type DungeonRunAvgAggregateOutputType = {
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    leaderId: number | null
+  }
+
+  export type DungeonRunSumAggregateOutputType = {
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    leaderId: number | null
+  }
+
+  export type DungeonRunMinAggregateOutputType = {
+    id: string | null
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    revealed: string | null
+    defeated: string | null
+    keys: string | null
+    opened: string | null
+    scenarios: string | null
+    gold: string | null
+    healed: string | null
+    healPending: string | null
+    createdAt: Date | null
+    playerId: string | null
+    dungeonId: string | null
+    leaderId: number | null
+  }
+
+  export type DungeonRunMaxAggregateOutputType = {
+    id: string | null
+    posX: number | null
+    posY: number | null
+    posL: number | null
+    revealed: string | null
+    defeated: string | null
+    keys: string | null
+    opened: string | null
+    scenarios: string | null
+    gold: string | null
+    healed: string | null
+    healPending: string | null
+    createdAt: Date | null
+    playerId: string | null
+    dungeonId: string | null
+    leaderId: number | null
+  }
+
+  export type DungeonRunCountAggregateOutputType = {
+    id: number
+    posX: number
+    posY: number
+    posL: number
+    revealed: number
+    defeated: number
+    keys: number
+    opened: number
+    scenarios: number
+    gold: number
+    healed: number
+    healPending: number
+    createdAt: number
+    playerId: number
+    dungeonId: number
+    leaderId: number
+    _all: number
+  }
+
+
+  export type DungeonRunAvgAggregateInputType = {
+    posX?: true
+    posY?: true
+    posL?: true
+    leaderId?: true
+  }
+
+  export type DungeonRunSumAggregateInputType = {
+    posX?: true
+    posY?: true
+    posL?: true
+    leaderId?: true
+  }
+
+  export type DungeonRunMinAggregateInputType = {
+    id?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    defeated?: true
+    keys?: true
+    opened?: true
+    scenarios?: true
+    gold?: true
+    healed?: true
+    healPending?: true
+    createdAt?: true
+    playerId?: true
+    dungeonId?: true
+    leaderId?: true
+  }
+
+  export type DungeonRunMaxAggregateInputType = {
+    id?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    defeated?: true
+    keys?: true
+    opened?: true
+    scenarios?: true
+    gold?: true
+    healed?: true
+    healPending?: true
+    createdAt?: true
+    playerId?: true
+    dungeonId?: true
+    leaderId?: true
+  }
+
+  export type DungeonRunCountAggregateInputType = {
+    id?: true
+    posX?: true
+    posY?: true
+    posL?: true
+    revealed?: true
+    defeated?: true
+    keys?: true
+    opened?: true
+    scenarios?: true
+    gold?: true
+    healed?: true
+    healPending?: true
+    createdAt?: true
+    playerId?: true
+    dungeonId?: true
+    leaderId?: true
+    _all?: true
+  }
+
+  export type DungeonRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DungeonRun to aggregate.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DungeonRuns
+    **/
+    _count?: true | DungeonRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DungeonRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DungeonRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DungeonRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DungeonRunMaxAggregateInputType
+  }
+
+  export type GetDungeonRunAggregateType<T extends DungeonRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateDungeonRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDungeonRun[P]>
+      : GetScalarType<T[P], AggregateDungeonRun[P]>
+  }
+
+
+
+
+  export type DungeonRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithAggregationInput | DungeonRunOrderByWithAggregationInput[]
+    by: DungeonRunScalarFieldEnum[] | DungeonRunScalarFieldEnum
+    having?: DungeonRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DungeonRunCountAggregateInputType | true
+    _avg?: DungeonRunAvgAggregateInputType
+    _sum?: DungeonRunSumAggregateInputType
+    _min?: DungeonRunMinAggregateInputType
+    _max?: DungeonRunMaxAggregateInputType
+  }
+
+  export type DungeonRunGroupByOutputType = {
+    id: string
+    posX: number
+    posY: number
+    posL: number
+    revealed: string
+    defeated: string
+    keys: string
+    opened: string
+    scenarios: string
+    gold: string
+    healed: string
+    healPending: string | null
+    createdAt: Date
+    playerId: string
+    dungeonId: string
+    leaderId: number | null
+    _count: DungeonRunCountAggregateOutputType | null
+    _avg: DungeonRunAvgAggregateOutputType | null
+    _sum: DungeonRunSumAggregateOutputType | null
+    _min: DungeonRunMinAggregateOutputType | null
+    _max: DungeonRunMaxAggregateOutputType | null
+  }
+
+  type GetDungeonRunGroupByPayload<T extends DungeonRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DungeonRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DungeonRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DungeonRunGroupByOutputType[P]>
+            : GetScalarType<T[P], DungeonRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DungeonRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    defeated?: boolean
+    keys?: boolean
+    opened?: boolean
+    scenarios?: boolean
+    gold?: boolean
+    healed?: boolean
+    healPending?: boolean
+    createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    leaderId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    defeated?: boolean
+    keys?: boolean
+    opened?: boolean
+    scenarios?: boolean
+    gold?: boolean
+    healed?: boolean
+    healPending?: boolean
+    createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    leaderId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    defeated?: boolean
+    keys?: boolean
+    opened?: boolean
+    scenarios?: boolean
+    gold?: boolean
+    healed?: boolean
+    healPending?: boolean
+    createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    leaderId?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }, ExtArgs["result"]["dungeonRun"]>
+
+  export type DungeonRunSelectScalar = {
+    id?: boolean
+    posX?: boolean
+    posY?: boolean
+    posL?: boolean
+    revealed?: boolean
+    defeated?: boolean
+    keys?: boolean
+    opened?: boolean
+    scenarios?: boolean
+    gold?: boolean
+    healed?: boolean
+    healPending?: boolean
+    createdAt?: boolean
+    playerId?: boolean
+    dungeonId?: boolean
+    leaderId?: boolean
+  }
+
+  export type DungeonRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "posX" | "posY" | "posL" | "revealed" | "defeated" | "keys" | "opened" | "scenarios" | "gold" | "healed" | "healPending" | "createdAt" | "playerId" | "dungeonId" | "leaderId", ExtArgs["result"]["dungeonRun"]>
+  export type DungeonRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }
+  export type DungeonRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }
+  export type DungeonRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dungeon?: boolean | DungeonDefaultArgs<ExtArgs>
+    leader?: boolean | DungeonRun$leaderArgs<ExtArgs>
+  }
+
+  export type $DungeonRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DungeonRun"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      dungeon: Prisma.$DungeonPayload<ExtArgs>
+      leader: Prisma.$DinozPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      posX: number
+      posY: number
+      posL: number
+      revealed: string
+      defeated: string
+      keys: string
+      opened: string
+      scenarios: string
+      gold: string
+      healed: string
+      healPending: string | null
+      createdAt: Date
+      playerId: string
+      dungeonId: string
+      leaderId: number | null
+    }, ExtArgs["result"]["dungeonRun"]>
+    composites: {}
+  }
+
+  type DungeonRunGetPayload<S extends boolean | null | undefined | DungeonRunDefaultArgs> = $Result.GetResult<Prisma.$DungeonRunPayload, S>
+
+  type DungeonRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DungeonRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DungeonRunCountAggregateInputType | true
+    }
+
+  export interface DungeonRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DungeonRun'], meta: { name: 'DungeonRun' } }
+    /**
+     * Find zero or one DungeonRun that matches the filter.
+     * @param {DungeonRunFindUniqueArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DungeonRunFindUniqueArgs>(args: SelectSubset<T, DungeonRunFindUniqueArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DungeonRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DungeonRunFindUniqueOrThrowArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DungeonRunFindUniqueOrThrowArgs>(args: SelectSubset<T, DungeonRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DungeonRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindFirstArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DungeonRunFindFirstArgs>(args?: SelectSubset<T, DungeonRunFindFirstArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DungeonRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindFirstOrThrowArgs} args - Arguments to find a DungeonRun
+     * @example
+     * // Get one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DungeonRunFindFirstOrThrowArgs>(args?: SelectSubset<T, DungeonRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DungeonRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DungeonRuns
+     * const dungeonRuns = await prisma.dungeonRun.findMany()
+     * 
+     * // Get first 10 DungeonRuns
+     * const dungeonRuns = await prisma.dungeonRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DungeonRunFindManyArgs>(args?: SelectSubset<T, DungeonRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DungeonRun.
+     * @param {DungeonRunCreateArgs} args - Arguments to create a DungeonRun.
+     * @example
+     * // Create one DungeonRun
+     * const DungeonRun = await prisma.dungeonRun.create({
+     *   data: {
+     *     // ... data to create a DungeonRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends DungeonRunCreateArgs>(args: SelectSubset<T, DungeonRunCreateArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DungeonRuns.
+     * @param {DungeonRunCreateManyArgs} args - Arguments to create many DungeonRuns.
+     * @example
+     * // Create many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DungeonRunCreateManyArgs>(args?: SelectSubset<T, DungeonRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DungeonRuns and returns the data saved in the database.
+     * @param {DungeonRunCreateManyAndReturnArgs} args - Arguments to create many DungeonRuns.
+     * @example
+     * // Create many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DungeonRuns and only return the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DungeonRunCreateManyAndReturnArgs>(args?: SelectSubset<T, DungeonRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DungeonRun.
+     * @param {DungeonRunDeleteArgs} args - Arguments to delete one DungeonRun.
+     * @example
+     * // Delete one DungeonRun
+     * const DungeonRun = await prisma.dungeonRun.delete({
+     *   where: {
+     *     // ... filter to delete one DungeonRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DungeonRunDeleteArgs>(args: SelectSubset<T, DungeonRunDeleteArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DungeonRun.
+     * @param {DungeonRunUpdateArgs} args - Arguments to update one DungeonRun.
+     * @example
+     * // Update one DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DungeonRunUpdateArgs>(args: SelectSubset<T, DungeonRunUpdateArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DungeonRuns.
+     * @param {DungeonRunDeleteManyArgs} args - Arguments to filter DungeonRuns to delete.
+     * @example
+     * // Delete a few DungeonRuns
+     * const { count } = await prisma.dungeonRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DungeonRunDeleteManyArgs>(args?: SelectSubset<T, DungeonRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DungeonRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DungeonRunUpdateManyArgs>(args: SelectSubset<T, DungeonRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DungeonRuns and returns the data updated in the database.
+     * @param {DungeonRunUpdateManyAndReturnArgs} args - Arguments to update many DungeonRuns.
+     * @example
+     * // Update many DungeonRuns
+     * const dungeonRun = await prisma.dungeonRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DungeonRuns and only return the `id`
+     * const dungeonRunWithIdOnly = await prisma.dungeonRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DungeonRunUpdateManyAndReturnArgs>(args: SelectSubset<T, DungeonRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DungeonRun.
+     * @param {DungeonRunUpsertArgs} args - Arguments to update or create a DungeonRun.
+     * @example
+     * // Update or create a DungeonRun
+     * const dungeonRun = await prisma.dungeonRun.upsert({
+     *   create: {
+     *     // ... data to create a DungeonRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DungeonRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DungeonRunUpsertArgs>(args: SelectSubset<T, DungeonRunUpsertArgs<ExtArgs>>): Prisma__DungeonRunClient<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DungeonRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunCountArgs} args - Arguments to filter DungeonRuns to count.
+     * @example
+     * // Count the number of DungeonRuns
+     * const count = await prisma.dungeonRun.count({
+     *   where: {
+     *     // ... the filter for the DungeonRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends DungeonRunCountArgs>(
+      args?: Subset<T, DungeonRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DungeonRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DungeonRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DungeonRunAggregateArgs>(args: Subset<T, DungeonRunAggregateArgs>): Prisma.PrismaPromise<GetDungeonRunAggregateType<T>>
+
+    /**
+     * Group by DungeonRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DungeonRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DungeonRunGroupByArgs['orderBy'] }
+        : { orderBy?: DungeonRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DungeonRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDungeonRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DungeonRun model
+   */
+  readonly fields: DungeonRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DungeonRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DungeonRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dungeon<T extends DungeonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DungeonDefaultArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    leader<T extends DungeonRun$leaderArgs<ExtArgs> = {}>(args?: Subset<T, DungeonRun$leaderArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DungeonRun model
+   */ 
+  interface DungeonRunFieldRefs {
+    readonly id: FieldRef<"DungeonRun", 'String'>
+    readonly posX: FieldRef<"DungeonRun", 'Int'>
+    readonly posY: FieldRef<"DungeonRun", 'Int'>
+    readonly posL: FieldRef<"DungeonRun", 'Int'>
+    readonly revealed: FieldRef<"DungeonRun", 'String'>
+    readonly defeated: FieldRef<"DungeonRun", 'String'>
+    readonly keys: FieldRef<"DungeonRun", 'String'>
+    readonly opened: FieldRef<"DungeonRun", 'String'>
+    readonly scenarios: FieldRef<"DungeonRun", 'String'>
+    readonly gold: FieldRef<"DungeonRun", 'String'>
+    readonly healed: FieldRef<"DungeonRun", 'String'>
+    readonly healPending: FieldRef<"DungeonRun", 'String'>
+    readonly createdAt: FieldRef<"DungeonRun", 'DateTime'>
+    readonly playerId: FieldRef<"DungeonRun", 'String'>
+    readonly dungeonId: FieldRef<"DungeonRun", 'String'>
+    readonly leaderId: FieldRef<"DungeonRun", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DungeonRun findUnique
+   */
+  export type DungeonRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findUniqueOrThrow
+   */
+  export type DungeonRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findFirst
+   */
+  export type DungeonRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DungeonRuns.
+     */
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findFirstOrThrow
+   */
+  export type DungeonRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter, which DungeonRun to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DungeonRuns.
+     */
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun findMany
+   */
+  export type DungeonRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter, which DungeonRuns to fetch.
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DungeonRuns to fetch.
+     */
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DungeonRuns.
+     */
+    cursor?: DungeonRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DungeonRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DungeonRuns.
+     */
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun create
+   */
+  export type DungeonRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DungeonRun.
+     */
+    data: XOR<DungeonRunCreateInput, DungeonRunUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun createMany
+   */
+  export type DungeonRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DungeonRuns.
+     */
+    data: DungeonRunCreateManyInput | DungeonRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DungeonRun createManyAndReturn
+   */
+  export type DungeonRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many DungeonRuns.
+     */
+    data: DungeonRunCreateManyInput | DungeonRunCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DungeonRun update
+   */
+  export type DungeonRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DungeonRun.
+     */
+    data: XOR<DungeonRunUpdateInput, DungeonRunUncheckedUpdateInput>
+    /**
+     * Choose, which DungeonRun to update.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun updateMany
+   */
+  export type DungeonRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DungeonRuns.
+     */
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyInput>
+    /**
+     * Filter which DungeonRuns to update
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DungeonRun updateManyAndReturn
+   */
+  export type DungeonRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * The data used to update DungeonRuns.
+     */
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyInput>
+    /**
+     * Filter which DungeonRuns to update
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DungeonRun upsert
+   */
+  export type DungeonRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DungeonRun to update in case it exists.
+     */
+    where: DungeonRunWhereUniqueInput
+    /**
+     * In case the DungeonRun found by the `where` argument doesn't exist, create a new DungeonRun with this data.
+     */
+    create: XOR<DungeonRunCreateInput, DungeonRunUncheckedCreateInput>
+    /**
+     * In case the DungeonRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DungeonRunUpdateInput, DungeonRunUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun delete
+   */
+  export type DungeonRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    /**
+     * Filter which DungeonRun to delete.
+     */
+    where: DungeonRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DungeonRun deleteMany
+   */
+  export type DungeonRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DungeonRuns to delete
+     */
+    where?: DungeonRunWhereInput
+    /**
+     * Limit how many DungeonRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DungeonRun.leader
+   */
+  export type DungeonRun$leaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+  /**
+   * DungeonRun without action
+   */
+  export type DungeonRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Dungeon
+   */
+
+  export type AggregateDungeon = {
+    _count: DungeonCountAggregateOutputType | null
+    _avg: DungeonAvgAggregateOutputType | null
+    _sum: DungeonSumAggregateOutputType | null
+    _min: DungeonMinAggregateOutputType | null
+    _max: DungeonMaxAggregateOutputType | null
+  }
+
+  export type DungeonAvgAggregateOutputType = {
+    level: number | null
+    placeStart: number | null
+    placeEnd: number | null
+  }
+
+  export type DungeonSumAggregateOutputType = {
+    level: number | null
+    placeStart: number | null
+    placeEnd: number | null
+  }
+
+  export type DungeonMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    type: $Enums.DungeonType | null
+    level: number | null
+    monsters: string | null
+    scenarios: string | null
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string | null
+    monsterPool: string | null
+    fightBackgrounds: string | null
+    isActive: boolean | null
+  }
+
+  export type DungeonMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    cipher: Uint8Array | null
+    iv: Uint8Array | null
+    tag: Uint8Array | null
+    type: $Enums.DungeonType | null
+    level: number | null
+    monsters: string | null
+    scenarios: string | null
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string | null
+    monsterPool: string | null
+    fightBackgrounds: string | null
+    isActive: boolean | null
+  }
+
+  export type DungeonCountAggregateOutputType = {
+    id: number
+    name: number
+    cipher: number
+    iv: number
+    tag: number
+    type: number
+    level: number
+    monsters: number
+    scenarios: number
+    placeStart: number
+    placeEnd: number
+    condition: number
+    monsterPool: number
+    fightBackgrounds: number
+    isActive: number
+    _all: number
+  }
+
+
+  export type DungeonAvgAggregateInputType = {
+    level?: true
+    placeStart?: true
+    placeEnd?: true
+  }
+
+  export type DungeonSumAggregateInputType = {
+    level?: true
+    placeStart?: true
+    placeEnd?: true
+  }
+
+  export type DungeonMinAggregateInputType = {
+    id?: true
+    name?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+    level?: true
+    monsters?: true
+    scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    fightBackgrounds?: true
+    isActive?: true
+  }
+
+  export type DungeonMaxAggregateInputType = {
+    id?: true
+    name?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+    level?: true
+    monsters?: true
+    scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    fightBackgrounds?: true
+    isActive?: true
+  }
+
+  export type DungeonCountAggregateInputType = {
+    id?: true
+    name?: true
+    cipher?: true
+    iv?: true
+    tag?: true
+    type?: true
+    level?: true
+    monsters?: true
+    scenarios?: true
+    placeStart?: true
+    placeEnd?: true
+    condition?: true
+    monsterPool?: true
+    fightBackgrounds?: true
+    isActive?: true
+    _all?: true
+  }
+
+  export type DungeonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dungeon to aggregate.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dungeons
+    **/
+    _count?: true | DungeonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DungeonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DungeonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DungeonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DungeonMaxAggregateInputType
+  }
+
+  export type GetDungeonAggregateType<T extends DungeonAggregateArgs> = {
+        [P in keyof T & keyof AggregateDungeon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDungeon[P]>
+      : GetScalarType<T[P], AggregateDungeon[P]>
+  }
+
+
+
+
+  export type DungeonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DungeonWhereInput
+    orderBy?: DungeonOrderByWithAggregationInput | DungeonOrderByWithAggregationInput[]
+    by: DungeonScalarFieldEnum[] | DungeonScalarFieldEnum
+    having?: DungeonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DungeonCountAggregateInputType | true
+    _avg?: DungeonAvgAggregateInputType
+    _sum?: DungeonSumAggregateInputType
+    _min?: DungeonMinAggregateInputType
+    _max?: DungeonMaxAggregateInputType
+  }
+
+  export type DungeonGroupByOutputType = {
+    id: string
+    name: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level: number
+    monsters: string
+    scenarios: string
+    placeStart: number | null
+    placeEnd: number | null
+    condition: string
+    monsterPool: string
+    fightBackgrounds: string
+    isActive: boolean
+    _count: DungeonCountAggregateOutputType | null
+    _avg: DungeonAvgAggregateOutputType | null
+    _sum: DungeonSumAggregateOutputType | null
+    _min: DungeonMinAggregateOutputType | null
+    _max: DungeonMaxAggregateOutputType | null
+  }
+
+  type GetDungeonGroupByPayload<T extends DungeonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DungeonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DungeonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DungeonGroupByOutputType[P]>
+            : GetScalarType<T[P], DungeonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DungeonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+    level?: boolean
+    monsters?: boolean
+    scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    fightBackgrounds?: boolean
+    isActive?: boolean
+    dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
+    _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+    level?: boolean
+    monsters?: boolean
+    scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    fightBackgrounds?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+    level?: boolean
+    monsters?: boolean
+    scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    fightBackgrounds?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["dungeon"]>
+
+  export type DungeonSelectScalar = {
+    id?: boolean
+    name?: boolean
+    cipher?: boolean
+    iv?: boolean
+    tag?: boolean
+    type?: boolean
+    level?: boolean
+    monsters?: boolean
+    scenarios?: boolean
+    placeStart?: boolean
+    placeEnd?: boolean
+    condition?: boolean
+    monsterPool?: boolean
+    fightBackgrounds?: boolean
+    isActive?: boolean
+  }
+
+  export type DungeonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cipher" | "iv" | "tag" | "type" | "level" | "monsters" | "scenarios" | "placeStart" | "placeEnd" | "condition" | "monsterPool" | "fightBackgrounds" | "isActive", ExtArgs["result"]["dungeon"]>
+  export type DungeonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dungeonRuns?: boolean | Dungeon$dungeonRunsArgs<ExtArgs>
+    _count?: boolean | DungeonCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DungeonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DungeonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $DungeonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dungeon"
+    objects: {
+      dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      cipher: Uint8Array
+      iv: Uint8Array
+      tag: Uint8Array
+      type: $Enums.DungeonType
+      level: number
+      monsters: string
+      scenarios: string
+      placeStart: number | null
+      placeEnd: number | null
+      condition: string
+      monsterPool: string
+      fightBackgrounds: string
+      isActive: boolean
+    }, ExtArgs["result"]["dungeon"]>
+    composites: {}
+  }
+
+  type DungeonGetPayload<S extends boolean | null | undefined | DungeonDefaultArgs> = $Result.GetResult<Prisma.$DungeonPayload, S>
+
+  type DungeonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DungeonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DungeonCountAggregateInputType | true
+    }
+
+  export interface DungeonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dungeon'], meta: { name: 'Dungeon' } }
+    /**
+     * Find zero or one Dungeon that matches the filter.
+     * @param {DungeonFindUniqueArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DungeonFindUniqueArgs>(args: SelectSubset<T, DungeonFindUniqueArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Dungeon that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DungeonFindUniqueOrThrowArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DungeonFindUniqueOrThrowArgs>(args: SelectSubset<T, DungeonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dungeon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindFirstArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DungeonFindFirstArgs>(args?: SelectSubset<T, DungeonFindFirstArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dungeon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindFirstOrThrowArgs} args - Arguments to find a Dungeon
+     * @example
+     * // Get one Dungeon
+     * const dungeon = await prisma.dungeon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DungeonFindFirstOrThrowArgs>(args?: SelectSubset<T, DungeonFindFirstOrThrowArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Dungeons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dungeons
+     * const dungeons = await prisma.dungeon.findMany()
+     * 
+     * // Get first 10 Dungeons
+     * const dungeons = await prisma.dungeon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DungeonFindManyArgs>(args?: SelectSubset<T, DungeonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Dungeon.
+     * @param {DungeonCreateArgs} args - Arguments to create a Dungeon.
+     * @example
+     * // Create one Dungeon
+     * const Dungeon = await prisma.dungeon.create({
+     *   data: {
+     *     // ... data to create a Dungeon
+     *   }
+     * })
+     * 
+     */
+    create<T extends DungeonCreateArgs>(args: SelectSubset<T, DungeonCreateArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Dungeons.
+     * @param {DungeonCreateManyArgs} args - Arguments to create many Dungeons.
+     * @example
+     * // Create many Dungeons
+     * const dungeon = await prisma.dungeon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DungeonCreateManyArgs>(args?: SelectSubset<T, DungeonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dungeons and returns the data saved in the database.
+     * @param {DungeonCreateManyAndReturnArgs} args - Arguments to create many Dungeons.
+     * @example
+     * // Create many Dungeons
+     * const dungeon = await prisma.dungeon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dungeons and only return the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DungeonCreateManyAndReturnArgs>(args?: SelectSubset<T, DungeonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Dungeon.
+     * @param {DungeonDeleteArgs} args - Arguments to delete one Dungeon.
+     * @example
+     * // Delete one Dungeon
+     * const Dungeon = await prisma.dungeon.delete({
+     *   where: {
+     *     // ... filter to delete one Dungeon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DungeonDeleteArgs>(args: SelectSubset<T, DungeonDeleteArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Dungeon.
+     * @param {DungeonUpdateArgs} args - Arguments to update one Dungeon.
+     * @example
+     * // Update one Dungeon
+     * const dungeon = await prisma.dungeon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DungeonUpdateArgs>(args: SelectSubset<T, DungeonUpdateArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Dungeons.
+     * @param {DungeonDeleteManyArgs} args - Arguments to filter Dungeons to delete.
+     * @example
+     * // Delete a few Dungeons
+     * const { count } = await prisma.dungeon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DungeonDeleteManyArgs>(args?: SelectSubset<T, DungeonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dungeons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dungeons
+     * const dungeon = await prisma.dungeon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DungeonUpdateManyArgs>(args: SelectSubset<T, DungeonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dungeons and returns the data updated in the database.
+     * @param {DungeonUpdateManyAndReturnArgs} args - Arguments to update many Dungeons.
+     * @example
+     * // Update many Dungeons
+     * const dungeon = await prisma.dungeon.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Dungeons and only return the `id`
+     * const dungeonWithIdOnly = await prisma.dungeon.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DungeonUpdateManyAndReturnArgs>(args: SelectSubset<T, DungeonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Dungeon.
+     * @param {DungeonUpsertArgs} args - Arguments to update or create a Dungeon.
+     * @example
+     * // Update or create a Dungeon
+     * const dungeon = await prisma.dungeon.upsert({
+     *   create: {
+     *     // ... data to create a Dungeon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dungeon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DungeonUpsertArgs>(args: SelectSubset<T, DungeonUpsertArgs<ExtArgs>>): Prisma__DungeonClient<$Result.GetResult<Prisma.$DungeonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Dungeons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonCountArgs} args - Arguments to filter Dungeons to count.
+     * @example
+     * // Count the number of Dungeons
+     * const count = await prisma.dungeon.count({
+     *   where: {
+     *     // ... the filter for the Dungeons we want to count
+     *   }
+     * })
+    **/
+    count<T extends DungeonCountArgs>(
+      args?: Subset<T, DungeonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DungeonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dungeon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DungeonAggregateArgs>(args: Subset<T, DungeonAggregateArgs>): Prisma.PrismaPromise<GetDungeonAggregateType<T>>
+
+    /**
+     * Group by Dungeon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DungeonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DungeonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DungeonGroupByArgs['orderBy'] }
+        : { orderBy?: DungeonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DungeonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDungeonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dungeon model
+   */
+  readonly fields: DungeonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dungeon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DungeonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dungeonRuns<T extends Dungeon$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Dungeon$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dungeon model
+   */ 
+  interface DungeonFieldRefs {
+    readonly id: FieldRef<"Dungeon", 'String'>
+    readonly name: FieldRef<"Dungeon", 'String'>
+    readonly cipher: FieldRef<"Dungeon", 'Bytes'>
+    readonly iv: FieldRef<"Dungeon", 'Bytes'>
+    readonly tag: FieldRef<"Dungeon", 'Bytes'>
+    readonly type: FieldRef<"Dungeon", 'DungeonType'>
+    readonly level: FieldRef<"Dungeon", 'Int'>
+    readonly monsters: FieldRef<"Dungeon", 'String'>
+    readonly scenarios: FieldRef<"Dungeon", 'String'>
+    readonly placeStart: FieldRef<"Dungeon", 'Int'>
+    readonly placeEnd: FieldRef<"Dungeon", 'Int'>
+    readonly condition: FieldRef<"Dungeon", 'String'>
+    readonly monsterPool: FieldRef<"Dungeon", 'String'>
+    readonly fightBackgrounds: FieldRef<"Dungeon", 'String'>
+    readonly isActive: FieldRef<"Dungeon", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dungeon findUnique
+   */
+  export type DungeonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findUniqueOrThrow
+   */
+  export type DungeonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findFirst
+   */
+  export type DungeonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dungeons.
+     */
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findFirstOrThrow
+   */
+  export type DungeonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeon to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dungeons.
+     */
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon findMany
+   */
+  export type DungeonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter, which Dungeons to fetch.
+     */
+    where?: DungeonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dungeons to fetch.
+     */
+    orderBy?: DungeonOrderByWithRelationInput | DungeonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dungeons.
+     */
+    cursor?: DungeonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dungeons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dungeons.
+     */
+    skip?: number
+    distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon create
+   */
+  export type DungeonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dungeon.
+     */
+    data: XOR<DungeonCreateInput, DungeonUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon createMany
+   */
+  export type DungeonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dungeons.
+     */
+    data: DungeonCreateManyInput | DungeonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dungeon createManyAndReturn
+   */
+  export type DungeonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * The data used to create many Dungeons.
+     */
+    data: DungeonCreateManyInput | DungeonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dungeon update
+   */
+  export type DungeonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dungeon.
+     */
+    data: XOR<DungeonUpdateInput, DungeonUncheckedUpdateInput>
+    /**
+     * Choose, which Dungeon to update.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon updateMany
+   */
+  export type DungeonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dungeons.
+     */
+    data: XOR<DungeonUpdateManyMutationInput, DungeonUncheckedUpdateManyInput>
+    /**
+     * Filter which Dungeons to update
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon updateManyAndReturn
+   */
+  export type DungeonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * The data used to update Dungeons.
+     */
+    data: XOR<DungeonUpdateManyMutationInput, DungeonUncheckedUpdateManyInput>
+    /**
+     * Filter which Dungeons to update
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon upsert
+   */
+  export type DungeonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dungeon to update in case it exists.
+     */
+    where: DungeonWhereUniqueInput
+    /**
+     * In case the Dungeon found by the `where` argument doesn't exist, create a new Dungeon with this data.
+     */
+    create: XOR<DungeonCreateInput, DungeonUncheckedCreateInput>
+    /**
+     * In case the Dungeon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DungeonUpdateInput, DungeonUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon delete
+   */
+  export type DungeonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+    /**
+     * Filter which Dungeon to delete.
+     */
+    where: DungeonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dungeon deleteMany
+   */
+  export type DungeonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dungeons to delete
+     */
+    where?: DungeonWhereInput
+    /**
+     * Limit how many Dungeons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dungeon.dungeonRuns
+   */
+  export type Dungeon$dungeonRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DungeonRun
+     */
+    select?: DungeonRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DungeonRun
+     */
+    omit?: DungeonRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonRunInclude<ExtArgs> | null
+    where?: DungeonRunWhereInput
+    orderBy?: DungeonRunOrderByWithRelationInput | DungeonRunOrderByWithRelationInput[]
+    cursor?: DungeonRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
+  }
+
+  /**
+   * Dungeon without action
+   */
+  export type DungeonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dungeon
+     */
+    select?: DungeonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dungeon
+     */
+    omit?: DungeonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DungeonInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -83187,6 +89893,7 @@ export namespace Prisma {
     remaining: 'remaining',
     FBTournamentStep: 'FBTournamentStep',
     unavailableReason: 'unavailableReason',
+    unavailableUntil: 'unavailableUntil',
     seed: 'seed',
     playerId: 'playerId',
     buildId: 'buildId'
@@ -83375,12 +90082,14 @@ export namespace Prisma {
     skipFight: 'skipFight',
     skipLevel: 'skipLevel',
     autoReequipItems: 'autoReequipItems',
+    bypassGatheringGrid: 'bypassGatheringGrid',
     shareArchivedData: 'shareArchivedData',
     archivedSiteId: 'archivedSiteId',
     displayedNotifications: 'displayedNotifications',
     banCaseId: 'banCaseId',
     discoveredSkills: 'discoveredSkills',
     lastVersionSeen: 'lastVersionSeen',
+    tosAccepted: 'tosAccepted',
     id: 'id'
   };
 
@@ -83461,6 +90170,42 @@ export namespace Prisma {
   };
 
   export type PlayerDinozShopScalarFieldEnum = (typeof PlayerDinozShopScalarFieldEnum)[keyof typeof PlayerDinozShopScalarFieldEnum]
+
+
+  export const PlayerDemonShopScalarFieldEnum: {
+    id: 'id',
+    raceId: 'raceId',
+    display: 'display',
+    nextUpElementId: 'nextUpElementId',
+    nextUpAltElementId: 'nextUpAltElementId',
+    nbrUpFire: 'nbrUpFire',
+    nbrUpWood: 'nbrUpWood',
+    nbrUpWater: 'nbrUpWater',
+    nbrUpLightning: 'nbrUpLightning',
+    nbrUpAir: 'nbrUpAir',
+    seed: 'seed',
+    playerId: 'playerId'
+  };
+
+  export type PlayerDemonShopScalarFieldEnum = (typeof PlayerDemonShopScalarFieldEnum)[keyof typeof PlayerDemonShopScalarFieldEnum]
+
+
+  export const DemonSkillScalarFieldEnum: {
+    id: 'id',
+    skillId: 'skillId',
+    dinozId: 'dinozId'
+  };
+
+  export type DemonSkillScalarFieldEnum = (typeof DemonSkillScalarFieldEnum)[keyof typeof DemonSkillScalarFieldEnum]
+
+
+  export const DemonSkillUnlockableScalarFieldEnum: {
+    id: 'id',
+    skillId: 'skillId',
+    dinozId: 'dinozId'
+  };
+
+  export type DemonSkillUnlockableScalarFieldEnum = (typeof DemonSkillUnlockableScalarFieldEnum)[keyof typeof DemonSkillUnlockableScalarFieldEnum]
 
 
   export const PlayerGatherScalarFieldEnum: {
@@ -83898,6 +90643,7 @@ export namespace Prisma {
     id: 'id',
     date: 'date',
     teamRace: 'teamRace',
+    demon: 'demon',
     levelLimit: 'levelLimit',
     cashPrice: 'cashPrice',
     nextRound: 'nextRound',
@@ -83950,6 +90696,49 @@ export namespace Prisma {
   };
 
   export type ServerStateScalarFieldEnum = (typeof ServerStateScalarFieldEnum)[keyof typeof ServerStateScalarFieldEnum]
+
+
+  export const DungeonRunScalarFieldEnum: {
+    id: 'id',
+    posX: 'posX',
+    posY: 'posY',
+    posL: 'posL',
+    revealed: 'revealed',
+    defeated: 'defeated',
+    keys: 'keys',
+    opened: 'opened',
+    scenarios: 'scenarios',
+    gold: 'gold',
+    healed: 'healed',
+    healPending: 'healPending',
+    createdAt: 'createdAt',
+    playerId: 'playerId',
+    dungeonId: 'dungeonId',
+    leaderId: 'leaderId'
+  };
+
+  export type DungeonRunScalarFieldEnum = (typeof DungeonRunScalarFieldEnum)[keyof typeof DungeonRunScalarFieldEnum]
+
+
+  export const DungeonScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    cipher: 'cipher',
+    iv: 'iv',
+    tag: 'tag',
+    type: 'type',
+    level: 'level',
+    monsters: 'monsters',
+    scenarios: 'scenarios',
+    placeStart: 'placeStart',
+    placeEnd: 'placeEnd',
+    condition: 'condition',
+    monsterPool: 'monsterPool',
+    fightBackgrounds: 'fightBackgrounds',
+    isActive: 'isActive'
+  };
+
+  export type DungeonScalarFieldEnum = (typeof DungeonScalarFieldEnum)[keyof typeof DungeonScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -84296,6 +91085,20 @@ export namespace Prisma {
    */
   export type ListEnumServerActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServerAction[]'>
     
+
+
+  /**
+   * Reference to a field of type 'DungeonType'
+   */
+  export type EnumDungeonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DungeonType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DungeonType[]'
+   */
+  export type ListEnumDungeonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DungeonType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -84370,12 +91173,14 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
+    unavailableUntil?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
     buildId?: UuidNullableFilter<"Dinoz"> | string | null
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
     build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
+    dungeonRun?: XOR<DungeonRunNullableScalarRelationFilter, DungeonRunWhereInput> | null
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
     offers?: OfferListRelationFilter
@@ -84425,12 +91230,14 @@ export namespace Prisma {
     remaining?: SortOrder
     FBTournamentStep?: SortOrder
     unavailableReason?: SortOrderInput | SortOrder
+    unavailableUntil?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
     buildId?: SortOrderInput | SortOrder
     castle?: ClanCastleOrderByWithRelationInput
     build?: DinozBuildOrderByWithRelationInput
     catches?: DinozCatchOrderByRelationAggregateInput
+    dungeonRun?: DungeonRunOrderByWithRelationInput
     logs?: LogOrderByRelationAggregateInput
     Moderation?: ModerationOrderByRelationAggregateInput
     offers?: OfferOrderByRelationAggregateInput
@@ -84483,12 +91290,14 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
+    unavailableUntil?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
     buildId?: UuidNullableFilter<"Dinoz"> | string | null
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
     build?: XOR<DinozBuildNullableScalarRelationFilter, DinozBuildWhereInput> | null
     catches?: DinozCatchListRelationFilter
+    dungeonRun?: XOR<DungeonRunNullableScalarRelationFilter, DungeonRunWhereInput> | null
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
     offers?: OfferListRelationFilter
@@ -84538,6 +91347,7 @@ export namespace Prisma {
     remaining?: SortOrder
     FBTournamentStep?: SortOrder
     unavailableReason?: SortOrderInput | SortOrder
+    unavailableUntil?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
     buildId?: SortOrderInput | SortOrder
@@ -84580,6 +91390,7 @@ export namespace Prisma {
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     FBTournamentStep?: IntWithAggregatesFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
+    unavailableUntil?: DateTimeNullableWithAggregatesFilter<"Dinoz"> | Date | string | null
     seed?: StringWithAggregatesFilter<"Dinoz"> | string
     playerId?: UuidWithAggregatesFilter<"Dinoz"> | string
     buildId?: UuidNullableWithAggregatesFilter<"Dinoz"> | string | null
@@ -85458,12 +92269,14 @@ export namespace Prisma {
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
+    bypassGatheringGrid?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
     displayedNotifications?: IntFilter<"Player"> | number
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     id?: UuidFilter<"Player"> | string
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
@@ -85487,6 +92300,7 @@ export namespace Prisma {
     banCase?: XOR<ModerationNullableScalarRelationFilter, ModerationWhereInput> | null
     playerTracking?: PlayerTrackingListRelationFilter
     dinozShop?: PlayerDinozShopListRelationFilter
+    demonShop?: PlayerDemonShopListRelationFilter
     gathers?: PlayerGatherListRelationFilter
     ingredients?: PlayerIngredientListRelationFilter
     items?: PlayerItemListRelationFilter
@@ -85503,6 +92317,7 @@ export namespace Prisma {
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -85531,12 +92346,14 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
+    bypassGatheringGrid?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrderInput | SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
     clan?: ClanOrderByWithRelationInput
     leaderOf?: ClanOrderByWithRelationInput
@@ -85560,6 +92377,7 @@ export namespace Prisma {
     banCase?: ModerationOrderByWithRelationInput
     playerTracking?: PlayerTrackingOrderByRelationAggregateInput
     dinozShop?: PlayerDinozShopOrderByRelationAggregateInput
+    demonShop?: PlayerDemonShopOrderByRelationAggregateInput
     gathers?: PlayerGatherOrderByRelationAggregateInput
     ingredients?: PlayerIngredientOrderByRelationAggregateInput
     items?: PlayerItemOrderByRelationAggregateInput
@@ -85576,6 +92394,7 @@ export namespace Prisma {
     pollVotes?: PollVoteOrderByRelationAggregateInput
     Events?: EventsOrderByRelationAggregateInput
     dinozBuilds?: DinozBuildOrderByRelationAggregateInput
+    dungeonRuns?: DungeonRunOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -85609,11 +92428,13 @@ export namespace Prisma {
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
+    bypassGatheringGrid?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
     displayedNotifications?: IntFilter<"Player"> | number
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
@@ -85636,6 +92457,7 @@ export namespace Prisma {
     banCase?: XOR<ModerationNullableScalarRelationFilter, ModerationWhereInput> | null
     playerTracking?: PlayerTrackingListRelationFilter
     dinozShop?: PlayerDinozShopListRelationFilter
+    demonShop?: PlayerDemonShopListRelationFilter
     gathers?: PlayerGatherListRelationFilter
     ingredients?: PlayerIngredientListRelationFilter
     items?: PlayerItemListRelationFilter
@@ -85652,6 +92474,7 @@ export namespace Prisma {
     pollVotes?: PollVoteListRelationFilter
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
+    dungeonRuns?: DungeonRunListRelationFilter
   }, "id" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -85680,12 +92503,14 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
+    bypassGatheringGrid?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrderInput | SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
     _avg?: PlayerAvgOrderByAggregateInput
@@ -85723,12 +92548,14 @@ export namespace Prisma {
     skipFight?: BoolWithAggregatesFilter<"Player"> | boolean
     skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
     autoReequipItems?: BoolWithAggregatesFilter<"Player"> | boolean
+    bypassGatheringGrid?: BoolWithAggregatesFilter<"Player"> | boolean
     shareArchivedData?: BoolWithAggregatesFilter<"Player"> | boolean
     archivedSiteId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     displayedNotifications?: IntWithAggregatesFilter<"Player"> | number
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
+    tosAccepted?: BoolWithAggregatesFilter<"Player"> | boolean
     id?: UuidWithAggregatesFilter<"Player"> | string
   }
 
@@ -86145,6 +92972,200 @@ export namespace Prisma {
     raceId?: IntWithAggregatesFilter<"PlayerDinozShop"> | number
     display?: StringWithAggregatesFilter<"PlayerDinozShop"> | string
     playerId?: UuidNullableWithAggregatesFilter<"PlayerDinozShop"> | string | null
+  }
+
+  export type PlayerDemonShopWhereInput = {
+    AND?: PlayerDemonShopWhereInput | PlayerDemonShopWhereInput[]
+    OR?: PlayerDemonShopWhereInput[]
+    NOT?: PlayerDemonShopWhereInput | PlayerDemonShopWhereInput[]
+    id?: IntFilter<"PlayerDemonShop"> | number
+    raceId?: IntFilter<"PlayerDemonShop"> | number
+    display?: StringFilter<"PlayerDemonShop"> | string
+    nextUpElementId?: IntFilter<"PlayerDemonShop"> | number
+    nextUpAltElementId?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpFire?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWood?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWater?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpLightning?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpAir?: IntFilter<"PlayerDemonShop"> | number
+    seed?: StringFilter<"PlayerDemonShop"> | string
+    playerId?: UuidNullableFilter<"PlayerDemonShop"> | string | null
+    skills?: DemonSkillListRelationFilter
+    unlockableSkills?: DemonSkillUnlockableListRelationFilter
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+  }
+
+  export type PlayerDemonShopOrderByWithRelationInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    seed?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    skills?: DemonSkillOrderByRelationAggregateInput
+    unlockableSkills?: DemonSkillUnlockableOrderByRelationAggregateInput
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type PlayerDemonShopWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PlayerDemonShopWhereInput | PlayerDemonShopWhereInput[]
+    OR?: PlayerDemonShopWhereInput[]
+    NOT?: PlayerDemonShopWhereInput | PlayerDemonShopWhereInput[]
+    raceId?: IntFilter<"PlayerDemonShop"> | number
+    display?: StringFilter<"PlayerDemonShop"> | string
+    nextUpElementId?: IntFilter<"PlayerDemonShop"> | number
+    nextUpAltElementId?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpFire?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWood?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWater?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpLightning?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpAir?: IntFilter<"PlayerDemonShop"> | number
+    seed?: StringFilter<"PlayerDemonShop"> | string
+    playerId?: UuidNullableFilter<"PlayerDemonShop"> | string | null
+    skills?: DemonSkillListRelationFilter
+    unlockableSkills?: DemonSkillUnlockableListRelationFilter
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+  }, "id">
+
+  export type PlayerDemonShopOrderByWithAggregationInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    seed?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    _count?: PlayerDemonShopCountOrderByAggregateInput
+    _avg?: PlayerDemonShopAvgOrderByAggregateInput
+    _max?: PlayerDemonShopMaxOrderByAggregateInput
+    _min?: PlayerDemonShopMinOrderByAggregateInput
+    _sum?: PlayerDemonShopSumOrderByAggregateInput
+  }
+
+  export type PlayerDemonShopScalarWhereWithAggregatesInput = {
+    AND?: PlayerDemonShopScalarWhereWithAggregatesInput | PlayerDemonShopScalarWhereWithAggregatesInput[]
+    OR?: PlayerDemonShopScalarWhereWithAggregatesInput[]
+    NOT?: PlayerDemonShopScalarWhereWithAggregatesInput | PlayerDemonShopScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    raceId?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    display?: StringWithAggregatesFilter<"PlayerDemonShop"> | string
+    nextUpElementId?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nextUpAltElementId?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nbrUpFire?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nbrUpWood?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nbrUpWater?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nbrUpLightning?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    nbrUpAir?: IntWithAggregatesFilter<"PlayerDemonShop"> | number
+    seed?: StringWithAggregatesFilter<"PlayerDemonShop"> | string
+    playerId?: UuidNullableWithAggregatesFilter<"PlayerDemonShop"> | string | null
+  }
+
+  export type DemonSkillWhereInput = {
+    AND?: DemonSkillWhereInput | DemonSkillWhereInput[]
+    OR?: DemonSkillWhereInput[]
+    NOT?: DemonSkillWhereInput | DemonSkillWhereInput[]
+    id?: IntFilter<"DemonSkill"> | number
+    skillId?: IntFilter<"DemonSkill"> | number
+    dinozId?: IntFilter<"DemonSkill"> | number
+    dinoz?: XOR<PlayerDemonShopScalarRelationFilter, PlayerDemonShopWhereInput>
+  }
+
+  export type DemonSkillOrderByWithRelationInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+    dinoz?: PlayerDemonShopOrderByWithRelationInput
+  }
+
+  export type DemonSkillWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    skillId_dinozId?: DemonSkillSkillIdDinozIdCompoundUniqueInput
+    AND?: DemonSkillWhereInput | DemonSkillWhereInput[]
+    OR?: DemonSkillWhereInput[]
+    NOT?: DemonSkillWhereInput | DemonSkillWhereInput[]
+    skillId?: IntFilter<"DemonSkill"> | number
+    dinozId?: IntFilter<"DemonSkill"> | number
+    dinoz?: XOR<PlayerDemonShopScalarRelationFilter, PlayerDemonShopWhereInput>
+  }, "id" | "skillId_dinozId">
+
+  export type DemonSkillOrderByWithAggregationInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+    _count?: DemonSkillCountOrderByAggregateInput
+    _avg?: DemonSkillAvgOrderByAggregateInput
+    _max?: DemonSkillMaxOrderByAggregateInput
+    _min?: DemonSkillMinOrderByAggregateInput
+    _sum?: DemonSkillSumOrderByAggregateInput
+  }
+
+  export type DemonSkillScalarWhereWithAggregatesInput = {
+    AND?: DemonSkillScalarWhereWithAggregatesInput | DemonSkillScalarWhereWithAggregatesInput[]
+    OR?: DemonSkillScalarWhereWithAggregatesInput[]
+    NOT?: DemonSkillScalarWhereWithAggregatesInput | DemonSkillScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DemonSkill"> | number
+    skillId?: IntWithAggregatesFilter<"DemonSkill"> | number
+    dinozId?: IntWithAggregatesFilter<"DemonSkill"> | number
+  }
+
+  export type DemonSkillUnlockableWhereInput = {
+    AND?: DemonSkillUnlockableWhereInput | DemonSkillUnlockableWhereInput[]
+    OR?: DemonSkillUnlockableWhereInput[]
+    NOT?: DemonSkillUnlockableWhereInput | DemonSkillUnlockableWhereInput[]
+    id?: IntFilter<"DemonSkillUnlockable"> | number
+    skillId?: IntFilter<"DemonSkillUnlockable"> | number
+    dinozId?: IntFilter<"DemonSkillUnlockable"> | number
+    dinoz?: XOR<PlayerDemonShopScalarRelationFilter, PlayerDemonShopWhereInput>
+  }
+
+  export type DemonSkillUnlockableOrderByWithRelationInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+    dinoz?: PlayerDemonShopOrderByWithRelationInput
+  }
+
+  export type DemonSkillUnlockableWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    skillId_dinozId?: DemonSkillUnlockableSkillIdDinozIdCompoundUniqueInput
+    AND?: DemonSkillUnlockableWhereInput | DemonSkillUnlockableWhereInput[]
+    OR?: DemonSkillUnlockableWhereInput[]
+    NOT?: DemonSkillUnlockableWhereInput | DemonSkillUnlockableWhereInput[]
+    skillId?: IntFilter<"DemonSkillUnlockable"> | number
+    dinozId?: IntFilter<"DemonSkillUnlockable"> | number
+    dinoz?: XOR<PlayerDemonShopScalarRelationFilter, PlayerDemonShopWhereInput>
+  }, "id" | "skillId_dinozId">
+
+  export type DemonSkillUnlockableOrderByWithAggregationInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+    _count?: DemonSkillUnlockableCountOrderByAggregateInput
+    _avg?: DemonSkillUnlockableAvgOrderByAggregateInput
+    _max?: DemonSkillUnlockableMaxOrderByAggregateInput
+    _min?: DemonSkillUnlockableMinOrderByAggregateInput
+    _sum?: DemonSkillUnlockableSumOrderByAggregateInput
+  }
+
+  export type DemonSkillUnlockableScalarWhereWithAggregatesInput = {
+    AND?: DemonSkillUnlockableScalarWhereWithAggregatesInput | DemonSkillUnlockableScalarWhereWithAggregatesInput[]
+    OR?: DemonSkillUnlockableScalarWhereWithAggregatesInput[]
+    NOT?: DemonSkillUnlockableScalarWhereWithAggregatesInput | DemonSkillUnlockableScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DemonSkillUnlockable"> | number
+    skillId?: IntWithAggregatesFilter<"DemonSkillUnlockable"> | number
+    dinozId?: IntWithAggregatesFilter<"DemonSkillUnlockable"> | number
   }
 
   export type PlayerGatherWhereInput = {
@@ -88547,6 +95568,7 @@ export namespace Prisma {
     id?: UuidFilter<"FBTournament"> | string
     date?: DateTimeFilter<"FBTournament"> | Date | string
     teamRace?: StringFilter<"FBTournament"> | string
+    demon?: BoolFilter<"FBTournament"> | boolean
     levelLimit?: IntFilter<"FBTournament"> | number
     cashPrice?: IntFilter<"FBTournament"> | number
     nextRound?: DateTimeFilter<"FBTournament"> | Date | string
@@ -88559,6 +95581,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -88574,6 +95597,7 @@ export namespace Prisma {
     NOT?: FBTournamentWhereInput | FBTournamentWhereInput[]
     date?: DateTimeFilter<"FBTournament"> | Date | string
     teamRace?: StringFilter<"FBTournament"> | string
+    demon?: BoolFilter<"FBTournament"> | boolean
     levelLimit?: IntFilter<"FBTournament"> | number
     cashPrice?: IntFilter<"FBTournament"> | number
     nextRound?: DateTimeFilter<"FBTournament"> | Date | string
@@ -88586,6 +95610,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -88604,6 +95629,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"FBTournament"> | string
     date?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
     teamRace?: StringWithAggregatesFilter<"FBTournament"> | string
+    demon?: BoolWithAggregatesFilter<"FBTournament"> | boolean
     levelLimit?: IntWithAggregatesFilter<"FBTournament"> | number
     cashPrice?: IntWithAggregatesFilter<"FBTournament"> | number
     nextRound?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
@@ -88861,6 +95887,232 @@ export namespace Prisma {
     nextCheck?: DateTimeWithAggregatesFilter<"ServerState"> | Date | string
   }
 
+  export type DungeonRunWhereInput = {
+    AND?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    OR?: DungeonRunWhereInput[]
+    NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    id?: StringFilter<"DungeonRun"> | string
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    defeated?: StringFilter<"DungeonRun"> | string
+    keys?: StringFilter<"DungeonRun"> | string
+    opened?: StringFilter<"DungeonRun"> | string
+    scenarios?: StringFilter<"DungeonRun"> | string
+    gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    leaderId?: IntNullableFilter<"DungeonRun"> | number | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+  }
+
+  export type DungeonRunOrderByWithRelationInput = {
+    id?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    defeated?: SortOrder
+    keys?: SortOrder
+    opened?: SortOrder
+    scenarios?: SortOrder
+    gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    leaderId?: SortOrderInput | SortOrder
+    player?: PlayerOrderByWithRelationInput
+    dungeon?: DungeonOrderByWithRelationInput
+    leader?: DinozOrderByWithRelationInput
+  }
+
+  export type DungeonRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    leaderId?: number
+    playerId_dungeonId?: DungeonRunPlayerIdDungeonIdCompoundUniqueInput
+    AND?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    OR?: DungeonRunWhereInput[]
+    NOT?: DungeonRunWhereInput | DungeonRunWhereInput[]
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    defeated?: StringFilter<"DungeonRun"> | string
+    keys?: StringFilter<"DungeonRun"> | string
+    opened?: StringFilter<"DungeonRun"> | string
+    scenarios?: StringFilter<"DungeonRun"> | string
+    gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dungeon?: XOR<DungeonScalarRelationFilter, DungeonWhereInput>
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+  }, "id" | "playerId_dungeonId" | "leaderId">
+
+  export type DungeonRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    defeated?: SortOrder
+    keys?: SortOrder
+    opened?: SortOrder
+    scenarios?: SortOrder
+    gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    leaderId?: SortOrderInput | SortOrder
+    _count?: DungeonRunCountOrderByAggregateInput
+    _avg?: DungeonRunAvgOrderByAggregateInput
+    _max?: DungeonRunMaxOrderByAggregateInput
+    _min?: DungeonRunMinOrderByAggregateInput
+    _sum?: DungeonRunSumOrderByAggregateInput
+  }
+
+  export type DungeonRunScalarWhereWithAggregatesInput = {
+    AND?: DungeonRunScalarWhereWithAggregatesInput | DungeonRunScalarWhereWithAggregatesInput[]
+    OR?: DungeonRunScalarWhereWithAggregatesInput[]
+    NOT?: DungeonRunScalarWhereWithAggregatesInput | DungeonRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DungeonRun"> | string
+    posX?: IntWithAggregatesFilter<"DungeonRun"> | number
+    posY?: IntWithAggregatesFilter<"DungeonRun"> | number
+    posL?: IntWithAggregatesFilter<"DungeonRun"> | number
+    revealed?: StringWithAggregatesFilter<"DungeonRun"> | string
+    defeated?: StringWithAggregatesFilter<"DungeonRun"> | string
+    keys?: StringWithAggregatesFilter<"DungeonRun"> | string
+    opened?: StringWithAggregatesFilter<"DungeonRun"> | string
+    scenarios?: StringWithAggregatesFilter<"DungeonRun"> | string
+    gold?: StringWithAggregatesFilter<"DungeonRun"> | string
+    healed?: StringWithAggregatesFilter<"DungeonRun"> | string
+    healPending?: StringNullableWithAggregatesFilter<"DungeonRun"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DungeonRun"> | Date | string
+    playerId?: UuidWithAggregatesFilter<"DungeonRun"> | string
+    dungeonId?: UuidWithAggregatesFilter<"DungeonRun"> | string
+    leaderId?: IntNullableWithAggregatesFilter<"DungeonRun"> | number | null
+  }
+
+  export type DungeonWhereInput = {
+    AND?: DungeonWhereInput | DungeonWhereInput[]
+    OR?: DungeonWhereInput[]
+    NOT?: DungeonWhereInput | DungeonWhereInput[]
+    id?: UuidFilter<"Dungeon"> | string
+    name?: StringFilter<"Dungeon"> | string
+    cipher?: BytesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
+    level?: IntFilter<"Dungeon"> | number
+    monsters?: StringFilter<"Dungeon"> | string
+    scenarios?: StringFilter<"Dungeon"> | string
+    placeStart?: IntNullableFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableFilter<"Dungeon"> | number | null
+    condition?: StringFilter<"Dungeon"> | string
+    monsterPool?: StringFilter<"Dungeon"> | string
+    fightBackgrounds?: StringFilter<"Dungeon"> | string
+    isActive?: BoolFilter<"Dungeon"> | boolean
+    dungeonRuns?: DungeonRunListRelationFilter
+  }
+
+  export type DungeonOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    level?: SortOrder
+    monsters?: SortOrder
+    scenarios?: SortOrder
+    placeStart?: SortOrderInput | SortOrder
+    placeEnd?: SortOrderInput | SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    fightBackgrounds?: SortOrder
+    isActive?: SortOrder
+    dungeonRuns?: DungeonRunOrderByRelationAggregateInput
+  }
+
+  export type DungeonWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: DungeonWhereInput | DungeonWhereInput[]
+    OR?: DungeonWhereInput[]
+    NOT?: DungeonWhereInput | DungeonWhereInput[]
+    cipher?: BytesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
+    level?: IntFilter<"Dungeon"> | number
+    monsters?: StringFilter<"Dungeon"> | string
+    scenarios?: StringFilter<"Dungeon"> | string
+    placeStart?: IntNullableFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableFilter<"Dungeon"> | number | null
+    condition?: StringFilter<"Dungeon"> | string
+    monsterPool?: StringFilter<"Dungeon"> | string
+    fightBackgrounds?: StringFilter<"Dungeon"> | string
+    isActive?: BoolFilter<"Dungeon"> | boolean
+    dungeonRuns?: DungeonRunListRelationFilter
+  }, "id" | "name">
+
+  export type DungeonOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    level?: SortOrder
+    monsters?: SortOrder
+    scenarios?: SortOrder
+    placeStart?: SortOrderInput | SortOrder
+    placeEnd?: SortOrderInput | SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    fightBackgrounds?: SortOrder
+    isActive?: SortOrder
+    _count?: DungeonCountOrderByAggregateInput
+    _avg?: DungeonAvgOrderByAggregateInput
+    _max?: DungeonMaxOrderByAggregateInput
+    _min?: DungeonMinOrderByAggregateInput
+    _sum?: DungeonSumOrderByAggregateInput
+  }
+
+  export type DungeonScalarWhereWithAggregatesInput = {
+    AND?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
+    OR?: DungeonScalarWhereWithAggregatesInput[]
+    NOT?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Dungeon"> | string
+    name?: StringWithAggregatesFilter<"Dungeon"> | string
+    cipher?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    iv?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    tag?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    type?: EnumDungeonTypeWithAggregatesFilter<"Dungeon"> | $Enums.DungeonType
+    level?: IntWithAggregatesFilter<"Dungeon"> | number
+    monsters?: StringWithAggregatesFilter<"Dungeon"> | string
+    scenarios?: StringWithAggregatesFilter<"Dungeon"> | string
+    placeStart?: IntNullableWithAggregatesFilter<"Dungeon"> | number | null
+    placeEnd?: IntNullableWithAggregatesFilter<"Dungeon"> | number | null
+    condition?: StringWithAggregatesFilter<"Dungeon"> | string
+    monsterPool?: StringWithAggregatesFilter<"Dungeon"> | string
+    fightBackgrounds?: StringWithAggregatesFilter<"Dungeon"> | string
+    isActive?: BoolWithAggregatesFilter<"Dungeon"> | boolean
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -88916,10 +96168,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -88969,10 +96223,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -89015,10 +96271,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -89068,10 +96326,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -89118,6 +96378,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
@@ -89148,6 +96409,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
   }
 
@@ -89180,6 +96442,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -89970,11 +97233,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -89998,6 +97263,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -90014,6 +97280,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -90042,12 +97309,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -90069,6 +97338,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -90085,6 +97355,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -90112,11 +97383,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90140,6 +97413,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -90156,6 +97430,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -90184,12 +97459,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -90211,6 +97488,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -90227,6 +97505,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -90255,12 +97534,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
   }
 
@@ -90289,11 +97570,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -90323,12 +97606,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -90708,6 +97993,191 @@ export namespace Prisma {
     raceId?: IntFieldUpdateOperationsInput | number
     display?: StringFieldUpdateOperationsInput | string
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PlayerDemonShopCreateInput = {
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    skills?: DemonSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DemonSkillUnlockableCreateNestedManyWithoutDinozInput
+    player?: PlayerCreateNestedOneWithoutDemonShopInput
+  }
+
+  export type PlayerDemonShopUncheckedCreateInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    playerId?: string | null
+    skills?: DemonSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DemonSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type PlayerDemonShopUpdateInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    skills?: DemonSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DemonSkillUnlockableUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneWithoutDemonShopNestedInput
+  }
+
+  export type PlayerDemonShopUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: DemonSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DemonSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type PlayerDemonShopCreateManyInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    playerId?: string | null
+  }
+
+  export type PlayerDemonShopUpdateManyMutationInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerDemonShopUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DemonSkillCreateInput = {
+    skillId: number
+    dinoz: PlayerDemonShopCreateNestedOneWithoutSkillsInput
+  }
+
+  export type DemonSkillUncheckedCreateInput = {
+    id?: number
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillUpdateInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinoz?: PlayerDemonShopUpdateOneRequiredWithoutSkillsNestedInput
+  }
+
+  export type DemonSkillUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillCreateManyInput = {
+    id?: number
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillUpdateManyMutationInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableCreateInput = {
+    skillId: number
+    dinoz: PlayerDemonShopCreateNestedOneWithoutUnlockableSkillsInput
+  }
+
+  export type DemonSkillUnlockableUncheckedCreateInput = {
+    id?: number
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillUnlockableUpdateInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinoz?: PlayerDemonShopUpdateOneRequiredWithoutUnlockableSkillsNestedInput
+  }
+
+  export type DemonSkillUnlockableUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableCreateManyInput = {
+    id?: number
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillUnlockableUpdateManyMutationInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlayerGatherCreateInput = {
@@ -92978,6 +100448,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -92990,6 +100461,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -93002,6 +100474,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93014,6 +100487,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93026,6 +100500,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -93036,6 +100511,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93046,6 +100522,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93326,6 +100803,266 @@ export namespace Prisma {
     nextCheck?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DungeonRunCreateInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunInput
+  }
+
+  export type DungeonRunUncheckedCreateInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    playerId: string
+    dungeonId: string
+    leaderId?: number | null
+  }
+
+  export type DungeonRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonRunCreateManyInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    playerId: string
+    dungeonId: string
+    leaderId?: number | null
+  }
+
+  export type DungeonRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DungeonRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonCreateInput = {
+    id?: string
+    name?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level?: number
+    monsters?: string
+    scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    fightBackgrounds?: string
+    isActive?: boolean
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutDungeonInput
+  }
+
+  export type DungeonUncheckedCreateInput = {
+    id?: string
+    name?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level?: number
+    monsters?: string
+    scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    fightBackgrounds?: string
+    isActive?: boolean
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutDungeonInput
+  }
+
+  export type DungeonUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    dungeonRuns?: DungeonRunUpdateManyWithoutDungeonNestedInput
+  }
+
+  export type DungeonUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput
+  }
+
+  export type DungeonCreateManyInput = {
+    id?: string
+    name?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level?: number
+    monsters?: string
+    scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    fightBackgrounds?: string
+    isActive?: boolean
+  }
+
+  export type DungeonUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DungeonUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -93432,6 +101169,17 @@ export namespace Prisma {
     not?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel> | $Enums.UnavailableReason | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UuidFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -93470,6 +101218,11 @@ export namespace Prisma {
     every?: DinozCatchWhereInput
     some?: DinozCatchWhereInput
     none?: DinozCatchWhereInput
+  }
+
+  export type DungeonRunNullableScalarRelationFilter = {
+    is?: DungeonRunWhereInput | null
+    isNot?: DungeonRunWhereInput | null
   }
 
   export type LogListRelationFilter = {
@@ -93665,6 +101418,7 @@ export namespace Prisma {
     remaining?: SortOrder
     FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
+    unavailableUntil?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
     buildId?: SortOrder
@@ -93722,6 +101476,7 @@ export namespace Prisma {
     remaining?: SortOrder
     FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
+    unavailableUntil?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
     buildId?: SortOrder
@@ -93756,6 +101511,7 @@ export namespace Prisma {
     remaining?: SortOrder
     FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
+    unavailableUntil?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
     buildId?: SortOrder
@@ -93848,6 +101604,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
     _max?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type UuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -94687,6 +102457,12 @@ export namespace Prisma {
     none?: PlayerDinozShopWhereInput
   }
 
+  export type PlayerDemonShopListRelationFilter = {
+    every?: PlayerDemonShopWhereInput
+    some?: PlayerDemonShopWhereInput
+    none?: PlayerDemonShopWhereInput
+  }
+
   export type PlayerGatherListRelationFilter = {
     every?: PlayerGatherWhereInput
     some?: PlayerGatherWhereInput
@@ -94763,6 +102539,12 @@ export namespace Prisma {
     none?: DinozBuildWhereInput
   }
 
+  export type DungeonRunListRelationFilter = {
+    every?: DungeonRunWhereInput
+    some?: DungeonRunWhereInput
+    none?: DungeonRunWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -94800,6 +102582,10 @@ export namespace Prisma {
   }
 
   export type PlayerDinozShopOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlayerDemonShopOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -94847,6 +102633,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type DungeonRunOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PlayerCountOrderByAggregateInput = {
     customText?: SortOrder
     name?: SortOrder
@@ -94873,12 +102663,14 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
+    bypassGatheringGrid?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     discoveredSkills?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -94919,11 +102711,13 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
+    bypassGatheringGrid?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -94953,11 +102747,13 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
+    bypassGatheringGrid?: SortOrder
     shareArchivedData?: SortOrder
     archivedSiteId?: SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
     lastVersionSeen?: SortOrder
+    tosAccepted?: SortOrder
     id?: SortOrder
   }
 
@@ -95046,17 +102842,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type DojoChallengeHistoryListRelationFilter = {
     every?: DojoChallengeHistoryWhereInput
     some?: DojoChallengeHistoryWhereInput
@@ -95134,20 +102919,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type DojoScalarRelationFilter = {
@@ -95329,6 +103100,170 @@ export namespace Prisma {
   export type PlayerDinozShopSumOrderByAggregateInput = {
     id?: SortOrder
     raceId?: SortOrder
+  }
+
+  export type DemonSkillListRelationFilter = {
+    every?: DemonSkillWhereInput
+    some?: DemonSkillWhereInput
+    none?: DemonSkillWhereInput
+  }
+
+  export type DemonSkillUnlockableListRelationFilter = {
+    every?: DemonSkillUnlockableWhereInput
+    some?: DemonSkillUnlockableWhereInput
+    none?: DemonSkillUnlockableWhereInput
+  }
+
+  export type DemonSkillOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DemonSkillUnlockableOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlayerDemonShopCountOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    seed?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerDemonShopAvgOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+  }
+
+  export type PlayerDemonShopMaxOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    seed?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerDemonShopMinOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    seed?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type PlayerDemonShopSumOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+  }
+
+  export type PlayerDemonShopScalarRelationFilter = {
+    is?: PlayerDemonShopWhereInput
+    isNot?: PlayerDemonShopWhereInput
+  }
+
+  export type DemonSkillSkillIdDinozIdCompoundUniqueInput = {
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillCountOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillAvgOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillMaxOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillMinOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillSumOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillUnlockableSkillIdDinozIdCompoundUniqueInput = {
+    skillId: number
+    dinozId: number
+  }
+
+  export type DemonSkillUnlockableCountOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillUnlockableAvgOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillUnlockableMaxOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillUnlockableMinOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type DemonSkillUnlockableSumOrderByAggregateInput = {
+    id?: SortOrder
+    skillId?: SortOrder
+    dinozId?: SortOrder
   }
 
   export type PlayerGatherCountOrderByAggregateInput = {
@@ -97040,6 +104975,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -97056,6 +104992,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -97066,6 +105003,7 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     teamRace?: SortOrder
+    demon?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
@@ -97284,6 +105222,187 @@ export namespace Prisma {
     _max?: NestedEnumServerActionFilter<$PrismaModel>
   }
 
+  export type DungeonScalarRelationFilter = {
+    is?: DungeonWhereInput
+    isNot?: DungeonWhereInput
+  }
+
+  export type DungeonRunPlayerIdDungeonIdCompoundUniqueInput = {
+    playerId: string
+    dungeonId: string
+  }
+
+  export type DungeonRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    defeated?: SortOrder
+    keys?: SortOrder
+    opened?: SortOrder
+    scenarios?: SortOrder
+    gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
+    createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type DungeonRunAvgOrderByAggregateInput = {
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type DungeonRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    defeated?: SortOrder
+    keys?: SortOrder
+    opened?: SortOrder
+    scenarios?: SortOrder
+    gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
+    createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type DungeonRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    revealed?: SortOrder
+    defeated?: SortOrder
+    keys?: SortOrder
+    opened?: SortOrder
+    scenarios?: SortOrder
+    gold?: SortOrder
+    healed?: SortOrder
+    healPending?: SortOrder
+    createdAt?: SortOrder
+    playerId?: SortOrder
+    dungeonId?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type DungeonRunSumOrderByAggregateInput = {
+    posX?: SortOrder
+    posY?: SortOrder
+    posL?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type EnumDungeonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeFilter<$PrismaModel> | $Enums.DungeonType
+  }
+
+  export type DungeonCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    level?: SortOrder
+    monsters?: SortOrder
+    scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    fightBackgrounds?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type DungeonAvgOrderByAggregateInput = {
+    level?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+  }
+
+  export type DungeonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    level?: SortOrder
+    monsters?: SortOrder
+    scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    fightBackgrounds?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type DungeonMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cipher?: SortOrder
+    iv?: SortOrder
+    tag?: SortOrder
+    type?: SortOrder
+    level?: SortOrder
+    monsters?: SortOrder
+    scenarios?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+    condition?: SortOrder
+    monsterPool?: SortOrder
+    fightBackgrounds?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type DungeonSumOrderByAggregateInput = {
+    level?: SortOrder
+    placeStart?: SortOrder
+    placeEnd?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type EnumDungeonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel> | $Enums.DungeonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDungeonTypeFilter<$PrismaModel>
+    _max?: NestedEnumDungeonTypeFilter<$PrismaModel>
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -97351,6 +105470,12 @@ export namespace Prisma {
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
     createMany?: DinozCatchCreateManyDinozInputEnvelope
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+  }
+
+  export type DungeonRunCreateNestedOneWithoutLeaderInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput
+    connect?: DungeonRunWhereUniqueInput
   }
 
   export type LogCreateNestedManyWithoutDinozInput = {
@@ -97482,6 +105607,12 @@ export namespace Prisma {
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
   }
 
+  export type DungeonRunUncheckedCreateNestedOneWithoutLeaderInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput
+    connect?: DungeonRunWhereUniqueInput
+  }
+
   export type LogUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
@@ -97610,6 +105741,10 @@ export namespace Prisma {
     set?: $Enums.UnavailableReason | null
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type ClanCastleUpdateOneWithoutDefenderNestedInput = {
     create?: XOR<ClanCastleCreateWithoutDefenderInput, ClanCastleUncheckedCreateWithoutDefenderInput>
     connectOrCreate?: ClanCastleCreateOrConnectWithoutDefenderInput
@@ -97642,6 +105777,16 @@ export namespace Prisma {
     update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
+  export type DungeonRunUpdateOneWithoutLeaderNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput
+    upsert?: DungeonRunUpsertWithoutLeaderInput
+    disconnect?: DungeonRunWhereInput | boolean
+    delete?: DungeonRunWhereInput | boolean
+    connect?: DungeonRunWhereUniqueInput
+    update?: XOR<XOR<DungeonRunUpdateToOneWithWhereWithoutLeaderInput, DungeonRunUpdateWithoutLeaderInput>, DungeonRunUncheckedUpdateWithoutLeaderInput>
   }
 
   export type LogUpdateManyWithoutDinozNestedInput = {
@@ -97897,6 +106042,16 @@ export namespace Prisma {
     update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
+  export type DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutLeaderInput
+    upsert?: DungeonRunUpsertWithoutLeaderInput
+    disconnect?: DungeonRunWhereInput | boolean
+    delete?: DungeonRunWhereInput | boolean
+    connect?: DungeonRunWhereUniqueInput
+    update?: XOR<XOR<DungeonRunUpdateToOneWithWhereWithoutLeaderInput, DungeonRunUpdateWithoutLeaderInput>, DungeonRunUncheckedUpdateWithoutLeaderInput>
   }
 
   export type LogUncheckedUpdateManyWithoutDinozNestedInput = {
@@ -98876,6 +107031,13 @@ export namespace Prisma {
     connect?: PlayerDinozShopWhereUniqueInput | PlayerDinozShopWhereUniqueInput[]
   }
 
+  export type PlayerDemonShopCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput> | PlayerDemonShopCreateWithoutPlayerInput[] | PlayerDemonShopUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutPlayerInput | PlayerDemonShopCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerDemonShopCreateManyPlayerInputEnvelope
+    connect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+  }
+
   export type PlayerGatherCreateNestedManyWithoutPlayerInput = {
     create?: XOR<PlayerGatherCreateWithoutPlayerInput, PlayerGatherUncheckedCreateWithoutPlayerInput> | PlayerGatherCreateWithoutPlayerInput[] | PlayerGatherUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PlayerGatherCreateOrConnectWithoutPlayerInput | PlayerGatherCreateOrConnectWithoutPlayerInput[]
@@ -98984,6 +107146,13 @@ export namespace Prisma {
     connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
     createMany?: DinozBuildCreateManyPlayerInputEnvelope
     connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+  }
+
+  export type DungeonRunCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
   }
 
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
@@ -99123,6 +107292,13 @@ export namespace Prisma {
     connect?: PlayerDinozShopWhereUniqueInput | PlayerDinozShopWhereUniqueInput[]
   }
 
+  export type PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput> | PlayerDemonShopCreateWithoutPlayerInput[] | PlayerDemonShopUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutPlayerInput | PlayerDemonShopCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerDemonShopCreateManyPlayerInputEnvelope
+    connect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+  }
+
   export type PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<PlayerGatherCreateWithoutPlayerInput, PlayerGatherUncheckedCreateWithoutPlayerInput> | PlayerGatherCreateWithoutPlayerInput[] | PlayerGatherUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PlayerGatherCreateOrConnectWithoutPlayerInput | PlayerGatherCreateOrConnectWithoutPlayerInput[]
@@ -99231,6 +107407,13 @@ export namespace Prisma {
     connectOrCreate?: DinozBuildCreateOrConnectWithoutPlayerInput | DinozBuildCreateOrConnectWithoutPlayerInput[]
     createMany?: DinozBuildCreateManyPlayerInputEnvelope
     connect?: DinozBuildWhereUniqueInput | DinozBuildWhereUniqueInput[]
+  }
+
+  export type DungeonRunUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -99534,6 +107717,20 @@ export namespace Prisma {
     deleteMany?: PlayerDinozShopScalarWhereInput | PlayerDinozShopScalarWhereInput[]
   }
 
+  export type PlayerDemonShopUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput> | PlayerDemonShopCreateWithoutPlayerInput[] | PlayerDemonShopUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutPlayerInput | PlayerDemonShopCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerDemonShopUpsertWithWhereUniqueWithoutPlayerInput | PlayerDemonShopUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerDemonShopCreateManyPlayerInputEnvelope
+    set?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    disconnect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    delete?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    connect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    update?: PlayerDemonShopUpdateWithWhereUniqueWithoutPlayerInput | PlayerDemonShopUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerDemonShopUpdateManyWithWhereWithoutPlayerInput | PlayerDemonShopUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerDemonShopScalarWhereInput | PlayerDemonShopScalarWhereInput[]
+  }
+
   export type PlayerGatherUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<PlayerGatherCreateWithoutPlayerInput, PlayerGatherUncheckedCreateWithoutPlayerInput> | PlayerGatherCreateWithoutPlayerInput[] | PlayerGatherUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PlayerGatherCreateOrConnectWithoutPlayerInput | PlayerGatherCreateOrConnectWithoutPlayerInput[]
@@ -99748,6 +107945,20 @@ export namespace Prisma {
     update?: DinozBuildUpdateWithWhereUniqueWithoutPlayerInput | DinozBuildUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: DinozBuildUpdateManyWithWhereWithoutPlayerInput | DinozBuildUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
+  }
+
+  export type DungeonRunUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutPlayerInput | DungeonRunUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutPlayerInput | DungeonRunUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutPlayerInput | DungeonRunUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
@@ -100018,6 +108229,20 @@ export namespace Prisma {
     deleteMany?: PlayerDinozShopScalarWhereInput | PlayerDinozShopScalarWhereInput[]
   }
 
+  export type PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput> | PlayerDemonShopCreateWithoutPlayerInput[] | PlayerDemonShopUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutPlayerInput | PlayerDemonShopCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerDemonShopUpsertWithWhereUniqueWithoutPlayerInput | PlayerDemonShopUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerDemonShopCreateManyPlayerInputEnvelope
+    set?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    disconnect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    delete?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    connect?: PlayerDemonShopWhereUniqueInput | PlayerDemonShopWhereUniqueInput[]
+    update?: PlayerDemonShopUpdateWithWhereUniqueWithoutPlayerInput | PlayerDemonShopUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerDemonShopUpdateManyWithWhereWithoutPlayerInput | PlayerDemonShopUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerDemonShopScalarWhereInput | PlayerDemonShopScalarWhereInput[]
+  }
+
   export type PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<PlayerGatherCreateWithoutPlayerInput, PlayerGatherUncheckedCreateWithoutPlayerInput> | PlayerGatherCreateWithoutPlayerInput[] | PlayerGatherUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: PlayerGatherCreateOrConnectWithoutPlayerInput | PlayerGatherCreateOrConnectWithoutPlayerInput[]
@@ -100234,6 +108459,20 @@ export namespace Prisma {
     deleteMany?: DinozBuildScalarWhereInput | DinozBuildScalarWhereInput[]
   }
 
+  export type DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput> | DungeonRunCreateWithoutPlayerInput[] | DungeonRunUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutPlayerInput | DungeonRunUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: DungeonRunCreateManyPlayerInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutPlayerInput | DungeonRunUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutPlayerInput | DungeonRunUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
   export type PlayerCreateNestedOneWithoutIpsInput = {
     create?: XOR<PlayerCreateWithoutIpsInput, PlayerUncheckedCreateWithoutIpsInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutIpsInput
@@ -100300,10 +108539,6 @@ export namespace Prisma {
     connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDojoInput | DojoOpponentsCreateOrConnectWithoutDojoInput[]
     createMany?: DojoOpponentsCreateManyDojoInputEnvelope
     connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type PlayerUpdateOneRequiredWithoutDojoNestedInput = {
@@ -100508,6 +108743,134 @@ export namespace Prisma {
     delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDinozShopInput, PlayerUpdateWithoutDinozShopInput>, PlayerUncheckedUpdateWithoutDinozShopInput>
+  }
+
+  export type DemonSkillCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput> | DemonSkillCreateWithoutDinozInput[] | DemonSkillUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillCreateOrConnectWithoutDinozInput | DemonSkillCreateOrConnectWithoutDinozInput[]
+    createMany?: DemonSkillCreateManyDinozInputEnvelope
+    connect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+  }
+
+  export type DemonSkillUnlockableCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput> | DemonSkillUnlockableCreateWithoutDinozInput[] | DemonSkillUnlockableUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillUnlockableCreateOrConnectWithoutDinozInput | DemonSkillUnlockableCreateOrConnectWithoutDinozInput[]
+    createMany?: DemonSkillUnlockableCreateManyDinozInputEnvelope
+    connect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+  }
+
+  export type PlayerCreateNestedOneWithoutDemonShopInput = {
+    create?: XOR<PlayerCreateWithoutDemonShopInput, PlayerUncheckedCreateWithoutDemonShopInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDemonShopInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DemonSkillUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput> | DemonSkillCreateWithoutDinozInput[] | DemonSkillUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillCreateOrConnectWithoutDinozInput | DemonSkillCreateOrConnectWithoutDinozInput[]
+    createMany?: DemonSkillCreateManyDinozInputEnvelope
+    connect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+  }
+
+  export type DemonSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput> | DemonSkillUnlockableCreateWithoutDinozInput[] | DemonSkillUnlockableUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillUnlockableCreateOrConnectWithoutDinozInput | DemonSkillUnlockableCreateOrConnectWithoutDinozInput[]
+    createMany?: DemonSkillUnlockableCreateManyDinozInputEnvelope
+    connect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+  }
+
+  export type DemonSkillUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput> | DemonSkillCreateWithoutDinozInput[] | DemonSkillUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillCreateOrConnectWithoutDinozInput | DemonSkillCreateOrConnectWithoutDinozInput[]
+    upsert?: DemonSkillUpsertWithWhereUniqueWithoutDinozInput | DemonSkillUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DemonSkillCreateManyDinozInputEnvelope
+    set?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    disconnect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    delete?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    connect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    update?: DemonSkillUpdateWithWhereUniqueWithoutDinozInput | DemonSkillUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DemonSkillUpdateManyWithWhereWithoutDinozInput | DemonSkillUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DemonSkillScalarWhereInput | DemonSkillScalarWhereInput[]
+  }
+
+  export type DemonSkillUnlockableUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput> | DemonSkillUnlockableCreateWithoutDinozInput[] | DemonSkillUnlockableUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillUnlockableCreateOrConnectWithoutDinozInput | DemonSkillUnlockableCreateOrConnectWithoutDinozInput[]
+    upsert?: DemonSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput | DemonSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DemonSkillUnlockableCreateManyDinozInputEnvelope
+    set?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    disconnect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    delete?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    connect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    update?: DemonSkillUnlockableUpdateWithWhereUniqueWithoutDinozInput | DemonSkillUnlockableUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DemonSkillUnlockableUpdateManyWithWhereWithoutDinozInput | DemonSkillUnlockableUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DemonSkillUnlockableScalarWhereInput | DemonSkillUnlockableScalarWhereInput[]
+  }
+
+  export type PlayerUpdateOneWithoutDemonShopNestedInput = {
+    create?: XOR<PlayerCreateWithoutDemonShopInput, PlayerUncheckedCreateWithoutDemonShopInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDemonShopInput
+    upsert?: PlayerUpsertWithoutDemonShopInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDemonShopInput, PlayerUpdateWithoutDemonShopInput>, PlayerUncheckedUpdateWithoutDemonShopInput>
+  }
+
+  export type DemonSkillUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput> | DemonSkillCreateWithoutDinozInput[] | DemonSkillUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillCreateOrConnectWithoutDinozInput | DemonSkillCreateOrConnectWithoutDinozInput[]
+    upsert?: DemonSkillUpsertWithWhereUniqueWithoutDinozInput | DemonSkillUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DemonSkillCreateManyDinozInputEnvelope
+    set?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    disconnect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    delete?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    connect?: DemonSkillWhereUniqueInput | DemonSkillWhereUniqueInput[]
+    update?: DemonSkillUpdateWithWhereUniqueWithoutDinozInput | DemonSkillUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DemonSkillUpdateManyWithWhereWithoutDinozInput | DemonSkillUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DemonSkillScalarWhereInput | DemonSkillScalarWhereInput[]
+  }
+
+  export type DemonSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput> | DemonSkillUnlockableCreateWithoutDinozInput[] | DemonSkillUnlockableUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DemonSkillUnlockableCreateOrConnectWithoutDinozInput | DemonSkillUnlockableCreateOrConnectWithoutDinozInput[]
+    upsert?: DemonSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput | DemonSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DemonSkillUnlockableCreateManyDinozInputEnvelope
+    set?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    disconnect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    delete?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    connect?: DemonSkillUnlockableWhereUniqueInput | DemonSkillUnlockableWhereUniqueInput[]
+    update?: DemonSkillUnlockableUpdateWithWhereUniqueWithoutDinozInput | DemonSkillUnlockableUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DemonSkillUnlockableUpdateManyWithWhereWithoutDinozInput | DemonSkillUnlockableUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DemonSkillUnlockableScalarWhereInput | DemonSkillUnlockableScalarWhereInput[]
+  }
+
+  export type PlayerDemonShopCreateNestedOneWithoutSkillsInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutSkillsInput, PlayerDemonShopUncheckedCreateWithoutSkillsInput>
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutSkillsInput
+    connect?: PlayerDemonShopWhereUniqueInput
+  }
+
+  export type PlayerDemonShopUpdateOneRequiredWithoutSkillsNestedInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutSkillsInput, PlayerDemonShopUncheckedCreateWithoutSkillsInput>
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutSkillsInput
+    upsert?: PlayerDemonShopUpsertWithoutSkillsInput
+    connect?: PlayerDemonShopWhereUniqueInput
+    update?: XOR<XOR<PlayerDemonShopUpdateToOneWithWhereWithoutSkillsInput, PlayerDemonShopUpdateWithoutSkillsInput>, PlayerDemonShopUncheckedUpdateWithoutSkillsInput>
+  }
+
+  export type PlayerDemonShopCreateNestedOneWithoutUnlockableSkillsInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedCreateWithoutUnlockableSkillsInput>
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutUnlockableSkillsInput
+    connect?: PlayerDemonShopWhereUniqueInput
+  }
+
+  export type PlayerDemonShopUpdateOneRequiredWithoutUnlockableSkillsNestedInput = {
+    create?: XOR<PlayerDemonShopCreateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedCreateWithoutUnlockableSkillsInput>
+    connectOrCreate?: PlayerDemonShopCreateOrConnectWithoutUnlockableSkillsInput
+    upsert?: PlayerDemonShopUpsertWithoutUnlockableSkillsInput
+    connect?: PlayerDemonShopWhereUniqueInput
+    update?: XOR<XOR<PlayerDemonShopUpdateToOneWithWhereWithoutUnlockableSkillsInput, PlayerDemonShopUpdateWithoutUnlockableSkillsInput>, PlayerDemonShopUncheckedUpdateWithoutUnlockableSkillsInput>
   }
 
   export type PlayerGatherCreategridInput = {
@@ -103151,6 +111514,100 @@ export namespace Prisma {
     set?: $Enums.ServerAction
   }
 
+  export type PlayerCreateNestedOneWithoutDungeonRunsInput = {
+    create?: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDungeonRunsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DungeonCreateNestedOneWithoutDungeonRunsInput = {
+    create?: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DungeonCreateOrConnectWithoutDungeonRunsInput
+    connect?: DungeonWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutDungeonRunInput = {
+    create?: XOR<DinozCreateWithoutDungeonRunInput, DinozUncheckedCreateWithoutDungeonRunInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDungeonRunInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput = {
+    create?: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDungeonRunsInput
+    upsert?: PlayerUpsertWithoutDungeonRunsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDungeonRunsInput, PlayerUpdateWithoutDungeonRunsInput>, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput = {
+    create?: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    connectOrCreate?: DungeonCreateOrConnectWithoutDungeonRunsInput
+    upsert?: DungeonUpsertWithoutDungeonRunsInput
+    connect?: DungeonWhereUniqueInput
+    update?: XOR<XOR<DungeonUpdateToOneWithWhereWithoutDungeonRunsInput, DungeonUpdateWithoutDungeonRunsInput>, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DinozUpdateOneWithoutDungeonRunNestedInput = {
+    create?: XOR<DinozCreateWithoutDungeonRunInput, DinozUncheckedCreateWithoutDungeonRunInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDungeonRunInput
+    upsert?: DinozUpsertWithoutDungeonRunInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutDungeonRunInput, DinozUpdateWithoutDungeonRunInput>, DinozUncheckedUpdateWithoutDungeonRunInput>
+  }
+
+  export type DungeonRunCreateNestedManyWithoutDungeonInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
+  export type DungeonRunUncheckedCreateNestedManyWithoutDungeonInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Uint8Array
+  }
+
+  export type EnumDungeonTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DungeonType
+  }
+
+  export type DungeonRunUpdateManyWithoutDungeonNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutDungeonInput | DungeonRunUpsertWithWhereUniqueWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutDungeonInput | DungeonRunUpdateWithWhereUniqueWithoutDungeonInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutDungeonInput | DungeonRunUpdateManyWithWhereWithoutDungeonInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutDungeonNestedInput = {
+    create?: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput> | DungeonRunCreateWithoutDungeonInput[] | DungeonRunUncheckedCreateWithoutDungeonInput[]
+    connectOrCreate?: DungeonRunCreateOrConnectWithoutDungeonInput | DungeonRunCreateOrConnectWithoutDungeonInput[]
+    upsert?: DungeonRunUpsertWithWhereUniqueWithoutDungeonInput | DungeonRunUpsertWithWhereUniqueWithoutDungeonInput[]
+    createMany?: DungeonRunCreateManyDungeonInputEnvelope
+    set?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    disconnect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    delete?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+    update?: DungeonRunUpdateWithWhereUniqueWithoutDungeonInput | DungeonRunUpdateWithWhereUniqueWithoutDungeonInput[]
+    updateMany?: DungeonRunUpdateManyWithWhereWithoutDungeonInput | DungeonRunUpdateManyWithWhereWithoutDungeonInput[]
+    deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -103235,6 +111692,17 @@ export namespace Prisma {
     in?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
     not?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel> | $Enums.UnavailableReason | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -103333,6 +111801,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
     _max?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -103501,17 +111983,6 @@ export namespace Prisma {
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -103534,20 +112005,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumOfferStatusFilter<$PrismaModel = never> = {
@@ -103736,6 +112193,40 @@ export namespace Prisma {
     _max?: NestedEnumServerActionFilter<$PrismaModel>
   }
 
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type NestedEnumDungeonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeFilter<$PrismaModel> | $Enums.DungeonType
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DungeonType | EnumDungeonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DungeonType[] | ListEnumDungeonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDungeonTypeWithAggregatesFilter<$PrismaModel> | $Enums.DungeonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDungeonTypeFilter<$PrismaModel>
+    _max?: NestedEnumDungeonTypeFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     name: string
     raceId: number
@@ -103761,10 +112252,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -103812,10 +112305,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -103891,6 +112386,7 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
+    unavailableUntil?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
     buildId?: UuidNullableFilter<"Dinoz"> | string | null
@@ -103960,6 +112456,47 @@ export namespace Prisma {
   export type DinozCatchCreateManyDinozInputEnvelope = {
     data: DinozCatchCreateManyDinozInput | DinozCatchCreateManyDinozInput[]
     skipDuplicates?: boolean
+  }
+
+  export type DungeonRunCreateWithoutLeaderInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutLeaderInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    playerId: string
+    dungeonId: string
+  }
+
+  export type DungeonRunCreateOrConnectWithoutLeaderInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
   }
 
   export type LogCreateWithoutDinozInput = {
@@ -104111,11 +112648,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -104138,6 +112677,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -104154,6 +112694,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -104182,12 +112723,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -104208,6 +112751,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -104224,6 +112768,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -104269,10 +112814,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -104321,10 +112868,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -104371,10 +112920,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -104422,10 +112973,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -104761,6 +113314,53 @@ export namespace Prisma {
     monsterId?: StringFilter<"DinozCatch"> | string
   }
 
+  export type DungeonRunUpsertWithoutLeaderInput = {
+    update: XOR<DungeonRunUpdateWithoutLeaderInput, DungeonRunUncheckedUpdateWithoutLeaderInput>
+    create: XOR<DungeonRunCreateWithoutLeaderInput, DungeonRunUncheckedCreateWithoutLeaderInput>
+    where?: DungeonRunWhereInput
+  }
+
+  export type DungeonRunUpdateToOneWithWhereWithoutLeaderInput = {
+    where?: DungeonRunWhereInput
+    data: XOR<DungeonRunUpdateWithoutLeaderInput, DungeonRunUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type DungeonRunUpdateWithoutLeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutLeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type LogUpsertWithWhereUniqueWithoutDinozInput = {
     where: LogWhereUniqueInput
     update: XOR<LogUpdateWithoutDinozInput, LogUncheckedUpdateWithoutDinozInput>
@@ -104918,11 +113518,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -104945,6 +113547,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -104961,6 +113564,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -104989,12 +113593,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -105015,6 +113621,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -105031,6 +113638,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -105088,10 +113696,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -105140,10 +113750,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -105464,10 +114076,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -105516,10 +114130,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -105661,10 +114277,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -105713,10 +114331,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -105844,10 +114464,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -105896,10 +114518,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -106039,10 +114663,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -106091,10 +114717,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -106230,10 +114858,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -106282,10 +114912,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -106343,10 +114975,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -106395,10 +115029,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -106440,10 +115076,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -106492,10 +115130,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -106617,10 +115257,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -106669,10 +115311,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -106784,10 +115428,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -106836,10 +115482,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -106961,10 +115609,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -107013,10 +115663,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -107128,10 +115780,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107180,10 +115834,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -107305,10 +115961,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -107357,10 +116015,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -107472,11 +116132,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -107500,6 +116162,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -107515,6 +116178,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozBuildsInput = {
@@ -107543,12 +116207,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -107570,6 +116236,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -107585,6 +116252,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozBuildsInput = {
@@ -107617,9 +116285,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -107669,9 +116339,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -107735,11 +116407,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -107763,6 +116437,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -107778,6 +116453,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozBuildsInput = {
@@ -107806,12 +116482,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -107833,6 +116511,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -107848,6 +116527,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutBuildInput = {
@@ -108305,11 +116985,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -108333,6 +117015,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -108348,6 +117031,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPollVotesInput = {
@@ -108376,12 +117060,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -108403,6 +117089,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -108418,6 +117105,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPollVotesInput = {
@@ -108515,11 +117203,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -108543,6 +117233,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -108558,6 +117249,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPollVotesInput = {
@@ -108586,12 +117278,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -108613,6 +117307,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -108628,6 +117323,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -108741,10 +117437,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -108793,10 +117491,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -108854,10 +117554,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -108906,10 +117608,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -109482,10 +118186,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -109534,9 +118240,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -109633,6 +118341,47 @@ export namespace Prisma {
 
   export type PlayerDinozShopCreateManyPlayerInputEnvelope = {
     data: PlayerDinozShopCreateManyPlayerInput | PlayerDinozShopCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerDemonShopCreateWithoutPlayerInput = {
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    skills?: DemonSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DemonSkillUnlockableCreateNestedManyWithoutDinozInput
+  }
+
+  export type PlayerDemonShopUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    skills?: DemonSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DemonSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type PlayerDemonShopCreateOrConnectWithoutPlayerInput = {
+    where: PlayerDemonShopWhereUniqueInput
+    create: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerDemonShopCreateManyPlayerInputEnvelope = {
+    data: PlayerDemonShopCreateManyPlayerInput | PlayerDemonShopCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -110128,6 +118877,52 @@ export namespace Prisma {
 
   export type DinozBuildCreateManyPlayerInputEnvelope = {
     data: DinozBuildCreateManyPlayerInput | DinozBuildCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DungeonRunCreateWithoutPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    dungeon: DungeonCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    dungeonId: string
+    leaderId?: number | null
+  }
+
+  export type DungeonRunCreateOrConnectWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DungeonRunCreateManyPlayerInputEnvelope = {
+    data: DungeonRunCreateManyPlayerInput | DungeonRunCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -110711,6 +119506,40 @@ export namespace Prisma {
     playerId?: UuidNullableFilter<"PlayerDinozShop"> | string | null
   }
 
+  export type PlayerDemonShopUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerDemonShopWhereUniqueInput
+    update: XOR<PlayerDemonShopUpdateWithoutPlayerInput, PlayerDemonShopUncheckedUpdateWithoutPlayerInput>
+    create: XOR<PlayerDemonShopCreateWithoutPlayerInput, PlayerDemonShopUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerDemonShopUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerDemonShopWhereUniqueInput
+    data: XOR<PlayerDemonShopUpdateWithoutPlayerInput, PlayerDemonShopUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PlayerDemonShopUpdateManyWithWhereWithoutPlayerInput = {
+    where: PlayerDemonShopScalarWhereInput
+    data: XOR<PlayerDemonShopUpdateManyMutationInput, PlayerDemonShopUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type PlayerDemonShopScalarWhereInput = {
+    AND?: PlayerDemonShopScalarWhereInput | PlayerDemonShopScalarWhereInput[]
+    OR?: PlayerDemonShopScalarWhereInput[]
+    NOT?: PlayerDemonShopScalarWhereInput | PlayerDemonShopScalarWhereInput[]
+    id?: IntFilter<"PlayerDemonShop"> | number
+    raceId?: IntFilter<"PlayerDemonShop"> | number
+    display?: StringFilter<"PlayerDemonShop"> | string
+    nextUpElementId?: IntFilter<"PlayerDemonShop"> | number
+    nextUpAltElementId?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpFire?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWood?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpWater?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpLightning?: IntFilter<"PlayerDemonShop"> | number
+    nbrUpAir?: IntFilter<"PlayerDemonShop"> | number
+    seed?: StringFilter<"PlayerDemonShop"> | string
+    playerId?: UuidNullableFilter<"PlayerDemonShop"> | string | null
+  }
+
   export type PlayerGatherUpsertWithWhereUniqueWithoutPlayerInput = {
     where: PlayerGatherWhereUniqueInput
     update: XOR<PlayerGatherUpdateWithoutPlayerInput, PlayerGatherUncheckedUpdateWithoutPlayerInput>
@@ -111140,6 +119969,44 @@ export namespace Prisma {
     name?: StringFilter<"DinozBuild"> | string
   }
 
+  export type DungeonRunUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    update: XOR<DungeonRunUpdateWithoutPlayerInput, DungeonRunUncheckedUpdateWithoutPlayerInput>
+    create: XOR<DungeonRunCreateWithoutPlayerInput, DungeonRunUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DungeonRunUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: DungeonRunWhereUniqueInput
+    data: XOR<DungeonRunUpdateWithoutPlayerInput, DungeonRunUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type DungeonRunUpdateManyWithWhereWithoutPlayerInput = {
+    where: DungeonRunScalarWhereInput
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type DungeonRunScalarWhereInput = {
+    AND?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    OR?: DungeonRunScalarWhereInput[]
+    NOT?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+    id?: StringFilter<"DungeonRun"> | string
+    posX?: IntFilter<"DungeonRun"> | number
+    posY?: IntFilter<"DungeonRun"> | number
+    posL?: IntFilter<"DungeonRun"> | number
+    revealed?: StringFilter<"DungeonRun"> | string
+    defeated?: StringFilter<"DungeonRun"> | string
+    keys?: StringFilter<"DungeonRun"> | string
+    opened?: StringFilter<"DungeonRun"> | string
+    scenarios?: StringFilter<"DungeonRun"> | string
+    gold?: StringFilter<"DungeonRun"> | string
+    healed?: StringFilter<"DungeonRun"> | string
+    healPending?: StringNullableFilter<"DungeonRun"> | string | null
+    createdAt?: DateTimeFilter<"DungeonRun"> | Date | string
+    playerId?: UuidFilter<"DungeonRun"> | string
+    dungeonId?: UuidFilter<"DungeonRun"> | string
+    leaderId?: IntNullableFilter<"DungeonRun"> | number | null
+  }
+
   export type PlayerCreateWithoutIpsInput = {
     customText?: string | null
     name: string
@@ -111165,11 +120032,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -111193,6 +120062,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -111208,6 +120078,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIpsInput = {
@@ -111236,12 +120107,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -111263,6 +120136,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -111278,6 +120152,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIpsInput = {
@@ -111321,11 +120196,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -111349,6 +120226,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -111364,6 +120242,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIpsInput = {
@@ -111392,12 +120271,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -111419,6 +120300,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111434,6 +120316,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDojoInput = {
@@ -111461,11 +120344,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -111489,6 +120374,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -111504,6 +120390,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -111532,12 +120419,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -111559,6 +120448,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -111574,6 +120464,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -111718,11 +120609,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -111746,6 +120639,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -111761,6 +120655,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -111789,12 +120684,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -111816,6 +120713,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -111831,6 +120729,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -111980,10 +120879,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -112032,10 +120933,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -112128,10 +121031,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -112180,10 +121085,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -112254,10 +121161,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -112306,10 +121215,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -112402,10 +121313,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -112454,10 +121367,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -112563,11 +121478,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -112590,6 +121507,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -112606,6 +121524,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -112634,12 +121553,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -112660,6 +121581,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -112676,6 +121598,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -112719,11 +121642,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -112746,6 +121671,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -112762,6 +121688,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -112790,12 +121717,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -112816,6 +121745,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -112832,6 +121762,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -112859,11 +121790,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -112886,6 +121819,7 @@ export namespace Prisma {
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -112902,6 +121836,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -112930,12 +121865,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -112956,6 +121893,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -112972,6 +121910,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -113015,11 +121954,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -113042,6 +121983,7 @@ export namespace Prisma {
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -113058,6 +122000,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -113086,12 +122029,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -113112,6 +122057,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113128,6 +122074,563 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DemonSkillCreateWithoutDinozInput = {
+    skillId: number
+  }
+
+  export type DemonSkillUncheckedCreateWithoutDinozInput = {
+    id?: number
+    skillId: number
+  }
+
+  export type DemonSkillCreateOrConnectWithoutDinozInput = {
+    where: DemonSkillWhereUniqueInput
+    create: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DemonSkillCreateManyDinozInputEnvelope = {
+    data: DemonSkillCreateManyDinozInput | DemonSkillCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DemonSkillUnlockableCreateWithoutDinozInput = {
+    skillId: number
+  }
+
+  export type DemonSkillUnlockableUncheckedCreateWithoutDinozInput = {
+    id?: number
+    skillId: number
+  }
+
+  export type DemonSkillUnlockableCreateOrConnectWithoutDinozInput = {
+    where: DemonSkillUnlockableWhereUniqueInput
+    create: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DemonSkillUnlockableCreateManyDinozInputEnvelope = {
+    data: DemonSkillUnlockableCreateManyDinozInput | DemonSkillUnlockableCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerCreateWithoutDemonShopInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    clan?: ClanCreateNestedOneWithoutPlayersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutDemonShopInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutDemonShopInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutDemonShopInput, PlayerUncheckedCreateWithoutDemonShopInput>
+  }
+
+  export type DemonSkillUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DemonSkillWhereUniqueInput
+    update: XOR<DemonSkillUpdateWithoutDinozInput, DemonSkillUncheckedUpdateWithoutDinozInput>
+    create: XOR<DemonSkillCreateWithoutDinozInput, DemonSkillUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DemonSkillUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DemonSkillWhereUniqueInput
+    data: XOR<DemonSkillUpdateWithoutDinozInput, DemonSkillUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DemonSkillUpdateManyWithWhereWithoutDinozInput = {
+    where: DemonSkillScalarWhereInput
+    data: XOR<DemonSkillUpdateManyMutationInput, DemonSkillUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DemonSkillScalarWhereInput = {
+    AND?: DemonSkillScalarWhereInput | DemonSkillScalarWhereInput[]
+    OR?: DemonSkillScalarWhereInput[]
+    NOT?: DemonSkillScalarWhereInput | DemonSkillScalarWhereInput[]
+    id?: IntFilter<"DemonSkill"> | number
+    skillId?: IntFilter<"DemonSkill"> | number
+    dinozId?: IntFilter<"DemonSkill"> | number
+  }
+
+  export type DemonSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DemonSkillUnlockableWhereUniqueInput
+    update: XOR<DemonSkillUnlockableUpdateWithoutDinozInput, DemonSkillUnlockableUncheckedUpdateWithoutDinozInput>
+    create: XOR<DemonSkillUnlockableCreateWithoutDinozInput, DemonSkillUnlockableUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DemonSkillUnlockableUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DemonSkillUnlockableWhereUniqueInput
+    data: XOR<DemonSkillUnlockableUpdateWithoutDinozInput, DemonSkillUnlockableUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DemonSkillUnlockableUpdateManyWithWhereWithoutDinozInput = {
+    where: DemonSkillUnlockableScalarWhereInput
+    data: XOR<DemonSkillUnlockableUpdateManyMutationInput, DemonSkillUnlockableUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DemonSkillUnlockableScalarWhereInput = {
+    AND?: DemonSkillUnlockableScalarWhereInput | DemonSkillUnlockableScalarWhereInput[]
+    OR?: DemonSkillUnlockableScalarWhereInput[]
+    NOT?: DemonSkillUnlockableScalarWhereInput | DemonSkillUnlockableScalarWhereInput[]
+    id?: IntFilter<"DemonSkillUnlockable"> | number
+    skillId?: IntFilter<"DemonSkillUnlockable"> | number
+    dinozId?: IntFilter<"DemonSkillUnlockable"> | number
+  }
+
+  export type PlayerUpsertWithoutDemonShopInput = {
+    update: XOR<PlayerUpdateWithoutDemonShopInput, PlayerUncheckedUpdateWithoutDemonShopInput>
+    create: XOR<PlayerCreateWithoutDemonShopInput, PlayerUncheckedCreateWithoutDemonShopInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutDemonShopInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutDemonShopInput, PlayerUncheckedUpdateWithoutDemonShopInput>
+  }
+
+  export type PlayerUpdateWithoutDemonShopInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneWithoutPlayersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutDemonShopInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerDemonShopCreateWithoutSkillsInput = {
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    unlockableSkills?: DemonSkillUnlockableCreateNestedManyWithoutDinozInput
+    player?: PlayerCreateNestedOneWithoutDemonShopInput
+  }
+
+  export type PlayerDemonShopUncheckedCreateWithoutSkillsInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    playerId?: string | null
+    unlockableSkills?: DemonSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type PlayerDemonShopCreateOrConnectWithoutSkillsInput = {
+    where: PlayerDemonShopWhereUniqueInput
+    create: XOR<PlayerDemonShopCreateWithoutSkillsInput, PlayerDemonShopUncheckedCreateWithoutSkillsInput>
+  }
+
+  export type PlayerDemonShopUpsertWithoutSkillsInput = {
+    update: XOR<PlayerDemonShopUpdateWithoutSkillsInput, PlayerDemonShopUncheckedUpdateWithoutSkillsInput>
+    create: XOR<PlayerDemonShopCreateWithoutSkillsInput, PlayerDemonShopUncheckedCreateWithoutSkillsInput>
+    where?: PlayerDemonShopWhereInput
+  }
+
+  export type PlayerDemonShopUpdateToOneWithWhereWithoutSkillsInput = {
+    where?: PlayerDemonShopWhereInput
+    data: XOR<PlayerDemonShopUpdateWithoutSkillsInput, PlayerDemonShopUncheckedUpdateWithoutSkillsInput>
+  }
+
+  export type PlayerDemonShopUpdateWithoutSkillsInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    unlockableSkills?: DemonSkillUnlockableUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneWithoutDemonShopNestedInput
+  }
+
+  export type PlayerDemonShopUncheckedUpdateWithoutSkillsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    unlockableSkills?: DemonSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type PlayerDemonShopCreateWithoutUnlockableSkillsInput = {
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    skills?: DemonSkillCreateNestedManyWithoutDinozInput
+    player?: PlayerCreateNestedOneWithoutDemonShopInput
+  }
+
+  export type PlayerDemonShopUncheckedCreateWithoutUnlockableSkillsInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    playerId?: string | null
+    skills?: DemonSkillUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type PlayerDemonShopCreateOrConnectWithoutUnlockableSkillsInput = {
+    where: PlayerDemonShopWhereUniqueInput
+    create: XOR<PlayerDemonShopCreateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedCreateWithoutUnlockableSkillsInput>
+  }
+
+  export type PlayerDemonShopUpsertWithoutUnlockableSkillsInput = {
+    update: XOR<PlayerDemonShopUpdateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedUpdateWithoutUnlockableSkillsInput>
+    create: XOR<PlayerDemonShopCreateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedCreateWithoutUnlockableSkillsInput>
+    where?: PlayerDemonShopWhereInput
+  }
+
+  export type PlayerDemonShopUpdateToOneWithWhereWithoutUnlockableSkillsInput = {
+    where?: PlayerDemonShopWhereInput
+    data: XOR<PlayerDemonShopUpdateWithoutUnlockableSkillsInput, PlayerDemonShopUncheckedUpdateWithoutUnlockableSkillsInput>
+  }
+
+  export type PlayerDemonShopUpdateWithoutUnlockableSkillsInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    skills?: DemonSkillUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneWithoutDemonShopNestedInput
+  }
+
+  export type PlayerDemonShopUncheckedUpdateWithoutUnlockableSkillsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: DemonSkillUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -113155,11 +122658,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -113183,6 +122688,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
@@ -113198,6 +122704,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -113226,12 +122733,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -113253,6 +122762,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
@@ -113268,6 +122778,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -113311,11 +122822,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -113339,6 +122852,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
@@ -113354,6 +122868,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -113382,12 +122897,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -113409,6 +122926,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113424,6 +122942,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -113451,11 +122970,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -113479,6 +123000,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
@@ -113494,6 +123016,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -113522,12 +123045,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -113549,6 +123074,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
@@ -113564,6 +123090,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -113607,11 +123134,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -113635,6 +123164,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
@@ -113650,6 +123180,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -113678,12 +123209,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -113705,6 +123238,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
@@ -113720,6 +123254,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -113747,11 +123282,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -113775,6 +123312,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
@@ -113790,6 +123328,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -113818,12 +123357,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -113845,6 +123386,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
@@ -113860,6 +123402,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -113903,11 +123446,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -113931,6 +123476,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
@@ -113946,6 +123492,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -113974,12 +123521,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -114001,6 +123550,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114016,6 +123566,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -114043,11 +123594,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -114071,6 +123624,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -114086,6 +123640,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -114114,12 +123669,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -114141,6 +123698,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -114156,6 +123714,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -114199,11 +123758,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -114227,6 +123788,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -114242,6 +123804,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -114270,12 +123833,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -114297,6 +123862,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114312,6 +123878,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -114339,11 +123906,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -114367,6 +123936,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -114382,6 +123952,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -114410,12 +123981,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -114437,6 +124010,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -114452,6 +124026,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -114495,11 +124070,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -114523,6 +124100,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -114538,6 +124116,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -114566,12 +124145,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -114593,6 +124174,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114608,6 +124190,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -114635,11 +124218,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -114663,6 +124248,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -114678,6 +124264,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -114706,12 +124293,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -114733,6 +124322,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -114748,6 +124338,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -114791,11 +124382,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -114819,6 +124412,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -114834,6 +124428,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -114862,12 +124457,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -114889,6 +124486,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -114904,6 +124502,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -115021,11 +124620,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -115048,6 +124649,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -115064,6 +124666,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -115092,12 +124695,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -115118,6 +124723,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -115134,6 +124740,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -115211,11 +124818,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -115238,6 +124847,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -115254,6 +124864,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -115282,12 +124893,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -115308,6 +124921,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -115324,6 +124938,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -115351,10 +124966,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -115403,10 +125020,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -115453,11 +125072,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -115480,6 +125101,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -115496,6 +125118,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -115524,12 +125147,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -115550,6 +125175,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -115566,6 +125192,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -115655,10 +125282,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -115707,10 +125336,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -115763,11 +125394,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -115790,6 +125423,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -115806,6 +125440,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -115834,12 +125469,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -115860,6 +125497,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -115876,6 +125514,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -115946,10 +125585,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -115998,10 +125639,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -116048,11 +125691,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -116075,6 +125720,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -116091,6 +125737,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -116119,12 +125766,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -116145,6 +125794,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -116161,6 +125811,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -116204,10 +125855,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -116256,10 +125909,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -116312,11 +125967,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -116339,6 +125996,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -116355,6 +126013,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -116383,12 +126042,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -116409,6 +126070,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -116425,6 +126087,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -116452,9 +126115,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -116504,9 +126169,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -116565,9 +126232,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -116617,9 +126286,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -116662,11 +126333,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -116689,6 +126362,7 @@ export namespace Prisma {
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -116705,6 +126379,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -116733,12 +126408,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -116759,6 +126436,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -116775,6 +126453,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -116818,11 +126497,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -116845,6 +126526,7 @@ export namespace Prisma {
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -116861,6 +126543,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -116889,12 +126572,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -116915,6 +126600,7 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -116931,6 +126617,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -116958,10 +126645,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -117010,10 +126699,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -117060,11 +126751,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -117087,6 +126780,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -117103,6 +126797,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -117131,12 +126826,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -117157,6 +126854,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -117173,6 +126871,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -117216,10 +126915,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -117268,10 +126969,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -117324,11 +127027,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -117351,6 +127056,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -117367,6 +127073,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -117395,12 +127102,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -117421,6 +127130,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -117437,6 +127147,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCastleCreateWithoutClanInput = {
@@ -117488,11 +127199,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -117515,6 +127228,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -117531,6 +127245,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -117559,12 +127274,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -117585,6 +127302,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -117601,6 +127319,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -117872,11 +127591,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -117899,6 +127620,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -117915,6 +127637,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanInput = {
@@ -117942,12 +127665,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -117969,6 +127694,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -117985,6 +127711,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanInput = {
@@ -118128,11 +127855,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -118155,6 +127884,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -118171,6 +127901,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -118199,12 +127930,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -118225,6 +127958,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -118241,6 +127975,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -118508,12 +128243,14 @@ export namespace Prisma {
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
+    bypassGatheringGrid?: BoolFilter<"Player"> | boolean
     shareArchivedData?: BoolFilter<"Player"> | boolean
     archivedSiteId?: IntNullableFilter<"Player"> | number | null
     displayedNotifications?: IntFilter<"Player"> | number
     banCaseId?: IntNullableFilter<"Player"> | number | null
     discoveredSkills?: IntNullableListFilter<"Player">
     lastVersionSeen?: StringFilter<"Player"> | string
+    tosAccepted?: BoolFilter<"Player"> | boolean
     id?: UuidFilter<"Player"> | string
   }
 
@@ -118622,9 +128359,11 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -118673,10 +128412,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -118960,11 +128701,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -118987,6 +128730,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -119003,6 +128747,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -119031,12 +128776,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -119057,6 +128804,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -119073,6 +128821,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -119170,11 +128919,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -119197,6 +128948,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -119213,6 +128965,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -119241,12 +128994,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -119267,6 +129022,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -119283,6 +129039,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanEventCreateWithoutClanWarsInput = {
@@ -120021,11 +129778,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -120048,6 +129807,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -120064,6 +129824,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -120092,12 +129853,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -120118,6 +129881,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -120134,6 +129898,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -120225,11 +129990,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -120252,6 +130019,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -120268,6 +130036,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -120296,12 +130065,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -120322,6 +130093,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -120338,6 +130110,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -120419,11 +130192,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -120446,6 +130221,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -120462,6 +130238,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -120490,12 +130267,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
@@ -120516,6 +130295,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -120532,6 +130312,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -120623,11 +130404,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -120650,6 +130433,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -120666,6 +130450,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -120694,12 +130479,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
@@ -120720,6 +130507,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -120736,6 +130524,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -120865,11 +130654,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -120892,6 +130683,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -120908,6 +130700,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -120936,12 +130729,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -120962,6 +130757,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -120978,6 +130774,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -121075,11 +130872,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -121102,6 +130901,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -121118,6 +130918,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -121146,12 +130947,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -121172,6 +130975,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -121188,6 +130992,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -121317,10 +131122,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonCreateNestedManyWithoutDinozInput
@@ -121369,10 +131176,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
@@ -121419,11 +131228,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121446,6 +131257,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -121462,6 +131274,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -121490,12 +131303,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121516,6 +131331,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -121532,6 +131348,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -121564,11 +131381,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121591,6 +131410,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -121607,6 +131427,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -121635,12 +131456,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121661,6 +131484,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -121677,6 +131501,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -121709,11 +131534,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -121736,6 +131563,7 @@ export namespace Prisma {
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -121752,6 +131580,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -121780,11 +131609,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -121806,6 +131637,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -121822,6 +131654,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -121913,10 +131746,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
@@ -121965,10 +131800,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
@@ -122021,11 +131858,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122048,6 +131887,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -122064,6 +131904,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -122092,12 +131933,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122118,6 +131961,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -122134,6 +131978,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -122172,11 +132017,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122199,6 +132046,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -122215,6 +132063,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -122243,12 +132092,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122269,6 +132120,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -122285,6 +132137,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -122323,11 +132176,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122350,6 +132205,7 @@ export namespace Prisma {
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -122366,6 +132222,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -122394,11 +132251,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122420,6 +132279,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -122436,6 +132296,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutTargetedCasesInput = {
@@ -122517,11 +132378,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -122544,6 +132407,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -122560,6 +132424,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -122588,12 +132453,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -122614,6 +132481,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -122630,6 +132498,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -122684,11 +132553,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -122711,6 +132582,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -122727,6 +132599,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -122755,12 +132628,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -122781,6 +132656,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -122797,6 +132673,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -122890,11 +132767,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -122917,6 +132796,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -122933,6 +132813,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -122961,12 +132842,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -122987,6 +132870,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -123003,6 +132887,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -123069,11 +132954,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123096,6 +132983,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -123112,6 +133000,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -123140,12 +133029,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123166,6 +133057,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -123182,6 +133074,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -123270,11 +133163,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -123297,6 +133192,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -123313,6 +133209,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -123341,12 +133238,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123367,6 +133266,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -123383,6 +133283,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -123461,11 +133362,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123488,6 +133391,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -123504,6 +133408,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -123532,12 +133437,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123558,6 +133465,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -123574,6 +133482,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -123659,11 +133568,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -123686,6 +133597,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -123702,6 +133614,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -123730,12 +133643,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -123756,6 +133671,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -123772,6 +133688,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -123885,11 +133802,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -123912,6 +133831,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -123928,6 +133848,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -123956,12 +133877,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -123982,6 +133905,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -123998,6 +133922,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -124025,11 +133950,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124052,6 +133979,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -124068,6 +133996,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -124096,12 +134025,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124122,6 +134053,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -124138,6 +134070,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -124181,11 +134114,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -124208,6 +134143,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -124224,6 +134160,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -124252,12 +134189,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -124278,6 +134217,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -124294,6 +134234,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -124321,11 +134262,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124349,6 +134292,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -124364,6 +134308,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -124392,12 +134337,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124419,6 +134366,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -124434,6 +134382,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -124466,11 +134415,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124494,6 +134445,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -124509,6 +134461,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeftFightArchivesInput = {
@@ -124537,12 +134490,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124564,6 +134519,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -124579,6 +134535,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeftFightArchivesInput = {
@@ -124611,11 +134568,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -124639,6 +134598,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -124654,6 +134614,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRightFightArchivesInput = {
@@ -124682,12 +134643,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -124709,6 +134672,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -124724,6 +134688,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRightFightArchivesInput = {
@@ -124840,6 +134805,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -124851,6 +134817,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -125027,11 +134994,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -125055,6 +135024,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -125070,6 +135040,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -125098,12 +135069,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -125125,6 +135098,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -125140,6 +135114,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutLeftFightArchivesInput = {
@@ -125178,11 +135153,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -125206,6 +135183,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -125221,6 +135199,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeftFightArchivesInput = {
@@ -125249,12 +135228,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -125276,6 +135257,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -125291,6 +135273,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutRightFightArchivesInput = {
@@ -125329,11 +135312,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -125357,6 +135342,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -125372,6 +135358,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRightFightArchivesInput = {
@@ -125400,12 +135387,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -125427,6 +135416,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -125442,6 +135432,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -125576,6 +135567,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -125587,6 +135579,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -125806,11 +135799,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -125834,6 +135829,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -125849,6 +135845,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -125877,12 +135874,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -125904,6 +135903,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -125919,6 +135919,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -126015,11 +136016,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -126043,6 +136046,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -126058,6 +136062,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -126086,12 +136091,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -126113,6 +136120,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -126128,6 +136136,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -126298,10 +136307,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     castle?: ClanCastleCreateNestedOneWithoutDefenderInput
     build?: DinozBuildCreateNestedOneWithoutDinozsInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -126350,10 +136361,12 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -126812,11 +136825,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -126840,6 +136855,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -126855,6 +136871,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGameDinozInput = {
@@ -126883,12 +136900,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -126910,6 +136929,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -126925,6 +136945,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGameDinozInput = {
@@ -127044,6 +137065,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -127055,6 +137077,7 @@ export namespace Prisma {
     id?: string
     date?: Date | string
     teamRace: string
+    demon?: boolean
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
@@ -127207,11 +137230,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -127235,6 +137260,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -127250,6 +137276,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGameDinozInput = {
@@ -127278,12 +137305,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -127305,6 +137334,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -127320,6 +137350,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
@@ -127417,6 +137448,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -127428,6 +137460,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     teamRace?: StringFieldUpdateOperationsInput | string
+    demon?: BoolFieldUpdateOperationsInput | boolean
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -127492,11 +137525,13 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     clan?: ClanCreateNestedOneWithoutPlayersInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -127520,6 +137555,7 @@ export namespace Prisma {
     banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
@@ -127535,6 +137571,7 @@ export namespace Prisma {
     ips?: PlayerIpCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutEventsInput = {
@@ -127563,12 +137600,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -127590,6 +137629,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
@@ -127605,6 +137645,7 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutEventsInput = {
@@ -127648,11 +137689,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     clan?: ClanUpdateOneWithoutPlayersNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -127676,6 +137719,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -127691,6 +137735,7 @@ export namespace Prisma {
     ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutEventsInput = {
@@ -127719,12 +137764,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -127746,6 +137793,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -127761,6 +137809,687 @@ export namespace Prisma {
     ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerCreateWithoutDungeonRunsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    clan?: ClanCreateNestedOneWithoutPlayersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutDungeonRunsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutDungeonRunsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonCreateWithoutDungeonRunsInput = {
+    id?: string
+    name?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level?: number
+    monsters?: string
+    scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    fightBackgrounds?: string
+    isActive?: boolean
+  }
+
+  export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
+    id?: string
+    name?: string
+    cipher: Uint8Array
+    iv: Uint8Array
+    tag: Uint8Array
+    type: $Enums.DungeonType
+    level?: number
+    monsters?: string
+    scenarios?: string
+    placeStart?: number | null
+    placeEnd?: number | null
+    condition?: string
+    monsterPool?: string
+    fightBackgrounds?: string
+    isActive?: boolean
+  }
+
+  export type DungeonCreateOrConnectWithoutDungeonRunsInput = {
+    where: DungeonWhereUniqueInput
+    create: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+  }
+
+  export type DinozCreateWithoutDungeonRunInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
+    seed?: string
+    castle?: ClanCastleCreateNestedOneWithoutDefenderInput
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutDungeonRunInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    castleId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
+    seed?: string
+    playerId: string
+    buildId?: string | null
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutDungeonRunInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutDungeonRunInput, DinozUncheckedCreateWithoutDungeonRunInput>
+  }
+
+  export type PlayerUpsertWithoutDungeonRunsInput = {
+    update: XOR<PlayerUpdateWithoutDungeonRunsInput, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+    create: XOR<PlayerCreateWithoutDungeonRunsInput, PlayerUncheckedCreateWithoutDungeonRunsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutDungeonRunsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutDungeonRunsInput, PlayerUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type PlayerUpdateWithoutDungeonRunsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneWithoutPlayersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutDungeonRunsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DungeonUpsertWithoutDungeonRunsInput = {
+    update: XOR<DungeonUpdateWithoutDungeonRunsInput, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+    create: XOR<DungeonCreateWithoutDungeonRunsInput, DungeonUncheckedCreateWithoutDungeonRunsInput>
+    where?: DungeonWhereInput
+  }
+
+  export type DungeonUpdateToOneWithWhereWithoutDungeonRunsInput = {
+    where?: DungeonWhereInput
+    data: XOR<DungeonUpdateWithoutDungeonRunsInput, DungeonUncheckedUpdateWithoutDungeonRunsInput>
+  }
+
+  export type DungeonUpdateWithoutDungeonRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
+    iv?: BytesFieldUpdateOperationsInput | Uint8Array
+    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
+    level?: IntFieldUpdateOperationsInput | number
+    monsters?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    placeStart?: NullableIntFieldUpdateOperationsInput | number | null
+    placeEnd?: NullableIntFieldUpdateOperationsInput | number | null
+    condition?: StringFieldUpdateOperationsInput | string
+    monsterPool?: StringFieldUpdateOperationsInput | string
+    fightBackgrounds?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DinozUpsertWithoutDungeonRunInput = {
+    update: XOR<DinozUpdateWithoutDungeonRunInput, DinozUncheckedUpdateWithoutDungeonRunInput>
+    create: XOR<DinozCreateWithoutDungeonRunInput, DinozUncheckedCreateWithoutDungeonRunInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutDungeonRunInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutDungeonRunInput, DinozUncheckedUpdateWithoutDungeonRunInput>
+  }
+
+  export type DinozUpdateWithoutDungeonRunInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seed?: StringFieldUpdateOperationsInput | string
+    castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutDungeonRunInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    castleId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DungeonRunCreateWithoutDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutDungeonRunsInput
+    leader?: DinozCreateNestedOneWithoutDungeonRunInput
+  }
+
+  export type DungeonRunUncheckedCreateWithoutDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    playerId: string
+    leaderId?: number | null
+  }
+
+  export type DungeonRunCreateOrConnectWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    create: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput>
+  }
+
+  export type DungeonRunCreateManyDungeonInputEnvelope = {
+    data: DungeonRunCreateManyDungeonInput | DungeonRunCreateManyDungeonInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DungeonRunUpsertWithWhereUniqueWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    update: XOR<DungeonRunUpdateWithoutDungeonInput, DungeonRunUncheckedUpdateWithoutDungeonInput>
+    create: XOR<DungeonRunCreateWithoutDungeonInput, DungeonRunUncheckedCreateWithoutDungeonInput>
+  }
+
+  export type DungeonRunUpdateWithWhereUniqueWithoutDungeonInput = {
+    where: DungeonRunWhereUniqueInput
+    data: XOR<DungeonRunUpdateWithoutDungeonInput, DungeonRunUncheckedUpdateWithoutDungeonInput>
+  }
+
+  export type DungeonRunUpdateManyWithWhereWithoutDungeonInput = {
+    where: DungeonRunScalarWhereInput
+    data: XOR<DungeonRunUpdateManyMutationInput, DungeonRunUncheckedUpdateManyWithoutDungeonInput>
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -127791,6 +138520,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
@@ -127821,10 +138551,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -127872,10 +138604,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -127921,6 +138655,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -128001,6 +138736,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
@@ -128230,10 +138966,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -128281,10 +139019,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -128330,6 +139070,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -128578,6 +139319,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
   }
@@ -128607,9 +139349,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -128659,9 +139403,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -128708,6 +139454,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
   }
@@ -128969,6 +139716,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     buildId?: string | null
   }
@@ -128983,6 +139731,20 @@ export namespace Prisma {
     id?: number
     raceId: number
     display: string
+  }
+
+  export type PlayerDemonShopCreateManyPlayerInput = {
+    id?: number
+    raceId: number
+    display: string
+    nextUpElementId: number
+    nextUpAltElementId: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
   }
 
   export type PlayerGatherCreateManyPlayerInput = {
@@ -129128,6 +139890,24 @@ export namespace Prisma {
     skills?: DinozBuildCreateskillsInput | number[]
     shareable?: boolean
     name: string
+  }
+
+  export type DungeonRunCreateManyPlayerInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    dungeonId: string
+    leaderId?: number | null
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -129537,10 +140317,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -129589,9 +140371,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -129638,6 +140422,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -129674,6 +140459,51 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     raceId?: IntFieldUpdateOperationsInput | number
     display?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerDemonShopUpdateWithoutPlayerInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    skills?: DemonSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DemonSkillUnlockableUpdateManyWithoutDinozNestedInput
+  }
+
+  export type PlayerDemonShopUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    skills?: DemonSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DemonSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type PlayerDemonShopUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
   }
 
   export type PlayerGatherUpdateWithoutPlayerInput = {
@@ -130125,6 +140955,60 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type DungeonRunUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeon?: DungeonUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dungeonId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type DojoTeamCreateManyDojoInput = {
     id?: string
     dinozId: number
@@ -130215,6 +141099,44 @@ export namespace Prisma {
     dinozId?: IntFieldUpdateOperationsInput | number
     fighted?: BoolFieldUpdateOperationsInput | boolean
     achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DemonSkillCreateManyDinozInput = {
+    id?: number
+    skillId: number
+  }
+
+  export type DemonSkillUnlockableCreateManyDinozInput = {
+    id?: number
+    skillId: number
+  }
+
+  export type DemonSkillUpdateWithoutDinozInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableUpdateWithoutDinozInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DemonSkillUnlockableUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
   }
 
   export type OfferBidCreateManyOfferInput = {
@@ -130374,12 +141296,14 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
     shareArchivedData?: boolean
     archivedSiteId?: number | null
     displayedNotifications?: number
     banCaseId?: number | null
     discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     lastVersionSeen?: string
+    tosAccepted?: boolean
     id: string
   }
 
@@ -130657,11 +141581,13 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -130684,6 +141610,7 @@ export namespace Prisma {
     banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
@@ -130700,6 +141627,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanInput = {
@@ -130727,12 +141655,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -130754,6 +141684,7 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
@@ -130770,6 +141701,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateManyWithoutClanInput = {
@@ -130797,12 +141729,14 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
     shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
     archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
     displayedNotifications?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
   }
 
@@ -130901,6 +141835,7 @@ export namespace Prisma {
     remaining?: number
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
     seed?: string
     playerId: string
     buildId?: string | null
@@ -130941,9 +141876,11 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -130992,10 +141929,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -131041,6 +141980,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -131429,10 +142369,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
     build?: DinozBuildUpdateOneWithoutDinozsNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -131481,10 +142423,12 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -131530,6 +142474,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     buildId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -132126,6 +143071,78 @@ export namespace Prisma {
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonRunCreateManyDungeonInput = {
+    id?: string
+    posX: number
+    posY: number
+    posL: number
+    revealed?: string
+    defeated?: string
+    keys?: string
+    opened?: string
+    scenarios?: string
+    gold?: string
+    healed?: string
+    healPending?: string | null
+    createdAt?: Date | string
+    playerId: string
+    leaderId?: number | null
+  }
+
+  export type DungeonRunUpdateWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutDungeonRunsNestedInput
+    leader?: DinozUpdateOneWithoutDungeonRunNestedInput
+  }
+
+  export type DungeonRunUncheckedUpdateWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DungeonRunUncheckedUpdateManyWithoutDungeonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    posX?: IntFieldUpdateOperationsInput | number
+    posY?: IntFieldUpdateOperationsInput | number
+    posL?: IntFieldUpdateOperationsInput | number
+    revealed?: StringFieldUpdateOperationsInput | string
+    defeated?: StringFieldUpdateOperationsInput | string
+    keys?: StringFieldUpdateOperationsInput | string
+    opened?: StringFieldUpdateOperationsInput | string
+    scenarios?: StringFieldUpdateOperationsInput | string
+    gold?: StringFieldUpdateOperationsInput | string
+    healed?: StringFieldUpdateOperationsInput | string
+    healPending?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

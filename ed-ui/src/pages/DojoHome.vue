@@ -23,7 +23,7 @@
 					}"
 				>
 					<img
-						:src="getImgURL('icons', 'act_tournoi')"
+						:src="getImgURL('icons', 'act_tournament')"
 						v-tippy="{
 							content: formatContent($t('dojo.tournaments')),
 							theme: 'small'

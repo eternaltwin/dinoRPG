@@ -85,6 +85,7 @@
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau",
 			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
+			"bypassGatheringGrid": "Passer la grille de collecte",
 			"archivedSiteId": "Site historique",
 			"shareArchivedData": "Partager ses stats Twinoid",
 			"displayedNotifications": "Nombre de notifications affichées simultanément",
@@ -150,6 +151,7 @@
 		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
 		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées.",
+		"gatherAlertError": "Erreur lors de la collecte automatique.",
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
 		"notEnoughDinozSelected": "Vous n'avez pas sélectionné suffisamment de Dinoz",
@@ -257,7 +259,10 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
-			"war_attack": "Attaquer le château adverse."
+			"war_attack": "Attaquer le château adverse.",
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"dungeon": "Voir l'évolution de l'exploration actuelle...",
+			"demon_shop": "ATTENTION ! DANGER !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -293,7 +298,10 @@
 			"fb_tournament": "Tournoi",
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
-			"war_attack": "Attaquer le château"
+			"war_attack": "Attaquer le château",
+			"dungeon_enter": "Entrer",
+			"dungeon": "Accéder au Plan",
+			"demon_shop": "Boutique Démoniaque"
 		}
 	},
 	"button": {
@@ -311,7 +319,9 @@
 		"close": "Fermer",
 		"search": "Rechercher",
 		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"noResults": "Aucun résultat",
+		"details": "Détails",
+		"return": "Retour"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -560,7 +570,7 @@
 			"surviving_ration": "En cas de blessures graves, la ration de survie peut vous rendre **entre 10 et 40 points de vie** lors d'un combat.",
 			"goblin_merguez": "La spécialité du Grand-Tout-Chaud. À consommer avec beaucoup de modération !",
 			"pampleboum": "Ce beau fruit appétissant n'attend qu'un grand coup de dent pour vous rendre 15 points de vie.",
-			"sos_helmet": "Augmente l'armure de votre Dinoz de 5% quand il est utilisé.",
+			"sos_helmet": "Donne le statut **Bouclier** pour une durée moyenne.",
 			"little_pepper": "Augmente de 10 points le prochain assaut de votre Dinoz.",
 			"zippo": "Votre Dinoz s'enflamme !",
 			"sos_flame": "Rien de tel qu'une Flammèche de Secours pour venir vous aider pendant un combat.",
@@ -1029,9 +1039,9 @@
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
 				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacune de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroirs. J'ai décidé d'appeler ça un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheureusement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
-				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre que racine...*"
+				"pac_go": "Es-tu fou !?!?!?!?!?!&&File d'ici et ne t'avise plus de me parler de ce parchemin !",
+				"pac_scroll": "Ah, euh... Félicitations d'avoir créé cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement plutôt opté pour arbre au lieu de meuble...*"
 			},
 			"playerChoice": {
 				"talk": "Parler au Professeur Eugène",
@@ -1178,7 +1188,7 @@
 				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Éleveur ?",
 				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on organise des rallyes tout autour de Dinoland !",
 				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
-				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrais alors répondre à ton vœu le plus cher.",
+				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrai alors répondre à ton vœu le plus cher.",
 				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. Cela veut dire que tu devrais être capable de survivre... là-bas... peut-être...",
 				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi être des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
 				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sache que tu y trouveras une clé, oui, LA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis bien entendu.",
@@ -1227,7 +1237,7 @@
 				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
 				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
 				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*.",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
+				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sûr mais je ne sais pas à quoi ça pourrait te servir.&& &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
 				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
 			},
 			"playerChoice": {
@@ -1324,8 +1334,8 @@
 				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
 				"accept": "Marché conclu...",
 				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tous ces poissons qu'on a l'habitude de s'envoyer ?",
-				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô !",
-				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rends ta racine, j'en avais déjà une vieille à utiliser."
+				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheux était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&&Aller, Tchôôôôô !",
+				"pac_root": "Uhmm... ? Déjà ?... Bah... J'vais te le faire...&&//Waka waka ouais ouais!//&&Et voilà !&&Bon par contre le charme a bien séché la racine, bon courage pour en faire quoi que ce soit. Tiens, je te rends ta racine, j'en avais déjà une vieille à utiliser."
 			},
 			"playerChoice": {
 				"vener": "Le Vénérable...",
@@ -1716,7 +1726,6 @@
 				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeler les détails...",
 				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ça va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
 				"accept": "OH OH OH OH OH !! Alors, s'il te plaît Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
-				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
 				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!",
 				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
 				"begin_memory": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
@@ -1799,6 +1808,20 @@
 		}
 	},
 	"shop": {
+		"demon": {
+			"name": "Boutique Démoniaque",
+			"sacrifice_help": "Bienvenue dans la Boutique Démoniaque ! Ici vous pouvez **sacrifier** vos Dinoz présents au cimetière en échange de **Tickets Démons** :demon_tk:. Le nombre de tickets obtenus dépends du niveau du Dinoz. Un Dinoz sacrifié n'est plus jouable ni visible. && Pour consulter la liste des Dinoz Démons, il vous faut un minimum de 30 :demon_tk:.",
+			"buy_help": "En échange de **Tickets Démons** :demon_tk:, vous pouvez invoquer un Dinoz démon. Celui-ci est déjà adulte et possède déjà des compétences.",
+			"unsacrifice_help": "Vous pouvez ressusciter un Dinoz sacrifié pour le même nombre de tickets obtenus lors de son sacrifice. Le rituel de résurrection dure 24 heures.",
+			"level": "Niv. {level}",
+			"sacrifice": "Sacrifier",
+			"sacrifice_toast": "Vous avez sacrifié votre Dinoz en offrande et obtenu {tickets} :demon_tk:.",
+			"sacrifice_title": "Sacrifice",
+			"buy_title": "Invocation",
+			"unsacrifice_title": "Résurrection",
+			"unsacrifice_toast": "Votre Dinoz va être ressuscité et sera disponible dans 24 heures.",
+			"yourDemonTickets": "Vos Tickets Démons"
+		},
 		"dinoz": {
 			"header": "Enclos des Dinoz",
 			"help": "Bienvenue dans l'Enclos des Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
@@ -2210,7 +2233,7 @@
 			"Carapace": "Augmente l'armure de 5%",
 			"Sauvagerie": "Augmente la puissance des **assauts** de Bois de 5",
 			"Endurance": "Augmente la défense Bois de 2",
-			"Vignes": "Diminue l'initiative d'un ennemi au sol de 15",
+			"Vignes": "Diminue l'initiative d'un ennemi au sol avec un pouvoir Bois de 2",
 			"RenfortsKorgon": "Appelle un korgon pour aider à combattre",
 			"Sympathique": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
 			"Croissance": "Augmente la puissance de tous les **assauts** de 1 et augmente le maximum de points de vie de 20",
@@ -2269,13 +2292,13 @@
 			"BouleDeFeu": "Attaque un ennemi avec un pouvoir de Feu 7",
 			"Combustion": "Tous les ennemis perdent des points de vie égaux à leur élément Bois (soumis équilibrage)",
 			"ChasseurDeDragon": "Permet au Dinoz de chasser des animaux très rares et dangereux dans certains lieux",
-			"Torche": "Le Dinoz s'enflamme et perd 1 PV par tour. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
+			"Torche": "Le Dinoz commence le combat avec le status Enflammé et perd 1 PV par cycle. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
 			"AuraIncandescente": "Augmente l'élément Feu de 2",
 			"Vengeance": "Augmente les chances de contre-attaque de 5%",
 			"Sieste": "Le Dinoz regagne jusqu'à 20 points de vie et s'endort",
 			"Meteores": "Attaque tous les ennemis avec un pouvoir de Feu 10",
-			"SelfControl": "Immunise le Dinoz contre tous les effets négatifs et diminue son initiative de 3",
-			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6, le maximum de vie de 50 et la vitesse de 15%",
+			"SelfControl": "Immunise le Dinoz contre tous les statuts négatifs et diminue son initiative de 3",
+			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6 et le maximum de vie de 50. Diminue également l'initiative de **tous** les autres combattants avec un pouvoir Feu de 2.",
 			"Planificateur": "Permet au Dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des **assauts** Bois de 12 et l'armure de 10%",
 			"PrintempsPrecoce": "Tous les autres combattants alliés regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
@@ -2297,7 +2320,7 @@
 			"DoucheEcossaise": "Attaque tous les ennemis avec un pouvoir Eau de 2",
 			"ZeroAbsolu": "Augmente la défense contre le Feu de 25",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne, il ne peut plus agir mais son armure augmente de 50%",
-			"Acupuncture": "Confère le statut soin (soigne 1 PV par cycle), les assaillants en mêlée subissent 1 point de dégât.",
+			"Acupuncture": "Confère le statut **Régénération**, les assaillants en mêlée subissent 1 point de dégât.",
 			"Sapeur": "Augmente la probabilité d'utilisation des équipements de 50%",
 			"RayonKaarSher": "Attaque tous les ennemis avec un pouvoir Eau de 7",
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
@@ -2321,10 +2344,10 @@
 			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos",
 			"PremiersSoins": "Permet au Dinoz de récupérer un point de vie à la fin du combat s'il a perdu de la vie",
 			"PureeSalvatrice": "Annule tous les effets négatifs du groupe",
-			"AuraHermetique": "Le Dinoz se donne le statut bouclier (augmente l'armure de 20%)",
+			"AuraHermetique": "Le Dinoz se donne le statut **Bouclier** pour une durée longue",
 			"CrepusculeFlambloyant": "Attaque tous les ennemis avec un pouvoir Feu 6 + Foudre 6",
 			"AubeFeuillue": "Régénère les PV de tous les Dinoz du groupe jusqu'à Foudre 2 + Bois 2",
-			"Benediction": "Donne le statut béni (augmente la puissance de tous les assauts de 3) à tous les Dinoz du groupe pour une durée moyenne.",
+			"Benediction": "Donne le statut **Béni** à tous les Dinoz du groupe pour une durée moyenne.",
 			"ArchangeCorrosif": "Augmente l'élément Feu de 2 et l'élément Foudre de 1",
 			"ArchangeGenesif": "Augmente l'élément Bois de 2 et l'élément Foudre de 1",
 			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz (non cumulable)",
@@ -2360,7 +2383,7 @@
 			"MeditationSolitaire": "Augmente la défense Air de 3, diminue la vitesse des attaques Air de 50%",
 			"MeditationTranscendantale": "Augmente la défense Air de 6, diminue la vitesse des attaques Air de 50%",
 			"SouffleDeVie": "Le Dinoz est immunisé au poison et aux malédictions",
-			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible pour une durée infinie",
+			"FormeEtherale": "Le Dinoz apparaît avec le statut Intangible pour une durée infinie",
 			"Brasero": "Attaque tous les ennemis avec un pouvoir Feu de 3",
 			"Detonation": "Le Dinoz perd 5 PV et gagne 15 d'initiative",
 			"CoeurDuPhenix": "Augmente le nombre de PV récupérés lors du repos de 15%",
@@ -2419,7 +2442,7 @@
 			"Bleu": "Augmente la puissance de tous les **assauts** de 20 lorsque le Dinoz est aux Îles Atlantéinées",
 			"MueAcqueuse": "Augmente la défense contre la Foudre de 20",
 			"CarapaceBlindee": "Augmente l'armure de 50%, réduit la vitesse de 20%",
-			"DieteChromatique": "Inflige le statut mono-élément à un ennemi (verrouille son élément actuel)",
+			"DieteChromatique": "Donne le statut Verrouillé à un ennemi (verrouille son élément actuel)",
 			"EffluveAphrodisiaque": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
 			"Nemo": "Le Dinoz peut pêcher dans une case supplémentaire",
 			"Cleptomane": "Empêche un des Dinoz adverses d'utiliser des objets non magiques pendant le combat. Se lance au début du combat.",
@@ -2537,7 +2560,7 @@
 			"49": "Morceau d’Orbe Sombre",
 			"53": "Goutte d’éther",
 			"56": "Potion Anti-sedh",
-			"41": "Réincarnation",
+			"41": "Réincarné",
 			"42": "Renaissance",
 			"57": "Souvenir de Skully",
 			"48": "Clé de Sylvenoire",
@@ -2658,6 +2681,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
+		"demon": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
@@ -2683,7 +2707,8 @@
 		"admin": "DinoRPG [ Admin Dashboard ]",
 		"event": "DinoRPG [ Événements ]",
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]"
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"terms": "DinoRPG [ Conditions d'utilisation ]"
 	},
 	"gather": {
 		"action": {
@@ -2719,7 +2744,7 @@
 		"header": "Liste des Missions",
 		"headers": {
 			"title": "Titre",
-			"status": "Statut"
+			"status": "Statut | Statuts"
 		},
 		"xp": "points d'expérience",
 		"gold": "pièces",
@@ -3554,8 +3579,7 @@
 			"title": "Options du compte",
 			"fight": "Afficher les combats",
 			"todo": "Non disponible",
-			"reset": "Supprimer le compte",
-			"retour": "Retour"
+			"reset": "Supprimer le compte"
 		},
 		"twinoidgoals": {
 			"name": "Statistiques DinoRPG",
@@ -4384,7 +4408,8 @@
 			"pteroz": "Pteroz",
 			"hippo": "Hippoclamp | Hippoclamp | Hippoclamps",
 			"rocky": "Rocky | Rocky | Rockys",
-			"pira": "Pirhanoz",
+			"pirhaloz": "Pirhaloz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Anguilloz",
 			"korgon": "Korgon | Korgon | Korgons",
@@ -4412,21 +4437,21 @@
 			"swampmf2": "Brumoz"
 		},
 		"status": {
-			"asleep": "endormi",
-			"slowed": "ralenti",
-			"petrified": "pétrifié",
-			"poisoned": "empoisonné",
-			"burned": "brûlé",
-			"locked": "verrouillé",
-			"dazzled": "ébloui",
-			"stunned": "étourdi",
-			"torched": "torche",
-			"intangible": "intangible",
-			"flying": "vol",
-			"quickened": "rapidité",
-			"shielded": "bouclier",
-			"blessed": "béni",
-			"healing": "soigné"
+			"asleep": "Endormi",
+			"slowed": "Ralenti",
+			"petrified": "Pétrifié",
+			"poisoned": "Empoisonné",
+			"burned": "Brûlé",
+			"locked": "Verrouillé",
+			"dazzled": "Ébloui",
+			"stunned": "Étourdi",
+			"torched": "Enflammé",
+			"intangible": "Intangible",
+			"flying": "Vol",
+			"quickened": "Accéléré",
+			"shielded": "Bouclier",
+			"blessed": "Béni",
+			"healing": "Régénération"
 		},
 		"step": {
 			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
@@ -4588,7 +4613,6 @@
 		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
 		"bid": "Enchérir",
 		"detail": "Voir détails",
 		"yourTreasuryNotes": "Vos Bons du Trésor",
@@ -4633,13 +4657,15 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
-		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action."
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
 	},
 	"logs": {
-		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au Dinoz {dinoz} ({dinozId})",
+		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
 		"AdminUpdateDinoz": "**Admin ({playerId})** a mis à jour {stat} à {value} du Dinoz {dinoz} ({dinozId})",
-		"AdminRemoveStatus": "**Admin ({playerId})** a enlevé le status {status} au Dinoz {dinoz} ({dinozId})",
+		"AdminRemoveStatus": "**Admin ({playerId})** a enlevé le statut {status} au Dinoz {dinoz} ({dinozId})",
 		"AdminAddSkill": "**Admin ({playerId})** a ajouté la compétence {skill} au Dinoz {dinoz} ({dinozId})",
 		"AdminRemoveSkill": "**Admin ({playerId})** a enlevé la compétence {skill} au Dinoz {dinoz} ({dinozId})",
 		"AdminAddUnlockableSkill": "**Admin ({playerId})** a ajouté la compétence débloquable {skill} au Dinoz {dinoz} ({dinozId})",
@@ -4667,6 +4693,8 @@
 		"HPLost": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a perdu **{hpLost} :pv:**.",
 		"Death": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** est mort.",
 		"Revive": "**{player} ({playerId})** a ressuscité son Dinoz **{dinoz} ({dinozId})**.",
+		"Sacrifice": "**{player} ({playerId})** a sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
+		"Unsacrifice": "**{player} ({playerId})** a dé-sacrifié son Dinoz **{dinoz} ({dinozId})** pour {tickets} tickets.",
 		"MissionStep": "**{player} ({playerId})** a avancé la mission **{mission}** à **l'étape {step}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** a annulé la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
@@ -4687,7 +4715,6 @@
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
@@ -4714,11 +4741,11 @@
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
 			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
-			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
+			"cashPrice": ":gold: La cagnotte pour ce tournoi est de **{cashPrice}** :gold: !!",
 			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&La cagnotte est actuellement à **{cashPrice}** :gold:.",
 		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
 		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
@@ -4726,8 +4753,7 @@
 			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
 			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
 			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
-			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
+			"startFight": "{gold} :gold:"
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",
@@ -5276,6 +5302,63 @@
 		"participantsConv": "Participants",
 		"blockSender": "Bloquer l'expéditeur"
 	},
+	"dungeon": {
+		"buttons": {
+			"up": "Bouger vers le haut",
+			"left": "Bouger vers la gauche",
+			"right": "Bouger vers la droite",
+			"down": "Bouger vers le bas",
+			"irma": "Utiliser une potion d'Irma pour continuer à avancer",
+			"stair_down": "Descendre les escaliers",
+			"stair_up": "Monter les escaliers",
+			"start": "Retourner à l'entrée du donjon",
+			"exit": "Sortir du donjon"
+		},
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d'en sortir seulement s'il retrouve l'entrée, la sortie ou s'il meurt.",
+		"floor": "Étage {floor}",
+		"name": {
+			"katatombs": "les Katatombes"
+		},
+		"katatombs": {
+			"misc": "Note de Mandragore : j'ai laissé le Parchemin du Démon dans ces Katatombes après en avoir fait une copie. J'espère que les Maîtres Dinoz qui le trouveront ne s'en serviront pas avec de mauvaises intentions, car les Dinoz-Démons sont tout de même très puissants...",
+			"napo": "Vous ouvrez un coffre apparemment abandonné depuis des centaines d'années. Il est vide, mais, intrigué, vous découvrez un double-fond dans lequel se trouvait bien caché un Napodino d'Or !",
+			"potion": "Vous trouvez 3 Potions d'Irma dans un petit coffre, c'est toujours ça de gagné !",
+			"demon": "Vous trouvez le Parchemin du Démon. Il indique l'emplacement d'une étrange boutique de Dinoz, nommée la Boutique Démoniaque, qui se situerait quelque part à la surface du Cimetière du Crépuscule. Il va d'abord vous falloir sortir des Katatombes...",
+			"enter": "En vous promenant dans le cimetière, vous remarquez une tombe qui semble ouverte. Vous suivez un escalier qui s'enfonce sous terre, dans ce qui semble être d'anciennes Katatombes...",
+			"exit": "Vous ressortez des Katatombes... On ne peut pas dire que le cimetière est particulièrement agréable, mais au moins vous sentez un léger souffle d'air ce qui change de la puanteur des souterrains."
+		},
+		"msg": {
+			"locked": "La porte des {name} est verrouillée.",
+			"opened": "La clé des {name} tourne dans la serrure : la porte s'ouvre dans un grincement sinistre...",
+			"key": "Vous trouvez la clé des {name} !",
+			"gold": "Vous trouvez {value} pièces d'or !",
+			"resumed": "Vous reprenez votre exploration là où vous l'aviez laissée."
+		},
+		"doorNames": "{prefix} {sufix}",
+		"doorNames_prefix": [
+			"Arbres",
+			"Dragons",
+			"Calamars",
+			"Gobelins",
+			"Kabukis",
+			"Roméos",
+			"Magiciens",
+			"Anges",
+			"Démons"
+		],
+		"doorNames_sufix": [
+			"Magiques",
+			"Morts",
+			"Vivants",
+			"Noirs",
+			"Enchantés",
+			"Enchanteurs",
+			"Rouges",
+			"en Plastique",
+			"en Mousse",
+			"Étincelants"
+		]
+	},
 	"scenario": {
 		"star": "L'être étrange",
 		"pac": "Parchemin étrange",
@@ -5352,5 +5435,13 @@
 		"select": "Voter",
 		"select_option": "Sélectionnez une option",
 		"total_participants": "{qty} votants"
+	},
+	"terms": {
+		"title": "Conditions d'utilisation",
+		"intro": "Merci de lire et d'accepter les conditions d'utilisation suivantes avant de continuer à jouer.",
+		"clause1": "La création ou l'utilisation de plusieurs comptes par un même joueur est interdite.",
+		"clause2": "L'utilisation de bots ou de tout script d'automatisation est interdite.",
+		"clause3": "L'exploitation volontaire d'un bug est interdite et doit être signalée à l'équipe.",
+		"accept_button": "J'accepte"
 	}
 }

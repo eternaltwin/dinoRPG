@@ -33,6 +33,7 @@ import { ETUser } from '@drpg/core/models/player/ETUser';
 import { ArchivedPlayer } from '@drpg/core/models/player/ArchivedPlayer';
 import { GLOBAL } from '../context.js';
 import { eventState } from './clanWar.js';
+import { gameConfig } from '../utils/gameConfig.js';
 
 /**
  * @summary Get data from player on login
@@ -40,14 +41,15 @@ import { eventState } from './clanWar.js';
  * @return Player
  */
 export async function getCommonData(req: Request) {
-	const authed = await auth(req);
+	// tosByPass: the frontend needs this data to know whether to redirect to the ToS page
+	const authed = await auth(req, false, true);
 	const playerCommonData = await getCommonDataRequest(authed.id);
 	if (!playerCommonData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	const dinoz = playerCommonData.dinoz.map(d => {
-		return { ...toDinozFiche(playerCommonData, d.id, null) };
+		return { ...toDinozFiche(playerCommonData, d.id, null, gameConfig()) };
 	});
 	for (const d of dinoz) {
 		d.actions = await getAvailableActions(d, playerCommonData);
@@ -67,6 +69,7 @@ export async function getCommonData(req: Request) {
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel,
 			autoReequipItems: playerCommonData.autoReequipItems,
+			bypassGatheringGrid: playerCommonData.bypassGatheringGrid,
 			archivedSiteId: playerCommonData.archivedSiteId,
 			shareArchivedData: playerCommonData.shareArchivedData,
 			displayedNotifications: playerCommonData.displayedNotifications
@@ -75,7 +78,8 @@ export async function getCommonData(req: Request) {
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
 		notifications: playerCommonData.notifications,
-		discoveredSkills: playerCommonData.discoveredSkills
+		discoveredSkills: playerCommonData.discoveredSkills,
+		tosAccepted: playerCommonData.tosAccepted
 	};
 
 	// Order dinoz
@@ -85,6 +89,16 @@ export async function getCommonData(req: Request) {
 	commonData.clanEvent = clanEvent;
 
 	return commonData;
+}
+
+/**
+ * @summary Accept the terms of service for the player doing the request
+ * @param req
+ */
+export async function acceptTos(req: Request) {
+	// tosByPass: this is the endpoint used to accept the ToS in the first place
+	const authed = await auth(req, false, true);
+	await setPlayer(authed.id, { tosAccepted: true });
 }
 
 /**
@@ -181,7 +195,7 @@ export async function setCustomText(req: Request) {
 
 	const playerProfile = await getPlayerRewardsRequest(authed.id);
 	if (!playerProfile) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === Reward.PLUME)) {
@@ -223,7 +237,7 @@ export async function getDinozList(req: Request) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
-	return dinozActive.map(dinoz => toDinozFicheLite(dinoz));
+	return dinozActive.map(dinoz => toDinozFicheLite(dinoz, gameConfig()));
 }
 
 /**
@@ -282,7 +296,13 @@ export async function resetAccount(req: Request) {
 		throw new Error('No player found.');
 	}
 
-	//Check if sell of bids are ongoing
+	// Check the account is less than 1 day old
+	let oneDayAfterCreation = playerToDelete.createdDate.getTime() + 24 * 60 * 60 * 1000;
+	if (oneDayAfterCreation > new Date().getTime()) {
+		throw new ExpectedError(translate('error.playerTooYoung', authed, { id: authed.id }));
+	}
+
+	// Check if sell of bids are ongoing
 	if (
 		playerToDelete.bids.length > 0 ||
 		playerToDelete.offers.filter(b => b.status === OfferStatus.ONGOING).length > 0
@@ -290,7 +310,7 @@ export async function resetAccount(req: Request) {
 		throw new ExpectedError(translate(`bidsOngoing`, authed));
 	}
 
-	//Check if part of a clan
+	// Check if part of a clan
 	if (playerToDelete.ClanMember) {
 		throw new ExpectedError(translate(`inClan`, authed));
 	}
@@ -321,6 +341,9 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'autoReequipItems') {
 		await setPlayer(authed.id, { autoReequipItems: req.body.setting });
+	}
+	if (req.params.setting === 'bypassGatheringGrid') {
+		await setPlayer(authed.id, { bypassGatheringGrid: req.body.setting });
 	}
 	if (req.params.setting === 'archivedSiteId') {
 		await setPlayer(authed.id, { archivedSiteId: req.body.setting });

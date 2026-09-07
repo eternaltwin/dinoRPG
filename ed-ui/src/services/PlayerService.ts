@@ -92,6 +92,10 @@ export const PlayerService = {
 		const res = await http().delete(`/player`);
 		return res.data;
 	},
+	async acceptTos(): Promise<void> {
+		const res = await http().patch('/player/tos');
+		return res.data;
+	},
 	async updatePlayerLanguage(language: Lang): Promise<void> {
 		const res = await http().put('/player/language', {
 			language: language
@@ -103,6 +107,7 @@ export const PlayerService = {
 			| 'skipLevel'
 			| 'skipFight'
 			| 'autoReequipItems'
+			| 'bypassGatheringGrid'
 			| 'archivedSiteId'
 			| 'shareArchivedData'
 			| 'displayedNotifications',

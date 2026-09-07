@@ -7,7 +7,7 @@
 				qualificationEnd: formatDate(tournamentState.schedule.qualificationEnd),
 				poolsStart: formatDate(tournamentState.schedule.poolsStart),
 				finalsStart: formatDate(tournamentState.schedule.finalsStart),
-				cashPrice: utils.beautifulNumber(tournamentState.cashPrice.toString())
+				cashPrice: formatNumber(tournamentState.cashPrice)
 			})
 		"
 	></DZDisclaimer>
@@ -47,7 +47,7 @@
 import { defineComponent } from 'vue';
 import { dojoStore, localStore, playerStore, useDinozStore } from '../../store/index.js';
 import { DojoService } from '../../services/DojoService.js';
-import { errorHandler, utils } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SelectDinoz from '../dojo/SelectDinoz.vue';
 import { UnavailableReason } from '@drpg/prisma/enums';
@@ -56,12 +56,13 @@ import DZButton from '../common/DZButton.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 import { raceList } from '../../constants/race.js';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'TournamentInfo',
 	computed: {
-		utils() {
-			return utils;
+		formatNumber() {
+			return formatNumber;
 		},
 		TournamentPhase() {
 			return TournamentPhase;

@@ -13,7 +13,6 @@ export async function removeUnlockableSkillsFromDinoz(dinozId: number, skillId: 
 	}
 }
 
-//TODO
 export async function addMultipleUnlockableSkills(
 	skills: Prisma.DinozSkillUnlockableCreateManyInput[],
 	event?: GameDinozUsage

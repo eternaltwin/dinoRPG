@@ -29,7 +29,7 @@
 			</div>
 		</div>
 
-		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
+		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('button.return') }}</DZButton>
 
 		<Transition name="bounce">
 			<FightRecap :stats="fightStat" />
@@ -114,10 +114,6 @@ export default defineComponent({
 		},
 		async startFight() {
 			if (!this.opponentId) return;
-			if (this.myTeam.some(dinoz => this.opponentTeam.includes(dinoz))) {
-				this.$toast.open({ message: this.$t('dojo.challengeFriend.doubleDinoz'), type: 'error' });
-				return;
-			}
 			try {
 				const rawFight = await DojoService.fightMyFriend(this.myTeam, this.opponentTeam, this.opponentId);
 				const fightResult = rawFight.fight;

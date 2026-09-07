@@ -174,9 +174,7 @@
 			<DZDisclaimer
 				help
 				round
-				:content="
-					$t('clan.war.disclaimerAttack', { cost: utils.beautifulNumber((attackCost?.trueValue ?? 0).toString()) })
-				"
+				:content="$t('clan.war.disclaimerAttack', { cost: formatNumber(attackCost?.trueValue ?? 0) })"
 			/>
 			<div class="ingredientWrapper" v-if="attackCost && attackCost.canAfford">
 				<Tippy
@@ -204,18 +202,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
-import { ClanService } from '../../services';
-import { errorHandler, utils } from '../../utils';
-import { clanStore } from '../../store/clanStore';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZTable from '../common/DZTable.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
+import { ClanService } from '../../services';
+import { errorHandler } from '../../utils';
+import { clanStore } from '../../store/clanStore';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Fight } from '@eternaltwin/dinorpg_animations';
 import { DinoAction, EntranceEffect, transpiled } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
 import { playerStore } from '../../store';
 import { AttackStatus, Castle, Defender, treasureIngredient } from '@drpg/core/models/clan/clan';
-import DZTable from '../common/DZTable.vue';
-import DinozMini from '../dinoz/DinozMini.vue';
 import { VueDraggable } from 'vue-draggable-plus';
 import {
 	PROSPECTOR_EVENING_WINDOW,
@@ -230,6 +228,8 @@ import {
 import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCalculation';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import axios from 'axios';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -246,9 +246,10 @@ export default defineComponent({
 			clanId: clanStore().getClanId as number,
 			castle: null as Castle | null,
 			defenders: [] as Defender[],
+			previousDefendersIds: [] as number[],
 			repairCost: null as RepairCost | null,
 			attackCost: null as WarCost | null,
-			utils: utils,
+			formatNumber: formatNumber,
 			ingredients: [] as treasureIngredient[],
 			repairLoading: false,
 			repairForm: {
@@ -302,12 +303,14 @@ export default defineComponent({
 		},
 		async onUpdate() {
 			try {
-				const order = await ClanService.reorderDefender(this.defenders.map(d => d.id));
-				this.defenders = [
-					...order.map(id => this.castle?.defender.find(d => d.id === id)).filter(d => d !== undefined)
-				];
+				const newOrder = this.defenders.map(d => d.id);
+				this.defenders = await ClanService.reorderDefender(this.previousDefendersIds, newOrder);
+				this.previousDefendersIds = newOrder;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+				if (axios.isAxiosError(e) && e.response?.status === 409) {
+					await this.loadComponent();
+				}
 			}
 		},
 		async buildCastle(firstTime: boolean) {
@@ -452,9 +455,8 @@ export default defineComponent({
 				this.castle = castle;
 				this.ingredients = await ClanService.getClanTreasure(+this.$route.params.id);
 
-				const order = this.castle.defenseOrder;
-				const defenders = this.castle.defender;
-				this.defenders = [...order.map(id => defenders.find(d => d.id === id)).filter(d => d !== undefined)];
+				this.defenders = this.castle.defender;
+				this.previousDefendersIds = this.defenders.map(d => d.id);
 
 				this.loadRepairCost();
 				setTimeout(() => this.loadAnimation(), 250);

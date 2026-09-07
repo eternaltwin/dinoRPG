@@ -1,0 +1,375 @@
+<template>
+	<TitleHeader :title="$t('pageTitle.demonShop')" :header="formatContent($t(`shop.demon.name`))" />
+	<div class="tabPanel">
+		<ul class="tabs">
+			<li>
+				<RouterLink
+					:to="{ name: 'DemonShopPage', query: { tab: 'sacrifice' } }"
+					:class="{ active: tab === 'sacrifice' }"
+					>{{ $t('shop.demon.sacrifice_title') }}</RouterLink
+				>
+			</li>
+			<li :class="{ disabled: isShopEmpty }">
+				<RouterLink
+					v-if="!isShopEmpty"
+					:to="{ name: 'DemonShopPage', query: { tab: 'buy' } }"
+					:class="{ active: tab === 'buy' }"
+					>{{ $t('shop.demon.buy_title') }}</RouterLink
+				>
+				<span v-else>{{ $t('shop.demon.buy_title') }}</span>
+			</li>
+			<li :class="{ disabled: isSacrificedEmpty }">
+				<RouterLink
+					v-if="!isSacrificedEmpty"
+					:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice' } }"
+					:class="{ active: tab === 'unsacrifice' }"
+					>{{ $t('shop.demon.unsacrifice_title') }}</RouterLink
+				>
+				<span v-else>{{ $t('shop.demon.unsacrifice_title') }}</span>
+			</li>
+		</ul>
+	</div>
+
+	<DZDisclaimer v-if="tab === 'sacrifice'" help :content="$t('shop.demon.sacrifice_help')" />
+	<DZDisclaimer v-if="tab === 'buy'" help :content="$t('shop.demon.buy_help')" />
+	<DZDisclaimer v-if="tab === 'unsacrifice'" help :content="$t('shop.demon.unsacrifice_help')" />
+
+	<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
+		<span>{{ demonTickets }}</span>
+		<img :src="getImgURL('icons', 'small_demon_tk')" :alt="$t('item.name.demon_ticket')" />
+		<template #content>
+			{{ $t('shop.demon.yourDemonTickets') }}
+		</template>
+	</Tippy>
+
+	<div v-if="tab === 'sacrifice'" class="shop_view">
+		<div
+			class="sacrifice_sheets"
+			:id="'sacrifice_sheet_' + index"
+			v-for="(dinoz, index) in demonShop.dinoz"
+			:key="dinoz.id"
+		>
+			<DZShop :dinoz="dinoz" sacrifice currency="demon" details="elementsOnly" @action="confirmSacrifice" />
+		</div>
+	</div>
+
+	<div v-if="tab === 'buy'" class="shop_view">
+		<div class="demon_sheets" :id="'demon_sheet_' + index" v-for="(dinoz, index) in demonShop.shop" :key="dinoz.id">
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmPurchase(dinoz.id)" />
+		</div>
+	</div>
+
+	<div v-if="tab === 'unsacrifice'" class="shop_view">
+		<div
+			class="unsacrifice_sheets"
+			:id="'unsacrifice_sheet_' + index"
+			v-for="(dinoz, index) in demonShop.sacrificed"
+			:key="dinoz.id"
+		>
+			<DZShop :dinoz="dinoz" currency="demon" details="advanced" @action="confirmUnsacrifice(dinoz.id)" />
+		</div>
+		<div class="pagination">
+			<RouterLink
+				v-if="sacrificedPage > 1"
+				:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice', page: sacrificedPage - 1 } }"
+			>
+				{{ $t('ranking.page.previous') }}
+			</RouterLink>
+			<RouterLink
+				v-if="demonShop.sacrificed?.length === 20"
+				:to="{ name: 'DemonShopPage', query: { tab: 'unsacrifice', page: sacrificedPage + 1 } }"
+			>
+				{{ $t('ranking.page.next') }}
+			</RouterLink>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import DZShop from '../components/common/DZShop.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { DemonShopService } from '../services/DemonShopService.js';
+import { InventoryService } from '../services/InventoryService.js';
+import { playerStore, useDinozStore } from '../store/index.js';
+import { errorHandler, utils } from '../utils/index.js';
+import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
+import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { Item } from '@drpg/core/models/item/ItemList';
+
+export default defineComponent({
+	name: 'DemonShopPage',
+	components: {
+		DZDisclaimer,
+		DZShop,
+		TitleHeader
+	},
+	data() {
+		return {
+			playerStore: playerStore(),
+			utils,
+			raceList,
+			skillList,
+			ElementType,
+			demonShop: {} as demonShopFiche,
+			openDetails: new Map() as Map<number, SkillDetails[]>,
+			demonTickets: 0
+		};
+	},
+	computed: {
+		tab(): string {
+			return (this.$route.query.tab as string) || 'buy';
+		},
+		sacrificedPage(): number {
+			return Number(this.$route.query.page) || 1;
+		},
+		isShopEmpty(): boolean {
+			return !this.demonShop.shop?.length;
+		},
+		isSacrificedEmpty(): boolean {
+			return !this.demonShop.sacrificed?.length;
+		}
+	},
+	methods: {
+		async loadSacrificedPage(page: number): Promise<void> {
+			try {
+				this.demonShop.sacrificed = await DemonShopService.getSacrificedDinoz(page);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async refresh(): Promise<void> {
+			try {
+				this.demonShop = await DemonShopService.getDemonDinozShop();
+				this.openDetails = new Map();
+				// Get player's treasury notes
+				const items = await InventoryService.getAllItemsData();
+				const demonTicketItem = items.find(i => i.id === Item.DEMON_TICKET);
+				this.demonTickets = demonTicketItem ? demonTicketItem.quantity : 0;
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
+		async confirmSacrifice(sacrifice: DinozShopFiche): Promise<void> {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					const tickets = await DemonShopService.sacrificeDinoz(sacrifice.id);
+					this.$toast.open({
+						message: this.$t(`shop.demon.sacrifice_toast`, { tickets: tickets }),
+						type: 'reward'
+					});
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+				// Update Dinoz list
+				let dinozStore = useDinozStore().getDinozList;
+				dinozStore = dinozStore.filter(d => d.id !== sacrifice.id);
+				useDinozStore().setDinozList(dinozStore);
+				// Update store to show the dinoz as buy back
+				this.demonShop.dinoz = this.demonShop.dinoz.filter(d => d.id !== sacrifice.id);
+				this.demonShop.sacrificed.push(sacrifice);
+				const oldValue = this.demonTickets;
+				this.demonTickets += sacrifice.price;
+				if (oldValue < 30 && this.demonTickets >= 30) {
+					await this.refresh();
+				}
+			}
+		},
+		async confirmPurchase(id: number): Promise<void> {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					const dinozCreated = await DemonShopService.buyDinoz(id);
+
+					// Update dinoz list
+					const dinozStore = useDinozStore().getDinozList;
+					dinozStore.push(dinozCreated);
+					useDinozStore().setDinozList(dinozStore);
+
+					// Go to dinoz page
+					await this.$router.push({
+						name: 'DinozPage',
+						params: {
+							id: dinozCreated.id
+						}
+					});
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		async confirmUnsacrifice(id: number): Promise<void> {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await DemonShopService.unsacrificeDinoz(id);
+					this.demonShop.sacrificed = this.demonShop.sacrificed.filter(d => d.id !== id);
+					await useDinozStore().refreshDinozFiche(id);
+					this.$toast.open({
+						message: this.$t('shop.demon.unsacrifice_toast'),
+						type: 'info'
+					});
+
+					// Go to dinoz page
+					await this.$router.push({
+						name: 'DinozPage',
+						params: {
+							id
+						}
+					});
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		toggleDetails(dinoz: DinozShopFiche) {
+			if (this.openDetails.has(dinoz.id)) {
+				this.openDetails.delete(dinoz.id);
+			} else {
+				this.openDetails.set(
+					dinoz.id,
+					toSkillDetails(
+						dinoz.skills.map(s => {
+							return {
+								skillId: s,
+								state: true
+							};
+						})
+					)
+				);
+			}
+		}
+	},
+	async mounted(): Promise<void> {
+		await this.refresh();
+		// refresh() only embeds page 1 of the sacrificed list; fetch the right page for a direct link.
+		if (this.tab === 'unsacrifice' && this.sacrificedPage !== 1) {
+			await this.loadSacrificedPage(this.sacrificedPage);
+		}
+	},
+	watch: {
+		// The 3 tabs share this component instance (no remount on navigation), so re-fetch the
+		// sacrificed page whenever it's entered or paged, instead of trusting stale in-memory data.
+		$route(to) {
+			if (to.query.tab === 'unsacrifice') {
+				this.loadSacrificedPage(Number(to.query.page) || 1);
+			}
+		}
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+@media (max-width: 510px) {
+	.shop_view {
+		max-width: 95%;
+	}
+}
+.treasury-notes {
+	color: #fce3bc;
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 4px;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.tabPanel {
+	position: relative;
+	color: white;
+	width: 100%;
+	top: 6px;
+
+	.tabs {
+		padding-top: 4px;
+		background-color: transparent;
+		text-shadow: 1px 1px 0px #9a4029;
+		border-bottom: 3px solid #bc683c;
+
+		:hover {
+			color: white;
+		}
+
+		a.active {
+			margin-top: 1px;
+			text-shadow: 1px 1px 0px #9a4029;
+			background-color: #d69e68;
+			line-height: 16pt;
+			color: white;
+			border-left-color: #ffe7aa;
+			border-top-color: #ffe7aa;
+			border-bottom: 1px solid #d69e68;
+		}
+		li.disabled span {
+			display: inline-block;
+			color: #fce3bc;
+			padding-left: 5px;
+			padding-right: 5px;
+			background-color: #bc683c;
+			border-right: 1px solid black;
+			border-left: 1px solid #d39a65;
+			border-top: 1px solid #d39a65;
+			font-size: 10pt;
+			opacity: 0.45;
+			cursor: not-allowed;
+		}
+	}
+}
+
+.shop_view {
+	display: flex;
+	gap: 40px;
+	flex-direction: column;
+	align-self: center;
+	align-items: center;
+}
+.pagination {
+	display: flex;
+	gap: 20px;
+	color: white;
+}
+.titleContent {
+	height: fit-content;
+	background-image: url('../assets/design/title_h1.webp');
+	background-position: left bottom;
+	background-repeat: no-repeat;
+	padding-bottom: 22px;
+	h3 {
+		margin-left: 5px;
+		color: #71b703;
+		font-variant: small-caps;
+	}
+}
+</style>

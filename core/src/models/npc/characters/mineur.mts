@@ -103,9 +103,5 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	ok: {
 		stepName: 'ok',
 		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
 	}
 };

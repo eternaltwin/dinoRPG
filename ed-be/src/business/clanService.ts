@@ -644,7 +644,7 @@ export async function giveClanIngredients(req: Request) {
 	const player = await getAllIngredientsDataRequest(authed.id);
 	// Throw an exception if the player doesn't exist
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	// Lock negative quantities

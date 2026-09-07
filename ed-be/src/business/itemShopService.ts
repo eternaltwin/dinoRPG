@@ -91,7 +91,7 @@ export async function buyItem(req: Request) {
 	const playerShopData = await getPlayerShopOneItemDataRequest(authed.id, itemId);
 
 	if (!playerShopData) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	// Extract item data from player
 	const playerItemData = playerShopData.items.find(item => item.itemId === itemId);
@@ -155,9 +155,9 @@ export async function buyItem(req: Request) {
 		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
 		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList[Item.TREASURE_COUPON].itemId);
 		if (!playerTreasure) {
-			await insertItem(authed.id, { itemId: itemList[Item.TREASURE_COUPON].itemId, quantity: quantityBought });
+			await insertItem(authed.id, { itemId: Item.TREASURE_COUPON, quantity: quantityBought });
 		} else {
-			await increaseItemQuantity(authed.id, itemList[Item.TREASURE_COUPON].itemId, quantityBought);
+			await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, quantityBought);
 		}
 
 		await createLog(

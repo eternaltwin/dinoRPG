@@ -11,13 +11,12 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	},
 	talk: {
 		stepName: 'talk',
-		nextStep: ['hello', 'help', 'give', 'act'],
-		alias: 'hello'
+		nextStep: ['hello', 'help', 'give', 'act']
 	},
 	hello: {
 		stepName: 'hello',
 		nextStep: [],
-		target: 'talk'
+		redirect: 'talk'
 	},
 	help: {
 		stepName: 'help',
@@ -93,8 +92,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	},
 	why: {
 		stepName: 'why',
-		nextStep: ['super'],
-		alias: 'no'
+		nextStep: ['super']
 	},
 	super: {
 		stepName: 'super',
@@ -102,11 +100,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	},
 	no: {
 		stepName: 'no',
-		target: 'why',
-		nextStep: []
-	},
-	stop: {
-		stepName: 'stop',
+		redirect: 'why',
 		nextStep: []
 	}
 };

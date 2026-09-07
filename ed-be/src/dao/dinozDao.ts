@@ -103,6 +103,7 @@ export async function getDinozItinerantShop(dinozId: number, playerId: string) {
 			select: {
 				id: true,
 				money: true,
+				shopKeeper: true,
 				ingredients: {
 					select: {
 						ingredientId: true,
@@ -224,14 +225,7 @@ export async function getDinozPlace(dinozId: number) {
 export async function isDinozInTournament(dinozId: number) {
 	return withSpan(isDinozInTournament.name, async () => {
 		let tournament = await getActiveTeamsCached(prisma);
-		if (!tournament) {
-			const testTournament = await TournamentManager.getActiveTeams(prisma);
-			if (!testTournament) {
-				return false;
-			} else {
-				tournament = testTournament;
-			}
-		}
+		if (!tournament) return false;
 
 		const dinoz = await prisma.dinoz.findUnique({
 			where: { id: dinozId },
@@ -315,6 +309,7 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 						raceId: true,
 						leaderId: true,
 						unavailableReason: true,
+						unavailableUntil: true,
 						fight: true,
 						gather: true,
 						remaining: true,
@@ -429,7 +424,8 @@ export async function getDinozPlaces(playerId: string) {
 				dinoz: {
 					select: {
 						id: true,
-						placeId: true
+						placeId: true,
+						unavailableReason: true
 					}
 				}
 			}
@@ -503,6 +499,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpFire: true,
 				raceId: true,
+				leaderId: true,
 				player: {
 					select: {
 						id: true,
@@ -518,7 +515,8 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				},
 				status: { select: { statusId: true } },
 				skills: { select: { skillId: true } },
-				unlockableSkills: { select: { skillId: true } }
+				unlockableSkills: { select: { skillId: true } },
+				unavailableReason: true
 			}
 		});
 
@@ -803,6 +801,37 @@ export async function getDinozForLevelUp(dinozId: number) {
 	});
 }
 
+export async function getDinozInfoForAdmin(dinozId: number) {
+	return withSpan(getDinozInfoForAdmin.name, async () => {
+		const dinoz = await prisma.dinoz.findUnique({
+			where: { id: dinozId },
+			select: {
+				id: true,
+				placeId: true,
+				maxLife: true,
+				raceId: true,
+				name: true,
+				display: true,
+				experience: true,
+				level: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				canChangeName: true,
+				unavailableReason: true,
+				items: { select: { itemId: true } },
+				skills: { select: { skillId: true } },
+				unlockableSkills: { select: { skillId: true } },
+				status: { select: { statusId: true } }
+			}
+		});
+
+		return dinoz;
+	});
+}
+
 export async function getEventDinozForLevelUp(dinozId: number) {
 	return withSpan(getEventDinozForLevelUp.name, async () => {
 		const dinoz = await prisma.gameDinoz.findUnique({
@@ -920,7 +949,6 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 }
 
 // Setters
-//TODO
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	return withSpan(createDinoz.name, async () => {
 		if (!dinoz.player?.connect?.id) {
@@ -1116,7 +1144,11 @@ export async function getFollowingDinoz(dinozId: number) {
 			},
 			select: {
 				id: true,
-				followers: { select: { id: true } },
+				placeId: true,
+				fight: true,
+				unavailableReason: true,
+				dungeonRun: true,
+				followers: { select: { id: true, unavailableReason: true, dungeonRun: true, fight: true } },
 				leaderId: true
 			}
 		});
@@ -1129,6 +1161,7 @@ export async function getLeaderWithFollowers(dinozId: number) {
 			where: { followers: { some: { id: dinozId } } },
 			select: {
 				id: true,
+				unavailableReason: true,
 				followers: { select: { id: true, skills: true } },
 				skills: true
 			}
@@ -1147,7 +1180,8 @@ export async function getIrmaUsageInfo(dinozId: number) {
 				remaining: true,
 				fight: true,
 				gather: true,
-				followers: { select: { id: true, remaining: true, fight: true, gather: true } },
+				unavailableReason: true,
+				followers: { select: { id: true, remaining: true, fight: true, unavailableReason: true, gather: true } },
 				player: {
 					select: {
 						id: true,
@@ -1204,7 +1238,26 @@ export async function getAllResting() {
 				skills: true
 			}
 		});
+		// TODO that does *NOT* take into account skills that increase maximum rest
 		return list.filter(d => d.life < Math.round(d.maxLife / 2));
+	});
+}
+
+export async function getAllUnavailableUntil() {
+	return withSpan(getAllResting.name, async () => {
+		const list = await prisma.dinoz.findMany({
+			where: {
+				NOT: {
+					unavailableUntil: null
+				}
+			},
+			select: {
+				id: true,
+				unavailableUntil: true,
+				unavailableReason: true
+			}
+		});
+		return list;
 	});
 }
 
@@ -1236,6 +1289,19 @@ export async function getDinozToReincarnate(dinozId: number) {
 				nbrUpLightning: true,
 				nbrUpWater: true,
 				nbrUpWood: true
+			}
+		});
+	});
+}
+
+export async function getDinozUnavailableReason(dinozId: number) {
+	return withSpan(getDinozUnavailableReason.name, async () => {
+		return await prisma.dinoz.findUnique({
+			where: {
+				id: dinozId
+			},
+			select: {
+				unavailableReason: true
 			}
 		});
 	});

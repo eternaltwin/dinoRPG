@@ -10,7 +10,9 @@ export const UnavailableReason = {
   resting: 'resting',
   unfreezing: 'unfreezing',
   defending: 'defending',
-  restingAttack: 'restingAttack'
+  restingAttack: 'restingAttack',
+  dungeon: 'dungeon',
+  unsacrificing: 'unsacrificing'
 };
 
 export const NewsType = {
@@ -58,6 +60,8 @@ export const LogType = {
   Fight: 'Fight',
   Death: 'Death',
   Revive: 'Revive',
+  Sacrifice: 'Sacrifice',
+  Unsacrifice: 'Unsacrifice',
   MissionStep: 'MissionStep',
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',
@@ -174,6 +178,17 @@ export const ServerAction = {
   prospector: 'prospector'
 };
 
+export const DungeonType = {
+  cavern: 'cavern',
+  crypt: 'crypt',
+  egypt: 'egypt',
+  forest: 'forest',
+  hell: 'hell',
+  ruin: 'ruin',
+  sewer: 'sewer',
+  stone: 'stone'
+};
+
 export const $Enums = {
   UnavailableReason,
   NewsType,
@@ -188,5 +203,6 @@ export const $Enums = {
   NotificationSeverity,
   GameDinozUsage,
   EventType,
-  ServerAction
+  ServerAction,
+  DungeonType
 };

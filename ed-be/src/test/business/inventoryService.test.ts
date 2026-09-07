@@ -4,7 +4,9 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
-vi.mock('../../config/game.config.js', () => ({ default: { dinoz: { maxQuantity: 5, leaderBonus: 3 } } }));
+vi.mock('../../utils/gameConfig.js', () => ({
+	gameConfig: vi.fn()
+}));
 vi.mock('../../dao/dinozDao.js', () => ({
 	createDinoz: vi.fn(),
 	getActiveDinoz: vi.fn(),
@@ -17,16 +19,24 @@ vi.mock('../../dao/dinozSkillDao.js', () => ({ addMultipleSkillToDinoz: vi.fn(),
 vi.mock('../../dao/dinozStatusDao.js', () => ({ removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), getPlayerInventoryDataRequest: vi.fn() }));
-vi.mock('../../dao/playerItemDao.js', () => ({ decreaseItemQuantity: vi.fn(), increaseItemQuantity: vi.fn(), insertItem: vi.fn() }));
+vi.mock('../../dao/playerItemDao.js', () => ({
+	decreaseItemQuantity: vi.fn(),
+	increaseItemQuantity: vi.fn(),
+	insertItem: vi.fn()
+}));
 vi.mock('../../dao/questsDao.js', () => ({ upsertQuest: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ updateDinozCount: vi.fn(), updatePoints: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
 vi.mock('../../utils/boxesLogic.js', () => ({ boxOpening: vi.fn() }));
-vi.mock('../../utils/dinoz.js', () => ({
-	initializeDinoz: vi.fn().mockReturnValue({ name: 'n' }),
-	learnNextSphereSkill: vi.fn(),
-	useRice: vi.fn()
-}));
+vi.mock('../../utils/dinoz.js', async importOriginal => {
+	const actual = await importOriginal();
+	return {
+		...actual,
+		initializeDinoz: vi.fn().mockReturnValue({ name: 'n' }),
+		learnNextSphereSkill: vi.fn(),
+		useRice: vi.fn()
+	};
+});
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/skillService.js', () => ({ applySkillEffect: vi.fn() }));
 vi.mock('@drpg/core/utils/DinozUtils', async orig => {
@@ -37,19 +47,22 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 import { updateDinozCount } from '../../dao/rankingDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
+import { decreaseItemQuantity } from '../../dao/playerItemDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../../dao/dinozItemDao.js';
 import { boxOpening } from '../../utils/boxesLogic.js';
-import { learnNextSphereSkill } from '../../utils/dinoz.js';
+import { generateDinozDisplay, learnNextSphereSkill } from '../../utils/dinoz.js';
 import {
 	getItemMaxQuantity,
 	getAllItemsData,
 	useItem,
-	generateDinozDisplay,
 	equipItem,
 	heal,
-	resurrect
+	resurrect,
+	useRice
 } from '../../business/inventoryService.js';
+import { updateDinoz } from '../../dao/dinozDao.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { gameConfig } from '../../utils/gameConfig.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -87,18 +100,28 @@ function withItem(itemId: number, overrides = {}) {
 
 describe('getItemMaxQuantity', () => {
 	it('applies shopkeeper bonus to non-magical items', () => {
-		const result = getItemMaxQuantity({ shopKeeper: true, rewards: [] } as never, { itemType: ItemType.CLASSIC, maxQuantity: 100 } as never);
+		const result = getItemMaxQuantity(
+			{ shopKeeper: true, rewards: [] } as never,
+			{ itemType: ItemType.CLASSIC, maxQuantity: 100 } as never
+		);
 		expect(result).toBe(150);
 	});
 	it('returns base max otherwise', () => {
-		const result = getItemMaxQuantity({ shopKeeper: false, rewards: [] } as never, { itemType: ItemType.CLASSIC, maxQuantity: 100 } as never);
+		const result = getItemMaxQuantity(
+			{ shopKeeper: false, rewards: [] } as never,
+			{ itemType: ItemType.CLASSIC, maxQuantity: 100 } as never
+		);
 		expect(result).toBe(100);
 	});
 });
 
 describe('getAllItemsData', () => {
 	it('maps player items', async () => {
-		vi.mocked(playerDao.getPlayerInventoryDataRequest).mockResolvedValue({ shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 2 }] } as never);
+		vi.mocked(playerDao.getPlayerInventoryDataRequest).mockResolvedValue({
+			shopKeeper: false,
+			rewards: [],
+			items: [{ itemId: 3, quantity: 2 }]
+		} as never);
 		const result = await getAllItemsData(req());
 		expect(result[0].id).toBe(3);
 	});
@@ -152,7 +175,9 @@ describe('useItem', () => {
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow("doesn't exist");
 	});
 	it('throws when not owned', async () => {
-		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(1, { player: { id: 'x', items: [{ itemId: 1, quantity: 1 }], quests: [] } }) as never);
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			withItem(1, { player: { id: 'x', items: [{ itemId: 1, quantity: 1 }], quests: [] } }) as never
+		);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow("doesn't belong");
 	});
 	it('throws when item does not exist', async () => {
@@ -172,7 +197,9 @@ describe('useItem', () => {
 		expect(result.length).toBeGreaterThan(0);
 	});
 	it('throws when not enough item', async () => {
-		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never);
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			dinozForItem({ player: { id: 'p1', cooker: false, items: [], quests: [] } }) as never
+		);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('notEnoughItem');
 	});
 	it('throws for an item with no usable effect', async () => {
@@ -184,14 +211,34 @@ describe('useItem', () => {
 describe('useItem - egg hatching', () => {
 	// A broad set of egg item ids exercises most of the hatchEgg display switch.
 	const EGG_IDS = [
-		63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-		91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 130, 144
+		63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
+		92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 130, 144
 	];
 	beforeEach(() => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue([{ player: { leader: false, messie: false } }] as never);
 		vi.mocked(dinozDao.createDinoz).mockResolvedValue({ id: 9 } as never);
 	});
 	it('hatches eggs of many kinds', async () => {
+		// Override config to allow hatching all eggs
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: {
+				maxLevel: 50,
+				maxQuantity: 100, // Here increase max active dinoz
+				leaderMessieBonus: 3,
+				initialMaxLevel: 50
+			},
+			shop: {
+				dinozNumber: 10,
+				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
+			},
+			general: {
+				initialMoney: 1000000,
+				dailyGridRewards: 10
+			}
+		});
 		let hatched = 0;
 		for (const eggId of EGG_IDS) {
 			vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(eggId) as never);
@@ -210,6 +257,25 @@ describe('useItem - egg hatching', () => {
 		vi.mocked(dinozDao.getActiveDinoz).mockResolvedValue(
 			Array.from({ length: 10 }, () => ({ player: { leader: false, messie: false } })) as never
 		);
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: {
+				maxLevel: 50,
+				maxQuantity: 10,
+				leaderMessieBonus: 3,
+				initialMaxLevel: 50
+			},
+			shop: {
+				dinozNumber: 10,
+				buyableQuetzu: 6
+			},
+			demonShop: {
+				dinozNumber: 5
+			},
+			general: {
+				initialMoney: 1000000,
+				dailyGridRewards: 10
+			}
+		});
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(63) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '63' }))).rejects.toThrow('tooManyActiveDinoz');
 	});
@@ -241,7 +307,10 @@ describe('equipItem', () => {
 	});
 	it('unequips an item', async () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
-			equipDinoz({ items: [{ id: 9, itemId: 3 }], player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 0 }] } }) as never
+			equipDinoz({
+				items: [{ id: 9, itemId: 3 }],
+				player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 3, quantity: 0 }] }
+			}) as never
 		);
 		await equipItem(req({ dinozId: '1' }, { itemId: 3, equip: false }));
 		expect(removeItemFromDinoz).toHaveBeenCalled();
@@ -256,12 +325,20 @@ describe('equipItem', () => {
 	});
 	it('throws when too many magic items are equipped', async () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
-			equipDinoz({ items: [{ id: 1, itemId: 35 }], skills: [], player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 35, quantity: 5 }] } }) as never
+			equipDinoz({
+				items: [{ id: 1, itemId: 35 }],
+				skills: [],
+				player: { id: 'p1', engineer: false, shopKeeper: false, rewards: [], items: [{ itemId: 35, quantity: 5 }] }
+			}) as never
 		);
-		await expect(equipItem(req({ dinozId: '1' }, { itemId: 35, equip: true }))).rejects.toThrow('tooManyMagicItemEquiped');
+		await expect(equipItem(req({ dinozId: '1' }, { itemId: 35, equip: true }))).rejects.toThrow(
+			'tooManyMagicItemEquiped'
+		);
 	});
 	it('throws when the dinoz is being sold', async () => {
-		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(equipDinoz({ unavailableReason: 'selling' }) as never);
+		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
+			equipDinoz({ unavailableReason: 'selling' }) as never
+		);
 		await expect(equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }))).rejects.toThrow('UnavailableReason');
 	});
 });
@@ -278,5 +355,44 @@ describe('heal / resurrect helpers', () => {
 	});
 	it('throws when resurrecting a living dinoz', () => {
 		expect(() => resurrect({ id: 1, life: 5, player: { lang: 'fr' } } as never)).toThrow('DinozNotDead');
+	});
+});
+
+const mockUpdateDinoz = vi.mocked(updateDinoz);
+
+describe('useRice', () => {
+	const freshDinoz = (level: number, raceId: number) => ({
+		id: 'dinoz-1',
+		level,
+		raceId,
+		status: [] as { statusId: number }[],
+		skills: [] as { skillId: number }[],
+		unlockableSkills: [] as { skillId: number }[]
+	});
+
+	it('only resets name and experience for a dinoz above level 1', async () => {
+		await useRice(freshDinoz(2, raceList[1].raceId));
+		expect(mockUpdateDinoz).toHaveBeenCalledWith('dinoz-1', {
+			name: '?',
+			experience: 0,
+			canChangeName: true
+		});
+	});
+
+	it('rerolls the seed and next-up elements for a level 1 dinoz', async () => {
+		await useRice(freshDinoz(1, raceList[1].raceId));
+		const update = mockUpdateDinoz.mock.calls[0][1];
+		expect(update.name).toBe('?');
+		expect(update.experience).toBe(0);
+		expect(typeof update.seed).toBe('string');
+		expect(update.nextUpElementId).toBeGreaterThanOrEqual(1);
+		expect(update.nextUpElementId).toBeLessThanOrEqual(5);
+		expect(update.nextUpAltElementId).toBeGreaterThanOrEqual(1);
+		expect(update.nextUpAltElementId).toBeLessThanOrEqual(5);
+	});
+
+	it('throws when a level 1 dinoz references an unknown race', async () => {
+		await expect(useRice(freshDinoz(1, -1))).rejects.toThrow(ExpectedError);
+		expect(mockUpdateDinoz).not.toHaveBeenCalled();
 	});
 });
