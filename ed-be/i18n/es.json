@@ -352,7 +352,7 @@
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"notFound": "Este laberinto no existe.",
+		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Tu Dino no está en la entrada del laberinto.",
 		"wrongTeam": "Otro grupo ya está explorando el laberinto.",
 		"noRun": "Nunca has visitado este laberinto.",
@@ -360,11 +360,15 @@
 		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación."
 	},
 	"UnavailableReason": {
-		"frozen": "Tu Dino está congelado",
-		"sacrificed": "Tu Dino está sacrificado",
-		"selling": "Tu Dino está en venta",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Tu Dino está descansando",
+		"frozen": "Tu Dino está congelado.",
+		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
+		"defending": "Votre Dinoz défend le château de votre clan.",
+		"restingAttack": "Votre Dinoz se remet de son combat.",
+		"sacrificed": "Tu Dino está sacrificado.",
+		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
+		"selling": "Tu Dino está en venta.",
+		"superdom": "Tu Dino está en el domo de Sulaflota.",
+		"resting": "Tu Dino está descansando.",
 		"dungeon": "Tu Dino está explorando un laberinto."
 	},
 	"fb_tournament": {
