@@ -156,18 +156,6 @@ function formatCountdown(remainingMs: number): string {
 	return `${h}:${m}:${s}`;
 }
 
-function formatCountdown(remainingMs: number): string {
-	const safeSeconds = Math.max(0, Math.floor(remainingMs / 1000));
-	const h = Math.floor(safeSeconds / 3600)
-		.toString()
-		.padStart(2, '0');
-	const m = Math.floor((safeSeconds % 3600) / 60)
-		.toString()
-		.padStart(2, '0');
-	const s = (safeSeconds % 60).toString().padStart(2, '0');
-	return `${h}:${m}:${s}`;
-}
-
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
