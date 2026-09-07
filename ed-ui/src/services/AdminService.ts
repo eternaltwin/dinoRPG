@@ -248,6 +248,8 @@ export const AdminService = {
 		monsterLevel?: number;
 		pool?: string[];
 		fightBackgrounds?: string[];
+		/** Indexed by the layout's Scenario items — a layout with N of them needs N entries. */
+		scenarios?: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
 		seed?: number;
 		width?: number;
 		height?: number;
@@ -298,7 +300,7 @@ export const AdminService = {
 			condition?: string;
 			pool?: string[];
 			fightBackgrounds?: string[];
-			scenarios?: string;
+			scenarios?: { text: string; icon?: string; obj?: number; count?: number; collec?: number }[];
 			isActive?: boolean;
 		}
 	): Promise<unknown> {

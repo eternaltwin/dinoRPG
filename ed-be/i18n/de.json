@@ -352,7 +352,7 @@
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"dungeon": {
-		"notFound": "Dieses Verlies existiert nicht.",
+		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Dein Dinoz ist nicht am Eingang zum Verlies.",
 		"wrongTeam": "In diesem Verlies befindet sich bereits eine andere Gruppe.",
 		"noRun": "Du hast dieses Verlies noch nie besucht.",
@@ -361,9 +361,13 @@
 	},
 	"UnavailableReason": {
 		"frozen": "Dein Dinoz ist eingefroren.",
+		"unfreezing": "Dein Dinoz ist dabei, aufgetaut zu werden.",
+		"defending": "Dein Dinoz verteidigt eure Klanburg.",
+		"restingAttack": "Dein Dinoz erholt sich gerade von dem Kampf.",
 		"sacrificed": "Dein Dinoz wurde geopfert.",
+		"unsacrificing": "Dein Dinoz ist dabei, wiederbelebt zu werden.",
 		"selling": "Dein Dinoz wird verkauft.",
-		"superdom": "Votre Dinoz est au superdom",
+		"superdom": "Dein Dinoz ist am SuperDom.",
 		"resting": "Dein Dinoz ruht sich aus.",
 		"dungeon": "Dein Dinoz erkundet ein Verlies."
 	},

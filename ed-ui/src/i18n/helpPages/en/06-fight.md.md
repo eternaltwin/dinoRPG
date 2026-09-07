@@ -82,9 +82,9 @@ During the battle, different statuses will affect your Dinoz, either as a bonus 
 - ![Accelerated Status](@guide/status_faster) The Dinoz is faster
 - ![Petrified Status](@guide/status_petrified) The Dinoz is petrified, it cannot attack anymore
 - ![Assault Bonus Status](@guide/status_assault_bonus) The Dinoz has a bonus on its assaults
-- ![Statut Poison](@guide/status_poisoned) Le Dinoz est empoisonné et subit des dégâts chaque tour
-- ![Statut Vérouillé](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
-- ![Statut Étourdi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
+- ![Poison Status](@guide/status_poisoned) The fighter is poisoned and takes damage every cycle
+- ![Locked Status](@guide/status_locked) The fighter's element wheel is locked
+- ![Dazzled Status](@guide/status_dazzled) Le fighter is dazzled and may miss its assaults
 - ![Statut Protégé](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
 - ![Statut Muet](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
 - ![Statut Sharingan](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires

@@ -112,7 +112,11 @@ export async function getAllItemsData(req: Request) {
 	return allItemsDataReply;
 }
 
-const CAN_STILL_USE_ITEMS: UnavailableReason[] = [UnavailableReason.resting, UnavailableReason.defending, UnavailableReason.restingAttack];
+const CAN_STILL_USE_ITEMS: UnavailableReason[] = [
+	UnavailableReason.resting,
+	UnavailableReason.defending,
+	UnavailableReason.restingAttack
+];
 
 export async function useItem(req: Request) {
 	//The Promise need to be reworked

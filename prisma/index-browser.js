@@ -299,6 +299,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   skipFight: 'skipFight',
   skipLevel: 'skipLevel',
   autoReequipItems: 'autoReequipItems',
+  bypassGatheringGrid: 'bypassGatheringGrid',
   shareArchivedData: 'shareArchivedData',
   archivedSiteId: 'archivedSiteId',
   displayedNotifications: 'displayedNotifications',

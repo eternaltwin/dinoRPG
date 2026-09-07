@@ -87,6 +87,35 @@
 		</fieldset>
 
 		<fieldset>
+			<legend>Scenarios (a Scenario item with value N triggers entry #N: popup text + optional grants)</legend>
+			<label class="hint">
+				An imported or generated layout carries Scenario items indexing this list — leave it short and the matching
+				chests/scrolls stay silent. The layout signature counts them: "4S" means entries #0 to #3 are needed.
+			</label>
+			<div v-for="(sc, i) in scenarios" :key="i" class="row scenario">
+				<b>#{{ i }}</b>
+				<select v-model="sc.icon">
+					<option value="chest">chest</option>
+					<option value="scroll">scroll</option>
+				</select>
+				<select v-model="sc.obj">
+					<option :value="null">no item</option>
+					<option v-for="(it, id) in itemList" :key="id" :value="Number(id)">{{ it.name }}</option>
+				</select>
+				<input type="number" v-model.number="sc.count" min="1" max="999" class="short" title="item count" />
+				<select v-model="sc.collec">
+					<option :value="null">no collection</option>
+					<option v-for="(r, id) in rewardList" :key="id" :value="Number(id)">{{ r.name }}</option>
+				</select>
+				<input type="text" v-model="sc.text" placeholder="Popup text" class="text" />
+				<button type="button" @click="scenarios.splice(i, 1)">✕</button>
+			</div>
+			<button type="button" @click="scenarios.push({ text: '', icon: 'chest', obj: null, count: 1, collec: null })">
+				+ scenario
+			</button>
+		</fieldset>
+
+		<fieldset>
 			<legend>Custom layout</legend>
 			<div>
 				<label>Encoded layout string (leave empty to generate; generation params below are then ignored)</label>
@@ -156,7 +185,13 @@ import { DungeonType } from '@drpg/prisma/enums';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { fightBackgroundList } from '@drpg/core/models/fight/FightBackgroundList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
+import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonClient';
 import DZTable from '../common/DZTable.vue';
+
+/** Editor row: the form uses null for "none" where DungeonScenario simply omits the field. */
+type ScenarioRow = { text: string; icon: 'chest' | 'scroll'; obj: number | null; count: number; collec: number | null };
 
 const placeEnumEntries = Object.entries(PlaceEnum).filter(([key]) => isNaN(Number(key))) as [string, number][];
 
@@ -170,6 +205,9 @@ export default defineComponent({
 			monsterList,
 			monsterNames: Object.keys(monsterList),
 			fightBackgroundList,
+			itemList,
+			rewardList,
+			scenarios: [] as ScenarioRow[],
 			// Keys whose assets/battle preview 404'd — see backgroundPreview.
 			missingPreviews: [] as string[],
 			selectedDungeonId: '' as string,
@@ -218,9 +256,26 @@ export default defineComponent({
 				this.form.isActive = dungeon.isActive;
 				this.form.pool = dungeon.monsterPool ? JSON.parse(dungeon.monsterPool) : [];
 				this.form.fightBackgrounds = dungeon.fightBackgrounds ? JSON.parse(dungeon.fightBackgrounds) : [];
+				this.scenarios = (dungeon.scenarios ? (JSON.parse(dungeon.scenarios) as DungeonScenario[]) : []).map(sc => ({
+					text: sc.text,
+					icon: sc.icon ?? 'chest',
+					obj: sc.obj ?? null,
+					count: sc.count ?? 1,
+					collec: sc.collec ?? null
+				}));
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
+		},
+		/** Drop the form's nulls: the backend validator rejects an explicit null item/reward. */
+		scenarioPayload() {
+			return this.scenarios.map(sc => ({
+				text: sc.text,
+				icon: sc.icon,
+				obj: sc.obj ?? undefined,
+				count: sc.obj != null ? sc.count : undefined,
+				collec: sc.collec ?? undefined
+			}));
 		},
 		async handleSubmit() {
 			if (this.form.name.length < 1) {
@@ -237,10 +292,12 @@ export default defineComponent({
 						condition: this.form.condition,
 						pool: this.form.pool,
 						fightBackgrounds: this.form.fightBackgrounds,
+						scenarios: this.scenarioPayload(),
 						isActive: this.form.isActive
 					});
 					this.$toast.success(`Dungeon ${this.selectedDungeonId} updated`);
 					this.selectedDungeonId = '';
+					this.scenarios = [];
 					this.dungeons = await AdminService.getDungeons();
 					return;
 				}
@@ -254,6 +311,7 @@ export default defineComponent({
 								monsterLevel: this.form.monsterLevel,
 								pool: this.form.pool,
 								fightBackgrounds: this.form.fightBackgrounds,
+								scenarios: this.scenarioPayload(),
 								placeStart: this.form.placeStart ?? undefined,
 								placeEnd: this.form.placeEnd ?? undefined,
 								condition: this.form.condition,
@@ -265,6 +323,7 @@ export default defineComponent({
 								monsterLevel: this.form.monsterLevel,
 								pool: this.form.pool,
 								fightBackgrounds: this.form.fightBackgrounds,
+								scenarios: this.scenarioPayload(),
 								// an emptied number input is '' — omit it so the backend picks a random seed
 								seed: typeof this.form.seed === 'number' ? this.form.seed : undefined,
 								width: this.form.width,
@@ -293,6 +352,7 @@ export default defineComponent({
 				await AdminService.deleteDungeon(this.selectedDungeonId);
 				this.selectedDungeonId = '';
 				this.form.name = '';
+				this.scenarios = [];
 				this.dungeons = await AdminService.getDungeons();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -364,6 +424,22 @@ form {
 		background-color: #f3ca92;
 		color: #710;
 		font-family: monospace;
+	}
+	.row {
+		flex-direction: row;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+		input[type='number'] {
+			width: 70px;
+		}
+	}
+	.short {
+		width: 60px;
+	}
+	.scenario .text {
+		flex: 1;
+		min-width: 200px;
 	}
 	.bg-previews {
 		flex-direction: row;

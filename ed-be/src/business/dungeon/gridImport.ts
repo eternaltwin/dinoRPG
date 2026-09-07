@@ -17,6 +17,7 @@ import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonClient';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from './DungeonCodec.js';
+import { DungeonItem } from './types.js';
 import type { DungeonDoor, DungeonLevel, DungeonRoom, DungeonStruct } from './types.js';
 
 const MAX_DOORS_PER_ROOM = 31; // 5-bit count in the codec, unchecked by encode()
@@ -47,6 +48,18 @@ export function checkScenarios(raw: unknown): DungeonScenario[] {
 		if (s.collec != null && !(s.collec in rewardList)) fail(`scenario ${i} grants an unknown reward`);
 		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec, raw: true };
 	});
+}
+
+/**
+ * Every IScenario item in a layout indexes the dungeon's scenario list: an item
+ * pointing past the end is a chest/scroll that can only ever stay silent, so
+ * refuse the dungeon instead of storing one that is mute by construction.
+ */
+export function checkScenarioCoverage(d: DungeonStruct, scenarios: DungeonScenario[]): void {
+	for (const lvl of d.levels)
+		for (const room of lvl.rooms)
+			if (room.item && room.item.k === DungeonItem.IScenario && room.item.v >= scenarios.length)
+				fail(`scenario item v=${room.item.v} has no scenario entry (${scenarios.length} provided)`);
 }
 
 export function structFromGrid(g: DungeonGrid): DungeonStruct {

@@ -41,7 +41,6 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	no: {
 		stepName: 'no',
 		nextStep: [],
-		alias: 'nothing',
 		redirect: 'nothing'
 	},
 	quest2: {
@@ -150,7 +149,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	bye: {
 		stepName: 'bye',
 		nextStep: [],
-		alias: 'nothing'
+		redirect: 'nothing'
 	},
 	begin_star: {
 		stepName: 'begin_star',

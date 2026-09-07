@@ -24,12 +24,11 @@ export async function getTestUsers() {
 	return await prisma.player.findMany({
 		where: {
 			name: {
-				contains: 'test',
+				contains: 'test'
 			}
 		}
 	});
 }
-
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return withSpan(createPlayer.name, async () => {
@@ -49,6 +48,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 				skipFight: true,
 				skipLevel: true,
 				autoReequipItems: true,
+				bypassGatheringGrid: true,
 				archivedSiteId: true,
 				shareArchivedData: true,
 				displayedNotifications: true,
@@ -681,6 +681,7 @@ export async function getCommonDataRequest(playerId: string) {
 					skipFight: true,
 					skipLevel: true,
 					autoReequipItems: true,
+					bypassGatheringGrid: true,
 					archivedSiteId: true,
 					shareArchivedData: true,
 					displayedNotifications: true,
