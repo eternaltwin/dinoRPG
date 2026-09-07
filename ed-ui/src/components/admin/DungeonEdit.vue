@@ -89,8 +89,10 @@
 		<fieldset>
 			<legend>Scenarios (a Scenario item with value N triggers entry #N: popup text + optional grants)</legend>
 			<label class="hint">
-				An imported or generated layout carries Scenario items indexing this list — leave it short and the matching
-				chests/scrolls stay silent. The layout signature counts them: "4S" means entries #0 to #3 are needed.
+				An imported or generated layout carries Scenario items indexing this list — its signature counts them, so "4S"
+				means entries #0 to #3. A layout stores their index but never their text: entries you leave out are filled with
+				the key scenario_&lt;i&gt;. Texts are i18n keys, resolved as dungeon.&lt;dungeon name&gt;.&lt;key&gt; — write
+				the sentence in the locale files, not here.
 			</label>
 			<div v-for="(sc, i) in scenarios" :key="i" class="row scenario">
 				<b>#{{ i }}</b>
@@ -107,7 +109,7 @@
 					<option :value="null">no collection</option>
 					<option v-for="(r, id) in rewardList" :key="id" :value="Number(id)">{{ r.name }}</option>
 				</select>
-				<input type="text" v-model="sc.text" placeholder="Popup text" class="text" />
+				<input type="text" v-model="sc.text" placeholder="i18n key, e.g. scenario_0" class="text" />
 				<button type="button" @click="scenarios.splice(i, 1)">✕</button>
 			</div>
 			<button type="button" @click="scenarios.push({ text: '', icon: 'chest', obj: null, count: 1, collec: null })">

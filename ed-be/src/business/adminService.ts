@@ -55,7 +55,7 @@ import {
 } from '../dao/dungeonRunDao.js';
 import { seal, unseal } from '../utils/dungeonCrypto.js';
 import { rollMonsters } from './dungeon/monsters.js';
-import { checkScenarioCoverage, checkScenarios, structFromGrid } from './dungeon/gridImport.js';
+import { checkScenarios, scenariosFromStruct, structFromGrid } from './dungeon/gridImport.js';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
 
@@ -1190,9 +1190,8 @@ export async function createSeededDungeon(req: Request) {
 		const encoded = new DungeonCodec().encode(d);
 		// BitCodec.write does not mask overflowing values — round-trip before sealing.
 		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
-		// Every chest/scroll (IScenario item) must point at one of the dungeon's scenario entries.
-		const scenarios = checkScenarios(req.body.scenarios);
-		checkScenarioCoverage(d, scenarios);
+		// Every chest/scroll (IScenario item) needs an entry; the grid's own get keys too.
+		const scenarios = scenariosFromStruct(d, checkScenarios(req.body.scenarios));
 		const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 		const created = await createDungeon(
 			seal(encoded),
@@ -1217,10 +1216,10 @@ export async function createSeededDungeon(req: Request) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
 		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
-		// The layout's IScenario items index this list, so it must travel with them: dropping it
-		// leaves every chest/scroll silent and drawn with decorateScenarios' fallback icon.
-		const scenarios = checkScenarios(req.body.scenarios);
-		checkScenarioCoverage(codec.d, scenarios);
+		// The layout's IScenario items index this list. The string carries their count but no text,
+		// so anything the admin did not write gets the scenario_<i> key to translate — without an
+		// entry the chest/scroll is silent, grants nothing and never counts as read.
+		const scenarios = scenariosFromStruct(codec.d, checkScenarios(req.body.scenarios));
 		const created = await createDungeon(
 			seal(codec.encode()),
 			type,
@@ -1258,8 +1257,7 @@ export async function createSeededDungeon(req: Request) {
 	const encoded = new DungeonCodec().encode(d);
 	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 	// OriginalGenerator scatters IScenario items numbered 0..n-1, which index this list.
-	const scenarios = checkScenarios(req.body.scenarios);
-	checkScenarioCoverage(d, scenarios);
+	const scenarios = scenariosFromStruct(d, checkScenarios(req.body.scenarios));
 	const created = await createDungeon(
 		seal(encoded),
 		type,
@@ -1306,17 +1304,17 @@ export async function updateDungeonAdmin(req: Request) {
 	}
 	let scenarios = existing.scenarios;
 	if (req.body.scenarios != null) {
-		const rows = checkScenarios(req.body.scenarios);
+		// The sealed layout is the only record of how many entries the dungeon needs, so a short
+		// list is topped up with keys rather than leaving those chests/scrolls orphaned. Re-saving
+		// a dungeon imported before this backfills its list.
 		const codec = new DungeonCodec();
-		// The sealed layout is the only record of how many entries the dungeon needs. An empty
-		// list is left alone: dungeons stored before this check exist and must stay editable.
 		const layout = unseal({
 			cipher: Buffer.from(existing.cipher),
 			iv: Buffer.from(existing.iv),
 			tag: Buffer.from(existing.tag)
 		});
-		if (rows.length > 0 && codec.decode(layout)) checkScenarioCoverage(codec.d, rows);
-		scenarios = JSON.stringify(rows);
+		const rows = checkScenarios(req.body.scenarios);
+		scenarios = JSON.stringify(codec.decode(layout) ? scenariosFromStruct(codec.d, rows) : rows);
 	}
 
 	return updateDungeonCatalog(id, {

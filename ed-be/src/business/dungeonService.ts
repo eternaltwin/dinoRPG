@@ -506,8 +506,8 @@ export async function move(req: Request): Promise<MoveResult> {
 			if (sc.obj != null || sc.collec != null) await checkpoint(next);
 			if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
 			if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
-			// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
-			scenario = { text: sc.raw ? sc.text : `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
+			// Scenario texts are always i18n keys — the client resolves them, never prints them.
+			scenario = { text: `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
 		}
 
 		// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.
