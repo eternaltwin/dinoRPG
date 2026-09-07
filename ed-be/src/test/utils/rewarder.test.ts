@@ -40,6 +40,7 @@ import { createLog } from '../../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { rewarder } from '../../utils/rewarder.js';
 import { gameConfig } from '../../utils/gameConfig.js';
+import { Reward } from '../../../../core/src/models/reward/RewardList.mjs';
 
 const team = (status: number[] = [], level = 1) => [{ id: 1, level, status: status.map(statusId => ({ statusId })) }];
 
@@ -198,6 +199,11 @@ describe('rewarder', () => {
 			RewardEnum.GOLD,
 			RewardEnum.EPIC
 		]);
+		expect(createNotification).not.toHaveBeenCalledOnce();
+	});
+
+	it('non displayed epic should not notify', async () => {
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: Reward.TIK }], team(), 'p1');
 		expect(createNotification).not.toHaveBeenCalledOnce();
 	});
 });
