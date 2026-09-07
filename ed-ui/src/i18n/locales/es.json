@@ -319,7 +319,7 @@
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
 		"details": "Detalles",
-		"return": "Retour"
+		"return": "Volver"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -4406,7 +4406,7 @@
 			"pteroz": "Teroz",
 			"hippo": "Hippoclamp",
 			"rocky": "Rokky",
-			"pirhaloz": "Pirhaloz",
+			"pirhaloz": "Piranho",
 			"pirhanoz": "Piranta",
 			"kazka": "Kaskadino",
 			"anguil": "Anguilos",
@@ -5302,15 +5302,15 @@
 	},
 	"dungeon": {
 		"buttons": {
-			"up": "Bouger vers le haut",
-			"left": "Bouger vers la gauche",
-			"right": "Bouger vers la droite",
-			"down": "Bouger vers le bas",
-			"irma": "Utiliser une potion d'Irma pour continuer à avancer",
-			"stair_down": "Descendre les escaliers",
-			"stair_up": "Monter les escaliers",
-			"start": "Retourner à l'entrée du donjon",
-			"exit": "Sortir du donjon"
+			"up": "Mover hacia arriba",
+			"left": "Mover hacia la izquierda",
+			"right": "Mover hacia la derecha",
+			"down": "Mover hacia abajo",
+			"irma": "Usar una poción de la Bruja Lola para continuar avanzando",
+			"stair_down": "Bajar las escaleras",
+			"stair_up": "Subir las escaleras",
+			"start": "Volver a la entrada del laberinto",
+			"exit": "Salir del laberinto"
 		},
 		"disclaimer": "**{dinoz}** está explorando actualmente **{dungeonName}**. Solo podrá salir si encuentra la salida, vuelve a la entrada o muere.",
 		"floor": "Nivel {floor}",

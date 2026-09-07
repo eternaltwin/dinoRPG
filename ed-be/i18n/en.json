@@ -352,7 +352,7 @@
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"notFound": "This dungeon does not exist.",
+		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Your Dinoz is not at the entrance of the dungeon.",
 		"wrongTeam": "A group is already exploring this dungeon.",
 		"noRun": "You have never visited this dungeon.",
@@ -360,11 +360,15 @@
 		"notHealing": "You cannot use this item here, you must go to a healing zone."
 	},
 	"UnavailableReason": {
-		"frozen": "Your Dinoz is frozen",
-		"sacrificed": "Your Dinoz is sacrificed",
-		"selling": "Your Dinoz is in auction",
-		"superdom": "Your Dinoz is at the Superdom",
-		"resting": "Your Dinoz is resting",
+		"frozen": "Your Dinoz is frozen.",
+		"unfreezing": "Your Dinoz is being unfrozen.",
+		"defending": "Your Dinoz is defending your Clan castle.",
+		"restingAttack": "Your Dinoz is recovering from its fight.",
+		"sacrificed": "Your Dinoz is sacrificed.",
+		"unsacrificing": "Your Dinoz is being resurrected.",
+		"selling": "Your Dinoz is in auction.",
+		"superdom": "Your Dinoz is at the Superdom.",
+		"resting": "Your Dinoz is resting.",
 		"dungeon": "Your Dinoz is exploring a dungeon."
 	},
 	"fb_tournament": {
