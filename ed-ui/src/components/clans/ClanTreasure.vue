@@ -17,10 +17,11 @@
 import { defineComponent } from 'vue';
 import { ClanService } from '../../services/ClanService.js';
 import { playerStore } from '../../store/index.js';
-import { errorHandler, utils } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'ClanTreasure',
@@ -33,9 +34,7 @@ export default defineComponent({
 	},
 	computed: {
 		treasureValue(): string {
-			return utils.beautifulNumber(
-				this.treasure.reduce((acc, cur) => acc + cur.price * (cur.quantity ?? 0), 0).toString()
-			);
+			return formatNumber(this.treasure.reduce((acc, cur) => acc + cur.price * (cur.quantity ?? 0), 0));
 		}
 	},
 	methods: {

@@ -174,9 +174,7 @@
 			<DZDisclaimer
 				help
 				round
-				:content="
-					$t('clan.war.disclaimerAttack', { cost: utils.beautifulNumber((attackCost?.trueValue ?? 0).toString()) })
-				"
+				:content="$t('clan.war.disclaimerAttack', { cost: formatNumber(attackCost?.trueValue ?? 0) })"
 			/>
 			<div class="ingredientWrapper" v-if="attackCost && attackCost.canAfford">
 				<Tippy
@@ -208,7 +206,7 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZTable from '../common/DZTable.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { ClanService } from '../../services';
-import { errorHandler, utils } from '../../utils';
+import { errorHandler } from '../../utils';
 import { clanStore } from '../../store/clanStore';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Fight } from '@eternaltwin/dinorpg_animations';
@@ -231,6 +229,7 @@ import { computeRepairCost, computeWarCost } from '@drpg/core/models/clan/warCal
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import axios from 'axios';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'ClanWar',
@@ -250,7 +249,7 @@ export default defineComponent({
 			previousDefendersIds: [] as number[],
 			repairCost: null as RepairCost | null,
 			attackCost: null as WarCost | null,
-			utils: utils,
+			formatNumber: formatNumber,
 			ingredients: [] as treasureIngredient[],
 			repairLoading: false,
 			repairForm: {

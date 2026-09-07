@@ -9,10 +9,7 @@
 		round
 		:content="$t(`dojo.timer.${state.phase}`, calculateTimeRemaining(state.nextScheduledMatch))"
 	/>
-	<DZDisclaimer
-		round
-		:content="$t(`dojo.timer.cashPrice`, { cashPrice: utils.beautifulNumber(state.cashPrice.toString()) })"
-	/>
+	<DZDisclaimer round :content="$t(`dojo.timer.cashPrice`, { cashPrice: formatNumber(state.cashPrice) })" />
 	<DZDisclaimer v-if="!tournamentTeam && tournamentState" round help :content="$t(`dojo.timer.noTeam`)" />
 </template>
 
@@ -21,13 +18,13 @@ import { defineComponent, PropType } from 'vue';
 import { dojoStore } from '../../store/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { TournamentState } from '@drpg/core/models/dojo/tournament';
-import { utils } from '../../utils';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'DojoTimer',
 	data() {
 		return {
-			utils: utils
+			formatNumber: formatNumber
 		};
 	},
 	computed: {

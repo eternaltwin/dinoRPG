@@ -226,6 +226,7 @@ import { CINEMA_LINK } from '../../utils/goTo.js';
 import LiveStats from './LiveStats.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 import { NotificationSeverity, AdminRole } from '@drpg/prisma/enums';
+import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -397,7 +398,7 @@ export default defineComponent({
 									' ' + r.quantity + ' **' + this.$t(`item.name.${itemList[r.value].name.toLocaleLowerCase()}`) + '**'
 								);
 							case RewardEnum.GOLD:
-								return ' **' + this.$t(`notification.rewardGold`, { quantity: r.value }) + '**';
+								return ' **' + this.$t(`notification.rewardGold`, { quantity: formatNumber(r.value, '.') }) + '**';
 						}
 					});
 					return {
