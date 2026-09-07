@@ -4,15 +4,14 @@ icon:
   name: small_member
 ---
 
-# Adopter un Dinoz
+# Adoptar un Dino
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **50 000** pièces d'or ![](@icons/small_gold) obtenues lors de la création de votre compte.
+Lo primero que debes hacer en DinoRPG es adoptar un Dino. Para ello dispones de **50 000** monedas de oro ![](@icons/small_gold) obtenidas al crear tu cuenta.
 
-En cliquant sur ![ACHETER UN DINOZ](@guide/adopt_button_fr) dans le menu de gauche ou ![bouton mobile](@icons/act_treasure) sur mobile, vous pourrez accéder à l'Enclos des Dinoz. Chaque Dinoz est unique et chaque jour l'enclos vous proposera une nouvelle sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. Cette sélection change aussi à chaque adoption faite via l'enclos.
+Al hacer clic en ![¡COMPRAR UN DINO!](@guide/adopt_button_es) en el menú de la izquierda o en ![botón móvil](@icons/act_treasure) desde un dispositivo móvil y podrás acceder a la Tienda de Dinos. Cada Dino es único y todos los días la Tienda pone a tu disposición una selección diferente de Dinos entre los cuales podrás elegir el que más te guste. Esta selección también cambia con cada vez que compres un Dino en la tienda.
 
-Chaque Dinoz est présenté de la façon suivante :
-![Écran d'adoption](@guide/adopt_shop_fr)
+Cada Dino es presentado de la siguiente manera: ![Pantalla de adopción](@guide/adopt_shop_es)
 
-Vous pouvez voir une image du Dinoz, sa **race** et son **prix**. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères.
+Puedes ver la imagen del Dino, su **raza** y su **precio**. Hay diferentes razas de Dinos y cada una tiene sus características propias. En particular, los valores de los **5 elementos** indicados al realizar la compra dependen de la raza del Dino, y algunas razas disponen de una **competencia suplementaria**. Estos dos aspectos influyen en el **combate**, como veremos más adelante. El precio también varía según la raza del Dino, ya que algunas razas son más raras y, por lo tanto, más caras.
 
-Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.
+¡Elige el Dino que más te guste y cómpralo!
