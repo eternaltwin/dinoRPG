@@ -11,6 +11,6 @@ export interface NpcData {
 	condition?: Condition;
 	fight?: MonsterFiche[];
 	reward?: Rewarder[];
-	// To redirect to another existing step of the NPC
+	// To redirect to another existing step of the NPC. Equivalent to "target" in MT source xml.
 	redirect?: string;
 }
