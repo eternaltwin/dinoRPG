@@ -4741,7 +4741,7 @@
 			"pools": ":chrono: El siguiente combate de la fase de grupos tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"finals": ":chrono: El siguiente combate de las fases finales tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
 			"nextQualif": ":chrono: Las próximas fases clasificatorias comenzarán en {day} días, {hours} horas y {minutes} minutos.",
-			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de {cashPrice} :gold:!!",
+			"cashPrice": "¡¡:gold: El premio en oro para este torneo es de **{cashPrice}** :gold:!!",
 			"noTeam": "No has inscrito un equipo para este torneo."
 		},
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por **{team} Dinos** con un **nivel máximo de {level}**. Las razas de Dinos disponibles son **{races}**. Estas razas ya están filtradas para tu selección.",
