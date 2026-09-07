@@ -416,6 +416,9 @@ class TournamentManager {
 						metadata: true,
 						id: true,
 						result: true
+					},
+					orderBy: {
+						tournamentStep: 'asc'
 					}
 				},
 				cashPrice: true
