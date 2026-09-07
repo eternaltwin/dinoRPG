@@ -352,24 +352,24 @@
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"inexistent": "This dungeon does not exist.",
+		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Your Dinoz is not at the entrance of the dungeon.",
 		"wrongTeam": "A group is already exploring this dungeon.",
 		"noRun": "You have never visited this dungeon.",
 		"notAtExit": "You cannot leave the dungeon from here!",
-		"notHealing": "Vous ne pouvez pas utiliser un objet ici, il vous faut aller à une zone de soin."
+		"notHealing": "You cannot use this item here, you must go to a healing zone."
 	},
 	"UnavailableReason": {
-		"frozen": "Votre Dinoz est congelé.",
-		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
-		"defending": "Votre Dinoz défend le château de votre clan.",
-		"restingAttack": "Votre Dinoz se remet de son combat.",
-		"sacrificed": "Votre Dinoz est sacrifié.",
-		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
-		"selling": "Votre Dinoz est en vente.",
-		"superdom": "Votre Dinoz est au superdom.",
-		"resting": "Votre Dinoz se repose.",
-		"dungeon": "Votre Dinoz explore un donjon."
+		"frozen": "Your Dinoz is frozen.",
+		"unfreezing": "Your Dinoz is being unfrozen.",
+		"defending": "Your Dinoz is defending your Clan castle.",
+		"restingAttack": "Your Dinoz is recovering from its fight.",
+		"sacrificed": "Your Dinoz is sacrificed.",
+		"unsacrificing": "Your Dinoz is being resurrected.",
+		"selling": "Your Dinoz is in auction.",
+		"superdom": "Your Dinoz is at the Superdom.",
+		"resting": "Your Dinoz is resting.",
+		"dungeon": "Your Dinoz is exploring a dungeon."
 	},
 	"fb_tournament": {
 		"noOpponent": "There is no one to fight at the moment"
