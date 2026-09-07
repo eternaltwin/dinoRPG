@@ -1308,13 +1308,14 @@ export async function updateDungeonAdmin(req: Request) {
 	if (req.body.scenarios != null) {
 		const rows = checkScenarios(req.body.scenarios);
 		const codec = new DungeonCodec();
-		// The sealed layout is the only record of how many entries the dungeon needs.
+		// The sealed layout is the only record of how many entries the dungeon needs. An empty
+		// list is left alone: dungeons stored before this check exist and must stay editable.
 		const layout = unseal({
 			cipher: Buffer.from(existing.cipher),
 			iv: Buffer.from(existing.iv),
 			tag: Buffer.from(existing.tag)
 		});
-		if (codec.decode(layout)) checkScenarioCoverage(codec.d, rows);
+		if (rows.length > 0 && codec.decode(layout)) checkScenarioCoverage(codec.d, rows);
 		scenarios = JSON.stringify(rows);
 	}
 
