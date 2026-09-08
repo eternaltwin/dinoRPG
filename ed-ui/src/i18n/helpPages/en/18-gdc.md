@@ -4,6 +4,8 @@ icon:
   name: small_attack
 ---
 
+![point d'interrogation](@icons/small_question) Cette page n'est pas à jour avec le nouveau fonctionnement de la guerre des clans.
+
 Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :
 
 # Le Trésor du Clan
@@ -13,6 +15,7 @@ Chaque Clan possède un Trésor qui correspond à la valeur des ingrédients à 
 Pour remplir le Trésor du Clan, chaque membre peut donner tout ou partie de ses ingrédients recueillis lors de ses actions de collecte. À partir de la page Ingrédients dans le menu de droite, vous aurez accès à un bouton permettant de 'Donner au Clan'.
 
 Le trésor a différentes utilités, les voici :
+
 - _La construction/reconstruction du Château_
 - _La déclaration de guerre contre un autre Clan_
 - _Le paiement du percepteur_
@@ -30,12 +33,13 @@ Voici un exemple de l'onglet Château :
 ![Exemple de page de château](@guide/castle)
 
 La page du Château résume ce qui suit :
+
 - _L'emplacement du Château_
-- _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300:pv: points de vie._
+- _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300 :pv: points de vie._
 
 # Déclarer une guerre
 
-Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquer, les clans qui vous attaques et les batailles que vous avez déjà remportés contre des clans adverses.
+Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquez, les clans qui vous attaquent et les batailles que vous avez déjà remportées contre des clans adverses.
 
 Pour lancer une guerre, il vous est nécessaire de disposer des ingrédients suffisants dans votre trésor. Une guerre dure 100 heures au maximum et ne peut être annulée. Pour remporter la guerre, il vous faudra détruire le château ennemi.
 
@@ -55,7 +59,7 @@ Voici un exemple d'une attaque de Château :
 
 Lorsque votre Clan est attaqué, il est important de préparer une bonne défense afin de ne pas perdre la Guerre lancée par un clan adverse ou lorsque vous déclarez la guerre.
 
-Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour ne pas que votre Château soit touché.
+Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour que votre Château ne soit pas touché.
 
 Voici un exemple d'une défense de Château :
 
@@ -64,4 +68,3 @@ Voici un exemple d'une défense de Château :
 # Le Percepteur
 
 Le percepteur doit être payé avant de déclarer une attaque. Il passe toujours dans la demi-heure qui suis l'heure qu'il propose ! Par exemple, s'il dit qu'il passera de 16h24 à 17h50, vous pourrez payer de 16h à 16h30.
-			

@@ -4,99 +4,99 @@ icon:
   name: small_fire
 ---
 
-# Les Combats
+# Fights
 
-Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monstres. Les différents protagonistes rejoignent alors le combat qui se déroule de façon automatique :
+A battle occurs when your Dinoz is attacked or attacks one or more monsters. The different participants then join the battle, which unfolds automatically:
 
 ![Combattre un monstre](@guide/fight)
 
-Les monstres et votre Dinoz attaquent au tour à tour, en fonction de leur **initiative**, de leur **vitesse**, et de leur **énergie**. À chaque coup, l'adversaire perd des **points de vie** ![pv](@icons/small_pv) qui sont affichés. Il faut que votre Dinoz tue tous les monstres pour pouvoir remporter le combat.
+Monsters and your Dinoz take turns attacking, based on their **initiative**, **speed**, and **energy**. With each hit, the opponent loses **health points** ![pv](@icons/small_pv), which are displayed. Your Dinoz must defeat all the monsters to win the battle.
 
-Lors de son tour, votre Dinoz peut effectuer une ou plusieurs des actions suivantes suivant son énergie :
+During its turn, your Dinoz can perform one or more of the following actions based on its energy:
 
-- Lancer un **assaut**, c'est-à-dire une attaque normale
-- Effectuer une **attaque spéciale**, qui remplace alors l'assaut
-- Utiliser une compétence de type **événement**
-- Utiliser un **équipement de combat**
+- Launch an **assault**, meaning a normal attack
+- Execute a **special attack**, which then replaces the assault
+- Use an **event** type skill
+- Use **combat equipment**
 
-## Les Éléments
+## The Elements
 
-Un Dinoz possède 5 valeurs d'**éléments** qui sont indiqués sur sa fiche :
+A Dinoz has 5 **elemental** values that are indicated on its profile:
 
-- ![Élément Feu](@elements/elem_fire) Feu
-- ![Élément Bois](@elements/elem_wood) Bois
-- ![Élément Eau](@elements/elem_water) Eau
-- ![Élément Foudre](@elements/elem_lightning) Foudre
-- ![Élément Air](@elements/elem_air) Air
+- ![](@elements/elem_fire) Fire
+- ![](@elements/elem_wood) Wood
+- ![](@elements/elem_water) Water
+- ![](@elements/elem_lightning) Lightning
+- ![](@elements/elem_air) Air
 
-Ces éléments sont organisés selon le **Grand Cycle des Éléments** :
+These elements are organized according to **the Grand Cycle of Elements**:
 
-![Grand Cycle des Éléments](@guide/elements)
+![Grand Cycle of Elements](@guide/elements)
 
-Un élément est fort contre les deux qui le suivent et faible contre les deux qui le précèdent. Ainsi, par exemple, le Feu est très fort contre le Bois et plutôt fort contre l'Eau, mais est très faible contre l'Air et plutôt faible contre la Foudre.
+An element is strong against the two that follow it and weak against the two that precede it. Thus, for example, Fire is very strong against Wood and quite strong against Water, but is very weak against Air and rather weak against Thunder.
 
-## Les Assauts
+## The Assaults
 
-Les Assauts se font toujours dans un ordre bien précis, qui est déterminé en fonction des valeurs des éléments, avec un tirage aléatoire en cas d'égalité.
+Assaults always occur in a specific order, determined by the elemental values, with a random draw in case of a tie.
 
-![Éléments du Dinoz](@guide/assault)
+![Dinoz Elements](@guide/assault)
 
-Ainsi, un Dinoz ayant les éléments ci-dessus va effectuer ses assauts dans l'ordre suivant :
+Thus, a Dinoz with the above elements will perform its assaults in the following order:
 
-- Eau ![Élément Eau](@elements/elem_water) en premier
-- puis Bois ![Élément Bois](@elements/elem_wood)
-- puis Foudre ![Élément Foudre](@elements/elem_lightning) et Air ![Élément Air](@elements/elem_air) dans un ordre indéterminé
-- et enfin Feu ![Élément Feu](@elements/elem_fire)
+- Water ![](@elements/elem_water) first
+- then Wood ![](@elements/elem_wood)
+- then Lightning ![](@elements/elem_lightning) and Air ![](@elements/elem_air) in a random order
+- and finally Fire ![](@elements/elem_fire)
 
-Une fois les 5 assauts effectués, le Dinoz recommencera à nouveau le cycle.
+Once the 5 assaults are completed, the Dinoz will go through the cycle again.
 
-En fonction de ses **éléments** et de ses **compétences**, le Dinoz a donc une certaine **puissance d'assaut** ainsi qu'une **défense** pour chaque élément. Ces caractéristiques sont visibles dans l'onglet **Détails** de la fiche du Dinoz.
+Based on its **elements** and **skills**, the Dinoz has a certain **assault power** and **defense** for each element. These characteristics are visible in the **Details** tab of the Dinoz' profile.
 
-Plus la **puissance d'assaut** d'un élément est forte et plus le Dinoz fera perdre des points de vie à ses adversaires quand il effectuera un assaut de cet élément. Plus la **défense** contre un élément est forte et plus le Dinoz sera protégé contre les attaques des adversaires effectuées avec cet élément.
+The stronger **the assault power** of an element, the more health points the Dinoz will deduct from its opponents when performing an assault of that element. The stronger **the defense** against an element, the more protected the Dinoz will be against attacks from opponents using that element.
 
-## Les Monstres
+## The Monsters
 
-De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire que tous vos éléments sont pris en compte lors de la défense. Cependant, certains monstres sont capables d'effectuer des assauts ou des attaques spéciales d'un élément particulier.
+Many monsters perform Void element assaults. This means that all your elements are taken into account during defense. However, some monsters are capable of performing assaults or special attacks of a particular element.
 
 ## Gains
 
-À la fin du combat, votre Dinoz gagne des pièces d'or :gold qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
+At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow it to heal, and **experience points** that will enable it to level up.
 
-## L'Énergie
+## The Energy
 
-![Énergie du Dinoz](@guide/energy)
+![Dinoz Energy](@guide/energy)
 
-Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le Dinoz détient. L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance.
+This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
 
-Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le Dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres.
+Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others.
 
-Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises. Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.
+This energy bar gradually fills up during the battle, referred to as **recovery**. The recovery of a Dinoz can vary depending on certain learned skills. The Dinoz must therefore wait until it has replenished its energy before using a skill.
 
-## Les Statuts en Combats
+## Fight Statuses
 
-Pendant le combat, différents statuts affecteront vos Dinoz, en bonus ou en malus, vous pouvez retrouver la liste de ses statuts ci-dessous :
+During the battle, different statuses will affect your Dinoz, either as a bonus or a penalty. You can find the list of these statuses below:
 
-- ![Statut Endormi](@guide/status_sleep) Le Dinoz est endormi, il ne peut pas bouger
-- ![Statut Endormi](@guide/status_untouchable) Le Dinoz ne peut être touché par un assaut classique
-- ![Statut Endormi](@guide/status_slow_down) Le Dinoz est ralenti
-- ![Statut Endormi](@guide/status_faster) Le Dinoz est plus rapide
-- ![Statut Endormi](@guide/status_petrified) Le Dinoz est pétrifié, il ne peut plus attaquer
-- ![Statut Endormi](@guide/status_assault_bonus) Le Dinoz a un bonus sur ses assauts
-- ![Statut Endormi](@guide/status_poisoned) Le Dinoz est empoisonné et subit des dégâts chaque tour
-- ![Statut Endormi](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
-- ![Statut Endormi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
-- ![Statut Endormi](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
-- ![Statut Endormi](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
-- ![Statut Endormi](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires
-- ![Statut Endormi](@guide/status_blocked_inventory) Le Dinoz ne peut plus utiliser le contenu de son inventaire
-- ![Statut Endormi](@guide/status_energy_penalty) Le Dinoz a un malus d'énergie
-- ![Statut Endormi](@guide/status_energy_bonus) Le Dinoz a un bonus d'énergie
-- ![Statut Endormi](@guide/status_bonus_def_fire) Le Dinoz a un bonus de défense en feu
-- ![Statut Endormi](@guide/status_bonus_def_wood) Le Dinoz a un bonus de défense en bois
-- ![Statut Endormi](@guide/status_bonus_def_water) Le Dinoz a un bonus de défense en eau
-- ![Statut Endormi](@guide/status_bonus_def_lightning) Le Dinoz a un bonus de défense en foudre
-- ![Statut Endormi](@guide/status_bonus_def_air) Le Dinoz a un bonus de défense en air
-- ![Statut Endormi](@guide/status_initiative_bonus) Le Dinoz a un bonus en initiative
-- ![Statut Endormi](@guide/status_initiative_penalty) Le Dinoz a un malus en initiative
-- ![Statut Endormi](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
-- ![Statut Endormi](@guide/status_def_bonus) Le Dinoz a un bonus en défense
+- ![Asleep Status](@guide/status_sleep) The Dinoz is asleep, it cannot move
+- ![Intangible Status](@guide/status_untouchable) The Dinoz cannot be hit by a standard assault
+- ![Slowed Status](@guide/status_slow_down) The Dinoz is slowed down
+- ![Accelerated Status](@guide/status_faster) The Dinoz is faster
+- ![Petrified Status](@guide/status_petrified) The Dinoz is petrified, it cannot attack anymore
+- ![Assault Bonus Status](@guide/status_assault_bonus) The Dinoz has a bonus on its assaults
+- ![Poison Status](@guide/status_poisoned) The fighter is poisoned and takes damage every cycle
+- ![Locked Status](@guide/status_locked) The fighter's element wheel is locked
+- ![Dazzled Status](@guide/status_dazzled) Le fighter is dazzled and may miss its assaults
+- ![Statut Protégé](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
+- ![Statut Muet](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
+- ![Statut Sharingan](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires
+- ![Statut Équipement Bloqué](@guide/status_blocked_inventory) Le Dinoz ne peut plus utiliser d'équipements
+- ![Statut Pénalité d'Énergie](@guide/status_energy_penalty) Le Dinoz a un malus d'énergie
+- ![Statut Bonus d'Énergie](@guide/status_energy_bonus) Le Dinoz a un bonus d'énergie
+- ![Statut Défense Feu](@guide/status_bonus_def_fire) Le Dinoz a un bonus de défense en feu
+- ![Statut Défense Bois](@guide/status_bonus_def_wood) Le Dinoz a un bonus de défense en bois
+- ![Statut Défense Eau](@guide/status_bonus_def_water) Le Dinoz a un bonus de défense en eau
+- ![Statut Défense Foudre](@guide/status_bonus_def_lightning) Le Dinoz a un bonus de défense en foudre
+- ![Statut Défense Air](@guide/status_bonus_def_air) Le Dinoz a un bonus de défense en air
+- ![Statut Bonus Initiative](@guide/status_initiative_bonus) Le Dinoz a un bonus en initiative
+- ![Statut Malus Initiative](@guide/status_initiative_penalty) Le Dinoz a un malus en initiative
+- ![Statut Bonus Esquive](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
+- ![Statut Bonus Défense](@guide/status_def_bonus) Le Dinoz a un bonus en défense

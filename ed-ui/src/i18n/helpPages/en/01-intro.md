@@ -13,3 +13,5 @@ Here, you play as a **Dinoz Master**, you can adopt and play multiple wild creat
 If you need assistance, you can access this **Game Guide** at any time by clicking the button ![question mark](@icons/small_question) in the right Menu.
 
 To continue reading the **Guide**, please click the button ![next page](@icons/small_page_down) below.
+
+Some sections of this guide are not up-to-date and in the processor of being reworked.

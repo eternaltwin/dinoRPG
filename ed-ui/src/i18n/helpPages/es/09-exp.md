@@ -4,7 +4,7 @@ icon:
   name: small_xp
 ---
 
-## L'Éxpérience
+## La Experiencia
 
 À la fin de chaque combat, votre Dinoz va gagner des **points d'expérience** ![](@icons/small_xp). Une fois que la barre d'expérience présente sur la fiche du Dinoz est remplie, votre Dinoz pourra **gagner un niveau**.
 

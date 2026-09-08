@@ -4,10 +4,12 @@ icon:
   name: small_attack
 ---
 
+![point d'interrogation](@icons/small_question) Le Championnat des Clans n'est pas encore implémenté. La description décrit ci-dessous son fonctionnement d'origine.
+
 Les **Clans** peuvent aussi s'affronter les uns aux autres lors du Championnat des Clans ! En voici les principes et les règles.
 
 # Le Championnat
-			
+
 Une fois un championnat démarré, plus aucun Clan ne peut rejoindre un classement ou changer de classement jusqu'à la fin de ce Championnat.
 
 Il n'est pas possible d'avoir un match nul en phase finale : ci cela devait arriver, un des deux Clans serait déclaré vainqueur par tirage au sort.
@@ -55,4 +57,3 @@ Le placement des Dinoz est donc extrêmement important si vous ne voulez pas vou
 Si un Dinoz attaque un adversaire par derrière, il le fait seul, l'adversaire sera pris par surprise et ne pourra pas appeler de renforts. Le combat sera alors en 1 contre 1.
 
 Si un Dinoz meurt au cours d'un combat, il est retiré de la bataille et ne pourra plus la rejoindre. Un Dinoz peut aussi quitter la bataille volontairement en retournant sur la ligne de touche de son Clan, il pourra alors se soigner et retourner combattre.
-			
