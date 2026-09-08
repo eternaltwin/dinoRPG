@@ -4,7 +4,7 @@ icon:
   name: small_fire
 ---
 
-# Les Combats
+# Los Combates
 
 Un combat a lieu quand votre Dinoz est attaqué ou attaque un ou plusieurs monstres. Les différents protagonistes rejoignent alors le combat qui se déroule de façon automatique :
 
