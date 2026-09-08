@@ -85,7 +85,7 @@
 			"skipFight": "Mostrar directamente el resultado del combate",
 			"skipLevel": "Saltar la animación de subida de nivel",
 			"autoReequipItems": "Reequipar automáticamente los objetos consumidos",
-			"bypassGatheringGrid": "Saltarse la cuadrícula de recolección",
+			"bypassGatheringGrid": "Saltarse el tablero de recolección",
 			"archivedSiteId": "Sitio web histórico",
 			"shareArchivedData": "Compartir sus estadísticas Twinoid",
 			"displayedNotifications": "Número de notificaciones mostradas simultáneamente",
@@ -4451,7 +4451,7 @@
 			"quickened": "acelerado",
 			"shielded": "escudo",
 			"blessed": "Bendecido",
-			"healing": "curación"
+			"healing": "Curación"
 		},
 		"step": {
 			"timeLimit": "El combate durará como máximo {time} unidades de tiempo.",
@@ -4854,14 +4854,14 @@
 		"sections": {
 			"intro": "Introducción",
 			"adopt": "Adoptar un Dino",
-			"name": "Nombrar tu Dino",
+			"name": "Ponerle un nombre",
 			"card": "La Ficha del Dino",
 			"move": "Desplazarse",
 			"fight": "Los Combates",
-			"heal": "Curación",
-			"death": "Muerte",
-			"exp": "Experiencia",
-			"missions": "Misiones",
+			"heal": "Curarse",
+			"death": "La Muerte",
+			"exp": "La Experiencia",
+			"missions": "Las Misiones",
 			"status": "Los Estatus",
 			"equipment": "Equipamiento",
 			"epic": "Objetos Épicos",
