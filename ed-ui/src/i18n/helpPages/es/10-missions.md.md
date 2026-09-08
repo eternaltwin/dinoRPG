@@ -4,7 +4,7 @@ icon:
   name: small_gold
 ---
 
-# Les Missions
+# Las Misiones
 
 Au cours de vos aventures dans Dinoland, vous pourrez rencontrer de nombreux personnages. Certains de ces personnages comme **Papy Joe** vous donneront accès à une liste de **missions**.
 

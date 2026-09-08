@@ -5335,7 +5335,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
