@@ -36,10 +36,12 @@ import { addRewardToPlayer } from '../../dao/playerRewardsDao.js';
 import { updateDinoz } from '../../dao/dinozDao.js';
 import { upsertQuest } from '../../dao/questsDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
+import { createLog } from '../../dao/logDao.js';
+import { LogType } from '@drpg/prisma';
 import { rewarder } from '../../utils/rewarder.js';
 import { gameConfig } from '../../utils/gameConfig.js';
 
-const team = (status: number[] = []) => [{ id: 1, level: 1, status: status.map(statusId => ({ statusId })) }];
+const team = (status: number[] = [], level = 1) => [{ id: 1, level, status: status.map(statusId => ({ statusId })) }];
 
 beforeEach(() => {
 	vi.clearAllMocks();
@@ -160,5 +162,69 @@ describe('rewarder', () => {
 	it('handles redirect and unknown rewards without error', async () => {
 		await expect(rewarder([{ rewardType: RewardEnum.REDIRECT } as never], team(), 'p1')).resolves.toBeDefined();
 		await expect(rewarder([{ rewardType: 'unknown' } as never], team(), 'p1')).resolves.toBeDefined();
+	});
+});
+
+describe('percentage experience', () => {
+	// xp needed to leave a level: floor(100 * 1.075^(level - 1))
+	const maxXp = (level: number) => Math.floor(100 * Math.pow(1.075, level - 1));
+	const grantedXp = () => vi.mocked(updateDinoz).mock.calls[0][1].experience as { increment: number };
+
+	beforeEach(() => {
+		vi.mocked(gameConfig).mockReturnValue({
+			dinoz: { maxLevel: 50, maxQuantity: 100, leaderMessieBonus: 3, initialMaxLevel: 50 },
+			shop: { dinozNumber: 10, buyableQuetzu: 6 },
+			demonShop: { dinozNumber: 5 },
+			general: { initialMoney: 1000000, dailyGridRewards: 10 }
+		});
+	});
+
+	const grant = (percent: number, dinozLevel: number, missionLevel?: number) =>
+		rewarder(
+			[{ rewardType: RewardEnum.EXPERIENCE_PERCENT, value: percent } as never],
+			team([], dinozLevel),
+			'p1',
+			false,
+			missionLevel
+		);
+
+	it('grants the plain percentage when the dinoz is at the mission level', async () => {
+		await grant(20, 10, 10);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(10) * 0.2));
+	});
+
+	it('bonuses an under-levelled dinoz by 5% per level', async () => {
+		await grant(20, 10, 15);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(10) * 0.2 * 1.25));
+	});
+
+	it('maluses an over-levelled dinoz by 5% per level', async () => {
+		await grant(20, 15, 10);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(15) * 0.2 * 0.75));
+	});
+
+	it('caps the bonus at 150% beyond a 10-level gap', async () => {
+		await grant(20, 10, 22);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(10) * 0.2 * 1.5));
+	});
+
+	it('floors the malus at 10% beyond an 18-level gap', async () => {
+		await grant(20, 30, 10);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(30) * 0.2 * 0.1));
+	});
+
+	it('applies no modifier when no mission level is given', async () => {
+		await grant(20, 15);
+		expect(grantedXp().increment).toBe(Math.round(maxXp(15) * 0.2));
+	});
+
+	it('grants nothing to a dinoz at max level', async () => {
+		await grant(20, 50, 50);
+		expect(grantedXp().increment).toBe(0);
+	});
+
+	it('logs the xp actually granted against the dinoz', async () => {
+		await grant(20, 10, 10);
+		expect(createLog).toHaveBeenCalledWith(LogType.XPEarned, 'p1', 1, Math.round(maxXp(10) * 0.2));
 	});
 });

@@ -34,7 +34,7 @@
 												<tr>
 													<td v-if="innerMission.xp">
 														<div class="center">
-															<span class="xp">{{ innerMission.xp }}</span>
+															<span class="xp">{{ innerMission.xp }}%</span>
 															<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
 														</div>
 													</td>
@@ -120,7 +120,7 @@ export default defineComponent({
 							this.npcMissions
 								.find(npc => npc.name === mission.npc)
 								?.missions?.find(m => m.missionId === innerMission.id)?.rewards || [];
-						const xp = rewards.find(r => r.rewardType === this.RewardEnum.EXPERIENCE);
+						const xp = rewards.find(r => r.rewardType === this.RewardEnum.EXPERIENCE_PERCENT);
 						const gold = rewards.find(r => r.rewardType === this.RewardEnum.GOLD);
 						const items = rewards.filter(r => r.rewardType === this.RewardEnum.ITEM);
 						return {

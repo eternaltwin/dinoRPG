@@ -12,6 +12,7 @@ export const M_RODEUR: Mission[] = [
 	{
 		missionId: MissionID.RODEUR_RODRIZ,
 		missionName: 'rodriz',
+		level: 25,
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
@@ -71,6 +72,7 @@ export const M_RODEUR: Mission[] = [
 	{
 		missionId: MissionID.RODEUR_RODLIF,
 		missionName: 'rodlif',
+		level: 30,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ
 		},
@@ -80,8 +82,8 @@ export const M_RODEUR: Mission[] = [
 				value: 5000
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 250
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 31
 			}
 		],
 		steps: [

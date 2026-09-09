@@ -40,8 +40,32 @@ export const GROUP_GOLD_DAMPENING = 3;
 export const groupXpMultiplier = (size: number) => Math.min((size + 1) / 2, GROUP_XP_MAX_MULTIPLIER);
 
 /** Same bonus as groupXpMultiplier, damped, for gold. */
-export const groupGoldMultiplier = (size: number) =>
-	1 + (groupXpMultiplier(size) - 1) / GROUP_GOLD_DAMPENING;
+export const groupGoldMultiplier = (size: number) => 1 + (groupXpMultiplier(size) - 1) / GROUP_GOLD_DAMPENING;
+
+/**
+ * Mission xp is expressed as a percentage of the xp needed for the Dinoz's CURRENT level
+ * (see getMaxXp), so a mission is worth the same fraction of a level whatever the Dinoz level.
+ *
+ * On top of that, the gap to the mission's own level moves the reward: an under-levelled Dinoz
+ * earns more, an over-levelled one earns less. This is what stops a player from banking easy
+ * missions - they are one-shot per Dinoz - and cashing them in at level 40.
+ *
+ * The xp curve itself grows 7.5%/level; 5% is a damped version of it. The bounds are deliberately
+ * asymmetric: the bonus caps at +50% after a 10-level gap, while the malus keeps biting all the
+ * way down to 10% (an 18-level gap). Because the curve outgrows a shallow malus, only a floor this
+ * low makes banking a mission cost raw xp as well as progression - past an 11-level gap the Dinoz
+ * ends up with fewer xp points than it would have got at the mission's own level.
+ */
+export const MISSION_XP_LEVEL_STEP = 0.05;
+export const MISSION_XP_MAX_MULTIPLIER = 1.5;
+export const MISSION_XP_MIN_MULTIPLIER = 0.1;
+
+/** Reward multiplier for a Dinoz of `dinozLevel` completing a mission balanced for `missionLevel`. */
+export const missionXpMultiplier = (dinozLevel: number, missionLevel: number) =>
+	Math.min(
+		Math.max(1 + MISSION_XP_LEVEL_STEP * (missionLevel - dinozLevel), MISSION_XP_MIN_MULTIPLIER),
+		MISSION_XP_MAX_MULTIPLIER
+	);
 
 export const MARKET_MIN_VALUE = 5000;
 export const MARKET_MAX_ITEMS = 5;

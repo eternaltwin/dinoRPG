@@ -12,6 +12,7 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_UNMUTE,
 		missionName: 'unmute',
+		level: 15,
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
@@ -19,8 +20,8 @@ export const M_GARDIEN: Mission[] = [
 				quantity: 3
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 110
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 40
 			}
 		],
 		steps: [
@@ -93,6 +94,7 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_ORCHID,
 		missionName: 'orchid',
+		level: 15,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
@@ -103,8 +105,8 @@ export const M_GARDIEN: Mission[] = [
 				quantity: 1
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 30
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 11
 			}
 		],
 		steps: [
@@ -153,6 +155,7 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_LICENS,
 		missionName: 'licens',
+		level: 15,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
@@ -163,8 +166,8 @@ export const M_GARDIEN: Mission[] = [
 				quantity: 3
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 40
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 15
 			}
 		],
 		steps: [
@@ -195,6 +198,7 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_KING,
 		missionName: 'king',
+		level: 16,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE },
@@ -207,8 +211,8 @@ export const M_GARDIEN: Mission[] = [
 				value: 2500
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 35
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 12
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -273,13 +277,14 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_WISHES,
 		missionName: 'wishes',
+		level: 16,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 60
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -361,13 +366,14 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_NEWPLT,
 		missionName: 'newplt',
+		level: 17,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 75
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 24
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -465,6 +471,7 @@ export const M_GARDIEN: Mission[] = [
 	{
 		missionId: MissionID.GARDIEN_GSHOP,
 		missionName: 'gshop',
+		level: 18,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE },
@@ -477,8 +484,8 @@ export const M_GARDIEN: Mission[] = [
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 5
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 1
 			},
 			{
 				rewardType: RewardEnum.STATUS,

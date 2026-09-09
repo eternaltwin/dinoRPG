@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -26,6 +26,7 @@ vi.mock('../../dao/dinozMissionDao.js', () => ({
 vi.mock('../../dao/playerRewardsDao.js', () => ({ getPlayerRewards: vi.fn() }));
 vi.mock('../../dao/playerItemDao.js', () => ({ decreaseItemQuantity: vi.fn(), getPlayerItems: vi.fn() }));
 vi.mock('../../utils/rewarder.js', () => ({ rewarder: vi.fn() }));
+vi.mock('../../utils/gameConfig.js', () => ({ gameConfig: vi.fn(() => ({ dinoz: { maxLevel: 50 } })) }));
 vi.mock('../../utils/server/translate.js', () => ({ default: vi.fn((key: string) => key) }));
 vi.mock('../../business/fightService.js', () => ({
 	calculateFightVsMonsters: vi.fn(),
@@ -95,6 +96,7 @@ const OTHER_PLACE = 2;
 const NPC_NAME = 'gardener';
 const MISSION_ID = 100;
 const REWARDS = [{ rewardType: 'item', value: 7, quantity: 1 }];
+const MISSION_LEVEL = 10;
 
 // A single NPC offering one mission with three steps (talk -> fight -> give item).
 const baseNpc = {
@@ -104,6 +106,7 @@ const baseNpc = {
 		{
 			missionId: MISSION_ID,
 			missionName: 'TestMission',
+			level: MISSION_LEVEL,
 			rewards: REWARDS,
 			steps: [
 				{
@@ -144,6 +147,8 @@ function missionPlayer(
 				id: DINOZ_ID,
 				placeId: PLACE_ID,
 				canChangeName: false,
+				level: MISSION_LEVEL,
+				status: [],
 				missions: [{ missionId: MISSION_ID, step, isFinished: false, progress: 0, ...missionOverrides }],
 				...overrides
 			}
@@ -279,8 +284,21 @@ describe('endMission', () => {
 		const result = await endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }));
 
 		expect(mockRewarder).toHaveBeenCalledOnce();
+		expect(mockRewarder).toHaveBeenCalledWith(REWARDS, expect.anything(), 'player-1', false, MISSION_LEVEL);
 		expect(mockFinishMission).toHaveBeenCalledWith('player-1', DINOZ_ID, MISSION_ID);
 		expect(result).toEqual(REWARDS);
+	});
+
+	it('resolves a percentage xp reward into the xp actually granted', async () => {
+		const npc = npcList as Record<string, { missions: { rewards: unknown[] }[] }>;
+		npc[NPC_NAME].missions[0].rewards = [{ rewardType: RewardEnum.EXPERIENCE_PERCENT, value: 20 }];
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(0));
+		mockRewarder.mockResolvedValue([] as never);
+
+		const result = await endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }));
+
+		// Dinoz at the mission level: no bonus, no malus, so a plain 20% of maxXp(10) = 191.
+		expect(result).toEqual([{ rewardType: RewardEnum.EXPERIENCE, value: Math.round(191 * 0.2) }]);
 	});
 
 	it('throws when the mission was never started', async () => {
