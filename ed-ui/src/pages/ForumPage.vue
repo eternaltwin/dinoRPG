@@ -198,6 +198,21 @@ export default defineComponent({
 	.locked {
 		margin-left: 4px;
 	}
+	// How many posts the thread holds, as a badge rather than a loose number: the row is read at a
+	// glance, and a fixed width keeps the counts lined up down the listing.
+	.quantity {
+		flex-shrink: 0;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		min-width: 3.5em;
+		padding: 1px 8px;
+		border: 1px solid rgba(142, 62, 38, 0.35);
+		border-radius: 4px;
+		color: #8e3e26;
+		font-size: 12px;
+		letter-spacing: 0.04em;
+	}
 	&:hover {
 		box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.4);
 	}

@@ -256,9 +256,64 @@ export default defineComponent({
 		font-feature-settings: normal;
 		font-size: 16px;
 		font-variation-settings: normal;
+		// A pasted URL is one long word: without this it pushes the post wider than the page.
+		overflow-wrap: break-word;
 		&.moderated {
 			font-style: italic;
 			opacity: 0.8;
+		}
+
+		// --- The rendered Marktwin ---------------------------------------------------------------
+		// `v-html`, so scoped selectors miss it: every rule below has to go through `:deep`.
+		//
+		// This is the whole set marktwin 0.5 emits (`src/emitter.rs`): `<strong>`, `<em>`,
+		// `span.strikethrough`, `<a>`, `<br />`, `div.mod` for `[mod]` and `div.mkt-admin` for
+		// `[admin]`. Icons emit `span.mkt-icon mkt-icon-<key>` and are left alone: Eternaltwin
+		// serves an empty icon list, so no key can reach us and there is no sprite to point at.
+		:deep(a) {
+			color: #fff1ad;
+			font-variant: normal;
+			text-decoration: underline;
+			&:hover {
+				color: #ffffff;
+			}
+		}
+		:deep(strong) {
+			font-weight: bold;
+			color: #ffffff;
+		}
+		:deep(em) {
+			font-style: italic;
+		}
+		:deep(.strikethrough) {
+			text-decoration: line-through;
+		}
+		// Who is speaking, said with a frame and an icon rather than a caption: `content:` cannot be
+		// translated, and the markup carries no text for the four locales to key off. The icons are
+		// Eternaltwin's own (`packages/website/src/static/assets/icons`), so the same `[mod]` block
+		// wears the same badge on both sites.
+		:deep(.mod),
+		:deep(.mkt-admin) {
+			margin: 6px 0;
+			padding: 8px 8px 8px 26px;
+			border: 1px solid transparent;
+			border-bottom-width: 3px;
+			border-radius: 3px;
+			background-repeat: no-repeat;
+			background-position: 6px 9px;
+		}
+		:deep(.mod) {
+			border-color: #ff9c5b;
+			background-color: #8d3e17;
+			background-image: url('../../assets/icons/warning.png');
+			// The warning is 8px wide against the announce's 16: nudged to sit centred in the same
+			// gutter, so the two blocks still line up when a post carries both.
+			background-position-x: 9px;
+		}
+		:deep(.mkt-admin) {
+			border-color: #f9c825;
+			background-color: #5d2a11;
+			background-image: url('../../assets/icons/adminAnnounce.png');
 		}
 	}
 	.post-actions {
