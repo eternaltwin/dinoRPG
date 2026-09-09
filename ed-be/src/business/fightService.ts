@@ -19,6 +19,7 @@ import {
 } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { groupGoldMultiplier, groupXpMultiplier } from '@drpg/core/constants';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { placeList, SWAMP_FOG_DAYS } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -337,11 +338,17 @@ export async function rewardFightVsMonsters(
 	let levelup = false;
 	let gold = 0;
 
+	// each Dinoz keeps a smaller share of the monsters' reward, but can add up to more than 100%
+	const xpShareMultiplier = groupXpMultiplier(team.length);
+	const goldShareMultiplier = groupGoldMultiplier(team.length);
+
 	for (const d of team) {
 		// TODO ignore on escape
 
 		let xp = 0;
-		const cur = d.level / teamLevel;
+		const share = d.level / teamLevel;
+		const cur = share * xpShareMultiplier;
+		const goldCur = share * goldShareMultiplier;
 
 		/** Restrict the use of low level dinoz in order to make easy money **/
 		let gfact = 1.0;
@@ -354,7 +361,7 @@ export async function rewardFightVsMonsters(
 		for (const f of monsters) {
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
 			let monsterXp = (f.xp ?? 10) * factor * cur;
-			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
+			fgold += (f.gold ?? 1.0) * factor * goldCur * gfact;
 			// Newbie bonus
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
 			// 50% more xp bonus for monsters of same or higher levels
@@ -653,7 +660,9 @@ export async function generateMonsterList(
 		teamPowerLevel += dinoz.level;
 		if (dinoz.level > greatestFighterLevel) greatestFighterLevel = dinoz.level;
 	}
-	const diff = (team.length + 2) / (team.length * 2 + 1);
+
+	// Set to one to not have a debuff on ennemy team
+	const diff = 1 //(team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
@@ -739,7 +748,7 @@ export async function generateMonsterList(
 		}
 	}
 
-	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
+	const mdelta = Math.max(Math.round(teamPowerLevel / 6), 2);
 	const ml = monsters.map(a => {
 		return { monster: a.monster, odds: a.p };
 	});
