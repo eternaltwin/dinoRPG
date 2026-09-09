@@ -7804,7 +7804,6 @@ __metadata:
     express-validator: "npm:^7.2.0"
     i18next: "npm:^23.12.2"
     i18next-fs-backend: "npm:^2.3.1"
-    jsonwebtoken: "npm:^9.0.2"
     multer: "npm:^1.4.5-lts.1"
     node-fetch: "npm:^3.3.2"
     node-schedule: "npm:^2.1.1"

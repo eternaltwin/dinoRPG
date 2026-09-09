@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import jwt from 'jsonwebtoken';
 import { createState, verifyState } from '../../utils/server/oauthState.js';
 
 const SECRET = 'test-secret';
@@ -16,8 +15,6 @@ describe('oauthState', () => {
 		const { state, rfp } = createState(SECRET);
 		// The state travels through Eternaltwin; only the hash may ride along.
 		expect(state).not.toContain(rfp);
-		const payload = jwt.decode(state) as { rfp_hash: string };
-		expect(payload.rfp_hash).not.toBe(rfp);
 	});
 
 	it('gives out a different rfp every time', () => {
@@ -30,9 +27,25 @@ describe('oauthState', () => {
 	});
 
 	it('rejects a state signed with another secret', () => {
+		const forged = createState('other-secret');
+		expect(() => verifyState(forged.state, forged.rfp, SECRET)).toThrow('Invalid or expired OAuth state');
+	});
+
+	it('rejects a state whose payload was tampered with', () => {
+		const { state, rfp } = createState(SECRET);
+		const tampered = state.replace(/^./, c => (c === 'a' ? 'b' : 'a'));
+		expect(() => verifyState(tampered, rfp, SECRET)).toThrow('Invalid or expired OAuth state');
+	});
+
+	it('rejects a state whose signature was tampered with', () => {
+		const { state, rfp } = createState(SECRET);
+		const tampered = state.replace(/.$/, c => (c === 'a' ? 'b' : 'a'));
+		expect(() => verifyState(tampered, rfp, SECRET)).toThrow('Invalid or expired OAuth state');
+	});
+
+	it('rejects a state that is not a token at all', () => {
 		const { rfp } = createState(SECRET);
-		const forged = jwt.sign({ rfp_hash: 'whatever' }, 'other-secret');
-		expect(() => verifyState(forged, rfp, SECRET)).toThrow('Invalid or expired OAuth state');
+		expect(() => verifyState('not-a-token', rfp, SECRET)).toThrow('Invalid or expired OAuth state');
 	});
 
 	it('rejects an expired state', () => {
