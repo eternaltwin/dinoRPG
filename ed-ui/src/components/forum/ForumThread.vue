@@ -1,49 +1,120 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.forum')" :header="title" />
-	<div class="wrapper" v-if="messages.length > 0">
-		<div v-for="message in messages" :key="message.id" class="container">
-			<div class="sender">
-				<DZUser :user="{ id: message.author.user.id, name: message.author.user.display_name.current.value }" />
-				<div class="date">{{ formatDate(message.ctime) }}</div>
-			</div>
-			<div class="message" v-html="message.revisions.last.content.html" />
-		</div>
+
+	<div v-if="reauthorize" class="notice">
+		<p>{{ $t('forum.error.reauthorize') }}</p>
 	</div>
-	<tr class="pagination-controls">
-		<button @click="previousPage" :disabled="currentPage === 1">
-			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
-		</button>
-		<span>{{ currentPage }} / {{ totalPages }}</span>
-		<button @click="nextPage" :disabled="currentPage === totalPages">
-			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
-		</button>
-	</tr>
-	<DZButton @click="goBack()">{{ $t('button.return') }}</DZButton>
+
+	<template v-else>
+		<div class="wrapper" v-if="messages.length > 0">
+			<div v-for="message in messages" :key="message.id" class="container">
+				<div class="sender">
+					<DZUser :user="{ id: message.author.user.id, name: message.author.user.display_name.current.value }" />
+					<div class="date">
+						{{ formatDate(message.ctime) }}
+						<span v-if="message.revisions.count > 1" class="edited">{{ $t('forum.edited') }}</span>
+					</div>
+				</div>
+
+				<div class="message" v-if="editingPostId === message.id">
+					<ForumEditor v-model="editContent" :grammar="grammar" :disabled="sending" />
+					<div class="actions">
+						<DZButton :off="sending" @click="saveEdit()">{{ $t('forum.edit.submit') }}</DZButton>
+						<DZButton @click="cancelEdit()">{{ $t('forum.cancel') }}</DZButton>
+					</div>
+				</div>
+				<template v-else>
+					<div class="message" v-if="message.revisions.last.content" v-html="message.revisions.last.content.html" />
+					<div class="message moderated" v-else>{{ $t('forum.moderated') }}</div>
+					<div class="post-actions" v-if="message.self?.can_edit">
+						<a @click="startEdit(message)">{{ $t('forum.edit.open') }}</a>
+					</div>
+				</template>
+			</div>
+		</div>
+
+		<tr class="pagination-controls">
+			<button @click="previousPage" :disabled="currentPage === 1">
+				<img class="left" src="/src/assets/button/button-back-arrow.webp" />
+			</button>
+			<span>{{ currentPage }} / {{ totalPages }}</span>
+			<button @click="nextPage" :disabled="currentPage === totalPages">
+				<img class="right" src="/src/assets/button/button-back-arrow.webp" />
+			</button>
+		</tr>
+
+		<div class="reply" v-if="canPost">
+			<p class="label">{{ $t('forum.reply.title') }}</p>
+			<ForumEditor
+				v-model="replyContent"
+				:grammar="grammar"
+				:disabled="sending"
+				:placeholder="$t('forum.reply.placeholder')"
+			/>
+			<div class="actions">
+				<DZButton :off="!canSendReply" @click="sendReply()">{{ $t('forum.reply.submit') }}</DZButton>
+			</div>
+		</div>
+		<p class="notice" v-else-if="isLocked">{{ $t('forum.locked') }}</p>
+
+		<DZButton @click="goBack()">{{ $t('button.return') }}</DZButton>
+	</template>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { ForumService } from '../../services/ForumService.js';
-import { errorHandler } from '../../utils/index.js';
-import { forumPost, posts } from '@drpg/core/models/forum/Forum';
+import { ForumErrorCode, handleForumError } from '../../utils/index.js';
+import { ForumGrammar, Thread, forumPost } from '@drpg/core/models/forum/Forum';
 import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
 import TitleHeader from '../utils/TitleHeader.vue';
 import DZButton from '../common/DZButton.vue';
+import ForumEditor from './ForumEditor.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'ForumThread',
-	components: { DZButton, TitleHeader, DZUser },
+	components: { DZButton, TitleHeader, DZUser, ForumEditor },
 	data() {
 		return {
-			thread: undefined as undefined | posts,
+			thread: undefined as undefined | Thread,
 			totalPages: 1,
 			currentPage: 1,
 			title: undefined as undefined | string,
 			messages: [] as forumPost[],
+			replyContent: '',
+			editingPostId: undefined as undefined | string,
+			editContent: '',
+			sending: false,
+			reauthorize: false,
 			localStore: localStore()
 		};
+	},
+	computed: {
+		threadId(): string {
+			return this.$route.params.threadId as string;
+		},
+		/** Served by the server alongside the section; never derived from the player's roles. */
+		grammar(): ForumGrammar | undefined {
+			return this.thread?.section?.self?.grammar;
+		},
+		/**
+		 * Whether to draw the reply box.
+		 *
+		 * The server computes this with the same predicate its write path enforces — a locked
+		 * thread, a mute and a token without `forum:write` all land here — so a box that shows is a
+		 * box that works. Nothing is re-derived from `is_locked` or from who the player is.
+		 */
+		canPost(): boolean {
+			return this.thread?.self?.can_post === true;
+		},
+		isLocked(): boolean {
+			return this.thread?.is_locked === true;
+		},
+		canSendReply(): boolean {
+			return !this.sending && this.replyContent.trim().length > 0;
+		}
 	},
 	methods: {
 		goBack() {
@@ -53,39 +124,85 @@ export default defineComponent({
 			return formatDateTime(dateString);
 		},
 		async readThread() {
-			const id = this.$route.params.threadId as string;
-			const page = +this.$route.params.page;
+			this.currentPage = Math.max(1, +this.$route.params.page || 1);
 			try {
-				const response = await ForumService.getThread(id, page);
-				this.thread = response.thread;
-				this.title = response.title;
-				if (response.thread.items) {
-					this.messages = response.thread.items;
-				}
+				const thread = await ForumService.getThread(this.threadId, this.currentPage);
+				this.thread = thread;
+				this.reauthorize = false;
+				this.title = thread.title;
+				this.messages = thread.posts.items ?? [];
+				this.totalPages = Math.max(1, Math.ceil(thread.posts.count / (thread.posts.limit ?? 1)));
 			} catch (e) {
-				errorHandler.handle(e, this.$toast);
+				this.messages = [];
+				this.reauthorize = handleForumError(e, this.$t, this.$toast) === ForumErrorCode.Reauthorize;
 			}
 		},
-		async previousPage() {
+		goToPage(page: number) {
+			if (page === this.currentPage) {
+				return this.readThread();
+			}
+			this.$router.push({ name: 'ForumThread', params: { threadId: this.threadId, page } });
+		},
+		previousPage() {
 			if (this.currentPage > 1) {
-				try {
-					this.currentPage--;
-					await this.readThread();
-				} catch (error) {
-					errorHandler.handle(error, this.$toast);
-					return;
-				}
+				this.goToPage(this.currentPage - 1);
 			}
 		},
-		async nextPage() {
+		nextPage() {
 			if (this.currentPage < this.totalPages) {
-				try {
-					this.currentPage++;
-					await this.readThread();
-				} catch (error) {
-					errorHandler.handle(error, this.$toast);
-					return;
-				}
+				this.goToPage(this.currentPage + 1);
+			}
+		},
+		async sendReply() {
+			if (!this.canSendReply) return;
+
+			this.sending = true;
+			try {
+				await ForumService.replyToThread(this.threadId, this.replyContent);
+				this.replyContent = '';
+				// The reply is the newest post, so it sits on the last page — which the reply itself
+				// may just have created.
+				const count = (this.thread?.posts.count ?? 0) + 1;
+				this.goToPage(Math.max(1, Math.ceil(count / (this.thread?.posts.limit ?? 1))));
+			} catch (e) {
+				handleForumError(e, this.$t, this.$toast);
+			} finally {
+				this.sending = false;
+			}
+		},
+		/**
+		 * Open an editor on a post.
+		 *
+		 * The Marktwin source comes from its own endpoint: a read only carries the rendered HTML,
+		 * and editing that would send markup back through the parser a second time.
+		 */
+		async startEdit(post: forumPost) {
+			try {
+				const source = await ForumService.getPostSource(post.id);
+				this.editContent = source.revisions.last.content?.marktwin ?? '';
+				this.editingPostId = post.id;
+			} catch (e) {
+				handleForumError(e, this.$t, this.$toast);
+			}
+		},
+		cancelEdit() {
+			this.editingPostId = undefined;
+			this.editContent = '';
+		},
+		async saveEdit() {
+			if (this.sending || this.editingPostId === undefined || this.editContent.trim().length === 0) return;
+
+			this.sending = true;
+			try {
+				await ForumService.updatePost(this.editingPostId, this.editContent);
+				this.cancelEdit();
+				await this.readThread();
+			} catch (e) {
+				// A refusal here is final — someone replied since, or a moderator rewrote the post.
+				// The editor stays open so nothing typed is lost.
+				handleForumError(e, this.$t, this.$toast);
+			} finally {
+				this.sending = false;
 			}
 		}
 	},
@@ -101,6 +218,13 @@ export default defineComponent({
 	flex-direction: column;
 	gap: 5px;
 	overflow-y: auto;
+}
+.notice {
+	background-color: #cb7c49;
+	color: #ffee92;
+	padding: 8px;
+	margin: 4px 0;
+	font-size: 13px;
 }
 .container {
 	display: flex;
@@ -120,6 +244,11 @@ export default defineComponent({
 		.date {
 			font-size: 1rem;
 			line-height: 1.75rem;
+			.edited {
+				font-size: 0.75rem;
+				font-style: italic;
+				margin-left: 4px;
+			}
 		}
 	}
 	.message {
@@ -127,7 +256,39 @@ export default defineComponent({
 		font-feature-settings: normal;
 		font-size: 16px;
 		font-variation-settings: normal;
+		&.moderated {
+			font-style: italic;
+			opacity: 0.8;
+		}
 	}
+	.post-actions {
+		display: flex;
+		justify-content: end;
+		padding: 0 5px 3px;
+		a {
+			cursor: pointer;
+			font-size: 12px;
+			text-decoration: underline;
+		}
+	}
+}
+.reply {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	background-color: #cb7c49;
+	color: #ffee92;
+	padding: 4px;
+	margin-top: 10px;
+	.label {
+		font-weight: bold;
+	}
+}
+.actions {
+	display: flex;
+	justify-content: end;
+	gap: 5px;
+	padding: 4px 0;
 }
 .pagination-controls {
 	margin-top: 10px;

@@ -54,6 +54,12 @@ export default defineComponent({
 	},
 	mounted(): void {
 		setTimeout(() => {
+			if (this.$route.query.error !== undefined) {
+				// Eternaltwin sends `error` instead of `code` when the player declines consent.
+				// Nothing to exchange, so say so rather than leave the page waiting.
+				errorHandler.handle(new Error('eternaltwinConsentDeclined'), this.$toast);
+				return;
+			}
 			if (this.$route.query.code !== undefined) {
 				this.authenticateToET();
 			}

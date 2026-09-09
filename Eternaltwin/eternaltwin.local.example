@@ -214,6 +214,7 @@ display_name = "DinoRPG"
 uri = "http://localhost:8080/"
 oauth_callback = "http://localhost:8080/authentication"
 secret = "dev_secret"
+allowed_scopes = "forum:write"
 
 # Default forum sections configuration
 # You can define any number of forum sections using `[seed.forum_section.<key>]` blocks (one block per

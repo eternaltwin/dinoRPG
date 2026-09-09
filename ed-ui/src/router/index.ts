@@ -41,12 +41,6 @@ const router = createRouter({
 					name: 'ForumThread',
 					component: () => import('../components/forum/ForumThread.vue')
 				},
-				// Disable for now
-				/*{
-					path: '/forum/newThread',
-					name: 'ForumNewMessage',
-					component: () => import('../components/forum/ForumNewMessage.vue')
-				},*/
 				{
 					path: '/dino/:id',
 					name: 'DinozPage',

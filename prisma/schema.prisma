@@ -265,50 +265,50 @@ model NPC {
 
 model Player {
   customText             String?
-  name                   String             @db.VarChar
-  connexionToken         String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                   String                  @db.VarChar
+  connexionToken         String                  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   money                  Int
   quetzuBought           Int
-  leader                 Boolean            @default(false)
-  engineer               Boolean            @default(false)
-  cooker                 Boolean            @default(false)
-  shopKeeper             Boolean            @default(false)
-  merchant               Boolean            @default(false)
-  priest                 Boolean            @default(false)
-  teacher                Boolean            @default(false)
-  createdDate            DateTime           @default(now()) @db.Timestamp(6)
-  updatedDate            DateTime           @default(now()) @updatedAt @db.Timestamp(6)
-  lastLogin              DateTime           @default(now()) @db.Timestamp(6)
+  leader                 Boolean                 @default(false)
+  engineer               Boolean                 @default(false)
+  cooker                 Boolean                 @default(false)
+  shopKeeper             Boolean                 @default(false)
+  merchant               Boolean                 @default(false)
+  priest                 Boolean                 @default(false)
+  teacher                Boolean                 @default(false)
+  createdDate            DateTime                @default(now()) @db.Timestamp(6)
+  updatedDate            DateTime                @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin              DateTime                @default(now()) @db.Timestamp(6)
   clanId                 Int?
-  clan                   Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
-  matelasseur            Boolean            @default(false)
-  messie                 Boolean            @default(false)
-  labruteDone            Boolean            @default(false)
-  role                   AdminRole          @default(PLAYER)
-  lang                   Lang               @default(fr)
-  dailyGridRewards       Int                @default(0)
-  skipFight              Boolean            @default(false)
-  skipLevel              Boolean            @default(false)
-  autoReequipItems       Boolean            @default(false)
-  bypassGatheringGrid    Boolean            @default(false)
-  shareArchivedData      Boolean            @default(false)
+  clan                   Clan?                   @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  matelasseur            Boolean                 @default(false)
+  messie                 Boolean                 @default(false)
+  labruteDone            Boolean                 @default(false)
+  role                   AdminRole               @default(PLAYER)
+  lang                   Lang                    @default(fr)
+  dailyGridRewards       Int                     @default(0)
+  skipFight              Boolean                 @default(false)
+  skipLevel              Boolean                 @default(false)
+  autoReequipItems       Boolean                 @default(false)
+  bypassGatheringGrid    Boolean                 @default(false)
+  shareArchivedData      Boolean                 @default(false)
   archivedSiteId         Int?
-  displayedNotifications Int                @default(3)
-  banCaseId              Int?               @unique
-  discoveredSkills       Int[]              @default([])
-  lastVersionSeen        String             @default("0.16.3")
-  tosAccepted            Boolean            @default(false)
-  id                     String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
-  leaderOf               Clan?              @relation("leader")
+  displayedNotifications Int                     @default(3)
+  banCaseId              Int?                    @unique
+  discoveredSkills       Int[]                   @default([])
+  lastVersionSeen        String                  @default("0.16.3")
+  tosAccepted            Boolean                 @default(false)
+  id                     String                  @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
+  leaderOf               Clan?                   @relation("leader")
   ClanHistory            ClanHistory[]
-  ClanJoinRequest        ClanJoinRequest?   @relation("clanRequest")
+  ClanJoinRequest        ClanJoinRequest?        @relation("clanRequest")
   ClanMember             ClanMember?
-  createdConversations   Conversation[]     @relation("CreatedConversations")
+  createdConversations   Conversation[]          @relation("CreatedConversations")
   Conversation           Conversation[]
   logs                   Log[]
   messages               Message[]
-  reportedCases          Moderation[]       @relation("ReporterRelation")
-  targetedCases          Moderation[]       @relation("TargetRelation")
+  reportedCases          Moderation[]            @relation("ReporterRelation")
+  targetedCases          Moderation[]            @relation("TargetRelation")
   notifications          Notification[]
   offers                 Offer[]
   bids                   OfferBid[]
@@ -317,7 +317,7 @@ model Player {
   usernameHistory        UsernameHistory[]
   ClanMessage            ClanMessage[]
   dinoz                  Dinoz[]
-  banCase                Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
+  banCase                Moderation?             @relation("AcceptedBan", fields: [banCaseId], references: [id])
   playerTracking         PlayerTracking[]
   dinozShop              PlayerDinozShop[]
   demonShop              PlayerDemonShop[]
@@ -328,9 +328,9 @@ model Player {
   rewards                PlayerReward[]
   ranking                Ranking?
   Dojo                   Dojo?
-  FightArchive           FightArchive[]     @relation("PlayerRelation")
-  LeftFightArchives      FightArchive[]     @relation("LeftPlayerRelation")
-  RightFightArchives     FightArchive[]     @relation("RightPlayerRelation")
+  FightArchive           FightArchive[]          @relation("PlayerRelation")
+  LeftFightArchives      FightArchive[]          @relation("LeftPlayerRelation")
+  RightFightArchives     FightArchive[]          @relation("RightPlayerRelation")
   FightWatched           FightWatched[]
   GameDinoz              GameDinoz[]
   ips                    PlayerIp[]
@@ -338,8 +338,29 @@ model Player {
   Events                 Events[]
   dinozBuilds            DinozBuild[]
   dungeonRuns            DungeonRun[]
+  eternaltwinToken       PlayerEternaltwinToken?
 
   @@map("player")
+}
+
+/// The Eternaltwin OAuth access token obtained for a player, used to call the Eternaltwin API
+/// (the forum) on their behalf.
+///
+/// The `refresh_token` Eternaltwin returns is deliberately not stored: no refresh flow is
+/// implemented server-side, so it is exchangeable for nothing and keeping it would only be one
+/// more secret at rest. When a token stops working, the player is sent through authorization again.
+model PlayerEternaltwinToken {
+  playerId    String    @id @db.Uuid
+  player      Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  accessToken String
+  /// The scope requested at authorization time. Eternaltwin's token response reports no granted
+  /// scope, so this records what was asked for, not a guarantee of what was given: only a real
+  /// call settles that.
+  scope       String
+  obtainedAt  DateTime  @default(now()) @db.Timestamp(6)
+  expiresAt   DateTime? @db.Timestamp(6)
+
+  @@map("player_eternaltwin_token")
 }
 
 model PlayerIp {

@@ -338,8 +338,29 @@ model Player {
   Events                 Events[]
   dinozBuilds            DinozBuild[]
   dungeonRuns            DungeonRun[]
+  eternaltwinToken       PlayerEternaltwinToken?
 
   @@map("player")
+}
+
+/// The Eternaltwin OAuth access token obtained for a player, used to call the Eternaltwin API
+/// (the forum) on their behalf.
+///
+/// The `refresh_token` Eternaltwin returns is deliberately not stored: no refresh flow is
+/// implemented server-side, so it is exchangeable for nothing and keeping it would only be one
+/// more secret at rest. When a token stops working, the player is sent through authorization again.
+model PlayerEternaltwinToken {
+  playerId    String    @id @db.Uuid
+  player      Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  accessToken String
+  /// The scope requested at authorization time. Eternaltwin's token response reports no granted
+  /// scope, so this records what was asked for, not a guarantee of what was given: only a real
+  /// call settles that.
+  scope       String
+  obtainedAt  DateTime  @default(now()) @db.Timestamp(6)
+  expiresAt   DateTime? @db.Timestamp(6)
+
+  @@map("player_eternaltwin_token")
 }
 
 model PlayerIp {

@@ -5276,6 +5276,47 @@
 		"errorDinoz": "You must specify a Dinoz to report",
 		"success": "Complaint sent successfully."
 	},
+	"forum": {
+		"cancel": "Cancel",
+		"empty": "No thread yet.",
+		"pinned": "Pinned thread",
+		"locked": "This thread is locked: nobody can reply to it any more.",
+		"moderated": "Message removed by the moderation team.",
+		"edited": "(edited)",
+		"newThread": {
+			"open": "New thread",
+			"title": "New thread",
+			"titleLabel": "Thread title:",
+			"titlePlaceholder": "Your title...",
+			"messageLabel": "Your message:",
+			"messagePlaceholder": "Your message...",
+			"submit": "Create the thread",
+			"titleTooShort": "The title must be at least {min} characters long.",
+			"messageRequired": "The message cannot be empty."
+		},
+		"reply": {
+			"title": "Reply",
+			"placeholder": "Your reply...",
+			"submit": "Send"
+		},
+		"edit": {
+			"open": "Edit",
+			"submit": "Save"
+		},
+		"editor": {
+			"strong": "Bold",
+			"emphasis": "Italic",
+			"strikethrough": "Strikethrough",
+			"link": "Link"
+		},
+		"error": {
+			"reauthorize": "Your Eternaltwin session has expired. Sign in again to reach the forum.",
+			"forbidden": "Eternaltwin refused this action. Trying again will not help.",
+			"notFound": "This content no longer exists.",
+			"conflict": "This content changed in the meantime. Reload the page before trying again.",
+			"revisionUnavailable": "The revision to correct could not be found."
+		}
+	},
 	"messagerie": {
 		"actions": "Actions",
 		"create": "Write",

@@ -5276,6 +5276,47 @@
 		"errorDinoz": "Du musst einen Dinoz zum Melden angeben",
 		"success": "Meldung erfolgreich gesendet."
 	},
+	"forum": {
+		"cancel": "Abbrechen",
+		"empty": "Noch kein Thema vorhanden.",
+		"pinned": "Angeheftetes Thema",
+		"locked": "Dieses Thema ist geschlossen: Niemand kann mehr antworten.",
+		"moderated": "Nachricht von der Moderation entfernt.",
+		"edited": "(bearbeitet)",
+		"newThread": {
+			"open": "Neues Thema",
+			"title": "Neues Thema",
+			"titleLabel": "Titel des Themas:",
+			"titlePlaceholder": "Dein Titel ...",
+			"messageLabel": "Deine Nachricht:",
+			"messagePlaceholder": "Deine Nachricht ...",
+			"submit": "Thema erstellen",
+			"titleTooShort": "Der Titel muss mindestens {min} Zeichen lang sein.",
+			"messageRequired": "Die Nachricht darf nicht leer sein."
+		},
+		"reply": {
+			"title": "Antworten",
+			"placeholder": "Deine Antwort ...",
+			"submit": "Senden"
+		},
+		"edit": {
+			"open": "Bearbeiten",
+			"submit": "Speichern"
+		},
+		"editor": {
+			"strong": "Fett",
+			"emphasis": "Kursiv",
+			"strikethrough": "Durchgestrichen",
+			"link": "Link"
+		},
+		"error": {
+			"reauthorize": "Deine Eternaltwin-Sitzung ist abgelaufen. Melde dich erneut an, um das Forum zu erreichen.",
+			"forbidden": "Eternaltwin hat diese Aktion abgelehnt. Ein erneuter Versuch ändert nichts.",
+			"notFound": "Dieser Inhalt existiert nicht mehr.",
+			"conflict": "Dieser Inhalt hat sich zwischenzeitlich geändert. Lade die Seite neu, bevor du es erneut versuchst.",
+			"revisionUnavailable": "Die zu korrigierende Fassung konnte nicht gefunden werden."
+		}
+	},
 	"messagerie": {
 		"actions": "Aktionen",
 		"create": "Verfassen",
