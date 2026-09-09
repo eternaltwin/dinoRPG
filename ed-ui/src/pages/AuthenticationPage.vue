@@ -29,7 +29,10 @@ export default defineComponent({
 	methods: {
 		async authenticateToET(): Promise<void> {
 			try {
-				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
+				const commonData = await OauthService.authenticateUser(
+					this.$route.query.code as string,
+					this.$route.query.state as string
+				);
 				// Set cookies
 				const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 				setCookie(`x-drpg-${channel}-user`, commonData.id, 7);

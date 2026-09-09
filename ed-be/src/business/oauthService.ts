@@ -14,8 +14,8 @@ import { GetAccessTokenError, RfcOauthClient } from '@eternaltwin/oauth-client-h
 import { trace } from '@opentelemetry/api';
 import dayjs from 'dayjs';
 import { Request, Response } from 'express';
-import { Config } from 'release-it';
 import urlJoin from 'url-join';
+import { Config } from '../config/config.js';
 import { LOGGER } from '../context.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -31,6 +31,7 @@ import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
+import { createState, verifyState } from '../utils/server/oauthState.js';
 import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
 import { eventState } from './clanWar.js';
@@ -43,6 +44,8 @@ export class OAuth {
 
 	#prisma: PismaClientLocal;
 
+	#config: Config;
+
 	public constructor(config: Config, prisma: PismaClientLocal) {
 		this.#oauthClient = new RfcOauthClient({
 			authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),
@@ -53,6 +56,7 @@ export class OAuth {
 		});
 		this.#eternaltwinClient = new EternaltwinNodeClient(new URL(config.eternaltwin.url));
 		this.#prisma = prisma;
+		this.#config = config;
 	}
 
 	public redirect(_req: Request, res: Response) {
@@ -60,8 +64,14 @@ export class OAuth {
 		res.header('Access-Control-Allow-Origin', '*');
 
 		try {
+			// Eternaltwin echoes `state` back without checking it, so the unpredictable part is
+			// ours. `rfp` goes to the browser that starts the flow and comes back on the callback;
+			// only its hash travels through Eternaltwin.
+			const { state, rfp } = createState(this.#config.salt);
+
 			res.send({
-				url: this.#oauthClient.getAuthorizationUri('base', 'authenticate')
+				url: this.#oauthClient.getAuthorizationUri('base', state),
+				rfp
 			});
 		} catch (error) {
 			sendError(res, error);
@@ -76,6 +86,9 @@ export class OAuth {
 			if (!req.query.code || typeof req.query.code !== 'string') {
 				throw new ExpectedError('Invalid code');
 			}
+
+			// Anti-CSRF, before spending the code on anything.
+			verifyState(req.query.state, req.query.rfp, this.#config.salt);
 
 			// ETwin Token
 			const token = await this.#oauthClient.getAccessToken(req.query.code);

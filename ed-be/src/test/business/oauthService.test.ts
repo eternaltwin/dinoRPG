@@ -47,26 +47,59 @@ vi.mock('@drpg/core/models/event/Events', () => ({ currentEvents: () => [], Game
 
 import { createPlayer, getCommonDataRequest } from '../../dao/playerDao.js';
 import { addPlayerInRanking } from '../../dao/rankingDao.js';
+import { createState } from '../../utils/server/oauthState.js';
 import sendError from '../../utils/server/sendErrors.js';
 import { OAuth } from '../../business/oauthService.js';
 
+const SALT = 'test-salt';
 const config = {
 	eternaltwin: { url: 'http://et/', clientRef: 'ref', secret: 'sec', section: 'sec' },
-	selfUrl: 'http://self/'
+	selfUrl: 'http://self/',
+	salt: SALT
 } as never;
+
+/** A callback query that passes the anti-CSRF check. */
+function validCallbackQuery(extra: Record<string, unknown> = {}) {
+	const { state, rfp } = createState(SALT);
+	return { code: 'abc', state, rfp, ...extra };
+}
 
 function makeRes() {
 	return { header: vi.fn(), send: vi.fn() } as never;
 }
 
+/** The message of the error handed to `sendError`. */
+function errorMessage(): string {
+	const [, error] = vi.mocked(sendError).mock.calls[0];
+	return (error as Error).message;
+}
+
 beforeEach(() => vi.clearAllMocks());
 
 describe('OAuth', () => {
-	it('redirect sends the authorization uri', () => {
+	it('redirect sends the authorization uri and a fresh rfp', () => {
 		const oauth = new OAuth(config, {} as never);
 		const res = makeRes();
 		oauth.redirect({} as never, res);
-		expect((res as { send: ReturnType<typeof vi.fn> }).send).toHaveBeenCalledWith({ url: 'http://auth' });
+
+		const sent = (res as { send: ReturnType<typeof vi.fn> }).send.mock.calls[0][0];
+		expect(sent.url).toBe('http://auth');
+		// The unpredictable part is ours to add: Eternaltwin echoes `state` back unchecked.
+		expect(typeof sent.rfp).toBe('string');
+		expect(sent.rfp.length).toBeGreaterThan(0);
+
+		// Only the hash of the rfp travels through Eternaltwin.
+		const [, state] = oauthClientInstance.getAuthorizationUri.mock.calls[0];
+		expect(state).not.toContain(sent.rfp);
+	});
+
+	it('redirect never reuses a state between two logins', () => {
+		const oauth = new OAuth(config, {} as never);
+		oauth.redirect({} as never, makeRes());
+		oauth.redirect({} as never, makeRes());
+
+		const [[, first], [, second]] = oauthClientInstance.getAuthorizationUri.mock.calls;
+		expect(first).not.toBe(second);
 	});
 
 	it('token creates a new player on first login', async () => {
@@ -80,7 +113,7 @@ describe('OAuth', () => {
 		const oauth = new OAuth(config, {} as never);
 		const res = makeRes();
 		const req = {
-			query: { code: 'abc' },
+			query: validCallbackQuery(),
 			headers: { 'user-agent': 'jest' },
 			socket: { remoteAddress: '1.2.3.4' }
 		} as never;
@@ -108,7 +141,7 @@ describe('OAuth', () => {
 		const oauth = new OAuth(config, {} as never);
 		const res = makeRes();
 		const req = {
-			query: { code: 'abc' },
+			query: validCallbackQuery(),
 			headers: { 'user-agent': 'jest' },
 			socket: { remoteAddress: '5.6.7.8' }
 		} as never;
@@ -122,5 +155,35 @@ describe('OAuth', () => {
 		const req = { query: {}, headers: {}, socket: {} } as never;
 		await oauth.token(req, res);
 		expect(sendError).toHaveBeenCalled();
+	});
+
+	it('token refuses a forged state before spending the code', async () => {
+		const oauth = new OAuth(config, {} as never);
+		const res = makeRes();
+		const req = {
+			query: { code: 'abc', state: 'forged', rfp: 'whatever' },
+			headers: {},
+			socket: {}
+		} as never;
+
+		await oauth.token(req, res);
+
+		expect(oauthClientInstance.getAccessToken).not.toHaveBeenCalled();
+		expect(sendError).toHaveBeenCalled();
+		expect(errorMessage()).toContain('Invalid or expired OAuth state');
+	});
+
+	it('token refuses an rfp belonging to another login attempt', async () => {
+		const oauth = new OAuth(config, {} as never);
+		const res = makeRes();
+		const req = {
+			query: { code: 'abc', state: createState(SALT).state, rfp: createState(SALT).rfp },
+			headers: {},
+			socket: {}
+		} as never;
+
+		await oauth.token(req, res);
+
+		expect(oauthClientInstance.getAccessToken).not.toHaveBeenCalled();
 	});
 });
