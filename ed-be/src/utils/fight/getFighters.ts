@@ -798,10 +798,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.nextAssaultMultiplier *= 1.2;
 	}
 
-	if (fighterHas[Skill.PIETINEMENT]) {
-		fighter.cancelArmor = true;
-	}
-
 	if (fighterHas[Skill.FORCE_DE_LUMIERE]) {
 		// +30 assault damage if on DARKWORLD
 		if (PlacesByMap[MapZone.DARKWORLD]?.includes(place)) {
