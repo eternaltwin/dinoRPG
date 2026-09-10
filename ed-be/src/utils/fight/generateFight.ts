@@ -727,16 +727,13 @@ const startFight = (fightData: DetailedFight) => {
 				fid: fighter.id,
 				skill: Skill.BRAVE
 			});
-			const init_down_notify = {
+			const init_up_notify = {
 				action: 'notify',
-				fids: [],
-				notification: NotificationList.InitDown
+				fids: [fighter.id],
+				notification: NotificationList.InitUp
 			} as NotifyStep;
-			allOtherFighters.forEach(opponent => {
-				opponent.time += powerOf(fightData.rng, fighter, [[ElementType.FIRE, 2]]) * TIME_FACTOR;
-				init_down_notify.fids.push(opponent.id);
-			});
-			fightData.steps.push(init_down_notify);
+			fighter.time += powerOf(fightData.rng, fighter, [[ElementType.FIRE, 2]]) * TIME_FACTOR;
+			fightData.steps.push(init_up_notify);
 		}
 	});
 
