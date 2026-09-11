@@ -188,7 +188,8 @@ describe('fightFriend', () => {
 				({
 					money: 1000,
 					cooker: false,
-					dinoz: [{ id: 1, unavailableReason: null }]
+					dinoz: [{ id: 1, unavailableReason: null }],
+					clanId: 1
 				}) as never
 		);
 		vi.mocked(getDinozForDojoFight).mockResolvedValue([
@@ -220,6 +221,15 @@ describe('fightFriend', () => {
 			dinoz: [{ id: 1, unavailableReason: null }]
 		} as never);
 	});
+	it('throws when not in same clan', async () => {
+		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValue({
+			money: 1000,
+			cooker: false,
+			dinoz: [{ id: 1, unavailableReason: null }],
+			clanId: 2
+		} as never);
+		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('error.notInYourClan');
+	});
 });
 
 describe('getDojoFriendData', () => {
@@ -232,14 +242,17 @@ describe('getDojoFriendData', () => {
 		await expect(getFriendDinoz(req({}, { id: 1 }))).rejects.toThrow('error.notInYourClan');
 	});
 	it('returns player available dinoz if all ok', async () => {
-		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({ dinoz: [
-			{ id: 1, name: 'abc', display: '0123', level: 1, unavailableReason: null },
-			{ id: 2, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.resting },
-			{ id: 3, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.frozen },
-			{ id: 4, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unfreezing },
-			{ id: 5, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unsacrificing },
-			{ id: 6, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.selling },
-		], clanId: 1 });
+		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({
+			dinoz: [
+				{ id: 1, name: 'abc', display: '0123', level: 1, unavailableReason: null },
+				{ id: 2, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.resting },
+				{ id: 3, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.frozen },
+				{ id: 4, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unfreezing },
+				{ id: 5, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unsacrificing },
+				{ id: 6, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.selling }
+			],
+			clanId: 1
+		});
 		let result = await getFriendDinoz(req({}, { id: 1 }));
 		expect(result.length).toBe(2);
 	});

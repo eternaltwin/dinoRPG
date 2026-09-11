@@ -660,7 +660,7 @@ export async function generateMonsterList(
 	}
 
 	// Set to one to not have a debuff on ennemy team
-	const diff = 1 //(team.length + 2) / (team.length * 2 + 1);
+	const diff = 1; //(team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);

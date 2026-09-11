@@ -94,13 +94,13 @@ export default defineComponent({
 		async selectPlayer(playerId: string) {
 			this.opponentDinoz = [];
 			this.opponentTeam = [];
+			this.opponentId = playerId;
 			if (playerId === this.playerStore.getPlayerId) {
 				this.opponentDinoz = this.myDinoz;
 			} else {
 				try {
 					const dinoz = await PlayerService.getFriendData(playerId);
 					this.opponentDinoz = dinoz.sort((a, b) => b.level - a.level);
-					this.opponentId = playerId;
 				} catch (e) {
 					errorHandler.handle(e, this.$toast);
 				}
