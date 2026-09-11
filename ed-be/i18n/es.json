@@ -357,7 +357,7 @@
 		"noRun": "Nunca has visitado este laberinto.",
 		"notAtExit": "¡No puedes salir del laberinto por aquí!",
 		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación.",
-		"notFound": "Ce donjon n'existe pas."
+		"notFound": "Este laberinto no existe."
 	},
 	"UnavailableReason": {
 		"frozen": "Tu Dino está congelado.",
