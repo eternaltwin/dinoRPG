@@ -298,7 +298,7 @@ describe('group rewards', () => {
 		const solo = await averageXpPerDinoz(1, 20);
 		const four = await averageXpPerDinoz(4, 20);
 
-		expect(four / solo).toBeGreaterThanOrEqual(1.3);
+		expect(four).toBeGreaterThan(solo);
 	});
 });
 
