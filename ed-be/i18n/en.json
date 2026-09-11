@@ -75,7 +75,8 @@
 		"dinozNotAvailable": "Your Dinoz is not available to perform this action.",
 		"notEnoughTickets": "You don't have enough tickets to perform this action.",
 		"noShopAccess": "You do not meet the requirements to access this shop.",
-		"tooManyItems": "You have too many items to perform this action."
+		"tooManyItems": "You have too many items to perform this action.",
+		"notInYourClan": "Vous ne faites pas parti du même clan."
 	},
 	"fb": {
 		"error": {
