@@ -440,7 +440,7 @@ export default defineComponent({
 						errorHandler.handle(err, this.$toast);
 						return;
 					}
-					await useDinozStore().refreshDinozFiche(currentDinoz.id);
+
 					this.$router.push({
 						name: 'DinozPage',
 						params: { id: currentDinoz.id.toString() }
