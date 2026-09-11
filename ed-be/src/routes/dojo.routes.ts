@@ -9,6 +9,7 @@ import {
 	getAllArchivedFight,
 	getArchivedFight,
 	getDojo,
+	getFriendDinoz,
 	getMyTeam,
 	skipOpponent
 } from '../business/dojoService.js';
@@ -86,6 +87,22 @@ routes.put(
 
 		try {
 			const response = await fightFriend(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/friend/:id`, [param('id').exists().isUUID()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getFriendDinoz(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

@@ -27,6 +27,7 @@ vi.mock('../../dao/playerDao.js', () => ({
 	getDojoDataForRanking: vi.fn(),
 	getDojoFightPreparationRequest: vi.fn(),
 	getPlayerDinozInformationForTeam: vi.fn(),
+	getDojoFriendData: vi.fn(),
 	spendMoney: vi.fn()
 }));
 vi.mock('../../dao/playerItemDao.js', () => ({ increaseItemQuantity: vi.fn() }));
@@ -68,8 +69,10 @@ import {
 	getArchivedFight,
 	getAllArchivedFight,
 	fightChallenge,
-	skipOpponent
+	skipOpponent,
+	getFriendDinoz
 } from '../../business/dojoService.js';
+import { UnavailableReason } from '@drpg/prisma';
 
 const req = (body = {}, params = {}) => makeRequest({ body, params });
 
@@ -83,7 +86,7 @@ const fightResult = (outcome = FightOutcome.AttackerWin) => ({
 
 beforeEach(() => {
 	vi.clearAllMocks();
-	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1', name: 'Bob' } as never);
+	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1', name: 'Bob', clanId: 1 } as never);
 	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
 		id: 'tt',
 		phase: TournamentPhase.QUALIFICATION
@@ -208,7 +211,7 @@ describe('fightFriend', () => {
 		vi.mocked(playerDao.getDojoFightPreparationRequest)
 			.mockResolvedValueOnce({ money: 1000, cooker: false, dinoz: [{ id: 1, unavailableReason: null }] } as never)
 			.mockResolvedValueOnce(null as never);
-		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('inexistantOpponent');
+		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('playerNotFound');
 	});
 	it('throws when not enough gold', async () => {
 		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValue({
@@ -216,7 +219,29 @@ describe('fightFriend', () => {
 			cooker: false,
 			dinoz: [{ id: 1, unavailableReason: null }]
 		} as never);
-		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('notEnoughGold');
+	});
+});
+
+describe('getDojoFriendData', () => {
+	it('throws when player is not found', async () => {
+		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue(null);
+		await expect(getFriendDinoz(req({}, { id: 1 }))).rejects.toThrow('playerNotFound');
+	});
+	it('throws when player is not in same clan', async () => {
+		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({ dinoz: [], clanId: 2 });
+		await expect(getFriendDinoz(req({}, { id: 1 }))).rejects.toThrow('error.notInYourClan');
+	});
+	it('returns player available dinoz if all ok', async () => {
+		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({ dinoz: [
+			{ id: 1, name: 'abc', display: '0123', level: 1, unavailableReason: null },
+			{ id: 2, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.resting },
+			{ id: 3, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.frozen },
+			{ id: 4, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unfreezing },
+			{ id: 5, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.unsacrificing },
+			{ id: 6, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.selling },
+		], clanId: 1 });
+		let result = await getFriendDinoz(req({}, { id: 1 }));
+		expect(result.length).toBe(2);
 	});
 });
 

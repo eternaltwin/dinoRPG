@@ -94,22 +94,16 @@ export default defineComponent({
 		async selectPlayer(playerId: string) {
 			this.opponentDinoz = [];
 			this.opponentTeam = [];
-			try {
-				const player = await PlayerService.getPlayerData(playerId);
-				this.opponentDinoz = player.dinoz
-					.filter(d => !d.isFrozen)
-					.map(d => {
-						return {
-							id: d.id,
-							name: d.name,
-							display: d.display,
-							level: d.level
-						};
-					})
-					.sort((a, b) => b.level - a.level);
-				this.opponentId = playerId;
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
+			if (playerId === this.playerStore.getPlayerId) {
+				this.opponentDinoz = this.myDinoz;
+			} else {
+				try {
+					const dinoz = await PlayerService.getFriendData(playerId);
+					this.opponentDinoz = dinoz.sort((a, b) => b.level - a.level);
+					this.opponentId = playerId;
+				} catch (e) {
+					errorHandler.handle(e, this.$toast);
+				}
 			}
 		},
 		async startFight() {
@@ -179,7 +173,14 @@ export default defineComponent({
 			return;
 		}
 		this.myDinoz = useDinozStore()
-			.getDinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen)
+			.getDinozList.filter(
+				d =>
+					d.unavailableReason !== UnavailableReason.frozen &&
+					d.unavailableReason !== UnavailableReason.sacrificed &&
+					d.unavailableReason !== UnavailableReason.unfreezing &&
+					d.unavailableReason !== UnavailableReason.unsacrificing &&
+					d.unavailableReason !== UnavailableReason.selling
+			)
 			.map(d => {
 				return {
 					id: d.id,
