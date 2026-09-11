@@ -1,10 +1,5 @@
 import { Request } from 'express';
-import {
-	getDinozForDojoFight,
-	getDinozForSkillEffect,
-	getDinozInfoForAdmin,
-	updateDinoz
-} from '../dao/dinozDao.js';
+import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
