@@ -1,8 +1,6 @@
 import { Request } from 'express';
 import {
-	getAllDinozFromAccount,
 	getDinozForDojoFight,
-	getDinozForLevelUp,
 	getDinozForSkillEffect,
 	getDinozInfoForAdmin,
 	updateDinoz
@@ -16,7 +14,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, ClanEventType, LogType } from '@drpg/prisma';
+import { ClanEventType, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
