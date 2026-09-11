@@ -364,8 +364,6 @@ export async function rewardFightVsMonsters(
 			fgold += (f.gold ?? 1.0) * factor * goldCur * gfact;
 			// Newbie bonus
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
-			// 50% more xp bonus for monsters of same or higher levels
-			else if (f.level >= d.level) monsterXp *= 1.5;
 			// Award bonus xp from monster (if any) to Dinoz within 5 level of them
 			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
 			xp += monsterXp;
@@ -662,7 +660,7 @@ export async function generateMonsterList(
 	}
 
 	// Set to one to not have a debuff on ennemy team
-	const diff = 1 //(team.length + 2) / (team.length * 2 + 1);
+	const diff = 1; //(team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);

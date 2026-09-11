@@ -1,12 +1,5 @@
 import { Request } from 'express';
-import {
-	getAllDinozFromAccount,
-	getDinozForDojoFight,
-	getDinozForLevelUp,
-	getDinozForSkillEffect,
-	getDinozInfoForAdmin,
-	updateDinoz
-} from '../dao/dinozDao.js';
+import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
@@ -16,7 +9,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, ClanEventType, LogType } from '@drpg/prisma';
+import { ClanEventType, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';

@@ -134,8 +134,9 @@ function computeUSkillEffects(
 	>,
 	skills: Skill[]
 ) {
+	const skillSet = new Set(skills);
 	uSkillsToPlayerFieldMap.forEach((field, skill) => {
-		player[field] = Boolean(skills.find(s => s === skill));
+		player[field] = skillSet.has(skill);
 	});
 }
 

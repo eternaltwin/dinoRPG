@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ Dinoland-Nachrichten ]",
 		"dinoz": "DinoRPG [ Profil von {dinoz} ]",
 		"shop": "DinoRPG [ Händler: {shop} ]",
-		"demon": "Dino-RPG [ Dämonisches Geschäft ]",
+		"demonShop": "Dino-RPG [ Dämonisches Geschäft ]",
 		"dinozShop": "DinoRPG [ Dinoz-Gehege ]",
 		"account": "DinoRPG [ Persönliche Informationen ]",
 		"ranking": "DinoRPG [ Die Große Ruhmeshalle ]",

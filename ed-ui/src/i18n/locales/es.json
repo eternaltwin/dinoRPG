@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ La actualidad en Dinoland ]",
 		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
 		"shop": "DinoRPG [ Tienda : {shop} ]",
-		"demon": "DinoRPG [ Tienda Demoniaca ]",
+		"demonShop": "DinoRPG [ Tienda Demoniaca ]",
 		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
 		"account": "DinoRPG [ Información personal ]",
 		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",

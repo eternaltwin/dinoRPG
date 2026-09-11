@@ -37,6 +37,7 @@ import {
 	getDojoChallengePreparationRequest,
 	getDojoDataForRanking,
 	getDojoFightPreparationRequest,
+	getDojoFriendData,
 	getPlayerDinozInformationForTeam,
 	spendMoney
 } from '../dao/playerDao.js';
@@ -49,6 +50,7 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { getLatestTournament, incrementCashPrice } from '../dao/tournamentDao.js';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -147,7 +149,10 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 	}
 	const rightPlayer = await getDojoFightPreparationRequest(rightId);
 	if (!rightPlayer) {
-		throw new ExpectedError(translate('dojo.inexistantOpponent', authed));
+		throw new ExpectedError(translate('playerNotFound', authed));
+	}
+	if (authed.clanId !== rightPlayer.clanId) {
+		throw new ExpectedError(translate('error.notInYourClan', authed));
 	}
 	if (!right.every(id => availableDinozIds(rightPlayer.dinoz).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
@@ -207,6 +212,23 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 		rightId
 	);
 	return { fight: fightArchive, stats: fightResult.stats };
+}
+
+export async function getFriendDinoz(req: Request): Promise<DinozDojoFiche[]> {
+	const authed = await auth(req);
+	const friendId = req.params.id;
+
+	const friend = await getDojoFriendData(friendId);
+
+	if (!friend) {
+		throw new ExpectedError(translate('playerNotFound', authed));
+	}
+
+	if (authed.clanId !== friend.clanId) {
+		throw new ExpectedError(translate('error.notInYourClan', authed));
+	}
+
+	return friend.dinoz.filter(d => !d.unavailableReason || !FIGHT_BLOCKING_REASONS.includes(d.unavailableReason));
 }
 
 export async function getArchivedFight(req: Request): Promise<DojoFightResume> {
@@ -635,6 +657,7 @@ async function createOpponentTeam(team: { id: number; level: number }[], myDojo:
 const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
 	UnavailableReason.frozen,
 	UnavailableReason.sacrificed,
+	UnavailableReason.unsacrificing,
 	UnavailableReason.selling,
 	UnavailableReason.unfreezing
 ];

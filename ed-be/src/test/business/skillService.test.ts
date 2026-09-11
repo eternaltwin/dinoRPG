@@ -7,7 +7,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 vi.mock('../../config/game.config.js', () => ({ default: { dinoz: { maxQuantity: 5 } } }));
 vi.mock('../../context.js', () => ({ GLOBAL: { config: {} } }));
 vi.mock('../../dao/dinozDao.js', () => ({
-	getAllDinozFromAccount: vi.fn(),
+	getAllDinozWithSkills: vi.fn(),
 	getDinozForLevelUp: vi.fn(),
 	getDinozSkillsLearnableAndUnlockable: vi.fn(),
 	getDinozToReincarnate: vi.fn(),
@@ -200,7 +200,7 @@ describe('applySkillEffect', () => {
 describe('computeUSkillsForPlayer', () => {
 	it('recomputes the player U skills', async () => {
 		vi.mocked(playerDao.getPlayerUSkills).mockResolvedValue({ id: 'p1' } as never);
-		vi.mocked(dinozDao.getAllDinozFromAccount).mockResolvedValue([{ skills: [{ skillId: 1 }] }] as never);
+		vi.mocked(dinozDao.getAllDinozWithSkills).mockResolvedValue([{ skills: [{ skillId: 1 }] }] as never);
 		await computeUSkillsForPlayer('p1');
 		expect(playerDao.setPlayer).toHaveBeenCalled();
 	});
@@ -224,7 +224,7 @@ describe('reincarnate', () => {
 	it('reincarnates a qualifying dinoz', async () => {
 		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(reincarnatable() as never);
 		vi.mocked(playerDao.getPlayerUSkills).mockResolvedValue({ id: 'p1' } as never);
-		vi.mocked(dinozDao.getAllDinozFromAccount).mockResolvedValue([] as never);
+		vi.mocked(dinozDao.getAllDinozWithSkills).mockResolvedValue([] as never);
 		await reincarnate(req({ id: '1' }));
 		expect(addStatusToDinoz).toHaveBeenCalledWith(1, DinozStatusId.REINCARNATION);
 	});

@@ -24,7 +24,7 @@ import {
 import { Request } from 'express';
 import { GLOBAL } from '../context.js';
 import {
-	getAllDinozFromAccount,
+	getAllDinozWithSkills,
 	getDinozForLevelUp,
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozToReincarnate,
@@ -518,7 +518,7 @@ export async function computeUSkillsForPlayer(playerId: string) {
 		throw new ExpectedError(`This player doesn't exist.`);
 	}
 	// Get player dinoz list
-	const dinozList = await getAllDinozFromAccount(playerId);
+	const dinozList = await getAllDinozWithSkills(playerId);
 	const skills = dinozList.flatMap(dinoz => dinoz.skills).map(skill => skill.skillId);
 	// Compute player U skills using dinoz skills
 	computeUSkillEffects(player, skills);

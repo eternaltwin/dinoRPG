@@ -1457,6 +1457,29 @@ export async function updateUsernameOnRelatedTables(playerId: string, newUsernam
 	});
 }
 
+export async function getDojoFriendData(playerId: string) {
+	return withSpan(getDojoFightPreparationRequest.name, async () => {
+		const player = await prisma.player.findUnique({
+			where: {
+				id: playerId
+			},
+			select: {
+				clanId: true,
+				dinoz: {
+					select: {
+						id: true,
+						unavailableReason: true,
+						name: true,
+						display: true,
+						level: true
+					}
+				}
+			}
+		});
+		return player;
+	});
+}
+
 export async function getDojoFightPreparationRequest(playerId: string) {
 	return withSpan(getDojoFightPreparationRequest.name, async () => {
 		const player = await prisma.player.findUnique({
@@ -1466,6 +1489,7 @@ export async function getDojoFightPreparationRequest(playerId: string) {
 			select: {
 				money: true,
 				cooker: true,
+				clanId: true,
 				dinoz: {
 					select: {
 						id: true,

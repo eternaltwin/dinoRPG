@@ -405,7 +405,6 @@ export const initializeMonster = (
 				probability -= 3.5 * memory.renfortApplied;
 			}
 
-
 			if (probability < 0) {
 				probability = 0;
 			}

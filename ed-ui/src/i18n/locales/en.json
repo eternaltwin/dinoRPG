@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ Dinoland News ]",
 		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
 		"shop": "DinoRPG [ Merchant: {shop} ]",
-		"demon": "DinoRPG [ Demon Shop ]",
+		"demonShop": "DinoRPG [ Demon Shop ]",
 		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
 		"account": "DinoRPG [ Personal Information ]",
 		"ranking": "DinoRPG [ Great Hall of Glory ]",
@@ -5335,17 +5335,7 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": [
-			"Trees",
-			"Dragons",
-			"Squids",
-			"Goblins",
-			"Kabukis",
-			"Romeos",
-			"Wizards",
-			"Angels",
-			"Demons"
-		],
+		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
