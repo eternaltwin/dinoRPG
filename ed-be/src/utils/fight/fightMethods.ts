@@ -1406,6 +1406,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// WOOD
 			case Skill.RENFORTS_KORGON: {
+				let korgon = structuredClone(monsterList.KORGON_REINFORCEMENT);
+				let buff = powerOf(fightData.rng, fighter, [[ElementType.WOOD, 3]]);
+				korgon.bonus_attack = korgon.bonus_attack ?? 0 + buff;
+				korgon.bonus_defense = korgon.bonus_defense ?? 0 + buff;
+				korgon.hp += buff;
+
 				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
 				break;
 			}
