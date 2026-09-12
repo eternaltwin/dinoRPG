@@ -26,7 +26,8 @@ export enum SkillFightConditionEnum {
 	MIN_OPPONENTS,
 	MIN_ELEMENTS,
 	ITEM_USED,
-	MIN_SPEED
+	MIN_SPEED,
+	MAX_SUMMON
 }
 
 export type SkillFightCondition = {
@@ -81,4 +82,6 @@ export type SkillFightCondition = {
 	[SkillFightConditionEnum.ITEM_USED]?: Item;
 	// Must have minimum speed
 	[SkillFightConditionEnum.MIN_SPEED]?: number;
+	// Must have not reached summon limit
+	[SkillFightConditionEnum.MAX_SUMMON]?: boolean;
 };

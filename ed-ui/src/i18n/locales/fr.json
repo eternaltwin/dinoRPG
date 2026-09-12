@@ -407,6 +407,7 @@
 		"initiative": "Initiative",
 		"energy": "Énergie",
 		"energyRecovery": "Récupération d'énergie",
+		"maxSummon": "Nombre maximum de renforts",
 		"maxFollowers": "Nombre maximum de suiveurs",
 		"armor": "Armure",
 		"armorBreak": "Perforation",

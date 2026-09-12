@@ -13,6 +13,7 @@ export enum SpecialStat {
 	INITIATIVE = 'initiative',
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
+	MAX_SUMMON = 'maxSummon',
 	MAX_FOLLOWERS = 'maxFollowers',
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
@@ -141,6 +142,7 @@ export enum UniqueSpecialStatUsedInFights {
 	INITIATIVE = 'initiative',
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
+	MAX_SUMMON = 'maxSummon',
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage'
@@ -159,6 +161,7 @@ export const BaseSpecialStats = {
 	[SpecialStat.HP_REGEN]: 1,
 	[SpecialStat.ENERGY]: 100,
 	[SpecialStat.ENERGY_RECOVERY]: 1,
+	[SpecialStat.MAX_SUMMON]: 1,
 	[SpecialStat.MAX_FOLLOWERS]: 2,
 	// Speeds
 	[SpecialStat.SPEED]: 1,

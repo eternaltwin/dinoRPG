@@ -18,6 +18,7 @@ type OtherAssaults<T> = Exclude<
 export type PassiveEffects = {
 	[Stat.MAX_HP]?: EffectDescriptor;
 	[Stat.HP_REGEN]?: EffectDescriptor;
+	[Stat.MAX_SUMMON]?: EffectDescriptor;
 	[Stat.MAX_FOLLOWERS]?: EffectDescriptor;
 	[Stat.INITIATIVE]?: EffectDescriptor;
 	[Stat.ENERGY]?: EffectDescriptor;

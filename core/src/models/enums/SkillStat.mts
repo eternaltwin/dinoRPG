@@ -4,6 +4,7 @@ export enum Stat {
 	MAX_FOLLOWERS = 'maxFollowers',
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
+	MAX_SUMMON = 'maxSummon',
 	// Elements
 	FIRE_ELEMENT = 'fireElement',
 	WOOD_ELEMENT = 'woodElement',
