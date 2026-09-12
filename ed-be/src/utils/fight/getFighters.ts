@@ -124,6 +124,9 @@ export const initializeDinoz = (
 				[SpecialStat.ENERGY_RECOVERY]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ??
 					BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
+				[SpecialStat.MAX_SUMMON]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MAX_SUMMON)?.value ??
+					BaseSpecialStats[SpecialStat.MAX_SUMMON],
 				[SpecialStat.ARMOR]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ??
 					BaseSpecialStats[SpecialStat.ARMOR],
@@ -293,6 +296,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.INITIATIVE]: BaseSpecialStats[SpecialStat.INITIATIVE], // Default
 				[SpecialStat.ENERGY]: BaseSpecialStats[SpecialStat.ENERGY], // Default
 				[SpecialStat.ENERGY_RECOVERY]: BaseSpecialStats[SpecialStat.ENERGY_RECOVERY], // Default
+				[SpecialStat.MAX_SUMMON]: BaseSpecialStats[SpecialStat.MAX_SUMMON], // Default
 				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
 				[SpecialStat.ARMOR_BREAK]: dinoz.stats.special[SpecialStat.ARMOR_BREAK],
 				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
@@ -478,6 +482,9 @@ export const initializeMonster = (
 				[SpecialStat.ENERGY_RECOVERY]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ??
 					BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
+				[SpecialStat.MAX_SUMMON]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.MAX_SUMMON)?.value ??
+					BaseSpecialStats[SpecialStat.MAX_SUMMON],
 				[SpecialStat.ARMOR]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ARMOR],
 				[SpecialStat.ARMOR_BREAK]:

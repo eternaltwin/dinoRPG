@@ -1238,7 +1238,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.SAUVAGERIE],
 		isSphereSkill: false,
 		priority: 3,
-		probability: 15
+		probability: 15,
+		fightCondition: {
+			[SkillFightConditionEnum.MAX_SUMMON]: true
+		}
 	},
 	[Skill.SYMPATIQUE]: {
 		id: Skill.SYMPATIQUE,
@@ -1497,7 +1500,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.HERITAGE_FAROE],
 		isSphereSkill: false,
 		priority: 4,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.MAX_SUMMON]: true
+		}
 	},
 	[Skill.LEADER]: {
 		id: Skill.LEADER,
@@ -2211,7 +2217,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.KARATE_SOUS_MARIN],
 		isSphereSkill: false,
 		priority: 8,
-		probability: 15
+		probability: 15,
+		fightCondition: {
+			[SkillFightConditionEnum.MAX_SUMMON]: true
+		}
 	},
 	[Skill.GRIFFES_EMPOISONNEES]: {
 		id: Skill.GRIFFES_EMPOISONNEES,
@@ -4217,7 +4226,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
 		raceId: [RaceEnum.SANTAZ],
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ARMOR_BREAK]: { operator: MathOperator.MULTIPLY, value: 1.05 }
+		}
 	},
 	[Skill.CUIRASSE]: {
 		id: Skill.CUIRASSE,

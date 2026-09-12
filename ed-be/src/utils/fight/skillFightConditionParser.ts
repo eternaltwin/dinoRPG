@@ -1,6 +1,6 @@
 import { SkillFightCondition, SkillFightConditionEnum } from '@drpg/core/models/dinoz/SkillFightCondition';
 import { DetailedFight } from './generateFight.js';
-import { BadFightStatus, DetailedFighter, GoodFightStatus } from '@drpg/core/models/fight/DetailedFighter';
+import { BadFightStatus, DetailedFighter, FighterType, GoodFightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { Operator } from '@drpg/core/models/enums/Parser';
 import { getAllies, getOpponents, hasStatus } from './fightMethods.js';
 import { getRandomInteger } from '../tools.js';
@@ -73,6 +73,7 @@ export const skillConditionParser = (
 	const MIN_ELEMENTS = condition[SkillFightConditionEnum.MIN_ELEMENTS];
 	const ITEM_USED = condition[SkillFightConditionEnum.ITEM_USED];
 	const MIN_SPEED = condition[SkillFightConditionEnum.MIN_SPEED];
+	const MAX_SUMMON = condition[SkillFightConditionEnum.MAX_SUMMON];
 
 	if (MIN_HP) {
 		result = fighter.hp >= MIN_HP;
@@ -131,11 +132,14 @@ export const skillConditionParser = (
 		result = fighter.itemsUsed.includes(ITEM_USED);
 	} else if (MIN_SPEED) {
 		result = fighter.stats.special.speed >= MIN_SPEED;
+	} else if (MAX_SUMMON) {
+		let activeSummonNumber = getAllies(fightData, fighter, [FighterType.CLONE, FighterType.REINFORCEMENT]).filter(r => r.master && r.master === fighter.id).length;
+		result = activeSummonNumber < fighter.stats.special.maxSummon;
 	} else {
 		result = false;
 	}
 
-	if (!result) result = false;
+	if (result === undefined) result = false;
 
 	return result;
 };
