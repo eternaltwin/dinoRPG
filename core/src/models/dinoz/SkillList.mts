@@ -1254,7 +1254,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.CARAPACE],
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 }
+			[Stat.MAX_FOLLOWERS]: { operator: MathOperator.ADD, value: 1 },
+			[Stat.MAX_SUMMON]: { operator: MathOperator.ADD, value: 1 }
 		}
 	},
 	[Skill.TENACITE]: {
