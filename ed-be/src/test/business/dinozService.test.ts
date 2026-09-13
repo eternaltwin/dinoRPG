@@ -228,6 +228,17 @@ describe('getAvailableActions', () => {
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.restingAttack }) as never, player())
 		).toEqual([]);
 	});
+	it('returns [] when unsacrificing', async () => {
+		expect(
+			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.unsacrificing }) as never, player())
+		).toEqual([]);
+	});
+	it('returns Demon Shop when sacrificed', async () => {
+		let result =
+			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.sacrificed }) as never, player());
+		expect(result.length).toBe(1);
+		expect(result[0].name).toBe(Action.DEMON_SHOP);
+	});
 	it('returns market when selling', async () => {
 		const result = await getAvailableActions(
 			baseDinoz({ unavailableReason: UnavailableReason.selling }) as never,
