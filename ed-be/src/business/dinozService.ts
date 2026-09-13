@@ -172,6 +172,11 @@ export async function getAvailableActions(
 		return [actionList[Action.STOP_CONGEL]];
 	}
 
+	// Demon shop for sacrificed
+	if (dinoz.unavailableReason === UnavailableReason.sacrificed) {
+		return [actionList[Action.DEMON_SHOP]];
+	}
+
 	// Stop rest
 	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
