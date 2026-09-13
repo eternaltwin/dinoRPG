@@ -38,7 +38,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-
 			sessionStore: sessionStore(),
 			fight: null as FightResult | null,
 			dinozId: +this.$route.params.dinozId,
