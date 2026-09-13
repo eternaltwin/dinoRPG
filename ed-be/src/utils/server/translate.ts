@@ -5,14 +5,29 @@ import i18next from '../../i18n.js';
 const translate = (key: string, user?: Pick<Player, 'lang'> | null, options?: Record<string, unknown>) =>
 	i18next.t(key, { lng: user?.lang, ...options });
 
-export function translateAll(key: string, options?: Record<string, unknown>) {
-	let ret = '';
-	const allLang = Object.values(Lang);
-	for (const lang of allLang) {
-		ret += t(key, { lng: lang, ...options }) + '\n';
-	}
-	return ret;
+const FLAG_EMOJI_BY_LANG: Record<string, string> = {
+	fr: '🇫🇷',
+	en: '🇬🇧',
+	es: '🇪🇸',
+	de: '🇩🇪',
+};
+
+function getFlagEmoji(lang: string): string {
+	return FLAG_EMOJI_BY_LANG[lang] ?? '🏳️';
 }
+
+export function translateAll(key: string, options?: Record<string, unknown>) {
+	const allLang = Object.values(Lang);
+
+	const texts = allLang.map((lang) => {
+		const flag = getFlagEmoji(lang);
+		const text = t(key, { lng: lang, ...options });
+		return `${flag} ${text}`;
+	});
+
+	return texts.join('\n\n');
+}
+
 export default translate;
 
 /**

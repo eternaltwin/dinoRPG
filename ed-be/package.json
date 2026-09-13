@@ -96,5 +96,8 @@
 	"files": [
 		"./dist/**/*.(js|map|ts)",
 		"./src/"
-	]
+	],
+	"imports": {
+		"#assets/*": "./src/assets/*"
+	}
 }
