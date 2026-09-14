@@ -473,13 +473,22 @@ export async function sacrificeDinoz(req: Request) {
 	}
 
 	// -- DB updates
+	// Update Dinoz unavailable reason and no remaining action
+	// Do this immediately as it sets the unavailable reason that will block subsequent calls
+	updateDinoz(dinozId, {
+		unavailableReason: UnavailableReason.sacrificed,
+		remaining: 0
+	});
 	const promises = [];
-	// Update Dinoz unavailable reason
-	promises.push(
-		updateDinoz(dinozId, {
-			unavailableReason: UnavailableReason.sacrificed
-		})
-	);
+	// Ungroup if leading one or part of one
+	if (dinoz.leaderId) {
+		promises.push(await updateDinoz(dinozId, { leader: { disconnect: true } }));
+	}
+	if (dinoz.followers.length > 0) {
+		for (const d of dinoz.followers) {
+			promises.push(await updateDinoz(d.id, { leader: { disconnect: true } }));
+		}
+	}
 	// Update demon tickets of player
 	if (dinoz.player.items.some(i => i.itemId === Item.DEMON_TICKET)) {
 		promises.push(increaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, demonTickets));
@@ -507,11 +516,6 @@ export async function sacrificeDinoz(req: Request) {
 export async function unsacrificeDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.dinozId;
-
-	// Check if the player has any active Dinoz at the cemetary
-	if (!(await hasAnyActiveDinozAt(authed, PlaceEnum.CIMETIERE))) {
-		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
-	}
 
 	// Check the player can unsacrifice Dinoz.
 	if (await isAtMaxActiveDinoz(authed)) {
@@ -546,16 +550,15 @@ export async function unsacrificeDinoz(req: Request) {
 	}
 
 	// -- DB updates
-	const promises = [];
 	// Update Dinoz unavailable reason
+	// Do this immediately as it sets the unavailable reason that will block subsequent calls
 	const duration = GLOBAL.config.isProduction ? UNSACRIFICE_DURATION : UNSACRIFICE_DURATION_DEBUG;
 	const endDate = new Date(Date.now() + duration);
-	promises.push(
-		updateDinoz(dinozId, {
-			unavailableReason: UnavailableReason.unsacrificing,
-			unavailableUntil: endDate
-		})
-	);
+	updateDinoz(dinozId, {
+		unavailableReason: UnavailableReason.unsacrificing,
+		unavailableUntil: endDate
+	});
+	const promises = [];
 	// Update demon tickets stockpile
 	promises.push(decreaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, cost));
 	// Update player U skills

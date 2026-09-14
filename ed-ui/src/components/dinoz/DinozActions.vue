@@ -6,13 +6,13 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<div class="action_content">
-			<template v-for="didi in dinozFullParty" :key="didi">
+			<template v-for="d in dinozFullParty" :key="d">
 				<MissionHUDVue
-					v-if="didi.missionHUD && didi.missionId"
-					:missionId="didi.missionId"
-					:dinozName="didi.name"
-					:dinozId="didi.id"
-					@abort="endMission(didi.id)"
+					v-if="d.missionHUD && d.missionId"
+					:missionId="d.missionId"
+					:dinozName="d.name"
+					:dinozId="d.id"
+					@abort="endMission(d.id)"
 				/>
 			</template>
 			<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
@@ -26,34 +26,24 @@
 				{{ $t('hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
 			</p>
 			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
-				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
-				help
-			/>
-			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReason.restingAttack"
-				:content="$t('hud.restingAttackCountdown', { time: attackCountdown })"
-				help
-			/>
-			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReason.unsacrificing"
-				:content="$t('hud.unsacrificeCountdown', { time: timeUntilAvailable })"
-				help
-			/>
-			<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReason.dungeon"
-				:content="$t('hud.dungeon')"
-				help
-				round
-			/>
-			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
 			></DZDisclaimer>
 			<DZDisclaimer
-				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life >= dinoz.maxLife / 2"
+				v-else-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life >= dinoz.maxLife / 2"
 				:content="$t('hud.restEnd')"
+				help
+			></DZDisclaimer>
+			<DZDisclaimer
+				v-else-if="dinoz.unavailableReason !== null && dinoz.unavailableReason !== undefined"
+				:content="
+					$t(`hud.unavailable.${dinoz.unavailableReason}`, {
+						midnightTime: timeUntilMidnight,
+						attackTime: attackCountdown,
+						unavailableTime: timeUntilAvailable
+					})
+				"
 				help
 			></DZDisclaimer>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :key="dinoz.id"></DZFollow>
@@ -279,7 +269,7 @@ export default defineComponent({
 				case Action.DEMON_SHOP:
 					this.$router.push({
 						name: 'DemonShopPage',
-						query: { tab: 'buy' }
+						query: { tab: 'sacrifice' }
 					});
 					break;
 				case Action.ITINERANT_SHOP:

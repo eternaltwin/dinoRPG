@@ -110,7 +110,6 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.dungeonName = dungeonName;
-		console.log(`setDungeonName: ${dinozToUpdate.dungeonName}`);
 	};
 
 	const setCurrentDinozId = (dinozId: number): void => {
