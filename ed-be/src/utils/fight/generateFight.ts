@@ -531,10 +531,6 @@ const prepareFight = (fightData: DetailedFight) => {
 			addStatus(fightData, fighter, FightStatus.INTANGIBLE, FightStatusLength.INFINITE, false);
 		}
 
-		if (hasSkill(fighter, Skill.TORCHE)) {
-			addStatus(fightData, fighter, FightStatus.TORCHED, FightStatusLength.INFINITE, false);
-		}
-
 		if (hasSkill(fighter, Skill.ACUPUNCTURE)) {
 			addStatus(fightData, fighter, FightStatus.HEALING, FightStatusLength.INFINITE, false);
 		}
