@@ -160,7 +160,6 @@ export function resolveStatus(status: FightStatus) {
 		case FightStatus.BLESSED:
 			return StatusEffect.Bless;
 		case FightStatus.POISONED:
-		case FightStatus.OVERTIME_POISON:
 			return StatusEffect.Poison;
 		case FightStatus.HEALING:
 			return StatusEffect.Heal;
@@ -895,6 +894,15 @@ export function transpileFight(
 					fid: step.fid,
 					damages: step.damages
 				});
+				break;
+			case 'announce': {
+				history.push({
+					action: DinoAction.ANNOUNCE,
+					fid: step.fid,
+					message: t(`fight.announcement.${step.txt}`)
+				});
+				break;
+			}
 		}
 	}
 	if (endText && victory) {

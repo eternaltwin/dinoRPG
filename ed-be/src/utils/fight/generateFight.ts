@@ -11,7 +11,8 @@ import {
 	stepFighter,
 	updateStat,
 	hasItem,
-	hasSkill
+	hasSkill,
+	loseHp
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
 import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
@@ -51,6 +52,7 @@ export type DetailedFight = {
 	deads: number[];
 	// Moving time in the fight
 	time: number;
+	isOvertime: boolean;
 	// Time left until the next status activates (poison, dot, or end of a status)
 	nextStatusTrigger: number;
 	// Time left until the next cycle activates (hypnosis, locked)
@@ -129,6 +131,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		rules: config.rules,
 		protectedFighters: [],
 		time: 0,
+		isOvertime: false,
 		nextStatusTrigger: FIGHT_INFINITE,
 		nextCycleTrigger: FIGHT_INFINITE,
 		lastFighterId: undefined,
@@ -299,49 +302,31 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	}
 
 	let turn = 0;
-	let overtimePoisonDamage = 10;
+	let overtimePoisonDamage = 1;
 
 	// Fight loop
 	while (fightData.outcome === null) {
 		// Order fighters by initiative (random if equal)
 		orderFighters(fightData);
 
-		// If fight is getting too long, poison all fighters with an overtime poison.
-		if (fightData.time > OVERTIME_THRESHOLD) {
+		// If fight is getting too long, deal overtime damage to all fighters.
+		if (fightData.time > OVERTIME_THRESHOLD && !	fightData.isOvertime) {
+			fightData.isOvertime = true;
+			fightData.steps.push({
+				action: 'announce',
+				fid: fightData.fighters[0].id,
+				txt: 'overtime'
+			})
+		}
+
+		if (fightData.isOvertime) {
 			fightData.fighters.forEach(fighter => {
-				if (!hasStatus(fighter, FightStatus.OVERTIME_POISON)) {
-					// Custom addition of the poisoned status to all fighters to override some error checks
-
-					// eslint-disable-next-line no-param-reassign
-					fighter.poisonedBy = {
-						id: OVERTIME_ID,
-						skill: 0 as Skill,
-						damage: overtimePoisonDamage
-					};
-
-					// Add status
-					const status_props = createStatus(FightStatus.OVERTIME_POISON, FightStatusLength.SUPER_SHORT);
-
-					// Update the next trigger of status accordingly
-					if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
-						fightData.nextStatusTrigger = CYCLE;
-					} else if (status_props.time < fightData.nextStatusTrigger) {
-						fightData.nextStatusTrigger = status_props.time;
-					}
-
-					fighter.status.push(status_props);
-
-					// Add status step
-					fightData.steps.push({
-						action: 'addStatus',
-						fighter: stepFighter(fighter),
-						status: FightStatus.OVERTIME_POISON
-					});
-				}
+				loseHp(fightData, fighter, overtimePoisonDamage, LifeEffect.Acid);
 			});
 
 			// Increase overtime damage by 1 for each turn elapsed since overtime started.
 			overtimePoisonDamage += 1;
+			checkDeaths(fightData);
 		}
 
 		if (turn > 1200) {
