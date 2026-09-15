@@ -1308,6 +1308,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			}
+			case Skill.TORCHE: {
+				addStatus(fightData, fighter, FightStatus.TORCHED, FightStatusLength.LONG);
+				break;
+			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
 				// Use condition checked prior and defined in skill details so the skill is not used if the fighter already has the status.

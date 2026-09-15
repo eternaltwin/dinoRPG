@@ -792,13 +792,20 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.TORCHE]: {
 		id: Skill.TORCHE,
 		name: 'Torche',
-		type: SkillType.S,
-		energy: Energy.NONE,
+		type: SkillType.E,
+		energy: Energy.E30,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.COMBUSTION],
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 30,
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.STATUS]: FightStatus.TORCHED
+			}
+		}
 	},
 	[Skill.SELF_CONTROL]: {
 		id: Skill.SELF_CONTROL,
@@ -2102,7 +2109,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ACUPUNCTURE]: {
 		id: Skill.ACUPUNCTURE,
 		name: 'Acupuncture',
-		type: SkillType.P,
+		type: SkillType.E,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
