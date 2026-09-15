@@ -311,6 +311,8 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					damages: fightStep.damages
 				})
 			];
+		case 'announce':
+			return [t(`fight.announcement.${fightStep.txt}`)];
 		default:
 			return [JSON.stringify(fightStep)];
 	}

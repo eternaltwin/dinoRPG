@@ -2185,7 +2185,6 @@ export const createStatus = (type: FightStatus, length?: number): FighterStatusD
 	switch (type) {
 		case FightStatus.TORCHED:
 		case FightStatus.BURNED:
-		case FightStatus.OVERTIME_POISON:
 		case FightStatus.POISONED:
 		case FightStatus.HEALING: {
 			cycle = true;
@@ -3918,7 +3917,7 @@ const loseHpwithResilience = (fightData: DetailedFight, fighter: DetailedFighter
 };
 
 // Have the figher lose the given number of damage
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+export const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
 	const hp_lost = damage;
 	fighter.hp -= damage;
@@ -4785,7 +4784,6 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
-						case FightStatus.OVERTIME_POISON:
 						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
 

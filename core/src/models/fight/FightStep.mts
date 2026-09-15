@@ -319,6 +319,13 @@ export interface AttackCastle {
 	damages: number;
 }
 
+export interface AnnounceStep {
+	action: 'announce',
+	fid: number,
+	// Key of text that matches i18n
+	txt: string
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| TimeoutStep
@@ -363,4 +370,5 @@ export type FightStep =
 	| AttachStep
 	| LoseCostumeStep
 	| AddCastle
-	| AttackCastle;
+	| AttackCastle
+	| AnnounceStep;
