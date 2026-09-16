@@ -1491,7 +1491,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.ESPRIT_GORILLOZ: {
-				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+				let spirit = structuredClone(monsterList.GORILLOZ_SPIRIT);
+				let buff = powerOf(fightData.rng, fighter, [[ElementType.WOOD, 5]]);
+				spirit.bonus_attack = spirit.bonus_attack ?? 0 + buff;
+				spirit.bonus_defense = spirit.bonus_defense ?? 0 + buff;
+				spirit.hp += buff;
+				const monster = createMonster(fightData, fighter, spirit);
 
 				// Set intangible
 				addStatus(fightData, monster, FightStatus.INTANGIBLE);
