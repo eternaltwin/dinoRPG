@@ -27,6 +27,7 @@ export enum FightStatus {
 	SHIELDED = 'shielded',
 	BLESSED = 'blessed',
 	HEALING = 'healing',
+	SPIKES = 'spikes',
 	// Skills
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',
@@ -55,7 +56,8 @@ export const GoodFightStatus = [
 	FightStatus.QUICKENED,
 	FightStatus.SHIELDED,
 	FightStatus.BLESSED,
-	FightStatus.HEALING
+	FightStatus.HEALING,
+	FightStatus.SPIKES
 ];
 
 export const BadFightStatus = [

@@ -1366,6 +1366,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			}
+			case Skill.ACUPUNCTURE: {
+				addStatus(fightData, fighter, FightStatus.HEALING, FightStatusLength.LONG);
+				addStatus(fightData, fighter, FightStatus.SPIKES, FightStatusLength.LONG);
+				break;
+			}
 			case Skill.CLONE_AQUEUX: {
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
@@ -4681,7 +4686,7 @@ const checkAfterDefenseEffects = (
 
 	// Skills:
 	// Accupuncture (*not* tied to the healing status): close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.ACUPUNCTURE)) {
+	if (isCloseCombat && damage > 0 && hasStatus(target, FightStatus.SPIKES)) {
 		loseHp(fightData, attacker, 1, LifeEffect.Normal);
 	}
 

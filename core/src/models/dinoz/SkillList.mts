@@ -2110,12 +2110,20 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.ACUPUNCTURE,
 		name: 'Acupuncture',
 		type: SkillType.E,
-		energy: Energy.NONE,
+		energy: Energy.E30,
 		element: [ElementType.WATER],
-		activatable: false,
+		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.DOUCHE_ECOSSAISE],
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 30,
+		fightCondition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [SkillFightConditionEnum.STATUS]: FightStatus.HEALING } },
+				{ [Operator.NOT]: { [SkillFightConditionEnum.STATUS]: FightStatus.SPIKES } }
+			]
+		}
 	},
 	[Skill.SAPEUR]: {
 		id: Skill.SAPEUR,

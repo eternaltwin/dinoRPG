@@ -133,7 +133,9 @@ export const skillConditionParser = (
 	} else if (MIN_SPEED) {
 		result = fighter.stats.special.speed >= MIN_SPEED;
 	} else if (MAX_SUMMON) {
-		let activeSummonNumber = getAllies(fightData, fighter, [FighterType.CLONE, FighterType.REINFORCEMENT]).filter(r => r.master && r.master === fighter.id).length;
+		let activeSummonNumber = getAllies(fightData, fighter, [FighterType.CLONE, FighterType.REINFORCEMENT]).filter(
+			r => r.master && r.master === fighter.id
+		).length;
 		result = activeSummonNumber < fighter.stats.special.maxSummon;
 	} else {
 		result = false;
