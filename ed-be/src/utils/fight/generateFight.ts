@@ -531,10 +531,6 @@ const prepareFight = (fightData: DetailedFight) => {
 			addStatus(fightData, fighter, FightStatus.INTANGIBLE, FightStatusLength.INFINITE, false);
 		}
 
-		if (hasSkill(fighter, Skill.ACUPUNCTURE)) {
-			addStatus(fightData, fighter, FightStatus.HEALING, FightStatusLength.INFINITE, false);
-		}
-
 		// TODO refine
 		// M_INITIATIVE_RESET
 		const initiativeResetInTeam = fightData.fighters.some(

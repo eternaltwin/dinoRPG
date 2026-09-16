@@ -2321,7 +2321,7 @@
 			"DoucheEcossaise": "Attaque tous les ennemis avec un pouvoir Eau de 2",
 			"ZeroAbsolu": "Augmente la défense contre le Feu de 25",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne, il ne peut plus agir mais son armure augmente de 50%",
-			"Acupuncture": "Confère le statut **Régénération**, les assaillants en mêlée subissent 1 point de dégât.",
+			"Acupuncture": "Confère les statuts **Régénération** (regagne 1 PV par cycle) et **Épineux** (les assaillants en mêlée subissent 1 point de dégât par attaque) pour une durée longue",
 			"Sapeur": "Augmente la probabilité d'utilisation des équipements de 50%",
 			"RayonKaarSher": "Attaque tous les ennemis avec un pouvoir Eau de 7",
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
@@ -4458,7 +4458,8 @@
 			"quickened": "Accéléré",
 			"shielded": "Bouclier",
 			"blessed": "Béni",
-			"healing": "Régénération"
+			"healing": "Régénération",
+			"spikes": "Épineux"
 		},
 		"step": {
 			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
