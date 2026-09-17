@@ -4493,7 +4493,10 @@
 		},
 		"player": "Master",
 		"clan": "Clan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "Prolongations !"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
@@ -4657,10 +4660,20 @@
 		"followed": "This Dinoz leads a group.",
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
-		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}.",
-		"unsacrificeCountdown": "The ritual to bring back your Dinoz from the dead will complete in {time}.",
-		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action.",
-		"dungeon": "Your Dinoz is currently exploring a dungeon, it must exit in order to receive care."
+		"unavailable": {
+			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
+			"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
+			"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
+			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
+			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
+			"defending": "Votre Dinoz défend le château de votre clan.",
+			"selling": "Votre Dinoz est en vente.",
+			"superdom": "Votre Dinoz est au superdom."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -5378,7 +5391,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
