@@ -60,7 +60,7 @@ Muchos monstruos efectúan asaltos de elemento Vacío. Esto quiere decir que tod
 
 ## Ganancias
 
-À la fin du combat, votre Dinoz gagne des pièces d'or :gold: qui vont lui permettre de se soigner et des points d'expérience qui vont lui permettre de changer de niveau.
+Al final del combate, tu Dino gana **monedas de oro** ![](@icons/small_gold) que le permitirán curarse, y **puntos de experiencia** ![xp](@icons/small_xp) que le permitirán subir de nivel.
 
 ## L'Énergie
 
