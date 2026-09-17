@@ -1040,7 +1040,7 @@
 				"noquestion": "Ah bueno, qué lástima, no dudes en volver de vez en cuando para aprender más sobre el universo de Dinoland.",
 				"pac_start": "Ahhhh, muy buena pregunta, joven aprendiz lleno de energía. Se trata de un pergamino relacionado con mis investigaciones sobre las competencias de los Dinos que nos rodean. ¿Sabías que pueden aprender una gran cantidad de competencias diferentes y que cada una de ellas puede desbloquear otras? Es como un sistema de cajones, donde dentro de cada cajón hay más cajones. He decidido llamarlo un mueble de competencias.&&En fin, todo esto para decir que he podido registrar qué competencias desbloquean a cuáles otras, ¡y eso es realmente muy útil! Pero, lamentablemente, el papel y la tinta utilizados son de fabricación científico-chamánica y solo mis ojos pueden descifrar lo que está escrito allí.",
 				"pac_go": "¡¡¡¡¡¡¡¿Estás loco?!!!!!!!&& &&¡Lárgate de aquí y no se te ocurra volver a hablarme de ese pergamino!",
-				"pac_scroll": "Ah, eh... Felicitaciones por haber creado esta maravilla también. Supongo que necesitas ayuda para usarlo? && && &&Vuelve a verme cuando tengas más experiencia en la crianza de Dinos.",
+				"pac_scroll": "Ah, eh... Felicitaciones por haber creado esta maravilla también. Supongo que necesitas ayuda para usarlo?&&Vuelve a verme cuando tengas más experiencia en la crianza de Dinos.",
 				"pac_end": "Bien, bien, bien. Aquí está entonces el Pergamino de las Competencias Compiladas. && && &&Para usarlo es muy simple. A partir de ahora, cada vez que tus Dinos hayan aprendido un cierto número de veces una competencia, esta será visible en el árbol de competencias. *Sí, finalmente opté por árbol en lugar de un mueble...*"
 			},
 			"playerChoice": {
