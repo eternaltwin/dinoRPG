@@ -2377,7 +2377,7 @@
 			"Tornade": "Attack all enemies with an Air power of 10 and make the flying ones fall to the ground",
 			"Eveil": "Decrease speed of Air attacks by 20%",
 			"PaumeEjectable": "Attack one enemy with double power, then decreases initiative by 15",
-			"VentVif": "Gain accelerated status (increases speed by 50%) for a short duration",
+			"VentVif": "Gain accelerated status (increases speed by 33%) for a short duration",
 			"FormeVaporeuse": "The Dinoz has 6% chance to become immaterial for a short duration right before being targeted by an attack",
 			"Professeur": "Increase the experience gained by all Dinoz by 5% (non-cumulative)",
 			"MeditationSolitaire": "Increase Air defense by 3 and decrease the speed of Air attacks by 50%.",
@@ -5335,7 +5335,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",

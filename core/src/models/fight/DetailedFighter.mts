@@ -136,7 +136,6 @@ export interface DetailedFighter {
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
 		special: Record<SpecialStatUsedInFights, number>;
-		speed: Record<ElementType | 'global', number>;
 	};
 	// Items
 	items: ItemFiche[];
