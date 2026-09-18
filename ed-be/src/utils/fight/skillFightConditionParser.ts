@@ -130,7 +130,7 @@ export const skillConditionParser = (
 	} else if (ITEM_USED) {
 		result = fighter.itemsUsed.includes(ITEM_USED);
 	} else if (MIN_SPEED) {
-		result = fighter.stats.speed.global >= MIN_SPEED;
+		result = fighter.stats.special.speed >= MIN_SPEED;
 	} else {
 		result = false;
 	}

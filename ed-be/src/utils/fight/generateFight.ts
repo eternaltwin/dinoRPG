@@ -698,7 +698,7 @@ const startFight = (fightData: DetailedFight) => {
 		// JOKER
 		if (hasSkill(fighter, Skill.JOKER)) {
 			// 50% chance to get 25% / -25% speed
-			fighter.stats.speed.global *= fightData.rng() > 0.5 ? 1.25 : 0.75;
+			fighter.stats.special.speed *= fightData.rng() > 0.5 ? 1.25 : 0.75;
 
 			// Add skill step
 			fightData.steps.push({
