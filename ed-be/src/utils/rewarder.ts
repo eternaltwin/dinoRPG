@@ -100,6 +100,10 @@ export async function rewarder(
 					break;
 				case RewardEnum.EXPERIENCE_PERCENT: {
 					// Without a reference level (npcService, specialService, tournamentManager) the multiplier is 1.
+					if (dinoz === null) {
+						LOGGER.warn(`No dinoz found for player ${playerId} for ${reward.rewardType} reward`);
+						break;
+					}
 					const gained = computeMissionXp(dinoz, reward.value, missionLevel ?? dinoz.level, gameConfig());
 					await updateDinoz(dinoz.id, { experience: { increment: gained } });
 					await createLog(LogType.XPEarned, playerId, dinoz.id, gained);
