@@ -233,7 +233,7 @@ describe('percentage experience', () => {
 			[{ rewardType: RewardEnum.EXPERIENCE_PERCENT, value: percent } as never],
 			team([], dinozLevel),
 			'p1',
-			false,
+			[],
 			missionLevel
 		);
 
