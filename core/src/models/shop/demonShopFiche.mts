@@ -4,4 +4,5 @@ export interface demonShopFiche {
 	dinoz: DinozShopFiche[];
 	sacrificed: DinozShopFiche[];
 	shop: DinozShopFiche[];
+	tickets: number;
 }

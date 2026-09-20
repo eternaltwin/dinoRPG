@@ -85,7 +85,7 @@ export async function getSacrificedDinoz(req: Request): Promise<DinozShopFiche[]
 export async function getDinozFromDemonShop(req: Request): Promise<demonShopFiche> {
 	const authed = await auth(req);
 
-	// Retrieve player with dinoz shop info
+	// Retrieve player with dinoz shop info (includes *available* Dinoz at the cemetary)
 	const player = await getPlayerDemonShopRequest(authed.id);
 
 	if (!player) {
@@ -96,13 +96,12 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	// Player must have a Dinoz at the cemetary
+	// Player must have an available Dinoz at the cemetary
+	if (player.dinoz.length === 0) {
+		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
+	}
+
 	const dinozAtCemetary: DinozShopFiche[] = player.dinoz
-		.filter(
-			d =>
-				d.placeId === PlaceEnum.CIMETIERE &&
-				(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
-		)
 		.map(d => {
 			return {
 				id: d.id,
@@ -119,10 +118,6 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 			};
 		})
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
-
-	if (dinozAtCemetary.length === 0) {
-		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
-	}
 
 	// Sacrificed Dinoz can pile up into the hundreds, so only the first page is loaded here.
 	// The rest is fetched on demand via getSacrificedDinoz.
@@ -291,7 +286,8 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	return {
 		dinoz: dinozAtCemetary,
 		sacrificed: sacrificedDinoz,
-		shop: listDinozShop
+		shop: listDinozShop,
+		tickets: demonTickets
 	};
 }
 
