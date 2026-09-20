@@ -714,26 +714,25 @@ describe('useIrma', () => {
 });
 
 describe('betaMove', () => {
-	const fightablePlayer = (dinozOverrides = {}) => ({
+	const makeDinoz = (dinozOverrides = {}) => ({
+		id: 1,
+		life: 100,
+		fight: true,
+		gather: true,
+		leaderId: null,
+		unavailableReason: null,
+		canChangeName: false,
+		concentration: null,
+		status: [],
+		...dinozOverrides
+	});
+	const fightablePlayer = (dinozOverrides = {}, extraDinoz = []) => ({
 		id: 'p1',
 		items: [],
 		rewards: [],
 		quests: [],
 		ranking: null,
-		dinoz: [
-			{
-				id: 1,
-				life: 100,
-				fight: true,
-				gather: true,
-				leaderId: null,
-				unavailableReason: null,
-				canChangeName: false,
-				concentration: null,
-				status: [],
-				...dinozOverrides
-			}
-		]
+		dinoz: [makeDinoz(dinozOverrides), ...extraDinoz]
 	});
 
 	it('moves the dinoz and fights monsters at the destination', async () => {
@@ -750,6 +749,16 @@ describe('betaMove', () => {
 			fightablePlayer({ unavailableReason: 'frozen' }) as never
 		);
 		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('not able to move');
+	});
+
+	it('throws when a dinoz is unavailable', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer({}, [makeDinoz({ unavailableReason: UnavailableReason.resting })]) as never);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('error.teamNotAvailable');
+	});
+
+	it('throws when a follower is dead', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer({}, [makeDinoz({ life: 0 })]) as never);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('error.teamNotAvailable');
 	});
 
 	it('throws when the destination does not exist', async () => {
