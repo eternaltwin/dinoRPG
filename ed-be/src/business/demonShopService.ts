@@ -471,7 +471,7 @@ export async function sacrificeDinoz(req: Request) {
 	// -- DB updates
 	// Update Dinoz unavailable reason and no remaining action
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
-	updateDinoz(dinozId, {
+	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.sacrificed,
 		remaining: 0
 	});
@@ -550,7 +550,7 @@ export async function unsacrificeDinoz(req: Request) {
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
 	const duration = GLOBAL.config.isProduction ? UNSACRIFICE_DURATION : UNSACRIFICE_DURATION_DEBUG;
 	const endDate = new Date(Date.now() + duration);
-	updateDinoz(dinozId, {
+	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.unsacrificing,
 		unavailableUntil: endDate
 	});
