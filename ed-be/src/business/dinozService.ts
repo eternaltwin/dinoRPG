@@ -153,7 +153,8 @@ export async function getAvailableActions(
 	const noActionsReasons: UnavailableReason[] = [
 		UnavailableReason.unfreezing,
 		UnavailableReason.restingAttack,
-		UnavailableReason.unsacrificing
+		UnavailableReason.unsacrificing,
+		UnavailableReason.sacrificed
 	];
 
 	const dinozPlace = actualPlace(dinoz);
@@ -170,11 +171,6 @@ export async function getAvailableActions(
 	// Stop congel
 	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		return [actionList[Action.STOP_CONGEL]];
-	}
-
-	// Demon shop for sacrificed
-	if (dinoz.unavailableReason === UnavailableReason.sacrificed) {
-		return [actionList[Action.DEMON_SHOP]];
 	}
 
 	// Stop rest

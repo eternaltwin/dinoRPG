@@ -148,10 +148,6 @@ export default defineComponent({
 			try {
 				this.demonShop = await DemonShopService.getDemonDinozShop();
 				this.openDetails = new Map();
-				// Get player's treasury notes
-				const items = await InventoryService.getAllItemsData();
-				const demonTicketItem = items.find(i => i.id === Item.DEMON_TICKET);
-				this.demonTickets = demonTicketItem ? demonTicketItem.quantity : 0;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

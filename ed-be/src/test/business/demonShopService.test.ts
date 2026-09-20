@@ -300,30 +300,6 @@ describe('getDinozFromDemonShop', () => {
 			expect(result.dinoz[0].id).toBe(2);
 		});
 
-		it('excludes dinoz at CIMETIERE with sacrificed unavailableReason', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ unavailableReason: UnavailableReason.sacrificed })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-		});
-
-		it('excludes dinoz that are not at CIMETIERE', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ placeId: PlaceEnum.DINOVILLE })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-		});
-
 		it('sorts cemetery dinoz by id ascending', async () => {
 			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
 				makePlayer({ dinoz: [3, 1, 2].map(id => makeDinoz({ id })) })

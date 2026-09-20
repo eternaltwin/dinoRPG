@@ -45,7 +45,7 @@ export async function getPlayerDemonShopRequest(playerId: string) {
 					where: {
 						AND: [
 							{ placeId: PlaceEnum.CIMETIERE },
-							{ OR: [{ unavailableReason: { not: UnavailableReason.sacrificed } }, { unavailableReason: null }] }
+							{ unavailableReason: null },
 						]
 					},
 					select: {
