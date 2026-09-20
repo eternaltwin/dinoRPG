@@ -5,6 +5,7 @@ import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { groupGoldMultiplier, groupXpMultiplier } from '@drpg/core/constants';
 import type { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { UnavailableReason } from '@drpg/prisma';
 
 vi.mock('../../context.js', () => ({
 	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
@@ -346,7 +347,35 @@ describe('processFight', () => {
 		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('not able to fight');
 	});
 
-	it('uses the special movement fight when one occurs and drops unavailable followers', async () => {
+	it('throws if a follower is not available', async () => {
+		const leader = {
+			...makeDinoz({ id: 1 }),
+			fight: true,
+			gather: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		const unavailableFollower = {
+			...makeDinoz({ id: 2 }),
+			life: 1000,
+			fight: true,
+			unavailableReason: UnavailableReason.resting,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({
+			id: 'p1',
+			teacher: false,
+			cooker: false,
+			dinoz: [leader, unavailableFollower]
+		} as never);
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('error.teamNotAvailable');
+	});
+
+	it('throws if a follower is dead', async () => {
 		const leader = {
 			...makeDinoz({ id: 1 }),
 			fight: true,
@@ -371,10 +400,7 @@ describe('processFight', () => {
 			cooker: false,
 			dinoz: [leader, deadFollower]
 		} as never);
-		vi.mocked(movementListener).mockResolvedValue({ result: true, fighters: [] } as never);
-		const result = await processFight(req({}, { dinozId: 1 }));
-		expect(result).toEqual({ result: true, fighters: [] });
-		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('error.teamNotAvailable');
 	});
 
 	it('throws when the dinoz still needs naming', async () => {
