@@ -43,10 +43,7 @@ export async function getPlayerDemonShopRequest(playerId: string) {
 					// (placeId alone isn't enough: sacrificed Dinoz never leave CIMETIERE, so they'd still
 					// be pulled here unbounded without also excluding unavailableReason=sacrificed.)
 					where: {
-						AND: [
-							{ placeId: PlaceEnum.CIMETIERE },
-							{ unavailableReason: null },
-						]
+						AND: [{ placeId: PlaceEnum.CIMETIERE }, { unavailableReason: null }]
 					},
 					select: {
 						level: true,

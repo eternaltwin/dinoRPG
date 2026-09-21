@@ -9,7 +9,7 @@ const FLAG_EMOJI_BY_LANG: Record<string, string> = {
 	fr: '🇫🇷',
 	en: '🇬🇧',
 	es: '🇪🇸',
-	de: '🇩🇪',
+	de: '🇩🇪'
 };
 
 function getFlagEmoji(lang: string): string {
@@ -19,7 +19,7 @@ function getFlagEmoji(lang: string): string {
 export function translateAll(key: string, options?: Record<string, unknown>) {
 	const allLang = Object.values(Lang);
 
-	const texts = allLang.map((lang) => {
+	const texts = allLang.map(lang => {
 		const flag = getFlagEmoji(lang);
 		const text = t(key, { lng: lang, ...options });
 		return `${flag} ${text}`;

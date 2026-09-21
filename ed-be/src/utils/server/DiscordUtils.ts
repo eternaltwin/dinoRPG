@@ -251,7 +251,9 @@ ${error.stack}
 		player: Pick<Player, 'name' | 'id'>,
 		image?: Uint8Array | undefined
 	) {
-		const favicon_attach = new AttachmentBuilder(fileURLToPath(import.meta.resolve('#assets/drpg.png')), { name: 'drpg.png' });
+		const favicon_attach = new AttachmentBuilder(fileURLToPath(import.meta.resolve('#assets/drpg.png')), {
+			name: 'drpg.png'
+		});
 		const files: AttachmentBuilder[] = [favicon_attach];
 
 		const embed = new EmbedBuilder()
@@ -277,7 +279,9 @@ ${error.stack}
 	public async sendNewsNotification(title: string, text: string, image: Uint8Array | undefined) {
 		text = removeIcons(text);
 
-		const favicon_attach = new AttachmentBuilder(fileURLToPath(import.meta.resolve('#assets/drpg.png')), { name: 'drpg.png' });
+		const favicon_attach = new AttachmentBuilder(fileURLToPath(import.meta.resolve('#assets/drpg.png')), {
+			name: 'drpg.png'
+		});
 		const files: AttachmentBuilder[] = [favicon_attach];
 
 		const embed = new EmbedBuilder()

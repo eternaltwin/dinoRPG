@@ -91,7 +91,6 @@ import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZShop from '../components/common/DZShop.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DemonShopService } from '../services/DemonShopService.js';
-import { InventoryService } from '../services/InventoryService.js';
 import { playerStore, useDinozStore } from '../store/index.js';
 import { errorHandler, utils } from '../utils/index.js';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
@@ -101,7 +100,6 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
-import { Item } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'DemonShopPage',
