@@ -1509,15 +1509,14 @@ export async function frozeDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError(translate('error.notYourDinoz', authed));
-	}
-
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
+
+	if (dinoz.player.id !== authed.id) {
+		throw new ExpectedError(translate('error.notYourDinoz', authed, { id: dinozId }));
 	}
 
 	if (dinoz.placeId !== PlaceEnum.GORGES_PROFONDES) {
@@ -1549,19 +1548,18 @@ export async function unfrozeDinoz(req: Request) {
 
 	const authed = await auth(req);
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
-	}
-
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
+
+	if (dinoz.player.id !== authed.id) {
+		throw new ExpectedError(translate('error.notYourDinoz', authed, { id: dinozId }));
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.frozen) {
-		throw new ExpectedError('Dinoz is not frozen');
+		throw new ExpectedError('error.dinozNotAvailable');
 	}
 
 	// Check if player can unfreeze the dinoz
@@ -1581,7 +1579,7 @@ export async function restDinoz(req: Request) {
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError(translate('error.notYourDinoz', authed))
+		throw new ExpectedError(translate('error.notYourDinoz', authed));
 	}
 
 	const dinoz = await checkRestDinoz(dinozId);
