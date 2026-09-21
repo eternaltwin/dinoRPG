@@ -752,12 +752,16 @@ describe('betaMove', () => {
 	});
 
 	it('throws when a dinoz is unavailable', async () => {
-		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer({}, [makeDinoz({ unavailableReason: UnavailableReason.resting })]) as never);
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
+			fightablePlayer({}, [makeDinoz({ unavailableReason: UnavailableReason.resting })]) as never
+		);
 		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('error.teamNotAvailable');
 	});
 
 	it('throws when a follower is dead', async () => {
-		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer({}, [makeDinoz({ life: 0 })]) as never);
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
+			fightablePlayer({}, [makeDinoz({ life: 0 })]) as never
+		);
 		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('error.teamNotAvailable');
 	});
 

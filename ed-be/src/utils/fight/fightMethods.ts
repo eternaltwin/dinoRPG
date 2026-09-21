@@ -5086,18 +5086,26 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 const getElementalSpeed = (fighter: DetailedFighter, element: ElementType) => {
 	switch (element) {
-		case ElementType.FIRE: return fighter.stats.special.fireSpeed;
-		case ElementType.WOOD: return fighter.stats.special.woodSpeed;
-		case ElementType.WATER: return fighter.stats.special.waterSpeed;
-		case ElementType.LIGHTNING: return fighter.stats.special.lightningSpeed;
-		case ElementType.AIR: return fighter.stats.special.airSpeed;
-		case ElementType.VOID: return 1;
+		case ElementType.FIRE:
+			return fighter.stats.special.fireSpeed;
+		case ElementType.WOOD:
+			return fighter.stats.special.woodSpeed;
+		case ElementType.WATER:
+			return fighter.stats.special.waterSpeed;
+		case ElementType.LIGHTNING:
+			return fighter.stats.special.lightningSpeed;
+		case ElementType.AIR:
+			return fighter.stats.special.airSpeed;
+		case ElementType.VOID:
+			return 1;
 	}
-}
+};
 
 const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	// Calculate new attacker's time
-	let time = Math.round(TIME_BASE * TIME_FACTOR * attacker.stats.special.speed * getElementalSpeed(attacker, attacker.element));
+	let time = Math.round(
+		TIME_BASE * TIME_FACTOR * attacker.stats.special.speed * getElementalSpeed(attacker, attacker.element)
+	);
 
 	// Minimum time increment of 1
 	if (time <= 0) {

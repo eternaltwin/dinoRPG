@@ -320,10 +320,10 @@ export interface AttackCastle {
 }
 
 export interface AnnounceStep {
-	action: 'announce',
-	fid: number,
+	action: 'announce';
+	fid: number;
 	// Key of text that matches i18n
-	txt: string
+	txt: string;
 }
 
 export type FightStep =

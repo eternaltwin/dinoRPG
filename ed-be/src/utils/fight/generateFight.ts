@@ -310,13 +310,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		orderFighters(fightData);
 
 		// If fight is getting too long, deal overtime damage to all fighters.
-		if (fightData.time > OVERTIME_THRESHOLD && !	fightData.isOvertime) {
+		if (fightData.time > OVERTIME_THRESHOLD && !fightData.isOvertime) {
 			fightData.isOvertime = true;
 			fightData.steps.push({
 				action: 'announce',
 				fid: fightData.fighters[0].id,
 				txt: 'overtime'
-			})
+			});
 		}
 
 		if (fightData.isOvertime) {
