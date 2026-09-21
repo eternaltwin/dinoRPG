@@ -67,7 +67,7 @@ export async function getOffers(
 					nbrUpWood: true,
 					nbrUpAir: true,
 					status: { select: { statusId: true } },
-					skills: { select: { skillId: true }, orderBy: { skillId: 'asc' } }
+					skills: { select: { skillId: true } }
 				}
 			},
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
