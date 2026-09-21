@@ -462,9 +462,12 @@ export async function sacrificeDinoz(req: Request) {
 
 	const playerTickets = dinoz.player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
 	const demonTickets = getDemonShopPrice(dinoz.level);
+	const maxQuantity = dinoz.player.shopKeeper
+		? itemList[Item.DEMON_TICKET].maxQuantity * 1.5
+		: itemList[Item.DEMON_TICKET].maxQuantity;
 
 	// Cannot exceed max number of tickets (even if the cap is really high)
-	if (playerTickets + demonTickets > itemList[Item.DEMON_TICKET].maxQuantity) {
+	if (playerTickets + demonTickets > maxQuantity) {
 		throw new ExpectedError(translate('error.tooManyItems', authed));
 	}
 
