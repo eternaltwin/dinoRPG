@@ -1534,8 +1534,8 @@ export async function frozeDinoz(req: Request) {
 		}
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.frozen) {
-		throw new ExpectedError('Dinoz already frozen');
+	if (dinoz.unavailableReason !== null) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	await updateDinoz(dinozId, {
@@ -1581,7 +1581,7 @@ export async function restDinoz(req: Request) {
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
+		throw new ExpectedError(translate('error.notYourDinoz', authed))
 	}
 
 	const dinoz = await checkRestDinoz(dinozId);
@@ -1590,12 +1590,12 @@ export async function restDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.resting && start) {
-		throw new ExpectedError(`Dinoz is already resting`);
+	if (dinoz.unavailableReason !== null && start) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.resting && !start) {
-		throw new ExpectedError(`Dinoz is not resting`);
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });
