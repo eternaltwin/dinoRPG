@@ -867,6 +867,20 @@ describe('frozeDinoz', () => {
 			} as never);
 			await expect(frozeDinoz(req({ id: '1' }))).rejects.toThrow('dinozWrongLocation');
 		});
+
+		it('frozeDinoz throws if Dinoz unavailable', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			const unavailableReasons = Object.values(UnavailableReason);
+			for (const u of unavailableReasons) {
+				vi.mocked(dinozDao.checkFrozenDinoz).mockResolvedValue({
+					placeId: PlaceEnum.GORGES_PROFONDES,
+					leaderId: null,
+					followers: [],
+					unavailableReason: u
+				} as never);
+				await expect(frozeDinoz(req({ id: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			}
+		});
 	});
 
 	describe('processing validation', () => {
@@ -952,19 +966,49 @@ describe('unfrozeDinoz', () => {
 
 describe('restDinoz', () => {
 	describe('input validation', () => {
-		it('restDinoz throws when already resting', async () => {
+		it('restDinoz throws if Dinoz not owned', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(false as never);
+			await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('error.notYourDinoz');
+		});
+
+		it('restDinoz throws if Dinoz not found', async () => {
 			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
-			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: UnavailableReason.resting } as never);
-			await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('already resting');
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue(null);
+			await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('dinozNotFound');
+		});
+
+		it('restDinoz (start) throws if Dinoz is not available', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			const unavailableReasons = Object.values(UnavailableReason);
+			for (const u of unavailableReasons) {
+				vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: u } as never);
+				await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('error.dinozNotAvailable');
+			}
+		});
+
+		it('restDinoz (stop) throws if Dinoz is available or not resting', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null } as never);
+			await expect(restDinoz(req({ id: '1' }, { start: false }))).rejects.toThrow('error.dinozNotAvailable');
+			const unavailableReasons = Object.values(UnavailableReason).filter(u => u !== UnavailableReason.resting);
+			for (const u of unavailableReasons) {
+				vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: u } as never);
+				await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('error.dinozNotAvailable');
+			}
 		});
 	});
 
 	describe('processing validation', () => {
 		it('restDinoz starts and stops resting', async () => {
 			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			// Start rest works if available
 			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null } as never);
 			await restDinoz(req({ id: '1' }, { start: true }));
 			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.resting });
+			// Stop rest works if resting
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: UnavailableReason.resting } as never);
+			await restDinoz(req({ id: '1' }, { start: false }));
+			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: null });
 		});
 	});
 });
