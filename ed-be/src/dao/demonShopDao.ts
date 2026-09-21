@@ -134,6 +134,7 @@ export async function getDinozDataForSacrificeRequest(dinozId: number) {
 				player: {
 					select: {
 						id: true,
+						shopKeeper: true,
 						rewards: true,
 						items: true
 					}
