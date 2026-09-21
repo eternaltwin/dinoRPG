@@ -18,20 +18,16 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		if (dinozIndex === -1) {
 			list.push(dinozFiche);
 		} else {
-			list.splice(dinozIndex, 1, {
-				...list[dinozIndex],
-				...dinozFiche
-			});
+			// No shadow merge, full replace.
+			list.splice(dinozIndex, 1, dinozFiche);
 		}
 
 		if (dinozFiche.followers.length >= 1) {
 			for (const follower of dinozFiche.followers) {
 				const followerFiche = await DinozService.getDinozFiche(follower.id);
 				const followerIndex = list.findIndex(d => d.id === followerFiche.id);
-				list.splice(followerIndex, 1, {
-					...list[followerIndex],
-					...followerFiche
-				});
+				// No shadow merge, full replace.
+				list.splice(followerIndex, 1, followerFiche);
 			}
 		}
 
@@ -101,17 +97,17 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		return dinoz;
 	};
 
-	const setDinozList = (dinozs: Array<DinozFiche>): void => {
-		dinozList.value = dinozs;
+	const setDinozList = (newDinozList: Array<DinozFiche>): void => {
+		dinozList.value = newDinozList;
 	};
 
 	const setDinoz = (dinoz: DinozFiche): void => {
-		const dinozToUpdate = dinozList.value.findIndex(dinozs => dinozs.id === dinoz.id);
+		const dinozToUpdate = dinozList.value.findIndex(d => d.id === dinoz.id);
 		dinozList.value.splice(dinozToUpdate, 1, dinoz);
 	};
 
-	const setDungeonName = (dinozId: number, dungeonName: string): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+	const setDungeonName = (dinozId: number, dungeonName: string | undefined): void => {
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.dungeonName = dungeonName;
 	};
@@ -121,7 +117,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	};
 
 	const setDinozSkillState = (dinozId: number, skill: Skill, state: boolean): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		const skillToUpdate = dinozToUpdate.skills.find(s => s.skillId === skill);
 		if (!skillToUpdate) throw Error('Dinoz have skill in store.');
@@ -129,7 +125,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	};
 
 	const setNpc = (dinozId: number, speech: string, name: string): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.npcAwait = {
 			npcSpeech: speech,
@@ -138,26 +134,26 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	};
 
 	const clearNpc = (dinozId: number): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.npcAwait = undefined;
 	};
 
 	const setItems = (dinozId: number, items: Array<number>): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.items = items;
 	};
 
 	const setDinozAttackTimer = (dinozId: number): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		dinozToUpdate.lastAttack = new Date();
 	};
 
 	const getDinozAttackTimer = (dinozId: number | undefined): number | undefined => {
 		if (!dinozId) return undefined;
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 		const now = new Date();
 		const delta = (now.getTime() - (dinozToUpdate.lastAttack?.getTime() ?? 0)) / 1000;
@@ -173,7 +169,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	};
 
 	const resetDinozAttackTimer = (dinozId: number): void => {
-		const dinozToUpdate = dinozList.value.find(dinozs => dinozs.id === dinozId);
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error(`Dinoz ${dinozId} doesn't exist in store.`);
 		dinozToUpdate.lastAttack = undefined;
 		refreshDinozFiche(dinozId);

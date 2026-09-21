@@ -75,7 +75,8 @@
 		"dinozNotAvailable": "Your Dinoz is not available to perform this action.",
 		"notEnoughTickets": "You don't have enough tickets to perform this action.",
 		"noShopAccess": "You do not meet the requirements to access this shop.",
-		"tooManyItems": "You have too many items to perform this action."
+		"tooManyItems": "You have too many items to perform this action.",
+		"notInYourClan": "Vous ne faites pas partie du même clan."
 	},
 	"fb": {
 		"error": {
@@ -352,12 +353,12 @@
 		"epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Your Dinoz is not at the entrance of the dungeon.",
 		"wrongTeam": "A group is already exploring this dungeon.",
 		"noRun": "You have never visited this dungeon.",
 		"notAtExit": "You cannot leave the dungeon from here!",
-		"notHealing": "You cannot use this item here, you must go to a healing zone."
+		"notHealing": "You cannot use this item here, you must go to a healing zone.",
+		"notFound": "Ce donjon n'existe pas."
 	},
 	"UnavailableReason": {
 		"frozen": "Your Dinoz is frozen.",

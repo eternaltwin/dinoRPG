@@ -135,32 +135,15 @@ export async function getDinozItinerantShop(dinozId: number, playerId: string) {
 	});
 }
 
-export async function getAllDinozFromAccount(playerId: string) {
-	return withSpan(getAllDinozFromAccount.name, async () => {
+export async function getAllDinozWithSkills(playerId: string) {
+	return withSpan(getAllDinozWithSkills.name, async () => {
 		const dinozList = await prisma.dinoz.findMany({
 			where: {
 				playerId
 			},
 			select: {
 				id: true,
-				leaderId: true,
-				raceId: true,
-				name: true,
-				unavailableReason: true,
-				level: true,
-				placeId: true,
-				canChangeName: true,
-				life: true,
-				maxLife: true,
-				experience: true,
-				nbrUpFire: true,
-				nbrUpWood: true,
-				nbrUpWater: true,
-				nbrUpLightning: true,
-				nbrUpAir: true,
-				status: true,
-				skills: true,
-				unlockableSkills: true
+				skills: { select: { skillId: true } }
 			}
 		});
 

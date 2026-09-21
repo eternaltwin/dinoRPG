@@ -4,18 +4,18 @@ icon:
   name: small_follow
 ---
 
-# Se Déplacer
+# Desplazarse
 
-L'Univers de Dinoland est constitué de nombreux endroits à découvrir. Cest différents lieux sont reliés par des chemins que votre Dinoz peut emprunter en se déplaçant. Pour **déplacer** votre Dinoz, il suffit de cliquer sur le point suivant de la Carte. La Carte de Dinoland est affichée de cette manière :
+El Universo de Dinoland está constituido por numerosos lugares a descubrir. Estos diferentes lugares están comunicados por caminos que tu Dino utilizará para desplazarse. Para **desplazar** tu Dino, solo tienes que hacer clic en el punto del Mapa al que quieres ir. El Mapa de Dinoland se muestra de la siguiente manera:
 
-![Déplacer son Dinoz](@guide/move)
+![Desplazar su Dino](@guide/move)
 
-Les chemins partant du lieu où se trouve actuellement votre Dinoz s'affichent et les lieux sur lesquels vous pouvez vous rendre se mettront à clignoter. Cliquez sur le lieu où vous désirez déplacer votre Dinoz pour qu'il s'y rende.
+Aquí se muestran los diferentes caminos que tu Dino puede tomar desde donde se encuentra. Los lugares a los que puedes dirigirte comenzarán a parpadear. Haz clic en el lugar al que deseas mover tu Dino para que se desplace ahí.
 
-Votre Dinoz peut se déplacer au minimum deux fois par jour. Il existe un cycle de récupération des actions, qui est le suivant :
+Tu Dino puede moverse al menos dos veces por día. Existe el siguiente ciclo de recuperación de acciones:
 
-- Votre Dinoz récupère ses nouvelles actions **chaque jour à minuit** (heure serveur).
+- Tu Dino recupera sus nuevas acciones **cada día a medianoche** (hora del servidor).
 
-Mais il suffit qu'il utilise une **potion de Madame Irma** ![potion irma](@item/item_irma) pour pouvoir à nouveau se déplacer le même jour, sans que vous ayez à attendre la fin du cycle.
+Para que vuelva a desplazarse inmediatamente y sin tener que esperar al final del ciclo, basta con usar una **poción de la Bruja Lola** ![poción bruja lola](@item/item_irma).
 
-Lors d'un déplacement entre deux lieux, des monstres attaquent votre Dinoz et un **combat** est donc lancé.
+Durante un desplazamiento entre dos lugares, tu Dino se enfrentará en **combate** a diversos monstruos.

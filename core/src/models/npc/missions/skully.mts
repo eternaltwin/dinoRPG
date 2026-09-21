@@ -12,10 +12,11 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY1,
 		missionName: 'skully1',
+		level: 5,
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 10
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 8
 			}
 		],
 		steps: [
@@ -68,13 +69,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY2,
 		missionName: 'skully2',
+		level: 6,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY1
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 20
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 14
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -182,13 +184,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY3,
 		missionName: 'skully3',
+		level: 7,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY2
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 10
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 6
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -282,13 +285,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY4,
 		missionName: 'skully4',
+		level: 8,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY3
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 40
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 24
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -382,13 +386,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY5,
 		missionName: 'skully5',
+		level: 9,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY4
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 30
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 17
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -516,13 +521,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY_END,
 		missionName: 'skully_end',
+		level: 10,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY5
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 10
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 5
 			}
 		],
 		steps: [

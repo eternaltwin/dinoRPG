@@ -4,44 +4,45 @@ icon:
   name: small_dojo
 ---
 
-Les **Dojos** sont des lieux où vous pouvez entraîner vos Dinoz les uns contre les autres, en combat singulier.
+![Ausrufezeichen](@icons/small_question) Dieser Abschnitt ist nicht im Einklang mit der neuen Dojo-Funktionalität.
 
-![](@icons/act_train) Vous pouvez y faire **affronter** vos Dinoz entre eux, mais aussi affronter ceux des membres de votre clan.",
+Das **Dojo** ist ein Ort, an dem du deine Dinoz gegen Andere im Einzelkampf antreten lassen kannst.
 
-Il vous est proposé un maximum de 50 défis tous les jours, par série de 5, à vous de les gagner pour faire monter votre Dojo dans le classement.
+![](@icons/act_train) Sie können entweder einander **gegenübertreten**, oder auch den Dinoz deiner Klanmitglieder.
 
-Si vous gagnez ou annulez les 5 défis proposés, une nouvelle liste de 5 défis vous sera immédiatement proposée (dans la limite des défis restants).
+Es werden dir täglich bis zu 50 Herausforderungen angeboten, die in 5er-Sätze aufgeteilt sind. Es liegt an dir, diese zu gewinnen, damit dein Dojo in der Rangliste aufsteigen kann.
 
-# Créer son Dojo
+Solltest du die fünf angebotenen Herausforderungen schaffen oder überspringen, werden dir sofort fünf neue angeboten (im Rahmen der verbleibenden Herausforderungen).
 
-Pour pouvoir créer votre Dojo, vous devrez faire la rencontre de Maître Zenit qui traîne le plus souvent à Forcebrut, il vous indiquera comment réaliser la construction de votre Dojo et son fonctionnement. Il vous faudra choisir un endroit et cliquer sur le bouton Dojo dans le menu de gauche. Une fois le Dojo construit, vous pouvez y accéder de partout.
+# Ein Dojo kreieren
 
-# Les Défis
+Um dein Dojo erstellen zu können, musst du Meister Zenit treffen, der sich am häufigsten in Rohkraft aufhält. Er wird dir erklären, wie du dein Dojo bauen kannst und wie es funktioniert. Du musst einen Ort auswählen und links im Menü die Schaltfläche „Dojo“ anklicken. Sobald das Dojo gebaut ist, kannst du von überall darauf zugreifen.
 
-Les défis sont des combats dans lesquels il faudra se battre face au Dinoz d'un des joueurs de DinoRPG. Il vous sera demandé de battre cet adversaire en essayant ou non d'atteindre un objectif fixé à l'avance.
+# Herausforderungen
 
-![](@icons/act_defi) Ce bouton permet d'accéder aux **défis du Dojo**. Choisissez un adversaire parmi la liste de défis proposés ! Choisissez ensuite le Dinoz que vous jugez le plus adapté pour gagner en remplissant l'objectif.
+Herausforderungen sind Kämpfe, in denen du gegen Dinoz anderer Dino-RPG-Spieler antreten musst. Du wirst aufgefordert, einen bestimmten Gegner zu besiegen, unabhängig davon, ob du zusätzlich versuchst, ein zuvor festgelegtes Ziel zu erreichen.
 
-# Le Tournoi Inter-Dojo
+![Zwei zusammenstoßende Fäuste](@icons/act_defi) Über diese Schaltfläche gelangst du zu den **Dojo-Herausforderungen**. Suche dir aus der Liste der angebotenen Herausforderungen einen Gegner aus! Wähle dann den Dinoz aus, der deiner Meinung nach für einen Sieg sowie die Erfüllung des Ziels am besten geeignet ist.
 
-Le Tournoi est un événement mensuel de DinoRPG, il réunit dans 16 groupes, les 256 dojos s'étant qualifiés pendant les phases éliminatoires. Ils devront se battre entre eux jusqu'à déterminer le meilleur joueur de Dinoland !
+# Das Inter-Dojo Turnier
 
-![](@icons/act_tournoi) Ce bouton permet d'accéder à la page Tournoi. Pendant plus d'une semaine, les joueurs évolueront dans **16 groupes de 16 joueurs**. Une fois le premier tour terminé, les 16 joueurs finalistes se retrouveront dans le groupe final. Le meilleur Maître Dinoz sera désigné à l'issue de cette épreuve. _Comme pour les défis, pendant les phases finales, les Dinoz ne perdent pas leurs points de vie. Mais cette fois-ci, les combats seront plus variés, avec ou sans objets magiques, en 1 contre 1 ou par équipe : 3 contre 3, 5 contre 5. Cela changera selon les éditions !_
+Das Turnier ist eine monatliche Veranstaltung in Dino-RPG, bei der 256 in 16 Gruppen aufgeteilte Dojos zusammenkommen, die sich zuvor in der Ausscheidungsphase qualifiziert haben. Sie treten im Kampf gegeneinander an bis der beste Dojo-Meister des Dinolandes feststeht!
 
-Sur la page Tournoi, vous pourrez sélectionner les Dinoz qui participeront au Tournoi, vous ne pourrez pas les changer entre les combats des phases finales. Le tournoi commence au moment où les phases éliminatoires se terminent.
+![Goldenes Siegerpodest](@icons/act_tournoi) Mit dieser Schaltfläche gelangst du zur Turnierseite. Eine Woche lang treten **16 Gruppen mit je 16 Spielern** gegeneinander an. Sobald die erste Runde abgeschlossen ist, finden sich die 16 Finalisten in der Endrunde wieder. Sodann wird in diesen Kämpfen der beste Dinoz-Meister bestimmt. _Wie auch bei den Herausforderungen verlieren die Dinoz in den letzten Phasen keine Lebenspunkte._
 
-Les joueurs s'étant qualifiés pour un tournoi, ne pourront pas participer au tournoi suivant. Ils pourront cependant retenter leur chance à l'édition suivante.
+Auf der Turnierseite kannst du die Dinoz auswählen, die am Turnier teilnehmen sollen. Diese kannst du zwischen den Kämpfen der Endrunde nicht mehr ändern. Das Turnier beginnt nach Abschluss der Ausscheidungsphasen.
 
-# L'Historique des Combats
+Spieler, die sich für ein Turnier qualifiziert haben, können am nächsten Turnier nicht teilnehmen. Sie können ihr Glück jedoch in der darauffolgenden Ausgabe wieder versuchen.
 
-![](@icons/act_historique) Ce bouton permet d'accéder à votre **historique** de défis que vous aurez effectués, vous pourrez ainsi revoir ces combats à loisirs.
+# Kampfverlauf
 
-# Questions diverses
+![Diskette](@icons/act_historique) Über diese Schaltfläche erreichst du den **Verlauf** der Herausforderungen, die du bereits abgeschlossen hast, um dir die Kämpfe nach Lust und Laune erneut anzuschauen.
 
-- **Créer un Dojo est-il gratuit ?** Non, la création de votre Dojo vous coûtera un certain nombre de pièces d'or. Mais pas d'inquiétudes, vos combats quotidiens vous faisant gagner de l'or, il ne vous faudra pas bien longtemps avant de pouvoir créer votre édifice de Maître.
-- **Comment customiser son Dojo ?** Vous avez remarqué le bouton ? Alors vous avez aussi dû remarquer qu'il n'est pas actif pour le moment... En effet, nous travaillons sur cette fonctionnalité, donc un peu de patience."
-- **Quelle est la fréquence des Tournois Inter-Dojos ?** Tous les mois, au lendemain de la finale du tournoi précédent, une nouvelle phase de qualifications commence. Elle se terminera toujours le dernier jour du mois à minuit, et les jours suivants se passent les phases éliminatoires pour les 256 dojos qualifiés.
-- **Comment participer au Tournoi Inter-Dojo ?** Pour participer au Tournoi, il faut faire parti des 256 meilleurs Dojos du mois. Le classement permet de connaître le niveau de vos adversaires. Les joueurs réussissant à se qualifier pour les phases finales recevront une récompense.
-- **Comment gagner un œuf de Toufufu ?** Il faut que votre Dojo fasse parti des 50 premiers du classement des Dojos à la fin du mois pour gagner cette récompense.
-- **Je ne suis pas là tous les jours, comment faire tous mes défis ?** Si vous ne faites pas vos 50 défis dans la journée, ils se cumuleront avec les 50 défis ajoutés le lendemain sans limite de cumul.",
-			
+# Diverse Fragen
+
+- **Ist der Bau eines Dojos kostenlos?** Nein, die Erstellung eines Dojos kostet eine bestimmte Anzahl an Goldmünzen. Aber keine Sorge: Deine täglichen Kämpfe bringen Gold ein und es wird nicht lange dauern, bis du als Meister deine Gebäude errichten kannst.
+- **Wie personalisiere ich mein Dojo?** Du hast also die Schaltfläche bemerkt, was? Dann ist dir auch sicher aufgefallen, dass diese im Moment inaktiv ist... Tatsächlich arbeiten wir derzeit an dieser Funktionalität, also bitten wir um ein wenig Geduld.
+- **Wie oft finden Inter-Dojo Turniere statt?** Jeden Monat, am Tag nach dem Finale des vorherigen Turniers, beginnt eine neue Qualifikationsphase. Diese endet immer am letzten Tag des Monats um Mitternacht und an den darauf folgenden Tagen finden die Ausscheidungsphasen für die 256 qualifizierten Dojos statt.
+- **Wie nehme ich an einem Inter-Dojo Turnier teil?** Um am Turnier teilnehmen zu können, musst du zu den 256 besten Dojos des Monats gehören. Über die Rangliste kannst du die Stufe deiner Gegner erfahren. Spieler, die es schaffen, sich für die Endrunden zu qualifizieren, erhalten eine Belohnung.
+- **Wie gewinne ich ein Tofufu-Ei?** Um diese Belohnung zu erhalten, muss dein Dojo zum Ende des Monats in der Dojo-Rangliste zu den besten 50 gehören.
+- **Ich bin nicht jeden Tag hier. Wie schließe ich alle meine Herausforderungen ab?** Wenn du deine 50 täglichen Herausforderungen nicht abschließt, werden die übrigen auf die 50 Herausforderungen des nächsten Tages addiert.

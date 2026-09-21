@@ -4,7 +4,7 @@ icon:
   name: small_delete
 ---
 
-# La Mort
+# La Muerte
 
 Il peut arriver qu'en combattant un monstre trop fort ou parce qu'il n'avait pas assez de vie, votre Dinoz meure au cours d'un combat. Pendant qu'il est mort, votre Dinoz ne peut alors plus effectuer **aucune action**. Il est donc immobilisé jusqu'à ce qu'il soit ressuscité.
 

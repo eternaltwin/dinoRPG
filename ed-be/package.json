@@ -1,6 +1,6 @@
 {
 	"name": "ed-be",
-	"version": "0.19.1",
+	"version": "0.19.3",
 	"description": "EternalDino API",
 	"scripts": {
 		"serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
@@ -96,5 +96,8 @@
 	"files": [
 		"./dist/**/*.(js|map|ts)",
 		"./src/"
-	]
+	],
+	"imports": {
+		"#assets/*": "./src/assets/*"
+	}
 }

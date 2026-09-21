@@ -100,12 +100,11 @@ export enum Monster {
 
 export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 20 to 10
+	// - resilience set to 10
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',
-		hp: 10,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -115,7 +114,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 33,
 		level: 1,
 		zones: [MapZone.DINOLAND],
@@ -123,12 +122,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'goupi'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 20 to 10
+	// - resilience set to 10
 	[Monster.GOUPIGNON2]: {
 		id: Monster.GOUPIGNON2,
 		name: 'goupignon',
-		hp: 10,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -138,7 +136,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 33,
 		level: 1,
 		zones: [MapZone.DINOLAND],
@@ -146,12 +144,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'goupi2'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 20 to 10
+	// - resilience set to 10
 	[Monster.GOUPIGNON3]: {
 		id: Monster.GOUPIGNON3,
 		name: 'goupignon',
-		hp: 10,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -161,7 +158,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 33,
 		level: 1,
 		zones: [MapZone.DINOLAND],
@@ -169,12 +166,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'goupi3'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 30 to 25
+	// - resilience set to 10
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
 		name: 'wolf',
-		hp: 25,
+		hp: 30,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -184,7 +180,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 1,
 		bonus_defense: 1,
-		resilience: 40,
+		resilience: 10,
 		odds: 80,
 		level: 5,
 		zones: [MapZone.DINOLAND],
@@ -198,7 +194,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'wolf'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	[Monster.GLUON]: {
 		id: Monster.GLUON,
 		name: 'gluon',
@@ -212,7 +208,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 20,
 		level: 7,
 		xp: 25,
@@ -223,12 +219,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		entrance: EntranceEffect.GROUND
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 70 to 50
+	// - resilience set to 10
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
 		name: 'greeng',
-		hp: 50,
+		hp: 70,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -238,7 +233,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 3,
 		bonus_defense: 6,
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 14,
 		zones: [MapZone.DINOLAND],
@@ -247,7 +242,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'gvert'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	[Monster.COQDUR]: {
 		id: Monster.COQDUR,
 		name: 'coq',
@@ -261,7 +256,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 50,
 		level: 21,
 		zones: [MapZone.DINOLAND],
@@ -297,7 +292,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'piraos'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
 		name: 'flam',
@@ -311,7 +306,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 3,
 		xp: 7,
@@ -326,8 +321,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'flam'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 60 to 25
+	// - resilience set to 10
 	[Monster.GOBLIN]: {
 		id: Monster.GOBLIN,
 		name: 'goblin',
@@ -341,7 +335,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 2,
 		bonus_defense: 1,
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 5,
 		zones: [MapZone.GTOUTCHAUD],
@@ -349,13 +343,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'goblin'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 70 to 40
+	// - resilience set to 10
 	// - fire element increased from 3 to 5
 	[Monster.BARCHE]: {
 		id: Monster.BARCHE,
 		name: 'barche',
-		hp: 40,
+		hp: 70,
 		elements: {
 			fire: 5,
 			wood: 1,
@@ -365,7 +358,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 10,
 		odds: 20,
 		level: 10,
 		xp: 15,
@@ -375,12 +368,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		entrance: EntranceEffect.RUN
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 100 to 75
+	// - resilience set to 10
 	[Monster.COBRA]: {
 		id: Monster.COBRA,
 		name: 'cobra',
-		hp: 75,
+		hp: 100,
 		elements: {
 			fire: 5,
 			wood: 0,
@@ -388,7 +380,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 4,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 20,
 		zones: [MapZone.GTOUTCHAUD],
@@ -397,7 +389,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		entrance: EntranceEffect.GROW
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	[Monster.PIRHALOZ]: {
 		id: Monster.PIRHALOZ,
 		name: 'pirhaloz',
@@ -409,7 +401,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 1,
 		zones: [MapZone.ILES],
@@ -421,7 +413,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'pira'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	[Monster.PIRHANOZ]: {
 		id: Monster.PIRHANOZ,
 		name: 'pirhanoz',
@@ -433,7 +425,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 6,
 		xp: 5,
@@ -448,12 +440,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'pira'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 50 to 40
+	// - resilience set to 10
 	[Monster.KAZKA]: {
 		id: Monster.KAZKA,
 		name: 'kazka',
-		hp: 40,
+		hp: 50,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -463,7 +454,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 3,
 		bonus_defense: 7,
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 8,
 		zones: [MapZone.ILES],
@@ -473,12 +464,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		entrance: EntranceEffect.GROW
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 120 to 60
+	// - resilience set to 10
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,
 		name: 'anguil',
-		hp: 60,
+		hp: 120,
 		elements: {
 			fire: 2,
 			wood: 0,
@@ -486,7 +476,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 70,
 		level: 18,
 		xp: 15,
@@ -496,14 +486,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'anguil'
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
+	// - resilience set to 10
 	// - level reduced from 28 to 25
-	// - increase bonus attack from 10 to 25
-	// - reduce hp from 100 to 80
 	[Monster.BORG]: {
 		id: Monster.BORG,
 		name: 'borg',
-		hp: 80,
+		hp: 100,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -513,7 +501,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 25,
 		bonus_defense: 40,
-		resilience: 40,
+		resilience: 10,
 		odds: 50,
 		level: 25,
 		zones: [MapZone.ILES],
@@ -523,8 +511,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		entrance: EntranceEffect.GROW
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - increase hp from 10 to 15
+	// - resilience set to 10
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
 		name: 'korgon',
@@ -536,7 +523,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 7,
 		zones: [MapZone.JUNGLE],
@@ -559,7 +546,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 7,
 		zones: [],
@@ -570,8 +557,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		}
 	},
 	// Diffs from MT's source:
-	// - resilience set to 40
-	// - hp reduced from 70 to 50
+	// - resilience set to 10
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
 		name: 'ronciv',
@@ -585,7 +571,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 6,
 		bonus_defense: 15,
-		resilience: 40,
+		resilience: 10,
 		odds: 100,
 		level: 15,
 		zones: [MapZone.JUNGLE],
@@ -1404,8 +1390,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ALL],
 		canBeCaptured: true
 	},
-	// Diffs from MT's source:
-	// - resilience set to 40
 	[Monster.DARK_LEECH]: {
 		id: Monster.DARK_LEECH,
 		name: 'sangsa',
@@ -1419,7 +1403,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 0,
 		odds: 0,
 		level: 72,
 		groups: [
@@ -1433,8 +1417,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND, MapZone.ILES],
 		canBeCaptured: true
 	},
-	// Diffs from MT's source:
-	// - resilience set to 40
 	[Monster.LONG_LEGGED_LEECH]: {
 		id: Monster.LONG_LEGGED_LEECH,
 		name: 'sangs2',
@@ -1448,7 +1430,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 0,
 		odds: 0,
 		level: 75,
 		groups: [
@@ -1531,8 +1513,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: false,
 		entrance: EntranceEffect.GROUND
 	},
-	// Diffs from MT's source:
-	// - resilience set to 40
 	[Monster.TW_BIGBEASTLY_1]: {
 		id: Monster.TW_BIGBEASTLY_1,
 		name: 'wbour1',
@@ -1546,7 +1526,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		resilience: 40,
+		resilience: 0,
 		hp: 300,
 		odds: 100,
 		xp: 0,

@@ -3,7 +3,7 @@
  * client, which only receives the fog-of-war reveals its own validated moves produce.
  */
 
-import type { Dinoz } from '@drpg/prisma';
+import { PantheonMotif, type Dinoz } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
@@ -54,7 +54,7 @@ import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FightOutcome, FightResult } from '@drpg/core/models/fight/FightResult';
 import { FightBackground } from '@drpg/core/models/fight/FightBackgroundList';
 import { getRandomArrayElement } from '../utils/tools.js';
-import { Place } from '@drpg/core/models/place/Place';
+import { checkAnnounce } from '../utils/server/announcer.js';
 
 /** Gold granted per dungeon level for each collected pile. */
 const GOLD_PER_LEVEL = 150;
@@ -505,9 +505,12 @@ export async function move(req: Request): Promise<MoveResult> {
 			// Mark the scenario read before granting what it carries.
 			if (sc.obj != null || sc.collec != null) await checkpoint(next);
 			if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
-			if (sc.collec != null) await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
-			// Builder scenarios carry raw text; the client's $t falls through to it unchanged.
-			scenario = { text: sc.raw ? sc.text : `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
+			if (sc.collec != null) {
+				await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
+				await checkAnnounce(PantheonMotif.epic, authed.id, sc.collec);
+			}
+			// Scenario texts are always i18n keys — the client resolves them, never prints them.
+			scenario = { text: `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
 		}
 
 		// First visit of a gold pile: reward gold scaled to the dungeon's level, then it's gone for good.

@@ -4,27 +4,30 @@ icon:
   name: small_browse_next
 ---
 
-# Vider son cache
+# Cache leeren
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.
+Vor allem Anderen, denk bitte daran, den **Browser-Cache zu leeren**! Dieser Vorgang ist simpel, kann aber eine Vielzahl technischer Probleme lösen.
 
-Sur Microsoft Edge:
-- Appuyer en même temps sur les touches [Ctrl], [Maj] et [Suppr]
-- Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
-- Confirmez votre choix en cliquant sur le bouton 'Effacer'
- 
-Sur Mozilla Firefox :
-- Cliquez sur le bouton de menu et sélectionnez les Paramètres
-- Sélectionnez le panneau Vie privée et sécurité
-- Dans la section Cookies et données de sites, cliquez sur le bouton 'Effacer les données...'
-- Cochez la case 'Contenu web en cache', puis cliquez sur le bouton 'Effacer'
+In Microsoft Edge:
 
-Sur Google Chrome :
-- Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
-- Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'
+- Drücke gleichzeitig [Strg], [Umschalt] und [Entf]
+- Es öffnet sich ein neues Fenster,  in dessen Reiter du „Gecachte Bilder und Daten“ auswählen musst
+- Bestätige deine Auswahl, indem du auf „Leeren“ drückst
 
-# Demander de l'aide
+In Mozilla Firefox:
 
-Vous trouverez souvent la réponse à vos questions directement sur le [serveur Discord d'Eternaltwin](https://discord.gg/ERc3svy).
+- Klicke oben im Menü auf „Extras“ und dann „Einstellungen“
+- Wähle den Abschnitt „Datenschutz und Sicherheit“ aus
+- Weiter unten bei „Cookies und Website-Daten“, klicke auf die Schaltfläche „Daten entfernen...“
+- Setze das Häkchen bei „Temporäre Dateien und Seiten im Cache“ und bestätige mit „Löschen“
 
-Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.
+In Google Chrome:
+
+- Klicke auf „Mehr“ und wähle „Browser-Daten leeren“
+- Wähle „Bilder und Daten im Cache“ und klicke dann auf „Daten löschen“
+
+# Hilfe anfordern
+
+Die Antworten auf Fragen findet man oft direkt auf dem [Eternaltwin-Discord](https://discord.gg/ERc3svy).
+
+Falls nicht, stelle deine Fragen und jemand aus der Gemeinschaft wird dir sicher helfen.

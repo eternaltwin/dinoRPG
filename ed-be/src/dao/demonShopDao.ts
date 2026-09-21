@@ -132,6 +132,8 @@ export async function getDinozDataForSacrificeRequest(dinozId: number) {
 				status: true,
 				items: true,
 				unavailableReason: true,
+				leaderId: true,
+				followers: true,
 				player: {
 					select: {
 						id: true,

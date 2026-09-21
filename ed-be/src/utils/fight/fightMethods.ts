@@ -1047,10 +1047,20 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 	// Count monsters with M_RENFORT, of type reinforcement and same team as fighter
-	const renfortApplied = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
+	const renfortApplied = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_RENFORTS)
+	).length;
 
 	// Count monsters with M_WORM_CALL, of type reinforcement and same team as fighter
-	const wormCalls = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
+	const wormCalls = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_WORM_CALL)
+	).length;
 
 	// Initialize monster
 	const monster = initializeMonster(
@@ -2175,7 +2185,6 @@ export const createStatus = (type: FightStatus, length?: number): FighterStatusD
 	switch (type) {
 		case FightStatus.TORCHED:
 		case FightStatus.BURNED:
-		case FightStatus.OVERTIME_POISON:
 		case FightStatus.POISONED:
 		case FightStatus.HEALING: {
 			cycle = true;
@@ -3908,7 +3917,7 @@ const loseHpwithResilience = (fightData: DetailedFight, fighter: DetailedFighter
 };
 
 // Have the figher lose the given number of damage
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+export const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
 	const hp_lost = damage;
 	fighter.hp -= damage;
@@ -4775,7 +4784,6 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
-						case FightStatus.OVERTIME_POISON:
 						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
 

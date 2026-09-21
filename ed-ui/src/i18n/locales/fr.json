@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
-		"demon": "DinoRPG [ Boutique Démoniaque ]",
+		"demonShop": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
@@ -3554,10 +3554,10 @@
 			"gluon": "Gluon | Gluon | Gluons",
 			"greeng": "Géant vert | Géant vert | Géants verts",
 			"coq": "Coqdur | Coqdur | Coqdurs",
-			"pira": "Pirhanoz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Anguilloz",
-			"kazka:pira": "Monstre des Îles | Monstre des Îles | Monstres des Îles",
+			"kazka:pirhanoz": "Monstre des Îles | Monstre des Îles | Monstres des Îles",
 			"korgon": "Korgon | Korgon | Korgons",
 			"korgon:ronciv": "Korgons ou alliés",
 			"barche": "Bébé Archelion | Bébé Archelion | Bébés Archelions",
@@ -4493,7 +4493,10 @@
 		},
 		"player": "Maître",
 		"clan": "Clan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "Prolongations !"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
@@ -4657,10 +4660,20 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
-		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
-		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
-		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"unavailable": {
+			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
+			"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
+			"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
+			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
+			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
+			"defending": "Votre Dinoz défend le château de votre clan.",
+			"selling": "Votre Dinoz est en vente.",
+			"superdom": "Votre Dinoz est au superdom."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",

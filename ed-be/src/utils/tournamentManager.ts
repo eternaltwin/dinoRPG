@@ -412,6 +412,9 @@ class TournamentManager {
 						metadata: true,
 						id: true,
 						result: true
+					},
+					orderBy: {
+						tournamentStep: 'asc'
 					}
 				},
 				cashPrice: true
@@ -420,6 +423,8 @@ class TournamentManager {
 		const allTournamentFights = tournament.fights;
 		const lastRound = new Map<string, number>();
 		allTournamentFights.forEach(match => {
+			// Some players may lose more than once in the tournament. However, the following logic works
+			// because the fights are ordered by tournamentStep (round).
 			const metadata = JSON.parse(match.metadata as string) as MetaData;
 			// Byes in the left or right of the fight would be treated as null
 			const leftDojoId = match.tournamentTeamLeft?.dojoId ?? null;

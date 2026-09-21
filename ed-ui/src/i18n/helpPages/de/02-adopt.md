@@ -4,15 +4,15 @@ icon:
   name: small_member
 ---
 
-# Adopter un Dinoz
+# Einen Dinoz adoptieren
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **50 000** pièces d'or ![](@icons/small_gold) obtenues lors de la création de votre compte.
+Als Erstes solltest du in Dino-RPG einen Dinoz adoptieren. Hierfür hast du bei der Kontoerstellung **50.000** ![Goldmünzen](@icons/small_gold) erhalten.
 
-En cliquant sur ![ACHETER UN DINOZ](@guide/adopt_button_fr) dans le menu de gauche ou ![bouton mobile](@icons/act_treasure) sur mobile, vous pourrez accéder à l'Enclos des Dinoz. Chaque Dinoz est unique et chaque jour l'enclos vous proposera une nouvelle sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. Cette sélection change aussi à chaque adoption faite via l'enclos.
+Klicke links im Menü auf ![Kaufe Dinoz!](@guide/adopt_button_de) oder auf ![die Schatztruhe](@icons/act_treasure) auf dem Smartphone, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst, welcher dir am besten gefällt. Diese wird ebenfalls nach dem Adoptieren eines Dinoz erneuert.
 
-Chaque Dinoz est présenté de la façon suivante :
-![Écran d'adoption](@guide/adopt_shop_fr)
+Jeder Dinoz wird wie folgt dargestellt:
+![Adoptionsseite](@guide/adopt_shop_de)
 
-Vous pouvez voir une image du Dinoz, sa **race** et son **prix**. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères.
+Du kannst das Aussehen, seine **Rasse** und den **Preis** des Dinoz betrachten. Es gibt unterschiedliche Rassen von Dinoz, die jeweils über eigene Besonderheiten verfügen. Vor allem die Verteilung der **5 Elemente** hängt beim Kauf von der Rasse des Dinoz ab und manche Rassen verfügen sogar über eine **zusätzliche Fähigkeit**. Beide Aspekte haben Einfluss auf den **Kampf**, worauf wir später eingehen. Auch der Preis kann von Dinoz zu Dinoz variieren, denn seltenere Rassen sind teurer.
 
-Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.
+Suche zunächst einen passenden Dinoz aus und dann kannst du ihn kaufen.

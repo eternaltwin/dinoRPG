@@ -24,7 +24,7 @@ import {
 import { Request } from 'express';
 import { GLOBAL } from '../context.js';
 import {
-	getAllDinozFromAccount,
+	getAllDinozWithSkills,
 	getDinozForLevelUp,
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozToReincarnate,
@@ -518,7 +518,7 @@ export async function computeUSkillsForPlayer(playerId: string) {
 		throw new ExpectedError(`This player doesn't exist.`);
 	}
 	// Get player dinoz list
-	const dinozList = await getAllDinozFromAccount(playerId);
+	const dinozList = await getAllDinozWithSkills(playerId);
 	const skills = dinozList.flatMap(dinoz => dinoz.skills).map(skill => skill.skillId);
 	// Compute player U skills using dinoz skills
 	computeUSkillEffects(player, skills);
@@ -551,7 +551,15 @@ export async function reincarnate(req: Request) {
 
 	const race = getRace(dinoz);
 
-	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.seed, race.demon !== undefined));
+	await updateDinoz(
+		dinoz.id,
+		reincarnateDinoz(
+			race,
+			dinoz.display,
+			dinoz.seed,
+			dinoz.status.some(s => s.statusId === DinozStatusId.DEMON)
+		)
+	);
 
 	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.
 	await removeAllSkillFromDinoz(dinoz.id);

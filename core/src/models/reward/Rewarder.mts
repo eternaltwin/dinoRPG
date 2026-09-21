@@ -46,6 +46,11 @@ export type Rewarder =
 			service: ServiceEnum[];
 	  }
 	| {
+			rewardType: RewardEnum.EXPERIENCE_PERCENT;
+			/** Percentage of the xp needed for the Dinoz's current level. */
+			value: number;
+	  }
+	| {
 			rewardType: Exclude<
 				RewardEnum,
 				| RewardEnum.CHANGE_ELEMENT
@@ -55,6 +60,7 @@ export type Rewarder =
 				| RewardEnum.SCENARIO
 				| RewardEnum.TELEPORT
 				| RewardEnum.REDIRECT
+				| RewardEnum.EXPERIENCE_PERCENT
 			>;
 			value: number;
 			reverse?: boolean;

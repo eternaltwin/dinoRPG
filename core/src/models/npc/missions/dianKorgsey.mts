@@ -12,14 +12,15 @@ export const M_DIANKORGSEY: Mission[] = [
 	{
 		missionId: MissionID.DIAN_KSWIM,
 		missionName: 'kswim',
+		level: 10,
 		rewards: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.FLIPPERS
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 20
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 10
 			}
 		],
 		steps: [
@@ -80,6 +81,7 @@ export const M_DIANKORGSEY: Mission[] = [
 	{
 		missionId: MissionID.DIAN_RIVALS,
 		missionName: 'rivals',
+		level: 12,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KSWIM
 		},
@@ -89,8 +91,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				value: 2000
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 40
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 18
 			}
 		],
 		steps: [
@@ -131,6 +133,7 @@ export const M_DIANKORGSEY: Mission[] = [
 	{
 		missionId: MissionID.DIAN_KFOOD,
 		missionName: 'kfood',
+		level: 12,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KSWIM
 		},
@@ -140,8 +143,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				value: 2000
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 40
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 18
 			}
 		],
 		steps: [
@@ -193,6 +196,7 @@ export const M_DIANKORGSEY: Mission[] = [
 	{
 		missionId: MissionID.DIAN_POISON,
 		missionName: 'poison',
+		level: 15,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KFOOD },
@@ -205,8 +209,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				value: 3500
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 100
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 36
 			},
 			{
 				rewardType: RewardEnum.ITEM,

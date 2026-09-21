@@ -20,7 +20,7 @@ import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { getItemMaxQuantity } from '../business/inventoryService.js';
 import { translateTarget } from '../utils/server/translate.js';
 import { Lang } from '@drpg/prisma';
-import { getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { computeMissionXp, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { gameConfig } from './gameConfig.js';
 import { formatNumber } from '@drpg/core/utils/string';
 
@@ -31,7 +31,8 @@ export async function rewarder(
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
 	playerId: string,
-	notify?: boolean
+	notify?: boolean,
+	missionLevel?: number
 ): Promise<[Item, number][]> {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
@@ -68,8 +69,15 @@ export async function rewarder(
 					break;
 				case RewardEnum.EXPERIENCE:
 					await updateDinoz(dinoz.id, { experience: { increment: reward.value } });
-					await createLog(LogType.XPEarned, playerId, undefined, reward.value);
+					await createLog(LogType.XPEarned, playerId, dinoz.id, reward.value);
 					break;
+				case RewardEnum.EXPERIENCE_PERCENT: {
+					// Without a reference level (npcService, specialService, tournamentManager) the multiplier is 1.
+					const gained = computeMissionXp(dinoz, reward.value, missionLevel ?? dinoz.level, gameConfig());
+					await updateDinoz(dinoz.id, { experience: { increment: gained } });
+					await createLog(LogType.XPEarned, playerId, dinoz.id, gained);
+					break;
+				}
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
 					if (showNotification) {

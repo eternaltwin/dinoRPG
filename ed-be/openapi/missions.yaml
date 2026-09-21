@@ -176,7 +176,10 @@ paths:
                   type: integer
       responses:
         '200':
-          description: The list of rewarders granted for finishing the mission.
+          description: >-
+            The list of rewarders granted for finishing the mission. Percentage xp
+            rewards (xpPercent) are resolved into the absolute xp actually granted and
+            returned as a plain xp rewarder.
           content:
             application/json:
               schema:

@@ -4,55 +4,56 @@ icon:
   name: small_attack
 ---
 
-Les **Clans** peuvent aussi s'affronter les uns aux autres lors du Championnat des Clans ! En voici les principes et les règles.
+![Ausrufezeichen](@icons/small_question) Die Meisterschaft der Klane wurde noch nicht implementiert. Die nachfolgende Beschreibung erläutert die ursprüngliche Funktionsweise.
 
-# Le Championnat
-			
-Une fois un championnat démarré, plus aucun Clan ne peut rejoindre un classement ou changer de classement jusqu'à la fin de ce Championnat.
+Dann können Klane noch in der **Meisterschaft der Klane** gegeneinander antreten! Hier sind die Grundlagen und Regeln:
 
-Il n'est pas possible d'avoir un match nul en phase finale : ci cela devait arriver, un des deux Clans serait déclaré vainqueur par tirage au sort.
+# Die Meisterschaft
 
-# Bataille
+Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platziert werden oder seine Rangplatzierung verändern bis die Meisterschaft beendet ist.
 
-Une bataille est lancée lorsque deux clans s'affrontent. Une bataille a une durée de _3 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+In der Endphase wird kein unentschieden zugelassen und bei einem Gleichstand wird einer der Klane per Zufallsprinzip zum Sieger erklärt.
 
-Une bataille se déroule dans un lieu donné. Vous devrez déplacer vos Dinoz à ce lieu pour qu'ils puissent y participer. Un joueur peut avoir jusqu'à _3 Dinoz_ dans une bataille, et dans tous les cas un Clan ne peut avoir plus de _45 Dinoz_ dans une bataille.
+# Das Schlachtfeld
 
-Voici une vue de bataille simplifiée :
+Eine Schlacht wird gestartet, wenn zwei Klane aufeinandertreffen. Sie dauert _3 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
-![Exemple de bataille simplifiée](@guide/battle_cdc)
+Eine Schlacht findet an einem bestimmten Ort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Ein Spieler kann bis zu _3 Dinoz_ in eine Schlacht schicken und insgesamt können sich nicht mehr als _45 Dinoz_ eines Klans auf dem Schlachtfeld befinden.
 
-En haut, vous pouvez voir le **score** actuel de la bataille et en bas le temps restant avant la fin de la bataille.
+Hier ist eine vereinfachte Darstellung der Kampfansicht:
 
-Les Dinoz qui ont rejoint la bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite.
+![Vereinfachte Darstellung einer Beispielschlacht](@guide/battle_cdc)
 
-Vous pouvez cliquer sur un Dinoz pour pouvoir le déplacer ou savoir à qui il appartient. Seule le propriétaire d'un Dinoz peut le déplacer.
+Oben siehst du den aktuellen **Punktestand** der Schlacht und unten die verbleibende Zeit bis zu ihrer Beendigung.
 
-_Nous rappelons que le prêt de compte entre joueurs est interdit et qu'en cas de violation du règlement tous les comptes concernés seront définitivement bloqués._
+Dinoz, die sich der Schlacht angeschlossen haben, können sich um ein Feld bewegen und müssen daraufhin zunächst eine bestimmte Anzahl von Minuten warten, bevor sie sich erneut bewegen können. Es ist möglich, Aktionen anzusammeln, wenn man sie nicht sofort verwendet.
 
-Une bonne organisation entre les membres du Clan est donc nécessaire pour remporter la victoire.
+Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,   allerdings kann ein Dinoz nur von seinem Besitzer bewegt werden.
 
-# Score
+_An dieser Stelle erinnern wir daran, dass die Weitergabe von Kontodaten zwischen Spielern verboten ist und dass im Falle eines Verstoßes gegen die Vorschriften alle betroffenen Konten permanent gesperrt werden._
 
-Comme vous pouvez le voir sur l'affichage de la bataille, chaque Clan dispose d'une **ligne de score**, bleue pour le Clan de gauche et rouge pour le Clan de droite.
+Eine gute Organisation zwischen Klanmitgliedern ist notwendig, um einen Sieg zu erringen.
 
-Toutes les _15 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Ainsi, dans l'exemple ci-dessus, le Clan de gauche (ligne bleue) va remporter 2 points et le Clan de droite (ligne rouge) 4 points.
+# Punkte
 
-La ligne de score est positionnée de la façon suivante : elle indique la position du premier Dinoz du Clan qui n'a pas été dépassé par un Dinoz du Clan adverse.
+Wie in der Schlachtdarstellung zu sehen ist, hat jeder Klan eine **Punktelinie**: Blau für den Klan links und rot für den Klan rechts.
 
-**Attention !** Un Dinoz adverse peut ainsi effectuer une percée qui va repousser votre ligne de score, ce qui vous empêchera de marquer des points lors du prochain calcul.
+Alle _15 Minuten_ erhalten die Klane Punkte, deren Menge auf dem Voranschreiten der Punktelinie basiert. Im obigen Beispiel würde also der Klan auf der linken Seite (blaue Linie) 2 Punkte und der Klan auf der rechten Seite (rote Linie) 4 Punkte erhalten.
 
-Rappel : une bataille a une durée de _3 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+Die Punktelinie wird wie folgt positioniert: Sie zeigt die Position des ersten Dinoz des Klans an, dem kein Dinoz des gegnerischen Klans gegenübergetreten ist.
 
-# Combats
+**Achtung!** Einem gegnerischen Dinoz kann auf diese Weise ein Durchbruch gelingen, der die eigene Punktelinie nach hinten verschiebt und deinen Klan somit daran hindert, bei der nächsten Auswertung Punkte zu erzielen.
 
-Si un Dinoz essaie de se déplacer sur l'emplacement occupé par un Dinoz adverse, un combat s'engage. Tous les Dinoz des 10 cases autour des deux combattants participent au combat, selon le schéma suivant :
+Zur Erinnerung: Ein Kampf dauert _3 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
-![Exemple de combats pour le CDC](@guide/position_cdc)
+# Kämpfe
 
-Le placement des Dinoz est donc extrêmement important si vous ne voulez pas vous retrouver en désavantage numérique au cours d'un combat.
+Wenn ein Dinoz versucht, sich auf ein von einem gegnerischen Dinoz besetztes Feld zu bewegen, wird ein Kampf ausgelöst. Alle Dinoz, die sich auf den zehn an die beiden Kämpfer angrenzenden Feldern befinden, nehmen gemäß dem folgenden Schema am Kampf teil:
 
-Si un Dinoz attaque un adversaire par derrière, il le fait seul, l'adversaire sera pris par surprise et ne pourra pas appeler de renforts. Le combat sera alors en 1 contre 1.
+![Schematische Darstellung eines MDK-Kampfes](@guide/position_cdc)
 
-Si un Dinoz meurt au cours d'un combat, il est retiré de la bataille et ne pourra plus la rejoindre. Un Dinoz peut aussi quitter la bataille volontairement en retournant sur la ligne de touche de son Clan, il pourra alors se soigner et retourner combattre.
-			
+Die Positionierung der Dinoz ist daher äußerst wichtig, wenn man im Kampf nicht zahlenmäßig unterlegen sein möchte.
+
+Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, denn der Gegner wird überrascht und kann keine Verstärkung herbeirufen. Der Kampf findet in diesem Fall eins gegen eins statt.
+
+Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann die Schlacht auch freiwillig verlassen, indem er an die Anfangslinie seines Klans zurückkehrt. In dem Fall kann er geheilt werden und dann die Schlacht wiederaufnehmen.

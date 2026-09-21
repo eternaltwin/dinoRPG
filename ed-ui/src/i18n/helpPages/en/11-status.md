@@ -10,4 +10,4 @@ En complétant différentes **Missions et Quêtes**, votre Dinoz va pouvoir obte
 
 En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus.
 
-Les statuts sont affichés quand vous consultez les Dinozs d'un autre joueur : saurez-vous en consulter le maximum ?
+Les statuts sont affichés quand vous consultez les Dinoz d'un autre joueur : saurez-vous en consulter le maximum ?
