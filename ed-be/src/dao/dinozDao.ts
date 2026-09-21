@@ -143,6 +143,7 @@ export async function getAllDinozWithSkills(playerId: string) {
 			},
 			select: {
 				id: true,
+				raceId: true,
 				skills: { select: { skillId: true } }
 			}
 		});

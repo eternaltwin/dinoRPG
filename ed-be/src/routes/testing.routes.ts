@@ -19,7 +19,7 @@ import { prisma } from '../prisma.js';
 import { shuffle } from '../utils/tools.js';
 import { createTournamentTestDinoz } from '../business/forceBruteService.js';
 import { createPlayer, getTestUsers } from '../dao/playerDao.js';
-import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
+import { getAllDinozWithSkills, updateDinoz } from '../dao/dinozDao.js';
 import { updateDojoPoints } from '../dao/rankingDao.js';
 import { simplifyCreateTournamentTeam } from '../business/tournamentService.js';
 import { getLatestTournament } from '../dao/tournamentDao.js';
@@ -155,7 +155,7 @@ routes.post(`${commonPath}/test-dinoz`, async (req: Request, res: Response) => {
 			Item.WANWAN_EGG_RARE
 		].map(itemId => itemList[itemId]);
 		for (const player of players) {
-			const numDinoz = (await getAllDinozFromAccount(player.id)).length;
+			const numDinoz = (await getAllDinozWithSkills(player.id)).length;
 			const toCreate = 18 - numDinoz;
 			shuffle(eggs);
 			for (let k = 0; k < toCreate; k++) {
@@ -166,7 +166,7 @@ routes.post(`${commonPath}/test-dinoz`, async (req: Request, res: Response) => {
 				await hatchEgg(egg, { id: player.id, lang: 'es' });
 			}
 
-			const dinoz = await getAllDinozFromAccount(player.id);
+			const dinoz = await getAllDinozWithSkills(player.id);
 			let i = 1;
 			for (const dino of dinoz) {
 				await updateDinoz(dino.id, {
@@ -191,7 +191,7 @@ routes.post(`${commonPath}/dojo/register-test-players`, async (req: Request, res
 		for (const player of players) {
 			await updateDojoPoints(player.id, 2);
 			const authorizedRaces = tournament.teamRace.split(',').map(r => parseInt(r)) as number[];
-			let dinoz = (await getAllDinozFromAccount(player.id)).filter(d => {
+			let dinoz = (await getAllDinozWithSkills(player.id)).filter(d => {
 				return authorizedRaces.includes(d.raceId);
 			});
 			console.log(`player ${player.name} has ${dinoz.length} Dinos for the tournament`);
