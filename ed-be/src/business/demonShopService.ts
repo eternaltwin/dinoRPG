@@ -308,13 +308,8 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	const hasActiveDinozAtCemetary = player.dinoz.some(
-		d =>
-			d.placeId === PlaceEnum.CIMETIERE &&
-			(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
-	);
-
-	if (!hasActiveDinozAtCemetary) {
+	// Player must have an available Dinoz at the cemetary
+	if (player.dinoz.length === 0) {
 		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
 	}
 
@@ -450,7 +445,7 @@ export async function sacrificeDinoz(req: Request) {
 		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	if (dinoz.unavailableReason !== null && dinoz.unavailableReason !== UnavailableReason.resting) {
+	if (dinoz.unavailableReason !== null) {
 		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
