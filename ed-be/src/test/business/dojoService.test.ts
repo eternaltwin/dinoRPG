@@ -28,9 +28,10 @@ vi.mock('../../dao/playerDao.js', () => ({
 	getDojoFightPreparationRequest: vi.fn(),
 	getPlayerDinozInformationForTeam: vi.fn(),
 	getDojoFriendData: vi.fn(),
+	getPlayerShopOneItemDataRequest: vi.fn(),
 	spendMoney: vi.fn()
 }));
-vi.mock('../../dao/playerItemDao.js', () => ({ increaseItemQuantity: vi.fn() }));
+vi.mock('../../dao/playerItemDao.js', () => ({ increaseItemQuantity: vi.fn(), insertItem: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ getPlayerPositionDojoDAO: vi.fn() }));
 vi.mock('../../dao/tournamentDao.js', () => ({ getLatestTournament: vi.fn(), incrementCashPrice: vi.fn() }));
 vi.mock('../../utils/tournamentManager.js', () => ({ default: { getCurrentTournamentState: vi.fn() } }));
@@ -301,6 +302,14 @@ describe('fightChallenge', () => {
 				DojoChallengeHistory: []
 			}
 		} as never);
+		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockImplementation(
+			async (id: string, itemId: number) =>
+				({
+					items: [{ id: itemId, quantity: 0 }],
+					rewards: [],
+					shopKeeper: false
+				}) as never
+		);
 		vi.mocked(getDinozForDojoFight).mockResolvedValue([
 			{ id: 1, items: [], maxLife: 100, life: 50, skills: [], playerId: 'p1' }
 		] as never);

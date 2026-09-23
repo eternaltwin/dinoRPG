@@ -233,7 +233,7 @@ export async function endMission(req: Request): Promise<Rewarder[]> {
 	const authed = await auth(req);
 
 	const { rewards, level } = mission.missionReference;
-	await rewarder(rewards, [mission.dinoz], authed.id, false, level);
+	await rewarder(rewards, [mission.dinoz], authed.id, [], level);
 	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
 
 	// Resolve percentages into the xp actually granted, so the client shows a real number.

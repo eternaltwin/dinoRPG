@@ -31,7 +31,6 @@ import {
 	incrementDailyReset,
 	replaceMyTeamDao
 } from '../dao/dojoDao.js';
-import { createNotification } from '../dao/notificationDao.js';
 import {
 	auth,
 	getDojoChallengePreparationRequest,
@@ -41,7 +40,6 @@ import {
 	getPlayerDinozInformationForTeam,
 	spendMoney
 } from '../dao/playerDao.js';
-import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -51,6 +49,7 @@ import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { getLatestTournament, incrementCashPrice } from '../dao/tournamentDao.js';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { rewarder } from '../utils/rewarder.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -484,36 +483,34 @@ export async function fightChallenge(
 	const promises = [];
 
 	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
 		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
+			rewarder(
+				[
 					{
 						rewardType: RewardEnum.ITEM,
 						value: Item.TREASURE_COUPON,
 						quantity: 1
 					}
-				]),
-				NotificationSeverity.reward
+				],
+				[],
+				authed.id
 			)
 		);
 		promises.push(incrementDailyReset(player.Dojo.id));
 	}
 
 	if (challengeWon && player.Dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
 		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
+			rewarder(
+				[
 					{
 						rewardType: RewardEnum.ITEM,
 						value: Item.TREASURE_COUPON,
 						quantity: 1
 					}
-				]),
-				NotificationSeverity.reward
+				],
+				[],
+				authed.id
 			)
 		);
 	}
@@ -608,18 +605,16 @@ export async function skipOpponent(req: Request) {
 
 	// If skip generate new batch of opponent
 	if (myDojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
-
-		await createNotification(
-			authed.id,
-			JSON.stringify([
+		await rewarder(
+			[
 				{
 					rewardType: RewardEnum.ITEM,
 					value: Item.TREASURE_COUPON,
 					quantity: 1
 				}
-			]),
-			NotificationSeverity.reward
+			],
+			[],
+			authed.id
 		);
 		await incrementDailyReset(myDojo.id);
 	}

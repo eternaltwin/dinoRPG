@@ -284,7 +284,7 @@ describe('endMission', () => {
 		const result = await endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }));
 
 		expect(mockRewarder).toHaveBeenCalledOnce();
-		expect(mockRewarder).toHaveBeenCalledWith(REWARDS, expect.anything(), 'player-1', false, MISSION_LEVEL);
+		expect(mockRewarder).toHaveBeenCalledWith(REWARDS, expect.anything(), 'player-1', [], MISSION_LEVEL);
 		expect(mockFinishMission).toHaveBeenCalledWith('player-1', DINOZ_ID, MISSION_ID);
 		expect(result).toEqual(REWARDS);
 	});
