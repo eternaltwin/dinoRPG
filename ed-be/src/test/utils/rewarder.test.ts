@@ -149,10 +149,17 @@ describe('rewarder', () => {
 		expect(createNotification).toHaveBeenCalled();
 	});
 
-	it('skips epic reward already owned', async () => {
+	it('skips epic reward already owned and non-stackable', async () => {
 		vi.mocked(playerDao.getPlayerRewardsRequest).mockResolvedValue({ rewards: [{ rewardId: 1 }] } as never);
 		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], team(), 'p1');
 		expect(addRewardToPlayer).not.toHaveBeenCalled();
+	});
+
+	it('reward stackable epic already owned', async () => {
+		const rewardValue = Reward.TID1;
+		vi.mocked(playerDao.getPlayerRewardsRequest).mockResolvedValue({ rewards: [{ rewardId: rewardValue }] } as never);
+		await rewarder([{ rewardType: RewardEnum.EPIC, value: rewardValue } as never], team(), 'p1');
+		expect(addRewardToPlayer).toHaveBeenCalled();
 	});
 
 	it.for([true, false])('progresses a scenario (withDinoz: %s)', async (withDinoz: boolean) => {

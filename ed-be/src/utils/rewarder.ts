@@ -175,7 +175,7 @@ export async function rewarder(
 					if (!rewardDetails) {
 						throw new ExpectedError(`Reward ${reward.value} doesn't exist.`);
 					}
-					if (!playerRewards.rewards.some(r => r.rewardId === rewardDetails.id)) {
+					if (rewardDetails.stackable || !playerRewards.rewards.some(r => r.rewardId === rewardDetails.id)) {
 						await addRewardToPlayer({
 							rewardId: reward.value,
 							player: { connect: { id: playerId } }
