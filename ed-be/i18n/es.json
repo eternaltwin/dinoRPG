@@ -73,6 +73,7 @@
 		"dinozWrongLocation": "Tu Dino no puede realizar esta acción en este lugar.",
 		"dinozInventoryNotEmpty": "Tu Dino debe vaciar su inventario.",
 		"dinozNotAvailable": "Tu Dino no está disponible para realizar esta acción.",
+		"teamNotAvailable": "Un ou plusieurs membres du groupe ne sont pas disponibles pour faire cette action.",
 		"notEnoughTickets": "No tienes suficientes tickets para realizar esta acción.",
 		"noShopAccess": "No cumples las condiciones para acceder a esta tienda.",
 		"tooManyItems": "Tienes demasiados objetos para realizar esta operación.",
