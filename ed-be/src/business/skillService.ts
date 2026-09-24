@@ -369,7 +369,7 @@ function getDinozLearnableSkills(
 function getNewDinozDataFromLevelUp(
 	dinozId: number,
 	tryNumber: number,
-	dinozSkills: Pick<
+	currentDinozData: Pick<
 		Dinoz,
 		| 'raceId'
 		| 'level'
@@ -390,69 +390,69 @@ function getNewDinozDataFromLevelUp(
 	},
 	dinozRace: DinozRace
 ) {
-	const maxXp = getMaxXp(dinozSkills, gameConfig());
-	const allLearnableSkills = getLearnableSkills(dinozSkills);
-
-	const allUnlockableSkills = getUnlockableSkills(dinozSkills);
-
-	const upChance = getDinozUpChance(allLearnableSkills, allUnlockableSkills, dinozRace);
-
-	const dinoz = {
-		id: dinozId,
-		experience: dinozSkills.experience - maxXp,
-		level: dinozSkills.level + 1,
-		nextUpElementId: getRandomUpElement(upChance, dinozSkills.seed + GLOBAL.config.salt + dinozSkills.level),
-		nextUpAltElementId: getRandomUpElement(upChance, dinozSkills.seed + GLOBAL.config.salt + dinozSkills.level + 'pdc'),
-		nbrUpFire: dinozSkills.nbrUpFire,
-		nbrUpWood: dinozSkills.nbrUpWood,
-		nbrUpWater: dinozSkills.nbrUpWater,
-		nbrUpLightning: dinozSkills.nbrUpLightning,
-		nbrUpAir: dinozSkills.nbrUpAir,
-		display: dinozSkills.display
-	};
-
 	// Elements
-	let nextUpElementId = tryNumber === 1 ? dinozSkills.nextUpElementId : dinozSkills.nextUpAltElementId;
+	let nextUpElementId = tryNumber === 1 ? currentDinozData.nextUpElementId : currentDinozData.nextUpAltElementId;
 
 	// Override for demons if the next level matches one of the guaranteed elements.
 	if (
-		dinozSkills.status.some(s => s.statusId === DinozStatusId.DEMON) &&
+		currentDinozData.status.some(s => s.statusId === DinozStatusId.DEMON) &&
 		dinozRace.demon?.guaranteed_elements &&
-		dinozRace.demon.guaranteed_elements[dinoz.level]
+		dinozRace.demon.guaranteed_elements[currentDinozData.level + 1]
 	) {
-		nextUpElementId = dinozRace.demon.guaranteed_elements[dinoz.level] as number;
+		nextUpElementId = dinozRace.demon.guaranteed_elements[currentDinozData.level + 1] as number;
 	}
+
+	const maxXp = getMaxXp(currentDinozData, gameConfig());
+	const allLearnableSkills = getLearnableSkills(currentDinozData);
+	const allUnlockableSkills = getUnlockableSkills(currentDinozData);
+
+	const upChance = getDinozUpChance(allLearnableSkills, allUnlockableSkills, dinozRace);
+
+	const newDinozData = {
+		id: dinozId,
+		experience: currentDinozData.experience - maxXp,
+		level: currentDinozData.level + 1,
+		// Set next elements based on current level (which is effectively one less than the newly acquired level)
+		nextUpElementId: getRandomUpElement(upChance, currentDinozData.seed + GLOBAL.config.salt + currentDinozData.level),
+		nextUpAltElementId: getRandomUpElement(upChance, currentDinozData.seed + GLOBAL.config.salt + currentDinozData.level + 'pdc'),
+		nbrUpFire: currentDinozData.nbrUpFire,
+		nbrUpWood: currentDinozData.nbrUpWood,
+		nbrUpWater: currentDinozData.nbrUpWater,
+		nbrUpLightning: currentDinozData.nbrUpLightning,
+		nbrUpAir: currentDinozData.nbrUpAir,
+		display: currentDinozData.display
+	};
 
 	switch (nextUpElementId) {
 		case ElementType.FIRE:
-			dinoz.nbrUpFire = dinozSkills.nbrUpFire + 1;
+			newDinozData.nbrUpFire = currentDinozData.nbrUpFire + 1;
 			break;
 		case ElementType.WOOD:
-			dinoz.nbrUpWood = dinozSkills.nbrUpWood + 1;
+			newDinozData.nbrUpWood = currentDinozData.nbrUpWood + 1;
 			break;
 		case ElementType.WATER:
-			dinoz.nbrUpWater = dinozSkills.nbrUpWater + 1;
+			newDinozData.nbrUpWater = currentDinozData.nbrUpWater + 1;
 			break;
 		case ElementType.LIGHTNING:
-			dinoz.nbrUpLightning = dinozSkills.nbrUpLightning + 1;
+			newDinozData.nbrUpLightning = currentDinozData.nbrUpLightning + 1;
 			break;
 		case ElementType.AIR:
-			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
+			newDinozData.nbrUpAir = currentDinozData.nbrUpAir + 1;
 			break;
 		default:
 			throw new ExpectedError(`Up type ${nextUpElementId} is not valid !`);
 	}
 
 	// Display
-	let growthLetter = fromBase62(dinozSkills.display[1]) % 10;
+	let growthLetter = fromBase62(currentDinozData.display[1]) % 10;
 
-	if (dinozSkills.level < 10 && dinozSkills.display[1] !== 'A') {
+	if (currentDinozData.level < 10 && currentDinozData.display[1] !== 'A') {
 		growthLetter++;
-		dinoz.display =
-			dinozSkills.display[0] + growthLetter + dinozSkills.display.substring(2, dinozSkills.display.length);
+		newDinozData.display =
+			currentDinozData.display[0] + growthLetter + currentDinozData.display.substring(2, currentDinozData.display.length);
 	}
 
-	return dinoz;
+	return newDinozData;
 }
 
 /**

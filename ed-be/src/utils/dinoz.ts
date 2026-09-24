@@ -508,8 +508,10 @@ export const randomlyLevelUpDinoz = (
 	const newLearnableSkills = getLearnableSkills(dinoz);
 	const newUnlockableSkills = getUnlockableSkills(dinoz);
 	const upChance = getDinozUpChance(newLearnableSkills, newUnlockableSkills, dinozRace);
-	dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level);
-	dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + dinoz.level + 'pdc');
+	// The "level" attribute appended to the seed is one level below the dinoz level. This is to align with the level up logic.
+	const level = dinoz.level - 1;
+	dinoz.nextUpElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + level);
+	dinoz.nextUpAltElementId = getRandomUpElement(upChance, dinoz.seed + GLOBAL.config.salt + level + 'pdc');
 };
 
 export const generateDinozDisplay = (
