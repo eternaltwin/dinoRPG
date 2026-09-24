@@ -153,7 +153,8 @@ export async function getAvailableActions(
 	const noActionsReasons: UnavailableReason[] = [
 		UnavailableReason.unfreezing,
 		UnavailableReason.restingAttack,
-		UnavailableReason.unsacrificing
+		UnavailableReason.unsacrificing,
+		UnavailableReason.sacrificed
 	];
 
 	const dinozPlace = actualPlace(dinoz);
@@ -170,11 +171,6 @@ export async function getAvailableActions(
 	// Stop congel
 	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		return [actionList[Action.STOP_CONGEL]];
-	}
-
-	// Demon shop for sacrificed
-	if (dinoz.unavailableReason === UnavailableReason.sacrificed) {
-		return [actionList[Action.DEMON_SHOP]];
 	}
 
 	// Stop rest
@@ -734,23 +730,8 @@ export async function betaMove(req: Request) {
 
 	let team = player.dinoz;
 
-	// Go through followers and make those that are unavailable leave the group.
-	const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
-
-	if (unavailableFollowers.length > 0) {
-		for (const d of unavailableFollowers) {
-			await updateDinoz(d.id, { leader: { disconnect: true } });
-		}
-		team = team.filter(d => d.life > 0 && d.unavailableReason === null);
-	}
-
-	for (const dinozData of team) {
-		//Remove temporary status
-		const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
-		if (tempStatus.length > 0) {
-			const promises = tempStatus.map(r => removeStatusFromDinoz(dinozData.id, r.statusId));
-			await Promise.all(promises);
-		}
+	if (team.some(d => d.life <= 0 || d.unavailableReason !== null)) {
+		throw new ExpectedError(translate('error.teamNotAvailable', authed));
 	}
 
 	if (dinoz.concentration) {
@@ -838,6 +819,13 @@ export async function betaMove(req: Request) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
+
+		// Remove temporary status
+		const tempStatus = dino.status.filter(r => r.statusId in TemporaryStatus);
+		if (tempStatus.length > 0) {
+			const promises = tempStatus.map(r => removeStatusFromDinoz(dino.id, r.statusId));
+			await Promise.all(promises);
+		}
 	}
 
 	// Update player stats
@@ -1531,15 +1519,14 @@ export async function frozeDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError(translate('error.notYourDinoz', authed));
-	}
-
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
+
+	if (dinoz.player.id !== authed.id) {
+		throw new ExpectedError(translate('error.notYourDinoz', authed, { id: dinozId }));
 	}
 
 	if (dinoz.placeId !== PlaceEnum.GORGES_PROFONDES) {
@@ -1556,8 +1543,8 @@ export async function frozeDinoz(req: Request) {
 		}
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.frozen) {
-		throw new ExpectedError('Dinoz already frozen');
+	if (dinoz.unavailableReason !== null) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	await updateDinoz(dinozId, {
@@ -1571,19 +1558,18 @@ export async function unfrozeDinoz(req: Request) {
 
 	const authed = await auth(req);
 
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
-	}
-
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
+
+	if (dinoz.player.id !== authed.id) {
+		throw new ExpectedError(translate('error.notYourDinoz', authed, { id: dinozId }));
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.frozen) {
-		throw new ExpectedError('Dinoz is not frozen');
+		throw new ExpectedError('error.dinozNotAvailable');
 	}
 
 	// Check if player can unfreeze the dinoz
@@ -1603,7 +1589,7 @@ export async function restDinoz(req: Request) {
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
+		throw new ExpectedError(translate('error.notYourDinoz', authed));
 	}
 
 	const dinoz = await checkRestDinoz(dinozId);
@@ -1612,12 +1598,12 @@ export async function restDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	if (dinoz.unavailableReason === UnavailableReason.resting && start) {
-		throw new ExpectedError(`Dinoz is already resting`);
+	if (dinoz.unavailableReason !== null && start) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.resting && !start) {
-		throw new ExpectedError(`Dinoz is not resting`);
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
 	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });

@@ -85,7 +85,7 @@ export async function getSacrificedDinoz(req: Request): Promise<DinozShopFiche[]
 export async function getDinozFromDemonShop(req: Request): Promise<demonShopFiche> {
 	const authed = await auth(req);
 
-	// Retrieve player with dinoz shop info
+	// Retrieve player with dinoz shop info (includes *available* Dinoz at the cemetary)
 	const player = await getPlayerDemonShopRequest(authed.id);
 
 	if (!player) {
@@ -96,13 +96,12 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	// Player must have a Dinoz at the cemetary
+	// Player must have an available Dinoz at the cemetary
+	if (player.dinoz.length === 0) {
+		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
+	}
+
 	const dinozAtCemetary: DinozShopFiche[] = player.dinoz
-		.filter(
-			d =>
-				d.placeId === PlaceEnum.CIMETIERE &&
-				(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
-		)
 		.map(d => {
 			return {
 				id: d.id,
@@ -119,10 +118,6 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 			};
 		})
 		.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
-
-	if (dinozAtCemetary.length === 0) {
-		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
-	}
 
 	// Sacrificed Dinoz can pile up into the hundreds, so only the first page is loaded here.
 	// The rest is fetched on demand via getSacrificedDinoz.
@@ -291,7 +286,8 @@ export async function getDinozFromDemonShop(req: Request): Promise<demonShopFich
 	return {
 		dinoz: dinozAtCemetary,
 		sacrificed: sacrificedDinoz,
-		shop: listDinozShop
+		shop: listDinozShop,
+		tickets: demonTickets
 	};
 }
 
@@ -312,13 +308,8 @@ export async function buyDemonDinoz(req: Request) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
-	const hasActiveDinozAtCemetary = player.dinoz.some(
-		d =>
-			d.placeId === PlaceEnum.CIMETIERE &&
-			(d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
-	);
-
-	if (!hasActiveDinozAtCemetary) {
+	// Player must have an available Dinoz at the cemetary
+	if (player.dinoz.length === 0) {
 		throw new ExpectedError(translate('error.noDinozAtCemetary', authed));
 	}
 
@@ -454,7 +445,7 @@ export async function sacrificeDinoz(req: Request) {
 		throw new ExpectedError(translate('error.noShopAccess', authed));
 	}
 
-	if (dinoz.unavailableReason !== null && dinoz.unavailableReason !== UnavailableReason.resting) {
+	if (dinoz.unavailableReason !== null) {
 		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
@@ -466,16 +457,19 @@ export async function sacrificeDinoz(req: Request) {
 
 	const playerTickets = dinoz.player.items.find(i => i.itemId === Item.DEMON_TICKET)?.quantity ?? 0;
 	const demonTickets = getDemonShopPrice(dinoz.level);
+	const maxQuantity = dinoz.player.shopKeeper
+		? itemList[Item.DEMON_TICKET].maxQuantity * 1.5
+		: itemList[Item.DEMON_TICKET].maxQuantity;
 
 	// Cannot exceed max number of tickets (even if the cap is really high)
-	if (playerTickets + demonTickets > itemList[Item.DEMON_TICKET].maxQuantity) {
+	if (playerTickets + demonTickets > maxQuantity) {
 		throw new ExpectedError(translate('error.tooManyItems', authed));
 	}
 
 	// -- DB updates
 	// Update Dinoz unavailable reason and no remaining action
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
-	updateDinoz(dinozId, {
+	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.sacrificed,
 		remaining: 0
 	});
@@ -554,7 +548,7 @@ export async function unsacrificeDinoz(req: Request) {
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
 	const duration = GLOBAL.config.isProduction ? UNSACRIFICE_DURATION : UNSACRIFICE_DURATION_DEBUG;
 	const endDate = new Date(Date.now() + duration);
-	updateDinoz(dinozId, {
+	await updateDinoz(dinozId, {
 		unavailableReason: UnavailableReason.unsacrificing,
 		unavailableUntil: endDate
 	});

@@ -95,14 +95,8 @@ export async function processFight(req: Request) {
 
 	let team = player.dinoz;
 
-	// Go through followers and make those that are unavailable leave the group.
-	const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
-
-	if (unavailableFollowers.length > 0) {
-		for (const d of unavailableFollowers) {
-			await updateDinoz(d.id, { leader: { disconnect: true } });
-		}
-		team = team.filter(d => d.life > 0 && d.unavailableReason === null);
+	if (team.some(d => d.life <= 0 || d.unavailableReason !== null)) {
+		throw new ExpectedError(translate('error.teamNotAvailable', authed));
 	}
 
 	if (dinozData.concentration) {

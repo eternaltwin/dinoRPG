@@ -87,7 +87,14 @@ export default defineComponent({
 		},
 		myDinoz() {
 			return useDinozStore()
-				.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+				.getDinozList.filter(
+					d =>
+						d.unavailableReason !== UnavailableReason.frozen &&
+						d.unavailableReason !== UnavailableReason.sacrificed &&
+						d.unavailableReason !== UnavailableReason.unfreezing &&
+						d.unavailableReason !== UnavailableReason.unsacrificing &&
+						d.unavailableReason !== UnavailableReason.selling
+				)
 				.filter(d => this.tournamentInfo?.teamRace.includes(d.race.raceId))
 				.filter(d => d.level <= (this.tournamentInfo?.levelLimit ?? 0))
 				.map(d => {

@@ -35,7 +35,7 @@
 	<DZDisclaimer v-if="tab === 'unsacrifice'" help :content="$t('shop.demon.unsacrifice_help')" />
 
 	<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow">
-		<span>{{ demonTickets }}</span>
+		<span>{{ demonShop.tickets }}</span>
 		<img :src="getImgURL('icons', 'small_demon_tk')" :alt="$t('item.name.demon_ticket')" />
 		<template #content>
 			{{ $t('shop.demon.yourDemonTickets') }}
@@ -91,7 +91,6 @@ import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZShop from '../components/common/DZShop.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DemonShopService } from '../services/DemonShopService.js';
-import { InventoryService } from '../services/InventoryService.js';
 import { playerStore, useDinozStore } from '../store/index.js';
 import { errorHandler, utils } from '../utils/index.js';
 import { demonShopFiche } from '@drpg/core/models/shop/demonShopFiche';
@@ -101,7 +100,6 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
-import { Item } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'DemonShopPage',
@@ -118,8 +116,7 @@ export default defineComponent({
 			skillList,
 			ElementType,
 			demonShop: {} as demonShopFiche,
-			openDetails: new Map() as Map<number, SkillDetails[]>,
-			demonTickets: 0
+			openDetails: new Map() as Map<number, SkillDetails[]>
 		};
 	},
 	computed: {
@@ -148,10 +145,6 @@ export default defineComponent({
 			try {
 				this.demonShop = await DemonShopService.getDemonDinozShop();
 				this.openDetails = new Map();
-				// Get player's treasury notes
-				const items = await InventoryService.getAllItemsData();
-				const demonTicketItem = items.find(i => i.id === Item.DEMON_TICKET);
-				this.demonTickets = demonTicketItem ? demonTicketItem.quantity : 0;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -183,9 +176,9 @@ export default defineComponent({
 				// Update store to show the dinoz as buy back
 				this.demonShop.dinoz = this.demonShop.dinoz.filter(d => d.id !== sacrifice.id);
 				this.demonShop.sacrificed.push(sacrifice);
-				const oldValue = this.demonTickets;
-				this.demonTickets += sacrifice.price;
-				if (oldValue < 30 && this.demonTickets >= 30) {
+				const oldValue = this.demonShop.tickets;
+				this.demonShop.tickets += sacrifice.price;
+				if (oldValue < 30 && this.demonShop.tickets >= 30) {
 					await this.refresh();
 				}
 			}

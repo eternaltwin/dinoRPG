@@ -276,7 +276,7 @@ describe('getDinozFromDemonShop', () => {
 	// ── result.dinoz — cemetery dinoz ───────────────────────────────────────────
 
 	describe('result.dinoz (cemetery dinoz)', () => {
-		it('includes dinoz at CIMETIERE with null unavailableReason', async () => {
+		it('includes dinoz at CIMETIERE only with null unavailableReason', async () => {
 			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
 				makePlayer({ dinoz: [makeDinoz({ id: 1, unavailableReason: null })] })
 			);
@@ -285,43 +285,6 @@ describe('getDinozFromDemonShop', () => {
 
 			expect(result.dinoz).toHaveLength(1);
 			expect(result.dinoz[0].id).toBe(1);
-		});
-
-		it('includes dinoz at CIMETIERE with resting unavailableReason', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					dinoz: [makeDinoz({ id: 2, unavailableReason: UnavailableReason.resting })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-			expect(result.dinoz[0].id).toBe(2);
-		});
-
-		it('excludes dinoz at CIMETIERE with sacrificed unavailableReason', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ unavailableReason: UnavailableReason.sacrificed })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-		});
-
-		it('excludes dinoz that are not at CIMETIERE', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ placeId: PlaceEnum.DINOVILLE })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
 		});
 
 		it('sorts cemetery dinoz by id ascending', async () => {
@@ -721,10 +684,13 @@ describe('sacrificeDinoz', () => {
 		});
 
 		it('throws ExpectedError when Dinoz is unavailable', async () => {
-			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
-				makeDinozWPlayer({ unavailableReason: UnavailableReason.sacrificed })
-			);
-			await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			const unavailableReasons = Object.values(UnavailableReason);
+			for (const u of unavailableReasons) {
+				vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
+					makeDinozWPlayer({ unavailableReason: u })
+				);
+				await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			}
 		});
 
 		it('throws ExpectedError when Dinoz has still items equipped', async () => {
@@ -895,10 +861,13 @@ describe('unsacrificeDinoz', () => {
 		});
 
 		it('throws ExpectedError when Dinoz is unavailable but not sacrificed', async () => {
-			vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
-				makeDinozWPlayer({ unavailableReason: UnavailableReason.frozen })
-			);
-			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			const unavailableReasons = Object.values(UnavailableReason).filter(u => u !== UnavailableReason.sacrificed);
+			for (const u of unavailableReasons) {
+				vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
+					makeDinozWPlayer({ unavailableReason: u })
+				);
+				await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			}
 		});
 
 		it('throws ExpectedError when player does not have enough tickets', async () => {
