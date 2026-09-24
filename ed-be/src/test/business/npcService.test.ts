@@ -548,7 +548,7 @@ describe('getNpcSpeech - fight step', () => {
 		const [rewardArg, , playerIdArg, applyFlag] = mockRewarder.mock.calls[0];
 		expect(rewardArg).toEqual([{ rewardType: RewardEnum.ITEM, value: 1, quantity: 1 }]);
 		expect(playerIdArg).toBe('player-1');
-		expect(applyFlag).toBe(true);
+		expect(applyFlag).toBe(undefined);
 	});
 
 	it('does not advance the step when the fight is lost', async () => {

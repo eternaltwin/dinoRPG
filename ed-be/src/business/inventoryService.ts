@@ -57,6 +57,8 @@ import { isOnHealingCell, markHealingCellUsed } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL } from '../context.js';
+import { rewarder } from '../utils/rewarder.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -167,7 +169,17 @@ export async function useItem(req: Request) {
 			itemId === itemList[Item.MEAT_PIE].itemId
 		) {
 			await upsertQuest(dinoz.player.id, Scenario.STAR, 4);
-			await increaseItemQuantity(dinoz.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
+			await rewarder(
+				[
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.MAGIC_STAR,
+						quantity: 1
+					}
+				],
+				[],
+				dinoz.player.id
+			);
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
 			const lifeHealed = Math.max(0, dinoz.life - initialLife);

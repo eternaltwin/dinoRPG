@@ -4,6 +4,9 @@
  */
 
 import { PantheonMotif, type Dinoz } from '@drpg/prisma';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { rewarder } from '../utils/rewarder.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
 import { Request } from 'express';
@@ -504,11 +507,14 @@ export async function move(req: Request): Promise<MoveResult> {
 			read.push(sIdx);
 			// Mark the scenario read before granting what it carries.
 			if (sc.obj != null || sc.collec != null) await checkpoint(next);
-			if (sc.obj != null) await increaseItemQuantity(authed.id, itemList[sc.obj].itemId, sc.count ?? 1);
-			if (sc.collec != null) {
-				await addRewardToPlayer({ rewardId: sc.collec, player: { connect: { id: authed.id } } });
-				await checkAnnounce(PantheonMotif.epic, authed.id, sc.collec);
+			const rewards = [] as Rewarder[];
+			if (sc.obj != null) {
+				rewards.push({ rewardType: RewardEnum.ITEM, value: sc.obj, quantity: sc.count ?? 1 });
 			}
+			if (sc.collec != null) {
+				rewards.push({ rewardType: RewardEnum.EPIC, value: sc.collec });
+			}
+			await rewarder(rewards, [], authed.id);
 			// Scenario texts are always i18n keys — the client resolves them, never prints them.
 			scenario = { text: `dungeon.${dungeon.name}.${sc.text}`, micon: sc.micon };
 		}
