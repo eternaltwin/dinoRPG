@@ -73,6 +73,7 @@
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
 		"dinozInventoryNotEmpty": "Your Dinoz must remove its equipment.",
 		"dinozNotAvailable": "Your Dinoz is not available to perform this action.",
+		"teamNotAvailable": "Un ou plusieurs membres du groupe ne sont pas disponibles pour faire cette action.",
 		"notEnoughTickets": "You don't have enough tickets to perform this action.",
 		"noShopAccess": "You do not meet the requirements to access this shop.",
 		"tooManyItems": "You have too many items to perform this action.",
