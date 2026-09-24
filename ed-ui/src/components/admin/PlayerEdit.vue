@@ -633,9 +633,7 @@ export default defineComponent({
 		},
 		filterEpicList(operation: string) {
 			if (operation === 'add') {
-				this.epicListFiltered = Object.keys(epicList.imgName).filter(
-					epicRewardId => !this.player.rewards.map(r => r.rewardId).includes(+epicRewardId)
-				);
+				this.epicListFiltered = Object.keys(epicList.imgName);
 			} else {
 				this.epicListFiltered = Object.keys(epicList.imgName).filter(epicRewardId =>
 					this.player.rewards.map(r => r.rewardId).includes(+epicRewardId)
