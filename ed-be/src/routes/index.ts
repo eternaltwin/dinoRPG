@@ -55,7 +55,6 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(newsRoutes);
 	app.use(npcRoutes);
 	app.use(clanWarRoutes);
-	// app.use(oauthRoutes);
 	app.use(playerRoutes);
 	app.use(shopRoutes);
 	app.use(demonShopRoutes);

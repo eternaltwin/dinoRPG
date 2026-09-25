@@ -5289,6 +5289,49 @@
 		"errorDinoz": "Vous devez spécifier un Dinoz à reporter",
 		"success": "Plainte envoyée avec succès."
 	},
+	"forum": {
+		"cancel": "Annuler",
+		"empty": "Aucun sujet pour le moment.",
+		"pinned": "Sujet épinglé",
+		"locked": "Ce sujet est verrouillé : plus personne ne peut y répondre.",
+		"moderated": "Message retiré par la modération.",
+		"edited": "(modifié)",
+		"unread": "Nouveaux messages",
+		"threadCount": "Nombre de sujets",
+		"newThread": {
+			"open": "Nouveau sujet",
+			"title": "Nouveau sujet",
+			"titleLabel": "Titre du sujet :",
+			"titlePlaceholder": "Votre titre...",
+			"messageLabel": "Votre message :",
+			"messagePlaceholder": "Votre message...",
+			"submit": "Créer le sujet",
+			"titleTooShort": "Le titre doit faire au moins {min} caractères.",
+			"messageRequired": "Le message ne peut pas être vide."
+		},
+		"reply": {
+			"title": "Répondre",
+			"placeholder": "Votre réponse...",
+			"submit": "Envoyer"
+		},
+		"edit": {
+			"open": "Éditer",
+			"submit": "Enregistrer"
+		},
+		"editor": {
+			"strong": "Gras",
+			"emphasis": "Italique",
+			"strikethrough": "Barré",
+			"link": "Lien"
+		},
+		"error": {
+			"reauthorize": "Ta session Eternaltwin a expiré. Reconnecte-toi pour accéder au forum.",
+			"forbidden": "Eternaltwin a refusé cette action. Elle ne passera pas en réessayant.",
+			"notFound": "Ce contenu n'existe plus.",
+			"conflict": "Ce contenu a changé entre-temps. Recharge la page avant de recommencer.",
+			"revisionUnavailable": "Impossible de retrouver la version à corriger."
+		}
+	},
 	"messagerie": {
 		"actions": "Actions",
 		"create": "Écrire",

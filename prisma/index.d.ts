@@ -99,6 +99,16 @@ export type NPC = $Result.DefaultSelection<Prisma.$NPCPayload>
  */
 export type Player = $Result.DefaultSelection<Prisma.$PlayerPayload>
 /**
+ * Model PlayerEternaltwinToken
+ * The Eternaltwin OAuth access token obtained for a player, used to call the Eternaltwin API
+ * (the forum) on their behalf.
+ * 
+ * The `refresh_token` Eternaltwin returns is deliberately not stored: no refresh flow is
+ * implemented server-side, so it is exchangeable for nothing and keeping it would only be one
+ * more secret at rest. When a token stops working, the player is sent through authorization again.
+ */
+export type PlayerEternaltwinToken = $Result.DefaultSelection<Prisma.$PlayerEternaltwinTokenPayload>
+/**
  * Model PlayerIp
  * 
  */
@@ -945,6 +955,16 @@ export class PrismaClient<
     * ```
     */
   get player(): Prisma.PlayerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.playerEternaltwinToken`: Exposes CRUD operations for the **PlayerEternaltwinToken** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlayerEternaltwinTokens
+    * const playerEternaltwinTokens = await prisma.playerEternaltwinToken.findMany()
+    * ```
+    */
+  get playerEternaltwinToken(): Prisma.PlayerEternaltwinTokenDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.playerIp`: Exposes CRUD operations for the **PlayerIp** model.
@@ -1912,6 +1932,7 @@ export namespace Prisma {
     NewsLike: 'NewsLike',
     NPC: 'NPC',
     Player: 'Player',
+    PlayerEternaltwinToken: 'PlayerEternaltwinToken',
     PlayerIp: 'PlayerIp',
     Dojo: 'Dojo',
     DojoTeam: 'DojoTeam',
@@ -1981,7 +2002,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerEternaltwinToken" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3240,6 +3261,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PlayerCountArgs<ExtArgs>
             result: $Utils.Optional<PlayerCountAggregateOutputType> | number
+          }
+        }
+      }
+      PlayerEternaltwinToken: {
+        payload: Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>
+        fields: Prisma.PlayerEternaltwinTokenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlayerEternaltwinTokenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlayerEternaltwinTokenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          findFirst: {
+            args: Prisma.PlayerEternaltwinTokenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlayerEternaltwinTokenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          findMany: {
+            args: Prisma.PlayerEternaltwinTokenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>[]
+          }
+          create: {
+            args: Prisma.PlayerEternaltwinTokenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          createMany: {
+            args: Prisma.PlayerEternaltwinTokenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PlayerEternaltwinTokenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>[]
+          }
+          delete: {
+            args: Prisma.PlayerEternaltwinTokenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          update: {
+            args: Prisma.PlayerEternaltwinTokenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlayerEternaltwinTokenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlayerEternaltwinTokenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PlayerEternaltwinTokenUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>[]
+          }
+          upsert: {
+            args: Prisma.PlayerEternaltwinTokenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayerEternaltwinTokenPayload>
+          }
+          aggregate: {
+            args: Prisma.PlayerEternaltwinTokenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePlayerEternaltwinToken>
+          }
+          groupBy: {
+            args: Prisma.PlayerEternaltwinTokenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PlayerEternaltwinTokenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlayerEternaltwinTokenCountArgs<ExtArgs>
+            result: $Utils.Optional<PlayerEternaltwinTokenCountAggregateOutputType> | number
           }
         }
       }
@@ -7118,6 +7213,7 @@ export namespace Prisma {
     newsLike?: NewsLikeOmit
     nPC?: NPCOmit
     player?: PlayerOmit
+    playerEternaltwinToken?: PlayerEternaltwinTokenOmit
     playerIp?: PlayerIpOmit
     dojo?: DojoOmit
     dojoTeam?: DojoTeamOmit
@@ -28168,6 +28264,7 @@ export namespace Prisma {
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
     dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
+    eternaltwinToken?: boolean | Player$eternaltwinTokenArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -28328,6 +28425,7 @@ export namespace Prisma {
     Events?: boolean | Player$EventsArgs<ExtArgs>
     dinozBuilds?: boolean | Player$dinozBuildsArgs<ExtArgs>
     dungeonRuns?: boolean | Player$dungeonRunsArgs<ExtArgs>
+    eternaltwinToken?: boolean | Player$eternaltwinTokenArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28382,6 +28480,7 @@ export namespace Prisma {
       Events: Prisma.$EventsPayload<ExtArgs>[]
       dinozBuilds: Prisma.$DinozBuildPayload<ExtArgs>[]
       dungeonRuns: Prisma.$DungeonRunPayload<ExtArgs>[]
+      eternaltwinToken: Prisma.$PlayerEternaltwinTokenPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -28852,6 +28951,7 @@ export namespace Prisma {
     Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinozBuilds<T extends Player$dinozBuildsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozBuildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozBuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dungeonRuns<T extends Player$dungeonRunsArgs<ExtArgs> = {}>(args?: Subset<T, Player$dungeonRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DungeonRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    eternaltwinToken<T extends Player$eternaltwinTokenArgs<ExtArgs> = {}>(args?: Subset<T, Player$eternaltwinTokenArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30245,6 +30345,25 @@ export namespace Prisma {
   }
 
   /**
+   * Player.eternaltwinToken
+   */
+  export type Player$eternaltwinTokenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    where?: PlayerEternaltwinTokenWhereInput
+  }
+
+  /**
    * Player without action
    */
   export type PlayerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30260,6 +30379,1078 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PlayerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PlayerEternaltwinToken
+   */
+
+  export type AggregatePlayerEternaltwinToken = {
+    _count: PlayerEternaltwinTokenCountAggregateOutputType | null
+    _min: PlayerEternaltwinTokenMinAggregateOutputType | null
+    _max: PlayerEternaltwinTokenMaxAggregateOutputType | null
+  }
+
+  export type PlayerEternaltwinTokenMinAggregateOutputType = {
+    playerId: string | null
+    accessToken: string | null
+    scope: string | null
+    obtainedAt: Date | null
+    expiresAt: Date | null
+  }
+
+  export type PlayerEternaltwinTokenMaxAggregateOutputType = {
+    playerId: string | null
+    accessToken: string | null
+    scope: string | null
+    obtainedAt: Date | null
+    expiresAt: Date | null
+  }
+
+  export type PlayerEternaltwinTokenCountAggregateOutputType = {
+    playerId: number
+    accessToken: number
+    scope: number
+    obtainedAt: number
+    expiresAt: number
+    _all: number
+  }
+
+
+  export type PlayerEternaltwinTokenMinAggregateInputType = {
+    playerId?: true
+    accessToken?: true
+    scope?: true
+    obtainedAt?: true
+    expiresAt?: true
+  }
+
+  export type PlayerEternaltwinTokenMaxAggregateInputType = {
+    playerId?: true
+    accessToken?: true
+    scope?: true
+    obtainedAt?: true
+    expiresAt?: true
+  }
+
+  export type PlayerEternaltwinTokenCountAggregateInputType = {
+    playerId?: true
+    accessToken?: true
+    scope?: true
+    obtainedAt?: true
+    expiresAt?: true
+    _all?: true
+  }
+
+  export type PlayerEternaltwinTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerEternaltwinToken to aggregate.
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerEternaltwinTokens to fetch.
+     */
+    orderBy?: PlayerEternaltwinTokenOrderByWithRelationInput | PlayerEternaltwinTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlayerEternaltwinTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerEternaltwinTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerEternaltwinTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlayerEternaltwinTokens
+    **/
+    _count?: true | PlayerEternaltwinTokenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlayerEternaltwinTokenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlayerEternaltwinTokenMaxAggregateInputType
+  }
+
+  export type GetPlayerEternaltwinTokenAggregateType<T extends PlayerEternaltwinTokenAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayerEternaltwinToken]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlayerEternaltwinToken[P]>
+      : GetScalarType<T[P], AggregatePlayerEternaltwinToken[P]>
+  }
+
+
+
+
+  export type PlayerEternaltwinTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerEternaltwinTokenWhereInput
+    orderBy?: PlayerEternaltwinTokenOrderByWithAggregationInput | PlayerEternaltwinTokenOrderByWithAggregationInput[]
+    by: PlayerEternaltwinTokenScalarFieldEnum[] | PlayerEternaltwinTokenScalarFieldEnum
+    having?: PlayerEternaltwinTokenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlayerEternaltwinTokenCountAggregateInputType | true
+    _min?: PlayerEternaltwinTokenMinAggregateInputType
+    _max?: PlayerEternaltwinTokenMaxAggregateInputType
+  }
+
+  export type PlayerEternaltwinTokenGroupByOutputType = {
+    playerId: string
+    accessToken: string
+    scope: string
+    obtainedAt: Date
+    expiresAt: Date | null
+    _count: PlayerEternaltwinTokenCountAggregateOutputType | null
+    _min: PlayerEternaltwinTokenMinAggregateOutputType | null
+    _max: PlayerEternaltwinTokenMaxAggregateOutputType | null
+  }
+
+  type GetPlayerEternaltwinTokenGroupByPayload<T extends PlayerEternaltwinTokenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlayerEternaltwinTokenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlayerEternaltwinTokenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlayerEternaltwinTokenGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayerEternaltwinTokenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlayerEternaltwinTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    playerId?: boolean
+    accessToken?: boolean
+    scope?: boolean
+    obtainedAt?: boolean
+    expiresAt?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerEternaltwinToken"]>
+
+  export type PlayerEternaltwinTokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    playerId?: boolean
+    accessToken?: boolean
+    scope?: boolean
+    obtainedAt?: boolean
+    expiresAt?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerEternaltwinToken"]>
+
+  export type PlayerEternaltwinTokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    playerId?: boolean
+    accessToken?: boolean
+    scope?: boolean
+    obtainedAt?: boolean
+    expiresAt?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerEternaltwinToken"]>
+
+  export type PlayerEternaltwinTokenSelectScalar = {
+    playerId?: boolean
+    accessToken?: boolean
+    scope?: boolean
+    obtainedAt?: boolean
+    expiresAt?: boolean
+  }
+
+  export type PlayerEternaltwinTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"playerId" | "accessToken" | "scope" | "obtainedAt" | "expiresAt", ExtArgs["result"]["playerEternaltwinToken"]>
+  export type PlayerEternaltwinTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type PlayerEternaltwinTokenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type PlayerEternaltwinTokenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $PlayerEternaltwinTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlayerEternaltwinToken"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      playerId: string
+      accessToken: string
+      /**
+       * The scope requested at authorization time. Eternaltwin's token response reports no granted
+       * scope, so this records what was asked for, not a guarantee of what was given: only a real
+       * call settles that.
+       */
+      scope: string
+      obtainedAt: Date
+      expiresAt: Date | null
+    }, ExtArgs["result"]["playerEternaltwinToken"]>
+    composites: {}
+  }
+
+  type PlayerEternaltwinTokenGetPayload<S extends boolean | null | undefined | PlayerEternaltwinTokenDefaultArgs> = $Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload, S>
+
+  type PlayerEternaltwinTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PlayerEternaltwinTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: PlayerEternaltwinTokenCountAggregateInputType | true
+    }
+
+  export interface PlayerEternaltwinTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlayerEternaltwinToken'], meta: { name: 'PlayerEternaltwinToken' } }
+    /**
+     * Find zero or one PlayerEternaltwinToken that matches the filter.
+     * @param {PlayerEternaltwinTokenFindUniqueArgs} args - Arguments to find a PlayerEternaltwinToken
+     * @example
+     * // Get one PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PlayerEternaltwinTokenFindUniqueArgs>(args: SelectSubset<T, PlayerEternaltwinTokenFindUniqueArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PlayerEternaltwinToken that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PlayerEternaltwinTokenFindUniqueOrThrowArgs} args - Arguments to find a PlayerEternaltwinToken
+     * @example
+     * // Get one PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PlayerEternaltwinTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, PlayerEternaltwinTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerEternaltwinToken that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenFindFirstArgs} args - Arguments to find a PlayerEternaltwinToken
+     * @example
+     * // Get one PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PlayerEternaltwinTokenFindFirstArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenFindFirstArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayerEternaltwinToken that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenFindFirstOrThrowArgs} args - Arguments to find a PlayerEternaltwinToken
+     * @example
+     * // Get one PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PlayerEternaltwinTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PlayerEternaltwinTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlayerEternaltwinTokens
+     * const playerEternaltwinTokens = await prisma.playerEternaltwinToken.findMany()
+     * 
+     * // Get first 10 PlayerEternaltwinTokens
+     * const playerEternaltwinTokens = await prisma.playerEternaltwinToken.findMany({ take: 10 })
+     * 
+     * // Only select the `playerId`
+     * const playerEternaltwinTokenWithPlayerIdOnly = await prisma.playerEternaltwinToken.findMany({ select: { playerId: true } })
+     * 
+     */
+    findMany<T extends PlayerEternaltwinTokenFindManyArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PlayerEternaltwinToken.
+     * @param {PlayerEternaltwinTokenCreateArgs} args - Arguments to create a PlayerEternaltwinToken.
+     * @example
+     * // Create one PlayerEternaltwinToken
+     * const PlayerEternaltwinToken = await prisma.playerEternaltwinToken.create({
+     *   data: {
+     *     // ... data to create a PlayerEternaltwinToken
+     *   }
+     * })
+     * 
+     */
+    create<T extends PlayerEternaltwinTokenCreateArgs>(args: SelectSubset<T, PlayerEternaltwinTokenCreateArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PlayerEternaltwinTokens.
+     * @param {PlayerEternaltwinTokenCreateManyArgs} args - Arguments to create many PlayerEternaltwinTokens.
+     * @example
+     * // Create many PlayerEternaltwinTokens
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PlayerEternaltwinTokenCreateManyArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PlayerEternaltwinTokens and returns the data saved in the database.
+     * @param {PlayerEternaltwinTokenCreateManyAndReturnArgs} args - Arguments to create many PlayerEternaltwinTokens.
+     * @example
+     * // Create many PlayerEternaltwinTokens
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PlayerEternaltwinTokens and only return the `playerId`
+     * const playerEternaltwinTokenWithPlayerIdOnly = await prisma.playerEternaltwinToken.createManyAndReturn({
+     *   select: { playerId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PlayerEternaltwinTokenCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PlayerEternaltwinToken.
+     * @param {PlayerEternaltwinTokenDeleteArgs} args - Arguments to delete one PlayerEternaltwinToken.
+     * @example
+     * // Delete one PlayerEternaltwinToken
+     * const PlayerEternaltwinToken = await prisma.playerEternaltwinToken.delete({
+     *   where: {
+     *     // ... filter to delete one PlayerEternaltwinToken
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PlayerEternaltwinTokenDeleteArgs>(args: SelectSubset<T, PlayerEternaltwinTokenDeleteArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PlayerEternaltwinToken.
+     * @param {PlayerEternaltwinTokenUpdateArgs} args - Arguments to update one PlayerEternaltwinToken.
+     * @example
+     * // Update one PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PlayerEternaltwinTokenUpdateArgs>(args: SelectSubset<T, PlayerEternaltwinTokenUpdateArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PlayerEternaltwinTokens.
+     * @param {PlayerEternaltwinTokenDeleteManyArgs} args - Arguments to filter PlayerEternaltwinTokens to delete.
+     * @example
+     * // Delete a few PlayerEternaltwinTokens
+     * const { count } = await prisma.playerEternaltwinToken.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PlayerEternaltwinTokenDeleteManyArgs>(args?: SelectSubset<T, PlayerEternaltwinTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerEternaltwinTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlayerEternaltwinTokens
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PlayerEternaltwinTokenUpdateManyArgs>(args: SelectSubset<T, PlayerEternaltwinTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerEternaltwinTokens and returns the data updated in the database.
+     * @param {PlayerEternaltwinTokenUpdateManyAndReturnArgs} args - Arguments to update many PlayerEternaltwinTokens.
+     * @example
+     * // Update many PlayerEternaltwinTokens
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PlayerEternaltwinTokens and only return the `playerId`
+     * const playerEternaltwinTokenWithPlayerIdOnly = await prisma.playerEternaltwinToken.updateManyAndReturn({
+     *   select: { playerId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PlayerEternaltwinTokenUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerEternaltwinTokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PlayerEternaltwinToken.
+     * @param {PlayerEternaltwinTokenUpsertArgs} args - Arguments to update or create a PlayerEternaltwinToken.
+     * @example
+     * // Update or create a PlayerEternaltwinToken
+     * const playerEternaltwinToken = await prisma.playerEternaltwinToken.upsert({
+     *   create: {
+     *     // ... data to create a PlayerEternaltwinToken
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlayerEternaltwinToken we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PlayerEternaltwinTokenUpsertArgs>(args: SelectSubset<T, PlayerEternaltwinTokenUpsertArgs<ExtArgs>>): Prisma__PlayerEternaltwinTokenClient<$Result.GetResult<Prisma.$PlayerEternaltwinTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PlayerEternaltwinTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenCountArgs} args - Arguments to filter PlayerEternaltwinTokens to count.
+     * @example
+     * // Count the number of PlayerEternaltwinTokens
+     * const count = await prisma.playerEternaltwinToken.count({
+     *   where: {
+     *     // ... the filter for the PlayerEternaltwinTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlayerEternaltwinTokenCountArgs>(
+      args?: Subset<T, PlayerEternaltwinTokenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlayerEternaltwinTokenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlayerEternaltwinToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlayerEternaltwinTokenAggregateArgs>(args: Subset<T, PlayerEternaltwinTokenAggregateArgs>): Prisma.PrismaPromise<GetPlayerEternaltwinTokenAggregateType<T>>
+
+    /**
+     * Group by PlayerEternaltwinToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerEternaltwinTokenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlayerEternaltwinTokenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlayerEternaltwinTokenGroupByArgs['orderBy'] }
+        : { orderBy?: PlayerEternaltwinTokenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlayerEternaltwinTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayerEternaltwinTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlayerEternaltwinToken model
+   */
+  readonly fields: PlayerEternaltwinTokenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlayerEternaltwinToken.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlayerEternaltwinTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PlayerEternaltwinToken model
+   */ 
+  interface PlayerEternaltwinTokenFieldRefs {
+    readonly playerId: FieldRef<"PlayerEternaltwinToken", 'String'>
+    readonly accessToken: FieldRef<"PlayerEternaltwinToken", 'String'>
+    readonly scope: FieldRef<"PlayerEternaltwinToken", 'String'>
+    readonly obtainedAt: FieldRef<"PlayerEternaltwinToken", 'DateTime'>
+    readonly expiresAt: FieldRef<"PlayerEternaltwinToken", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PlayerEternaltwinToken findUnique
+   */
+  export type PlayerEternaltwinTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerEternaltwinToken to fetch.
+     */
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken findUniqueOrThrow
+   */
+  export type PlayerEternaltwinTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerEternaltwinToken to fetch.
+     */
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken findFirst
+   */
+  export type PlayerEternaltwinTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerEternaltwinToken to fetch.
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerEternaltwinTokens to fetch.
+     */
+    orderBy?: PlayerEternaltwinTokenOrderByWithRelationInput | PlayerEternaltwinTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerEternaltwinTokens.
+     */
+    cursor?: PlayerEternaltwinTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerEternaltwinTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerEternaltwinTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerEternaltwinTokens.
+     */
+    distinct?: PlayerEternaltwinTokenScalarFieldEnum | PlayerEternaltwinTokenScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken findFirstOrThrow
+   */
+  export type PlayerEternaltwinTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerEternaltwinToken to fetch.
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerEternaltwinTokens to fetch.
+     */
+    orderBy?: PlayerEternaltwinTokenOrderByWithRelationInput | PlayerEternaltwinTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerEternaltwinTokens.
+     */
+    cursor?: PlayerEternaltwinTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerEternaltwinTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerEternaltwinTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerEternaltwinTokens.
+     */
+    distinct?: PlayerEternaltwinTokenScalarFieldEnum | PlayerEternaltwinTokenScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken findMany
+   */
+  export type PlayerEternaltwinTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerEternaltwinTokens to fetch.
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerEternaltwinTokens to fetch.
+     */
+    orderBy?: PlayerEternaltwinTokenOrderByWithRelationInput | PlayerEternaltwinTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlayerEternaltwinTokens.
+     */
+    cursor?: PlayerEternaltwinTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerEternaltwinTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerEternaltwinTokens.
+     */
+    skip?: number
+    distinct?: PlayerEternaltwinTokenScalarFieldEnum | PlayerEternaltwinTokenScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken create
+   */
+  export type PlayerEternaltwinTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlayerEternaltwinToken.
+     */
+    data: XOR<PlayerEternaltwinTokenCreateInput, PlayerEternaltwinTokenUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken createMany
+   */
+  export type PlayerEternaltwinTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlayerEternaltwinTokens.
+     */
+    data: PlayerEternaltwinTokenCreateManyInput | PlayerEternaltwinTokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PlayerEternaltwinToken createManyAndReturn
+   */
+  export type PlayerEternaltwinTokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * The data used to create many PlayerEternaltwinTokens.
+     */
+    data: PlayerEternaltwinTokenCreateManyInput | PlayerEternaltwinTokenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerEternaltwinToken update
+   */
+  export type PlayerEternaltwinTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlayerEternaltwinToken.
+     */
+    data: XOR<PlayerEternaltwinTokenUpdateInput, PlayerEternaltwinTokenUncheckedUpdateInput>
+    /**
+     * Choose, which PlayerEternaltwinToken to update.
+     */
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken updateMany
+   */
+  export type PlayerEternaltwinTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlayerEternaltwinTokens.
+     */
+    data: XOR<PlayerEternaltwinTokenUpdateManyMutationInput, PlayerEternaltwinTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerEternaltwinTokens to update
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * Limit how many PlayerEternaltwinTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerEternaltwinToken updateManyAndReturn
+   */
+  export type PlayerEternaltwinTokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * The data used to update PlayerEternaltwinTokens.
+     */
+    data: XOR<PlayerEternaltwinTokenUpdateManyMutationInput, PlayerEternaltwinTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerEternaltwinTokens to update
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * Limit how many PlayerEternaltwinTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayerEternaltwinToken upsert
+   */
+  export type PlayerEternaltwinTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlayerEternaltwinToken to update in case it exists.
+     */
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    /**
+     * In case the PlayerEternaltwinToken found by the `where` argument doesn't exist, create a new PlayerEternaltwinToken with this data.
+     */
+    create: XOR<PlayerEternaltwinTokenCreateInput, PlayerEternaltwinTokenUncheckedCreateInput>
+    /**
+     * In case the PlayerEternaltwinToken was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlayerEternaltwinTokenUpdateInput, PlayerEternaltwinTokenUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken delete
+   */
+  export type PlayerEternaltwinTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
+    /**
+     * Filter which PlayerEternaltwinToken to delete.
+     */
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * PlayerEternaltwinToken deleteMany
+   */
+  export type PlayerEternaltwinTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerEternaltwinTokens to delete
+     */
+    where?: PlayerEternaltwinTokenWhereInput
+    /**
+     * Limit how many PlayerEternaltwinTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayerEternaltwinToken without action
+   */
+  export type PlayerEternaltwinTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerEternaltwinToken
+     */
+    select?: PlayerEternaltwinTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayerEternaltwinToken
+     */
+    omit?: PlayerEternaltwinTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerEternaltwinTokenInclude<ExtArgs> | null
   }
 
 
@@ -90096,6 +91287,17 @@ export namespace Prisma {
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
+  export const PlayerEternaltwinTokenScalarFieldEnum: {
+    playerId: 'playerId',
+    accessToken: 'accessToken',
+    scope: 'scope',
+    obtainedAt: 'obtainedAt',
+    expiresAt: 'expiresAt'
+  };
+
+  export type PlayerEternaltwinTokenScalarFieldEnum = (typeof PlayerEternaltwinTokenScalarFieldEnum)[keyof typeof PlayerEternaltwinTokenScalarFieldEnum]
+
+
   export const PlayerIpScalarFieldEnum: {
     id: 'id',
     ip: 'ip',
@@ -92318,6 +93520,7 @@ export namespace Prisma {
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
     dungeonRuns?: DungeonRunListRelationFilter
+    eternaltwinToken?: XOR<PlayerEternaltwinTokenNullableScalarRelationFilter, PlayerEternaltwinTokenWhereInput> | null
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -92395,6 +93598,7 @@ export namespace Prisma {
     Events?: EventsOrderByRelationAggregateInput
     dinozBuilds?: DinozBuildOrderByRelationAggregateInput
     dungeonRuns?: DungeonRunOrderByRelationAggregateInput
+    eternaltwinToken?: PlayerEternaltwinTokenOrderByWithRelationInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -92475,6 +93679,7 @@ export namespace Prisma {
     Events?: EventsListRelationFilter
     dinozBuilds?: DinozBuildListRelationFilter
     dungeonRuns?: DungeonRunListRelationFilter
+    eternaltwinToken?: XOR<PlayerEternaltwinTokenNullableScalarRelationFilter, PlayerEternaltwinTokenWhereInput> | null
   }, "id" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -92557,6 +93762,61 @@ export namespace Prisma {
     lastVersionSeen?: StringWithAggregatesFilter<"Player"> | string
     tosAccepted?: BoolWithAggregatesFilter<"Player"> | boolean
     id?: UuidWithAggregatesFilter<"Player"> | string
+  }
+
+  export type PlayerEternaltwinTokenWhereInput = {
+    AND?: PlayerEternaltwinTokenWhereInput | PlayerEternaltwinTokenWhereInput[]
+    OR?: PlayerEternaltwinTokenWhereInput[]
+    NOT?: PlayerEternaltwinTokenWhereInput | PlayerEternaltwinTokenWhereInput[]
+    playerId?: UuidFilter<"PlayerEternaltwinToken"> | string
+    accessToken?: StringFilter<"PlayerEternaltwinToken"> | string
+    scope?: StringFilter<"PlayerEternaltwinToken"> | string
+    obtainedAt?: DateTimeFilter<"PlayerEternaltwinToken"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"PlayerEternaltwinToken"> | Date | string | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }
+
+  export type PlayerEternaltwinTokenOrderByWithRelationInput = {
+    playerId?: SortOrder
+    accessToken?: SortOrder
+    scope?: SortOrder
+    obtainedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type PlayerEternaltwinTokenWhereUniqueInput = Prisma.AtLeast<{
+    playerId?: string
+    AND?: PlayerEternaltwinTokenWhereInput | PlayerEternaltwinTokenWhereInput[]
+    OR?: PlayerEternaltwinTokenWhereInput[]
+    NOT?: PlayerEternaltwinTokenWhereInput | PlayerEternaltwinTokenWhereInput[]
+    accessToken?: StringFilter<"PlayerEternaltwinToken"> | string
+    scope?: StringFilter<"PlayerEternaltwinToken"> | string
+    obtainedAt?: DateTimeFilter<"PlayerEternaltwinToken"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"PlayerEternaltwinToken"> | Date | string | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }, "playerId">
+
+  export type PlayerEternaltwinTokenOrderByWithAggregationInput = {
+    playerId?: SortOrder
+    accessToken?: SortOrder
+    scope?: SortOrder
+    obtainedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    _count?: PlayerEternaltwinTokenCountOrderByAggregateInput
+    _max?: PlayerEternaltwinTokenMaxOrderByAggregateInput
+    _min?: PlayerEternaltwinTokenMinOrderByAggregateInput
+  }
+
+  export type PlayerEternaltwinTokenScalarWhereWithAggregatesInput = {
+    AND?: PlayerEternaltwinTokenScalarWhereWithAggregatesInput | PlayerEternaltwinTokenScalarWhereWithAggregatesInput[]
+    OR?: PlayerEternaltwinTokenScalarWhereWithAggregatesInput[]
+    NOT?: PlayerEternaltwinTokenScalarWhereWithAggregatesInput | PlayerEternaltwinTokenScalarWhereWithAggregatesInput[]
+    playerId?: UuidWithAggregatesFilter<"PlayerEternaltwinToken"> | string
+    accessToken?: StringWithAggregatesFilter<"PlayerEternaltwinToken"> | string
+    scope?: StringWithAggregatesFilter<"PlayerEternaltwinToken"> | string
+    obtainedAt?: DateTimeWithAggregatesFilter<"PlayerEternaltwinToken"> | Date | string
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"PlayerEternaltwinToken"> | Date | string | null
   }
 
   export type PlayerIpWhereInput = {
@@ -97281,6 +98541,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -97356,6 +98617,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -97431,6 +98693,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -97506,6 +98769,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -97615,6 +98879,61 @@ export namespace Prisma {
     lastVersionSeen?: StringFieldUpdateOperationsInput | string
     tosAccepted?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlayerEternaltwinTokenCreateInput = {
+    accessToken: string
+    scope: string
+    obtainedAt?: Date | string
+    expiresAt?: Date | string | null
+    player: PlayerCreateNestedOneWithoutEternaltwinTokenInput
+  }
+
+  export type PlayerEternaltwinTokenUncheckedCreateInput = {
+    playerId: string
+    accessToken: string
+    scope: string
+    obtainedAt?: Date | string
+    expiresAt?: Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenUpdateInput = {
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    player?: PlayerUpdateOneRequiredWithoutEternaltwinTokenNestedInput
+  }
+
+  export type PlayerEternaltwinTokenUncheckedUpdateInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenCreateManyInput = {
+    playerId: string
+    accessToken: string
+    scope: string
+    obtainedAt?: Date | string
+    expiresAt?: Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenUpdateManyMutationInput = {
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenUncheckedUpdateManyInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PlayerIpCreateInput = {
@@ -102545,6 +103864,11 @@ export namespace Prisma {
     none?: DungeonRunWhereInput
   }
 
+  export type PlayerEternaltwinTokenNullableScalarRelationFilter = {
+    is?: PlayerEternaltwinTokenWhereInput | null
+    isNot?: PlayerEternaltwinTokenWhereInput | null
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -102786,6 +104110,30 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
+  }
+
+  export type PlayerEternaltwinTokenCountOrderByAggregateInput = {
+    playerId?: SortOrder
+    accessToken?: SortOrder
+    scope?: SortOrder
+    obtainedAt?: SortOrder
+    expiresAt?: SortOrder
+  }
+
+  export type PlayerEternaltwinTokenMaxOrderByAggregateInput = {
+    playerId?: SortOrder
+    accessToken?: SortOrder
+    scope?: SortOrder
+    obtainedAt?: SortOrder
+    expiresAt?: SortOrder
+  }
+
+  export type PlayerEternaltwinTokenMinOrderByAggregateInput = {
+    playerId?: SortOrder
+    accessToken?: SortOrder
+    scope?: SortOrder
+    obtainedAt?: SortOrder
+    expiresAt?: SortOrder
   }
 
   export type PlayerIpPlayerIdIpCompoundUniqueInput = {
@@ -107155,6 +108503,12 @@ export namespace Prisma {
     connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
   }
 
+  export type PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput = {
+    create?: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: PlayerEternaltwinTokenCreateOrConnectWithoutPlayerInput
+    connect?: PlayerEternaltwinTokenWhereUniqueInput
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -107414,6 +108768,12 @@ export namespace Prisma {
     connectOrCreate?: DungeonRunCreateOrConnectWithoutPlayerInput | DungeonRunCreateOrConnectWithoutPlayerInput[]
     createMany?: DungeonRunCreateManyPlayerInputEnvelope
     connect?: DungeonRunWhereUniqueInput | DungeonRunWhereUniqueInput[]
+  }
+
+  export type PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput = {
+    create?: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: PlayerEternaltwinTokenCreateOrConnectWithoutPlayerInput
+    connect?: PlayerEternaltwinTokenWhereUniqueInput
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -107961,6 +109321,16 @@ export namespace Prisma {
     deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
   }
 
+  export type PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput = {
+    create?: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: PlayerEternaltwinTokenCreateOrConnectWithoutPlayerInput
+    upsert?: PlayerEternaltwinTokenUpsertWithoutPlayerInput
+    disconnect?: PlayerEternaltwinTokenWhereInput | boolean
+    delete?: PlayerEternaltwinTokenWhereInput | boolean
+    connect?: PlayerEternaltwinTokenWhereUniqueInput
+    update?: XOR<XOR<PlayerEternaltwinTokenUpdateToOneWithWhereWithoutPlayerInput, PlayerEternaltwinTokenUpdateWithoutPlayerInput>, PlayerEternaltwinTokenUncheckedUpdateWithoutPlayerInput>
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -108471,6 +109841,30 @@ export namespace Prisma {
     update?: DungeonRunUpdateWithWhereUniqueWithoutPlayerInput | DungeonRunUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: DungeonRunUpdateManyWithWhereWithoutPlayerInput | DungeonRunUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: DungeonRunScalarWhereInput | DungeonRunScalarWhereInput[]
+  }
+
+  export type PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput = {
+    create?: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: PlayerEternaltwinTokenCreateOrConnectWithoutPlayerInput
+    upsert?: PlayerEternaltwinTokenUpsertWithoutPlayerInput
+    disconnect?: PlayerEternaltwinTokenWhereInput | boolean
+    delete?: PlayerEternaltwinTokenWhereInput | boolean
+    connect?: PlayerEternaltwinTokenWhereUniqueInput
+    update?: XOR<XOR<PlayerEternaltwinTokenUpdateToOneWithWhereWithoutPlayerInput, PlayerEternaltwinTokenUpdateWithoutPlayerInput>, PlayerEternaltwinTokenUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PlayerCreateNestedOneWithoutEternaltwinTokenInput = {
+    create?: XOR<PlayerCreateWithoutEternaltwinTokenInput, PlayerUncheckedCreateWithoutEternaltwinTokenInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutEternaltwinTokenInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutEternaltwinTokenNestedInput = {
+    create?: XOR<PlayerCreateWithoutEternaltwinTokenInput, PlayerUncheckedCreateWithoutEternaltwinTokenInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutEternaltwinTokenInput
+    upsert?: PlayerUpsertWithoutEternaltwinTokenInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutEternaltwinTokenInput, PlayerUpdateWithoutEternaltwinTokenInput>, PlayerUncheckedUpdateWithoutEternaltwinTokenInput>
   }
 
   export type PlayerCreateNestedOneWithoutIpsInput = {
@@ -112695,6 +114089,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -112769,6 +114164,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -113565,6 +114961,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -113639,6 +115036,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -116179,6 +117577,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozBuildsInput = {
@@ -116253,6 +117652,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozBuildsInput = {
@@ -116454,6 +117854,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozBuildsInput = {
@@ -116528,6 +117929,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutBuildInput = {
@@ -117032,6 +118434,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPollVotesInput = {
@@ -117106,6 +118509,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPollVotesInput = {
@@ -117250,6 +118654,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPollVotesInput = {
@@ -117324,6 +118729,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -118926,6 +120332,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PlayerEternaltwinTokenCreateWithoutPlayerInput = {
+    accessToken: string
+    scope: string
+    obtainedAt?: Date | string
+    expiresAt?: Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput = {
+    accessToken: string
+    scope: string
+    obtainedAt?: Date | string
+    expiresAt?: Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenCreateOrConnectWithoutPlayerInput = {
+    where: PlayerEternaltwinTokenWhereUniqueInput
+    create: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+  }
+
   export type ClanUpsertWithoutPlayersInput = {
     update: XOR<ClanUpdateWithoutPlayersInput, ClanUncheckedUpdateWithoutPlayersInput>
     create: XOR<ClanCreateWithoutPlayersInput, ClanUncheckedCreateWithoutPlayersInput>
@@ -120007,6 +121432,347 @@ export namespace Prisma {
     leaderId?: IntNullableFilter<"DungeonRun"> | number | null
   }
 
+  export type PlayerEternaltwinTokenUpsertWithoutPlayerInput = {
+    update: XOR<PlayerEternaltwinTokenUpdateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedUpdateWithoutPlayerInput>
+    create: XOR<PlayerEternaltwinTokenCreateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedCreateWithoutPlayerInput>
+    where?: PlayerEternaltwinTokenWhereInput
+  }
+
+  export type PlayerEternaltwinTokenUpdateToOneWithWhereWithoutPlayerInput = {
+    where?: PlayerEternaltwinTokenWhereInput
+    data: XOR<PlayerEternaltwinTokenUpdateWithoutPlayerInput, PlayerEternaltwinTokenUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PlayerEternaltwinTokenUpdateWithoutPlayerInput = {
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PlayerEternaltwinTokenUncheckedUpdateWithoutPlayerInput = {
+    accessToken?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    obtainedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PlayerCreateWithoutEternaltwinTokenInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    clan?: ClanCreateNestedOneWithoutPlayersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutEternaltwinTokenInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    autoReequipItems?: boolean
+    bypassGatheringGrid?: boolean
+    shareArchivedData?: boolean
+    archivedSiteId?: number | null
+    displayedNotifications?: number
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    tosAccepted?: boolean
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    demonShop?: PlayerDemonShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    LeftFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutLeftPlayerInput
+    RightFightArchives?: FightArchiveUncheckedCreateNestedManyWithoutRightPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    ips?: PlayerIpUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
+    dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutEternaltwinTokenInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutEternaltwinTokenInput, PlayerUncheckedCreateWithoutEternaltwinTokenInput>
+  }
+
+  export type PlayerUpsertWithoutEternaltwinTokenInput = {
+    update: XOR<PlayerUpdateWithoutEternaltwinTokenInput, PlayerUncheckedUpdateWithoutEternaltwinTokenInput>
+    create: XOR<PlayerCreateWithoutEternaltwinTokenInput, PlayerUncheckedCreateWithoutEternaltwinTokenInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutEternaltwinTokenInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutEternaltwinTokenInput, PlayerUncheckedUpdateWithoutEternaltwinTokenInput>
+  }
+
+  export type PlayerUpdateWithoutEternaltwinTokenInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneWithoutPlayersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutEternaltwinTokenInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
+    bypassGatheringGrid?: BoolFieldUpdateOperationsInput | boolean
+    shareArchivedData?: BoolFieldUpdateOperationsInput | boolean
+    archivedSiteId?: NullableIntFieldUpdateOperationsInput | number | null
+    displayedNotifications?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    tosAccepted?: BoolFieldUpdateOperationsInput | boolean
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    demonShop?: PlayerDemonShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    LeftFightArchives?: FightArchiveUncheckedUpdateManyWithoutLeftPlayerNestedInput
+    RightFightArchives?: FightArchiveUncheckedUpdateManyWithoutRightPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    ips?: PlayerIpUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
   export type PlayerCreateWithoutIpsInput = {
     customText?: string | null
     name: string
@@ -120079,6 +121845,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIpsInput = {
@@ -120153,6 +121920,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIpsInput = {
@@ -120243,6 +122011,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIpsInput = {
@@ -120317,6 +122086,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDojoInput = {
@@ -120391,6 +122161,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -120465,6 +122236,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -120656,6 +122428,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -120730,6 +122503,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -121525,6 +123299,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -121599,6 +123374,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -121689,6 +123465,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -121763,6 +123540,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -121837,6 +123615,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -121911,6 +123690,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -122001,6 +123781,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -122075,6 +123856,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DemonSkillCreateWithoutDinozInput = {
@@ -122187,6 +123969,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDemonShopInput = {
@@ -122261,6 +124044,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDemonShopInput = {
@@ -122401,6 +124185,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDemonShopInput = {
@@ -122475,6 +124260,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerDemonShopCreateWithoutSkillsInput = {
@@ -122705,6 +124491,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -122779,6 +124566,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -122869,6 +124657,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -122943,6 +124732,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -123017,6 +124807,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -123091,6 +124882,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -123181,6 +124973,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -123255,6 +125048,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -123329,6 +125123,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -123403,6 +125198,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -123493,6 +125289,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -123567,6 +125364,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -123641,6 +125439,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -123715,6 +125514,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -123805,6 +125605,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -123879,6 +125680,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -123953,6 +125755,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -124027,6 +125830,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -124117,6 +125921,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -124191,6 +125996,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -124265,6 +126071,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -124339,6 +126146,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -124429,6 +126237,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -124503,6 +126312,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -124667,6 +126477,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -124741,6 +126552,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -124865,6 +126677,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -124939,6 +126752,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -125119,6 +126933,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -125193,6 +127008,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -125441,6 +127257,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -125515,6 +127332,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -125738,6 +127556,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -125812,6 +127631,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -126014,6 +127834,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -126088,6 +127909,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -126380,6 +128202,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -126454,6 +128277,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -126544,6 +128368,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -126618,6 +128443,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -126798,6 +128624,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -126872,6 +128699,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -127074,6 +128902,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -127148,6 +128977,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanCastleCreateWithoutClanInput = {
@@ -127246,6 +129076,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -127320,6 +129151,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -127638,6 +129470,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanInput = {
@@ -127712,6 +129545,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanInput = {
@@ -127902,6 +129736,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -127976,6 +129811,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -128748,6 +130584,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -128822,6 +130659,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -128966,6 +130804,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -129040,6 +130879,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanEventCreateWithoutClanWarsInput = {
@@ -129825,6 +131665,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -129899,6 +131740,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -130037,6 +131879,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -130111,6 +131954,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -130239,6 +132083,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -130313,6 +132158,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -130451,6 +132297,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -130525,6 +132372,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -130701,6 +132549,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -130775,6 +132624,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -130919,6 +132769,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -130993,6 +132844,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -131275,6 +133127,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -131349,6 +133202,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -131428,6 +133282,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -131502,6 +133357,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -131581,6 +133437,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -131655,6 +133512,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -131905,6 +133763,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -131979,6 +133838,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -132064,6 +133924,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -132138,6 +133999,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -132223,6 +134085,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -132297,6 +134160,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutTargetedCasesInput = {
@@ -132425,6 +134289,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -132499,6 +134364,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -132600,6 +134466,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -132674,6 +134541,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -132814,6 +134682,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -132888,6 +134757,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -133001,6 +134871,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -133075,6 +134946,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -133210,6 +135082,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -133284,6 +135157,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -133409,6 +135283,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -133483,6 +135358,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -133615,6 +135491,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -133689,6 +135566,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -133849,6 +135727,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -133923,6 +135802,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -133997,6 +135877,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -134071,6 +135952,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -134161,6 +136043,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -134235,6 +136118,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -134309,6 +136193,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -134383,6 +136268,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -134462,6 +136348,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeftFightArchivesInput = {
@@ -134536,6 +136423,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeftFightArchivesInput = {
@@ -134615,6 +136503,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRightFightArchivesInput = {
@@ -134689,6 +136578,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRightFightArchivesInput = {
@@ -135041,6 +136931,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -135115,6 +137006,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutLeftFightArchivesInput = {
@@ -135200,6 +137092,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeftFightArchivesInput = {
@@ -135274,6 +137167,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutRightFightArchivesInput = {
@@ -135359,6 +137253,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRightFightArchivesInput = {
@@ -135433,6 +137328,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -135846,6 +137742,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -135920,6 +137817,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -136063,6 +137961,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -136137,6 +138036,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -136872,6 +138772,7 @@ export namespace Prisma {
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGameDinozInput = {
@@ -136946,6 +138847,7 @@ export namespace Prisma {
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGameDinozInput = {
@@ -137277,6 +139179,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGameDinozInput = {
@@ -137351,6 +139254,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
@@ -137572,6 +139476,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutEventsInput = {
@@ -137646,6 +139551,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
     dungeonRuns?: DungeonRunUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutEventsInput = {
@@ -137736,6 +139642,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutEventsInput = {
@@ -137810,6 +139717,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDungeonRunsInput = {
@@ -137884,6 +139792,7 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
     Events?: EventsCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDungeonRunsInput = {
@@ -137958,6 +139867,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
     Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
     dinozBuilds?: DinozBuildUncheckedCreateNestedManyWithoutPlayerInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedCreateNestedOneWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDungeonRunsInput = {
@@ -138195,6 +140105,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDungeonRunsInput = {
@@ -138269,6 +140180,7 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DungeonUpsertWithoutDungeonRunsInput = {
@@ -141628,6 +143540,7 @@ export namespace Prisma {
     Events?: EventsUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanInput = {
@@ -141702,6 +143615,7 @@ export namespace Prisma {
     Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
     dinozBuilds?: DinozBuildUncheckedUpdateManyWithoutPlayerNestedInput
     dungeonRuns?: DungeonRunUncheckedUpdateManyWithoutPlayerNestedInput
+    eternaltwinToken?: PlayerEternaltwinTokenUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateManyWithoutClanInput = {

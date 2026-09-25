@@ -1,42 +1,99 @@
 <template>
 	<div class="creationMode">
 		<div class="title">
-			<p>{{ $t('messagerie.newMsg') }}</p>
+			<p>{{ $t('forum.newThread.title') }}</p>
 		</div>
 		<div class="messageTitle">
-			<label for="title">{{ $t('messagerie.newMsgTitle') }}</label>
-			<input type="text" id="title" v-model="titleThread" :placeholder="$t('messagerie.title')" />
+			<label for="threadTitle">{{ $t('forum.newThread.titleLabel') }}</label>
+			<input
+				type="text"
+				id="threadTitle"
+				v-model="titleThread"
+				:maxlength="TITLE_MAX_LENGTH"
+				:disabled="sending"
+				:placeholder="$t('forum.newThread.titlePlaceholder')"
+			/>
 		</div>
 		<div class="message">
-			<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
-			<textarea id="message" v-model="messageThread" :placeholder="$t('messagerie.message')" />
+			<label for="threadMessage">{{ $t('forum.newThread.messageLabel') }}</label>
+			<ForumEditor
+				field-id="threadMessage"
+				v-model="messageThread"
+				:grammar="grammar"
+				:disabled="sending"
+				:placeholder="$t('forum.newThread.messagePlaceholder')"
+			/>
+		</div>
+		<p class="hint" v-if="error">{{ error }}</p>
+		<div class="actions">
+			<DZButton :off="!canSend" @click="send()">{{ $t('forum.newThread.submit') }}</DZButton>
+			<DZButton @click="$emit('cancel')">{{ $t('forum.cancel') }}</DZButton>
 		</div>
 	</div>
-	<DZButton @click="send()">Send</DZButton>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import DZButton from '../common/DZButton.vue';
+import ForumEditor from './ForumEditor.vue';
 import { ForumService } from '../../services/ForumService.js';
-import { errorHandler } from '../../utils/index.js';
+import { handleForumError } from '../../utils/index.js';
+import { ForumGrammar } from '@drpg/core/models/forum/Forum';
+
+/**
+ * What Eternaltwin accepts as a thread title: trimmed, 2 to 64 characters.
+ * `packages/core/src/lib/forum/forum-thread-title.mts`.
+ */
+const TITLE_MIN_LENGTH = 2;
+const TITLE_MAX_LENGTH = 64;
 
 export default defineComponent({
 	name: 'ForumNewMessage',
-	components: { DZButton },
+	components: { DZButton, ForumEditor },
+	props: {
+		sectionId: { type: String, required: true },
+		grammar: { type: Object as PropType<ForumGrammar | undefined>, default: undefined }
+	},
+	emits: ['created', 'cancel'],
 	data() {
 		return {
-			titleThread: undefined as undefined | string,
-			messageThread: undefined as undefined | string
+			titleThread: '',
+			messageThread: '',
+			sending: false,
+			error: '',
+			TITLE_MAX_LENGTH
 		};
+	},
+	computed: {
+		canSend(): boolean {
+			return (
+				!this.sending && this.titleThread.trim().length >= TITLE_MIN_LENGTH && this.messageThread.trim().length > 0
+			);
+		}
 	},
 	methods: {
 		async send() {
-			if (!this.titleThread || !this.messageThread) return;
+			// Checked here only to spare a round-trip: the server holds the same bounds and is the
+			// one that decides.
+			if (this.titleThread.trim().length < TITLE_MIN_LENGTH) {
+				this.error = this.$t('forum.newThread.titleTooShort', { min: TITLE_MIN_LENGTH });
+				return;
+			}
+			if (this.messageThread.trim().length === 0) {
+				this.error = this.$t('forum.newThread.messageRequired');
+				return;
+			}
+			if (this.sending) return;
+
+			this.sending = true;
+			this.error = '';
 			try {
-				await ForumService.createThread(this.titleThread, this.messageThread);
+				const thread = await ForumService.createThread(this.sectionId, this.titleThread.trim(), this.messageThread);
+				this.$emit('created', thread.id);
 			} catch (e) {
-				errorHandler.handle(e, this.$toast);
+				handleForumError(e, this.$t, this.$toast);
+			} finally {
+				this.sending = false;
 			}
 		}
 	}
@@ -80,18 +137,6 @@ export default defineComponent({
 			}
 		}
 	}
-	.search {
-		display: flex;
-		label {
-			width: 25%;
-		}
-	}
-	.participants {
-		display: flex;
-		justify-content: center;
-		width: 100%;
-		gap: 3px;
-	}
 	.message {
 		display: flex;
 		flex-direction: column;
@@ -99,25 +144,15 @@ export default defineComponent({
 		label {
 			width: 25%;
 		}
-		textarea {
-			background-color: #b05733;
-			outline: 1px solid transparent;
-			color: #ffee92;
-			font-weight: 400;
-			font-size: 16px;
-			outline-offset: 2px;
-			width: 100%;
-			border: none;
-			padding-left: 4px;
-			&:focus {
-				transition: outline-color 0.5s;
-				outline-color: #efdba8;
-			}
-		}
 	}
-	.send {
+	.hint {
+		color: #ffd7d7;
+		font-size: 13px;
+	}
+	.actions {
 		display: flex;
 		justify-content: end;
+		gap: 5px;
 	}
 }
 </style>

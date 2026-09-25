@@ -5276,6 +5276,49 @@
 		"errorDinoz": "Debes especificar un Dino para reportar",
 		"success": "Reporte enviado con éxito."
 	},
+	"forum": {
+		"cancel": "Cancelar",
+		"empty": "Todavía no hay ningún tema.",
+		"pinned": "Tema fijado",
+		"locked": "Este tema está cerrado: ya nadie puede responder.",
+		"moderated": "Mensaje retirado por la moderación.",
+		"edited": "(editado)",
+		"unread": "Mensajes nuevos",
+		"threadCount": "Número de temas",
+		"newThread": {
+			"open": "Nuevo tema",
+			"title": "Nuevo tema",
+			"titleLabel": "Título del tema:",
+			"titlePlaceholder": "Tu título...",
+			"messageLabel": "Tu mensaje:",
+			"messagePlaceholder": "Tu mensaje...",
+			"submit": "Crear el tema",
+			"titleTooShort": "El título debe tener al menos {min} caracteres.",
+			"messageRequired": "El mensaje no puede estar vacío."
+		},
+		"reply": {
+			"title": "Responder",
+			"placeholder": "Tu respuesta...",
+			"submit": "Enviar"
+		},
+		"edit": {
+			"open": "Editar",
+			"submit": "Guardar"
+		},
+		"editor": {
+			"strong": "Negrita",
+			"emphasis": "Cursiva",
+			"strikethrough": "Tachado",
+			"link": "Enlace"
+		},
+		"error": {
+			"reauthorize": "Tu sesión de Eternaltwin ha caducado. Vuelve a conectarte para acceder al foro.",
+			"forbidden": "Eternaltwin ha rechazado esta acción. Reintentar no cambiará nada.",
+			"notFound": "Este contenido ya no existe.",
+			"conflict": "Este contenido ha cambiado mientras tanto. Recarga la página antes de volver a intentarlo.",
+			"revisionUnavailable": "No se ha podido encontrar la versión que corregir."
+		}
+	},
 	"messagerie": {
 		"actions": "Acciones",
 		"create": "Escribir",

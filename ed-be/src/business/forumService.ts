@@ -1,67 +1,124 @@
-import { Request } from 'express';
-import { auth } from '../dao/playerDao.js';
+import type { ForumPostSource, ForumType, Thread, forumPost } from '@drpg/core/models/forum/Forum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ForumType, Thread } from '@drpg/core/models/forum/Forum';
+import { Request } from 'express';
 import { GLOBAL } from '../context.js';
-import urlJoin from 'url-join';
+import { getToken } from '../dao/eternaltwinTokenDao.js';
+import { auth } from '../dao/playerDao.js';
+import { EternaltwinForumClient } from './eternaltwinForumClient.js';
 
-export async function getAllThreadsFromPage(req: Request) {
-	const config = GLOBAL.config;
-	const page = +req.params.page;
-	const eternaltwin = new URL(
-		urlJoin(
-			config.eternaltwin.url,
-			`api/v1/forum/sections/${config.eternaltwin.section}?offset=${(page - 1) * 20}&limit=20`
-		)
-	);
+/**
+ * Build a forum client acting for the player behind this request.
+ *
+ * Every call is made from the backend with the player's own access token, never from their
+ * browser: Eternaltwin's CORS policy would block that, and the token does not belong client-side.
+ */
+async function clientFor(req: Request): Promise<{ client: EternaltwinForumClient; playerId: string }> {
+	const authed = await auth(req);
+	const token = await getToken(authed.id);
 
-	const fofo = await fetch(eternaltwin);
-	const data = (await fofo.json()) as ForumType;
+	if (token === null) {
+		// Nothing to refresh into — the player has to authorize again.
+		throw new ExpectedError('eternaltwinReauthorize');
+	}
 
-	return data.threads;
+	return {
+		client: new EternaltwinForumClient(authed.id, token.accessToken),
+		playerId: authed.id
+	};
 }
 
-export async function getThread(req: Request) {
-	const config = GLOBAL.config;
+/**
+ * A section of the DinoRPG forum, with one page of its threads and its sub-sections.
+ *
+ * Without a `sectionId`, the configured DinoRPG section — the root of the game's forum tree.
+ *
+ * The whole section is returned rather than its thread listing alone: the `self` block carries the
+ * roles, whether a thread may be opened here, and the Marktwin grammar the player may write with,
+ * and the editor must offer exactly what the server accepts. It is passed through untouched —
+ * permissions are the server's to compute.
+ */
+export async function getSection(req: Request): Promise<ForumType> {
+	const { client } = await clientFor(req);
+	const sectionRef = req.params.sectionId ?? GLOBAL.config.eternaltwin.section;
+	const page = +req.params.page;
 
+	const { threads_per_page: limit } = await client.getPageSizes();
+
+	return client.getSection(sectionRef, (page - 1) * limit, limit);
+}
+
+/**
+ * A thread and one page of its posts.
+ *
+ * The whole thread is returned: it carries `self` (what the player may do here), `section.self`
+ * (the grammar to write with) and a `self` per post (whether it may still be edited). Dropping any
+ * of them would leave the interface guessing at permissions it was handed.
+ */
+export async function getThread(req: Request): Promise<Thread> {
+	const { client } = await clientFor(req);
 	const threadId = req.params.threadId;
 	const page = +req.params.page;
-	const eternaltwin = new URL(
-		urlJoin(config.eternaltwin.url, `api/v1/forum/threads/${threadId}?offset=${(page - 1) * 20}&limit=20`)
-	);
 
-	const fofo = await fetch(eternaltwin);
-	const data = (await fofo.json()) as Thread;
+	const { posts_per_page: limit } = await client.getPageSizes();
 
-	return { thread: data.posts, title: data.title };
+	return client.getThread(threadId, (page - 1) * limit, limit);
 }
 
-export async function createThread(req: Request) {
-	const config = GLOBAL.config;
-
+/**
+ * Open a thread in a section. `message` is Marktwin, not HTML or Markdown.
+ *
+ * Threads live in the sub-sections: the DinoRPG root section only groups them, and the server
+ * refuses a thread there. Whether the player may write in `sectionId` is the server's call.
+ */
+export async function createThread(req: Request): Promise<Thread> {
+	const { client } = await clientFor(req);
+	const sectionId = req.body.sectionId;
 	const title = req.body.title;
 	const message = req.body.message;
-	const body = JSON.stringify({ title: title, body: message });
-	const eternaltwin = new URL(urlJoin(config.eternaltwin.url, `api/v1/forum/sections/${config.eternaltwin.section}`));
 
-	try {
-		const response = await fetch(eternaltwin, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Cookie: 'sid=xxxxx-ffff-aaaa-zzzz-ghghgfhfg'
-			},
-			body: body
-		});
-		if (!response.ok) {
-			console.error(`Request failed with status ${response.status}`);
-			throw new Error(`Failed to create thread: ${response.statusText}`);
-		}
-		const data = (await response.json()) as Thread;
-		return { thread: data.posts, title: data.title };
-	} catch (error) {
-		// Gérer les erreurs et afficher un log
-		console.error('Error creating thread:', error);
-		throw error;
+	return client.createThread(sectionId, title, message);
+}
+
+/**
+ * Reply to a thread. `message` is Marktwin.
+ */
+export async function replyToThread(req: Request): Promise<forumPost> {
+	const { client } = await clientFor(req);
+
+	return client.replyToThread(req.params.threadId, req.body.message);
+}
+
+/**
+ * The Marktwin source of a post, for opening an editor.
+ *
+ * Ordinary reads do not carry the source, and the caller needs the id of the last revision to
+ * send back with the edit.
+ */
+export async function getPostSource(req: Request): Promise<ForumPostSource> {
+	const { client } = await clientFor(req);
+
+	return client.getPostSource(req.params.postId);
+}
+
+/**
+ * Rewrite a post.
+ *
+ * The `last_revision_id` is re-read here rather than taken from the client: it identifies the
+ * revision being replaced, which is how the server detects that someone else edited in between.
+ * A stale one sent by a browser that held the editor open would defeat that check.
+ */
+export async function updatePost(req: Request): Promise<forumPost> {
+	const { client } = await clientFor(req);
+	const postId = req.params.postId;
+	const content = req.body.content;
+	const comment = req.body.comment ?? null;
+
+	const source = await client.getPostSource(postId);
+	const lastRevisionId = source.revisions?.last?.id;
+
+	if (typeof lastRevisionId !== 'string') {
+		throw new ExpectedError('eternaltwinPostRevisionUnavailable');
 	}
+
+	return client.updatePost(postId, lastRevisionId, content, comment);
 }
