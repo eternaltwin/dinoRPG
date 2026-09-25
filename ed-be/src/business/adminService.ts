@@ -1,12 +1,5 @@
 import { Request } from 'express';
-import {
-	getAllDinozFromAccount,
-	getDinozForDojoFight,
-	getDinozForLevelUp,
-	getDinozForSkillEffect,
-	getDinozInfoForAdmin,
-	updateDinoz
-} from '../dao/dinozDao.js';
+import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
@@ -16,7 +9,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, ClanEventType, LogType } from '@drpg/prisma';
+import { ClanEventType, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
@@ -53,13 +46,14 @@ import {
 	listDungeonsCatalog,
 	updateDungeonCatalog
 } from '../dao/dungeonRunDao.js';
-import { seal } from '../utils/dungeonCrypto.js';
+import { seal, unseal } from '../utils/dungeonCrypto.js';
 import { rollMonsters } from './dungeon/monsters.js';
-import { checkScenarios, structFromGrid } from './dungeon/gridImport.js';
-import { DungeonItem } from './dungeon/types.js';
-import type { DungeonGridLevel } from '@drpg/core/models/dungeon/DungeonEditor';
+import { checkScenarios, scenariosFromStruct, structFromGrid } from './dungeon/gridImport.js';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { FightBackground, isFightBackground } from '@drpg/core/models/fight/FightBackgroundList';
+import { rewarder } from '../utils/rewarder.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -225,11 +219,13 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 	const rewardList: number[] = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
-			await addMultipleRewardToPlayer(
+			await rewarder(
 				rewardList.map(reward => ({
-					playerId: req.params.id,
-					rewardId: +reward
-				}))
+					rewardType: RewardEnum.EPIC,
+					value: +reward
+				})),
+				[],
+				req.params.id
 			);
 
 			for (const reward of rewardList) {
@@ -263,10 +259,16 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
 	const items: { id: number; quantity: number }[] = req.body.items;
 	switch (req.body.operation) {
 		case 'increase':
+			const rewards: Rewarder[] = [];
 			for (const item of items) {
-				await increaseItemQuantity(req.params.id, item.id, item.quantity);
+				rewards.push({
+					rewardType: RewardEnum.ITEM,
+					value: item.id,
+					quantity: item.quantity
+				});
 				await createLog(LogType.AdminAddItem, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
+			await rewarder(rewards, [], req.params.id);
 			break;
 		case 'decrease':
 			for (const item of items) {
@@ -1192,12 +1194,8 @@ export async function createSeededDungeon(req: Request) {
 		const encoded = new DungeonCodec().encode(d);
 		// BitCodec.write does not mask overflowing values — round-trip before sealing.
 		if (!new DungeonCodec().decode(encoded)) throw new ExpectedError('Grid produced an invalid layout');
-		// Every chest/scroll (IScenario item) must point at one of the dungeon's scenario entries.
-		const scenarios = checkScenarios(req.body.scenarios);
-		for (const lvl of grid.levels as DungeonGridLevel[])
-			for (const it of lvl.items)
-				if (it.k === DungeonItem.IScenario && it.v >= scenarios.length)
-					throw new ExpectedError(`Invalid dungeon grid: scenario item v=${it.v} has no scenario entry`);
+		// Every chest/scroll (IScenario item) needs an entry; the grid's own get keys too.
+		const scenarios = scenariosFromStruct(d, checkScenarios(req.body.scenarios));
 		const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 		const created = await createDungeon(
 			seal(encoded),
@@ -1222,9 +1220,10 @@ export async function createSeededDungeon(req: Request) {
 		const codec = new DungeonCodec();
 		if (!codec.decode(layout)) throw new ExpectedError('Invalid dungeon layout string');
 		const monsters = JSON.stringify(rollMonsters(codec.d, pool, monsterLevel));
-		// The layout's IScenario items index this list, so it must travel with them: dropping it
-		// leaves every chest/scroll silent and drawn with decorateScenarios' fallback icon.
-		const scenarios = checkScenarios(req.body.scenarios);
+		// The layout's IScenario items index this list. The string carries their count but no text,
+		// so anything the admin did not write gets the scenario_<i> key to translate — without an
+		// entry the chest/scroll is silent, grants nothing and never counts as read.
+		const scenarios = scenariosFromStruct(codec.d, checkScenarios(req.body.scenarios));
 		const created = await createDungeon(
 			seal(codec.encode()),
 			type,
@@ -1262,7 +1261,7 @@ export async function createSeededDungeon(req: Request) {
 	const encoded = new DungeonCodec().encode(d);
 	const monsters = JSON.stringify(rollMonsters(d, pool, monsterLevel));
 	// OriginalGenerator scatters IScenario items numbered 0..n-1, which index this list.
-	const scenarios = checkScenarios(req.body.scenarios);
+	const scenarios = scenariosFromStruct(d, checkScenarios(req.body.scenarios));
 	const created = await createDungeon(
 		seal(encoded),
 		type,
@@ -1307,8 +1306,20 @@ export async function updateDungeonAdmin(req: Request) {
 			throw new ExpectedError('Invalid condition JSON');
 		}
 	}
-	const scenarios =
-		req.body.scenarios != null ? JSON.stringify(checkScenarios(req.body.scenarios)) : existing.scenarios;
+	let scenarios = existing.scenarios;
+	if (req.body.scenarios != null) {
+		// The sealed layout is the only record of how many entries the dungeon needs, so a short
+		// list is topped up with keys rather than leaving those chests/scrolls orphaned. Re-saving
+		// a dungeon imported before this backfills its list.
+		const codec = new DungeonCodec();
+		const layout = unseal({
+			cipher: Buffer.from(existing.cipher),
+			iv: Buffer.from(existing.iv),
+			tag: Buffer.from(existing.tag)
+		});
+		const rows = checkScenarios(req.body.scenarios);
+		scenarios = JSON.stringify(codec.decode(layout) ? scenariosFromStruct(codec.d, rows) : rows);
+	}
 
 	return updateDungeonCatalog(id, {
 		name: req.body.name ?? existing.name,

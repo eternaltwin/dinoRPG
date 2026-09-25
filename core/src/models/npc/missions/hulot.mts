@@ -12,14 +12,15 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_SEQACT,
 		missionName: 'seqact',
+		level: 20,
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
 				value: 1500
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 40
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 10
 			}
 		],
 		condition: {
@@ -56,14 +57,15 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_TOXIC,
 		missionName: 'toxic',
+		level: 15,
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
 				value: 1500
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 20
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 7
 			}
 		],
 		steps: [
@@ -112,6 +114,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_MAP,
 		missionName: 'map',
+		level: 20,
 		condition: {
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
@@ -124,8 +127,8 @@ export const M_HULOT: Mission[] = [
 				value: 2500
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 60
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 15
 			}
 		],
 		steps: [
@@ -219,13 +222,14 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_HUCURE,
 		missionName: 'hucure',
+		level: 20,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 60
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -355,6 +359,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_BCKPCK,
 		missionName: 'bckpck',
+		level: 21,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE },
@@ -363,8 +368,8 @@ export const M_HULOT: Mission[] = [
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 60
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 14
 			},
 			{
 				rewardType: RewardEnum.STATUS,

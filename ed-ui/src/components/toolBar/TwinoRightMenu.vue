@@ -143,7 +143,7 @@
 						</svg>
 						<span>Admin</span>
 					</RouterLink>
-					<RouterLink v-if="playerStore.getRole === AdminRole.ADMIN" class="link" to="/forum">
+					<RouterLink class="link" to="/forum">
 						<svg
 							class="svgLinkIcon admin"
 							focusable="false"

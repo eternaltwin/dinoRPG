@@ -2377,7 +2377,7 @@
 			"Tornade": "Attaque tous les ennemis avec un pouvoir Air de 10 et fait tomber les ennemis volants au sol",
 			"Eveil": "Diminue la vitesse des attaques Air de 20%",
 			"PaumeEjectable": "Attaque avec un assaut de puissance doublée, puis le Dinoz perd 15 en initiative",
-			"VentVif": "Donne le statut accéléré pour une courte durée (Augmente la vitesse de 50%)",
+			"VentVif": "Donne le statut accéléré pour une courte durée (Augmente la vitesse de 33%)",
 			"FormeVaporeuse": "Le Dinoz a 6% de chance de devenir intangible pour une durée courte juste avant de subir une attaque",
 			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5% (non cumulable)",
 			"MeditationSolitaire": "Augmente la défense Air de 3, diminue la vitesse des attaques Air de 50%",
@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
-		"demon": "DinoRPG [ Boutique Démoniaque ]",
+		"demonShop": "DinoRPG [ Boutique Démoniaque ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
@@ -3554,10 +3554,10 @@
 			"gluon": "Gluon | Gluon | Gluons",
 			"greeng": "Géant vert | Géant vert | Géants verts",
 			"coq": "Coqdur | Coqdur | Coqdurs",
-			"pira": "Pirhanoz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Anguilloz",
-			"kazka:pira": "Monstre des Îles | Monstre des Îles | Monstres des Îles",
+			"kazka:pirhanoz": "Monstre des Îles | Monstre des Îles | Monstres des Îles",
 			"korgon": "Korgon | Korgon | Korgons",
 			"korgon:ronciv": "Korgons ou alliés",
 			"barche": "Bébé Archelion | Bébé Archelion | Bébés Archelions",
@@ -4493,7 +4493,10 @@
 		},
 		"player": "Maître",
 		"clan": "Clan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "Prolongations !"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
@@ -4657,10 +4660,20 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
-		"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
-		"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
-		"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper."
+		"unavailable": {
+			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
+			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
+			"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
+			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
+			"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
+			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
+			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
+			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
+			"defending": "Votre Dinoz défend le château de votre clan.",
+			"selling": "Votre Dinoz est en vente.",
+			"superdom": "Votre Dinoz est au superdom."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le statut {status} au Dinoz {dinoz} ({dinozId})",
@@ -5275,6 +5288,49 @@
 		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
 		"errorDinoz": "Vous devez spécifier un Dinoz à reporter",
 		"success": "Plainte envoyée avec succès."
+	},
+	"forum": {
+		"cancel": "Annuler",
+		"empty": "Aucun sujet pour le moment.",
+		"pinned": "Sujet épinglé",
+		"locked": "Ce sujet est verrouillé : plus personne ne peut y répondre.",
+		"moderated": "Message retiré par la modération.",
+		"edited": "(modifié)",
+		"unread": "Nouveaux messages",
+		"threadCount": "Nombre de sujets",
+		"newThread": {
+			"open": "Nouveau sujet",
+			"title": "Nouveau sujet",
+			"titleLabel": "Titre du sujet :",
+			"titlePlaceholder": "Votre titre...",
+			"messageLabel": "Votre message :",
+			"messagePlaceholder": "Votre message...",
+			"submit": "Créer le sujet",
+			"titleTooShort": "Le titre doit faire au moins {min} caractères.",
+			"messageRequired": "Le message ne peut pas être vide."
+		},
+		"reply": {
+			"title": "Répondre",
+			"placeholder": "Votre réponse...",
+			"submit": "Envoyer"
+		},
+		"edit": {
+			"open": "Éditer",
+			"submit": "Enregistrer"
+		},
+		"editor": {
+			"strong": "Gras",
+			"emphasis": "Italique",
+			"strikethrough": "Barré",
+			"link": "Lien"
+		},
+		"error": {
+			"reauthorize": "Ta session Eternaltwin a expiré. Reconnecte-toi pour accéder au forum.",
+			"forbidden": "Eternaltwin a refusé cette action. Elle ne passera pas en réessayant.",
+			"notFound": "Ce contenu n'existe plus.",
+			"conflict": "Ce contenu a changé entre-temps. Recharge la page avant de recommencer.",
+			"revisionUnavailable": "Impossible de retrouver la version à corriger."
+		}
 	},
 	"messagerie": {
 		"actions": "Actions",

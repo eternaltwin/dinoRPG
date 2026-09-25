@@ -45,10 +45,7 @@ export enum FightStatus {
 	NO_SKILL = 'noSkill',
 	WEAKENED = 'weakened',
 	LIGHTNING_STRUCK = 'lightningStruck',
-	AIR_SLOWED = 'airSlowed',
-	// Other
-	// Only used for when fights are too long
-	OVERTIME_POISON = 'overtime_poison'
+	AIR_SLOWED = 'airSlowed'
 }
 
 export const GoodFightStatus = [
@@ -139,7 +136,6 @@ export interface DetailedFighter {
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
 		special: Record<SpecialStatUsedInFights, number>;
-		speed: Record<ElementType | 'global', number>;
 	};
 	// Items
 	items: ItemFiche[];

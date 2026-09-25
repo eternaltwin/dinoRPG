@@ -11,13 +11,14 @@ export const M_MMEX: Mission[] = [
 	{
 		missionId: MissionID.MMEX_MMEX1,
 		missionName: 'mmex1',
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3 //Did this to block mission
 		},
 		rewards: [
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 10
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 8
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -29,6 +30,7 @@ export const M_MMEX: Mission[] = [
 	{
 		missionId: MissionID.MMEX_MMEX2,
 		missionName: 'mmex2',
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3 //Did this to block mission
 		},
@@ -44,6 +46,7 @@ export const M_MMEX: Mission[] = [
 	{
 		missionId: MissionID.MMEX_MMEX3,
 		missionName: 'mmex3',
+		level: 5,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX1 },
@@ -61,6 +64,7 @@ export const M_MMEX: Mission[] = [
 	{
 		missionId: MissionID.MMEX_MMEX4,
 		missionName: 'mmex4',
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3
 		},
@@ -70,8 +74,8 @@ export const M_MMEX: Mission[] = [
 				value: 1000
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 30
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 23
 			}
 		],
 		steps: []
@@ -79,6 +83,7 @@ export const M_MMEX: Mission[] = [
 	{
 		missionId: MissionID.MMEX_MMEX5,
 		missionName: 'mmex5',
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3
 		},
@@ -88,8 +93,8 @@ export const M_MMEX: Mission[] = [
 				value: 1000
 			},
 			{
-				rewardType: RewardEnum.EXPERIENCE,
-				value: 30
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 23
 			}
 		],
 		steps: []

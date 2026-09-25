@@ -276,7 +276,7 @@ describe('getDinozFromDemonShop', () => {
 	// ── result.dinoz — cemetery dinoz ───────────────────────────────────────────
 
 	describe('result.dinoz (cemetery dinoz)', () => {
-		it('includes dinoz at CIMETIERE with null unavailableReason', async () => {
+		it('includes dinoz at CIMETIERE only with null unavailableReason', async () => {
 			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
 				makePlayer({ dinoz: [makeDinoz({ id: 1, unavailableReason: null })] })
 			);
@@ -285,43 +285,6 @@ describe('getDinozFromDemonShop', () => {
 
 			expect(result.dinoz).toHaveLength(1);
 			expect(result.dinoz[0].id).toBe(1);
-		});
-
-		it('includes dinoz at CIMETIERE with resting unavailableReason', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					dinoz: [makeDinoz({ id: 2, unavailableReason: UnavailableReason.resting })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-			expect(result.dinoz[0].id).toBe(2);
-		});
-
-		it('excludes dinoz at CIMETIERE with sacrificed unavailableReason', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ unavailableReason: UnavailableReason.sacrificed })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
-		});
-
-		it('excludes dinoz that are not at CIMETIERE', async () => {
-			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(
-				makePlayer({
-					extraDinoz: [makeDinoz({ placeId: PlaceEnum.DINOVILLE })]
-				})
-			);
-
-			const result = await getDinozFromDemonShop(req());
-
-			expect(result.dinoz).toHaveLength(1);
 		});
 
 		it('sorts cemetery dinoz by id ascending', async () => {
@@ -721,10 +684,13 @@ describe('sacrificeDinoz', () => {
 		});
 
 		it('throws ExpectedError when Dinoz is unavailable', async () => {
-			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
-				makeDinozWPlayer({ unavailableReason: UnavailableReason.sacrificed })
-			);
-			await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			const unavailableReasons = Object.values(UnavailableReason);
+			for (const u of unavailableReasons) {
+				vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
+					makeDinozWPlayer({ unavailableReason: u })
+				);
+				await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			}
 		});
 
 		it('throws ExpectedError when Dinoz has still items equipped', async () => {
@@ -753,7 +719,7 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
-			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed });
+			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed, remaining: 0 });
 			expect(increaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
@@ -773,7 +739,74 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
-			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed });
+			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed, remaining: 0 });
+			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
+				itemId: Item.DEMON_TICKET,
+				quantity: getDemonShopPrice(LEVEL)
+			});
+			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
+			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
+			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
+			expect(createLog).toHaveBeenCalledWith(
+				LogType.Sacrifice,
+				DEFAULT_PLAYER_ID,
+				DEFAULT_DINOZ_ID,
+				getDemonShopPrice(LEVEL)
+			);
+		});
+
+		it('normal flow - disband group if leading it', async () => {
+			const LEVEL = 10;
+			const FOLLOWERS = [{ id: 10 }, { id: 11 }, { id: 12 }];
+			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
+				makeDinozWPlayer({ level: LEVEL, followers: FOLLOWERS }, { items: [] })
+			);
+			const result = await sacrificeDinoz(req({ dinozId: DEFAULT_DINOZ_ID }));
+
+			expect(result).toBeDefined();
+
+			expect(updateDinoz).toHaveBeenNthCalledWith(1, DEFAULT_DINOZ_ID, {
+				unavailableReason: UnavailableReason.sacrificed,
+				remaining: 0
+			});
+			let nthCall = 2;
+			FOLLOWERS.forEach(f => {
+				expect(updateDinoz).toHaveBeenNthCalledWith(nthCall, f.id, {
+					leader: { disconnect: true }
+				});
+				nthCall++;
+			});
+			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
+				itemId: Item.DEMON_TICKET,
+				quantity: getDemonShopPrice(LEVEL)
+			});
+			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
+			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
+			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
+			expect(createLog).toHaveBeenCalledWith(
+				LogType.Sacrifice,
+				DEFAULT_PLAYER_ID,
+				DEFAULT_DINOZ_ID,
+				getDemonShopPrice(LEVEL)
+			);
+		});
+
+		it('normal flow - leave group if following', async () => {
+			const LEVEL = 10;
+			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
+				makeDinozWPlayer({ level: LEVEL, leaderId: 123 }, { items: [] })
+			);
+			const result = await sacrificeDinoz(req({ dinozId: DEFAULT_DINOZ_ID }));
+
+			expect(result).toBeDefined();
+
+			expect(updateDinoz).toHaveBeenNthCalledWith(1, DEFAULT_DINOZ_ID, {
+				unavailableReason: UnavailableReason.sacrificed,
+				remaining: 0
+			});
+			expect(updateDinoz).toHaveBeenNthCalledWith(2, DEFAULT_DINOZ_ID, {
+				leader: { disconnect: true }
+			});
 			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
 				itemId: Item.DEMON_TICKET,
 				quantity: getDemonShopPrice(LEVEL)
@@ -802,11 +835,6 @@ describe('unsacrificeDinoz', () => {
 	// ── Input validation ────────────────────────────────────────────────────────
 
 	describe('input validation', () => {
-		it('throws ExpectedError when player does not have a Dinoz at the cemetary', async () => {
-			vi.mocked(hasAnyActiveDinozAt).mockResolvedValue(false);
-			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.noDinozAtCemetary');
-		});
-
 		it('throws ExpectedError when player has max active Dinoz', async () => {
 			vi.mocked(isAtMaxActiveDinoz).mockResolvedValue(true);
 			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('tooManyActiveDinoz');
@@ -833,10 +861,13 @@ describe('unsacrificeDinoz', () => {
 		});
 
 		it('throws ExpectedError when Dinoz is unavailable but not sacrificed', async () => {
-			vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
-				makeDinozWPlayer({ unavailableReason: UnavailableReason.frozen })
-			);
-			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			const unavailableReasons = Object.values(UnavailableReason).filter(u => u !== UnavailableReason.sacrificed);
+			for (const u of unavailableReasons) {
+				vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
+					makeDinozWPlayer({ unavailableReason: u })
+				);
+				await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			}
 		});
 
 		it('throws ExpectedError when player does not have enough tickets', async () => {

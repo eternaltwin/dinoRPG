@@ -4,7 +4,7 @@
  * Renders a DinoRPG dino from its code string using @eternaltwin/dinorpg_animations + Puppeteer.
  *
  * Supports two render modes:
- *   - 'sdino' : small animated dino (portrait frame, standing position)
+ *   - 'sdino' : small dino, frozen on frame 0 of the 'stand' animation
  *   - 'dino'  : big static portrait
  */
 
@@ -21,8 +21,6 @@ import { fileURLToPath } from 'url';
 export type DinoType = 'sdino' | 'dino';
 
 export interface RenderOptions {
-	/** Scale factor applied to canvas dimensions. Default: 1 */
-	scale?: number;
 	/** Damage level for big portrait (0–3). Default: 0. Ignored for 'sdino'. */
 	damages?: number;
 }
@@ -53,6 +51,10 @@ fs.mkdirSync(CACHE_DIR, { recursive: true });
 const MIN_VALID_SIZE: number = 500;
 const READY_TIMEOUT: number = 15_000;
 
+// Dimensions standard du canvas, partagees par le template et la capture.
+const WIDTH: number = 190;
+const HEIGHT: number = 165;
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 let httpServer: http.Server | null = null;
@@ -72,9 +74,8 @@ function enqueue<T>(fn: () => Promise<T>): Promise<T> {
 // ─── HTML template ───────────────────────────────────────────────────────────
 
 function buildHtml(type: DinoType, code: string, damages: number): string {
-	// On fixe les dimensions standard
-	const width = 190;
-	const height = 165;
+	const width = WIDTH;
+	const height = HEIGHT;
 
 	// Ajustement des ancres pour que le Dino soit bien centré dans 190x165
 	// (Valeurs historiques de DinoRPG)
@@ -100,6 +101,10 @@ function buildHtml(type: DinoType, code: string, damages: number): string {
   <script src="/dinorpg-animations-test.min.js"></script>
   <script>
     window.__dinoReadyFired = false;
+    window.__dinoError = null;
+    window.onerror = function (message, source, line, col, err) {
+      window.__dinoError = String((err && err.stack) || message);
+    };
     (function () {
       try {
         var renderer = DinoAnim.autoDetectRenderer({
@@ -131,7 +136,10 @@ function buildHtml(type: DinoType, code: string, damages: number): string {
           if (frames < 20) { requestAnimationFrame(renderLoop); }
         }
         renderLoop();
-      } catch (e) { console.error(e); }
+      } catch (e) {
+        window.__dinoError = String((e && e.stack) || e);
+        console.error(e);
+      }
     })();
   </script>
 </body>
@@ -213,15 +221,12 @@ async function stopBrowser(): Promise<void> {
 async function renderPage(type: DinoType, code: string, opts: Required<RenderOptions>): Promise<Buffer> {
 	if (!browser) throw new Error('Browser not started');
 
-	const { scale } = opts;
-	const html = buildHtml(type, code, scale);
-	const width = type === 'sdino' ? Math.round(100 * scale) : 190;
-	const height = type === 'sdino' ? Math.round(100 * scale) : 165;
+	const html = buildHtml(type, code, opts.damages);
 	const RENDER_URL = `http://127.0.0.1:${PORT}/render`;
 
 	const page = await browser.newPage();
-	// DeviceScaleFactor 2 pour une meilleure netteté
-	await page.setViewport({ width, height, deviceScaleFactor: 1 });
+	// Le viewport doit correspondre au canvas construit par buildHtml, sinon la capture rogne le dino.
+	await page.setViewport({ width: WIDTH, height: HEIGHT, deviceScaleFactor: 1 });
 
 	try {
 		// Redirection des logs du navigateur vers Node.js
@@ -263,7 +268,7 @@ async function renderPage(type: DinoType, code: string, opts: Required<RenderOpt
 		const buf = (await page.screenshot({
 			type: 'png',
 			omitBackground: true,
-			clip: { x: 0, y: 0, width, height }
+			clip: { x: 0, y: 0, width: WIDTH, height: HEIGHT }
 		})) as Buffer;
 
 		return buf;
@@ -297,12 +302,11 @@ export async function stop(): Promise<void> {
 
 export function renderDino(type: DinoType, code: string, opts: RenderOptions = {}): Promise<Buffer> {
 	const resolvedOpts: Required<RenderOptions> = {
-		scale: opts.scale ?? 1,
 		damages: opts.damages ?? 0
 	};
 
 	const safe = code.replace(/[^0-9A-Za-z]/g, '');
-	const cacheKey = `${type}_${safe}_s${resolvedOpts.scale}_d${resolvedOpts.damages}`;
+	const cacheKey = `${type}_${safe}_d${resolvedOpts.damages}`;
 	const cachePath = path.join(CACHE_DIR, `${cacheKey}.png`);
 
 	if (fs.existsSync(cachePath)) {
@@ -319,7 +323,13 @@ export function renderDino(type: DinoType, code: string, opts: RenderOptions = {
 		return doRender(type, code, resolvedOpts);
 	})
 		.then((buf: Buffer) => {
-			fs.writeFileSync(cachePath, buf);
+			if (buf.length < MIN_VALID_SIZE) {
+				throw new Error(`Rendered image too small (${buf.length} bytes), refusing to cache ${cacheKey}`);
+			}
+			// Ecriture atomique : un crash en cours d'ecriture ne doit pas laisser un PNG tronque en cache.
+			const tmpPath = `${cachePath}.tmp`;
+			fs.writeFileSync(tmpPath, buf);
+			fs.renameSync(tmpPath, cachePath);
 			inFlight.delete(cacheKey);
 			return buf;
 		})

@@ -19,17 +19,17 @@ const sentinel = (monster: DetailedFighter) => {
 
 const stinger = (monster: DetailedFighter) => {
 	monster.stats.special.evasion *= 1.6;
-	monster.stats.speed.global *= 1.5;
+	monster.stats.special.speed *= 1.5;
 	monster.status.push(createStatus(FightStatus.NO_POISON));
 };
 
 const brig1 = (monster: DetailedFighter) => {
-	monster.stats.speed.global *= 1.7;
+	monster.stats.special.speed *= 1.7;
 	setSkillProbability(monster, Skill.M_STEAL, 10);
 };
 
 const brig2 = (monster: DetailedFighter) => {
-	monster.stats.speed.global *= 0.7;
+	monster.stats.special.speed *= 0.7;
 	monster.time -= 15 * TIME_FACTOR;
 	monster.stats.special.multihit *= 1.3;
 	setSkillProbability(monster, Skill.M_STEAL, 5);
@@ -45,7 +45,7 @@ const ggoupi = (monster: DetailedFighter) => {
 
 const singmu = (monster: DetailedFighter) => {
 	monster.stats.special.multihit *= 1.5;
-	monster.stats.speed.global *= 0.3;
+	monster.stats.special.speed *= 0.3;
 };
 
 const cyclo = (monster: DetailedFighter) => {
@@ -90,7 +90,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		worm(monster);
 	},
 	[Monster.WORM2]: monster => {
-		monster.stats.speed.global *= 0.6;
+		monster.stats.special.speed *= 0.6;
 	},
 	[Monster.EARTHWORM_MATRIARCH]: monster => {
 		worm(monster);
@@ -100,7 +100,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		worm(monster);
 	},
 	[Monster.COQDUR]: monster => {
-		monster.stats.speed.global *= 0.4;
+		monster.stats.special.speed *= 0.4;
 	},
 	[Monster.RONCIV]: monster => {
 		sentinel(monster);
@@ -109,7 +109,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		sentinel(monster);
 
 		// Comet
-		monster.stats.speed.global *= 1.5;
+		monster.stats.special.speed *= 1.5;
 		monster.stats.base[ElementType.WOOD] = 15;
 	},
 	[Monster.TW_BIGBEASTLY_1]: monster => {
@@ -132,7 +132,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.CACTUS]: monster => {
 		monster.stats.special.evasion *= 1.3;
-		monster.stats.speed.global *= 1.3;
+		monster.stats.special.speed *= 1.3;
 		monster.spikes = 2;
 	},
 	[Monster.TRIPOU_THE_SOFTY]: monster => {
@@ -169,7 +169,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.time -= 100 * TIME_FACTOR;
 	},
 	[Monster.MOUKTIZ]: monster => {
-		monster.stats.speed.global *= 0.6;
+		monster.stats.special.speed *= 0.6;
 		monster.stats.special.evasion *= 1.2;
 	},
 	[Monster.FRUTOX_DEFENDER]: monster => {
@@ -214,14 +214,14 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.special.evasion *= 1.05;
 		monster.stats.special.multihit *= 1.05;
 		monster.stats.special.counter *= 1.1;
-		monster.stats.speed.global *= 0.5;
+		monster.stats.special.speed *= 0.5;
 	},
 	[Boss.TW_BIGBEASTLY]: monster => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
 	[Boss.PR_IGOR]: monster => {
 		monster.stats.special.evasion *= 1.25;
-		monster.stats.speed.global *= 3;
+		monster.stats.special.speed *= 3;
 	},
 	[Boss.YAKUZI]: monster => {
 		monster.stats.special.multihit *= 1.25;
@@ -239,7 +239,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		multiplySkillProbability(monster, Skill.LANCEUR_DE_GLAND, 2);
 	},
 	[Boss.DEMYOM_DEFENDER]: monster => {
-		monster.stats.speed.global *= 1.5;
+		monster.stats.special.speed *= 1.5;
 		monster.stats.assaultBonus[ElementType.FIRE] += 25;
 		monster.stats.assaultBonus[ElementType.WOOD] += 25;
 		monster.stats.assaultBonus[ElementType.WATER] += 25;
@@ -249,7 +249,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.status.push(createStatus(FightStatus.NO_POISON));
 	},
 	[Boss.GROTOX]: monster => {
-		monster.stats.speed.global *= 0.4;
+		monster.stats.special.speed *= 0.4;
 	},
 	[Boss.BEHEMOUNT]: monster => {
 		monster.status.push(createStatus(FightStatus.NO_DEATH));

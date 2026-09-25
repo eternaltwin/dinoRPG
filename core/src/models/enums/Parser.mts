@@ -50,6 +50,7 @@ export enum RewardEnum {
 	MAXEXPERIENCE = 'maxExp',
 	SKILL = 'skill',
 	EXPERIENCE = 'xp',
+	EXPERIENCE_PERCENT = 'xpPercent',
 	GOLD = 'gold',
 	ITEM = 'item',
 	MAX_ITEM = 'max_item',

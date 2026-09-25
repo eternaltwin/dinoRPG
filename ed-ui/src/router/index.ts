@@ -32,6 +32,12 @@ const router = createRouter({
 					component: () => import('../pages/ForumPage.vue')
 				},
 				{
+					// Static `section` segment: ranks ahead of `/forum/:threadId/:page` below.
+					path: '/forum/section/:sectionId',
+					name: 'ForumSection',
+					component: () => import('../pages/ForumPage.vue')
+				},
+				{
 					path: '/terms',
 					name: 'Terms',
 					component: () => import('../pages/TermsPage.vue')
@@ -41,12 +47,6 @@ const router = createRouter({
 					name: 'ForumThread',
 					component: () => import('../components/forum/ForumThread.vue')
 				},
-				// Disable for now
-				/*{
-					path: '/forum/newThread',
-					name: 'ForumNewMessage',
-					component: () => import('../components/forum/ForumNewMessage.vue')
-				},*/
 				{
 					path: '/dino/:id',
 					name: 'DinozPage',

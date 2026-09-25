@@ -235,7 +235,14 @@ export default defineComponent({
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
 					this.myDinoz = useDinozStore()
-						.getDinozList.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReason.resting)
+						.getDinozList.filter(
+							d =>
+								d.unavailableReason !== UnavailableReason.frozen &&
+								d.unavailableReason !== UnavailableReason.sacrificed &&
+								d.unavailableReason !== UnavailableReason.unfreezing &&
+								d.unavailableReason !== UnavailableReason.unsacrificing &&
+								d.unavailableReason !== UnavailableReason.selling
+						)
 						.filter(d => d.level >= 10)
 						.map(d => {
 							return {

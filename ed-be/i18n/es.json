@@ -75,7 +75,8 @@
 		"dinozNotAvailable": "Tu Dino no está disponible para realizar esta acción.",
 		"notEnoughTickets": "No tienes suficientes tickets para realizar esta acción.",
 		"noShopAccess": "No cumples las condiciones para acceder a esta tienda.",
-		"tooManyItems": "Tienes demasiados objetos para realizar esta operación."
+		"tooManyItems": "Tienes demasiados objetos para realizar esta operación.",
+		"notInYourClan": "No pertenecen al mismo clan."
 	},
 	"fb": {
 		"error": {
@@ -352,20 +353,20 @@
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"dungeon": {
-		"inexistent": "Ce donjon n'existe pas.",
 		"wrongPlace": "Tu Dino no está en la entrada del laberinto.",
 		"wrongTeam": "Otro grupo ya está explorando el laberinto.",
 		"noRun": "Nunca has visitado este laberinto.",
 		"notAtExit": "¡No puedes salir del laberinto por aquí!",
-		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación."
+		"notHealing": "No puedes usar un objeto aquí; debes ir a una zona de curación.",
+		"notFound": "Este laberinto no existe."
 	},
 	"UnavailableReason": {
 		"frozen": "Tu Dino está congelado.",
-		"unfreezing": "Votre Dinoz est en train d'être décongelé.",
-		"defending": "Votre Dinoz défend le château de votre clan.",
-		"restingAttack": "Votre Dinoz se remet de son combat.",
+		"unfreezing": "Tu Dino está siendo descongelado.",
+		"defending": "Tu Dino defiende el castillo de tu clan.",
+		"restingAttack": "Tu Dino se está recuperando de su combate.",
 		"sacrificed": "Tu Dino está sacrificado.",
-		"unsacrificing": "Votre Dinoz est en train d'être ressuscité.",
+		"unsacrificing": "Tu Dino está siendo resucitado.",
 		"selling": "Tu Dino está en venta.",
 		"superdom": "Tu Dino está en el domo de Sulaflota.",
 		"resting": "Tu Dino está descansando.",

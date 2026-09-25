@@ -31,16 +31,15 @@ import {
 	incrementDailyReset,
 	replaceMyTeamDao
 } from '../dao/dojoDao.js';
-import { createNotification } from '../dao/notificationDao.js';
 import {
 	auth,
 	getDojoChallengePreparationRequest,
 	getDojoDataForRanking,
 	getDojoFightPreparationRequest,
+	getDojoFriendData,
 	getPlayerDinozInformationForTeam,
 	spendMoney
 } from '../dao/playerDao.js';
-import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -49,6 +48,8 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { getLatestTournament, incrementCashPrice } from '../dao/tournamentDao.js';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { rewarder } from '../utils/rewarder.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -147,7 +148,10 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 	}
 	const rightPlayer = await getDojoFightPreparationRequest(rightId);
 	if (!rightPlayer) {
-		throw new ExpectedError(translate('dojo.inexistantOpponent', authed));
+		throw new ExpectedError(translate('playerNotFound', authed));
+	}
+	if (authed.clanId !== rightPlayer.clanId) {
+		throw new ExpectedError(translate('error.notInYourClan', authed));
 	}
 	if (!right.every(id => availableDinozIds(rightPlayer.dinoz).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
@@ -207,6 +211,23 @@ export async function fightFriend(req: Request): Promise<{ fight: DojoFightResum
 		rightId
 	);
 	return { fight: fightArchive, stats: fightResult.stats };
+}
+
+export async function getFriendDinoz(req: Request): Promise<DinozDojoFiche[]> {
+	const authed = await auth(req);
+	const friendId = req.params.id;
+
+	const friend = await getDojoFriendData(friendId);
+
+	if (!friend) {
+		throw new ExpectedError(translate('playerNotFound', authed));
+	}
+
+	if (authed.clanId !== friend.clanId) {
+		throw new ExpectedError(translate('error.notInYourClan', authed));
+	}
+
+	return friend.dinoz.filter(d => !d.unavailableReason || !FIGHT_BLOCKING_REASONS.includes(d.unavailableReason));
 }
 
 export async function getArchivedFight(req: Request): Promise<DojoFightResume> {
@@ -462,36 +483,34 @@ export async function fightChallenge(
 	const promises = [];
 
 	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
 		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
+			rewarder(
+				[
 					{
 						rewardType: RewardEnum.ITEM,
 						value: Item.TREASURE_COUPON,
 						quantity: 1
 					}
-				]),
-				NotificationSeverity.reward
+				],
+				[],
+				authed.id
 			)
 		);
 		promises.push(incrementDailyReset(player.Dojo.id));
 	}
 
 	if (challengeWon && player.Dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
 		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
+			rewarder(
+				[
 					{
 						rewardType: RewardEnum.ITEM,
 						value: Item.TREASURE_COUPON,
 						quantity: 1
 					}
-				]),
-				NotificationSeverity.reward
+				],
+				[],
+				authed.id
 			)
 		);
 	}
@@ -586,18 +605,16 @@ export async function skipOpponent(req: Request) {
 
 	// If skip generate new batch of opponent
 	if (myDojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
-		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
-
-		await createNotification(
-			authed.id,
-			JSON.stringify([
+		await rewarder(
+			[
 				{
 					rewardType: RewardEnum.ITEM,
 					value: Item.TREASURE_COUPON,
 					quantity: 1
 				}
-			]),
-			NotificationSeverity.reward
+			],
+			[],
+			authed.id
 		);
 		await incrementDailyReset(myDojo.id);
 	}
@@ -635,6 +652,7 @@ async function createOpponentTeam(team: { id: number; level: number }[], myDojo:
 const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
 	UnavailableReason.frozen,
 	UnavailableReason.sacrificed,
+	UnavailableReason.unsacrificing,
 	UnavailableReason.selling,
 	UnavailableReason.unfreezing
 ];

@@ -7,9 +7,23 @@ import * as dotenv from 'dotenv';
  */
 export interface EternaltwinConfig {
 	/**
-	 * Absolute URL to the Eternaltwin root.
+	 * Absolute URL to the Eternaltwin API root, for server-to-server calls: the token exchange,
+	 * `auth/self` and the forum.
 	 */
 	readonly url: string;
+
+	/**
+	 * Absolute URL to the Eternaltwin site as a player's browser reaches it.
+	 *
+	 * Used only for links we hand a browser that are served by the Eternaltwin SPA — the
+	 * terms-of-service page. Never for API calls, and not for `/oauth/authorize`, which the
+	 * Eternaltwin backend serves and which must stay on {@link url}: after login the site returns
+	 * the browser to it with a same-origin navigation.
+	 *
+	 * Defaults to {@link url}, which is correct whenever the site and the API share an origin —
+	 * the normal deployment, and the one the OAuth flow requires.
+	 */
+	readonly publicUrl: string;
 
 	/**
 	 * OAuth client reference (uuid or key).
@@ -29,6 +43,19 @@ export interface EternaltwinConfig {
 	readonly secret: string;
 
 	/**
+	 * OAuth scope requested when authorizing a player.
+	 *
+	 * Scopes are nested: `base` (identity only) is included in `forum:read`,
+	 * itself included in `forum:write`. Asking for one grants the ones below,
+	 * so a single value is enough. Ask for the narrowest one that does the job.
+	 *
+	 * The instance caps this with `seed.app.<key>.allowed_scopes`: an app that
+	 * was never given one may only request `base`, and a wider request is
+	 * refused at the authorization step.
+	 */
+	readonly scope: string;
+
+	/**
 	 * Name of the app as registered with Eternaltwin.
 	 *
 	 * (First part of the client key).
@@ -43,9 +70,9 @@ export interface EternaltwinConfig {
 	readonly channel: string;
 
 	/**
-	 * Id of the DinoRPG section's forum
+	 * Reference of the DinoRPG forum section: the root whose sub-sections make up the game's forum.
 	 *
-	 *
+	 * Either the section UUID or its key (e.g. `dinorpg`); the API accepts both.
 	 */
 	readonly section: string;
 }
@@ -196,16 +223,20 @@ export function config(env: Record<string, string | undefined>): Config {
 	const selfUrl = readSelfUrl(env.SELF_URL);
 
 	const eternaltwinUrl: string = env.ETERNALTWIN_URL ?? env.ETWIN_URL ?? 'http://localhost:50320/';
+	const eternaltwinPublicUrl: string = env.ETERNALTWIN_PUBLIC_URL ?? env.ETWIN_PUBLIC_URL ?? eternaltwinUrl;
 	const eternaltwinClientRef: string = env.ETERNALTWIN_CLIENT_REF ?? env.ETWIN_CLIENT_ID ?? 'dinorpg@clients';
 	const eternaltwinSecret: string = env.ETERNALTWIN_SECRET ?? env.ETWIN_CLIENT_SECRET ?? 'dev_secret';
+	const eternaltwinScope: string = env.ETERNALTWIN_SCOPE ?? 'forum:write';
 	const eternaltwinApp: string = env.ETERNALTWIN_APP ?? 'dinorpg';
 	const eternaltwinChannel: string = env.ETERNALTWIN_CHANNEL ?? 'dev';
-	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'e99e23b8-3b70-4238-9846-aab8b0c49e4c';
+	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'dinorpg';
 
 	const eternaltwin: EternaltwinConfig = {
 		url: eternaltwinUrl,
+		publicUrl: eternaltwinPublicUrl,
 		clientRef: eternaltwinClientRef,
 		secret: eternaltwinSecret,
+		scope: eternaltwinScope,
 		app: eternaltwinApp,
 		channel: eternaltwinChannel,
 		section: eternaltwinSection

@@ -37,10 +37,9 @@ export interface RevealedCell {
  * `obj`/`count` grant an item, `collec` grants a reward, `icon` is the map
  * icon (a chest when omitted), `micon` the popup icon.
  *
- * `raw`: true = `text` is shown to the player literally (admin/builder-typed
- * scenarios). Falsy/omitted = `text` is an i18n key fragment — the actual
- * string lives under `dungeon.<dungeonName>.<text>` in the translation
- * files (used by the hand-curated dungeons, e.g. katatombs).
+ * `text` is always an i18n key fragment, never a literal string: what the
+ * player reads lives under `dungeon.<dungeonName>.<text>` in the translation
+ * files (as the hand-curated dungeons do, e.g. katatombs).
  */
 export type DungeonScenario = {
 	obj?: Item;
@@ -48,8 +47,8 @@ export type DungeonScenario = {
 	collec?: Reward;
 	icon?: 'scroll' | 'chest';
 	micon?: string;
+	/** i18n key fragment, resolved as `dungeon.<dungeonName>.<text>`. */
 	text: string;
-	raw?: boolean;
 };
 
 export interface StartRunResult {

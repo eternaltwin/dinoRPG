@@ -4,8 +4,8 @@ icon:
   name: small_lock
 ---
 
-# Sécurité de mon compte
+# Kontosicherheit
 
-**Peu importe qui vous le demande**... 
+**Egal, wer fragt**...
 
-Ne communiquez jamais vos identifiants et mots de passe !
+**Niemals** deine Anmeldedaten oder Passwörter weitergeben!

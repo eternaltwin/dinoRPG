@@ -14,8 +14,8 @@ import { GetAccessTokenError, RfcOauthClient } from '@eternaltwin/oauth-client-h
 import { trace } from '@opentelemetry/api';
 import dayjs from 'dayjs';
 import { Request, Response } from 'express';
-import { Config } from 'release-it';
 import urlJoin from 'url-join';
+import { Config } from '../config/config.js';
 import { LOGGER } from '../context.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -26,15 +26,25 @@ import {
 	setPlayer,
 	updateUsernameOnRelatedTables
 } from '../dao/playerDao.js';
+import { upsertToken } from '../dao/eternaltwinTokenDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
+import { createState, verifyState } from '../utils/server/oauthState.js';
 import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
 import { eventState } from './clanWar.js';
 import { gameConfig } from '../utils/gameConfig.js';
+
+/**
+ * The player has not accepted Eternaltwin's terms of service.
+ *
+ * Spelled out here rather than taken from `ErrorCode`: the enum shipped with
+ * `@eternaltwin/client-node` is generated and does not carry this code yet.
+ */
+const TOS_NOT_ACCEPTED = 'Q1012';
 
 export class OAuth {
 	#oauthClient: RfcOauthClient;
@@ -43,8 +53,13 @@ export class OAuth {
 
 	#prisma: PismaClientLocal;
 
+	#config: Config;
+
 	public constructor(config: Config, prisma: PismaClientLocal) {
 		this.#oauthClient = new RfcOauthClient({
+			// `/oauth/authorize` is served by the Eternaltwin backend, not by its SPA, and after
+			// login the site sends the browser back to it with a same-origin full page load. It
+			// therefore has to sit on the API origin.
 			authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),
 			tokenEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/token')),
 			callbackEndpoint: new URL(urlJoin(config.selfUrl.toString(), 'authentication')),
@@ -53,6 +68,7 @@ export class OAuth {
 		});
 		this.#eternaltwinClient = new EternaltwinNodeClient(new URL(config.eternaltwin.url));
 		this.#prisma = prisma;
+		this.#config = config;
 	}
 
 	public redirect(_req: Request, res: Response) {
@@ -60,8 +76,14 @@ export class OAuth {
 		res.header('Access-Control-Allow-Origin', '*');
 
 		try {
+			// Eternaltwin echoes `state` back without checking it, so the unpredictable part is
+			// ours. `rfp` goes to the browser that starts the flow and comes back on the callback;
+			// only its hash travels through Eternaltwin.
+			const { state, rfp } = createState(this.#config.salt);
+
 			res.send({
-				url: this.#oauthClient.getAuthorizationUri('base', 'authenticate')
+				url: this.#oauthClient.getAuthorizationUri(this.#config.eternaltwin.scope, state),
+				rfp
 			});
 		} catch (error) {
 			sendError(res, error);
@@ -73,9 +95,17 @@ export class OAuth {
 		res.header('Access-Control-Allow-Origin', '*');
 
 		try {
+			// The player declined consent: Eternaltwin sends `error` instead of `code`.
+			if (req.query.error === 'access_denied') {
+				throw new ExpectedError('eternaltwinConsentDeclined');
+			}
+
 			if (!req.query.code || typeof req.query.code !== 'string') {
 				throw new ExpectedError('Invalid code');
 			}
+
+			// Anti-CSRF, before spending the code on anything.
+			verifyState(req.query.state, req.query.rfp, this.#config.salt);
 
 			// ETwin Token
 			const token = await this.#oauthClient.getAccessToken(req.query.code);
@@ -87,6 +117,10 @@ export class OAuth {
 				throw new Error('Invalid auth type');
 			}
 			trace.getActiveSpan()?.addEvent('getAuthSelf', { 'user.id': self.user.id });
+
+			// `expires_in` is a huge value and there is no refresh flow, so this is informative
+			// only: when the token stops working the player simply authorizes again.
+			const expiresAt = typeof token.expiresIn === 'number' ? new Date(Date.now() + token.expiresIn * 1000) : null;
 
 			// Get user's IP
 			const ip =
@@ -124,12 +158,15 @@ export class OAuth {
 					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
 				}
 				await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
+				await upsertToken(player.id, token.accessToken, this.#config.eternaltwin.scope, expiresAt);
 				res.send({
 					id: player.id,
 					connexionToken: player.connexionToken
 				});
 				return;
 			}
+
+			await upsertToken(player.id, token.accessToken, this.#config.eternaltwin.scope, expiresAt);
 
 			// Update display name if changed on ET side
 			if (player && player.name !== etwinUser.displayName.current.value) {
@@ -225,6 +262,21 @@ export class OAuth {
 						// is invalid. This can happen if an old token is reused. This
 						// usually happens when the JS redirects fails and the original
 						// URL with the token remains in the browser history.
+						break;
+					case TOS_NOT_ACCEPTED:
+						// Final and fixable only by the player. There is no token, so no identity
+						// and no local session to open, and retrying changes nothing: point them
+						// at the terms and offer to start over.
+						sendError(
+							res,
+							new ExpectedError(`eternaltwinTosRequired:${urlJoin(this.#config.eternaltwin.publicUrl, 'tos-accept')}`)
+						);
+						break;
+					case ErrorCode.InvalidScopeError:
+						// We asked for more than this app is allowed to request. `allowed_scopes`
+						// on the instance's `seed.app.<key>` is the cap, and it is raised there,
+						// not here.
+						sendError(res, new ExpectedError(`eternaltwinScopeRefused:${this.#config.eternaltwin.scope}`));
 						break;
 					default:
 						sendError(res, error);

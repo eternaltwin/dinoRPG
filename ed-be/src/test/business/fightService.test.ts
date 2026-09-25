@@ -3,7 +3,9 @@ import { makeRequest } from '../helpers/req.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { groupGoldMultiplier, groupXpMultiplier } from '@drpg/core/constants';
 import type { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { UnavailableReason } from '@drpg/prisma';
 
 vi.mock('../../context.js', () => ({
 	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
@@ -193,6 +195,112 @@ describe('generateMonsterList', () => {
 			generateMonsterList([{ level: 20, placeId: 1, playerId: 'p1', missions: [] }] as never, 999999 as never)
 		).rejects.toThrow("doesn't exist");
 	});
+
+	// The padding added after each draw used to be a quarter of the target, which capped the
+	// number of draws at ~4 however large the team was: a group of four met as few monsters
+	// as a lone Dinoz, then split the reward four ways.
+	it('grows the monster pool with the size of the team', async () => {
+		const averageCount = async (size: number) => {
+			const runs = 100;
+			let total = 0;
+			for (let i = 0; i < runs; i++) {
+				const team = Array.from({ length: size }, () => ({
+					level: 20,
+					placeId: PLACE,
+					playerId: 'p1',
+					missions: []
+				}));
+				total += (await generateMonsterList(team as never, PLACE)).length;
+			}
+			return total / runs;
+		};
+
+		const solo = await averageCount(1);
+		const duo = await averageCount(2);
+		const four = await averageCount(4);
+
+		expect(duo).toBeGreaterThan(solo);
+		expect(four).toBeGreaterThan(duo);
+	});
+});
+
+describe('group rewards', () => {
+	const rewardTeam = (size: number, level: number) =>
+		Array.from({ length: size }, (_, i) => ({
+			id: i + 1,
+			level,
+			experience: 0,
+			life: 200,
+			placeId: PLACE,
+			status: [],
+			skills: [],
+			items: []
+		}));
+
+	const victoryOver = (team: { id: number }[]) => ({
+		outcome: FightOutcome.AttackerWin,
+		attackers: team.map(d => ({
+			dinozId: d.id,
+			hpLost: 0,
+			statusGained: [],
+			itemsUsed: [],
+			goldLost: 0,
+			playerId: 'p1'
+		})),
+		defenders: [],
+		fighters: [],
+		catches: [],
+		steps: []
+	});
+
+	// Measures the whole loop, pool included: the bonus only shows up end to end, since the
+	// share each Dinoz keeps is smaller but applies to a pool that grew with the team.
+	const averageXpPerDinoz = async (size: number, level: number) => {
+		const runs = 150;
+		let total = 0;
+		for (let i = 0; i < runs; i++) {
+			vi.mocked(dinozDao.updateDinoz).mockClear();
+			const team = rewardTeam(size, level);
+			const monsters = await generateMonsterList(
+				team.map(d => ({ level: d.level, placeId: PLACE, playerId: 'p1', missions: [] })) as never,
+				PLACE
+			);
+			await rewardFightVsMonsters(team as never, monsters, victoryOver(team) as never, PLACE, {
+				id: 'p1',
+				teacher: false
+			});
+			const granted = vi
+				.mocked(dinozDao.updateDinoz)
+				.mock.calls.map(call => (call[1] as { experience?: { increment: number } }).experience?.increment ?? 0)
+				.reduce((a, b) => a + b, 0);
+			total += granted / size;
+		}
+		return total / runs;
+	};
+
+	it('splits the monster xp so the shares add up to more than 100%', () => {
+		// A lone Dinoz keeps everything, a duo keeps 75% each, and the total is capped from 4.
+		expect(groupXpMultiplier(1)).toBe(1);
+		expect(groupXpMultiplier(2) / 2).toBe(0.75);
+		expect(groupXpMultiplier(3)).toBe(2);
+		expect(groupXpMultiplier(4)).toBe(2.5);
+		expect(groupXpMultiplier(6)).toBe(2.5);
+	});
+
+	it('gives gold only a damped share of the same bonus', () => {
+		expect(groupGoldMultiplier(1)).toBe(1);
+		for (const size of [2, 3, 4, 6]) {
+			expect(groupGoldMultiplier(size)).toBeGreaterThan(1);
+			expect(groupGoldMultiplier(size)).toBeLessThan(groupXpMultiplier(size));
+		}
+	});
+
+	it('makes a team of four out-earn the same Dinoz fighting alone', async () => {
+		const solo = await averageXpPerDinoz(1, 20);
+		const four = await averageXpPerDinoz(4, 20);
+
+		expect(four).toBeGreaterThan(solo);
+	});
 });
 
 describe('fightMonstersAtPlace', () => {
@@ -239,7 +347,35 @@ describe('processFight', () => {
 		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('not able to fight');
 	});
 
-	it('uses the special movement fight when one occurs and drops unavailable followers', async () => {
+	it('throws if a follower is not available', async () => {
+		const leader = {
+			...makeDinoz({ id: 1 }),
+			fight: true,
+			gather: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		const unavailableFollower = {
+			...makeDinoz({ id: 2 }),
+			life: 1000,
+			fight: true,
+			unavailableReason: UnavailableReason.resting,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({
+			id: 'p1',
+			teacher: false,
+			cooker: false,
+			dinoz: [leader, unavailableFollower]
+		} as never);
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('error.teamNotAvailable');
+	});
+
+	it('throws if a follower is dead', async () => {
 		const leader = {
 			...makeDinoz({ id: 1 }),
 			fight: true,
@@ -264,10 +400,7 @@ describe('processFight', () => {
 			cooker: false,
 			dinoz: [leader, deadFollower]
 		} as never);
-		vi.mocked(movementListener).mockResolvedValue({ result: true, fighters: [] } as never);
-		const result = await processFight(req({}, { dinozId: 1 }));
-		expect(result).toEqual({ result: true, fighters: [] });
-		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('error.teamNotAvailable');
 	});
 
 	it('throws when the dinoz still needs naming', async () => {

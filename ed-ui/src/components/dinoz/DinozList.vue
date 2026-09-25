@@ -123,7 +123,9 @@ export default defineComponent({
 	watch: {
 		getDinozList: {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen);
+				this.dinozList = dinozList.filter(
+					d => d.unavailableReason !== UnavailableReason.frozen && d.unavailableReason !== UnavailableReason.sacrificed
+				);
 			},
 			deep: true
 		}

@@ -1,5 +1,5 @@
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -9,6 +9,8 @@ import { MissionStep } from '@drpg/core/models/missions/missionSteps';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList, PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { computeMissionXp } from '@drpg/core/utils/DinozUtils';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
@@ -28,6 +30,7 @@ import {
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { auth } from '../dao/playerDao.js';
@@ -224,14 +227,24 @@ export async function interactMission(req: Request) {
 	}
 }
 
-export async function endMission(req: Request) {
+export async function endMission(req: Request): Promise<Rewarder[]> {
 	const mission = await checkMission(req);
 
 	const authed = await auth(req);
 
-	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id, false);
+	const { rewards, level } = mission.missionReference;
+	await rewarder(rewards, [mission.dinoz], authed.id, [], level);
 	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
-	return mission.missionReference.rewards;
+
+	// Resolve percentages into the xp actually granted, so the client shows a real number.
+	return rewards.map(reward =>
+		reward.rewardType === RewardEnum.EXPERIENCE_PERCENT
+			? {
+					rewardType: RewardEnum.EXPERIENCE,
+					value: computeMissionXp(mission.dinoz, reward.value, level, gameConfig())
+				}
+			: reward
+	);
 }
 
 async function checkMission(req: Request) {

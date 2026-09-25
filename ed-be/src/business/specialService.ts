@@ -129,7 +129,7 @@ export async function movementListener(
 			);
 			// Rewards against monsters are granted only by defeating them. Tie counts as defeat.
 			if (fightResult.outcome === FightOutcome.AttackerWin) {
-				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id, true);
+				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
 			if (potentialSpecialActions.startText) {
@@ -140,7 +140,7 @@ export async function movementListener(
 			}
 			return result;
 		} else {
-			await rewarder(potentialSpecialActions.reward, team, player.id, true);
+			await rewarder(potentialSpecialActions.reward, team, player.id);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 		}
 	}

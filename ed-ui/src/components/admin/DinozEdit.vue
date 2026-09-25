@@ -237,13 +237,13 @@ export default defineComponent({
 		dinozId: { type: Number, required: true }
 	},
 	computed: {
-		statusListFiltered(): Array<string> {
+		statusListFiltered(): Array<number> {
 			const dinozStatusSet = new Set(this.dinoz.status ?? []);
-			const allStatus = Object.values(statusList.imgName);
+			const allStatus = Object.values(statusList.id);
 			const statusListFiltered =
 				this.statusOperation === 'add'
-					? allStatus.filter(status => !dinozStatusSet.has(parseInt(status)))
-					: allStatus.filter(status => dinozStatusSet.has(parseInt(status)));
+					? allStatus.filter(status => !dinozStatusSet.has(status))
+					: allStatus.filter(status => dinozStatusSet.has(status));
 			return statusListFiltered;
 		},
 		skillListFiltered(): SkillDetails[] {

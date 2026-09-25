@@ -2377,7 +2377,7 @@
 			"Tornade": "Attack all enemies with an Air power of 10 and make the flying ones fall to the ground",
 			"Eveil": "Decrease speed of Air attacks by 20%",
 			"PaumeEjectable": "Attack one enemy with double power, then decreases initiative by 15",
-			"VentVif": "Gain accelerated status (increases speed by 50%) for a short duration",
+			"VentVif": "Gain accelerated status (increases speed by 33%) for a short duration",
 			"FormeVaporeuse": "The Dinoz has 6% chance to become immaterial for a short duration right before being targeted by an attack",
 			"Professeur": "Increase the experience gained by all Dinoz by 5% (non-cumulative)",
 			"MeditationSolitaire": "Increase Air defense by 3 and decrease the speed of Air attacks by 50%.",
@@ -2681,7 +2681,7 @@
 		"default": "DinoRPG [ Dinoland News ]",
 		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
 		"shop": "DinoRPG [ Merchant: {shop} ]",
-		"demon": "DinoRPG [ Demon Shop ]",
+		"demonShop": "DinoRPG [ Demon Shop ]",
 		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
 		"account": "DinoRPG [ Personal Information ]",
 		"ranking": "DinoRPG [ Great Hall of Glory ]",
@@ -3554,10 +3554,10 @@
 			"gluon": "Gluon | Gluon | Gluons",
 			"greeng": "Green Giant | Green Giant | Green Giants",
 			"coq": "Giant Chicken | Giant Chicken | Giant Chickens",
-			"pira": "Pirhanoz",
+			"pirhanoz": "Pirhanoz",
 			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Eeloz",
-			"kazka:pira": "Atlanteid Island monster | Atlanteid Island monster | Atlanteid Island monsters",
+			"kazka:pirhanoz": "Atlanteid Island monster | Atlanteid Island monster | Atlanteid Island monsters",
 			"korgon": "Korgon | Korgon | Korgons",
 			"korgon:ronciv": "Korgons or Allies",
 			"barche": "Baby Archelion | Baby Archelion | Archelion Babies",
@@ -5275,6 +5275,49 @@
 		"error": "You must provide a reason and explanation with your complaint.",
 		"errorDinoz": "You must specify a Dinoz to report",
 		"success": "Complaint sent successfully."
+	},
+	"forum": {
+		"cancel": "Cancel",
+		"empty": "No thread yet.",
+		"pinned": "Pinned thread",
+		"locked": "This thread is locked: nobody can reply to it any more.",
+		"moderated": "Message removed by the moderation team.",
+		"edited": "(edited)",
+		"unread": "New posts",
+		"threadCount": "Number of threads",
+		"newThread": {
+			"open": "New thread",
+			"title": "New thread",
+			"titleLabel": "Thread title:",
+			"titlePlaceholder": "Your title...",
+			"messageLabel": "Your message:",
+			"messagePlaceholder": "Your message...",
+			"submit": "Create the thread",
+			"titleTooShort": "The title must be at least {min} characters long.",
+			"messageRequired": "The message cannot be empty."
+		},
+		"reply": {
+			"title": "Reply",
+			"placeholder": "Your reply...",
+			"submit": "Send"
+		},
+		"edit": {
+			"open": "Edit",
+			"submit": "Save"
+		},
+		"editor": {
+			"strong": "Bold",
+			"emphasis": "Italic",
+			"strikethrough": "Strikethrough",
+			"link": "Link"
+		},
+		"error": {
+			"reauthorize": "Your Eternaltwin session has expired. Sign in again to reach the forum.",
+			"forbidden": "Eternaltwin refused this action. Trying again will not help.",
+			"notFound": "This content no longer exists.",
+			"conflict": "This content changed in the meantime. Reload the page before trying again.",
+			"revisionUnavailable": "The revision to correct could not be found."
+		}
 	},
 	"messagerie": {
 		"actions": "Actions",

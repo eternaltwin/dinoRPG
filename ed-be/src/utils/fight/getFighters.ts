@@ -174,15 +174,6 @@ export const initializeDinoz = (
 				[SpecialStat.CRITICAL_HIT_BONUS]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ??
 					BaseSpecialStats[SpecialStat.CRITICAL_HIT_BONUS]
-			},
-			speed: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
 			}
 		},
 		items,
@@ -319,8 +310,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.ACID_BLOOD_DAMAGE]: BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE], // Default
 				[SpecialStat.CRITICAL_HIT_CHANCE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_CHANCE],
 				[SpecialStat.CRITICAL_HIT_BONUS]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_BONUS]
-			},
-			speed: dinoz.stats.speed
+			}
 		},
 		items: [], // No items for clones
 		itemsUsed: [],
@@ -404,7 +394,6 @@ export const initializeMonster = (
 			if (skill === Skill.M_RENFORTS || skill === Skill.M_WORM_CALL) {
 				probability -= 3.5 * memory.renfortApplied;
 			}
-
 
 			if (probability < 0) {
 				probability = 0;
@@ -536,15 +525,6 @@ export const initializeMonster = (
 				[SpecialStat.CRITICAL_HIT_BONUS]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ??
 					BaseSpecialStats[SpecialStat.CRITICAL_HIT_BONUS]
-			},
-			speed: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
 			}
 		},
 		items: [],
@@ -1001,7 +981,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 		}
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
-			fighter.stats.speed.global *= 0.95;
+			fighter.stats.special.speed *= 0.95;
 		}
 		// AIR
 		if (team[Skill.MAITRE_LEVITATEUR]) {

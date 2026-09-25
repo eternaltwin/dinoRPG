@@ -35,6 +35,10 @@
 
 		<fieldset>
 			<legend>Scenarios (a Scenario item with value N triggers entry #N: popup text + optional grants)</legend>
+			<label class="hint">
+				Texts are i18n keys, resolved as dungeon.&lt;dungeon name&gt;.&lt;key&gt; — write the sentence in the locale
+				files, not here.
+			</label>
 			<div v-for="(sc, i) in scenarios" :key="i" class="row scenario">
 				<b>#{{ i }}</b>
 				<select v-model="sc.icon">
@@ -50,7 +54,7 @@
 					<option :value="null">no collection</option>
 					<option v-for="(r, id) in rewardList" :key="id" :value="Number(id)">{{ r.name }}</option>
 				</select>
-				<input type="text" v-model="sc.text" placeholder="Popup text" class="text" />
+				<input type="text" v-model="sc.text" placeholder="i18n key, e.g. scenario_0" class="text" />
 				<button type="button" @click="scenarios.splice(i, 1)">✕</button>
 			</div>
 			<button type="button" @click="scenarios.push({ text: '', icon: 'chest', obj: null, count: 1, collec: null })">

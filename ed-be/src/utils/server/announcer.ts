@@ -8,7 +8,7 @@ import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { renderBigDino } from '@drpg/renderer';
 
 export async function checkAnnounce(type: PantheonMotif, id: string, extension: number | string) {
-	if (GLOBAL.config.eternaltwin.channel !== 'production') return;
+	// if (GLOBAL.config.eternaltwin.channel !== 'production') return;
 	const pantheon = await getPantheonFromType(type);
 	switch (type) {
 		case PantheonMotif.race:
@@ -20,7 +20,14 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 				break;
 			}
 			if (raceAtThisLevel.length <= 4) {
-				const big: Buffer = await renderBigDino(dinoz.display);
+				// Le rendu Puppeteer est le seul maillon fragile ici, et checkAnnounce est await
+				// dans le chemin de montee de niveau : un echec ne doit pas casser la reponse du joueur.
+				let big: Buffer | undefined;
+				try {
+					big = await renderBigDino(dinoz.display);
+				} catch (error) {
+					GLOBAL.logger.error(`Failed to render dinoz ${dinoz.id} for pantheon announce: ${error}`);
+				}
 				DISCORD.sendPantheonNotification(
 					translateAll('announce.dinoz', {
 						position: raceAtThisLevel.length + 1,

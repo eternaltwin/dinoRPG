@@ -310,6 +310,14 @@ exports.Prisma.PlayerScalarFieldEnum = {
   id: 'id'
 };
 
+exports.Prisma.PlayerEternaltwinTokenScalarFieldEnum = {
+  playerId: 'playerId',
+  accessToken: 'accessToken',
+  scope: 'scope',
+  obtainedAt: 'obtainedAt',
+  expiresAt: 'expiresAt'
+};
+
 exports.Prisma.PlayerIpScalarFieldEnum = {
   id: 'id',
   ip: 'ip',
@@ -1031,6 +1039,7 @@ exports.Prisma.ModelName = {
   NewsLike: 'NewsLike',
   NPC: 'NPC',
   Player: 'Player',
+  PlayerEternaltwinToken: 'PlayerEternaltwinToken',
   PlayerIp: 'PlayerIp',
   Dojo: 'Dojo',
   DojoTeam: 'DojoTeam',

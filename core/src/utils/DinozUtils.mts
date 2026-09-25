@@ -13,7 +13,7 @@ import {
 	Ranking,
 	TournamentTeam
 } from '@drpg/prisma';
-import { PlayerForConditionCheck } from '../constants.mjs';
+import { missionXpMultiplier, PlayerForConditionCheck } from '../constants.mjs';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
@@ -335,6 +335,16 @@ export const getMaxXp = (
 
 	return dinoz.level >= maxLevel ? 0 : Math.floor(100 * Math.pow(1.075, dinoz.level - 1));
 };
+
+/** Absolute xp granted by a mission worth `percent`% of a level, to a Dinoz at `dinoz.level`. */
+export const computeMissionXp = (
+	dinoz: Pick<Dinoz, 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	percent: number,
+	missionLevel: number,
+	config: Config
+) => Math.round(((getMaxXp(dinoz, config) * percent) / 100) * missionXpMultiplier(dinoz.level, missionLevel));
 
 export const isAlive = (dinoz: Pick<Dinoz, 'life'>) => dinoz.life > 0;
 

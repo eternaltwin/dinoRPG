@@ -1047,10 +1047,20 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 	// Count monsters with M_RENFORT, of type reinforcement and same team as fighter
-	const renfortApplied = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
+	const renfortApplied = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_RENFORTS)
+	).length;
 
 	// Count monsters with M_WORM_CALL, of type reinforcement and same team as fighter
-	const wormCalls = fightData.fighters.filter(f => f.attacker === fighter.attacker && f.type === FighterType.REINFORCEMENT && f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
+	const wormCalls = fightData.fighters.filter(
+		f =>
+			f.attacker === fighter.attacker &&
+			f.type === FighterType.REINFORCEMENT &&
+			f.skills.some(skill => skill.id === Skill.M_WORM_CALL)
+	).length;
 
 	// Initialize monster
 	const monster = initializeMonster(
@@ -1954,7 +1964,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Item.FUCA_PILL: {
 				// Use condition checked prior and defined in item fiche to make sure the fuca pill can be used.
 				// Check and throw error.
-				if (fighter.itemsUsed.includes(Item.FUCA_PILL) || fighter.stats.speed.global < 0.51) {
+				if (fighter.itemsUsed.includes(Item.FUCA_PILL) || fighter.stats.special.speed < 0.51) {
 					LOGGER.error('`Fuca Pill conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
@@ -1963,7 +1973,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Increase speed
-				fighter.stats.speed.global *= 0.75;
+				fighter.stats.special.speed *= 0.75;
 				break;
 			}
 			case Item.LORIS_COSTUME: {
@@ -2175,7 +2185,6 @@ export const createStatus = (type: FightStatus, length?: number): FighterStatusD
 	switch (type) {
 		case FightStatus.TORCHED:
 		case FightStatus.BURNED:
-		case FightStatus.OVERTIME_POISON:
 		case FightStatus.POISONED:
 		case FightStatus.HEALING: {
 			cycle = true;
@@ -2239,7 +2248,7 @@ export const addStatus = (
 	// Handle the immediate effect of the status
 	switch (status) {
 		case FightStatus.AIR_SLOWED: {
-			fighter.stats.speed.global *= 2;
+			fighter.stats.special.speed *= 2;
 			break;
 		}
 		case FightStatus.ASLEEP: {
@@ -2251,11 +2260,11 @@ export const addStatus = (
 			break;
 		}
 		case FightStatus.SLOWED: {
-			fighter.stats.speed.global *= 1.5;
+			fighter.stats.special.speed *= 1.5;
 			break;
 		}
 		case FightStatus.QUICKENED: {
-			fighter.stats.speed.global /= 1.5;
+			fighter.stats.special.speed /= 1.5;
 			break;
 		}
 		case FightStatus.PETRIFIED: {
@@ -2333,7 +2342,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 		// Reverse the effect of the status
 		switch (status) {
 			case FightStatus.AIR_SLOWED: {
-				fighter.stats.speed.global /= 2;
+				fighter.stats.special.speed /= 2;
 				break;
 			}
 			case FightStatus.ASLEEP: {
@@ -2345,11 +2354,11 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case FightStatus.SLOWED: {
-				fighter.stats.speed.global /= 1.5;
+				fighter.stats.special.speed /= 1.5;
 				break;
 			}
 			case FightStatus.QUICKENED: {
-				fighter.stats.speed.global *= 1.5;
+				fighter.stats.special.speed *= 1.5;
 				break;
 			}
 			case FightStatus.PETRIFIED: {
@@ -3228,7 +3237,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			allies.forEach(ally => {
 				// Fasten
-				ally.stats.speed.global *= 0.5;
+				ally.stats.special.speed *= 0.5;
 			});
 
 			addStatus(fightData, fighter, FightStatus.USED_FUJIN);
@@ -3292,7 +3301,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				poison(fightData, opponent, fighter, Skill.HADES, FightStatusLength.MEDIUM);
 
 				// Slow
-				opponent.stats.speed.global *= 1.5;
+				opponent.stats.special.speed *= 1.5;
 			});
 			break;
 		}
@@ -3908,7 +3917,7 @@ const loseHpwithResilience = (fightData: DetailedFight, fighter: DetailedFighter
 };
 
 // Have the figher lose the given number of damage
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+export const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
 	const hp_lost = damage;
 	fighter.hp -= damage;
@@ -4775,7 +4784,6 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
-						case FightStatus.OVERTIME_POISON:
 						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
 
@@ -4952,7 +4960,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				// Increase other fighters time by 10 * speed
 				getFighters(fightData).forEach(f => {
 					if (f.id !== fighter.id) {
-						f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+						f.time += 10 * TIME_FACTOR * fighter.stats.special.speed;
 					}
 				});
 
@@ -5076,9 +5084,28 @@ export const checkDeaths = (fightData: DetailedFight) => {
 	}
 };
 
+const getElementalSpeed = (fighter: DetailedFighter, element: ElementType) => {
+	switch (element) {
+		case ElementType.FIRE:
+			return fighter.stats.special.fireSpeed;
+		case ElementType.WOOD:
+			return fighter.stats.special.woodSpeed;
+		case ElementType.WATER:
+			return fighter.stats.special.waterSpeed;
+		case ElementType.LIGHTNING:
+			return fighter.stats.special.lightningSpeed;
+		case ElementType.AIR:
+			return fighter.stats.special.airSpeed;
+		case ElementType.VOID:
+			return 1;
+	}
+};
+
 const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	// Calculate new attacker's time
-	let time = Math.round(TIME_BASE * TIME_FACTOR * attacker.stats.speed.global * attacker.stats.speed[attacker.element]);
+	let time = Math.round(
+		TIME_BASE * TIME_FACTOR * attacker.stats.special.speed * getElementalSpeed(attacker, attacker.element)
+	);
 
 	// Minimum time increment of 1
 	if (time <= 0) {

@@ -77,7 +77,11 @@ export default defineComponent({
 					items: offer.items.map(item => ({
 						...item,
 						name: (item.isIngredient ? ingredientNameList[item.itemId] : itemList[item.itemId]?.name) ?? ''
-					}))
+					})),
+					dinoz: offer.dinoz && {
+						...offer.dinoz,
+						skills: [...offer.dinoz.skills].sort((a, b) => a.skillId - b.skillId)
+					}
 				}))
 				.sort((a, b) => b.endDate.getTime() - a.endDate.getTime()); // Sort by endDate (descending)
 		},

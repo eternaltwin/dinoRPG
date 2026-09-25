@@ -17,6 +17,7 @@ import type { DungeonScenario } from '@drpg/core/models/dungeon/DungeonClient';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { DungeonCodec } from './DungeonCodec.js';
+import { DungeonItem } from './types.js';
 import type { DungeonDoor, DungeonLevel, DungeonRoom, DungeonStruct } from './types.js';
 
 const MAX_DOORS_PER_ROOM = 31; // 5-bit count in the codec, unchecked by encode()
@@ -32,21 +33,53 @@ function checkInt(v: unknown, min: number, max: number, what: string): number {
 	return v;
 }
 
+/** i18n key fragment: a translation-file identifier, never a sentence. */
+const SCENARIO_KEY = /^[A-Za-z0-9_][A-Za-z0-9_.-]{0,63}$/;
+
 /**
  * Validate the builder's scenario list (what each chest/scroll item shows and
- * grants) into storable DungeonScenario[]. Texts are raw, not i18n keys.
+ * grants) into storable DungeonScenario[]. A text is an i18n key fragment read
+ * as `dungeon.<dungeon name>.<text>` — the strings themselves live in the
+ * translation files, so nothing here is ever shown to a player as typed.
  */
 export function checkScenarios(raw: unknown): DungeonScenario[] {
 	if (raw == null) return [];
 	if (!Array.isArray(raw) || raw.length > 64) fail('scenarios must be an array of at most 64 entries');
 	return raw.map((s, i) => {
 		if (typeof s?.text !== 'string' || s.text.trim() === '') fail(`scenario ${i} needs a text`);
+		if (!SCENARIO_KEY.test(s.text.trim()))
+			fail(`scenario ${i} text must be an i18n key such as scenario_0, not the sentence itself`);
 		if (s.icon != null && s.icon !== 'scroll' && s.icon !== 'chest') fail(`scenario ${i} icon must be scroll or chest`);
 		if (s.obj != null && !(s.obj in itemList)) fail(`scenario ${i} grants an unknown item`);
 		if (s.count != null) checkInt(s.count, 1, 999, `scenario ${i} count`);
 		if (s.collec != null && !(s.collec in rewardList)) fail(`scenario ${i} grants an unknown reward`);
-		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec, raw: true };
+		return { text: s.text.trim(), icon: s.icon, obj: s.obj, count: s.count, collec: s.collec };
 	});
+}
+
+/** Highest IScenario index the layout points at, +1 — i.e. how many entries it needs. */
+export function scenarioCount(d: DungeonStruct): number {
+	let n = 0;
+	for (const lvl of d.levels)
+		for (const room of lvl.rooms)
+			if (room.item && room.item.k === DungeonItem.IScenario && room.item.v + 1 > n) n = room.item.v + 1;
+	return n;
+}
+
+/**
+ * A layout stores only the *index* of each chest/scroll, never its text, so an
+ * imported string ("4S" in its signature) says how many scenarios the dungeon
+ * has but not what they say. Give every index an entry, so the dungeon lands in
+ * DB with a list matching its items: without one, walking onto those cells does
+ * nothing at all — no popup, no grant, never marked read. Entries the admin
+ * wrote win; the rest get the `scenario_<i>` key to translate under
+ * `dungeon.<dungeon name>.`.
+ */
+export function scenariosFromStruct(d: DungeonStruct, scenarios: DungeonScenario[]): DungeonScenario[] {
+	const filled = scenarios.slice();
+	for (let i = 0; i < scenarioCount(d); i++)
+		if (filled[i] == null) filled[i] = { text: `scenario_${i}`, icon: 'chest' };
+	return filled;
 }
 
 export function structFromGrid(g: DungeonGrid): DungeonStruct {

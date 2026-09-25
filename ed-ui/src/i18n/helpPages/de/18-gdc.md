@@ -4,64 +4,67 @@ icon:
   name: small_attack
 ---
 
-Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :
+![Ausrufezeichen](@icons/small_question) Dieser Abschnitt ist nicht im Einklang mit der neuen Funktionalität von Klanenkriegen.
 
-# Le Trésor du Clan
+Dann können Klane noch im **Klanenkrieg** gegeneinander antreten! Hier sind die Grundlagen und Regeln:
 
-Chaque Clan possède un Trésor qui correspond à la valeur des ingrédients à disposition dans le Clan.
+# Schatzkammer des Klans
 
-Pour remplir le Trésor du Clan, chaque membre peut donner tout ou partie de ses ingrédients recueillis lors de ses actions de collecte. À partir de la page Ingrédients dans le menu de droite, vous aurez accès à un bouton permettant de 'Donner au Clan'.
+Jeder Klan verfügt über eine Schatzkammer im Wert der verfügbaren Zutaten des Klans.
 
-Le trésor a différentes utilités, les voici :
-- _La construction/reconstruction du Château_
-- _La déclaration de guerre contre un autre Clan_
-- _Le paiement du percepteur_
+Um die Klanschatzkammer zu füllen, kann jedes Mitglied alle oder einen Teil seiner beim Sammeln zusammengetragenen Zutaten spenden. Rechts im Menü auf der Seite „Zutaten“ ist die Schaltfläche zu finden, mit der man „Dem Klan spenden“ kann.
 
-# Le Château du Clan
+Die Schatzkammer hat folgende Verwendungszwecke:
 
-Chaque Clan peut construire son propre Château à partir de l'onglet **'Château'**. Pour le construire, vous avez besoin d'**ingrédients** qui seront retirés de votre Trésor. Seul le leader du Clan peut lancer la première construction du Château.
+- _Bau und Wiederaufbau der Burg_
+- _Kriegserklärung an einen anderen Klan_
+- _Bezahlung des Steuereintreibers_
 
-Une fois le château construit, il est possible de lui assigner des défenseurs qui assureront la protection du château lors des attaques ennemies. Pour assigner un de vos Dinoz à la défense du château, il vous faut vous rendre à l'emplacement de votre château et faire l'action **'Défendre le château'**.
+# Die Klanburg
 
-Si tous les défenseurs se font tuer lors d'un combat ou qu'il n'y a plus de défenseurs, le château subira des dégâts et sera donc endommagé.
+Jeder Klan kann im Reiter „Burg“ seine eigene Burg errichten. Um sie zu bauen, werden **Zutaten** benötigt, die aus der Klanschatzkammer entnommen werden. Nur der Anführer des Klans kann den Erstbau der Burg in die Wege leiten.
 
-Voici un exemple de l'onglet Château :
+Sobald die Burg errichtet ist, kann man ihr Verteidiger zuweisen, die ihren Schutz gegen feindliche Angriffe gewährleisten. Um einen Dinoz der Burgverteidigung zuzuweisen, musst du zu ihrem Standort gehen und die Aktion „Burg verteidigen“ ausführen.
 
-![Exemple de page de château](@guide/castle)
+Sollten bei einem Angriff alle Verteidiger getötet werden oder sollte es keine Verteidiger mehr geben, erleidet die Burg Schaden und wird dadurch beschädigt.
 
-La page du Château résume ce qui suit :
-- _L'emplacement du Château_
-- _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300:pv: points de vie._
+Hier ist ein Beispiel des Reiters „Burg“:
 
-# Déclarer une guerre
+![Beispiel der Burgseite](@guide/castle)
 
-Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquer, les clans qui vous attaques et les batailles que vous avez déjà remportés contre des clans adverses.
+Auf die Seite der Burg sind die folgenden Dinge aufgeführt:
 
-Pour lancer une guerre, il vous est nécessaire de disposer des ingrédients suffisants dans votre trésor. Une guerre dure 100 heures au maximum et ne peut être annulée. Pour remporter la guerre, il vous faudra détruire le château ennemi.
+- _Standort der Burg_
+- _Zustand der Burg: Lebenspunkte wie im obigen Bild zu sehen ist. Standardmäßig verfügt eine Burg über 300 :pv:._
 
-# Les Attaques
+# Krieg erklären
 
-Pour attaquer un château, vous aurez besoin de le localiser, vous devrez donc déplacer votre Dinoz jusqu'à ce que vous trouviez le château ennemi, après quoi vous appuyez simplement sur le bouton 'Attaquer' et vous verrez votre groupe de Dinoz défier les défenseurs du château, ou en l'absence de ces derniers, attaquera le château directement.
+Dieser Reiter ermöglicht es dir, diverse Informationen bezüglich der Klanenkriege einzusehen, wie beispielsweise welche Klane ihr gerade angreift, von welchen ihr angegriffen werdet, sowie welche Kämpfe gegen feindliche Klane bereits gewonnen wurden.
 
-Ces assauts ont une limite de temps pour se battre, si vous vainquez les défenseurs dans ce délai, tous vos Dinoz attaqueront le château adversaire.
+Um einen Krieg zu starten, muss eure Schatzkammer über genügend Zutaten verfügen. Ein Krieg dauert bis zu 100 Stunden und kann nicht abgebrochen werden. Um den Krieg zu gewinnen, muss die feindliche Burg zerstört werden.
 
-En détruisant le château ennemi, vous gagnerez la guerre, tandis que si votre château est détruit, vous perdrez.
+# Angriff
 
-Voici un exemple d'une attaque de Château :
+Um eine Burg anzugreifen, muss diese zunächst gefunden werden. Ihr müsst eure Dinoz also herumbewegen, bis die feindliche Burg gefunden ist. Sobald dies geschehen ist, müsst ihr einfach die Aktion „Burg angreifen“ ausführen und ihr werdet Zeuge wie eure Dinoz-Gruppe die Burgverteidiger herausfordert, oder, falls letztere nicht vorhanden sind, die Burg direkt angreift.
 
-![Exemple d'attaque de château](@guide/attack_castle)
+Diese Angriffe sind zeitlich begrenzt und wenn die Verteidiger innerhalb dieser Zeit besiegt werden, können all eure Dinoz die Burg des Gegners direkt angreifen.
 
-# La Défense
+Wird die feindliche Burg zerstört, ist der Krieg gewonnen und im Gegenzug verliert ihr den Krieg, falls die eigene Burg fällt.
 
-Lorsque votre Clan est attaqué, il est important de préparer une bonne défense afin de ne pas perdre la Guerre lancée par un clan adverse ou lorsque vous déclarez la guerre.
+Hier ist ein Beispiel für einen Angriff auf eine Burg:
 
-Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour ne pas que votre Château soit touché.
+![Beispiel eines Burgangriffs](@guide/attack_castle)
 
-Voici un exemple d'une défense de Château :
+# Verteidigung
 
-![Exemple de défense de château](@guide/def_castle)
+Sollte euer Klan einen anderen Klan angreifen oder angegriffen werden, ist es wichtig, eine gute Verteidigung vorzubereiten, um den Krieg nicht zu verlieren.
 
-# Le Percepteur
+Der Anführer des Klans sowie Mitglieder mit den entsprechenden Rechten können Dinoz hin und her schieben, und somit die Verteidigung justieren, um die beste Strategie auszuarbeiten, damit eure Burg nicht beschädigt wird.
 
-Le percepteur doit être payé avant de déclarer une attaque. Il passe toujours dans la demi-heure qui suis l'heure qu'il propose ! Par exemple, s'il dit qu'il passera de 16h24 à 17h50, vous pourrez payer de 16h à 16h30.
-			
+Hier ist ein Beispiel einer Burgverteidigung:
+
+![Beispiel einer Burgverteidigung](@guide/def_castle)
+
+# Der Steuereintreiber
+
+Bevor ein Angriff gestartet werden kann, muss der Steuereintreiber bezahlt werden. Er kommt immer und bleibt für eine halbe Stunde um den genannten Zeitraum herum! Wenn er beispielsweise sagt, dass er zwischen 16:24 und 17:50 vorbeikommt, könnte er von 16:00 bis 16:30 bezahlt werden.

@@ -4,7 +4,6 @@ import { setSpecificStat } from './trackingDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
-//TODO
 export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) {
 	const rewardStat = Object.values(rewardList).find(r => r.id === reward.rewardId);
 	const playerId = reward.player?.connect?.id;
@@ -27,7 +26,6 @@ export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) 
 	});
 }
 
-//TODO
 export async function addMultipleRewardToPlayer(rewards: Prisma.PlayerRewardCreateManyInput[]) {
 	await prisma.playerReward.createMany({
 		data: rewards

@@ -8,7 +8,7 @@ icon:
 
 The first thing you need to do on DinoRPG is to adopt a Dinoz. For this, you have **50,000** gold coins ![](@icons/small_gold) obtained when creating your account.
 
-By clicking on ![BUY A DINOZ](@guide/adopt_button_en) in the left menu or ![mobile button](@icons/act_treasure) on mobile, you can access the Dinoz Enclosure. Each Dinoz is unique, and every day, the enclosure will offer you a new selection of Dinoz among which you can choose the one that suits you the most. It also refreshes everytime your adopt a new Dinoz from it.
+By clicking on ![BUY A DINOZ](@guide/adopt_button_en) in the left menu or ![mobile button](@icons/act_treasure) on mobile, you can access the Dinoz Enclosure. Each Dinoz is unique, and every day, the enclosure will offer you a new selection of Dinoz among which you can choose the one that suits you the most. It also refreshes every time your adopt a new Dinoz from it.
 
 Each Dinoz is presented as follows:
 ![Adoption Screen](@guide/adopt_shop_en)

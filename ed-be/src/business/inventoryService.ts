@@ -57,6 +57,8 @@ import { isOnHealingCell, markHealingCellUsed } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL } from '../context.js';
+import { rewarder } from '../utils/rewarder.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export const getItemMaxQuantity = (
 	playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>,
@@ -112,7 +114,11 @@ export async function getAllItemsData(req: Request) {
 	return allItemsDataReply;
 }
 
-const CAN_STILL_USE_ITEMS: UnavailableReason[] = [UnavailableReason.resting, UnavailableReason.defending, UnavailableReason.restingAttack];
+const CAN_STILL_USE_ITEMS: UnavailableReason[] = [
+	UnavailableReason.resting,
+	UnavailableReason.defending,
+	UnavailableReason.restingAttack
+];
 
 export async function useItem(req: Request) {
 	//The Promise need to be reworked
@@ -131,12 +137,12 @@ export async function useItem(req: Request) {
 	// For some specific unavailable reasons, the Dinoz cannot use an item:
 	if (dinoz.unavailableReason && !CAN_STILL_USE_ITEMS.includes(dinoz.unavailableReason)) {
 		healingZone = await isOnHealingCell(dinoz);
-		if (dinoz.unavailableReason === UnavailableReason.dungeon && !healingZone && item.itemId !== Item.POTION_IRMA) {
+		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
+			// No item can be used if the Dinoz is unavailable (minus the exceptions)
+			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
+		} else if (!healingZone && item.itemId !== Item.POTION_IRMA) {
 			// Only item usable in a dungeon outside of a healing zone are irma potions
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
-		} else {
-			// Else no item can be used if the Dinoz is unavailable (minus the exceptions)
-			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 		}
 	}
 
@@ -163,7 +169,17 @@ export async function useItem(req: Request) {
 			itemId === itemList[Item.MEAT_PIE].itemId
 		) {
 			await upsertQuest(dinoz.player.id, Scenario.STAR, 4);
-			await increaseItemQuantity(dinoz.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
+			await rewarder(
+				[
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.MAGIC_STAR,
+						quantity: 1
+					}
+				],
+				[],
+				dinoz.player.id
+			);
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
 			const lifeHealed = Math.max(0, dinoz.life - initialLife);

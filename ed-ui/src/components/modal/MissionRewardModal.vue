@@ -8,7 +8,7 @@
 				<p>{{ $t(`missions.dialog.${missionName}.${validator}`) }}</p>
 				<ul>
 					<template v-for="reward in missionReward" :key="reward">
-						<li v-if="reward.rewardType === rewardEnum.EXPERIENCE">
+						<li v-if="reward.rewardType === rewardEnum.EXPERIENCE && reward.value">
 							<img :src="getImgURL('icons', 'small_xp')" alt="xp" /> {{ reward.value }} {{ $t('missions.xp') }}
 						</li>
 						<li v-if="reward.rewardType === rewardEnum.GOLD">

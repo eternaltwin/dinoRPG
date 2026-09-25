@@ -4,7 +4,7 @@ icon:
   name: small_mode
 ---
 
-# Les Objets Epiques
+# Les Objets Épiques
 
 Sur votre fiche de Maître Dinoz, accessible à partir du lien **Mon Compte** dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques.
 

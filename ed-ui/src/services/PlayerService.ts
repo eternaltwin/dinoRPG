@@ -22,6 +22,10 @@ export const PlayerService = {
 		const res = await http().get(`/player/${id}`);
 		return res.data;
 	},
+	async getFriendData(id: string): Promise<DinozDojoFiche[]> {
+		const res = await http().get(`/dojo/friend/${id}`);
+		return res.data;
+	},
 	async requestImport(server: string): Promise<void> {
 		const res = await http().put(`/player/import`, {
 			server: server
