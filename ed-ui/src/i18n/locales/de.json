@@ -5283,6 +5283,8 @@
 		"locked": "Dieses Thema ist geschlossen: Niemand kann mehr antworten.",
 		"moderated": "Nachricht von der Moderation entfernt.",
 		"edited": "(bearbeitet)",
+		"unread": "Neue Beiträge",
+		"threadCount": "Anzahl der Themen",
 		"newThread": {
 			"open": "Neues Thema",
 			"title": "Neues Thema",

@@ -34,6 +34,18 @@ export interface ForumGrammar {
 	spoiler: boolean;
 	strong: boolean;
 	strikethrough: boolean;
+	/** The fields below are recent additions; an older instance omits them. */
+	animation?: boolean;
+	announcement?: boolean;
+	bad?: boolean;
+	big?: boolean;
+	code?: boolean;
+	collapse?: boolean;
+	list?: boolean;
+	rp?: boolean;
+	sidenote?: boolean;
+	underline?: boolean;
+	user?: boolean;
 }
 
 export interface ForumSectionSelf {
@@ -42,19 +54,25 @@ export interface ForumSectionSelf {
 	grammar?: ForumGrammar;
 	/** Threads of this section holding posts the actor has not been shown. */
 	unread_threads?: number;
+	/** Whether the actor may open a thread here. Absent on instances that predate it. */
+	can_create_thread?: boolean;
 }
 
 /**
  * Per-thread permissions, computed by the server with the same predicates its write paths apply.
  * Show a control if and only if the matching flag is true; never re-derive these.
+ *
+ * A thread read on its own carries the `can_*` flags; a thread listed in a section only carries
+ * `is_unread`.
  */
 export interface ForumThreadSelf {
-	can_post: boolean;
-	can_lock: boolean;
-	can_pin: boolean;
-	can_move: boolean;
-	can_delete: boolean;
-	can_report: boolean;
+	can_post?: boolean;
+	can_lock?: boolean;
+	can_pin?: boolean;
+	can_move?: boolean;
+	can_delete?: boolean;
+	can_report?: boolean;
+	is_unread?: boolean;
 }
 
 /**
@@ -68,16 +86,36 @@ export interface ForumPostSelf {
 	can_report: boolean;
 }
 
-export type ForumType = {
+/** How a section names its parent. */
+export interface ForumSectionRef {
+	id: string;
+	key: string | null;
+	display_name: string;
+}
+
+/**
+ * A section as it appears inside another resource — a child in a listing, the section of a thread:
+ * its threads are only counted, not listed.
+ */
+export interface ForumSectionSummary {
 	type: 'ForumSection';
 	id: string;
-	key: string;
+	key: string | null;
 	display_name: string;
 	ctime: string;
-	locale: forumLocale;
-	threads: forumThreads;
-	role_grants?: RoleGrant[];
+	locale: forumLocale | null;
+	/** `null` for a top-level section. Absent on instances that predate nested sections. */
+	parent?: ForumSectionRef | null;
+	threads: { count: number };
 	self?: ForumSectionSelf;
+}
+
+/** A section read on its own: one page of its threads, and its sub-sections. */
+export type ForumType = Omit<ForumSectionSummary, 'threads'> & {
+	threads: forumThreads;
+	/** Absent on instances that predate nested sections. */
+	children?: ForumSectionSummary[];
+	role_grants?: RoleGrant[];
 };
 
 export interface RoleGrant {
@@ -101,7 +139,7 @@ export interface ForumSectionListing {
 	offset: number;
 	limit: number;
 	count: number;
-	items: ForumType[];
+	items: ForumSectionSummary[];
 }
 
 export interface forumThreads {
@@ -120,8 +158,18 @@ export interface Thread {
 	is_pinned: boolean;
 	is_locked: boolean;
 	posts: posts;
-	section?: ForumType;
+	section?: ForumSectionSummary;
+	/** Listing only: the most recent post, without its content. */
+	last_post?: ForumLastPost;
+	has_admin_announcement?: boolean;
 	self?: ForumThreadSelf;
+}
+
+export interface ForumLastPost {
+	type: 'ForumPost';
+	id: string;
+	ctime: string;
+	author: Author;
 }
 
 export interface posts {

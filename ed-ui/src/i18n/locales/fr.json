@@ -5296,6 +5296,8 @@
 		"locked": "Ce sujet est verrouillé : plus personne ne peut y répondre.",
 		"moderated": "Message retiré par la modération.",
 		"edited": "(modifié)",
+		"unread": "Nouveaux messages",
+		"threadCount": "Nombre de sujets",
 		"newThread": {
 			"open": "Nouveau sujet",
 			"title": "Nouveau sujet",

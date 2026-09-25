@@ -5,37 +5,71 @@
 		<p>{{ $t('forum.error.reauthorize') }}</p>
 	</div>
 
-	<template v-else>
+	<template v-else-if="section">
+		<nav class="breadcrumb">
+			<template v-if="section.parent">
+				<RouterLink :to="{ name: 'ForumSection', params: { sectionId: section.parent.id } }">
+					{{ section.parent.display_name }}
+				</RouterLink>
+				›
+			</template>
+			<span>{{ section.display_name }}</span>
+		</nav>
+
+		<div v-if="children.length > 0" class="sections">
+			<RouterLink
+				v-for="child in children"
+				:key="child.id"
+				class="section"
+				:class="{ unread: (child.self?.unread_threads ?? 0) > 0 }"
+				:to="{ name: 'ForumSection', params: { sectionId: child.id } }"
+			>
+				<span class="title">{{ child.display_name }}</span>
+				<span v-if="(child.self?.unread_threads ?? 0) > 0" class="unread-count" :title="$t('forum.unread')">
+					{{ child.self?.unread_threads }}
+				</span>
+				<span class="quantity" :title="$t('forum.threadCount')">{{ child.threads.count }}</span>
+			</RouterLink>
+		</div>
+
 		<DZButton v-if="canWrite && !creating" class="new" @click="creating = true">
 			{{ $t('forum.newThread.open') }}
 		</DZButton>
-		<ForumNewMessage v-if="creating" :grammar="grammar" @created="openThread" @cancel="creating = false" />
+		<ForumNewMessage
+			v-if="creating"
+			:section-id="section.id"
+			:grammar="grammar"
+			@created="openThread"
+			@cancel="creating = false"
+		/>
 
-		<p v-if="!creating && threads.length === 0" class="empty">{{ $t('forum.empty') }}</p>
+		<p v-if="!creating && threads.length === 0 && children.length === 0" class="empty">{{ $t('forum.empty') }}</p>
 
-		<div v-for="day in threads" :key="day.date.toDateString()">
-			<div class="date">{{ formatDate(day.date) }}</div>
-			<div v-for="thread in day.threads" :key="thread.id" class="thread">
-				<div class="icon">
-					<img v-if="thread.is_pinned" :src="getImgURL('icons', 'thread')" :alt="$t('forum.pinned')" />
+		<template v-if="threads.length > 0">
+			<div v-for="day in threads" :key="day.date.toDateString()">
+				<div class="date">{{ formatDate(day.date) }}</div>
+				<div v-for="thread in day.threads" :key="thread.id" class="thread" :class="{ unread: thread.self?.is_unread }">
+					<div class="icon">
+						<img v-if="thread.is_pinned" :src="getImgURL('icons', 'thread')" :alt="$t('forum.pinned')" />
+					</div>
+					<RouterLink class="title" :to="`/forum/${thread.id}/1`">
+						{{ thread.title }}
+						<span v-if="thread.is_locked" class="locked" :title="$t('forum.locked')">🔒</span>
+					</RouterLink>
+					<div class="quantity">{{ thread.posts.count }}</div>
 				</div>
-				<RouterLink class="title" :to="`/forum/${thread.id}/1`">
-					{{ thread.title }}
-					<span v-if="thread.is_locked" class="locked" :title="$t('forum.locked')">🔒</span>
-				</RouterLink>
-				<div class="quantity">{{ thread.posts.count }}</div>
 			</div>
-		</div>
 
-		<tr class="pagination-controls">
-			<button @click="previousPage" :disabled="currentPage === 1">
-				<img class="left" src="/src/assets/button/button-back-arrow.webp" />
-			</button>
-			<span>{{ currentPage }} / {{ totalPages }}</span>
-			<button @click="nextPage" :disabled="currentPage === totalPages">
-				<img class="right" src="/src/assets/button/button-back-arrow.webp" />
-			</button>
-		</tr>
+			<tr class="pagination-controls">
+				<button @click="previousPage" :disabled="currentPage === 1">
+					<img class="left" src="/src/assets/button/button-back-arrow.webp" />
+				</button>
+				<span>{{ currentPage }} / {{ totalPages }}</span>
+				<button @click="nextPage" :disabled="currentPage === totalPages">
+					<img class="right" src="/src/assets/button/button-back-arrow.webp" />
+				</button>
+			</tr>
+		</template>
 	</template>
 </template>
 
@@ -44,7 +78,7 @@ import { defineComponent } from 'vue';
 import { ForumService } from '../services/ForumService.js';
 import { ForumErrorCode, handleForumError } from '../utils/index.js';
 import { getImgURL } from '../mixin/mixin.js';
-import { DatedThread, ForumGrammar, ForumType } from '@drpg/core/models/forum/Forum';
+import { DatedThread, ForumGrammar, ForumSectionSummary, ForumType } from '@drpg/core/models/forum/Forum';
 import { localStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZButton from '../components/common/DZButton.vue';
@@ -67,6 +101,14 @@ export default defineComponent({
 		};
 	},
 	computed: {
+		/** The section in the route; `undefined` for the DinoRPG root section. */
+		sectionId(): string | undefined {
+			return (this.$route.params.sectionId as string | undefined) || undefined;
+		},
+		/** Absent on instances that predate nested sections. */
+		children(): ForumSectionSummary[] {
+			return this.section?.children ?? [];
+		},
 		/**
 		 * The Marktwin the server will accept from this player here.
 		 *
@@ -79,13 +121,19 @@ export default defineComponent({
 		/**
 		 * Whether to offer opening a thread.
 		 *
-		 * `ForumSectionSelf` carries no `can_create_thread`, so this is as far as the server lets us
-		 * see: it answered with a `self` block, meaning it recognised the player. A refusal — muted
-		 * player, token without `forum:write` — only shows up on send, and is reported then rather
-		 * than hidden behind a missing button.
+		 * Computed by the server: the DinoRPG root section only groups sub-sections and takes no
+		 * thread of its own, and a muted player or a token without `forum:write` land here too.
 		 */
 		canWrite(): boolean {
-			return this.section?.self !== undefined;
+			return this.section?.self?.can_create_thread === true;
+		}
+	},
+	watch: {
+		// Moving between sections keeps this component mounted: only the route parameter changes.
+		async sectionId() {
+			this.currentPage = 1;
+			this.creating = false;
+			await this.refresh();
 		}
 	},
 	methods: {
@@ -99,13 +147,14 @@ export default defineComponent({
 		},
 		async refresh() {
 			try {
-				const section = await ForumService.getPageThreads(this.currentPage);
+				const section = await ForumService.getSection(this.sectionId, this.currentPage);
 				this.section = section;
 				this.reauthorize = false;
 				this.threads = this.groupByDay(section);
 				// The page size is the instance's, and it comes back with the listing.
 				this.totalPages = Math.max(1, Math.ceil(section.threads.count / section.threads.limit));
 			} catch (e) {
+				this.section = undefined;
 				this.threads = [];
 				this.reauthorize = handleForumError(e, this.$t, this.$toast) === ForumErrorCode.Reauthorize;
 			}
@@ -114,7 +163,8 @@ export default defineComponent({
 			const days: DatedThread[] = [];
 
 			for (const thread of section.threads.items) {
-				const date = new Date(thread.ctime);
+				// Threads come ordered by their latest post, so that is the day they belong to.
+				const date = new Date(thread.last_post?.ctime ?? thread.ctime);
 				const day = days.find(a => a.date.toLocaleDateString() === date.toLocaleDateString());
 				if (day) {
 					day.threads.push(thread);
@@ -145,6 +195,53 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	align-items: center;
+	padding: 4px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #8e3e26;
+}
+.sections {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-bottom: 8px;
+	.section {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 6px 4px;
+		background-color: #ae6139;
+		color: #ffee92;
+		font-size: 14px;
+		font-weight: bold;
+		text-decoration: none;
+		.title {
+			width: 100%;
+		}
+		.unread-count {
+			flex-shrink: 0;
+			padding: 0 6px;
+			border-radius: 8px;
+			background-color: #ffee92;
+			color: #8e3e26;
+			font-size: 11px;
+		}
+		.quantity {
+			flex-shrink: 0;
+			min-width: 3.5em;
+			text-align: center;
+			font-size: 12px;
+		}
+		&:hover {
+			box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.5);
+		}
+	}
+}
 .new {
 	margin: 2px;
 	width: fit-content;
@@ -197,6 +294,9 @@ export default defineComponent({
 	}
 	.locked {
 		margin-left: 4px;
+	}
+	&.unread .title {
+		text-decoration: underline;
 	}
 	// How many posts the thread holds, as a badge rather than a loose number: the row is read at a
 	// glance, and a fixed width keeps the counts lined up down the listing.

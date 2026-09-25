@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 
 vi.mock('../../context.js', () => ({
-	GLOBAL: { config: { eternaltwin: { url: 'http://et/', section: 'drpg_main' } } },
+	GLOBAL: { config: { eternaltwin: { url: 'http://et/', section: 'dinorpg' } } },
 	LOGGER: { error: vi.fn(), log: vi.fn() }
 }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
@@ -27,7 +27,7 @@ import { auth } from '../../dao/playerDao.js';
 import { getToken } from '../../dao/eternaltwinTokenDao.js';
 import {
 	createThread,
-	getAllThreadsFromPage,
+	getSection,
 	getThread,
 	replyToThread,
 	updatePost
@@ -44,7 +44,7 @@ describe('forumService', () => {
 	it('asks the player to authorize again when no token is stored', async () => {
 		vi.mocked(getToken).mockResolvedValue(null as never);
 
-		await expect(getAllThreadsFromPage(makeRequest({ params: { page: '1' } } as never))).rejects.toThrow(
+		await expect(getSection(makeRequest({ params: { page: '1' } } as never))).rejects.toThrow(
 			'eternaltwinReauthorize'
 		);
 	});
@@ -53,9 +53,17 @@ describe('forumService', () => {
 		clientInstance.getPageSizes.mockResolvedValue({ threads_per_page: 15, posts_per_page: 5 });
 		clientInstance.getSection.mockResolvedValue({ threads: { items: [] } });
 
-		await getAllThreadsFromPage(makeRequest({ params: { page: '3' } } as never));
+		await getSection(makeRequest({ params: { page: '3' } } as never));
 
-		expect(clientInstance.getSection).toHaveBeenCalledWith('drpg_main', 30, 15);
+		expect(clientInstance.getSection).toHaveBeenCalledWith('dinorpg', 30, 15);
+	});
+
+	it('reads the sub-section named in the route', async () => {
+		clientInstance.getSection.mockResolvedValue({ threads: { items: [] }, children: [] });
+
+		await getSection(makeRequest({ params: { sectionId: 'drpg_main', page: '2' } } as never));
+
+		expect(clientInstance.getSection).toHaveBeenCalledWith('drpg_main', 20, 20);
 	});
 
 	it('hands the section over whole, grammar included', async () => {
@@ -68,7 +76,7 @@ describe('forumService', () => {
 		};
 		clientInstance.getSection.mockResolvedValue(section);
 
-		const result = await getAllThreadsFromPage(makeRequest({ params: { page: '1' } } as never));
+		const result = await getSection(makeRequest({ params: { page: '1' } } as never));
 
 		expect(result).toBe(section);
 	});
@@ -113,10 +121,12 @@ describe('forumService', () => {
 		expect(result.self).toBeUndefined();
 	});
 
-	it('creates a thread in the configured section', async () => {
+	it('creates a thread in the section the player picked', async () => {
 		clientInstance.createThread.mockResolvedValue({ type: 'ForumThread' });
 
-		await createThread(makeRequest({ body: { title: 'Titre', message: 'corps' } } as never));
+		await createThread(
+			makeRequest({ body: { sectionId: 'drpg_main', title: 'Titre', message: 'corps' } } as never)
+		);
 
 		expect(clientInstance.createThread).toHaveBeenCalledWith('drpg_main', 'Titre', 'corps');
 	});

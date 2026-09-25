@@ -3,13 +3,14 @@ import { ForumPostSource, ForumType, Thread, forumPost } from '@drpg/core/models
 
 export const ForumService = {
 	/**
-	 * The DinoRPG section with one page of its threads.
+	 * A section with one page of its threads and its sub-sections; without `sectionId`, the DinoRPG
+	 * root section.
 	 *
 	 * The whole section, not just its threads: `self.grammar` says what the player may write here,
 	 * and it has to reach the editor.
 	 */
-	async getPageThreads(page: number): Promise<ForumType> {
-		const res = await http().get(`/forum/${page}`);
+	async getSection(sectionId: string | undefined, page: number): Promise<ForumType> {
+		const res = await http().get(sectionId ? `/forum/sections/${sectionId}/${page}` : `/forum/${page}`);
 		return res.data;
 	},
 	async getThread(threadId: string, page: number): Promise<Thread> {
@@ -17,8 +18,9 @@ export const ForumService = {
 		return res.data;
 	},
 	/** `message` is Marktwin, not HTML: it goes to Eternaltwin's own parser. */
-	async createThread(title: string, message: string): Promise<Thread> {
+	async createThread(sectionId: string, title: string, message: string): Promise<Thread> {
 		const res = await http().post(`/forum/newThread`, {
+			sectionId: sectionId,
 			title: title,
 			message: message
 		});

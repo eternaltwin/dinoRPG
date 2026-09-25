@@ -4,8 +4,8 @@ import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
 import {
 	createThread,
-	getAllThreadsFromPage,
 	getPostSource,
+	getSection,
 	getThread,
 	replyToThread,
 	updatePost
@@ -47,7 +47,7 @@ routes.patch(
 
 routes.post(
 	`${commonPath}/newThread`,
-	[body('title').exists(), body('message').exists()],
+	[body('sectionId').isString().notEmpty(), body('title').exists(), body('message').exists()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -85,12 +85,29 @@ routes.get(`${commonPath}/:page`, [param('page').exists().toInt().isNumeric()], 
 	}
 
 	try {
-		const response = await getAllThreadsFromPage(req);
+		const response = await getSection(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
 	}
 });
+
+routes.get(
+	`${commonPath}/sections/:sectionId/:page`,
+	[param('sectionId').exists(), param('page').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getSection(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
 
 routes.get(
 	`${commonPath}/:threadId/:page`,

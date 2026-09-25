@@ -70,9 +70,9 @@ export interface EternaltwinConfig {
 	readonly channel: string;
 
 	/**
-	 * Reference of the DinoRPG forum section.
+	 * Reference of the DinoRPG forum section: the root whose sub-sections make up the game's forum.
 	 *
-	 * Either the section UUID or its key (e.g. `drpg_main`); the API accepts both.
+	 * Either the section UUID or its key (e.g. `dinorpg`); the API accepts both.
 	 */
 	readonly section: string;
 }
@@ -229,7 +229,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	const eternaltwinScope: string = env.ETERNALTWIN_SCOPE ?? 'forum:write';
 	const eternaltwinApp: string = env.ETERNALTWIN_APP ?? 'dinorpg';
 	const eternaltwinChannel: string = env.ETERNALTWIN_CHANNEL ?? 'dev';
-	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'drpg_main';
+	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'dinorpg';
 
 	const eternaltwin: EternaltwinConfig = {
 		url: eternaltwinUrl,

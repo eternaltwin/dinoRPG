@@ -5283,6 +5283,8 @@
 		"locked": "This thread is locked: nobody can reply to it any more.",
 		"moderated": "Message removed by the moderation team.",
 		"edited": "(edited)",
+		"unread": "New posts",
+		"threadCount": "Number of threads",
 		"newThread": {
 			"open": "New thread",
 			"title": "New thread",

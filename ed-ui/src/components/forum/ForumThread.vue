@@ -117,8 +117,14 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		/** Back to the section the thread lives in, or to the forum root if it is not known yet. */
 		goBack() {
-			this.$router.push({ name: 'Forum' });
+			const sectionId = this.thread?.section?.id;
+			if (sectionId) {
+				this.$router.push({ name: 'ForumSection', params: { sectionId } });
+			} else {
+				this.$router.push({ name: 'Forum' });
+			}
 		},
 		formatDate(dateString: string) {
 			return formatDateTime(dateString);

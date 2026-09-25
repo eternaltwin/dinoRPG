@@ -32,6 +32,12 @@ const router = createRouter({
 					component: () => import('../pages/ForumPage.vue')
 				},
 				{
+					// Static `section` segment: ranks ahead of `/forum/:threadId/:page` below.
+					path: '/forum/section/:sectionId',
+					name: 'ForumSection',
+					component: () => import('../pages/ForumPage.vue')
+				},
+				{
 					path: '/terms',
 					name: 'Terms',
 					component: () => import('../pages/TermsPage.vue')

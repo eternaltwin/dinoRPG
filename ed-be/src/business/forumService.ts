@@ -28,19 +28,23 @@ async function clientFor(req: Request): Promise<{ client: EternaltwinForumClient
 }
 
 /**
- * The DinoRPG section, with one page of its threads.
+ * A section of the DinoRPG forum, with one page of its threads and its sub-sections.
+ *
+ * Without a `sectionId`, the configured DinoRPG section — the root of the game's forum tree.
  *
  * The whole section is returned rather than its thread listing alone: the `self` block carries the
- * roles and the Marktwin grammar the player may write with, and the editor must offer exactly what
- * the server accepts. It is passed through untouched — permissions are the server's to compute.
+ * roles, whether a thread may be opened here, and the Marktwin grammar the player may write with,
+ * and the editor must offer exactly what the server accepts. It is passed through untouched —
+ * permissions are the server's to compute.
  */
-export async function getAllThreadsFromPage(req: Request): Promise<ForumType> {
+export async function getSection(req: Request): Promise<ForumType> {
 	const { client } = await clientFor(req);
+	const sectionRef = req.params.sectionId ?? GLOBAL.config.eternaltwin.section;
 	const page = +req.params.page;
 
 	const { threads_per_page: limit } = await client.getPageSizes();
 
-	return client.getSection(GLOBAL.config.eternaltwin.section, (page - 1) * limit, limit);
+	return client.getSection(sectionRef, (page - 1) * limit, limit);
 }
 
 /**
@@ -61,14 +65,18 @@ export async function getThread(req: Request): Promise<Thread> {
 }
 
 /**
- * Open a thread in the DinoRPG section. `message` is Marktwin, not HTML or Markdown.
+ * Open a thread in a section. `message` is Marktwin, not HTML or Markdown.
+ *
+ * Threads live in the sub-sections: the DinoRPG root section only groups them, and the server
+ * refuses a thread there. Whether the player may write in `sectionId` is the server's call.
  */
 export async function createThread(req: Request): Promise<Thread> {
 	const { client } = await clientFor(req);
+	const sectionId = req.body.sectionId;
 	const title = req.body.title;
 	const message = req.body.message;
 
-	return client.createThread(GLOBAL.config.eternaltwin.section, title, message);
+	return client.createThread(sectionId, title, message);
 }
 
 /**

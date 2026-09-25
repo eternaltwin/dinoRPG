@@ -51,6 +51,7 @@ export default defineComponent({
 	name: 'ForumNewMessage',
 	components: { DZButton, ForumEditor },
 	props: {
+		sectionId: { type: String, required: true },
 		grammar: { type: Object as PropType<ForumGrammar | undefined>, default: undefined }
 	},
 	emits: ['created', 'cancel'],
@@ -87,7 +88,7 @@ export default defineComponent({
 			this.sending = true;
 			this.error = '';
 			try {
-				const thread = await ForumService.createThread(this.titleThread.trim(), this.messageThread);
+				const thread = await ForumService.createThread(this.sectionId, this.titleThread.trim(), this.messageThread);
 				this.$emit('created', thread.id);
 			} catch (e) {
 				handleForumError(e, this.$t, this.$toast);
