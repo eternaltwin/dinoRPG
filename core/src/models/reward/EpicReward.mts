@@ -4,6 +4,7 @@ export interface EpicReward {
 	displayed: boolean;
 	announced: boolean;
 	type: RewardType;
+	stackable: boolean;
 }
 
 export enum RewardType {
