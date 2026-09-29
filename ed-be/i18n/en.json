@@ -73,11 +73,11 @@
 		"dinozWrongLocation": "Your Dinoz cannot perform this action at this location.",
 		"dinozInventoryNotEmpty": "Your Dinoz must remove its equipment.",
 		"dinozNotAvailable": "Your Dinoz is not available to perform this action.",
-		"teamNotAvailable": "Un ou plusieurs membres du groupe ne sont pas disponibles pour faire cette action.",
+		"teamNotAvailable": "One or more members of the group are unavailable to perform this action.",
 		"notEnoughTickets": "You don't have enough tickets to perform this action.",
 		"noShopAccess": "You do not meet the requirements to access this shop.",
 		"tooManyItems": "You have too many items to perform this action.",
-		"notInYourClan": "Vous ne faites pas partie du même clan."
+		"notInYourClan": "You do not belong to the same clan."
 	},
 	"fb": {
 		"error": {
@@ -359,7 +359,7 @@
 		"noRun": "You have never visited this dungeon.",
 		"notAtExit": "You cannot leave the dungeon from here!",
 		"notHealing": "You cannot use this item here, you must go to a healing zone.",
-		"notFound": "Ce donjon n'existe pas."
+		"notFound": "This dungeon does not exist."
 	},
 	"UnavailableReason": {
 		"frozen": "Your Dinoz is frozen.",
