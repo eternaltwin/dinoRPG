@@ -85,18 +85,18 @@ During the battle, different statuses will affect your Dinoz, either as a bonus 
 - ![Poison Status](@guide/status_poisoned) The fighter is poisoned and takes damage every cycle
 - ![Locked Status](@guide/status_locked) The fighter's element wheel is locked
 - ![Dazzled Status](@guide/status_dazzled) Le fighter is dazzled and may miss its assaults
-- ![Statut Protégé](@guide/status_protected) Le Dinoz est protégé par un membre de son équipe
-- ![Statut Muet](@guide/status_mute) Le Dinoz est muet, il ne peut plus appeler son invocation
-- ![Statut Sharingan](@guide/status_sharingan) Le Dinoz peut copier les techniques de ses adversaires
-- ![Statut Équipement Bloqué](@guide/status_blocked_inventory) Le Dinoz ne peut plus utiliser d'équipements
-- ![Statut Pénalité d'Énergie](@guide/status_energy_penalty) Le Dinoz a un malus d'énergie
-- ![Statut Bonus d'Énergie](@guide/status_energy_bonus) Le Dinoz a un bonus d'énergie
-- ![Statut Défense Feu](@guide/status_bonus_def_fire) Le Dinoz a un bonus de défense en feu
-- ![Statut Défense Bois](@guide/status_bonus_def_wood) Le Dinoz a un bonus de défense en bois
-- ![Statut Défense Eau](@guide/status_bonus_def_water) Le Dinoz a un bonus de défense en eau
-- ![Statut Défense Foudre](@guide/status_bonus_def_lightning) Le Dinoz a un bonus de défense en foudre
-- ![Statut Défense Air](@guide/status_bonus_def_air) Le Dinoz a un bonus de défense en air
-- ![Statut Bonus Initiative](@guide/status_initiative_bonus) Le Dinoz a un bonus en initiative
-- ![Statut Malus Initiative](@guide/status_initiative_penalty) Le Dinoz a un malus en initiative
+- ![Protected Status](@guide/status_protected) The Dinoz is protected by a teammate
+- ![Muted Status](@guide/status_mute) The Dinoz is muted and cannot call its invocation
+- ![Sharingan Status](@guide/status_sharingan) The Dinoz can copy skills from its opponents
+- ![Blocked Equipment Status](@guide/status_blocked_inventory) The Dinoz cannot use items from its inventory
+- ![Energy Penalty Status](@guide/status_energy_penalty) The Dinoz has an energy penalty
+- ![Energy Bonus Status](@guide/status_energy_bonus) The Dinoz has an energy bonus
+- ![Fire Defense Status](@guide/status_bonus_def_fire) The Dinoz has a fire defense bonus
+- ![Wood Defense Status](@guide/status_bonus_def_wood) The Dinoz has a wood defense bonus
+- ![Water Defense Status](@guide/status_bonus_def_water) The Dinoz has a water defense bonus
+- ![Lightning Defense Status](@guide/status_bonus_def_lightning) The Dinoz has a lightning defense bonus
+- ![Air Defense Status](@guide/status_bonus_def_air) The Dinoz has an air defense bonus
+- ![Initiative Bonus](@guide/status_initiative_bonus) The Dinoz receives an initiative bonus
+- ![Initiative Penalty](@guide/status_initiative_penalty) The Dinoz receives an initiative penalty
 - ![Statut Bonus Esquive](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
-- ![Statut Bonus Défense](@guide/status_def_bonus) Le Dinoz a un bonus en défense
+- ![Defense Bonus](@guide/status_def_bonus) The Dinoz receives a defense bonus
