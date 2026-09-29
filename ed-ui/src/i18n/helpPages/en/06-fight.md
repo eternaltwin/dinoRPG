@@ -98,5 +98,5 @@ During the battle, different statuses will affect your Dinoz, either as a bonus 
 - ![Air Defense Status](@guide/status_bonus_def_air) The Dinoz has an air defense bonus
 - ![Initiative Bonus](@guide/status_initiative_bonus) The Dinoz receives an initiative bonus
 - ![Initiative Penalty](@guide/status_initiative_penalty) The Dinoz receives an initiative penalty
-- ![Statut Bonus Esquive](@guide/status_dodge_bonus) Le Dinoz a un bonus en esquive
+- ![Dodge Bonus](@guide/status_dodge_bonus) The Dinoz receives a dodge bonus
 - ![Defense Bonus](@guide/status_def_bonus) The Dinoz receives a defense bonus
