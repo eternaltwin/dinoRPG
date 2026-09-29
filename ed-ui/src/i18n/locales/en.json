@@ -4495,7 +4495,7 @@
 		"clan": "Clan",
 		"vs": "VS",
 		"announcement": {
-			"overtime": "Prolongations !"
+			"overtime": "Overtime!"
 		}
 	},
 	"ingredients": {
@@ -4661,15 +4661,15 @@
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 		"unavailable": {
-			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
-			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
-			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
-			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
-			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
-			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
-			"defending": "Votre Dinoz défend le château de votre clan.",
-			"selling": "Votre Dinoz est en vente.",
-			"superdom": "Votre Dinoz est au Super Dôme."
+			"unfreezing": "Your Dinoz is waking up and will be available in {midnightTime}.",
+			"unsacrificing": "The ritual to bring back your Dinoz from the dead will complete in {unavailableTime}.",
+			"restingAttack": "Your Dinoz must recover for another {attackTime} seconds before it can do another action.",
+			"dungeon": "Your Dinoz is currently exploring a dungeon, it must exit in order to receive care.",
+			"sacrificed": "Your Dinoz has been sacrificed. You can resurrect it if your wish to, it will take 24 hours.",
+			"frozen": "Your Dinoz is frozen. You can unfreeze it, the process completes at midnight.",
+			"defending": "Your Dinoz is defending your Clan castle.",
+			"selling": "Your Dinoz is on sale.",
+			"superdom": "Your Dinoz is at the Superdom."
 		}
 	},
 	"logs": {
