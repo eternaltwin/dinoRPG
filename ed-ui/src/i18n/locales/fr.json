@@ -4157,7 +4157,8 @@
 			"forfeit": "Forfait",
 			"ongoing": "En cours",
 			"castleDestroyed": "Château détruit",
-			"timeout": "Défendu"
+			"timeout": "Défendu",
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
