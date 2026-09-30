@@ -5288,21 +5288,21 @@
 	},
 	"forum": {
 		"cancel": "Cancelar",
-		"empty": "Todavía no hay ningún tema.",
-		"pinned": "Tema fijado",
-		"locked": "Este tema está cerrado: ya nadie puede responder.",
+		"empty": "Todavía no hay ningún hilo.",
+		"pinned": "Hilo fijado",
+		"locked": "Este hilo está cerrado: ya nadie puede responder.",
 		"moderated": "Mensaje retirado por la moderación.",
 		"edited": "(editado)",
 		"unread": "Mensajes nuevos",
-		"threadCount": "Número de temas",
+		"threadCount": "Número de hilos",
 		"newThread": {
-			"open": "Nuevo tema",
-			"title": "Nuevo tema",
-			"titleLabel": "Título del tema:",
+			"open": "Nuevo hilo",
+			"title": "Nuevo hilo",
+			"titleLabel": "Título del hilo:",
 			"titlePlaceholder": "Tu título...",
 			"messageLabel": "Tu mensaje:",
 			"messagePlaceholder": "Tu mensaje...",
-			"submit": "Crear el tema",
+			"submit": "Crear el hilo",
 			"titleTooShort": "El título debe tener al menos {min} caracteres.",
 			"messageRequired": "El mensaje no puede estar vacío."
 		},
@@ -5319,14 +5319,14 @@
 			"strong": "Negrita",
 			"emphasis": "Cursiva",
 			"strikethrough": "Tachado",
-			"link": "Enlace"
+			"link": "Link"
 		},
 		"error": {
 			"reauthorize": "Tu sesión de Eternaltwin ha caducado. Vuelve a conectarte para acceder al foro.",
 			"forbidden": "Eternaltwin ha rechazado esta acción. Reintentar no cambiará nada.",
 			"notFound": "Este contenido ya no existe.",
-			"conflict": "Este contenido ha cambiado mientras tanto. Recarga la página antes de volver a intentarlo.",
-			"revisionUnavailable": "No se ha podido encontrar la versión que corregir."
+			"conflict": "Este contenido ha cambiado desde que lo cargaste. Recarga la página antes de volver a intentarlo.",
+			"revisionUnavailable": "No se ha podido encontrar la versión a corregir."
 		}
 	},
 	"messagerie": {
