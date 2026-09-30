@@ -2727,9 +2727,9 @@
 		"type": {
 			"cueille": "plantes",
 			"fish": "poissons",
-			"hunt": "Chasser",
-			"seek": "Fouiller",
-			"energy": "énergie",
+			"hunt": "trésor de chasse",
+			"seek": "artefacts",
+			"energy": "énergies",
 			"anniv": "trésors fabuleux",
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
