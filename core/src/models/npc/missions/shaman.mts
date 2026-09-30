@@ -12,11 +12,11 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_INIT1,
 		missionName: 'init1',
-		level: 3,
+		level: 10,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 17
+				value: 15
 			}
 		],
 		steps: [
@@ -66,14 +66,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_INIT2,
 		missionName: 'init2',
-		level: 10,
+		level: 11,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT1
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 31
+				value: 30
 			},
 			{
 				rewardType: RewardEnum.STATUS,
@@ -173,14 +173,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_BURN,
 		missionName: 'burn',
-		level: 10,
+		level: 11,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 21
+				value: 25
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -267,14 +267,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_BARBEC,
 		missionName: 'barbec',
-		level: 11,
+		level: 13,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_BURN
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 19
+				value: 10
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -368,14 +368,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_JOKE,
 		missionName: 'joke',
-		level: 10,
+		level: 11,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 16
+				value: 25
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -418,14 +418,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_DEFEND,
 		missionName: 'defend',
-		level: 12,
+		level: 13,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 27
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -527,14 +527,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_SHIPMT,
 		missionName: 'shipmt',
-		level: 12,
+		level: 13,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_DEFEND
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 11
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -658,14 +658,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_SALES,
 		missionName: 'sales',
-		level: 10,
+		level: 11,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 10
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -708,14 +708,14 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_RITUAL,
 		missionName: 'ritual',
-		level: 11,
+		level: 13,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 24
+				value: 30
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -840,7 +840,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 	{
 		missionId: MissionID.SHAMAN_HIERO,
 		missionName: 'hiero',
-		level: 13,
+		level: 14,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2 },
@@ -851,7 +851,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 8
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -892,7 +892,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 36
+				value: 50
 			},
 			{
 				rewardType: RewardEnum.GOLD,

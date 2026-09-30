@@ -12,11 +12,11 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY1,
 		missionName: 'skully1',
-		level: 5,
+		level: 15,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 8
+				value: 15
 			}
 		],
 		steps: [
@@ -69,14 +69,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY2,
 		missionName: 'skully2',
-		level: 6,
+		level: 16,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY1
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 14
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -184,14 +184,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY3,
 		missionName: 'skully3',
-		level: 7,
+		level: 17,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 6
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -285,14 +285,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY4,
 		missionName: 'skully4',
-		level: 8,
+		level: 18,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY3
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 24
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -386,14 +386,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY5,
 		missionName: 'skully5',
-		level: 9,
+		level: 19,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY4
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 17
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -521,14 +521,14 @@ export const M_SKULLY: Mission[] = [
 	{
 		missionId: MissionID.SKULLY_END,
 		missionName: 'skully_end',
-		level: 10,
+		level: 20,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY5
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 5
+				value: 15
 			}
 		],
 		steps: [

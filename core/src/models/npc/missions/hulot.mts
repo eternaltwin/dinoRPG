@@ -12,7 +12,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_SEQACT,
 		missionName: 'seqact',
-		level: 20,
+		level: 22,
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
@@ -57,7 +57,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_TOXIC,
 		missionName: 'toxic',
-		level: 15,
+		level: 23,
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
@@ -65,7 +65,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 7
+				value: 10
 			}
 		],
 		steps: [
@@ -114,7 +114,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_MAP,
 		missionName: 'map',
-		level: 20,
+		level: 23,
 		condition: {
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
@@ -222,7 +222,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_HUCURE,
 		missionName: 'hucure',
-		level: 20,
+		level: 24,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC
 		},
@@ -359,7 +359,7 @@ export const M_HULOT: Mission[] = [
 	{
 		missionId: MissionID.HULOT_BCKPCK,
 		missionName: 'bckpck',
-		level: 21,
+		level: 24,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE },
@@ -369,7 +369,7 @@ export const M_HULOT: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 14
+				value: 10
 			},
 			{
 				rewardType: RewardEnum.STATUS,
