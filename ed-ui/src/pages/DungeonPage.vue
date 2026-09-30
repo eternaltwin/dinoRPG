@@ -75,7 +75,7 @@ import { errorHandler } from '../utils';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZButton from '../components/common/DZButton.vue';
-import {itemList} from "@drpg/core/models/item/ItemList";
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // At module scope on purpose: Pixi objects must stay out of Vue's reactivity (deep proxies

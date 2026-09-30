@@ -72,14 +72,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
-import { npcList } from '@drpg/core/models/npc/NpcList';
+import { missionNameList, npcList } from '@drpg/core/models/npc/NpcList';
 import { useDinozStore } from '../../store';
 
 export default defineComponent({
@@ -120,7 +119,7 @@ export default defineComponent({
 	},
 	computed: {
 		missionName(): string {
-			return missionsList[this.missionId];
+			return missionNameList[this.missionId];
 		},
 		missionDetail(): MissionHUD | null {
 			const dinozList: Array<DinozFiche> = useDinozStore().getDinozList;

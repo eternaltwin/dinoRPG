@@ -2744,7 +2744,8 @@
 		"header": "Liste des Missions",
 		"headers": {
 			"title": "Titre",
-			"status": "Statut | Statuts"
+			"status": "Statut | Statuts",
+			"level": "Niveau"
 		},
 		"xp": "points d'expérience",
 		"gold": "pièces",

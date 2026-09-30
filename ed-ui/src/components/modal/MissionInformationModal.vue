@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList } from '../../constants/index.js';
+import { missionNameList } from '@drpg/core/models/npc/NpcList';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { useDinozStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
@@ -66,7 +66,7 @@ export default defineComponent({
 	},
 	computed: {
 		missionName(): string {
-			return missionsList[this.mission?.missionId ?? -1];
+			return missionNameList[this.mission?.missionId ?? -1];
 		},
 		dinoz(): DinozFiche | undefined {
 			return useDinozStore().getDinoz(this.dinozId);

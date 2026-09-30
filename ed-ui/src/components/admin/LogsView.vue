@@ -23,7 +23,7 @@ import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameL
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { defineComponent } from 'vue';
-import { missionsList } from '../../constants/missions.js';
+import { missionNameList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '../../constants/place.js';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
@@ -119,18 +119,18 @@ const getLogPropsForTranslation = (
 			break;
 		case 'MissionStep':
 			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`),
+				mission: $t(`missions.name.${missionNameList[+log.values[0]]}`),
 				step: log.values[1]
 			};
 			break;
 		case 'MissionFinished':
 			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`)
+				mission: $t(`missions.name.${missionNameList[+log.values[0]]}`)
 			};
 			break;
 		case 'MissionCanceled':
 			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`)
+				mission: $t(`missions.name.${missionNameList[+log.values[0]]}`)
 			};
 			break;
 		case 'Gather':

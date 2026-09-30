@@ -31,7 +31,7 @@ import { updateDinoz } from '../dao/dinozDao.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
-import {addItemToDinoz, removeItemFromDinoz} from '../dao/dinozItemDao.js';
+import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -40,8 +40,8 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { gameConfig } from '../utils/gameConfig.js';
-import {decreaseItemQuantity} from "../dao/playerItemDao.js";
-import {scenarioChecker} from "../utils/scenarioChecker.js";
+import { decreaseItemQuantity } from '../dao/playerItemDao.js';
+import { scenarioChecker } from '../utils/scenarioChecker.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
