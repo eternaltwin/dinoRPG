@@ -300,10 +300,13 @@ export default defineComponent({
 		applyResult(move: MoveResult, batch: MoveStep[]): void {
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (move.fight && currentDinoz) {
+				// The leader died in this fight: a survivor carries the run on from here.
+				const leaderId = move.leaderId ?? currentDinoz.id;
+				if (move.leaderId != null) useDinozStore().setDungeonName(leaderId, this.dungeonId);
 				this.sessionStore.setFightResult(move.fight);
 				this.$router.push({
 					name: 'Fight',
-					params: { dinozId: currentDinoz.id.toString() }
+					params: { dinozId: leaderId.toString() }
 				});
 			}
 			// What the entered cell held before this step's re-reveal clears it: the pickup to announce.

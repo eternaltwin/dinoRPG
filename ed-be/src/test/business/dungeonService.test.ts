@@ -25,6 +25,11 @@ vi.mock('../../dao/dinozDao.js', () => ({
 	updateMultipleDinoz: vi.fn()
 }));
 
+vi.mock('../../business/fightService.js', () => ({
+	calculateFightVsMonsters: vi.fn(),
+	rewardFightVsMonsters: vi.fn()
+}));
+
 vi.mock('../../utils/server/translate.js', () => ({
 	default: vi.fn((key: string) => key)
 }));
@@ -36,10 +41,16 @@ import {
 	updateRun,
 	updateRunHealing,
 	getDungeonByName,
-	getDungeonById
+	getDungeonById,
+	dinozEnterRun,
+	dinozExitRun
 } from '../../dao/dungeonRunDao.js';
 import { auth } from '../../dao/playerDao.js';
-import { getFollowingDinoz } from '../../dao/dinozDao.js';
+import { getDinozFightDataRequest, getFollowingDinoz, updateDinoz } from '../../dao/dinozDao.js';
+import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../business/fightService.js';
+import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { startRun, move, isOnHealingCell, markHealingCellUsed } from '../../business/dungeonService.js';
 import { DungeonItem } from '../../business/dungeon/types.js';
 import { OriginalGenerator } from '../../business/dungeon/original/index.js';
@@ -442,6 +453,117 @@ describe('dungeonService — items sitting inside a room rect', () => {
 		expect(r.ok).toBe(true);
 		expect(r.pos).toEqual({ l: offOrigin.l, x: offOrigin.x, y: offOrigin.y });
 		expect(r.scenario?.text).toBe(`dungeon.unit-test-dungeon.sc${offOrigin.v}`);
+	});
+});
+
+describe('dungeonService — leader dies in a fight', () => {
+	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
+	const path = findPath(d, d.start, d.exit)!;
+	const fightCell = path[1];
+	const step = { dx: fightCell.x - d.start.x, dy: fightCell.y - d.start.y, dl: 0 };
+	const monster = Object.keys(monsterList)[0];
+
+	/** A fight-ready party member; `skills` are skill ids. */
+	function member(id: number, overrides: Record<string, any> = {}, skills: number[] = []): any {
+		return {
+			id,
+			life: 10,
+			fight: true,
+			concentration: null,
+			unavailableReason: UnavailableReason.dungeon,
+			leaderId: id === DEFAULT_DINOZ_ID ? null : DEFAULT_DINOZ_ID,
+			skills: skills.map(skillId => ({ skillId })),
+			...overrides
+		};
+	}
+
+	/** Run one step into the monster cell with `party`; `died` lose all their life in the fight. */
+	async function fight(party: any[], died: number[], won = true) {
+		vi.mocked(getDinozFightDataRequest).mockResolvedValue({ id: 'player1', dinoz: party } as never);
+		vi.mocked(calculateFightVsMonsters).mockReturnValue({
+			outcome: won ? FightOutcome.AttackerWin : FightOutcome.DefenderWin,
+			attackers: party.map(p => ({ dinozId: p.id, hpLost: died.includes(p.id) ? p.life : 0 }))
+		} as never);
+		vi.mocked(rewardFightVsMonsters).mockResolvedValue({ result: won } as never);
+		return move(
+			makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: DEFAULT_DINOZ_ID, steps: [step] } })
+		);
+	}
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(getDungeonByName).mockResolvedValue({
+			...dungeonRowFor(d),
+			monsters: JSON.stringify([{ l: fightCell.l, x: fightCell.x, y: fightCell.y, monsters: [monster] }])
+		} as never);
+		vi.mocked(findRun).mockResolvedValue(runRowFor(d) as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+	});
+
+	it('hands the run to a surviving follower', async () => {
+		const r = await fight([member(1), member(2)], [1]);
+		expect(r.leaderId).toBe(2);
+		expect(dinozEnterRun).toHaveBeenCalledWith('run1', 2);
+		expect(updateDinoz).toHaveBeenCalledWith(2, { leader: { disconnect: true } });
+		expect(dinozExitRun).not.toHaveBeenCalled();
+	});
+
+	it('picks the survivor able to lead everyone, skipping a BRAVE one', async () => {
+		const r = await fight(
+			[member(1), member(2, {}, [Skill.BRAVE]), member(3), member(4), member(5, {}, [Skill.SYMPATIQUE])],
+			[1]
+		);
+		// 4 survivors: 2 is BRAVE (leads none), 3 and 4 lead 2, 5 leads 3 → 5 keeps them all.
+		expect(r.leaderId).toBe(5);
+		for (const id of [2, 3, 4]) expect(updateDinoz).toHaveBeenCalledWith(id, { leader: { connect: { id: 5 } } });
+		expect(dinozEnterRun).toHaveBeenCalledWith('run1', 5);
+	});
+
+	it('the first survivor able to lead everyone takes over', async () => {
+		const r = await fight([member(1), member(2, {}, [Skill.BRAVE]), member(3), member(4)], [1]);
+		expect(r.leaderId).toBe(3);
+	});
+
+	it('sends the survivors the new leader cannot lead out of the dungeon', async () => {
+		const r = await fight([member(1), member(2), member(3), member(4), member(5)], [1]);
+		// Nobody can lead 3 others: 2 leads 3 and 4, 5 leaves.
+		expect(r.leaderId).toBe(2);
+		expect(updateDinoz).toHaveBeenCalledWith(5, { leader: { disconnect: true }, unavailableReason: null });
+		expect(updateDinoz).not.toHaveBeenCalledWith(5, { leader: { connect: { id: 2 } } });
+	});
+
+	it('only a BRAVE survivor leads alone', async () => {
+		const r = await fight([member(1), member(2, {}, [Skill.BRAVE]), member(3, {}, [Skill.BRAVE])], [1]);
+		expect(r.leaderId).toBe(2);
+		expect(updateDinoz).toHaveBeenCalledWith(3, { leader: { disconnect: true }, unavailableReason: null });
+	});
+
+	it('still promotes on a loss, then leaves the run', async () => {
+		const r = await fight([member(1), member(2)], [1], false);
+		expect(r.leaderId).toBe(2);
+		expect(dinozEnterRun).toHaveBeenCalledWith('run1', 2);
+		expect(dinozExitRun).toHaveBeenCalledOnce();
+	});
+
+	it('keeps the leader when only a follower dies', async () => {
+		const r = await fight([member(1), member(2)], [2]);
+		expect(r.leaderId).toBeUndefined();
+		expect(dinozEnterRun).not.toHaveBeenCalled();
+	});
+
+	it('a party wiped out has no one to promote', async () => {
+		const r = await fight([member(1), member(2)], [1, 2], false);
+		expect(r.leaderId).toBeUndefined();
+		expect(dinozEnterRun).not.toHaveBeenCalled();
+		expect(dinozExitRun).toHaveBeenCalledOnce();
+	});
+
+	it('a leader already dead before the fight hands over first', async () => {
+		const r = await fight([member(1, { life: 0, unavailableReason: null }), member(2)], []);
+		expect(r.leaderId).toBe(2);
+		expect(dinozEnterRun).toHaveBeenCalledWith('run1', 2);
+		expect(r.fight).toBeDefined();
 	});
 });
 

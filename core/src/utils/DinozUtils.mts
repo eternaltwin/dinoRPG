@@ -291,7 +291,7 @@ export const getFollowableDinoz = <
 	});
 };
 
-export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
+export const getMaxFollowers = (dinoz: { skills: Pick<DinozSkill, 'skillId'>[] }) => {
 	let max = BaseSpecialStats[SpecialStat.MAX_FOLLOWERS];
 
 	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);

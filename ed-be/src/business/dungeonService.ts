@@ -3,7 +3,7 @@
  * client, which only receives the fog-of-war reveals its own validated moves produce.
  */
 
-import { PantheonMotif, type Dinoz } from '@drpg/prisma';
+import { PantheonMotif, type Dinoz, type DinozSkill } from '@drpg/prisma';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { rewarder } from '../utils/rewarder.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -50,7 +50,7 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { UnavailableReason } from '@drpg/prisma/enums';
-import { isAlive } from '@drpg/core/utils/DinozUtils';
+import { getMaxFollowers, isAlive } from '@drpg/core/utils/DinozUtils';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
@@ -203,6 +203,42 @@ async function dropFromTeam(dinozIds: number[], clearUnavailable: boolean): Prom
 			clearUnavailable ? { leader: { disconnect: true }, unavailableReason: null } : { leader: { disconnect: true } }
 		);
 	}
+}
+
+/**
+ * The survivor who takes over a party whose leader is gone: the first one able to lead all
+ * the others, else the one able to lead the most (getMaxFollowers: BRAVE leads none).
+ */
+function pickNewLeader<T extends { skills: Pick<DinozSkill, 'skillId'>[] }>(survivors: T[]): T {
+	const capacity = survivors.map(s => getMaxFollowers(s));
+	const fitsAll = capacity.findIndex(c => c >= survivors.length - 1);
+	if (fitsAll !== -1) return survivors[fitsAll];
+	return survivors[capacity.indexOf(Math.max(...capacity))];
+}
+
+/**
+ * Hand the run over to a survivor once its leader left the party. The others follow the new
+ * leader up to what it can lead; the rest leave the dungeon. Returns the new team, leader first.
+ */
+async function promoteLeader<T extends { id: number; skills: Pick<DinozSkill, 'skillId'>[] }>(
+	runId: string,
+	survivors: T[]
+): Promise<T[]> {
+	const leader = pickNewLeader(survivors);
+	const others = survivors.filter(s => s.id !== leader.id);
+	const kept = others.slice(0, getMaxFollowers(leader));
+	const left = others.slice(kept.length);
+	await updateDinoz(leader.id, { leader: { disconnect: true } });
+	for (const f of kept) {
+		await updateDinoz(f.id, { leader: { connect: { id: leader.id } } });
+	}
+	if (left.length > 0)
+		await dropFromTeam(
+			left.map(d => d.id),
+			true
+		);
+	await dinozEnterRun(runId, leader.id);
+	return [leader, ...kept];
 }
 
 /** Flag the team on cell (l,x,y) beaten for this run; its icon stops appearing in reveals. */
@@ -444,6 +480,8 @@ export async function move(req: Request): Promise<MoveResult> {
 	let scenario: MoveResult['scenario'];
 	let goldReward: number | undefined;
 	let result: FightResult | undefined = undefined;
+	// Set when the leader left the party and a survivor took the run over.
+	let newLeaderId: number | undefined;
 
 	/**
 	 * Persist everything mutated so far, durably, before an irreversible payout. The run row
@@ -542,12 +580,9 @@ export async function move(req: Request): Promise<MoveResult> {
 			if (!player) {
 				throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 			}
-			const dinozData = player.dinoz.find(d => d.id === dinozId);
+			let dinozData = player.dinoz.find(d => d.id === dinozId);
 			if (!dinozData) {
 				throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
-			}
-			if (dinozData.unavailableReason !== UnavailableReason.dungeon) {
-				throw new ExpectedError(`Dinoz is not able to fight in the dungeon.`);
 			}
 			let team = player.dinoz;
 
@@ -565,6 +600,18 @@ export async function move(req: Request): Promise<MoveResult> {
 					false
 				);
 			team = team.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
+
+			// A leader that already left the party (e.g. a run stuck before leaders were handed
+			// over on death) passes the run to a survivor before the fight.
+			if (!team.some(d => d.id === dinozData?.id) && team.length > 0) {
+				team = await promoteLeader(run.id, team);
+				dinozData = team[0];
+				newLeaderId = dinozData.id;
+			}
+
+			if (dinozData.unavailableReason !== UnavailableReason.dungeon) {
+				throw new ExpectedError(`Dinoz is not able to fight in the dungeon.`);
+			}
 
 			if (dinozData.concentration) {
 				throw new ExpectedError(translate(`concentration`, authed));
@@ -611,16 +658,23 @@ export async function move(req: Request): Promise<MoveResult> {
 				);
 				team = team.filter(d => !diedInFight.some(dead => dead.id === d.id));
 			}
+			await updateMultipleDinoz(
+				team.map(d => d.id),
+				{ fight: false }
+			);
+
+			// The leader died but not everyone: a survivor takes the run over. On a loss too,
+			// so the regrouped party can come back through the door.
+			const leaderId = dinozData.id;
+			if (diedInFight.some(dead => dead.id === leaderId) && team.length > 0) {
+				newLeaderId = (await promoteLeader(run.id, team))[0].id;
+			}
 
 			if (!result.result) {
 				// Wiped: the run's leader leaves, and the next entrant restarts from the door.
 				lost = true;
 				await dinozExitRun(run.id);
 			}
-			await updateMultipleDinoz(
-				team.map(d => d.id),
-				{ fight: false }
-			);
 		}
 
 		// Re-send the entered cell even if already revealed, so a door opening, key pickup or
@@ -669,6 +723,7 @@ export async function move(req: Request): Promise<MoveResult> {
 		),
 		fight: result,
 		scenario,
-		gold: goldReward
+		gold: goldReward,
+		leaderId: newLeaderId
 	};
 }
