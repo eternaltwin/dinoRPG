@@ -4495,7 +4495,7 @@
 		"clan": "Clan",
 		"vs": "VS",
 		"announcement": {
-			"overtime": "Prolongations !"
+			"overtime": "¡Prórroga!"
 		}
 	},
 	"ingredients": {
@@ -4661,15 +4661,15 @@
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
 		"unavailable": {
-			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
-			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
-			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
-			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
-			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
-			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
-			"defending": "Votre Dinoz défend le château de votre clan.",
-			"selling": "Votre Dinoz est en vente.",
-			"superdom": "Votre Dinoz est au Super Dôme."
+			"unfreezing": "Tu Dino se está despertando y estará disponible en {midnightTime}.",
+			"unsacrificing": "El ritual para devolver a tu Dino de entre los muertos terminará en {unavailableTime}.",
+			"restingAttack": "Tu Dino todavía debe esperar {attackTime} segundos antes de poder realizar otra acción.",
+			"dungeon": "Tu Dino está explorando actualmente un laberinto. Debe salir del laberinto para que puedas ocuparte de él.",
+			"sacrificed": "Tu Dino ha sido sacrificado. Puedes devolverlo a la vida si lo deseas; esto tardará 24 horas.",
+			"frozen": "Tu Dino está congelado. Puedes descongelarlo si lo deseas; la descongelación terminará a medianoche.",
+			"defending": "Tu Dino defiende el castillo de tu clan.",
+			"selling": "Tu Dino está en venta.",
+			"superdom": "Tu Dino está en el domo de Sulaflota."
 		}
 	},
 	"logs": {
