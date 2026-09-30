@@ -342,6 +342,24 @@ export default defineComponent({
 								this.dinoz.missionId,
 								action.prop as string
 							);
+							if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+								const itemsStr = fight.autoReequipped
+									.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+									.join(', ');
+								this.$toast.open({
+									message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+									type: 'success'
+								});
+							}
+							if (fight.missingReequip && fight.missingReequip.length > 0) {
+								const itemsStr = fight.missingReequip
+									.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+									.join(', ');
+								this.$toast.open({
+									message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+									type: 'warning'
+								});
+							}
 							this.sessionStore.setFightResult(fight);
 							this.$router.push({
 								name: 'Fight',
@@ -652,6 +670,24 @@ export default defineComponent({
 						}
 						this.sessionStore.setFightResult(fight);
 
+						if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+							const itemsStr = fight.autoReequipped
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+								type: 'success'
+							});
+						}
+						if (fight.missingReequip && fight.missingReequip.length > 0) {
+							const itemsStr = fight.missingReequip
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+								type: 'warning'
+							});
+						}
 						this.$router.push({
 							name: 'Fight',
 							params: { dinozId: this.dinozId.toString() }
