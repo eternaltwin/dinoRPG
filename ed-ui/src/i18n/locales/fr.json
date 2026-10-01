@@ -2727,9 +2727,9 @@
 		"type": {
 			"cueille": "plantes",
 			"fish": "poissons",
-			"hunt": "trésor de chasse",
-			"seek": "artefacts",
-			"energy": "énergies",
+			"hunt": "Chasser",
+			"seek": "Fouiller",
+			"energy": "énergie",
 			"anniv": "trésors fabuleux",
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
@@ -2744,8 +2744,7 @@
 		"header": "Liste des Missions",
 		"headers": {
 			"title": "Titre",
-			"status": "Statut | Statuts",
-			"level": "Niveau"
+			"status": "Statut | Statuts"
 		},
 		"xp": "points d'expérience",
 		"gold": "pièces",
@@ -4158,8 +4157,7 @@
 			"forfeit": "Forfait",
 			"ongoing": "En cours",
 			"castleDestroyed": "Château détruit",
-			"timeout": "Défendu",
-			"stolen": "Destruction volée"
+			"timeout": "Défendu"
 		}
 	},
 	"clan": {
