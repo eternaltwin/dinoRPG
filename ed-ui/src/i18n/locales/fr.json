@@ -4663,18 +4663,15 @@
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 		"unavailable": {
-			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}.",
 			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
-			"unsacrificeCountdown": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {time}.",
 			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
-			"restingAttackCountdown": "Votre Dinoz doit récupérer encore {time} secondes avant de pouvoir refaire une action.",
 			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
 			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
 			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
 			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
 			"defending": "Votre Dinoz défend le château de votre clan.",
 			"selling": "Votre Dinoz est en vente.",
-			"superdom": "Votre Dinoz est au superdom."
+			"superdom": "Votre Dinoz est au Super Dôme."
 		}
 	},
 	"logs": {

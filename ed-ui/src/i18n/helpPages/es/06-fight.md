@@ -62,11 +62,11 @@ Muchos monstruos efectúan asaltos de elemento Vacío. Esto quiere decir que tod
 
 Al final del combate, tu Dino gana **monedas de oro** ![](@icons/small_gold) que le permitirán curarse, y **puntos de experiencia** ![xp](@icons/small_xp) que le permitirán subir de nivel.
 
-## L'Énergie
+## La Energía
 
-![Énergie du Dinoz](@guide/energy)
+![Energía del Dino](@guide/energy)
 
-Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le Dinoz détient. L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance.
+Cada Dino posee una barra de energía azul, junto a su barra de vida. Esta barra representa la **energía** que el Dino posee, y está llena a la mitad al inicio del combate. Similar a la barra de vida, tiene un máximo valor, que es llamado la **resistencia** del Dino. La resistencia del Dino puede variar según las competencias que haya aprendido. Algunos bonus pueden aumentar esta resistencia.
 
 Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le Dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres.
 

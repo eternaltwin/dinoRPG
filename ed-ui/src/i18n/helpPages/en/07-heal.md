@@ -4,18 +4,18 @@ icon:
   name: small_use
 ---
 
-# Se Soigner
+# Healing
 
-Une fois un **combat** fini, votre Dinoz peut avoir perdu des **points de vie**. Il est donc nécessaire de le soigner de façon à éviter qu'il ne meure. Pour cela, vous pouvez acheter avec vos pièces d'or ![](@icons/small_gold) différents objets dans la **Boutique** ![](@icons/act_boutique).
+Once a battle is **finished**, your Dinoz may have lost some **health points**. Therefore, it is necessary to heal it to prevent it from dying. To do so, you can buy with gold ![](@icons/small_gold) various items in the **Shop** ![](@icons/act_boutique).
 
-Accédez à l'onglet **Inventaire** depuis la fiche de votre Dinoz pour voir la liste des objets que vous possédez et pour pouvoir les utiliser. Par exemple un **Nuage Burger** ![](@item/item_cloud_burger) va rendre 10 points de vie à votre Dinoz.
+Access the **Inventory** tab from your Dinoz's profile to see the list of items you possess and to be able to use them. For example, a **Cloud Burger** ![](@item/item_cloud_burger) heals 10 health points to your Dinoz.
 
-![Utiliser un Nuage Burger dans l'inventaire](@guide/heal)
+![Use a cloud burger from the inventory](@guide/heal)
 
-## Se Reposer
+## Resting
 
-Si votre Dinoz a peu de points de vie, il peut **Se Reposer** ![pv](@icons/act_rest). Cela lui permet de récupérer automatiquement des points de vie au fur et à mesure que le temps s'écoule. En contrepartie, il ne peut plus effectuer aucune action pendant qu'il se repose.
+If your Dinoz has very few health points, it can \*_rest_ ![](@icons/act_rest). This allows it to automatically recover hit points over time. However, it cannot perform any actions while resting.
 
-Au début, votre Dinoz se reposera au rythme d'**1** ![pv](@icons/small_pv) par heure, mais cela pourra être amélioré par certaines compétences.
+At the beginning, your Dinoz will recover **1** ![hp](@icons/small_pv) per hour, but this can be improved with some skills.
 
-Vous pouvez arrêter le repos de votre Dinoz à tout moment mais votre Dinoz ne peut pas regagner plus de la **moitié** de ses points de vie en se reposant.
+You can stop your Dinoz's rest at any time, but your Dinoz cannot regain more than half of its health points while resting.

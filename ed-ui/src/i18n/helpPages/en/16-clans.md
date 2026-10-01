@@ -4,18 +4,18 @@ icon:
   name: small_leader
 ---
 
-Les **Clans** sont des groupes de joueurs de DinoRPG. Appartenir à un Clan vous permet de discuter avec d'autres joueurs, d'échanger des techniques et des astuces, et de vous entraider. Vous pouvez rejoindre un Clan ou créer votre propre Clan à partir du menu de droite **Clans**.
+**Clans** are groups of DinoRPG players. Belonging to a Clan allows you to chat with other players, exchange techniques and tips, and help each other out. You can join a Clan or create your own Clan from the **Clans** section in the right menu.
 
-# Rejoindre un Clan
+# Joining a Clan
 
-Tout d'abord, sachez que vous ne pouvez faire partie que d'un seul Clan.
+Firstly, know that you can only be a member of one Clan.
 
-Pour rejoindre un Clan, il vous faudra d'abord en trouver un qui vous convient. La description donnée par le créateur du Clan, la présence d'amis dans ce Clan, la réputation du Clan auprès des autres joueurs... Tous ces points vous aideront à faire votre choix.
+To join a Clan, you will first need to find one that suits you. The description provided by the Clan creator, the presence of friends in the Clan, the reputation of the Clan among other players... All these points will help you make your choice.
 
-Une fois votre Clan sélectionné, vous pouvez déposer une demande d'adhésion. Pour éviter les demandes non sérieuses, cette action coûte **1.000** pièces d'or ![](@icons/small_gold). Ces pièces seront perdues si votre demande est acceptée par le créateur du Clan. Par contre, si votre demande est refusée ou si vous l'annulez, vous récupérez vos pièces. Vous pouvez d'ailleurs à tout moment annuler votre demande, pour pouvoir effectuer une nouvelle demande d'adhésion à un autre Clan par exemple.
+Once you have selected your Clan, you can submit a membership request. To avoid bogus requests, this action costs **1,000** gold ![](@icons/small_gold). These coins will be lost if your request is accepted by the Clan creator. However, if your request is rejected or if you cancel it, you will get your coins back. You can also cancel your request at any time, for example, to submit a new membership request to another Clan.
 
-# Créer et gérer son Clan
+# Creating and managing your Clan
 
-De façon à éviter un trop grand nombre de Clans vides ou inactifs, la création de Clans coûte des pièces d'or et nécessite d'obtenir 15 points au Classement, soit l'équivalent d'un Dinoz niveau 15 ou de trois Dinoz niveau 5.
+To avoid too many empty or inactive Clans, creating Clans costs gold coins and requires obtaining 15 points in the Ranking, which is equivalent to having a Dinoz at level 15 or three Dinoz at level 5.
 
-Une fois votre Clan créé, vous pourrez modifier sa bannière et sa description, accepter de nouveaux membres dans le Clan, leur déléguer les différents droits de gestion du Clan, etc.
+Once your Clan is created, you can modify its banner and description, accept new members into the Clan, delegate various management rights to them, etc.
