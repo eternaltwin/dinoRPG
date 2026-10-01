@@ -12,7 +12,7 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_FISH,
 		missionName: 'fish',
-		level: 1,
+		level: 4,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
@@ -55,7 +55,7 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_DOG,
 		missionName: 'dog',
-		level: 1,
+		level: 5,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
@@ -110,14 +110,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_KILGOU,
 		missionName: 'kilgou',
-		level: 3,
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 26
+				value: 25
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -152,14 +152,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_KILWLF,
 		missionName: 'kilwlf',
-		level: 5,
+		level: 6,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILGOU
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 23
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -230,14 +230,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_FFLOW,
 		missionName: 'fflow',
-		level: 2,
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 19
+				value: 25
 			}
 		],
 		steps: [
@@ -277,14 +277,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_KBOOK,
 		missionName: 'kbook',
-		level: 2,
+		level: 5,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FFLOW
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 19
+				value: 15
 			}
 		],
 		steps: [
@@ -324,14 +324,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_MSG,
 		missionName: 'msg',
-		level: 3,
+		level: 6,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KBOOK
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 26
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.EPIC,
@@ -376,14 +376,14 @@ export const M_PAPY_JOE: Mission[] = [
 	{
 		missionId: MissionID.PAPY_JOE_LETTRE,
 		missionName: 'lettre',
-		level: 3,
+		level: 6,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_MSG
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 17
+				value: 20
 			}
 		],
 		steps: [
@@ -419,7 +419,7 @@ export const M_PAPY_JOE: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 19
+				value: 25
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -464,7 +464,7 @@ export const M_PAPY_JOE: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 39
+				value: 40
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -509,7 +509,7 @@ export const M_PAPY_JOE: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 47
+				value: 50
 			},
 			{
 				rewardType: RewardEnum.GOLD,

@@ -145,37 +145,41 @@ export async function movementListener(
 		}
 	}
 
-	// Check if any dinoz has an unfinished mission
-	const dinozMission = team.flatMap(dinoz => dinoz.missions).find(m => !m.isFinished);
+	// Check every unfinished mission of the team
+	const dinozMissions = team.flatMap(dinoz => dinoz.missions).filter(m => !m.isFinished);
 
-	if (dinozMission) {
-		// Find the dinoz with the unfinished mission
-		const dinozWithMission = team.find(dinoz => dinoz.missions.some(m => m.missionId === dinozMission.missionId));
-		if (dinozWithMission) {
-			// Check the actual step of the dinoz with the unfinished mission
-			const actualStep = getActualStep(dinozWithMission);
+	for (const dinozMission of dinozMissions) {
+		// Check the actual step of the unfinished mission
+		const actualStep = getActualStep({ missions: [dinozMission] });
 
-			if (actualStep?.stepId !== undefined) {
-				if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-					const fightResult = calculateFightVsMonsters(team, player, finalPlace, actualStep.requirement.target);
-					const result = await rewardFightVsMonsters(
-						team,
-						actualStep.requirement.target,
-						fightResult,
-						finalPlace,
-						player
-					);
-					// Rewards against monsters are granted only by defeating them. Tie counts as defeat.
-					if (fightResult.outcome === FightOutcome.AttackerWin) {
-						const teamIds = team.map(dinoz => dinoz.id);
-
-						await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
-						await updateMultipleDinoz(teamIds, { placeId: finalPlace });
-					}
-					return result;
-				}
-			}
+		if (
+			actualStep?.stepId === undefined ||
+			actualStep.place !== finalPlace ||
+			actualStep.requirement.actionType !== ConditionEnum.KILL_BOSS
+		) {
+			continue;
 		}
+
+		const fightResult = calculateFightVsMonsters(team, player, finalPlace, actualStep.requirement.target);
+		const result = await rewardFightVsMonsters(team, actualStep.requirement.target, fightResult, finalPlace, player);
+		// Rewards against monsters are granted only by defeating them. Tie counts as defeat.
+		if (fightResult.outcome === FightOutcome.AttackerWin) {
+			// Only advance the dinoz that are on the same step of this mission
+			const dinozOnStepIds = team
+				.filter(dinoz =>
+					dinoz.missions.some(
+						m => !m.isFinished && m.missionId === dinozMission.missionId && m.step === dinozMission.step
+					)
+				)
+				.map(dinoz => dinoz.id);
+
+			await updateMissionStep(player.id, dinozOnStepIds, dinozMission.missionId, actualStep.stepId + 1);
+			await updateMultipleDinoz(
+				team.map(dinoz => dinoz.id),
+				{ placeId: finalPlace }
+			);
+		}
+		return result;
 	}
 	return false;
 }

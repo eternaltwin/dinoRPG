@@ -2744,7 +2744,8 @@
 		"header": "Missions list",
 		"headers": {
 			"title": "Title",
-			"status": "Status"
+			"status": "Status",
+			"level": "Level"
 		},
 		"xp": "experience points",
 		"gold": "coins",
@@ -4157,7 +4158,8 @@
 			"forfeit": "Forfeit",
 			"ongoing": "Ongoing",
 			"castleDestroyed": "Destroyed Castle",
-			"timeout": "Defended"
+			"timeout": "Defended",
+			"stolen": "Stolen Destruction"
 		}
 	},
 	"clan": {
@@ -4493,7 +4495,10 @@
 		},
 		"player": "Master",
 		"clan": "Clan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "Overtime!"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
@@ -4657,10 +4662,17 @@
 		"followed": "This Dinoz leads a group.",
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
-		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}.",
-		"unsacrificeCountdown": "The ritual to bring back your Dinoz from the dead will complete in {time}.",
-		"restingAttackCountdown": "Your Dinoz must recover for another {time} seconds before it can do another action.",
-		"dungeon": "Your Dinoz is currently exploring a dungeon, it must exit in order to receive care."
+		"unavailable": {
+			"unfreezing": "Your Dinoz is waking up and will be available in {midnightTime}.",
+			"unsacrificing": "The ritual to bring back your Dinoz from the dead will complete in {unavailableTime}.",
+			"restingAttack": "Your Dinoz must recover for another {attackTime} seconds before it can do another action.",
+			"dungeon": "Your Dinoz is currently exploring a dungeon, it must exit in order to receive care.",
+			"sacrificed": "Your Dinoz has been sacrificed. You can resurrect it if your wish to, it will take 24 hours.",
+			"frozen": "Your Dinoz is frozen. You can unfreeze it, the process completes at midnight.",
+			"defending": "Your Dinoz is defending your Clan castle.",
+			"selling": "Your Dinoz is on sale.",
+			"superdom": "Your Dinoz is at the Superdom."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -5378,7 +5390,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",

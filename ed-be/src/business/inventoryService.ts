@@ -117,7 +117,9 @@ export async function getAllItemsData(req: Request) {
 const CAN_STILL_USE_ITEMS: UnavailableReason[] = [
 	UnavailableReason.resting,
 	UnavailableReason.defending,
-	UnavailableReason.restingAttack
+	UnavailableReason.restingAttack,
+	UnavailableReason.unsacrificing,
+	UnavailableReason.unfreezing
 ];
 
 export async function useItem(req: Request) {

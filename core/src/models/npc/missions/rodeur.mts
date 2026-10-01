@@ -22,6 +22,10 @@ export const M_RODEUR: Mission[] = [
 			{
 				rewardType: RewardEnum.GOLD,
 				value: 5000
+			},
+			{
+				rewardType: RewardEnum.EXPERIENCE_PERCENT,
+				value: 15
 			}
 		],
 		steps: [
@@ -83,7 +87,7 @@ export const M_RODEUR: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 31
+				value: 40
 			}
 		],
 		steps: [

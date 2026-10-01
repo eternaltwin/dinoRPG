@@ -177,7 +177,6 @@ export default defineComponent({
 		setInterval(() => {
 			this.getTime();
 		}, 1000);
-		this.startSseForNotification();
 	},
 	unmounted() {
 		if (this.sseWatchdog) clearTimeout(this.sseWatchdog);

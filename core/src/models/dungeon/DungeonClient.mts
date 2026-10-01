@@ -92,6 +92,8 @@ export interface MoveResult {
 	scenario?: { text: string; micon?: string };
 	/** Gold collected on this step, if the entered cell held an uncollected pile. */
 	gold?: number;
+	/** The dinoz now leading the run, when the previous leader left the party (died). */
+	leaderId?: number;
 }
 
 // ── rendering ──────────────────────────────────────────────────────────────

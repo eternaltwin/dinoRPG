@@ -2744,7 +2744,8 @@
 		"header": "Liste der Missionen",
 		"headers": {
 			"title": "Titel",
-			"status": "Status"
+			"status": "Status",
+			"level": "Niveau"
 		},
 		"xp": "Erfahrungspunkte",
 		"gold": "Gold",
@@ -4157,7 +4158,8 @@
 			"forfeit": "Aufgegeben",
 			"ongoing": "Im Gange",
 			"castleDestroyed": "Burg zerstört",
-			"timeout": "Verteidigt"
+			"timeout": "Verteidigt",
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
@@ -4493,7 +4495,10 @@
 		},
 		"player": "Meister",
 		"clan": "Klan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "Prolongations !"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Diese Seite erfasst alle Zutaten, die mithilfe von Sammelfähigkeiten zusammengetragen worden sind.",
@@ -4657,10 +4662,17 @@
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-		"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein.",
-		"unsacrificeCountdown": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten endet um {time}.",
-		"restingAttackCountdown": "Dein Dinoz muss noch {time} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
-		"dungeon": "Dein Dinoz erkundet gerade ein Verlies. Um Hilfe zu bekommen, müsste dieser es erst verlassen."
+		"unavailable": {
+			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
+			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
+			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
+			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
+			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
+			"defending": "Votre Dinoz défend le château de votre clan.",
+			"selling": "Votre Dinoz est en vente.",
+			"superdom": "Votre Dinoz est au Super Dôme."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",

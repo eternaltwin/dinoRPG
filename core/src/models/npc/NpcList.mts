@@ -414,3 +414,9 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		flashvars: undefined
 	}
 };
+
+export const missionNameList: Record<number, string> = Object.fromEntries(
+	Object.values(npcList)
+		.flatMap(npc => npc.missions ?? [])
+		.map(mission => [mission.missionId, mission.missionName])
+);

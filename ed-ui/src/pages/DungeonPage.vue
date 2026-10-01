@@ -75,6 +75,7 @@ import { errorHandler } from '../utils';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DZButton from '../components/common/DZButton.vue';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 // ── page state & control loop ─────────────────────────────────────────────────
 // At module scope on purpose: Pixi objects must stay out of Vue's reactivity (deep proxies
@@ -300,10 +301,31 @@ export default defineComponent({
 		applyResult(move: MoveResult, batch: MoveStep[]): void {
 			const currentDinoz = useDinozStore().getDinoz(this.dinozId);
 			if (move.fight && currentDinoz) {
+				// The leader died in this fight: a survivor carries the run on from here.
+				const leaderId = move.leaderId ?? currentDinoz.id;
+				if (move.leaderId != null) useDinozStore().setDungeonName(leaderId, this.dungeonId);
 				this.sessionStore.setFightResult(move.fight);
+				if (move.fight.autoReequipped && move.fight.autoReequipped.length > 0) {
+					const itemsStr = move.fight.autoReequipped
+						.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+						.join(', ');
+					this.$toast.open({
+						message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+						type: 'success'
+					});
+				}
+				if (move.fight.missingReequip && move.fight.missingReequip.length > 0) {
+					const itemsStr = move.fight.missingReequip
+						.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+						.join(', ');
+					this.$toast.open({
+						message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+						type: 'warning'
+					});
+				}
 				this.$router.push({
 					name: 'Fight',
-					params: { dinozId: currentDinoz.id.toString() }
+					params: { dinozId: leaderId.toString() }
 				});
 			}
 			// What the entered cell held before this step's re-reveal clears it: the pickup to announce.

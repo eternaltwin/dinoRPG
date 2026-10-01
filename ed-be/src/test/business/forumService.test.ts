@@ -25,13 +25,7 @@ vi.mock('../../business/eternaltwinForumClient.js', () => ({
 
 import { auth } from '../../dao/playerDao.js';
 import { getToken } from '../../dao/eternaltwinTokenDao.js';
-import {
-	createThread,
-	getSection,
-	getThread,
-	replyToThread,
-	updatePost
-} from '../../business/forumService.js';
+import { createThread, getSection, getThread, replyToThread, updatePost } from '../../business/forumService.js';
 
 beforeEach(() => {
 	vi.clearAllMocks();
@@ -44,9 +38,7 @@ describe('forumService', () => {
 	it('asks the player to authorize again when no token is stored', async () => {
 		vi.mocked(getToken).mockResolvedValue(null as never);
 
-		await expect(getSection(makeRequest({ params: { page: '1' } } as never))).rejects.toThrow(
-			'eternaltwinReauthorize'
-		);
+		await expect(getSection(makeRequest({ params: { page: '1' } } as never))).rejects.toThrow('eternaltwinReauthorize');
 	});
 
 	it('paginates with the instance page size, not a hardcoded 20', async () => {
@@ -124,9 +116,7 @@ describe('forumService', () => {
 	it('creates a thread in the section the player picked', async () => {
 		clientInstance.createThread.mockResolvedValue({ type: 'ForumThread' });
 
-		await createThread(
-			makeRequest({ body: { sectionId: 'drpg_main', title: 'Titre', message: 'corps' } } as never)
-		);
+		await createThread(makeRequest({ body: { sectionId: 'drpg_main', title: 'Titre', message: 'corps' } } as never));
 
 		expect(clientInstance.createThread).toHaveBeenCalledWith('drpg_main', 'Titre', 'corps');
 	});

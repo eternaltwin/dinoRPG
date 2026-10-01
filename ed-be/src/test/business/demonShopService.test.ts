@@ -686,9 +686,7 @@ describe('sacrificeDinoz', () => {
 		it('throws ExpectedError when Dinoz is unavailable', async () => {
 			const unavailableReasons = Object.values(UnavailableReason);
 			for (const u of unavailableReasons) {
-				vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
-					makeDinozWPlayer({ unavailableReason: u })
-				);
+				vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(makeDinozWPlayer({ unavailableReason: u }));
 				await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
 			}
 		});
@@ -863,9 +861,7 @@ describe('unsacrificeDinoz', () => {
 		it('throws ExpectedError when Dinoz is unavailable but not sacrificed', async () => {
 			const unavailableReasons = Object.values(UnavailableReason).filter(u => u !== UnavailableReason.sacrificed);
 			for (const u of unavailableReasons) {
-				vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
-					makeDinozWPlayer({ unavailableReason: u })
-				);
+				vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(makeDinozWPlayer({ unavailableReason: u }));
 				await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
 			}
 		});

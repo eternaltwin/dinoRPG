@@ -113,7 +113,7 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-import { npcList } from '@drpg/core/models/npc/NpcList';
+import { missionNameList, npcList } from '@drpg/core/models/npc/NpcList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
@@ -123,7 +123,7 @@ import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../../components/modal/ResurrectModal.vue';
-import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
+import { itinerantShopNameList, shopNameList } from '../../constants/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { ClanService, DinozService, DungeonService, FightService, MissionService } from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
@@ -342,6 +342,24 @@ export default defineComponent({
 								this.dinoz.missionId,
 								action.prop as string
 							);
+							if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+								const itemsStr = fight.autoReequipped
+									.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+									.join(', ');
+								this.$toast.open({
+									message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+									type: 'success'
+								});
+							}
+							if (fight.missingReequip && fight.missingReequip.length > 0) {
+								const itemsStr = fight.missingReequip
+									.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+									.join(', ');
+								this.$toast.open({
+									message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+									type: 'warning'
+								});
+							}
 							this.sessionStore.setFightResult(fight);
 							this.$router.push({
 								name: 'Fight',
@@ -652,6 +670,24 @@ export default defineComponent({
 						}
 						this.sessionStore.setFightResult(fight);
 
+						if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+							const itemsStr = fight.autoReequipped
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipSuccess', { items: itemsStr }),
+								type: 'success'
+							});
+						}
+						if (fight.missingReequip && fight.missingReequip.length > 0) {
+							const itemsStr = fight.missingReequip
+								.map(item => `${item.count}x ${this.$t(`item.name.${itemList[item.itemId].name}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: this.$t('toast.autoReequipMissing', { items: itemsStr }),
+								type: 'warning'
+							});
+						}
 						this.$router.push({
 							name: 'Fight',
 							params: { dinozId: this.dinozId.toString() }
@@ -802,7 +838,7 @@ export default defineComponent({
 				return;
 			}
 			if (this.dinoz.missionId) {
-				return missionsList[this.dinoz.missionId];
+				return missionNameList[this.dinoz.missionId];
 			}
 			return undefined;
 		},

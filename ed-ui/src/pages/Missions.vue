@@ -4,6 +4,7 @@
 		<tbody>
 			<tr>
 				<th class="name">{{ $t('missions.headers.title') }}</th>
+				<th class="level">{{ $t('missions.headers.level') }}</th>
 				<th class="status">{{ $t('missions.headers.status') }}</th>
 			</tr>
 			<tr v-for="mission in missionList" :key="mission.missionId" :class="mission.status">
@@ -25,6 +26,7 @@
 					</Tippy>
 					{{ $t(`missions.name.${allMission[mission.missionId]}`) }}
 				</td>
+				<td class="level">{{ mission.status !== 'unavailable' ? getMissionLevel(mission) : '' }}</td>
 				<td class="status">{{ $t(`missions.status.${mission.status}`) }}</td>
 			</tr>
 		</tbody>
@@ -43,10 +45,11 @@ import { defineComponent } from 'vue';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { MissionService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
-import { missionsList } from '../constants/index.js';
 import MissionInformation from '../components/modal/MissionInformationModal.vue';
 import { sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import { npcList, missionNameList } from '@drpg/core/models/npc/NpcList';
+import { Npc } from '@drpg/core/models/npc/npc';
 
 export default defineComponent({
 	name: 'Missions',
@@ -58,7 +61,7 @@ export default defineComponent({
 		return {
 			missionList: [] as Array<MissionList>,
 			sessionStore: sessionStore(),
-			allMission: missionsList,
+			allMission: missionNameList,
 			information: false as boolean,
 			mission: undefined as MissionList | undefined
 		};
@@ -69,6 +72,9 @@ export default defineComponent({
 				this.mission = mission;
 				this.information = !this.information;
 			}
+		},
+		getMissionLevel(mission: MissionList): number {
+			return this.npc.missions?.find(m => m.missionId === mission.missionId)?.level ?? 0;
 		},
 		async reload(): Promise<void> {
 			const dinozId: string = this.$route.params.id.toString();
@@ -89,6 +95,9 @@ export default defineComponent({
 	computed: {
 		dinozId(): number {
 			return +this.$route.params.id;
+		},
+		npc(): Npc {
+			return npcList[this.$route.params.npc.toString()];
 		}
 	},
 	async mounted(): Promise<void> {
@@ -188,6 +197,15 @@ table {
 				background-image: url('../assets/background/table_cell.webp');
 				background-position: -10px 0px;
 				max-width: 4px;
+			}
+			&.level {
+				font-weight: bold;
+				text-align: center;
+				color: #bc683c;
+				background-image: url('../assets/background/table_cell.webp');
+				background-position: -10px 0px;
+				max-width: 4px;
+				text-decoration: none;
 			}
 
 			background-image: url('../assets/background/table_cell.webp');

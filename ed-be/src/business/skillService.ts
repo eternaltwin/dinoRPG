@@ -414,7 +414,10 @@ function getNewDinozDataFromLevelUp(
 		level: currentDinozData.level + 1,
 		// Set next elements based on current level (which is effectively one less than the newly acquired level)
 		nextUpElementId: getRandomUpElement(upChance, currentDinozData.seed + GLOBAL.config.salt + currentDinozData.level),
-		nextUpAltElementId: getRandomUpElement(upChance, currentDinozData.seed + GLOBAL.config.salt + currentDinozData.level + 'pdc'),
+		nextUpAltElementId: getRandomUpElement(
+			upChance,
+			currentDinozData.seed + GLOBAL.config.salt + currentDinozData.level + 'pdc'
+		),
 		nbrUpFire: currentDinozData.nbrUpFire,
 		nbrUpWood: currentDinozData.nbrUpWood,
 		nbrUpWater: currentDinozData.nbrUpWater,
@@ -449,7 +452,9 @@ function getNewDinozDataFromLevelUp(
 	if (currentDinozData.level < 10 && currentDinozData.display[1] !== 'A') {
 		growthLetter++;
 		newDinozData.display =
-			currentDinozData.display[0] + growthLetter + currentDinozData.display.substring(2, currentDinozData.display.length);
+			currentDinozData.display[0] +
+			growthLetter +
+			currentDinozData.display.substring(2, currentDinozData.display.length);
 	}
 
 	return newDinozData;

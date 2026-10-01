@@ -63,7 +63,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList, statusList } from '../../constants/index.js';
+import { statusList } from '../../constants/index.js';
+import { missionNameList } from '@drpg/core/models/npc/NpcList';
 import { playerStore, useDinozStore } from '../../store/index.js';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -89,7 +90,7 @@ export default defineComponent({
 			const dinozId = this.$route.params.id as string;
 			const myDinoz = useDinozStore().getDinoz(+dinozId);
 			const missionId = myDinoz?.missionId;
-			return missionsList[missionId ?? -1];
+			return missionNameList[missionId ?? -1];
 		},
 		validator(): string {
 			const dinozId = this.$route.params.id as string;

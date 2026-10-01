@@ -12,11 +12,11 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_KILPIR,
 		missionName: 'kilpir',
-		level: 6,
+		level: 12,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 21
+				value: 50
 			}
 		],
 		steps: [
@@ -56,11 +56,11 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_TROC,
 		missionName: 'troc',
-		level: 8,
+		level: 10,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 61
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -148,14 +148,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_KILKSK,
 		missionName: 'kilksk',
-		level: 8,
+		level: 13,
 		condition: {
 			[Operator.AND]: [{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILPIR }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 18
+				value: 15
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -190,14 +190,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_KILANG,
 		missionName: 'kilang',
-		level: 18,
+		level: 14,
 		condition: {
 			[Operator.AND]: [{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK }, { [ConditionEnum.MINLEVEL]: 18 }]
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 15
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -272,14 +272,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_BIGPCH,
 		missionName: 'bigpch',
-		level: 12,
+		level: 17,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 68
+				value: 50
 			},
 			{
 				rewardType: RewardEnum.GOLD,
@@ -314,11 +314,11 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_RALLY1,
 		missionName: 'rally1',
-		level: 4,
+		level: 11,
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 8
+				value: 15
 			}
 		],
 		steps: [
@@ -348,14 +348,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_RALLY2,
 		missionName: 'rally2',
-		level: 6,
+		level: 13,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY1
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 14
+				value: 15
 			}
 		],
 		steps: [
@@ -396,14 +396,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_RALLY3,
 		missionName: 'rally3',
-		level: 8,
+		level: 16,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY2
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 18
+				value: 15
 			}
 		],
 		steps: [
@@ -455,14 +455,14 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_RALLY4,
 		missionName: 'rally4',
-		level: 10,
+		level: 20,
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY3
 		},
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 21
+				value: 15
 			}
 		],
 		steps: [
@@ -492,7 +492,7 @@ export const M_BAO_BOB: Mission[] = [
 	{
 		missionId: MissionID.BAO_BOB_TOUR,
 		missionName: 'tour',
-		level: 12,
+		level: 25,
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY4 },
@@ -502,7 +502,7 @@ export const M_BAO_BOB: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.EXPERIENCE_PERCENT,
-				value: 45
+				value: 20
 			},
 			{
 				rewardType: RewardEnum.EPIC,

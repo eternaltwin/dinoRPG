@@ -31,7 +31,7 @@ import { updateDinoz } from '../dao/dinozDao.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
-import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
+import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { getTournamentFightsToShow } from '../business/tournamentService.js';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -40,6 +40,8 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { gameConfig } from '../utils/gameConfig.js';
+import { decreaseItemQuantity } from '../dao/playerItemDao.js';
+import { scenarioChecker } from '../utils/scenarioChecker.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -555,8 +557,16 @@ export async function fightFBTournamentOpponent(req: Request) {
 			catches: { select: { id: true, hp: true, monsterId: true } },
 			player: {
 				select: {
+					id: true,
+					autoReequipItems: true,
 					cooker: true,
-					teacher: true
+					teacher: true,
+					items: {
+						select: {
+							itemId: true,
+							quantity: true
+						}
+					}
 				}
 			}
 		}
@@ -701,18 +711,39 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	await archiveFight(fightResult, victory, authed.id, null);
 
-	// Consume item used
-	let merguezUsed = 0;
-	for (const fighter of [...fightResult.attackers]) {
+	// Items used
+	const merguezPerPlayer: Record<string, number> = {};
+	const autoReequippedItems: Record<number, number> = {};
+	const missingReequipItems: Record<number, number> = {};
+	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
 
-			if (itemUsed === Item.GOBLIN_MERGUEZ) {
-				merguezUsed++;
+			if (dinoz.player.autoReequipItems && fighter.playerId === dinoz.player.id) {
+				const inventoryItem = dinoz.player.items.find(i => i.itemId === itemUsed);
+				if (inventoryItem && inventoryItem.quantity > 0) {
+					inventoryItem.quantity--;
+					await decreaseItemQuantity(dinoz.player.id, itemUsed, 1);
+					await addItemToDinoz(fighter.dinozId, itemUsed);
+					autoReequippedItems[itemUsed] = (autoReequippedItems[itemUsed] || 0) + 1;
+				} else {
+					missingReequipItems[itemUsed] = (missingReequipItems[itemUsed] || 0) + 1;
+				}
+			}
+
+			if (fighter.playerId && itemUsed === Item.GOBLIN_MERGUEZ) {
+				if (!merguezPerPlayer[fighter.playerId]) {
+					merguezPerPlayer[fighter.playerId] = 0;
+				}
+				merguezPerPlayer[fighter.playerId]++;
 			}
 		}
 	}
-	await setSpecificStat(StatTracking.MERGUEZ, authed.id, merguezUsed);
+
+	// Handle goblin merguez
+	for (const [playerId, merguezUsed] of Object.entries(merguezPerPlayer)) {
+		await setSpecificStat(StatTracking.MERGUEZ, playerId, merguezUsed);
+	}
 
 	let statusReward: DinozStatusId | undefined = undefined;
 	if (victory && dinoz.FBTournamentStep % 10 === 0) {

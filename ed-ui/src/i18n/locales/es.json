@@ -1040,7 +1040,7 @@
 				"noquestion": "Ah bueno, qué lástima, no dudes en volver de vez en cuando para aprender más sobre el universo de Dinoland.",
 				"pac_start": "Ahhhh, muy buena pregunta, joven aprendiz lleno de energía. Se trata de un pergamino relacionado con mis investigaciones sobre las competencias de los Dinos que nos rodean. ¿Sabías que pueden aprender una gran cantidad de competencias diferentes y que cada una de ellas puede desbloquear otras? Es como un sistema de cajones, donde dentro de cada cajón hay más cajones. He decidido llamarlo un mueble de competencias.&&En fin, todo esto para decir que he podido registrar qué competencias desbloquean a cuáles otras, ¡y eso es realmente muy útil! Pero, lamentablemente, el papel y la tinta utilizados son de fabricación científico-chamánica y solo mis ojos pueden descifrar lo que está escrito allí.",
 				"pac_go": "¡¡¡¡¡¡¡¿Estás loco?!!!!!!!&& &&¡Lárgate de aquí y no se te ocurra volver a hablarme de ese pergamino!",
-				"pac_scroll": "Ah, eh... Felicitaciones por haber creado esta maravilla también. Supongo que necesitas ayuda para usarlo? && && &&Vuelve a verme cuando tengas más experiencia en la crianza de Dinos.",
+				"pac_scroll": "Ah, eh... Felicitaciones por haber creado esta maravilla también. Supongo que necesitas ayuda para usarlo?&&Vuelve a verme cuando tengas más experiencia en la crianza de Dinos.",
 				"pac_end": "Bien, bien, bien. Aquí está entonces el Pergamino de las Competencias Compiladas. && && &&Para usarlo es muy simple. A partir de ahora, cada vez que tus Dinos hayan aprendido un cierto número de veces una competencia, esta será visible en el árbol de competencias. *Sí, finalmente opté por árbol en lugar de un mueble...*"
 			},
 			"playerChoice": {
@@ -2744,7 +2744,8 @@
 		"header": "Lista de misiones",
 		"headers": {
 			"title": "Título",
-			"status": "Estatus"
+			"status": "Estatus",
+			"level": "Niveau"
 		},
 		"xp": "puntos de experiencia",
 		"gold": "oro",
@@ -4157,7 +4158,8 @@
 			"forfeit": "Abandonada",
 			"ongoing": "En curso",
 			"castleDestroyed": "Castillo destruido",
-			"timeout": "Defendido"
+			"timeout": "Defendido",
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
@@ -4493,7 +4495,10 @@
 		},
 		"player": "Maestro",
 		"clan": "Clan",
-		"vs": "VS"
+		"vs": "VS",
+		"announcement": {
+			"overtime": "¡Prórroga!"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Esta página incluye los ingredientes que has obtenido hasta el momento.",
@@ -4601,7 +4606,7 @@
 		"history": "Historial",
 		"dinoz": "Dinos",
 		"items": "Objetos",
-		"makeAnOffer": "Hacer oferta",
+		"makeAnOffer": "Crear una oferta",
 		"filter": "Filtro",
 		"all": "Todos",
 		"seller": "Vendedor",
@@ -4657,10 +4662,17 @@
 		"followed": "Este Dino es el líder del grupo.",
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
-		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}.",
-		"unsacrificeCountdown": "El ritual para devolver a tu Dino de entre los muertos terminará en {time}.",
-		"restingAttackCountdown": "Tu Dino debe recuperarse durante {time} segundos más antes de poder realizar otra acción.",
-		"dungeon": "Tu Dino está explorando actualmente un laberinto. Sal del laberinto para poder ocuparte de él."
+		"unavailable": {
+			"unfreezing": "Tu Dino se está despertando y estará disponible en {midnightTime}.",
+			"unsacrificing": "El ritual para devolver a tu Dino de entre los muertos terminará en {unavailableTime}.",
+			"restingAttack": "Tu Dino todavía debe esperar {attackTime} segundos antes de poder realizar otra acción.",
+			"dungeon": "Tu Dino está explorando actualmente un laberinto. Debe salir del laberinto para que puedas ocuparte de él.",
+			"sacrificed": "Tu Dino ha sido sacrificado. Puedes devolverlo a la vida si lo deseas; esto tardará 24 horas.",
+			"frozen": "Tu Dino está congelado. Puedes descongelarlo si lo deseas; la descongelación terminará a medianoche.",
+			"defending": "Tu Dino defiende el castillo de tu clan.",
+			"selling": "Tu Dino está en venta.",
+			"superdom": "Tu Dino está en el domo de Sulaflota."
+		}
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -5278,21 +5290,21 @@
 	},
 	"forum": {
 		"cancel": "Cancelar",
-		"empty": "Todavía no hay ningún tema.",
-		"pinned": "Tema fijado",
-		"locked": "Este tema está cerrado: ya nadie puede responder.",
+		"empty": "Todavía no hay ningún hilo.",
+		"pinned": "Hilo fijado",
+		"locked": "Este hilo está cerrado: ya nadie puede responder.",
 		"moderated": "Mensaje retirado por la moderación.",
 		"edited": "(editado)",
 		"unread": "Mensajes nuevos",
-		"threadCount": "Número de temas",
+		"threadCount": "Número de hilos",
 		"newThread": {
-			"open": "Nuevo tema",
-			"title": "Nuevo tema",
-			"titleLabel": "Título del tema:",
+			"open": "Nuevo hilo",
+			"title": "Nuevo hilo",
+			"titleLabel": "Título del hilo:",
 			"titlePlaceholder": "Tu título...",
 			"messageLabel": "Tu mensaje:",
 			"messagePlaceholder": "Tu mensaje...",
-			"submit": "Crear el tema",
+			"submit": "Crear el hilo",
 			"titleTooShort": "El título debe tener al menos {min} caracteres.",
 			"messageRequired": "El mensaje no puede estar vacío."
 		},
@@ -5309,14 +5321,14 @@
 			"strong": "Negrita",
 			"emphasis": "Cursiva",
 			"strikethrough": "Tachado",
-			"link": "Enlace"
+			"link": "Link"
 		},
 		"error": {
 			"reauthorize": "Tu sesión de Eternaltwin ha caducado. Vuelve a conectarte para acceder al foro.",
 			"forbidden": "Eternaltwin ha rechazado esta acción. Reintentar no cambiará nada.",
 			"notFound": "Este contenido ya no existe.",
-			"conflict": "Este contenido ha cambiado mientras tanto. Recarga la página antes de volver a intentarlo.",
-			"revisionUnavailable": "No se ha podido encontrar la versión que corregir."
+			"conflict": "Este contenido ha cambiado desde que lo cargaste. Recarga la página antes de volver a intentarlo.",
+			"revisionUnavailable": "No se ha podido encontrar la versión a corregir."
 		}
 	},
 	"messagerie": {
