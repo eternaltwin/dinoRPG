@@ -2745,7 +2745,7 @@
 		"headers": {
 			"title": "Title",
 			"status": "Status",
-			"level": "Niveau"
+			"level": "Level"
 		},
 		"xp": "experience points",
 		"gold": "coins",
@@ -4159,7 +4159,7 @@
 			"ongoing": "Ongoing",
 			"castleDestroyed": "Destroyed Castle",
 			"timeout": "Defended",
-			"stolen": "Destruction volée"
+			"stolen": "Stolen Destruction"
 		}
 	},
 	"clan": {
