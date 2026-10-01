@@ -73,6 +73,7 @@
 		"dinozWrongLocation": "Dein Dinoz kann diese Aktion an diesem Ort nicht durchführen.",
 		"dinozInventoryNotEmpty": "Dein Dinoz muss seine Ausrüstung ablegen.",
 		"dinozNotAvailable": "Dein Dinoz steht für diese Aktion nicht zur Verfügung.",
+		"teamNotAvailable": "Un ou plusieurs membres du groupe ne sont pas disponibles pour faire cette action.",
 		"notEnoughTickets": "Du hast nicht genügend Gutscheine, um diese Aktion auszuführen.",
 		"noShopAccess": "Du erfüllst nicht die Bedingungen, um dieses Geschäft aufzusuchen.",
 		"tooManyItems": "Du hast zu viele Gegenstände, um diesen Vorgang durchzuführen.",

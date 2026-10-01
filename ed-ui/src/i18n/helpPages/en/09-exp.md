@@ -4,24 +4,24 @@ icon:
   name: small_xp
 ---
 
-## L'Expérience
+## Experience
 
-À la fin de chaque combat, votre Dinoz va gagner des **points d'expérience** ![](@icons/small_xp). Une fois que la barre d'expérience présente sur la fiche du Dinoz est remplie, votre Dinoz pourra **gagner un niveau**.
+At the end of each fight, your Dinoz will gain **experience points** ![](@icons/small_xp). Once the experience bar on your Dinoz's profile is filled, your Dinoz will be able to level up.
 
-Tout d'abord, un **élément** est tiré au hasard. Votre Dinoz verra donc la valeur de cet élément augmentée. Voici un exemple :
+First, an **element** is drawn at random. Your Dinoz will then see the value of this element increased. Here's an example:
 
-![Écran de gain de niveau](@guide/exp)
+![Level up interface](@guide/exp)
 
-## Compétences
+## Skills
 
-Ensuite, il vous est demandé d'**apprendre une compétence**, dont la liste est déterminée en fonction de l'élément qui a été choisi. Suivant la description de la compétence, choisissez celle qui vous convient le mieux.
+Then, you will be asked to learn a skill, the list of which is determined based on the element that has been chosen. According to the description of the skill, choose the one that suits you best.
 
-Vous pouvez retrouver la liste des compétences que votre Dinoz a appris à partir de l'onglet **Détails** sur sa fiche.
+You can find the list of skills that your Dinoz has learned from the **Details** tab on its profile.
 
-En fonction de la **race** de votre Dinoz, les **probabilités** d'augmenter un **élément** donné ne sont pas les mêmes, et donc les choix de compétences et les possibilités de développement de votre Dinoz vont varier.
+Depending on your Dinoz's **race**, the **probabilities** of increasing a given **element** are not the same, and thus the choices of skills and the possibilities of your Dinoz's development will vary.
 
-## Débloquer des Compétences
+## Unlocking Skills
 
-Chaque compétence que votre Dinoz apprend peut lui permettre d'accéder à d'autres compétences plus puissantes. Cependant, avant de pouvoir les apprendre, il faudra les **débloquer**. Cette option vous est proposée quand votre Dinoz change de niveau si cela est possible.
+Each skill your Dinoz learns can allow it to access other more powerful skills. However, before they can be learned, they must be **unlocked**. This option is presented to you when your Dinoz levels up if it is possible.
 
-Il vous faudra donc **choisir** entre apprendre plus de compétences pour pouvoir en débloquer plusieurs d'un coup ou débloquer plus rapidement les compétences les plus puissantes.
+Therefore, you will need to choose between learning more skills to potentially unlock several at once or unlocking the most powerful skills more quickly.
