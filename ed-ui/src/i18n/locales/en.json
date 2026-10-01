@@ -2744,7 +2744,8 @@
 		"header": "Missions list",
 		"headers": {
 			"title": "Title",
-			"status": "Status"
+			"status": "Status",
+			"level": "Niveau"
 		},
 		"xp": "experience points",
 		"gold": "coins",
@@ -4157,7 +4158,8 @@
 			"forfeit": "Forfeit",
 			"ongoing": "Ongoing",
 			"castleDestroyed": "Destroyed Castle",
-			"timeout": "Defended"
+			"timeout": "Defended",
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
