@@ -2744,7 +2744,8 @@
 		"header": "Liste der Missionen",
 		"headers": {
 			"title": "Titel",
-			"status": "Status"
+			"status": "Status",
+			"level": "Niveau"
 		},
 		"xp": "Erfahrungspunkte",
 		"gold": "Gold",
@@ -4157,7 +4158,8 @@
 			"forfeit": "Aufgegeben",
 			"ongoing": "Im Gange",
 			"castleDestroyed": "Burg zerstört",
-			"timeout": "Verteidigt"
+			"timeout": "Verteidigt",
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
