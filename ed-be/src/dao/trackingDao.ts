@@ -20,6 +20,12 @@ export function setSpecificStat(stat: string, playerId: string, quantity: number
 	});
 }
 
+export function deleteStat(stat: string, playerId: string) {
+	return prisma.playerTracking.delete({
+		where: { stat_playerId: { stat, playerId } }
+	});
+}
+
 export async function getEveryStatTop3() {
 	const top3: GetStatRankingsResponse = await prisma.$queryRaw`
 		SELECT s.stat, s."playerId", s.quantity, p.name AS "playerName"
