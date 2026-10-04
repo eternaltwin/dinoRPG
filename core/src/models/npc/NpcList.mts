@@ -108,7 +108,7 @@ export const npcList: Partial<Record<NpcName, Npc>> = {
 		name: NpcName.forgeron,
 		id: 8,
 		placeId: PlaceEnum.FORGES_DU_GTC,
-		condition: { [ConditionEnum.ACTIVE]: false }, //TODO use fmedal as condition
+		condition: { [ConditionEnum.PLAYER_EPIC]: Reward.FMEDAL },
 		data: FORGERON,
 		flashvars: 'frame=blabla',
 		missions: undefined
