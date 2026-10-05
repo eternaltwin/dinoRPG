@@ -66,7 +66,7 @@ At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow
 
 ![Dinoz Energy](@guide/energy)
 
-This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
+Each Dinoz has a bar of energy, in blue, next to its health points bar. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
 
 Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others.
 
