@@ -4666,12 +4666,12 @@
 			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
 			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
 			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
-			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"dungeon": "Dein Dinoz erkundet gerade ein Verlies. Um Hilfe zu bekommen, müsste dieser es erst verlassen.",
 			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
 			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
-			"defending": "Votre Dinoz défend le château de votre clan.",
-			"selling": "Votre Dinoz est en vente.",
-			"superdom": "Votre Dinoz est au Super Dôme."
+			"defending": "Dein Dinoz verteidigt eure Klanburg.",
+			"selling": "Dein Dinoz wird verkauft.",
+			"superdom": "Dein Dinoz ist am SuperDom."
 		}
 	},
 	"logs": {
