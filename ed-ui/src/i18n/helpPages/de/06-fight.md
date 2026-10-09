@@ -35,7 +35,7 @@ Diese Elemente sind dem **Großen Zyklus der Elemente** nach angeordnet:
 
 Ein Element ist jeweils stark gegenüber den zwei nachfolgenden und schwach gegenüber den zwei zuvor. So ist beispielsweise Feuer sehr stark gegen Holz und etwas stärker gegen Wasser, während es sehr schwach gegen Luft und etwas schwächer gegen Blitz ist.
 
-## Die Angriffe
+## Les Assauts
 
 Angriffe erfolgen immer in einer festgelegten Reihenfolge, die auf den Elementarwerten basiert, wobei sie im Falle von Gleichheit zufällig bestimmt wird.
 

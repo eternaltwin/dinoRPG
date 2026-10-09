@@ -12,7 +12,7 @@ First, an **element** is drawn at random. Your Dinoz will then see the value of 
 
 ![Level up interface](@guide/exp)
 
-## Skills
+## Compétences
 
 Then, you will be asked to learn a skill, the list of which is determined based on the element that has been chosen. According to the description of the skill, choose the one that suits you best.
 

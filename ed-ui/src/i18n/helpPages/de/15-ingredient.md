@@ -12,6 +12,6 @@ Wenn du über eine solche Fähigkeit verfügst und dich am passenden Ort befinde
 
 Hier geht es darum, Kästchen zu selektieren, die untersucht werden sollen. Mit etwas Glück findest du viele Zutaten, von denen die seltensten mehrere tausend Goldmünzen einbringen können.
 
-Um deine Zutaten zu verkaufen, musst du den **Fliegenden Händler** ausfindig machen, der sich jede Woche an einem anderen Ort aufhält. Abhängig vom **Wochentag** kann er dir verschiedene Arten von Zutaten zu einem Spitzenpreis abkaufen. Sei also auf der Hut!
+Um deine Zutaten zu verkaufen, musst du den **Fliegenden Händler** ausfindig machen, der sich jede Woche an einem anderen Ort aufhält. Abhängig vom **Wochentag** kann er dir verschiedene Arten von Zutaten zu einem Spitzenpreis abkaufen.
 
 Da die Menge an Zutaten, die du transportieren kannst, begrenzt ist, ist es empfehlenswert, diese regelmäßig zu verkaufen.
