@@ -4353,7 +4353,7 @@
 			"WAR_PLAYER_ATTACKED": "He atacado al clan {clan} e infligí {damage} de daño al castillo enemigo.",
 			"WAR_PLAYER_ATTACK": "Les he atacado e infligí {damage} de daño a tu castillo.",
 			"WAR_WON": "¡Hemos ganado la guerra contra el clan {name}!",
-			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y nos robó la guerra.",
+			"WAR_STOLEN": "El clan {destroyedBy} destruyó el castillo del clan {defenderName} y robó la guerra.",
 			"UNKNOWN": "Evento desconocido."
 		}
 	},
