@@ -6,13 +6,13 @@ icon:
 
 **Klane** sind Gemeinschaften von Dino-RPG-Spielern. Als Teil eines Klans kann man sich mit anderen Mitgliedern unterhalten, Techniken und Tipps austauschen und sich gegenseitig helfen. Du kannst einem Klan beitreten oder über **„Klane“** rechts im Menü einen eigenen Klan erstellen.
 
-# Klanbeitritt
+# Rejoindre un Clan
 
-Zunächst musst du wissen, dass man gleichzeitig nur einem Klan angehören kann.
+Tout d'abord, sachez que vous ne pouvez faire partie que d'un seul Clan.
 
-Um einem Klan beizutreten, musst du zunächst einen finden, der zu dir passt. Ob es die Beschreibung des Klangründers, Anwesenheit von Freunden im Klan oder Ruf des Klans bei anderen Spielern ist...  all das kann dir bei der Auswahl weiterhelfen.
+Um einem Klan beizutreten, musst du zunächst einen finden, der zu dir passt. Ob es die Beschreibung des Klangründers, Anwesenheit von Freunden im Klan oder Ruf des Klans bei anderen Spielern ist... all das kann dir bei der Auswahl weiterhelfen.
 
-Sobald du einen Klan ausgesucht hast, kannst du eine Mitgliedschaftsanfrage einreichen. Um unseriöse Anfragen zu vermeiden, kostet das Einreichen **1.000** Goldmünzen ![](@icons/small_gold). Sollte die Anfrage vom Klangründer akzeptiert werden, gehen diese Münzen verloren,  während sie dir beim Abbruch oder einer Ablehnung zurückerstattet werden. Du kannst deine Anfrage jederzeit widerrufen, um beispielsweise einen neuen Mitgliedschaftsantrag bei einem anderen Klan einreichen zu können.
+Sobald du einen Klan ausgesucht hast, kannst du eine Mitgliedschaftsanfrage einreichen. Um unseriöse Anfragen zu vermeiden, kostet das Einreichen **1.000** Goldmünzen ![](@icons/small_gold). Ces pièces seront perdues si votre demande est acceptée par le créateur du Clan. Par contre, si votre demande est refusée ou si vous l'annulez, vous récupérez vos pièces. Du kannst deine Anfrage jederzeit widerrufen, um beispielsweise einen neuen Mitgliedschaftsantrag bei einem anderen Klan einreichen zu können.
 
 # Klan erstellen und verwalten
 
