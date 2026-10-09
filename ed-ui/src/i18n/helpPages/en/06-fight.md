@@ -66,7 +66,7 @@ At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow
 
 ![Dinoz Energy](@guide/energy)
 
-Each Dinoz has a bar of energy, in blue, next to its health points bar. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
+This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses allow to increase it._
 
 Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others.
 
@@ -83,8 +83,8 @@ During the battle, different statuses will affect your Dinoz, either as a bonus 
 - ![Petrified Status](@guide/status_petrified) The Dinoz is petrified, it cannot attack anymore
 - ![Assault Bonus Status](@guide/status_assault_bonus) The Dinoz has a bonus on its assaults
 - ![Poison Status](@guide/status_poisoned) The fighter is poisoned and takes damage every cycle
-- ![Locked Status](@guide/status_locked) The fighter's element wheel is locked
-- ![Dazzled Status](@guide/status_dazzled) Le fighter is dazzled and may miss its assaults
+- ![Statut Vérouillé](@guide/status_locked) Le Dinoz n'est pas libre d'utiliser tous ses éléments
+- ![Statut Étourdi](@guide/status_dazzled) Le Dinoz est ébloui, il peut rater son assaut sur un Dinoz adverse
 - ![Protected Status](@guide/status_protected) The Dinoz is protected by a teammate
 - ![Muted Status](@guide/status_mute) The Dinoz is muted and cannot call its invocation
 - ![Sharingan Status](@guide/status_sharingan) The Dinoz can copy skills from its opponents
