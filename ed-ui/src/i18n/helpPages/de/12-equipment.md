@@ -14,4 +14,4 @@ Um einen Kampfgegenstand auszurüsten, verwende den Reiter **„Inventar“**. D
 
 Die meisten Kampfgegenstände sind nur einmalig verwendbar. Wenn dein Dinoz also einen davon im Kampf benutzt, wird er zerstört und an seiner Stelle kann etwas Anderes ausgerüstet werden.
 
-Kampfgegenstände ermöglichen dir, deine **Strategie** an die Monster, denen du begegnest, anzupassen. Setze sie also sinnvoll ein.
+Kampfgegenstände ermöglichen dir, deine **Strategie** an die Monster, denen du begegnest, anzupassen.
