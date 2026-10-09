@@ -12,7 +12,7 @@ Access the **Inventory** tab from your Dinoz's profile to see the list of items 
 
 ![Use a cloud burger from the inventory](@guide/heal)
 
-## Resting
+## Se Reposer
 
 If your Dinoz has very few health points, it can \*_rest_ ![](@icons/act_rest). This allows it to automatically recover hit points over time. However, it cannot perform any actions while resting.
 
