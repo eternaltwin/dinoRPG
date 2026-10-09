@@ -4,7 +4,7 @@ icon:
   name: small_follow
 ---
 
-# Fortbewegung
+# Se Déplacer
 
 Die Welt von Dinoland ist voller Schauplätze zum Entdecken. Diese unterschiedlichen Orte sind durch Wege verbunden, auf denen sich dein Dinoz fortbewegen kann. Um deinen Dinoz zu **bewegen**, musst du auf der Karte lediglich einen nahegelegenen Punkt anklicken. Die Karte des Dinolandes sieht folgendermaßen aus:
 
