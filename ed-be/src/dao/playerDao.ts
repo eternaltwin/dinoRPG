@@ -797,7 +797,8 @@ export async function getPlayerInfoForAdmin(playerId: string) {
 					select: {
 						id: true,
 						name: true
-					}
+					},
+					orderBy: [{ id: 'asc' }]
 				}
 			}
 		});
