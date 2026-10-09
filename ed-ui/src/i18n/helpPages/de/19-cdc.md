@@ -12,13 +12,13 @@ Dann können Klane noch in der **Meisterschaft der Klane** gegeneinander antrete
 
 Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platziert werden oder seine Rangplatzierung verändern bis die Meisterschaft beendet ist.
 
-In der Endphase wird kein unentschieden zugelassen und bei einem Gleichstand wird einer der Klane per Zufallsprinzip zum Sieger erklärt.
+Il n'est pas possible d'avoir un match nul en phase finale : ci cela devait arriver, un des deux Clans serait déclaré vainqueur par tirage au sort.
 
 # Das Schlachtfeld
 
 Eine Schlacht wird gestartet, wenn zwei Klane aufeinandertreffen. Sie dauert _3 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
-Eine Schlacht findet an einem bestimmten Ort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Ein Spieler kann bis zu _3 Dinoz_ in eine Schlacht schicken und insgesamt können sich nicht mehr als _45 Dinoz_ eines Klans auf dem Schlachtfeld befinden.
+Une bataille se déroule dans un lieu donné. Vous devrez déplacer vos Dinoz à ce lieu pour qu'ils puissent y participer. Un joueur peut avoir jusqu'à _3 Dinoz_ dans une bataille, et dans tous les cas un Clan ne peut avoir plus de _45 Dinoz_ dans une bataille.
 
 Hier ist eine vereinfachte Darstellung der Kampfansicht:
 
@@ -28,7 +28,7 @@ Oben siehst du den aktuellen **Punktestand** der Schlacht und unten die verbleib
 
 Dinoz, die sich der Schlacht angeschlossen haben, können sich um ein Feld bewegen und müssen daraufhin zunächst eine bestimmte Anzahl von Minuten warten, bevor sie sich erneut bewegen können. Es ist möglich, Aktionen anzusammeln, wenn man sie nicht sofort verwendet.
 
-Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,   allerdings kann ein Dinoz nur von seinem Besitzer bewegt werden.
+Vous pouvez cliquer sur un Dinoz pour pouvoir le déplacer ou savoir à qui il appartient. Seule le propriétaire d'un Dinoz peut le déplacer.
 
 _An dieser Stelle erinnern wir daran, dass die Weitergabe von Kontodaten zwischen Spielern verboten ist und dass im Falle eines Verstoßes gegen die Vorschriften alle betroffenen Konten permanent gesperrt werden._
 
@@ -56,4 +56,4 @@ Die Positionierung der Dinoz ist daher äußerst wichtig, wenn man im Kampf nich
 
 Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, denn der Gegner wird überrascht und kann keine Verstärkung herbeirufen. Der Kampf findet in diesem Fall eins gegen eins statt.
 
-Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann die Schlacht auch freiwillig verlassen, indem er an die Anfangslinie seines Klans zurückkehrt. In dem Fall kann er geheilt werden und dann die Schlacht wiederaufnehmen.
+Eine Schlacht findet an einem bestimmten Ort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Ein Spieler kann bis zu _3 Dinoz_ in eine Schlacht schicken und insgesamt können sich nicht mehr als _45 Dinoz_ eines Klans auf dem Schlachtfeld befinden.
