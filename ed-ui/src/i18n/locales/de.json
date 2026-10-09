@@ -235,7 +235,7 @@
 			"cueille": "Dein Dinoz kann an diesem Ort hübsche Pflänzchen **pflücken**. Manche von ihnen sind noch unbekannt, daher sollte man sie lieber nicht essen!",
 			"anniv": "Verwende deine Jubiläumsgutscheine, um seltene Schätze zu finden und vielleicht auch Dinoz-Eier!",
 			"fish": "Dein Dinoz kann an dieser Stelle nach zahlreichen Zutaten **fischen**. Aber hüte dich vor dem großen, bösen, schwarzen Hai aus den Abgründen der Pestilenz!",
-			"hunt": "Der Dinoz kann in der Umgebung **Wildtiere** jagen, um so an wertvolle Zutaten zu gelangen.",
+			"hunt": "Der Dinoz kann in der Umgebung **wilde Tiere** jagen, um so an wertvolle Zutaten zu gelangen.",
 			"seek": "Dein Dinoz kann an diesem Ort nach **uralten Artefakten** in der Erde schürfen. Sie sind selten aber an Wert nicht zu überbieten!",
 			"energy": "Ermöglicht dem Dinoz, an bestimmten Stellen alle Arten von elementarer Energie zu absorbieren.",
 			"xmas": "Mit deinen Weihnachtsgutscheinen kannst du bei der Schneetzeljagd mitmachen und zahlreiche Geschenke gewinnen!",
@@ -491,7 +491,7 @@
 			"lightning_sphere": "Blitzsphäre",
 			"air_sphere": "Luftsphäre",
 			"void_sphere": "Leerensphäre",
-			"demon_ticket": "Dämonengutschein",
+			"demon_ticket": "Dämonenticket",
 			"treasure_coupon": "Schatzbrief",
 			"moueffe_egg": "Möffen-Ei",
 			"moueffe_egg_rare": "Seltenes Möffen-Ei",
@@ -2398,7 +2398,7 @@
 			"Survie": "Im Falle seines Todes wird der Dinoz einmalig mit 12 Lebenspunkten wiederbelebt.",
 			"Aiguillon": "Greift einen Gegner mit einer Luftkraft von 3 an.",
 			"AuraPuante": "Vergiftet für eine mittlere Dauer Angreifer im Nahkampf, welche dann jede Runde 10 Schaden erleiden.",
-			"Hypnose": "Einer der Gegner wird hypnotisiert und kämpft dann für 4 Runden an deiner Seite.",
+			"Hypnose": "Einer der Gegner wird hypnotisiert und kämpft dann an deiner Seite.",
 			"Vendetta": "Erhöht die Chance auf einen Gegenangriff um 20%.",
 			"Secousse": "Schlägt mit einer Holz- und Luftkraft von 4 auf dem Boden auf und fügt dabei allen Gegnern Schaden zu.",
 			"Bulle": "Der Dinoz wird von einem Schutzschild umhüllt, der den Schaden von Fähigkeiten aller Elemente außer Holz reduziert. Die Wirksamkeit basiert auf dem Verhältnis des Wasser- und Luftelements zu den anderen Elementen.",
@@ -2745,7 +2745,7 @@
 		"headers": {
 			"title": "Titel",
 			"status": "Status",
-			"level": "Stufe"
+			"level": "Niveau"
 		},
 		"xp": "Erfahrungspunkte",
 		"gold": "Gold",
@@ -4159,7 +4159,7 @@
 			"ongoing": "Im Gange",
 			"castleDestroyed": "Burg zerstört",
 			"timeout": "Verteidigt",
-			"stolen": "Zerstörung geraubt"
+			"stolen": "Destruction volée"
 		}
 	},
 	"clan": {
@@ -4497,7 +4497,7 @@
 		"clan": "Klan",
 		"vs": "VS",
 		"announcement": {
-			"overtime": "Verlängerung! "
+			"overtime": "Prolongations !"
 		}
 	},
 	"ingredients": {
@@ -4663,15 +4663,15 @@
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 		"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
 		"unavailable": {
-			"unfreezing": "Dieser Dinoz ist am Auftauen und wird um {midnightTime} verfügbar sein.",
-			"unsacrificing": "Das Ritual zur Wiedererweckung deines Dinoz von den Toten wird um {unavailableTime} abgeschlossen sein.",
-			"restingAttack": "Dein Dinoz muss noch {attackTime} Sekunden lang Pause machen, bevor er eine weitere Aktion ausführen kann.",
-			"dungeon": "Dein Dinoz erkundet gerade ein Verlies. Um Hilfe zu bekommen, müsste dieser es erst verlassen.",
-			"sacrificed": "Dein Dinoz wurde geopfert. Du kannst ihn nach Belieben wiedererwecken – der Vorgang wäre nach 24 Stunden abgeschlossen.",
-			"frozen": "Dein Dinoz ist eingefroren. Du kannst ihn nach Belieben auftauen – der Vorgang wäre dann um Mitternacht abgeschlossen.",
-			"defending": "Dein Dinoz verteidigt eure Klanburg.",
-			"selling": "Dein Dinoz wird verkauft.",
-			"superdom": "Dein Dinoz ist am SuperDom."
+			"unfreezing": "Votre Dinoz est en train de se réveiller et sera disponible dans {midnightTime}.",
+			"unsacrificing": "Le rituel pour ramener votre Dinoz d'entre les morts se finira dans {unavailableTime}.",
+			"restingAttack": "Votre Dinoz doit récupérer encore {attackTime} secondes avant de pouvoir refaire une action.",
+			"dungeon": "Votre Dinoz explore actuellement un donjon, sortez-en afin de vous en occuper.",
+			"sacrificed": "Votre Dinoz a été sacrifié. Vous pouvez le ramener à la vie si vous le souhaitez, cela prendra 24 heures.",
+			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
+			"defending": "Votre Dinoz défend le château de votre clan.",
+			"selling": "Votre Dinoz est en vente.",
+			"superdom": "Votre Dinoz est au Super Dôme."
 		}
 	},
 	"logs": {
@@ -5301,21 +5301,21 @@
 			"open": "Neues Thema",
 			"title": "Neues Thema",
 			"titleLabel": "Titel des Themas:",
-			"titlePlaceholder": "Dein Titel...",
-			"messageLabel": "Dein Beitrag:",
-			"messagePlaceholder": "Dein Beitrag...",
+			"titlePlaceholder": "Dein Titel ...",
+			"messageLabel": "Deine Nachricht:",
+			"messagePlaceholder": "Deine Nachricht ...",
 			"submit": "Thema erstellen",
 			"titleTooShort": "Der Titel muss mindestens {min} Zeichen lang sein.",
-			"messageRequired": "Der Beitrag darf nicht leer sein."
+			"messageRequired": "Die Nachricht darf nicht leer sein."
 		},
 		"reply": {
 			"title": "Antworten",
-			"placeholder": "Deine Antwort…",
+			"placeholder": "Deine Antwort ...",
 			"submit": "Senden"
 		},
 		"edit": {
 			"open": "Bearbeiten",
-			"submit": "Übernehmen"
+			"submit": "Speichern"
 		},
 		"editor": {
 			"strong": "Fett",
@@ -5325,9 +5325,9 @@
 		},
 		"error": {
 			"reauthorize": "Deine Eternaltwin-Sitzung ist abgelaufen. Melde dich erneut an, um das Forum zu erreichen.",
-			"forbidden": "Eternaltwin hat diese Aktion abgelehnt. Ein erneuter Versuch wird nichts daran ändern.",
-			"notFound": "Dieser Inhalt ist nicht mehr verfügbar.",
-			"conflict": "Dieser Inhalt hat sich inzwischen geändert. Lade die Seite neu, bevor du es erneut versuchst.",
+			"forbidden": "Eternaltwin hat diese Aktion abgelehnt. Ein erneuter Versuch ändert nichts.",
+			"notFound": "Dieser Inhalt existiert nicht mehr.",
+			"conflict": "Dieser Inhalt hat sich zwischenzeitlich geändert. Lade die Seite neu, bevor du es erneut versuchst.",
 			"revisionUnavailable": "Die zu korrigierende Fassung konnte nicht gefunden werden."
 		}
 	},
