@@ -18,7 +18,7 @@ Solltest du die fünf angebotenen Herausforderungen schaffen oder überspringen,
 
 Um dein Dojo erstellen zu können, musst du Meister Zenit treffen, der sich am häufigsten in Rohkraft aufhält. Er wird dir erklären, wie du dein Dojo bauen kannst und wie es funktioniert. Du musst einen Ort auswählen und links im Menü die Schaltfläche „Dojo“ anklicken. Sobald das Dojo gebaut ist, kannst du von überall darauf zugreifen.
 
-# Herausforderungen
+# Les Défis
 
 Herausforderungen sind Kämpfe, in denen du gegen Dinoz anderer Dino-RPG-Spieler antreten musst. Du wirst aufgefordert, einen bestimmten Gegner zu besiegen, unabhängig davon, ob du zusätzlich versuchst, ein zuvor festgelegtes Ziel zu erreichen.
 
