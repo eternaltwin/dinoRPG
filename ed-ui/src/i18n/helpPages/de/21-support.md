@@ -11,19 +11,19 @@ Vor allem Anderen, denk bitte daran, den **Browser-Cache zu leeren**! Dieser Vor
 In Microsoft Edge:
 
 - Drücke gleichzeitig [Strg], [Umschalt] und [Entf]
-- Es öffnet sich ein neues Fenster,  in dessen Reiter du „Gecachte Bilder und Daten“ auswählen musst
+- Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
 - Bestätige deine Auswahl, indem du auf „Leeren“ drückst
 
 In Mozilla Firefox:
 
-- Klicke oben im Menü auf „Extras“ und dann „Einstellungen“
-- Wähle den Abschnitt „Datenschutz und Sicherheit“ aus
+- Cliquez sur le bouton de menu et sélectionnez les Paramètres
+- Sélectionnez le panneau Vie privée et sécurité
 - Weiter unten bei „Cookies und Website-Daten“, klicke auf die Schaltfläche „Daten entfernen...“
 - Setze das Häkchen bei „Temporäre Dateien und Seiten im Cache“ und bestätige mit „Löschen“
 
 In Google Chrome:
 
-- Klicke auf „Mehr“ und wähle „Browser-Daten leeren“
+- Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
 - Wähle „Bilder und Daten im Cache“ und klicke dann auf „Daten löschen“
 
 # Hilfe anfordern
