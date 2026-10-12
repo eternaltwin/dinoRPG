@@ -6,12 +6,12 @@ icon:
 
 # Introduction
 
-Welcome to **DinoRPG** !
+Bienvenue sur **DinoRPG** !
 
-Here, you play as a **Dinoz Master**, you can adopt and play multiple wild creatures named **Dinoz**. You can explore the world of Dinoland, battle and evolve your Dinoz, complete **Missions**, and fulfill the numerous **Quests** you encounter during your adventure.
+Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou plusieurs petites créatures sauvages nommées les **Dinoz**. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure.
 
-If you need assistance, you can access this **Game Guide** at any time by clicking the button ![question mark](@icons/small_question) in the right Menu.
+Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce **Guide du Jeu** en cliquant sur le bouton ![point d'interrogation](@icons/small_question) dans le Menu de droite.
 
-To continue reading the **Guide**, please click the button ![next page](@icons/small_page_down) below.
+Pour découvrir la suite du **Guide**, merci de cliquer sur le bouton ![page suivante](@icons/small_page_down) ci-dessous.
 
-Some sections of this guide are not up-to-date and in the processor of being reworked.
+Certaines sections de ce guide ne sont pas finies et sont en cours de mise à jour.
