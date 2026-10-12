@@ -4,13 +4,13 @@ icon:
   name: small_delete
 ---
 
-# La Mort
+# Death
 
-Il peut arriver qu'en combattant un monstre trop fort ou parce qu'il n'avait pas assez de vie, votre Dinoz meure au cours d'un combat. Pendant qu'il est mort, votre Dinoz ne peut alors plus effectuer **aucune action**. Il est donc immobilisé jusqu'à ce qu'il soit ressuscité.
+It can happen that your Dinoz dies during a battle while fighting a monster that is too strong or because it did not have enough health. While it is dead, your Dinoz cannot perform any actions. It is therefore immobilized until it is resurrected.
 
-Vous avez 2 possibilités pour **ressusciter** votre Dinoz :
+You have 2 options to **resuscitate** your Dinoz:
 
-- **Gratuitement** : votre Dinoz retournera à Dinoville et il perdra la moitié de ses points d'expérience accumulés depuis son dernier niveau.
-- Avec une **potion d'ange** ![](@item/item_potion_angel) : votre Dinoz restera où il est et ne perdra pas de points d'expérience.
+- **For free**: your Dinoz will return to Dinotown and will lose half of its accumulated experience points since its last level.
+- With an **angel potion** ![](@item/item_potion_angel): your Dinoz will remain where it is and will not lose any experience points.
 
-Selon la façon dont vous préférez gérer vos pièces d'or, l'une comme l'autre des solutions peut être intéressante.
+Depending on how you prefer to manage your gold coins, either solution can be interesting.
