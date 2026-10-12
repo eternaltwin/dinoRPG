@@ -4,14 +4,14 @@ icon:
   name: fx_bckpck
 ---
 
-# Equipments
+# Les Équipements
 
-On its profile, your Dinoz has a certain number of slots available for combat equipment. Some can indeed be equipped in one of these slots, and they will then be usable in battle.
+Sur sa fiche, votre Dinoz d'un certain nombre d'emplacements disponibles pour des **équipements de combat**. Certains peuvent en effet être **équipés** dans un de ces emplacements et ils seront alors utilisables en combat.
 
-To equip a combat item, go the **Inventory**. The **equip** ![](@icons/small_equip) action is not available for all objects. Once an item is equipped, you can remove it at any time by clicking on its slot in the equipment. Here's an example:
+Pour équiper un objet de combat, utilisez l'onglet **Inventaire**. L'action **équiper** ![](@icons/small_equip) n'est disponible que pour certains objets. Une fois un objet équipé, vous pouvez à tout moment l'enlever en cliquant sur son emplacement dans l'équipement. Voici un exemple :
 
-![Example to equip an item](@guide/equipment)
+![Exemple de Dinoz équipé d'objets](@guide/equipment)
 
-Most combat items can only be used once. This means that when your Dinoz uses it in battle, it will be destroyed, and a new item can then be equipped in its place.
+La plupart des objets de combat ne sont utilisables qu'une seule fois. Cela veut dire que lorsque votre Dinoz l'utilisera lors d'un combat, il sera détruit et un nouvel objet pourra alors être équipé à sa place.
 
-Combat equipment allows you to adapt your **strategy** based on the monsters you encounter, so make good use of it.
+Les équipements de combat permettent d'adapter votre **stratégie** en fonction des monstres que vous rencontrez, faites-en bon usage.
