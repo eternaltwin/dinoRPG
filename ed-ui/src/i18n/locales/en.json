@@ -110,7 +110,7 @@
 		"selectADinozAtMarketFirst": "You must first bring a Dinoz to the market.",
 		"unknownDinoz": "Unknown Dinoz.",
 		"noFollowers": "The Dinoz is not followed.",
-		"leaderChanged": "Your Dinoz is the new group leader",
+		"leaderChanged": "Your Dinoz is the new group leader.",
 		"missingUser": "Missing user.",
 		"missingData": "Missing data.",
 		"labrute": "You received {quantity} :irma:.",
@@ -193,17 +193,17 @@
 		"text3": "DinoRPG is part of {Eternaltwin}, if you want, you can donate on {OpenCollective}."
 	},
 	"import": {
-		"disclaimer": "You can save your original DinoRPG account on DinoRPG.&& &&All your dinoz, items and ingredients will be saved. The same applies to the status, skills, levels and appearances of your dinoz.&& &&Missions carried out by your dinoz will not be saved, some will be automatically completed due to their mandatory nature.&&The same applies to items equipped on your Dinoz. To start saving, save the cookie link as a new bookmark, go to the DinorRPG site and click on the new bookmark. Then paste the cookie in the appropriate field, and click on the button of the server you wish to import.&&&Accept the use of the Twinoid application when prompted.&& &&The more Dinoz you have in your account, the longer it will take to save. **Do not leave the page while importing.**&& &&You can restart the import a second time. Only one server can be saved. You won't be able to save the progress and dinoz of all servers at once, so choose carefully!&& &&If you have any questions or problems, don't hesitate to contact us on the Eternaltwin Discord.",
+		"disclaimer": "You can save your original DinoRPG account on DinoRPG.&& &&All your Dinoz, items and ingredients will be saved. The same applies to the status, skills, levels and appearances of your Dinoz.&& &&Missions carried out by your Dinoz will not be saved, some will be automatically completed due to their mandatory nature.&&The same applies to items equipped on your Dinoz. To start saving, save the cookie link as a new bookmark, go to the DinorRPG site and click on the new bookmark. Then paste the cookie in the appropriate field, and click on the button of the server you wish to import.&&&Accept the use of the Twinoid application when prompted.&& &&The more Dinoz you have in your account, the longer it will take to save. **Do not leave the page while importing.**&& &&You can restart the import a second time. Only one server can be saved. You won't be able to save the progress and Dinoz of all servers at once, so choose carefully!&& &&If you have any questions or problems, don't hesitate to contact us on the Eternaltwin Discord.",
 		"imported": "Congratulations, the account named {accountName} and having the Twinoid ID {accountID} has been imported!&&{nbDinos} Dinoz of which {nbDemons} sacrificed Dinoz have been saved from the server {server}!&&A new import will delete what is currently saved.",
 		"deleted": "Congratulations, the account named {accountName} with the Twinoid ID {accountID} has been removed from DinoRPG! &&{nbDinos} Dinoz, including {nbDemons} sacrificed Dinoz have been removed. You can now re-import.",
 		"disclaimer2": "You can save your Twinoid trophies and statistics by clicking on the button below."
 	},
 	"element": {
-		"fire": "Element **Fire**",
-		"wood": "Element **Wood**",
-		"water": "Element **Water**",
-		"lightning": "Element **Lightning**",
-		"air": "Element **Air**",
+		"fire": "**Fire** Element",
+		"wood": "**Wood** Element",
+		"water": "**Water** Element",
+		"lightning": "**Lightning** Element",
+		"air": "**Air** Element",
 		"neutral": "Element **Void** && //(this element applies to the monsters' normal attacks)//",
 		"void": "Element **Void** && //(this element applies to the monsters' normal attacks)//"
 	},
