@@ -4,16 +4,16 @@ icon:
   name: fx_ccard
 ---
 
-# La Fiche du Dinoz
+# The Dinoz Profile
 
-La **Fiche** de votre Dinoz est l'endroit où vous pouvez à la fois voir l'**état** de votre Dinoz et effectuer un certain nombre d'**actions**. Elle se présente sous la forme suivante :
+The **profile** of your Dinoz is where you can both see the **state** of your Dinoz and perform a number of **actions**. It is presented as follows:
 
-![Fiche du Dinoz](@guide/card)
+![Dinoz Profile](@guide/card)
 
-Vous pouvez y apercevoir les informations suivantes :
+You can observe the following information :
 
-- En haut à droite, les **éléments** et la **race** de votre Dinoz.
-- En dessous de l'image, dans le rond rouge, son **niveau**, permettant de mesurer sa puissance actuelle. Dans la barre marquée ![pv](@icons/small_pv) (PV), ses **points de vie** : c'est la santé de votre Dinoz. Quand la barre est entièrement vide, votre Dinoz **meurt**. Dans la barre marquée ![xp](@icons/small_xp) (XP), ses **points d'expérience** : vous en gagnez après chaque combat. Quand la barre est pleine, votre Dinoz pourra progresser d'un niveau.
-- En dessous, les différentes **actions** que votre Dinoz peut effectuer, par exemple _Combattre_.
+- At the top right, the **elements** and **race** of your Dinoz.
+- Below the image, in the red circle, its **level**, indicating its current power. In the bar marked ![pv](@icons/small_pv) (HP), its **hit points**: this is your Dinoz' health. When the bar is completely empty, your Dinoz **dies**. In the bar marked ![xp](@icons/small_xp) (XP), its **experience points**: it gains some after each battle. When the bar is full, your Dinoz can progress to the next level.
+- Below, the different **actions** your Dinoz can perform, such as _Fight_.
 
-Nous allons maintenant parler des différentes actions que votre Dinoz peut effectuer.
+We will now discuss the various actions your Dinoz can perform.
