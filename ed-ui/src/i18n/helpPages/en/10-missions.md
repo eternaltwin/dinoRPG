@@ -4,16 +4,16 @@ icon:
   name: small_gold
 ---
 
-# Les Missions
+# Missions
 
-Au cours de vos aventures dans Dinoland, vous pourrez rencontrer de nombreux personnages. Certains de ces personnages comme **Papy Joe** vous donneront accès à une liste de **missions**.
+During your adventures in Dinoland, you will encounter many characters. Some of these characters, like **Grandpa Joe**, will grant you access to a list of **missions**.
 
-Chaque mission a un objectif précis :
+Each mission has a precise goal :
 
-![Exemple de mission de Papy Joe](@guide/missions)
+![Grandpa Joe mission example](@guide/missions)
 
-Votre Dinoz ne peut effectuer qu'**une seule mission à la fois**, donc choisissez avec soin celle que vous voulez effectuer puis accomplissez-la. Une fois l'objectif de la mission rempli, vous pouvez retourner voir le personnage qui a donné la mission à votre Dinoz pour obtenir une récompense.
+Your Dinoz can undertake **only one mission at a time**, so choose carefully which one you want to undertake and then complete it. Once the mission's objective is fulfilled, you can return to the character who assigned the mission to your Dinoz to claim a reward.
 
-Certaines missions sont bloquées au départ. Pour les débloquer, il vous faudra finir d'autres missions auparavant, augmenter le niveau de votre Dinoz, ou terminer certaines **Quêtes** données par d'autres personnages.
+Some missions are not available immediately. To unlock them, you will need to complete other missions first, increase your Dinoz's level, or finish certain **Quests** given by other characters.
 
-Une mission peut être remplie une fois par chacun de vos Dinoz.
+A mission can be completed only once per Dinoz.
