@@ -4,10 +4,10 @@ icon:
   name: small_edit
 ---
 
-# Les Statuts
+# Statuses
 
-En complétant différentes **Missions et Quêtes**, votre Dinoz va pouvoir obtenir de nombreux statuts qui seront répertoriés sur sa fiche. Placez la souris sur une de ces **statuts** pour obtenir de l'aide sur son effet.
+By completing various **Missions and Quests**, your Dinoz will be able to obtain numerous statuses that will be listed on its profile. Hover over one of those **statuses** to get help on its effect.
 
-En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus.
+In general, statuses are permanent. This means that once obtained, you cannot lose them. However, some statuses are temporary and can therefore be lost.
 
-Les statuts sont affichés quand vous consultez les Dinoz d'un autre joueur : saurez-vous en consulter le maximum ?
+The statuses are displayed when you view another player's Dinoz: will you be able to view the maximum of them ?
