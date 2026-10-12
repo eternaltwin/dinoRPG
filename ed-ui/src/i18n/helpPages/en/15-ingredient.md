@@ -4,14 +4,14 @@ icon:
   name: fx_pelle
 ---
 
-Certaines compétences permettent à votre Dinoz de **collecter des ingrédients** dans les différents lieux de Dinoland.
+Some skills allow your Dinoz to **collect ingredients** from various locations in Dinoland.
 
-Quand vous avez une de ces compétences et que vous êtes sur le bon lieu, une action de collecte apparaît parmi les actions de votre Dinoz. Lorsque vous effectuez cette action, une grille s'affiche.
+When you have one of these skills and you are in the right location, a collection action appears among your Dinoz' actions. When you perform this action, a grid appears.
 
-![Exemple de grille de récolte](@guide/gather)
+![Example of collect grid](@guide/gather)
 
-Vous devez sélectionner la ou les cases que vous désirez examiner. Avec un peu de chance, vous trouverez de nombreux ingrédients dont les plus rares vous rapporteront plusieurs milliers de pièces d'or.
+You must select a set number of tiles you wish to examine. With a bit of luck, you will find numerous ingredients, with the rarest ones fetching several thousand gold coins.
 
-Pour vendre vos ingrédients, vous devez trouver le **Marchand Ambulant** qui se déplace chaque semaine dans un nouveau lieu. En fonction du **jour de la semaine**, il pourra vous acheter différents types d'ingrédients pour un très bon prix, alors soyez attentifs.
+To sell your ingredients, you need to find the Wandering Merchant who moves to a new location every week. Depending on the **day of the week**, he may buy different types of ingredients for a very good price, so be attentive.
 
-Vous avez une quantité maximum d'ingrédients que vous pouvez transporter, il vous faudra donc les vendre de façon régulière.
+You have a maximum quantity of ingredients you can carry, so you will need to sell them regularly.
