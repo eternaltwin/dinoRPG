@@ -4,8 +4,8 @@ icon:
   name: small_mode
 ---
 
-# Les Objets Épiques
+# Epic Items
 
-Sur votre fiche de Maître Dinoz, accessible à partir du lien **Mon Compte** dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques.
+On your Master Dinoz's profile, accessible from the **My Account** link in the right menu, you can find the list of your epic rewards.
 
-Ces objets peuvent être récupérés de différentes façons, soit par l'accomplissement de **Quêtes**, soit par la participation à des **événements** qui rythment la vie du site. Vous ne pouvez en posséder qu'un seul exemplaire de chaque et ils sont visibles par les autres joueurs de DinoRPG.
+These items can be obtained in different ways, either by completing **Quests** or by participating in **events** that punctuate the life of the game. You can only own one copy of each, and they are visible to other DinoRPG players.
