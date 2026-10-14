@@ -107,3 +107,11 @@ Alors il faut changer `eternalTwinServerUri` dans `ed-be/config_development.toml
 Il n'est pas nécessaire de recréer un compte ET à chaque fois. Tant que les DB ne sont pas wipe, l'environnement est persistant.
 
 Eternaltwin créé par défaut 10 compte (alice, bob, etc) avec pour mot de passe la première lettre du prénom 10 fois. Les information sont visualisable dans eternaltwin.local.toml
+
+# Licence
+
+Le code source de DinoRPG est distribué sous licence [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0) : toute utilisation non commerciale est autorisée. Copyright [Eternaltwin](https://eternaltwin.org).
+
+Les assets du jeu (images, sprites, animations, sons…) sont la propriété de [Motion Twin](https://motion-twin.com) et sont distribués sous licence [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+Voir le fichier [LICENSE](LICENSE) pour le texte complet des deux licences.

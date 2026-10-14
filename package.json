@@ -2,12 +2,7 @@
 	"name": "@eternaltwin/dinorpg-monorepo",
 	"private": true,
 	"version": "0.19.4",
-	"licenses": [
-		{
-			"type": "AGPL-3.0-or-later",
-			"url": "https://spdx.org/licenses/AGPL-3.0-or-later.html"
-		}
-	],
+	"license": "PolyForm-Noncommercial-1.0.0",
 	"engines": {
 		"node": ">=22"
 	},

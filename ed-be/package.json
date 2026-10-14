@@ -23,7 +23,7 @@
 		"git": false
 	},
 	"author": "Jolujolu",
-	"license": "ISC",
+	"license": "PolyForm-Noncommercial-1.0.0",
 	"dependencies": {
 		"@drpg/core": "workspace:^",
 		"@drpg/renderer": "workspace:^",

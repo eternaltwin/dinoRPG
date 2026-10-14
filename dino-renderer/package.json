@@ -1,6 +1,7 @@
 {
 	"name": "@drpg/renderer",
 	"version": "1.0.0",
+	"license": "PolyForm-Noncommercial-1.0.0",
 	"description": "Renders DinoRPG dinoz to PNG using @eternaltwin/dinorpg_animations + Puppeteer",
 	"private": true,
 	"type": "module",
