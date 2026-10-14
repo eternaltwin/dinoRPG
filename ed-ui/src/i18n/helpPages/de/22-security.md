@@ -8,4 +8,4 @@ icon:
 
 **Egal, wer fragt**...
 
-Ne communiquez jamais vos identifiants et mots de passe !
+**Niemals** deine Anmeldedaten oder Passwörter weitergeben!
