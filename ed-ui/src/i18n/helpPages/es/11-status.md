@@ -4,7 +4,7 @@ icon:
   name: small_edit
 ---
 
-# Los Estatus
+# Les Statuts
 
 En complétant différentes **Missions et Quêtes**, votre Dinoz va pouvoir obtenir de nombreux statuts qui seront répertoriés sur sa fiche. Placez la souris sur une de ces **statuts** pour obtenir de l'aide sur son effet.
 

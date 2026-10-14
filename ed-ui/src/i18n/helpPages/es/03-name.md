@@ -4,7 +4,7 @@ icon:
   name: small_question
 ---
 
-# Ponerle un nombre
+# Nommer son Dinoz
 
 Una vez comprado tu Dino, tienes que ponerle un nombre. Por ejemplo:
 

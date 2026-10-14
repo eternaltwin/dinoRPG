@@ -6,7 +6,7 @@ icon:
 
 Wenn du mehrere Dinoz hast, können sie sich gemeinsam fortbewegen und als **Gruppe** kämpfen. Hierzu musst du zwei Dinoz zunächst zum gleichen Ort bringen und dann bei einem von ihnen die Aktion **„Folgen“** benutzen.
 
-Sobald deine Dinoz-Gruppe zusammengestellt ist, reisen und kämpfen ihre Mitglieder zusammen:
+Une fois votre groupe constitué, vous pouvez vous déplacer et combattre ensemble.
 
 ![Beispiel eines Gruppenkampfes](@guide/group)
 

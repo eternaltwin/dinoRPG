@@ -8,11 +8,11 @@ icon:
 
 Am Ende jedes Kampfes erhält dein Dinoz **Erfahrungspunkte** ![](@icons/small_xp). Sobald der Erfahrungsbalken im Dinoz-Profil gefüllt ist, kann dein Dinoz **eine Stufe aufsteigen**.
 
-Zunächst wird durch Zufallsprinzip ein **Element** ermittelt,  was dazu führt, dass sich bei deinem Dinoz der entsprechende Wert erhöht. Hier ist ein Beispiel:
+Tout d'abord, un **élément** est tiré au hasard. Votre Dinoz verra donc la valeur de cet élément augmentée. Hier ist ein Beispiel:
 
 ![Beispiel eins Stufenaufstiegs](@guide/exp)
 
-## Fähigkeiten
+## Compétences
 
 Dann wird erforderlich, dass **eine Fähigkeit erlernt wird** und zwar aus einer Liste, welche durch das ermittelte Element bestimmt wird. Wähle eine Fähigkeit aus, deren Beschreibung dir am meisten zusagt.
 
@@ -20,7 +20,7 @@ Die Liste der Fähigkeiten, die dein Dinoz bereits erlernt hat, findest du auf s
 
 Abhängig von der **Rasse** deines Dinoz unterscheiden sich die **Wahrscheinlichkeiten**, ein bestimmtes **Element** zu steigern, weshalb sowohl die Auswahl ihrer Fähigkeiten, als auch ihre Entwicklungmöglichkeiten variieren können.
 
-## Fähigkeiten freischalten
+## Débloquer des Compétences
 
 Jede Fähigkeit, die dein Dinoz erlernt, kann ihm Zugriff zu anderen, mächtigeren Fähigkeiten gewähren. Bevor diese jedoch erlernt werden können, müssen sie zunächst **freigeschaltet** werden. Falls möglich, wird diese Option beim Stufenaufstieg angeboten.
 
