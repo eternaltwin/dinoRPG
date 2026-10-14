@@ -189,7 +189,7 @@
 		"thanks": "Agradecimientos",
 		"dinorpg": "DinoRPG",
 		"text1": "Este juego es un proyecto fan de {DinoRPG} de Motion Twin. A menos que se indique lo contrario, todos los elementos gráficos se han extraído del juego y son propiedad de Motion Twin.",
-		"text2": "DinoRPG es de código abierto y todo el mundo puede participar. Puedes consultar el código fuente en {Gitlab}.",
+		"text2": "DinoRPG es de código abierto y todo el mundo puede participar. Puedes consultar el código fuente en {GitHub}.",
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
 	"import": {
