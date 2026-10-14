@@ -47,7 +47,7 @@
 		"build:back": "cd ed-be && yarn run build",
 		"build:front": "cd ed-ui && yarn run build",
 		"build:render": "cd dino-renderer && yarn run build",
-		"build:gitlab": "yarn run build:render && yarn run build:back && yarn run build:front",
+		"build:ci": "yarn run build:render && yarn run build:back && yarn run build:front",
 		"build": "yarn run build:render && yarn run build:back && yarn run build:front",
 		"build-debug": "yarn run build:back && yarn run build:front",
 		"build:core": "cd core && yarn run build",

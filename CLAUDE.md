@@ -85,4 +85,4 @@ Pages → Components → Services (Axios) → Backend REST /api/v1
 - **Formatter**: Prettier — tabs, LF, semicolons, single quotes, no trailing commas, 120-char width
 - **Package manager**: `yarn` only (not npm or pnpm); Yarn 4.10.3 via `.yarn/releases/`
 - **core/ sources**: `.mts` files; package exports built `.mjs` from `dist/`
-- **CI** (`.gitlab-ci.yml`): `yarn install` → `yarn build:gitlab` → `yarn lint:test` on MRs and `develop`
+- **CI** (`.github/workflows/`): `ci.yml` runs `yarn build:ci` → `yarn lint:test` + backend coverage on PRs, `develop` and `staging`; `release.yml` bumps the `eternaltwin/config` channel file on `staging` pushes and tags

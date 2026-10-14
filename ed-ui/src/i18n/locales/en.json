@@ -189,7 +189,7 @@
 		"thanks": "Special Thanks",
 		"dinorpg": "DinoRPG",
 		"text1": "This is a fan-project for {DinoRPG} from Motion Twin. Unless otherwise stated, all graphic parts are from these games and thus are Motion Twin's property.",
-		"text2": "DinoRPG is Open Source and everyone is welcome to contribute. You can find the source code on {Gitlab}.",
+		"text2": "DinoRPG is Open Source and everyone is welcome to contribute. You can find the source code on {GitHub}.",
 		"text3": "DinoRPG is part of {Eternaltwin}, if you want, you can donate on {OpenCollective}."
 	},
 	"import": {

@@ -13,7 +13,7 @@ Pour déployer l'environnement de dev, suivez les étapes suivantes :
 ## Clonage
 Cloner le projet
 ```bash
-$ git clone git@gitlab.com:eternal-twin/dinorpg/dinorpg.git
+$ git clone git@github.com:eternaltwin/dinoRPG.git
 ```
 Checkout sur staging:
 ```bash

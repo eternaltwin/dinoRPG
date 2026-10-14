@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, staging]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --immutable
+      - run: yarn build:ci
+      - run: yarn lint:test
+
+  back-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --immutable
+      - run: yarn build:core
+      - run: yarn build:render
+      - working-directory: ed-be
+        run: >-
+          yarn vitest run --coverage
+          --coverage.reporter=text
+          --coverage.reporter=cobertura
+          --reporter=default
+          --reporter=junit
+          --outputFile.junit=junit.xml
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: back-coverage
+          path: |
+            ed-be/junit.xml
+            ed-be/coverage/cobertura-coverage.xml
