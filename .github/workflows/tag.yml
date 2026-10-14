@@ -1,0 +1,79 @@
+name: Tag
+
+# On every pushed tag:
+# 1. if the tag is on staging, merge staging into develop;
+# 2. if the tag is (then) on develop, create the GitHub release;
+# 3. point the server-config production channel to the released commit.
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tag-release
+  cancel-in-progress: false
+
+jobs:
+  merge-staging:
+    runs-on: ubuntu-latest
+    outputs:
+      on-develop: ${{ steps.check.outputs.on-develop }}
+      commit: ${{ steps.check.outputs.commit }}
+    steps:
+      # GITHUB_TOKEN cannot push commits that touch .github/workflows/, so the push
+      # goes through DEPLOY_KEY (repository deploy key with write access).
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+      - name: Merge staging into develop
+        run: |
+          TAG_COMMIT=$(git rev-parse "${GITHUB_REF_NAME}^{commit}")
+          if git merge-base --is-ancestor "$TAG_COMMIT" origin/staging; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git checkout -B develop origin/develop
+            git merge --no-edit origin/staging -m "Merge branch 'staging' into develop (${GITHUB_REF_NAME})"
+            git push origin develop
+          else
+            echo "Tag ${GITHUB_REF_NAME} is not on staging, no merge."
+          fi
+      - name: Check tag is on develop
+        id: check
+        run: |
+          git fetch --no-tags origin develop
+          TAG_COMMIT=$(git rev-parse "${GITHUB_REF_NAME}^{commit}")
+          echo "commit=$TAG_COMMIT" >> "$GITHUB_OUTPUT"
+          if git merge-base --is-ancestor "$TAG_COMMIT" origin/develop; then
+            echo "on-develop=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Tag ${GITHUB_REF_NAME} is not on develop, no release."
+            echo "on-develop=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  release:
+    needs: merge-staging
+    if: needs.merge-staging.outputs.on-develop == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "Release ${GITHUB_REF_NAME} already exists."
+          else
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              --verify-tag --title "$GITHUB_REF_NAME" --generate-notes
+          fi
+
+  # Releases created with GITHUB_TOKEN do not trigger the `release` event,
+  # so the production channel is updated from here.
+  production:
+    needs: [merge-staging, release]
+    uses: ./.github/workflows/production-channel.yml
+    with:
+      tag: ${{ github.ref_name }}
+    secrets: inherit

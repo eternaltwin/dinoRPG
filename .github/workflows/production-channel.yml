@@ -1,0 +1,26 @@
+name: Production channel
+
+# Points the server-config production channel to the commit of a published release.
+# Triggered by releases created by hand, and called by the Tag workflow for the releases it creates.
+on:
+  release:
+    types: [published]
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  update-production:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - name: Update production.json
+        env:
+          CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
+        run: .github/scripts/update-channel.sh production "$(git rev-parse HEAD)" "[DRPG] Version $TAG"

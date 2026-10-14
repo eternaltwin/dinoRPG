@@ -85,4 +85,4 @@ Pages → Components → Services (Axios) → Backend REST /api/v1
 - **Formatter**: Prettier — tabs, LF, semicolons, single quotes, no trailing commas, 120-char width
 - **Package manager**: `yarn` only (not npm or pnpm); Yarn 4.10.3 via `.yarn/releases/`
 - **core/ sources**: `.mts` files; package exports built `.mjs` from `dist/`
-- **CI** (`.github/workflows/`): `ci.yml` runs `yarn build:ci` → `yarn lint:test` + backend coverage on PRs, `develop` and `staging`; `release.yml` bumps the `eternaltwin/config` channel file on `staging` pushes and tags
+- **CI** (`.github/workflows/`): `ci.yml` runs `yarn build:ci` → `yarn lint:test` + backend coverage on PRs, `develop` and `staging`; `staging-channel.yml` points the `eternaltwin/config` (GitLab server-config) staging channel to each `staging` push; `tag.yml` on a tag merges `staging` into `develop` (if the tag is on staging) through the `DEPLOY_KEY` deploy key secret, creates the GitHub release (if the tag is on develop) and calls `production-channel.yml`, which points the production channel to the released commit (also runs on manually published releases)
