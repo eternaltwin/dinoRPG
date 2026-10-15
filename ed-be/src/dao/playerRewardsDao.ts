@@ -1,6 +1,6 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-import { setSpecificStat } from './trackingDao.js';
+import { setSpecificStat, deleteStat } from './trackingDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
@@ -33,6 +33,14 @@ export async function addMultipleRewardToPlayer(rewards: Prisma.PlayerRewardCrea
 }
 
 export async function removeRewardFromPlayer(playerId: string, rewardId: number) {
+	const rewardStat = Object.values(rewardList).find(r => r.id === rewardId);
+	if (!rewardStat) throw new ExpectedError(`Epic reward not found`);
+
+	try {
+		await deleteStat(rewardStat.name, playerId);
+	} catch (error) {
+		// If the stat doesn't exist, do nothing.
+	}
 	await prisma.playerReward.delete({
 		where: { rewardId_playerId: { rewardId, playerId } }
 	});
