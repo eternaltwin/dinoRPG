@@ -1,0 +1,49 @@
+version: 2
+updates:
+  # Yarn 4 monorepo: the root manifest + yarn.lock cover every workspace
+  - package-ecosystem: npm
+    directory: /
+    target-branch: staging
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Paris
+    open-pull-requests-limit: 10
+    versioning-strategy: increase-if-necessary
+    commit-message:
+      prefix: deps
+      prefix-development: deps-dev
+    groups:
+      prisma:
+        patterns:
+          - prisma
+          - '@prisma/*'
+      vue:
+        patterns:
+          - vue
+          - vue-*
+          - '@vue/*'
+          - '@vitejs/*'
+          - vite
+          - pinia
+      opentelemetry:
+        patterns:
+          - '@opentelemetry/*'
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: staging
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Paris
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns:
+          - '*'
