@@ -58,7 +58,7 @@
 		"romans": "^3.1.0",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.0",
-		"toml": "^3.0.0",
+		"toml": "^5.0.0",
 		"url": "^0.11.3",
 		"ws": "^8.15.1"
 	},
