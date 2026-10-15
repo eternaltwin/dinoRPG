@@ -12,15 +12,6 @@ const midnightReset = async () => {
 		await prisma.$transaction(
 			async tx => {
 				await tx.$executeRaw`SELECT pg_advisory_xact_lock(${SHARED_DINOZ_OPERATIONS_LOCK})`;
-				// Unfreeze dinoz
-				await tx.dinoz.updateMany({
-					where: {
-						unavailableReason: UnavailableReason.unfreezing
-					},
-					data: {
-						unavailableReason: null
-					}
-				});
 
 				// Fount healing
 				const lifeIncrement = 5;
