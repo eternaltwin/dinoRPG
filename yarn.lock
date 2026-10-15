@@ -1909,7 +1909,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@drpg/prisma@workspace:prisma":
+"@drpg/prisma@workspace:^, @drpg/prisma@workspace:prisma":
   version: 0.0.0-use.local
   resolution: "@drpg/prisma@workspace:prisma"
   languageName: unknown
@@ -3842,6 +3842,17 @@ __metadata:
     picocolors: "npm:^1.0.0"
     tslib: "npm:^2.6.0"
   checksum: 10/f0b0b305a83bd65fac5637d28ad3e33f19194043e03ceef6b4e13d260bfa2678b73df76dc56ed906469ffe0494d4bd214e6b92ca80684f38547982edf982dd15
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:1.63.0":
+  version: 1.63.0
+  resolution: "@playwright/test@npm:1.63.0"
+  dependencies:
+    playwright: "npm:1.63.0"
+  bin:
+    playwright: cli.js
+  checksum: 10/b5e561b8f11488b8062b98c5cf975740f48ae7e9b455fb7152e0fb90d8e13f20c3c3ae6a15833655364246b99f5a46f6601daa5a9eef01de5004c8be7e2b3af3
   languageName: node
   linkType: hard
 
@@ -7727,6 +7738,16 @@ __metadata:
   checksum: 10/62ba61a830c56801db28ff6305c7d289b6dc9f859054e8c982abd8ee0b0a14d2e9a8e7d086ffee12e868d43e2bbe8a964be55ddbd8c8957714c87373c7a4f9b0
   languageName: node
   linkType: hard
+
+"e2e@workspace:e2e":
+  version: 0.0.0-use.local
+  resolution: "e2e@workspace:e2e"
+  dependencies:
+    "@drpg/prisma": "workspace:^"
+    "@playwright/test": "npm:1.63.0"
+    dotenv: "npm:^16.4.5"
+  languageName: unknown
+  linkType: soft
 
 "earcut@npm:^2.2.4":
   version: 2.2.4
@@ -12895,6 +12916,26 @@ __metadata:
   dependencies:
     find-up: "npm:^4.0.0"
   checksum: 10/9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.63.0":
+  version: 1.63.0
+  resolution: "playwright-core@npm:1.63.0"
+  bin:
+    playwright-core: cli.js
+  checksum: 10/d0f7c70786f5e08aa7553a77ba28c07427086e323ae8c4126a647debd8181966dc11d6f8fe1462f2a776ad60c95451b08f01fbee17b11e69a5bd9a2070fe75a6
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.63.0":
+  version: 1.63.0
+  resolution: "playwright@npm:1.63.0"
+  dependencies:
+    playwright-core: "npm:1.63.0"
+  bin:
+    playwright: cli.js
+  checksum: 10/ec87c22888148603a8955bc2a092f416455af931fe53925b9143ce333b83e42a6d8c159c00a4f2d232b27100cf3eadd93cec8a6e5c4e12c1c00663d2034dd515
   languageName: node
   linkType: hard
 

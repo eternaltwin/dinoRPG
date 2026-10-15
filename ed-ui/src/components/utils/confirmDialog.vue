@@ -17,13 +17,18 @@
 			</section>
 
 			<footer class="simple-confirm-dialog-footer">
-				<DZButton v-if="rejectLabel" class="btn btn-reject" @click="rejectDialog">
+				<DZButton v-if="rejectLabel" class="btn btn-reject" data-testid="confirm-reject" @click="rejectDialog">
 					<div class="btn-content">
 						<img :src="getImgURL('icons', 'small_delete')" alt="delete" />
 						<span>{{ rejectLabel }}</span>
 					</div>
 				</DZButton>
-				<DZButton class="btn btn-accept" @click="acceptDialog" @keydown.enter="acceptDialog">
+				<DZButton
+					class="btn btn-accept"
+					data-testid="confirm-accept"
+					@click="acceptDialog"
+					@keydown.enter="acceptDialog"
+				>
 					<div class="btn-content">
 						<img :src="getImgURL('icons', 'small_right')" alt="right" />
 						<span>{{ acceptLabel }}</span>

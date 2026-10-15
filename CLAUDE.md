@@ -38,6 +38,7 @@ Requires Node >= 22 and PostgreSQL 17 with `dinorpg` and `eternaltwin` databases
 | Lint check only (no write) | `yarn lint:test` |
 | Lint autofix | `yarn lint:fix` |
 | Backend tests | `yarn test:ci` |
+| Front e2e tests (Playwright) | `yarn test:e2e` (`yarn test:e2e:ui` for the UI mode) |
 | DB sync (dev) | `yarn db:sync:dev` |
 | Create migration only | `yarn db:migrate:manual` |
 | Apply migration | `yarn migration` |
@@ -80,9 +81,15 @@ Pages → Components → Services (Axios) → Backend REST /api/v1
 - **Backend**: import from `@drpg/prisma`
 - Generated files under `prisma/` are auto-generated — do not hand-edit (except `prisma/generate-enums-wrapper.js` and `prisma/package.reference.json`)
 
+## E2E tests (e2e/)
+
+- Playwright drives the real stack: it starts ed-be (`prisma migrate deploy` + `dist/main.js`, so run `yarn build:core && yarn build:back` first) and Vite on the usual ports, against the `dinorpg_e2e` database. Stop `yarn dev` before running them.
+- Database URL: `E2E_DATABASE_URL`, else `DATABASE_URL` from `ed-be/.env` with the database swapped for `dinorpg_e2e`. First run: `yarn --cwd e2e playwright install chromium`.
+- No Eternaltwin: the `player` fixture (`e2e/support/fixtures.ts`) inserts a fresh player per test and sets the `x-drpg-e2e-*` cookies. Pin backend env in `e2e/support/env.ts`, which overrides `ed-be/.env`.
+
 ## Style & Tooling
 
 - **Formatter**: Prettier — tabs, LF, semicolons, single quotes, no trailing commas, 120-char width
 - **Package manager**: `yarn` only (not npm or pnpm); Yarn 4.10.3 via `.yarn/releases/`
 - **core/ sources**: `.mts` files; package exports built `.mjs` from `dist/`
-- **CI** (`.github/workflows/`): `ci.yml` runs `yarn build:ci` → `yarn lint:test` + backend coverage on PRs, `develop` and `staging`; `staging-channel.yml` points the `eternaltwin/config` (GitLab server-config) staging channel to each `staging` push; `tag.yml` on a tag merges `staging` into `develop` (if the tag is on staging) through the `DEPLOY_KEY` deploy key secret, creates the GitHub release (if the tag is on develop) and calls `production-channel.yml`, which points the production channel to the released commit (also runs on manually published releases)
+- **CI** (`.github/workflows/`): `ci.yml` runs `yarn build:ci` → `yarn lint:test` + backend coverage + Playwright e2e (Postgres service) on PRs, `develop` and `staging`; `staging-channel.yml` points the `eternaltwin/config` (GitLab server-config) staging channel to each `staging` push; `tag.yml` on a tag merges `staging` into `develop` (if the tag is on staging) through the `DEPLOY_KEY` deploy key secret, creates the GitHub release (if the tag is on develop) and calls `production-channel.yml`, which points the production channel to the released commit (also runs on manually published releases)

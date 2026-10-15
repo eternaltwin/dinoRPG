@@ -55,3 +55,8 @@ prisma/runtime/*
 !prisma/generate-enums-wrapper.js
 
 dino-renderer/cache/*
+
+# Playwright e2e outputs
+/e2e/test-results/
+/e2e/playwright-report/
+/e2e/blob-report/

@@ -29,7 +29,8 @@
 					"ed-ui/package.json",
 					"core/package.json",
 					"prisma/package.json",
-					"Eternaltwin/package.json"
+					"Eternaltwin/package.json",
+					"e2e/package.json"
 				]
 			}
 		}
@@ -49,6 +50,8 @@
 		"etwin": "cd Eternaltwin && yarn run eternaltwin db sync",
 		"test:ci": "yarn build:core && cd ed-be && yarn run test:ci",
 		"coverage": "cd ed-be && yarn run coverage",
+		"test:e2e": "cd e2e && yarn test",
+		"test:e2e:ui": "cd e2e && yarn test:ui",
 		"lint:test": "cd ed-ui && yarn lint:test",
 		"lint:fix": "cd ed-ui && yarn lint:fix",
 		"lint": "yarn prettier --config .prettierrc '**/src/**/*.{mts,ts,json}' --write && yarn lint:fix",
@@ -69,7 +72,8 @@
 			"core/",
 			"prisma/",
 			"Eternaltwin/",
-			"dino-renderer/"
+			"dino-renderer/",
+			"e2e/"
 		]
 	},
 	"packageManager": "yarn@4.10.3",

@@ -1,0 +1,17 @@
+{
+	"name": "e2e",
+	"version": "0.19.4",
+	"license": "PolyForm-Noncommercial-1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"test": "yarn playwright test",
+		"test:ui": "yarn playwright test --ui",
+		"report": "yarn playwright show-report"
+	},
+	"devDependencies": {
+		"@drpg/prisma": "workspace:^",
+		"@playwright/test": "1.63.0",
+		"dotenv": "^16.4.5"
+	}
+}
