@@ -574,6 +574,11 @@ export async function reincarnate(req: Request) {
 		for (const skill of race.skills) {
 			promises.push(addSkillToDinoz(dinoz.id, skill));
 		}
+		if (race.demon && race.demon.skills && dinoz.status.some(s => s.statusId === DinozStatusId.DEMON)) {
+			for (const skill of race.demon?.skills) {
+				promises.push(addSkillToDinoz(dinoz.id, skill));
+			}
+		}
 	}
 	promises.push(removeAllStatusFromDinoz(dinoz.id));
 	promises.push(removeAllMissionsFromDinoz(dinoz.id));
