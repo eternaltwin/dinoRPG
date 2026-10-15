@@ -30,7 +30,7 @@
 	],
 	"devDependencies": {
 		"@types/finalhandler": "^1.2.3",
-		"@types/node": "^22.10.2",
+		"@types/node": "^26.6.5",
 		"@types/serve-static": "^1.15.5",
 		"typescript": "^5.4.0"
 	}

@@ -1914,7 +1914,7 @@ __metadata:
   dependencies:
     "@eternaltwin/dinorpg_animations": "npm:^1.0.9"
     "@types/finalhandler": "npm:^1.2.3"
-    "@types/node": "npm:^22.10.2"
+    "@types/node": "npm:^26.6.5"
     "@types/serve-static": "npm:^1.15.5"
     finalhandler: "npm:^1.2.0"
     puppeteer: "npm:^22.0.0"
@@ -4655,12 +4655,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.10.2":
-  version: 22.10.2
-  resolution: "@types/node@npm:22.10.2"
+"@types/node@npm:^26.6.5":
+  version: 26.6.5
+  resolution: "@types/node@npm:26.6.5"
   dependencies:
-    undici-types: "npm:~6.20.0"
-  checksum: 10/451adfefed4add58b069407173e616220fd4aaa3307cdde1bb701aa053b65b54ced8483db2f870dcedec7a58cb3b06101fbc19d85852716672ec1fd3660947fa
+    undici-types: "npm:~8.9.0"
+  checksum: 10/03780cc68280b566af47c0f673318e665258dbdcc953737a83c11593424d55aecb8b2642a573da33f76cb4dd5457379548388b78ab284cb3b762030e5d58b252
   languageName: node
   linkType: hard
 
@@ -7787,7 +7787,7 @@ __metadata:
     "@types/cron": "npm:^2.4.3"
     "@types/express": "npm:^4.17.21"
     "@types/multer": "npm:^1.4.12"
-    "@types/node": "npm:^22.10.2"
+    "@types/node": "npm:^26.6.5"
     "@types/node-fetch": "npm:^2.6.12"
     "@types/node-schedule": "npm:^2.1.7"
     "@types/request": "npm:^2.48.12"
@@ -15336,10 +15336,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.20.0":
-  version: 6.20.0
-  resolution: "undici-types@npm:6.20.0"
-  checksum: 10/583ac7bbf4ff69931d3985f4762cde2690bb607844c16a5e2fbb92ed312fe4fa1b365e953032d469fa28ba8b224e88a595f0b10a449332f83fa77c695e567dbe
+"undici-types@npm:~8.9.0":
+  version: 8.9.0
+  resolution: "undici-types@npm:8.9.0"
+  checksum: 10/8785591929de2b71d281c684e915c4a8c41becc225adbf42a3e89148f8b384724a21533494c30a1cbb85b4cbccd088d020788ff4f2d605013eb2863cd47a1639
   languageName: node
   linkType: hard
 
