@@ -76,6 +76,12 @@ export default defineComponent({
 	computed: {
 		eternaltwinGames() {
 			return getEternaltwinGames().sort(() => Math.random() - 0.5);
+		},
+		// Player allowed to receive notifications. Login sets the id and the ToS flag in the same tick:
+		// one watcher on both opens a single SSE connection instead of two racing ones.
+		ssePlayerId(): string | null {
+			const playerId = this.playerStore.getPlayerId;
+			return this.playerStore.getTosAccepted && typeof playerId === 'string' ? playerId : null;
 		}
 	},
 	methods: {
@@ -165,10 +171,7 @@ export default defineComponent({
 		'playerStore.getNotificationsCounter': function (notification: number) {
 			this.notification = notification;
 		},
-		'playerStore.getPlayerId': function () {
-			this.startSseForNotification();
-		},
-		'playerStore.getTosAccepted': function () {
+		ssePlayerId() {
 			this.startSseForNotification();
 		}
 	},
