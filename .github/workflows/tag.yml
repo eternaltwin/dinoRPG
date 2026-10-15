@@ -29,7 +29,7 @@ jobs:
     steps:
       # GITHUB_TOKEN cannot push commits that touch .github/workflows/, so the push
       # goes through DEPLOY_KEY (repository deploy key with write access).
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
