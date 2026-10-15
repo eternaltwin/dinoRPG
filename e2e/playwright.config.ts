@@ -9,6 +9,8 @@ export default defineConfig({
 	forbidOnly: CI,
 	retries: CI ? 2 : 0,
 	workers: CI ? 2 : undefined,
+	// The Vite dev server transforms modules on first request, which is slow on a cold CI runner.
+	expect: { timeout: CI ? 15_000 : 5_000 },
 	reporter: CI ? [['list'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'on-failure' }]],
 	use: {
 		baseURL: FRONT_URL,
