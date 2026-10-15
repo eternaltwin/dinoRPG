@@ -3,13 +3,14 @@ import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, upd
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addMoney, auth, getPlayerInfoForAdmin, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
-import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
+import { addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
+import { createNotification } from '../dao/notificationDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../dao/playerItemDao.js';
+import { decreaseItemQuantity, setMultipleItem } from '../dao/playerItemDao.js';
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { ClanEventType, LogType } from '@drpg/prisma';
+import { ClanEventType, LogType, NotificationSeverity } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
@@ -193,6 +194,11 @@ export async function setPlayerMoney(req: Request) {
 		case 'add':
 			await createLog(LogType.AdminAddMoney, authed.id, undefined, req.params.id, req.body.gold);
 			newMoney = (await addMoney(req.params.id, +req.body.gold)).money;
+			await createNotification(
+				req.params.id,
+				JSON.stringify([{ rewardType: RewardEnum.GOLD, value: +req.body.gold }] satisfies Rewarder[]),
+				NotificationSeverity.reward
+			);
 			break;
 		case 'remove':
 			await createLog(LogType.AdminRemoveMoney, authed.id, undefined, req.params.id, req.body.gold);
