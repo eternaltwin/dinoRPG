@@ -242,10 +242,11 @@ export function config(env: Record<string, string | undefined>): Config {
 		section: eternaltwinSection
 	};
 
+	// Empty values count as unset, so an environment can switch off webhooks that a .env file defines.
 	const rawDiscordPantheonNotifId = env.DISCORD_PANTHEON_WEBHOOK_ID;
 	const rawDiscordPantheonNotifToken = env.DISCORD_PANTHEON_WEBHOOK_TOKEN;
 	let discordPantheonNotifications: DiscordConfig | null = null;
-	if (typeof rawDiscordPantheonNotifId === 'string' && typeof rawDiscordPantheonNotifToken === 'string') {
+	if (rawDiscordPantheonNotifId && rawDiscordPantheonNotifToken) {
 		discordPantheonNotifications = {
 			webhookId: rawDiscordPantheonNotifId,
 			webhookToken: rawDiscordPantheonNotifToken
@@ -255,7 +256,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	const rawDiscordNewsNotifId = env.DISCORD_NEWS_WEBHOOK_ID;
 	const rawDiscordNewsNotifToken = env.DISCORD_NEWS_WEBHOOK_TOKEN;
 	let discordNewsNotifications: DiscordConfig | null = null;
-	if (typeof rawDiscordNewsNotifId === 'string' && typeof rawDiscordNewsNotifToken === 'string') {
+	if (rawDiscordNewsNotifId && rawDiscordNewsNotifToken) {
 		discordNewsNotifications = {
 			webhookId: rawDiscordNewsNotifId,
 			webhookToken: rawDiscordNewsNotifToken
@@ -265,7 +266,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	const rawDiscordLogId = env.DISCORD_LOGS_WEBHOOK_ID;
 	const rawDiscordLogToken = env.DISCORD_LOGS_WEBHOOK_TOKEN;
 	let discordLogs: DiscordConfig | null = null;
-	if (typeof rawDiscordLogId === 'string' && typeof rawDiscordLogToken === 'string') {
+	if (rawDiscordLogId && rawDiscordLogToken) {
 		discordLogs = {
 			webhookId: rawDiscordLogId,
 			webhookToken: rawDiscordLogToken
