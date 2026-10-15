@@ -29,3 +29,19 @@ test('a player who has not accepted the terms must accept them first', async ({ 
 	const saved = await db.player.findUniqueOrThrow({ where: { id: player.id } });
 	expect(saved.tosAccepted).toBe(true);
 });
+
+test('logging in opens a single notification stream', async ({ page, player }) => {
+	const sseAuthentications: string[] = [];
+	page.on('request', request => {
+		if (request.method() === 'POST' && request.url().endsWith('/server-events/sse/authenticate')) {
+			sseAuthentications.push(request.url());
+		}
+	});
+
+	await page.goto('/');
+	await expect(page.locator('#accountList .money')).toBeVisible();
+	await page.waitForLoadState('networkidle');
+
+	expect(sseAuthentications).toHaveLength(1);
+	await expect(page.getByText('Too many requests')).toHaveCount(0);
+});
