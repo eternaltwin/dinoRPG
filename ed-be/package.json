@@ -80,7 +80,7 @@
 		"@vitest/coverage-v8": "^4.1.9",
 		"concurrently": "^9.1.0",
 		"prettier": "^3.4.2",
-		"prisma": "^6.5.0",
+		"prisma": "^7.10.0",
 		"sanitize-html": "^2.13.1",
 		"ts-node": "^10.9.2",
 		"tsc-watch": "6.2.1",
