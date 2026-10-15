@@ -1,7 +1,7 @@
 name: Production channel
 
 # Points the server-config production channel to the commit of a published release.
-# Triggered by releases created by hand, and called by the Tag workflow for the releases it creates.
+# Triggered by releases created by hand (after the e2e tests), and called by the Tag workflow for the releases it creates.
 on:
   release:
     types: [published]
@@ -12,7 +12,14 @@ on:
         type: string
 
 jobs:
+  # The Tag workflow runs the e2e tests before calling this one; a release published by hand has not.
+  e2e:
+    if: github.event_name == 'release'
+    uses: ./.github/workflows/e2e.yml
+
   update-production:
+    needs: e2e
+    if: ${{ !cancelled() && (needs.e2e.result == 'success' || needs.e2e.result == 'skipped') }}
     runs-on: ubuntu-latest
     env:
       TAG: ${{ inputs.tag || github.event.release.tag_name }}

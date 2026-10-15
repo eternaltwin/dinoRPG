@@ -1,6 +1,7 @@
 name: Tag
 
 # On every pushed tag:
+# 0. run the e2e tests on the tagged commit; nothing below happens if they fail;
 # 1. if the tag is on staging, merge staging into develop;
 # 2. if the tag is (then) on develop, create the GitHub release;
 # 3. point the server-config production channel to the released commit.
@@ -16,7 +17,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  e2e:
+    uses: ./.github/workflows/e2e.yml
+
   merge-staging:
+    needs: e2e
     runs-on: ubuntu-latest
     outputs:
       on-develop: ${{ steps.check.outputs.on-develop }}
