@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"@drpg/prisma": "workspace:^",
-		"@playwright/test": "1.63.0",
+		"@playwright/test": "1.64.0",
 		"dotenv": "^16.4.5"
 	}
 }
