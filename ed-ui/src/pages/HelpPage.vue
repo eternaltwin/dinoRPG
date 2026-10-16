@@ -46,7 +46,7 @@
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZButton from '../components/common/DZButton.vue';
-import Markdown from 'vue3-markdown-it';
+import Markdown from '../utils/markdown';
 import { MarkdownWithMetadata, loadAllHelpPages, processMarkdownImages } from '../utils/markdownLoader';
 import { localStore } from '../store/index';
 

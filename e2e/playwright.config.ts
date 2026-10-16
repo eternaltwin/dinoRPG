@@ -8,7 +8,8 @@ export default defineConfig({
 	fullyParallel: true,
 	forbidOnly: CI,
 	retries: CI ? 2 : 0,
-	workers: CI ? 2 : undefined,
+	// The Vite dev server serves the app unbundled: more parallel pages make cold loads time out.
+	workers: 2,
 	// The Vite dev server transforms modules on first request, which is slow on a cold CI runner.
 	expect: { timeout: CI ? 15_000 : 5_000 },
 	reporter: CI ? [['list'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'on-failure' }]],

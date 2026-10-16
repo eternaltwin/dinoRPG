@@ -1,6 +1,6 @@
 import { App } from 'vue';
 import type { ToastPluginApi, ToastProps } from 'vue-toast-notification';
-import ToastPlugin from 'vue-toast-notification';
+import { ToastPlugin } from 'vue-toast-notification';
 import { playerStore } from '../store';
 import { formatText } from './formatText';
 

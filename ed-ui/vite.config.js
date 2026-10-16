@@ -1,8 +1,10 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import { fileURLToPath } from 'node:url';
 
 const STATIC_DIR = 'public';
+const MIXINS = fileURLToPath(new URL('./src/css/_mixins.scss', import.meta.url));
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -19,12 +21,13 @@ export default defineConfig(({ mode }) => {
 		},
 		css: {
 			preprocessorOptions: {
-				scss: { additionalData: `@import "./src/css/_mixins.scss";` }
+				scss: { additionalData: `@use "${MIXINS}" as *;\n` }
 			}
 		},
 		server: {
 			port: 8080,
-			https: env.VITE_USE_HTTPS === 'true'
+			https: env.VITE_USE_HTTPS === 'true',
+			forwardConsole: false
 		},
 		define: {
 			['import.meta.env.VERSION']: JSON.stringify(require('./package.json').version)

@@ -44,7 +44,7 @@ import { localStore } from '../../store/index.js';
 import { API_BASE, errorHandler } from '../../utils/index.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import Roadmap from './Roadmap.vue';
-import Markdown from 'vue3-markdown-it';
+import Markdown from '../../utils/markdown';
 import Poll from './Poll.vue';
 
 export default defineComponent({
