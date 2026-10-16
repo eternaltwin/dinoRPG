@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/client.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -667,17 +667,19 @@ export const DungeonType: typeof $Enums.DungeonType
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Concentrations
  * const concentrations = await prisma.concentration.findMany()
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -688,16 +690,18 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Concentrations
    * const concentrations = await prisma.concentration.findMany()
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.PrismaClientConstructorArgs<ClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
@@ -710,13 +714,6 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
-
 /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
@@ -724,7 +721,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -736,7 +733,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -747,7 +744,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -759,7 +756,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -775,12 +772,11 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
-
 
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
@@ -1515,14 +1511,6 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
-   */
-  export type Metrics = runtime.Metrics
-  export type Metric<T> = runtime.Metric<T>
-  export type MetricHistogram = runtime.MetricHistogram
-  export type MetricHistogramBucket = runtime.MetricHistogramBucket
-
-  /**
   * Extensions
   */
   export import Extension = $Extensions.UserArgs
@@ -1533,11 +1521,12 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.5.0
-   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
+   * Prisma Client JS version: 7.10.0
+   * Query Engine version: 0edf323efd1d98336f3f0a68684b56f689b900d3
    */
   export type PrismaVersion = {
     client: string
+    engine: string
   }
 
   export const prismaVersion: PrismaVersion
@@ -1547,6 +1536,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -1667,6 +1657,19 @@ export namespace Prisma {
   };
 
   /**
+   * Resolved type of the argument passed to the `PrismaClient` constructor.
+   *
+   * When called without a narrower options type (the common case), this resolves
+   * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+   * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+   * the argument is missing or incomplete. When the user supplies a narrower
+   * options type (e.g. via a literal), it falls back to `Subset` to keep
+   * filtering out unknown properties.
+   */
+  export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+    [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+  /**
    * SelectSubset
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
    * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -1698,7 +1701,7 @@ export namespace Prisma {
   type XOR<T, U> =
     T extends object ?
     U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
+      ((Without<T, U> & U) | (Without<U, T> & T)) & object
     : U : T
 
 
@@ -1989,9 +1992,6 @@ export namespace Prisma {
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-  export type Datasources = {
-    db?: Datasource
-  }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
@@ -7141,32 +7141,32 @@ export namespace Prisma {
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasources?: Datasources
-    /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasourceUrl?: string
-    /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -7179,6 +7179,29 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+     * 
+     * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+     * 
+     * Learn more: https://pris.ly/d/driver-adapters
+     * 
+     * @example
+     * ```ts
+     * import { PrismaPg } from '@prisma/adapter-pg'
+     * import { PrismaClient } from './generated/prisma/client'
+     * 
+     * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+     * const prisma = new PrismaClient({ adapter })
+     * ```
+     */
+    adapter?: runtime.SqlDriverAdapterFactory
+    /**
+     * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+     * 
+     * Learn more: https://pris.ly/d/accelerate
+     */
+    accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -7194,6 +7217,22 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
     concentration?: ConcentrationOmit
@@ -7274,10 +7313,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -7317,25 +7361,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -9312,7 +9337,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Concentration model
-   */ 
+   */
   interface ConcentrationFieldRefs {
     readonly id: FieldRef<"Concentration", 'Int'>
   }
@@ -9515,6 +9540,11 @@ export namespace Prisma {
      * Skip the first `n` Concentrations.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Concentrations.
+     */
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -10927,7 +10957,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Dinoz model
-   */ 
+   */
   interface DinozFieldRefs {
     readonly id: FieldRef<"Dinoz", 'Int'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
@@ -11161,6 +11191,11 @@ export namespace Prisma {
      * Skip the first `n` Dinozs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dinozs.
+     */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -12548,7 +12583,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozItem model
-   */ 
+   */
   interface DinozItemFieldRefs {
     readonly id: FieldRef<"DinozItem", 'Int'>
     readonly itemId: FieldRef<"DinozItem", 'Int'>
@@ -12754,6 +12789,11 @@ export namespace Prisma {
      * Skip the first `n` DinozItems.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozItems.
+     */
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -13710,7 +13750,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozItemToDinoz model
-   */ 
+   */
   interface DinozItemToDinozFieldRefs {
     readonly dinozId: FieldRef<"DinozItemToDinoz", 'Int'>
     readonly dinozItemId: FieldRef<"DinozItemToDinoz", 'Int'>
@@ -13915,6 +13955,11 @@ export namespace Prisma {
      * Skip the first `n` DinozItemToDinozs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozItemToDinozs.
+     */
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -14856,7 +14901,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozMission model
-   */ 
+   */
   interface DinozMissionFieldRefs {
     readonly id: FieldRef<"DinozMission", 'Int'>
     readonly missionId: FieldRef<"DinozMission", 'Int'>
@@ -15064,6 +15109,11 @@ export namespace Prisma {
      * Skip the first `n` DinozMissions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozMissions.
+     */
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -15997,7 +16047,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozSkill model
-   */ 
+   */
   interface DinozSkillFieldRefs {
     readonly id: FieldRef<"DinozSkill", 'Int'>
     readonly skillId: FieldRef<"DinozSkill", 'Int'>
@@ -16204,6 +16254,11 @@ export namespace Prisma {
      * Skip the first `n` DinozSkills.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozSkills.
+     */
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -17144,7 +17199,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozSkillUnlockable model
-   */ 
+   */
   interface DinozSkillUnlockableFieldRefs {
     readonly id: FieldRef<"DinozSkillUnlockable", 'Int'>
     readonly skillId: FieldRef<"DinozSkillUnlockable", 'Int'>
@@ -17350,6 +17405,11 @@ export namespace Prisma {
      * Skip the first `n` DinozSkillUnlockables.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozSkillUnlockables.
+     */
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -18290,7 +18350,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozStatus model
-   */ 
+   */
   interface DinozStatusFieldRefs {
     readonly id: FieldRef<"DinozStatus", 'Int'>
     readonly statusId: FieldRef<"DinozStatus", 'Int'>
@@ -18496,6 +18556,11 @@ export namespace Prisma {
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozStatuses.
+     */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -19430,7 +19495,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozBuild model
-   */ 
+   */
   interface DinozBuildFieldRefs {
     readonly id: FieldRef<"DinozBuild", 'String'>
     readonly playerId: FieldRef<"DinozBuild", 'String'>
@@ -19637,6 +19702,11 @@ export namespace Prisma {
      * Skip the first `n` DinozBuilds.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozBuilds.
+     */
     distinct?: DinozBuildScalarFieldEnum | DinozBuildScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -20520,7 +20590,7 @@ export namespace Prisma {
 
   /**
    * Fields of the migrations model
-   */ 
+   */
   interface migrationsFieldRefs {
     readonly id: FieldRef<"migrations", 'Int'>
     readonly timestamp: FieldRef<"migrations", 'BigInt'>
@@ -20705,6 +20775,11 @@ export namespace Prisma {
      * Skip the first `n` migrations.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of migrations.
+     */
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -20924,7 +20999,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     type: $Enums.NewsType | null
-    image: Uint8Array | null
+    image: Bytes | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -20941,7 +21016,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     type: $Enums.NewsType | null
-    image: Uint8Array | null
+    image: Bytes | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -21123,7 +21198,7 @@ export namespace Prisma {
     id: number
     title: string | null
     type: $Enums.NewsType
-    image: Uint8Array | null
+    image: Bytes | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -21245,7 +21320,7 @@ export namespace Prisma {
       id: number
       title: string | null
       type: $Enums.NewsType
-      image: Uint8Array | null
+      image: Prisma.Bytes | null
       frenchTitle: string | null
       frenchText: string | null
       englishTitle: string | null
@@ -21679,7 +21754,7 @@ export namespace Prisma {
 
   /**
    * Fields of the News model
-   */ 
+   */
   interface NewsFieldRefs {
     readonly id: FieldRef<"News", 'Int'>
     readonly title: FieldRef<"News", 'String'>
@@ -21895,6 +21970,11 @@ export namespace Prisma {
      * Skip the first `n` News.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of News.
+     */
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -22838,7 +22918,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Poll model
-   */ 
+   */
   interface PollFieldRefs {
     readonly id: FieldRef<"Poll", 'Int'>
     readonly newsId: FieldRef<"Poll", 'Int'>
@@ -23045,6 +23125,11 @@ export namespace Prisma {
      * Skip the first `n` Polls.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Polls.
+     */
     distinct?: PollScalarFieldEnum | PollScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -24001,7 +24086,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PollOption model
-   */ 
+   */
   interface PollOptionFieldRefs {
     readonly id: FieldRef<"PollOption", 'Int'>
     readonly pollId: FieldRef<"PollOption", 'Int'>
@@ -24208,6 +24293,11 @@ export namespace Prisma {
      * Skip the first `n` PollOptions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PollOptions.
+     */
     distinct?: PollOptionScalarFieldEnum | PollOptionScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -25150,7 +25240,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PollVote model
-   */ 
+   */
   interface PollVoteFieldRefs {
     readonly id: FieldRef<"PollVote", 'Int'>
     readonly pollId: FieldRef<"PollVote", 'Int'>
@@ -25357,6 +25447,11 @@ export namespace Prisma {
      * Skip the first `n` PollVotes.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PollVotes.
+     */
     distinct?: PollVoteScalarFieldEnum | PollVoteScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -26227,7 +26322,7 @@ export namespace Prisma {
 
   /**
    * Fields of the NewsLike model
-   */ 
+   */
   interface NewsLikeFieldRefs {
     readonly newsId: FieldRef<"NewsLike", 'Int'>
     readonly playerId: FieldRef<"NewsLike", 'String'>
@@ -26432,6 +26527,11 @@ export namespace Prisma {
      * Skip the first `n` NewsLikes.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NewsLikes.
+     */
     distinct?: NewsLikeScalarFieldEnum | NewsLikeScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -27322,7 +27422,7 @@ export namespace Prisma {
 
   /**
    * Fields of the NPC model
-   */ 
+   */
   interface NPCFieldRefs {
     readonly id: FieldRef<"NPC", 'Int'>
     readonly npcId: FieldRef<"NPC", 'Int'>
@@ -27528,6 +27628,11 @@ export namespace Prisma {
      * Skip the first `n` NPCS.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NPCS.
+     */
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -28979,7 +29084,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Player model
-   */ 
+   */
   interface PlayerFieldRefs {
     readonly customText: FieldRef<"Player", 'String'>
     readonly name: FieldRef<"Player", 'String'>
@@ -29215,6 +29320,11 @@ export namespace Prisma {
      * Skip the first `n` Players.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Players.
+     */
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -31024,7 +31134,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerEternaltwinToken model
-   */ 
+   */
   interface PlayerEternaltwinTokenFieldRefs {
     readonly playerId: FieldRef<"PlayerEternaltwinToken", 'String'>
     readonly accessToken: FieldRef<"PlayerEternaltwinToken", 'String'>
@@ -31231,6 +31341,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerEternaltwinTokens.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerEternaltwinTokens.
+     */
     distinct?: PlayerEternaltwinTokenScalarFieldEnum | PlayerEternaltwinTokenScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -32101,7 +32216,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerIp model
-   */ 
+   */
   interface PlayerIpFieldRefs {
     readonly id: FieldRef<"PlayerIp", 'Int'>
     readonly ip: FieldRef<"PlayerIp", 'String'>
@@ -32306,6 +32421,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerIps.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerIps.
+     */
     distinct?: PlayerIpScalarFieldEnum | PlayerIpScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -33246,7 +33366,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Dojo model
-   */ 
+   */
   interface DojoFieldRefs {
     readonly id: FieldRef<"Dojo", 'String'>
     readonly playerId: FieldRef<"Dojo", 'String'>
@@ -33455,6 +33575,11 @@ export namespace Prisma {
      * Skip the first `n` Dojos.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dojos.
+     */
     distinct?: DojoScalarFieldEnum | DojoScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -34436,7 +34561,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DojoTeam model
-   */ 
+   */
   interface DojoTeamFieldRefs {
     readonly id: FieldRef<"DojoTeam", 'String'>
     readonly dojoId: FieldRef<"DojoTeam", 'String'>
@@ -34642,6 +34767,11 @@ export namespace Prisma {
      * Skip the first `n` DojoTeams.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoTeams.
+     */
     distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -35544,7 +35674,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DojoOpponents model
-   */ 
+   */
   interface DojoOpponentsFieldRefs {
     readonly id: FieldRef<"DojoOpponents", 'String'>
     readonly dojoId: FieldRef<"DojoOpponents", 'String'>
@@ -35751,6 +35881,11 @@ export namespace Prisma {
      * Skip the first `n` DojoOpponents.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoOpponents.
+     */
     distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -36685,7 +36820,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DojoChallengeHistory model
-   */ 
+   */
   interface DojoChallengeHistoryFieldRefs {
     readonly id: FieldRef<"DojoChallengeHistory", 'String'>
     readonly dojoId: FieldRef<"DojoChallengeHistory", 'String'>
@@ -36895,6 +37030,11 @@ export namespace Prisma {
      * Skip the first `n` DojoChallengeHistories.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoChallengeHistories.
+     */
     distinct?: DojoChallengeHistoryScalarFieldEnum | DojoChallengeHistoryScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -37765,7 +37905,7 @@ export namespace Prisma {
 
   /**
    * Fields of the UsernameHistory model
-   */ 
+   */
   interface UsernameHistoryFieldRefs {
     readonly id: FieldRef<"UsernameHistory", 'Int'>
     readonly username: FieldRef<"UsernameHistory", 'String'>
@@ -37970,6 +38110,11 @@ export namespace Prisma {
      * Skip the first `n` UsernameHistories.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsernameHistories.
+     */
     distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -38875,7 +39020,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerDinozShop model
-   */ 
+   */
   interface PlayerDinozShopFieldRefs {
     readonly id: FieldRef<"PlayerDinozShop", 'Int'>
     readonly raceId: FieldRef<"PlayerDinozShop", 'Int'>
@@ -39081,6 +39226,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerDinozShops.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerDinozShops.
+     */
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -40120,7 +40270,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerDemonShop model
-   */ 
+   */
   interface PlayerDemonShopFieldRefs {
     readonly id: FieldRef<"PlayerDemonShop", 'Int'>
     readonly raceId: FieldRef<"PlayerDemonShop", 'Int'>
@@ -40334,6 +40484,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerDemonShops.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerDemonShops.
+     */
     distinct?: PlayerDemonShopScalarFieldEnum | PlayerDemonShopScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -41279,7 +41434,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DemonSkill model
-   */ 
+   */
   interface DemonSkillFieldRefs {
     readonly id: FieldRef<"DemonSkill", 'Int'>
     readonly skillId: FieldRef<"DemonSkill", 'Int'>
@@ -41484,6 +41639,11 @@ export namespace Prisma {
      * Skip the first `n` DemonSkills.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkills.
+     */
     distinct?: DemonSkillScalarFieldEnum | DemonSkillScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -42362,7 +42522,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DemonSkillUnlockable model
-   */ 
+   */
   interface DemonSkillUnlockableFieldRefs {
     readonly id: FieldRef<"DemonSkillUnlockable", 'Int'>
     readonly skillId: FieldRef<"DemonSkillUnlockable", 'Int'>
@@ -42567,6 +42727,11 @@ export namespace Prisma {
      * Skip the first `n` DemonSkillUnlockables.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemonSkillUnlockables.
+     */
     distinct?: DemonSkillUnlockableScalarFieldEnum | DemonSkillUnlockableScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -43469,7 +43634,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerGather model
-   */ 
+   */
   interface PlayerGatherFieldRefs {
     readonly id: FieldRef<"PlayerGather", 'Int'>
     readonly place: FieldRef<"PlayerGather", 'Int'>
@@ -43676,6 +43841,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerGathers.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerGathers.
+     */
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -44585,7 +44755,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerIngredient model
-   */ 
+   */
   interface PlayerIngredientFieldRefs {
     readonly id: FieldRef<"PlayerIngredient", 'Int'>
     readonly ingredientId: FieldRef<"PlayerIngredient", 'Int'>
@@ -44791,6 +44961,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerIngredients.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerIngredients.
+     */
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -45700,7 +45875,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerItem model
-   */ 
+   */
   interface PlayerItemFieldRefs {
     readonly id: FieldRef<"PlayerItem", 'Int'>
     readonly itemId: FieldRef<"PlayerItem", 'Int'>
@@ -45906,6 +46081,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerItems.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerItems.
+     */
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -46831,7 +47011,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerQuest model
-   */ 
+   */
   interface PlayerQuestFieldRefs {
     readonly id: FieldRef<"PlayerQuest", 'Int'>
     readonly questId: FieldRef<"PlayerQuest", 'Int'>
@@ -47038,6 +47218,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerQuests.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerQuests.
+     */
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -47931,7 +48116,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerReward model
-   */ 
+   */
   interface PlayerRewardFieldRefs {
     readonly id: FieldRef<"PlayerReward", 'Int'>
     readonly rewardId: FieldRef<"PlayerReward", 'Int'>
@@ -48136,6 +48321,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerRewards.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerRewards.
+     */
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -49093,7 +49283,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ranking model
-   */ 
+   */
   interface RankingFieldRefs {
     readonly id: FieldRef<"Ranking", 'Int'>
     readonly dinozCount: FieldRef<"Ranking", 'Int'>
@@ -49302,6 +49492,11 @@ export namespace Prisma {
      * Skip the first `n` Rankings.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -50130,7 +50325,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Secret model
-   */ 
+   */
   interface SecretFieldRefs {
     readonly key: FieldRef<"Secret", 'String'>
     readonly value: FieldRef<"Secret", 'String'>
@@ -50314,6 +50509,11 @@ export namespace Prisma {
      * Skip the first `n` Secrets.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Secrets.
+     */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -51192,7 +51392,7 @@ export namespace Prisma {
 
   /**
    * Fields of the OfferItem model
-   */ 
+   */
   interface OfferItemFieldRefs {
     readonly id: FieldRef<"OfferItem", 'Int'>
     readonly offerId: FieldRef<"OfferItem", 'Int'>
@@ -51399,6 +51599,11 @@ export namespace Prisma {
      * Skip the first `n` OfferItems.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferItems.
+     */
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -52309,7 +52514,7 @@ export namespace Prisma {
 
   /**
    * Fields of the OfferBid model
-   */ 
+   */
   interface OfferBidFieldRefs {
     readonly id: FieldRef<"OfferBid", 'Int'>
     readonly offerId: FieldRef<"OfferBid", 'Int'>
@@ -52516,6 +52721,11 @@ export namespace Prisma {
      * Skip the first `n` OfferBids.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferBids.
+     */
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -53491,7 +53701,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Offer model
-   */ 
+   */
   interface OfferFieldRefs {
     readonly id: FieldRef<"Offer", 'Int'>
     readonly endDate: FieldRef<"Offer", 'DateTime'>
@@ -53701,6 +53911,11 @@ export namespace Prisma {
      * Skip the first `n` Offers.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Offers.
+     */
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -54713,7 +54928,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Log model
-   */ 
+   */
   interface LogFieldRefs {
     readonly id: FieldRef<"Log", 'Int'>
     readonly dinozId: FieldRef<"Log", 'Int'>
@@ -54922,6 +55137,11 @@ export namespace Prisma {
      * Skip the first `n` Logs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Logs.
+     */
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -55850,7 +56070,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozCatch model
-   */ 
+   */
   interface DinozCatchFieldRefs {
     readonly id: FieldRef<"DinozCatch", 'Int'>
     readonly dinozId: FieldRef<"DinozCatch", 'Int'>
@@ -56056,6 +56276,11 @@ export namespace Prisma {
      * Skip the first `n` DinozCatches.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -56942,7 +57167,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerTracking model
-   */ 
+   */
   interface PlayerTrackingFieldRefs {
     readonly id: FieldRef<"PlayerTracking", 'Int'>
     readonly stat: FieldRef<"PlayerTracking", 'String'>
@@ -57148,6 +57373,11 @@ export namespace Prisma {
      * Skip the first `n` PlayerTrackings.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerTrackings.
+     */
     distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -57403,7 +57633,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string | null
-    image: Uint8Array | null
+    image: Bytes | null
   }
 
   export type PantheonMaxAggregateOutputType = {
@@ -57414,7 +57644,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string | null
-    image: Uint8Array | null
+    image: Bytes | null
   }
 
   export type PantheonCountAggregateOutputType = {
@@ -57570,7 +57800,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string
-    image: Uint8Array | null
+    image: Bytes | null
     _count: PantheonCountAggregateOutputType | null
     _avg: PantheonAvgAggregateOutputType | null
     _sum: PantheonSumAggregateOutputType | null
@@ -57670,7 +57900,7 @@ export namespace Prisma {
       indicator: number | null
       playerId: string | null
       playerName: string
-      image: Uint8Array | null
+      image: Prisma.Bytes | null
     }, ExtArgs["result"]["pantheon"]>
     composites: {}
   }
@@ -58094,7 +58324,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Pantheon model
-   */ 
+   */
   interface PantheonFieldRefs {
     readonly id: FieldRef<"Pantheon", 'Int'>
     readonly motif: FieldRef<"Pantheon", 'PantheonMotif'>
@@ -58304,6 +58534,11 @@ export namespace Prisma {
      * Skip the first `n` Pantheons.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pantheons.
+     */
     distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -58592,7 +58827,7 @@ export namespace Prisma {
     name: string | null
     treasureValue: number | null
     creationDate: Date | null
-    banner: Uint8Array | null
+    banner: Bytes | null
     leaderId: string | null
   }
 
@@ -58601,7 +58836,7 @@ export namespace Prisma {
     name: string | null
     treasureValue: number | null
     creationDate: Date | null
-    banner: Uint8Array | null
+    banner: Bytes | null
     leaderId: string | null
   }
 
@@ -58747,7 +58982,7 @@ export namespace Prisma {
     name: string
     treasureValue: number
     creationDate: Date
-    banner: Uint8Array | null
+    banner: Bytes | null
     leaderId: string
     langs: $Enums.Lang[]
     _count: ClanCountAggregateOutputType | null
@@ -58876,7 +59111,7 @@ export namespace Prisma {
       name: string
       treasureValue: number
       creationDate: Date
-      banner: Uint8Array | null
+      banner: Prisma.Bytes | null
       leaderId: string
       langs: $Enums.Lang[]
     }, ExtArgs["result"]["clan"]>
@@ -59314,7 +59549,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Clan model
-   */ 
+   */
   interface ClanFieldRefs {
     readonly id: FieldRef<"Clan", 'Int'>
     readonly name: FieldRef<"Clan", 'String'>
@@ -59523,6 +59758,11 @@ export namespace Prisma {
      * Skip the first `n` Clans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clans.
+     */
     distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -60762,7 +61002,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanCastle model
-   */ 
+   */
   interface ClanCastleFieldRefs {
     readonly id: FieldRef<"ClanCastle", 'Int'>
     readonly clanId: FieldRef<"ClanCastle", 'Int'>
@@ -60970,6 +61210,11 @@ export namespace Prisma {
      * Skip the first `n` ClanCastles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanCastles.
+     */
     distinct?: ClanCastleScalarFieldEnum | ClanCastleScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -61968,7 +62213,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanCastleRepair model
-   */ 
+   */
   interface ClanCastleRepairFieldRefs {
     readonly id: FieldRef<"ClanCastleRepair", 'Int'>
     readonly castleId: FieldRef<"ClanCastleRepair", 'Int'>
@@ -62178,6 +62423,11 @@ export namespace Prisma {
      * Skip the first `n` ClanCastleRepairs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanCastleRepairs.
+     */
     distinct?: ClanCastleRepairScalarFieldEnum | ClanCastleRepairScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -63072,7 +63322,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanJoinRequest model
-   */ 
+   */
   interface ClanJoinRequestFieldRefs {
     readonly id: FieldRef<"ClanJoinRequest", 'Int'>
     readonly clanId: FieldRef<"ClanJoinRequest", 'Int'>
@@ -63278,6 +63528,11 @@ export namespace Prisma {
      * Skip the first `n` ClanJoinRequests.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanJoinRequests.
+     */
     distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -64240,7 +64495,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanWar model
-   */ 
+   */
   interface ClanWarFieldRefs {
     readonly id: FieldRef<"ClanWar", 'String'>
     readonly eventId: FieldRef<"ClanWar", 'String'>
@@ -64450,6 +64705,11 @@ export namespace Prisma {
      * Skip the first `n` ClanWars.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanWars.
+     */
     distinct?: ClanWarScalarFieldEnum | ClanWarScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -65471,7 +65731,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanWarRanking model
-   */ 
+   */
   interface ClanWarRankingFieldRefs {
     readonly id: FieldRef<"ClanWarRanking", 'Int'>
     readonly clanId: FieldRef<"ClanWarRanking", 'Int'>
@@ -65684,6 +65944,11 @@ export namespace Prisma {
      * Skip the first `n` ClanWarRankings.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanWarRankings.
+     */
     distinct?: ClanWarRankingScalarFieldEnum | ClanWarRankingScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -66544,7 +66809,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanEvent model
-   */ 
+   */
   interface ClanEventFieldRefs {
     readonly id: FieldRef<"ClanEvent", 'String'>
     readonly eventType: FieldRef<"ClanEvent", 'ClanEventType'>
@@ -66751,6 +67016,11 @@ export namespace Prisma {
      * Skip the first `n` ClanEvents.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanEvents.
+     */
     distinct?: ClanEventScalarFieldEnum | ClanEventScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -67685,7 +67955,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanIngredient model
-   */ 
+   */
   interface ClanIngredientFieldRefs {
     readonly id: FieldRef<"ClanIngredient", 'Int'>
     readonly ingredientId: FieldRef<"ClanIngredient", 'Int'>
@@ -67891,6 +68161,11 @@ export namespace Prisma {
      * Skip the first `n` ClanIngredients.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanIngredients.
+     */
     distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -68809,7 +69084,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanMessage model
-   */ 
+   */
   interface ClanMessageFieldRefs {
     readonly id: FieldRef<"ClanMessage", 'Int'>
     readonly clanId: FieldRef<"ClanMessage", 'Int'>
@@ -69017,6 +69292,11 @@ export namespace Prisma {
      * Skip the first `n` ClanMessages.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMessages.
+     */
     distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -69954,7 +70234,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanHistory model
-   */ 
+   */
   interface ClanHistoryFieldRefs {
     readonly id: FieldRef<"ClanHistory", 'Int'>
     readonly clanId: FieldRef<"ClanHistory", 'Int'>
@@ -70162,6 +70442,11 @@ export namespace Prisma {
      * Skip the first `n` ClanHistories.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanHistories.
+     */
     distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -71111,7 +71396,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanMember model
-   */ 
+   */
   interface ClanMemberFieldRefs {
     readonly id: FieldRef<"ClanMember", 'Int'>
     readonly clanId: FieldRef<"ClanMember", 'Int'>
@@ -71320,6 +71605,11 @@ export namespace Prisma {
      * Skip the first `n` ClanMembers.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMembers.
+     */
     distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -72230,7 +72520,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanPage model
-   */ 
+   */
   interface ClanPageFieldRefs {
     readonly id: FieldRef<"ClanPage", 'Int'>
     readonly home: FieldRef<"ClanPage", 'Boolean'>
@@ -72438,6 +72728,11 @@ export namespace Prisma {
      * Skip the first `n` ClanPages.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanPages.
+     */
     distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -73428,7 +73723,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Moderation model
-   */ 
+   */
   interface ModerationFieldRefs {
     readonly id: FieldRef<"Moderation", 'Int'>
     readonly dinozId: FieldRef<"Moderation", 'Int'>
@@ -73640,6 +73935,11 @@ export namespace Prisma {
      * Skip the first `n` Moderations.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Moderations.
+     */
     distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -74672,7 +74972,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Conversation model
-   */ 
+   */
   interface ConversationFieldRefs {
     readonly id: FieldRef<"Conversation", 'String'>
     readonly createdAt: FieldRef<"Conversation", 'DateTime'>
@@ -74882,6 +75182,11 @@ export namespace Prisma {
      * Skip the first `n` Conversations.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Conversations.
+     */
     distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -75889,7 +76194,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Participants model
-   */ 
+   */
   interface ParticipantsFieldRefs {
     readonly id: FieldRef<"Participants", 'Int'>
     readonly conversationId: FieldRef<"Participants", 'String'>
@@ -76096,6 +76401,11 @@ export namespace Prisma {
      * Skip the first `n` Participants.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Participants.
+     */
     distinct?: ParticipantsScalarFieldEnum | ParticipantsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -77033,7 +77343,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Message model
-   */ 
+   */
   interface MessageFieldRefs {
     readonly id: FieldRef<"Message", 'Int'>
     readonly content: FieldRef<"Message", 'String'>
@@ -77241,6 +77551,11 @@ export namespace Prisma {
      * Skip the first `n` Messages.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Messages.
+     */
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -78163,7 +78478,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Notification model
-   */ 
+   */
   interface NotificationFieldRefs {
     readonly id: FieldRef<"Notification", 'String'>
     readonly message: FieldRef<"Notification", 'String'>
@@ -78372,6 +78687,11 @@ export namespace Prisma {
      * Skip the first `n` Notifications.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -79504,7 +79824,7 @@ export namespace Prisma {
 
   /**
    * Fields of the FightArchive model
-   */ 
+   */
   interface FightArchiveFieldRefs {
     readonly id: FieldRef<"FightArchive", 'String'>
     readonly fighters: FieldRef<"FightArchive", 'String'>
@@ -79724,6 +80044,11 @@ export namespace Prisma {
      * Skip the first `n` FightArchives.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FightArchives.
+     */
     distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -80775,7 +81100,7 @@ export namespace Prisma {
 
   /**
    * Fields of the FightWatched model
-   */ 
+   */
   interface FightWatchedFieldRefs {
     readonly id: FieldRef<"FightWatched", 'String'>
     readonly playerId: FieldRef<"FightWatched", 'String'>
@@ -80981,6 +81306,11 @@ export namespace Prisma {
      * Skip the first `n` FightWatcheds.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FightWatcheds.
+     */
     distinct?: FightWatchedScalarFieldEnum | FightWatchedScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -81947,7 +82277,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Tournament model
-   */ 
+   */
   interface TournamentFieldRefs {
     readonly id: FieldRef<"Tournament", 'String'>
     readonly date: FieldRef<"Tournament", 'DateTime'>
@@ -82159,6 +82489,11 @@ export namespace Prisma {
      * Skip the first `n` Tournaments.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tournaments.
+     */
     distinct?: TournamentScalarFieldEnum | TournamentScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -83099,7 +83434,7 @@ export namespace Prisma {
 
   /**
    * Fields of the TournamentTeam model
-   */ 
+   */
   interface TournamentTeamFieldRefs {
     readonly id: FieldRef<"TournamentTeam", 'String'>
     readonly dojoId: FieldRef<"TournamentTeam", 'String'>
@@ -83305,6 +83640,11 @@ export namespace Prisma {
      * Skip the first `n` TournamentTeams.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TournamentTeams.
+     */
     distinct?: TournamentTeamScalarFieldEnum | TournamentTeamScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -84353,7 +84693,7 @@ export namespace Prisma {
 
   /**
    * Fields of the FBTournament model
-   */ 
+   */
   interface FBTournamentFieldRefs {
     readonly id: FieldRef<"FBTournament", 'String'>
     readonly date: FieldRef<"FBTournament", 'DateTime'>
@@ -84563,6 +84903,11 @@ export namespace Prisma {
      * Skip the first `n` FBTournaments.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FBTournaments.
+     */
     distinct?: FBTournamentScalarFieldEnum | FBTournamentScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -85775,7 +86120,7 @@ export namespace Prisma {
 
   /**
    * Fields of the GameDinoz model
-   */ 
+   */
   interface GameDinozFieldRefs {
     readonly id: FieldRef<"GameDinoz", 'Int'>
     readonly name: FieldRef<"GameDinoz", 'String'>
@@ -85998,6 +86343,11 @@ export namespace Prisma {
      * Skip the first `n` GameDinozs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameDinozs.
+     */
     distinct?: GameDinozScalarFieldEnum | GameDinozScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -87090,7 +87440,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Events model
-   */ 
+   */
   interface EventsFieldRefs {
     readonly event: FieldRef<"Events", 'EventType'>
     readonly playerId: FieldRef<"Events", 'String'>
@@ -87296,6 +87646,11 @@ export namespace Prisma {
      * Skip the first `n` Events.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
     distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -88105,7 +88460,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ServerState model
-   */ 
+   */
   interface ServerStateFieldRefs {
     readonly action: FieldRef<"ServerState", 'ServerAction'>
     readonly nextCheck: FieldRef<"ServerState", 'DateTime'>
@@ -88289,6 +88644,11 @@ export namespace Prisma {
      * Skip the first `n` ServerStates.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ServerStates.
+     */
     distinct?: ServerStateScalarFieldEnum | ServerStateScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -89315,7 +89675,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DungeonRun model
-   */ 
+   */
   interface DungeonRunFieldRefs {
     readonly id: FieldRef<"DungeonRun", 'String'>
     readonly posX: FieldRef<"DungeonRun", 'Int'>
@@ -89533,6 +89893,11 @@ export namespace Prisma {
      * Skip the first `n` DungeonRuns.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DungeonRuns.
+     */
     distinct?: DungeonRunScalarFieldEnum | DungeonRunScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -89802,9 +90167,9 @@ export namespace Prisma {
   export type DungeonMinAggregateOutputType = {
     id: string | null
     name: string | null
-    cipher: Uint8Array | null
-    iv: Uint8Array | null
-    tag: Uint8Array | null
+    cipher: Bytes | null
+    iv: Bytes | null
+    tag: Bytes | null
     type: $Enums.DungeonType | null
     level: number | null
     monsters: string | null
@@ -89820,9 +90185,9 @@ export namespace Prisma {
   export type DungeonMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    cipher: Uint8Array | null
-    iv: Uint8Array | null
-    tag: Uint8Array | null
+    cipher: Bytes | null
+    iv: Bytes | null
+    tag: Bytes | null
     type: $Enums.DungeonType | null
     level: number | null
     monsters: string | null
@@ -90011,9 +90376,9 @@ export namespace Prisma {
   export type DungeonGroupByOutputType = {
     id: string
     name: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level: number
     monsters: string
@@ -90135,9 +90500,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      cipher: Uint8Array
-      iv: Uint8Array
-      tag: Uint8Array
+      cipher: Prisma.Bytes
+      iv: Prisma.Bytes
+      tag: Prisma.Bytes
       type: $Enums.DungeonType
       level: number
       monsters: string
@@ -90570,7 +90935,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Dungeon model
-   */ 
+   */
   interface DungeonFieldRefs {
     readonly id: FieldRef<"Dungeon", 'String'>
     readonly name: FieldRef<"Dungeon", 'String'>
@@ -90787,6 +91152,11 @@ export namespace Prisma {
      * Skip the first `n` Dungeons.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dungeons.
+     */
     distinct?: DungeonScalarFieldEnum | DungeonScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -91984,7 +92354,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references 
+   * Field references
    */
 
 
@@ -93056,7 +93426,7 @@ export namespace Prisma {
     id?: IntFilter<"News"> | number
     title?: StringNullableFilter<"News"> | string | null
     type?: EnumNewsTypeFilter<"News"> | $Enums.NewsType
-    image?: BytesNullableFilter<"News"> | Uint8Array | null
+    image?: BytesNullableFilter<"News"> | Bytes | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
     englishTitle?: StringNullableFilter<"News"> | string | null
@@ -93097,7 +93467,7 @@ export namespace Prisma {
     NOT?: NewsWhereInput | NewsWhereInput[]
     title?: StringNullableFilter<"News"> | string | null
     type?: EnumNewsTypeFilter<"News"> | $Enums.NewsType
-    image?: BytesNullableFilter<"News"> | Uint8Array | null
+    image?: BytesNullableFilter<"News"> | Bytes | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
     englishTitle?: StringNullableFilter<"News"> | string | null
@@ -93141,7 +93511,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"News"> | number
     title?: StringNullableWithAggregatesFilter<"News"> | string | null
     type?: EnumNewsTypeWithAggregatesFilter<"News"> | $Enums.NewsType
-    image?: BytesNullableWithAggregatesFilter<"News"> | Uint8Array | null
+    image?: BytesNullableWithAggregatesFilter<"News"> | Bytes | null
     frenchTitle?: StringNullableWithAggregatesFilter<"News"> | string | null
     frenchText?: StringNullableWithAggregatesFilter<"News"> | string | null
     englishTitle?: StringNullableWithAggregatesFilter<"News"> | string | null
@@ -95185,7 +95555,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
-    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
+    image?: BytesNullableFilter<"Pantheon"> | Bytes | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
@@ -95214,7 +95584,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
-    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
+    image?: BytesNullableFilter<"Pantheon"> | Bytes | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
@@ -95246,7 +95616,7 @@ export namespace Prisma {
     indicator?: IntNullableWithAggregatesFilter<"Pantheon"> | number | null
     playerId?: UuidNullableWithAggregatesFilter<"Pantheon"> | string | null
     playerName?: StringWithAggregatesFilter<"Pantheon"> | string
-    image?: BytesNullableWithAggregatesFilter<"Pantheon"> | Uint8Array | null
+    image?: BytesNullableWithAggregatesFilter<"Pantheon"> | Bytes | null
   }
 
   export type ClanWhereInput = {
@@ -95257,7 +95627,7 @@ export namespace Prisma {
     name?: StringFilter<"Clan"> | string
     treasureValue?: IntFilter<"Clan"> | number
     creationDate?: DateTimeFilter<"Clan"> | Date | string
-    banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
+    banner?: BytesNullableFilter<"Clan"> | Bytes | null
     leaderId?: UuidFilter<"Clan"> | string
     langs?: EnumLangNullableListFilter<"Clan">
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
@@ -95309,7 +95679,7 @@ export namespace Prisma {
     NOT?: ClanWhereInput | ClanWhereInput[]
     treasureValue?: IntFilter<"Clan"> | number
     creationDate?: DateTimeFilter<"Clan"> | Date | string
-    banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
+    banner?: BytesNullableFilter<"Clan"> | Bytes | null
     langs?: EnumLangNullableListFilter<"Clan">
     castle?: XOR<ClanCastleNullableScalarRelationFilter, ClanCastleWhereInput> | null
     leader?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
@@ -95350,7 +95720,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Clan"> | string
     treasureValue?: IntWithAggregatesFilter<"Clan"> | number
     creationDate?: DateTimeWithAggregatesFilter<"Clan"> | Date | string
-    banner?: BytesNullableWithAggregatesFilter<"Clan"> | Uint8Array | null
+    banner?: BytesNullableWithAggregatesFilter<"Clan"> | Bytes | null
     leaderId?: UuidWithAggregatesFilter<"Clan"> | string
     langs?: EnumLangNullableListFilter<"Clan">
   }
@@ -97272,9 +97642,9 @@ export namespace Prisma {
     NOT?: DungeonWhereInput | DungeonWhereInput[]
     id?: UuidFilter<"Dungeon"> | string
     name?: StringFilter<"Dungeon"> | string
-    cipher?: BytesFilter<"Dungeon"> | Uint8Array
-    iv?: BytesFilter<"Dungeon"> | Uint8Array
-    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    cipher?: BytesFilter<"Dungeon"> | Bytes
+    iv?: BytesFilter<"Dungeon"> | Bytes
+    tag?: BytesFilter<"Dungeon"> | Bytes
     type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
@@ -97313,9 +97683,9 @@ export namespace Prisma {
     AND?: DungeonWhereInput | DungeonWhereInput[]
     OR?: DungeonWhereInput[]
     NOT?: DungeonWhereInput | DungeonWhereInput[]
-    cipher?: BytesFilter<"Dungeon"> | Uint8Array
-    iv?: BytesFilter<"Dungeon"> | Uint8Array
-    tag?: BytesFilter<"Dungeon"> | Uint8Array
+    cipher?: BytesFilter<"Dungeon"> | Bytes
+    iv?: BytesFilter<"Dungeon"> | Bytes
+    tag?: BytesFilter<"Dungeon"> | Bytes
     type?: EnumDungeonTypeFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntFilter<"Dungeon"> | number
     monsters?: StringFilter<"Dungeon"> | string
@@ -97358,9 +97728,9 @@ export namespace Prisma {
     NOT?: DungeonScalarWhereWithAggregatesInput | DungeonScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Dungeon"> | string
     name?: StringWithAggregatesFilter<"Dungeon"> | string
-    cipher?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
-    iv?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
-    tag?: BytesWithAggregatesFilter<"Dungeon"> | Uint8Array
+    cipher?: BytesWithAggregatesFilter<"Dungeon"> | Bytes
+    iv?: BytesWithAggregatesFilter<"Dungeon"> | Bytes
+    tag?: BytesWithAggregatesFilter<"Dungeon"> | Bytes
     type?: EnumDungeonTypeWithAggregatesFilter<"Dungeon"> | $Enums.DungeonType
     level?: IntWithAggregatesFilter<"Dungeon"> | number
     monsters?: StringWithAggregatesFilter<"Dungeon"> | string
@@ -98095,7 +98465,7 @@ export namespace Prisma {
   export type NewsCreateInput = {
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -98114,7 +98484,7 @@ export namespace Prisma {
     id?: number
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -98132,7 +98502,7 @@ export namespace Prisma {
   export type NewsUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98151,7 +98521,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98170,7 +98540,7 @@ export namespace Prisma {
     id?: number
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -98186,7 +98556,7 @@ export namespace Prisma {
   export type NewsUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98203,7 +98573,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -100175,7 +100545,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
     dinoz?: DinozCreateNestedOneWithoutPantheonInput
     player?: PlayerCreateNestedOneWithoutPantheonInput
   }
@@ -100188,7 +100558,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type PantheonUpdateInput = {
@@ -100196,7 +100566,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     dinoz?: DinozUpdateOneWithoutPantheonNestedInput
     player?: PlayerUpdateOneWithoutPantheonNestedInput
   }
@@ -100209,7 +100579,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type PantheonCreateManyInput = {
@@ -100220,7 +100590,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type PantheonUpdateManyMutationInput = {
@@ -100228,7 +100598,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type PantheonUncheckedUpdateManyInput = {
@@ -100239,14 +100609,14 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type ClanCreateInput = {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -100269,7 +100639,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -100291,7 +100661,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -100314,7 +100684,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -100337,7 +100707,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
   }
@@ -100346,7 +100716,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
   }
 
@@ -100355,7 +100725,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
   }
@@ -102255,9 +102625,9 @@ export namespace Prisma {
   export type DungeonCreateInput = {
     id?: string
     name?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level?: number
     monsters?: string
@@ -102274,9 +102644,9 @@ export namespace Prisma {
   export type DungeonUncheckedCreateInput = {
     id?: string
     name?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level?: number
     monsters?: string
@@ -102293,9 +102663,9 @@ export namespace Prisma {
   export type DungeonUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -102312,9 +102682,9 @@ export namespace Prisma {
   export type DungeonUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -102331,9 +102701,9 @@ export namespace Prisma {
   export type DungeonCreateManyInput = {
     id?: string
     name?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level?: number
     monsters?: string
@@ -102349,9 +102719,9 @@ export namespace Prisma {
   export type DungeonUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -102367,9 +102737,9 @@ export namespace Prisma {
   export type DungeonUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -103349,10 +103719,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
   export type PollNullableScalarRelationFilter = {
@@ -103458,10 +103828,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -104166,7 +104536,7 @@ export namespace Prisma {
   export type PlayerIpSumOrderByAggregateInput = {
     id?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> = 
+  export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
         Required<JsonFilterBase<$PrismaModel>>
@@ -104242,7 +104612,7 @@ export namespace Prisma {
     reputation?: SortOrder
     dailyReset?: SortOrder
   }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
         Required<JsonWithAggregatesFilterBase<$PrismaModel>>
@@ -106652,10 +107022,10 @@ export namespace Prisma {
   }
 
   export type BytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
   }
 
   export type EnumDungeonTypeFilter<$PrismaModel = never> = {
@@ -106732,10 +107102,10 @@ export namespace Prisma {
   }
 
   export type BytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
@@ -107949,7 +108319,7 @@ export namespace Prisma {
   }
 
   export type NullableBytesFieldUpdateOperationsInput = {
-    set?: Uint8Array | null
+    set?: Bytes | null
   }
 
   export type PollUpdateOneWithoutNewsNestedInput = {
@@ -112967,7 +113337,7 @@ export namespace Prisma {
   }
 
   export type BytesFieldUpdateOperationsInput = {
-    set?: Uint8Array
+    set?: Bytes
   }
 
   export type EnumDungeonTypeFieldUpdateOperationsInput = {
@@ -113301,10 +113671,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -113335,10 +113705,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -113377,7 +113747,7 @@ export namespace Prisma {
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
-  export type NestedJsonFilter<$PrismaModel = never> = 
+  export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
         Required<NestedJsonFilterBase<$PrismaModel>>
@@ -113588,10 +113958,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
   }
 
   export type NestedEnumDungeonTypeFilter<$PrismaModel = never> = {
@@ -113602,10 +113972,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
@@ -113993,7 +114363,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
     player?: PlayerCreateNestedOneWithoutPantheonInput
   }
 
@@ -114004,7 +114374,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type PantheonCreateOrConnectWithoutDinozInput = {
@@ -114875,7 +115245,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
-    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
+    image?: BytesNullableFilter<"Pantheon"> | Bytes | null
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -118046,7 +118416,7 @@ export namespace Prisma {
   export type NewsCreateWithoutPollInput = {
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -118064,7 +118434,7 @@ export namespace Prisma {
     id?: number
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -118145,7 +118515,7 @@ export namespace Prisma {
   export type NewsUpdateWithoutPollInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -118163,7 +118533,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -118735,7 +119105,7 @@ export namespace Prisma {
   export type NewsCreateWithoutLikedByInput = {
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -118753,7 +119123,7 @@ export namespace Prisma {
     id?: number
     title?: string | null
     type?: $Enums.NewsType
-    image?: Uint8Array | null
+    image?: Bytes | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -118786,7 +119156,7 @@ export namespace Prisma {
   export type NewsUpdateWithoutLikedByInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -118804,7 +119174,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -119040,7 +119410,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -119062,7 +119432,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -119088,7 +119458,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -119110,7 +119480,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
@@ -119476,7 +119846,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
     dinoz?: DinozCreateNestedOneWithoutPantheonInput
   }
 
@@ -119487,7 +119857,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type PantheonCreateOrConnectWithoutPlayerInput = {
@@ -120366,7 +120736,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -120388,7 +120758,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -120420,7 +120790,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -120442,7 +120812,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
@@ -130126,7 +130496,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -130148,7 +130518,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
@@ -130325,7 +130695,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -130347,7 +130717,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
@@ -130468,7 +130838,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -130490,7 +130860,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -130682,7 +131052,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -130704,7 +131074,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -130909,7 +131279,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -130931,7 +131301,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -130957,7 +131327,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -130979,7 +131349,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -131005,7 +131375,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -131027,7 +131397,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -131093,7 +131463,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131115,7 +131485,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -131147,7 +131517,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131169,7 +131539,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -131201,7 +131571,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131223,7 +131593,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -131244,7 +131614,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -131266,7 +131636,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -131326,7 +131696,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131348,7 +131718,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -131495,7 +131865,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -131517,7 +131887,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -131554,7 +131924,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131576,7 +131946,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -131752,7 +132122,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -131774,7 +132144,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -131972,7 +132342,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -131994,7 +132364,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -132170,7 +132540,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -132192,7 +132562,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -132390,7 +132760,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -132412,7 +132782,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -132433,7 +132803,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -132455,7 +132825,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -132647,7 +133017,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -132669,7 +133039,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -132851,7 +133221,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -132873,7 +133243,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -132910,7 +133280,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -132932,7 +133302,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -133524,7 +133894,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleCreateNestedOneWithoutClanInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
@@ -133546,7 +133916,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Uint8Array | null
+    banner?: Bytes | null
     leaderId: string
     langs?: ClanCreatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
@@ -134178,7 +134548,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUpdateOneWithoutClanNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
@@ -134200,7 +134570,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     leaderId?: StringFieldUpdateOperationsInput | string
     langs?: ClanUpdatelangsInput | $Enums.Lang[]
     castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
@@ -139878,9 +140248,9 @@ export namespace Prisma {
   export type DungeonCreateWithoutDungeonRunsInput = {
     id?: string
     name?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level?: number
     monsters?: string
@@ -139896,9 +140266,9 @@ export namespace Prisma {
   export type DungeonUncheckedCreateWithoutDungeonRunsInput = {
     id?: string
     name?: string
-    cipher: Uint8Array
-    iv: Uint8Array
-    tag: Uint8Array
+    cipher: Bytes
+    iv: Bytes
+    tag: Bytes
     type: $Enums.DungeonType
     level?: number
     monsters?: string
@@ -140197,9 +140567,9 @@ export namespace Prisma {
   export type DungeonUpdateWithoutDungeonRunsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -140215,9 +140585,9 @@ export namespace Prisma {
   export type DungeonUncheckedUpdateWithoutDungeonRunsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    cipher?: BytesFieldUpdateOperationsInput | Uint8Array
-    iv?: BytesFieldUpdateOperationsInput | Uint8Array
-    tag?: BytesFieldUpdateOperationsInput | Uint8Array
+    cipher?: BytesFieldUpdateOperationsInput | Bytes
+    iv?: BytesFieldUpdateOperationsInput | Bytes
+    tag?: BytesFieldUpdateOperationsInput | Bytes
     type?: EnumDungeonTypeFieldUpdateOperationsInput | $Enums.DungeonType
     level?: IntFieldUpdateOperationsInput | number
     monsters?: StringFieldUpdateOperationsInput | string
@@ -140617,7 +140987,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type DinozCreateManyLeaderInput = {
@@ -140829,7 +141199,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     player?: PlayerUpdateOneWithoutPantheonNestedInput
   }
 
@@ -140840,7 +141210,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type PantheonUncheckedUpdateManyWithoutDinozInput = {
@@ -140850,7 +141220,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type DinozUpdateWithoutLeaderInput = {
@@ -141576,7 +141946,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
-    image?: Uint8Array | null
+    image?: Bytes | null
   }
 
   export type ParticipantsCreateManyPlayerInput = {
@@ -142123,7 +142493,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     dinoz?: DinozUpdateOneWithoutPantheonNestedInput
   }
 
@@ -142134,7 +142504,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type PantheonUncheckedUpdateManyWithoutPlayerInput = {
@@ -142144,7 +142514,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
-    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    image?: NullableBytesFieldUpdateOperationsInput | Bytes | null
   }
 
   export type ParticipantsUpdateWithoutPlayerInput = {

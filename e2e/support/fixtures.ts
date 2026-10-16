@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { test as base, expect } from '@playwright/test';
 import { PrismaClient } from '@drpg/prisma';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { DATABASE_URL, FRONT_URL, RELEASE_CHANNEL } from './env.js';
 
 export type TestPlayer = {
@@ -25,7 +26,7 @@ type Fixtures = {
 export const test = base.extend<Fixtures, { workerDb: PrismaClient }>({
 	workerDb: [
 		async ({}, use) => {
-			const db = new PrismaClient({ datasourceUrl: DATABASE_URL });
+			const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: DATABASE_URL }) });
 			await use(db);
 			await db.$disconnect();
 		},

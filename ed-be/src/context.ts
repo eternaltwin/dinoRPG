@@ -8,6 +8,7 @@ import { PARENT_PORT } from './logger/parent-port.js';
 import { DiscordClient, NetworkDiscordClient, NOOP_DISCORD_CLIENT } from './utils/server/DiscordUtils.js';
 import { ASYNC_DISPOSE } from './utils/server/dispose.js';
 import { LiveStats } from './liveStats.js';
+import { createPrismaAdapter } from './prismaAdapter.js';
 
 const DEBUG_QUERIES = false;
 
@@ -55,37 +56,38 @@ export class ServerContext {
 			logger = fallbackLogger;
 		}
 
-		const prisma = new PrismaClient(
-			DEBUG_QUERIES
-				? {
-						log: [
-							{
-								emit: 'event',
-								level: 'query'
-							},
-							{
-								emit: 'stdout',
-								level: 'error'
-							},
-							{
-								emit: 'stdout',
-								level: 'info'
-							},
-							{
-								emit: 'stdout',
-								level: 'warn'
-							}
-						]
-					}
-				: undefined
-		);
-
+		const adapter = createPrismaAdapter();
+		let prisma: PrismaClient;
 		if (DEBUG_QUERIES) {
-			prisma.$on('query', e => {
+			const debugPrisma = new PrismaClient({
+				adapter,
+				log: [
+					{
+						emit: 'event',
+						level: 'query'
+					},
+					{
+						emit: 'stdout',
+						level: 'error'
+					},
+					{
+						emit: 'stdout',
+						level: 'info'
+					},
+					{
+						emit: 'stdout',
+						level: 'warn'
+					}
+				]
+			});
+			debugPrisma.$on('query', e => {
 				logger.warn(`Query: ${e.query}`);
 				logger.warn(`Params: ${e.params}`);
 				logger.warn(`Duration: ${e.duration}ms`);
 			});
+			prisma = debugPrisma;
+		} else {
+			prisma = new PrismaClient({ adapter });
 		}
 
 		this.config = config;

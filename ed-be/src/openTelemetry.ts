@@ -4,7 +4,7 @@ import { SEMRESATTRS_DEPLOYMENT_ENVIRONMENT, SEMRESATTRS_SERVICE_NAME } from '@o
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { ExpressInstrumentation, ExpressLayerType } from '@opentelemetry/instrumentation-express';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
-import prismaInstrumentation from '@prisma/instrumentation';
+import { PrismaInstrumentation } from '@prisma/instrumentation';
 import urlJoin from 'url-join';
 import { Buffer } from 'buffer';
 import { AlwaysOnSampler, BatchSpanProcessor, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
@@ -42,7 +42,7 @@ export function initOpentelemetry(config: Config): NodeSDK {
 			new ExpressInstrumentation({
 				ignoreLayersType: [ExpressLayerType.MIDDLEWARE, ExpressLayerType.REQUEST_HANDLER, ExpressLayerType.ROUTER]
 			}),
-			new prismaInstrumentation.PrismaInstrumentation()
+			new PrismaInstrumentation()
 		]
 	});
 
