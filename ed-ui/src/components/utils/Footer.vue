@@ -193,6 +193,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
+
 $footer-bg-color: transparent;
 $box-bg-color: #fffcf4;
 $box-border-color: #bd7e49;
@@ -293,7 +295,7 @@ footer {
 		fill: white;
 	}
 	.shadow {
-		fill: lighten($box-border-color, 39%);
+		fill: color.adjust($box-border-color, $lightness: 39%);
 	}
 }
 

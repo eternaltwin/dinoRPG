@@ -1,7 +1,7 @@
-@import './_shop.scss';
-@import './_general.scss';
-@import './tooltip';
-@import './emmet';
+@use './shop';
+@use './general';
+@use './tooltip';
+@use './emmet';
 @import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 /*.v-toast__item--success{background-color:#181a6c}
