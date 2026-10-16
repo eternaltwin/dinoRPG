@@ -345,10 +345,14 @@ export default defineComponent({
 		overflow-y: auto;
 		li {
 			display: flex;
+			align-items: flex-start;
 			gap: 2px;
 			font-size: 9pt;
 			img {
+				flex-shrink: 0;
 				width: 13px;
+				height: auto;
+				margin-top: 1px;
 			}
 			span {
 				color: #710;

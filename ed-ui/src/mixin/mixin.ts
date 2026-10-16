@@ -10,8 +10,16 @@ export const refreshGold = async () => {
 	playerStore().setMoney(+newMoney);
 };
 
+// Explicit recursive glob: Vite turns a templated `new URL(..., import.meta.url)` into a single-level
+// glob (`/src/assets/*/*.webp`), so nested paths such as `map/map` would resolve to `undefined`.
+const images = import.meta.glob<string>('/src/assets/**/*.{webp,png}', {
+	eager: true,
+	query: '?url',
+	import: 'default'
+});
+
 export const getImgURL = (path: string, imgName: string, pixel?: boolean) => {
-	return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url).toString();
+	return images[`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`] ?? '';
 };
 
 export const mixin = {
