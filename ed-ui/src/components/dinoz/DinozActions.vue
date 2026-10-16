@@ -96,13 +96,13 @@
 			</Tippy>
 			<DZDisclaimer timer v-if="isSelling" class="selling" :content="$t('toast.isSelling')" />
 		</div>
+		<GatherRewardModal
+			v-if="fastGatherOver && fastGatherResult"
+			:rewards="fastGatherResult.rewards"
+			:ingredientsAtMaxQuantity="fastGatherResult.ingredientsAtMaxQuantity"
+			@close="closeFastGatherModal"
+		/>
 	</div>
-	<GatherRewardModal
-		v-if="fastGatherOver && fastGatherResult"
-		:rewards="fastGatherResult.rewards"
-		:ingredientsAtMaxQuantity="fastGatherResult.ingredientsAtMaxQuantity"
-		@close="closeFastGatherModal"
-	/>
 </template>
 
 <script lang="ts">
@@ -148,6 +148,7 @@ function formatCountdown(remainingMs: number): string {
 
 export default defineComponent({
 	name: 'DinozActions',
+	emits: ['continueMission', 'endMission'],
 	data() {
 		return {
 			shopNameList: shopNameList,

@@ -337,7 +337,6 @@ export default defineComponent({
 			const img = new Image();
 			const map = placeList.find(p => p.placeId === this.dinozData.placeId)?.map;
 			img.src = this.getImgURL('map/map', map ?? '');
-			console.log(map)
 
 			img.onload = () => {
 				// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
