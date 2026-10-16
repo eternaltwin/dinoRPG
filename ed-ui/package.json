@@ -27,7 +27,7 @@
     "chart.js": "^4.4.2",
     "ckeditor5": "^45.0.0",
     "mitt": "^3.0.1",
-    "pinia": "^2.1.7",
+    "pinia": "^4.0.3",
     "pinia-plugin-persistedstate": "^3.2.0",
     "pixi.js": "^7.4.3",
     "url-join": "^5.0.0",
