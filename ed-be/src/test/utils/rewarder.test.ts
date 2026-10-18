@@ -141,6 +141,14 @@ describe('rewarder', () => {
 		expect(playerItemDao.decreaseItemQuantity).toHaveBeenCalled();
 	});
 
+	it('decrease item not owned by the player', async () => {
+		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2, reverse: true } as never], team(), 'p1', [
+			RewardEnum.ITEM
+		]);
+		expect(playerItemDao.insertItem).not.toHaveBeenCalled();
+		expect(playerItemDao.decreaseItemQuantity).not.toHaveBeenCalled();
+	});
+
 	it.for([true, false])('grants an epic reward (withDinoz: %s)', async (withDinoz: boolean) => {
 		await rewarder([{ rewardType: RewardEnum.EPIC, value: 1 } as never], withDinoz ? team() : [], 'p1', [
 			RewardEnum.EPIC

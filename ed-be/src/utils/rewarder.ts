@@ -159,8 +159,10 @@ export async function rewarder(
 							actualRewards.push([itemRewarded.itemId, actualQuantity]);
 						}
 					} else {
-						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
-						actualRewards.push([itemRewarded.itemId, reward.quantity]);
+						if (!reward.reverse) {
+							await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
+							actualRewards.push([itemRewarded.itemId, reward.quantity]);
+						}
 					}
 					if (!reward.reverse && notify.includes(RewardEnum.ITEM) && showNotification) {
 						rewardsToNotify.push(reward);
