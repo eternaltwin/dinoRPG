@@ -413,7 +413,7 @@ import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
-import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerTypeToSend';
+import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerAdminFiche';
 import DZSelect from '../common/DZSelect.vue';
 import { AdminRole } from '@drpg/prisma/enums';
 

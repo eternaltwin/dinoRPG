@@ -38,7 +38,7 @@ import { errorHandler } from '../utils/index.js';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
 import { formatText } from '../utils/formatText.js';
 import DZButton from '../components/common/DZButton.vue';
-import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'ImportPage',

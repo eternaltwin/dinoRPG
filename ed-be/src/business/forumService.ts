@@ -1,5 +1,7 @@
-import type { ForumPostSource, ForumType, Thread, forumPost } from '@drpg/core/models/forum/Forum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import type { ForumPost } from '@eternaltwin/core/forum/forum-post';
+import type { ForumSection } from '@eternaltwin/core/forum/forum-section';
+import type { ForumThread } from '@eternaltwin/core/forum/forum-thread';
 import { Request } from 'express';
 import { GLOBAL } from '../context.js';
 import { getToken } from '../dao/eternaltwinTokenDao.js';
@@ -37,12 +39,12 @@ async function clientFor(req: Request): Promise<{ client: EternaltwinForumClient
  * and the editor must offer exactly what the server accepts. It is passed through untouched —
  * permissions are the server's to compute.
  */
-export async function getSection(req: Request): Promise<ForumType> {
+export async function getSection(req: Request): Promise<ForumSection> {
 	const { client } = await clientFor(req);
 	const sectionRef = req.params.sectionId ?? GLOBAL.config.eternaltwin.section;
 	const page = +req.params.page;
 
-	const { threads_per_page: limit } = await client.getPageSizes();
+	const { threadsPerPage: limit } = await client.getPageSizes();
 
 	return client.getSection(sectionRef, (page - 1) * limit, limit);
 }
@@ -54,12 +56,12 @@ export async function getSection(req: Request): Promise<ForumType> {
  * (the grammar to write with) and a `self` per post (whether it may still be edited). Dropping any
  * of them would leave the interface guessing at permissions it was handed.
  */
-export async function getThread(req: Request): Promise<Thread> {
+export async function getThread(req: Request): Promise<ForumThread> {
 	const { client } = await clientFor(req);
 	const threadId = req.params.threadId;
 	const page = +req.params.page;
 
-	const { posts_per_page: limit } = await client.getPageSizes();
+	const { postsPerPage: limit } = await client.getPageSizes();
 
 	return client.getThread(threadId, (page - 1) * limit, limit);
 }
@@ -70,7 +72,7 @@ export async function getThread(req: Request): Promise<Thread> {
  * Threads live in the sub-sections: the DinoRPG root section only groups them, and the server
  * refuses a thread there. Whether the player may write in `sectionId` is the server's call.
  */
-export async function createThread(req: Request): Promise<Thread> {
+export async function createThread(req: Request): Promise<ForumThread> {
 	const { client } = await clientFor(req);
 	const sectionId = req.body.sectionId;
 	const title = req.body.title;
@@ -82,19 +84,18 @@ export async function createThread(req: Request): Promise<Thread> {
 /**
  * Reply to a thread. `message` is Marktwin.
  */
-export async function replyToThread(req: Request): Promise<forumPost> {
+export async function replyToThread(req: Request): Promise<ForumPost> {
 	const { client } = await clientFor(req);
 
 	return client.replyToThread(req.params.threadId, req.body.message);
 }
 
 /**
- * The Marktwin source of a post, for opening an editor.
+ * A post with the Marktwin source of its latest revision, for opening an editor.
  *
- * Ordinary reads do not carry the source, and the caller needs the id of the last revision to
- * send back with the edit.
+ * Ordinary reads do not carry the source. `revisions.items` holds the latest revision alone.
  */
-export async function getPostSource(req: Request): Promise<ForumPostSource> {
+export async function getPostSource(req: Request): Promise<ForumPost> {
 	const { client } = await clientFor(req);
 
 	return client.getPostSource(req.params.postId);
@@ -107,16 +108,17 @@ export async function getPostSource(req: Request): Promise<ForumPostSource> {
  * revision being replaced, which is how the server detects that someone else edited in between.
  * A stale one sent by a browser that held the editor open would defeat that check.
  */
-export async function updatePost(req: Request): Promise<forumPost> {
+export async function updatePost(req: Request): Promise<ForumPost> {
 	const { client } = await clientFor(req);
 	const postId = req.params.postId;
 	const content = req.body.content;
 	const comment = req.body.comment ?? null;
 
 	const source = await client.getPostSource(postId);
-	const lastRevisionId = source.revisions?.last?.id;
+	const revisions = source.revisions.items;
+	const lastRevisionId = revisions[revisions.length - 1]?.id;
 
-	if (typeof lastRevisionId !== 'string') {
+	if (lastRevisionId === undefined) {
 		throw new ExpectedError('eternaltwinPostRevisionUnavailable');
 	}
 

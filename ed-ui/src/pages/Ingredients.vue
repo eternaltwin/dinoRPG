@@ -179,6 +179,8 @@ table {
 				padding-right: 4px;
 				padding-bottom: 8px;
 				max-width: 15px;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 		td {

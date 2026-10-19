@@ -47,7 +47,7 @@ export default defineComponent({
 			});
 			if (res) {
 				try {
-					const dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
+					const dinozCreated = await DinozService.buyDinoz(dinoz.id);
 					await this.$refreshGold();
 
 					const dinozStore = useDinozStore().getDinozList;

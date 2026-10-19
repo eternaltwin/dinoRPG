@@ -4,16 +4,18 @@
 	</select>
 	<input type="datetime-local" v-model="fromDate" placeholder="fromDate" />
 	<button @click="reload" :disabled="!logs.length">Reload</button>
-	<div v-if="type !== 'null' && type !== null">
+	<div v-if="type !== null">
 		<Line v-if="loaded" :data="chartData" :options="chartOptions" :width="400" :height="400" />
 	</div>
 </template>
 
 <script lang="ts">
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
+import type { LogType } from '@drpg/prisma/enums';
 import {
 	CategoryScale,
 	Chart as ChartJS,
+	type ChartOptions,
 	Legend,
 	LinearScale,
 	LineElement,
@@ -45,7 +47,7 @@ export default defineComponent({
 
 		return {
 			logs: [] as LogListResponse,
-			type: null as LogListResponse[number]['type'] | string | null,
+			type: null as LogType | null,
 			LogTypes,
 			fromDate: todayAtMidnight.toISOString().slice(0, 16),
 			loaded: false,
@@ -63,14 +65,12 @@ export default defineComponent({
 						}
 					},
 					y: {
-						ticks: {
-							beginAtZero: true
-						}
+						beginAtZero: true
 					}
 				},
 				responsive: true,
 				maintainAspectRatio: false
-			}
+			} as ChartOptions<'line'>
 		};
 	},
 	computed: {

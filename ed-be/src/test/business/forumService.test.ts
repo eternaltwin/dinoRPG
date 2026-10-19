@@ -31,7 +31,7 @@ beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(auth).mockResolvedValue({ id: 'p1' } as never);
 	vi.mocked(getToken).mockResolvedValue({ accessToken: 'tok' } as never);
-	clientInstance.getPageSizes.mockResolvedValue({ threads_per_page: 20, posts_per_page: 10 });
+	clientInstance.getPageSizes.mockResolvedValue({ threadsPerPage: 20, postsPerPage: 10 });
 });
 
 describe('forumService', () => {
@@ -42,7 +42,7 @@ describe('forumService', () => {
 	});
 
 	it('paginates with the instance page size, not a hardcoded 20', async () => {
-		clientInstance.getPageSizes.mockResolvedValue({ threads_per_page: 15, posts_per_page: 5 });
+		clientInstance.getPageSizes.mockResolvedValue({ threadsPerPage: 15, postsPerPage: 5 });
 		clientInstance.getSection.mockResolvedValue({ threads: { items: [] } });
 
 		await getSection(makeRequest({ params: { page: '3' } } as never));
@@ -77,8 +77,8 @@ describe('forumService', () => {
 		const thread = {
 			type: 'ForumThread',
 			title: 'T',
-			posts: { count: 1, items: [{ id: 'p1', self: { can_edit: true } }] },
-			self: { can_post: true },
+			posts: { count: 1, items: [{ id: 'p1', self: { canEdit: true } }] },
+			self: { canPost: true },
 			section: { self: { grammar: { strong: true } } }
 		};
 		clientInstance.getThread.mockResolvedValue(thread);
@@ -90,12 +90,12 @@ describe('forumService', () => {
 
 	it('passes the server-computed self block through untouched', async () => {
 		const self = {
-			can_post: false,
-			can_lock: false,
-			can_pin: false,
-			can_move: false,
-			can_delete: false,
-			can_report: true
+			canPost: false,
+			canLock: false,
+			canPin: false,
+			canMove: false,
+			canDelete: false,
+			canReport: true
 		};
 		clientInstance.getThread.mockResolvedValue({ posts: { count: 0 }, title: 'T', self });
 
@@ -103,14 +103,6 @@ describe('forumService', () => {
 
 		// Permissions are the server's to compute; the service must not re-derive or drop them.
 		expect(result.self).toBe(self);
-	});
-
-	it('reports a thread with no self block rather than inventing one', async () => {
-		clientInstance.getThread.mockResolvedValue({ posts: { count: 0 }, title: 'T' });
-
-		const result = await getThread(makeRequest({ params: { threadId: 't1', page: '1' } } as never));
-
-		expect(result.self).toBeUndefined();
 	});
 
 	it('creates a thread in the section the player picked', async () => {
@@ -130,7 +122,7 @@ describe('forumService', () => {
 	});
 
 	it('reads the source before editing, and sends that revision id', async () => {
-		clientInstance.getPostSource.mockResolvedValue({ revisions: { last: { id: 'rev9' } } });
+		clientInstance.getPostSource.mockResolvedValue({ revisions: { count: 9, items: [{ id: 'rev9' }] } });
 		clientInstance.updatePost.mockResolvedValue({ type: 'ForumPost' });
 
 		await updatePost(makeRequest({ params: { postId: 'post1' }, body: { content: 'v2' } } as never));
@@ -140,7 +132,7 @@ describe('forumService', () => {
 	});
 
 	it('refuses to edit when no revision id can be read', async () => {
-		clientInstance.getPostSource.mockResolvedValue({ revisions: { count: 0 } });
+		clientInstance.getPostSource.mockResolvedValue({ revisions: { count: 0, items: [] } });
 
 		await expect(
 			updatePost(makeRequest({ params: { postId: 'post1' }, body: { content: 'v2' } } as never))

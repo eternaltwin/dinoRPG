@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { ForumGrammar } from '@drpg/core/models/forum/Forum';
+import type { ForumGrammar } from '@eternaltwin/core/forum/forum-grammar';
 
 interface Range {
 	start: number;

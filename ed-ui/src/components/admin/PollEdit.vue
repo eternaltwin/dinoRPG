@@ -62,7 +62,7 @@
 				<input :id="`option${index}`" type="text" v-model="option.optionText" required />
 				<div class="option-controls">
 					<label class="title" for="orderIndex">Ordre :</label>
-					<input type="number" v-model.number="option.orderIndex" min="0" :placeholder="index" />
+					<input type="number" v-model.number="option.orderIndex" min="0" :placeholder="String(index)" />
 					<DZButton v-if="pollOptions.length > 2" @click="removeOption(index)" type="button"> Supprimer </DZButton>
 				</div>
 			</div>
@@ -208,7 +208,8 @@ export default defineComponent({
 				Object.keys(this.form).forEach(key => {
 					const value = this.form[key as keyof NewsForm];
 					if (value) {
-						formData.append(key, value);
+						// FormData stringifies its values anyway; the date input already yields a string.
+						formData.append(key, String(value));
 					}
 				});
 				formData.append('options', JSON.stringify(this.pollOptions));

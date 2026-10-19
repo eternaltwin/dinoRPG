@@ -81,7 +81,7 @@
 								{{ clan.totalScore }}
 							</template>
 							<template v-else-if="rankingType === ClanRankingType.WAR">
-								{{ clan.clanWarRanking?.reputation ?? 0 }}
+								{{ clan.clanWarRanking?.[0]?.reputation ?? 0 }}
 								<img :src="getImgURL('icons', 'small_reput')" alt="reputation" />
 							</template>
 							<span

@@ -7,8 +7,9 @@
     "serve": "yarn concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
     "serve:app": "yarn run build:deps && yarn run lint:fix && yarn vite --host",
     "serve:deps": "yarn run build:deps --watch",
-    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" && yarn run build:deps && yarn vite build",
+    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" && yarn run build:deps && yarn run type-check && yarn vite build",
     "build:deps": "yarn tsc --project ./tsconfig.deps.json --noEmit",
+    "type-check": "yarn vue-tsc --noEmit --project ./tsconfig.json",
     "preview": "yarn vite preview",
     "lint:test": "yarn eslint --ext .ts,vue --ignore-path .gitignore .",
     "lint:fix": "yarn eslint --ext .ts,vue --ignore-path .gitignore . --fix",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
+    "@eternaltwin/core": "^0.17.0",
     "@eternaltwin/dinorpg_animations": "^1.0.9",
     "@pixi/filter-drop-shadow": "^5.2.0",
     "@pixi/filter-glow": "^5.2.1",
@@ -26,6 +28,8 @@
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
     "ckeditor5": "^45.0.0",
+    "kryo": "^0.16.1",
+    "kryo-json": "^0.16.1",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
@@ -63,7 +67,8 @@
     "upng-js": "^2.1.0",
     "vite": "^8.3.4",
     "vite-plugin-mkcert": "^1.17.6",
-    "vite-plugin-vue-devtools": "^8.2.1"
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vue-tsc": "^3.3.13"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

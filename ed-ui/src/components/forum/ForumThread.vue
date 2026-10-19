@@ -9,7 +9,7 @@
 		<div class="wrapper" v-if="messages.length > 0">
 			<div v-for="message in messages" :key="message.id" class="container">
 				<div class="sender">
-					<DZUser :user="{ id: message.author.user.id, name: message.author.user.display_name.current.value }" />
+					<DZUser :user="authorOf(message.author)" />
 					<div class="date">
 						{{ formatDate(message.ctime) }}
 						<span v-if="message.revisions.count > 1" class="edited">{{ $t('forum.edited') }}</span>
@@ -26,7 +26,7 @@
 				<template v-else>
 					<div class="message" v-if="message.revisions.last.content" v-html="message.revisions.last.content.html" />
 					<div class="message moderated" v-else>{{ $t('forum.moderated') }}</div>
-					<div class="post-actions" v-if="message.self?.can_edit">
+					<div class="post-actions" v-if="message.self.canEdit">
 						<a @click="startEdit(message)">{{ $t('forum.edit.open') }}</a>
 					</div>
 				</template>
@@ -65,7 +65,11 @@
 import { defineComponent } from 'vue';
 import { ForumService } from '../../services/ForumService.js';
 import { ForumErrorCode, handleForumError } from '../../utils/index.js';
-import { ForumGrammar, Thread, forumPost } from '@drpg/core/models/forum/Forum';
+import { ObjectType } from '@eternaltwin/core/core/object-type';
+import type { ForumActor } from '@eternaltwin/core/forum/forum-actor';
+import type { ForumGrammar } from '@eternaltwin/core/forum/forum-grammar';
+import type { ForumThread } from '@eternaltwin/core/forum/forum-thread';
+import type { ShortForumPost } from '@eternaltwin/core/forum/short-forum-post';
 import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
 import TitleHeader from '../utils/TitleHeader.vue';
@@ -78,11 +82,11 @@ export default defineComponent({
 	components: { DZButton, TitleHeader, DZUser, ForumEditor },
 	data() {
 		return {
-			thread: undefined as undefined | Thread,
+			thread: undefined as undefined | ForumThread,
 			totalPages: 1,
 			currentPage: 1,
 			title: undefined as undefined | string,
-			messages: [] as forumPost[],
+			messages: [] as ShortForumPost[],
 			replyContent: '',
 			editingPostId: undefined as undefined | string,
 			editContent: '',
@@ -97,20 +101,20 @@ export default defineComponent({
 		},
 		/** Served by the server alongside the section; never derived from the player's roles. */
 		grammar(): ForumGrammar | undefined {
-			return this.thread?.section?.self?.grammar;
+			return this.thread?.section.self.grammar;
 		},
 		/**
 		 * Whether to draw the reply box.
 		 *
 		 * The server computes this with the same predicate its write path enforces — a locked
 		 * thread, a mute and a token without `forum:write` all land here — so a box that shows is a
-		 * box that works. Nothing is re-derived from `is_locked` or from who the player is.
+		 * box that works. Nothing is re-derived from `isLocked` or from who the player is.
 		 */
 		canPost(): boolean {
-			return this.thread?.self?.can_post === true;
+			return this.thread?.self.canPost === true;
 		},
 		isLocked(): boolean {
-			return this.thread?.is_locked === true;
+			return this.thread?.isLocked === true;
 		},
 		canSendReply(): boolean {
 			return !this.sending && this.replyContent.trim().length > 0;
@@ -119,15 +123,23 @@ export default defineComponent({
 	methods: {
 		/** Back to the section the thread lives in, or to the forum root if it is not known yet. */
 		goBack() {
-			const sectionId = this.thread?.section?.id;
+			const sectionId = this.thread?.section.id;
 			if (sectionId) {
 				this.$router.push({ name: 'ForumSection', params: { sectionId } });
 			} else {
 				this.$router.push({ name: 'Forum' });
 			}
 		},
-		formatDate(dateString: string) {
-			return formatDateTime(dateString);
+		formatDate(date: Date) {
+			return formatDateTime(date.toISOString());
+		},
+		/**
+		 * The user to show as a post's author. A role actor only names its user to those allowed to
+		 * see it, and an OAuth client has no user at all.
+		 */
+		authorOf(actor: ForumActor): { id: string; name: string } | null {
+			const user = actor.type === ObjectType.ClientForumActor ? undefined : actor.user;
+			return user ? { id: user.id, name: user.displayName.current.value } : null;
 		},
 		async readThread() {
 			this.currentPage = Math.max(1, +this.$route.params.page || 1);
@@ -136,8 +148,8 @@ export default defineComponent({
 				this.thread = thread;
 				this.reauthorize = false;
 				this.title = thread.title;
-				this.messages = thread.posts.items ?? [];
-				this.totalPages = Math.max(1, Math.ceil(thread.posts.count / (thread.posts.limit ?? 1)));
+				this.messages = thread.posts.items;
+				this.totalPages = Math.max(1, Math.ceil(thread.posts.count / thread.posts.limit));
 			} catch (e) {
 				this.messages = [];
 				this.reauthorize = handleForumError(e, this.$t, this.$toast) === ForumErrorCode.Reauthorize;
@@ -169,7 +181,7 @@ export default defineComponent({
 				// The reply is the newest post, so it sits on the last page — which the reply itself
 				// may just have created.
 				const count = (this.thread?.posts.count ?? 0) + 1;
-				this.goToPage(Math.max(1, Math.ceil(count / (this.thread?.posts.limit ?? 1))));
+				this.goToPage(Math.max(1, Math.ceil(count / (this.thread?.posts.limit || 1))));
 			} catch (e) {
 				handleForumError(e, this.$t, this.$toast);
 			} finally {
@@ -182,10 +194,11 @@ export default defineComponent({
 		 * The Marktwin source comes from its own endpoint: a read only carries the rendered HTML,
 		 * and editing that would send markup back through the parser a second time.
 		 */
-		async startEdit(post: forumPost) {
+		async startEdit(post: ShortForumPost) {
 			try {
 				const source = await ForumService.getPostSource(post.id);
-				this.editContent = source.revisions.last.content?.marktwin ?? '';
+				// The backend sends the latest revision alone.
+				this.editContent = source.revisions.items[0]?.content?.marktwin ?? '';
 				this.editingPostId = post.id;
 			} catch (e) {
 				handleForumError(e, this.$t, this.$toast);

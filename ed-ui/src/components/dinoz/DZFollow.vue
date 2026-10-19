@@ -21,7 +21,7 @@
 			</span>
 	</div>-->
 	<div v-if="display" class="followList">
-		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow">
+		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow.id">
 			<DinozMini
 				v-tippy="{
 					content: dinozToFollow.name,
@@ -92,20 +92,23 @@ export default defineComponent({
 				}
 
 				const targetDinoz = currentDinozList.find(dinoz => dinoz.id === targetId);
-				if (!targetDinoz) {
+				const follower = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+				if (!targetDinoz || !follower) {
 					this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 					return;
 				}
 
 				const dinozs: Array<DinozFiche> = orderDinozList(
 					currentDinozList.map(dinoz => {
-						if (dinoz.id === +this.$route.params.id) {
+						if (dinoz.id === follower.id) {
 							dinoz.leaderId = targetId;
 						} else if (dinoz.id === targetId) {
 							dinoz.followers.push({
-								id: +this.$route.params.id,
-								fight: targetDinoz.fight,
-								remaining: targetDinoz.remaining
+								id: follower.id,
+								name: follower.name,
+								fight: follower.fight,
+								remaining: follower.remaining,
+								gather: follower.gather
 							});
 						}
 						return dinoz;

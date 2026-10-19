@@ -1,5 +1,5 @@
 import { http } from '../utils/index.js';
-import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerTypeToSend';
+import { PlayerAdminFiche } from '@drpg/core/models/player/PlayerAdminFiche';
 import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { AdminRole, UnavailableReason } from '@drpg/prisma/enums';
@@ -190,10 +190,10 @@ export const AdminService = {
 	},
 	async updateBan(
 		playerId: string,
-		action?: string,
+		action?: string | null,
 		reason?: string,
 		comment?: string,
-		dinozId?: number
+		dinozId?: number | null
 	): Promise<void> {
 		const res = await http().put(`/admin/updateBan/${playerId}`, {
 			action: action,

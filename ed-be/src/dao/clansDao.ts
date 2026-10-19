@@ -113,7 +113,7 @@ export async function getRankingWarClansRequest(page: number) {
 			return {
 				...clanWithoutCastle,
 				isCastleBuilt: (castle?.currentLife ?? 0) > 0,
-				clanWarRanking: { reputation: Math.round(ranking.reputation) }
+				clanWarRanking: [{ reputation: Math.round(ranking.reputation) }]
 			};
 		});
 	});

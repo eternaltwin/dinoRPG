@@ -137,9 +137,9 @@ export default defineComponent({
 			page: 1 as number,
 			pantheon: PantheonMotif.race as PantheonMotif,
 			display: [] as PantheonDisplay[],
-			race: null,
-			level: null,
-			rewardId: null,
+			race: null as string | null,
+			level: null as number | null,
+			rewardId: null as Reward | null,
 			localStore: localStore(),
 			rewardList: rewardList as Readonly<Record<Reward, EpicReward>>
 		};

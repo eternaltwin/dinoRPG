@@ -30,7 +30,6 @@ import { errorHandler } from '../../utils';
 import { InventoryService } from '../../services';
 import EventBus from '../../events/index.js';
 import { useDinozStore } from '../../store';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -39,7 +38,8 @@ export default defineComponent({
 			return itemList;
 		},
 		getInventory(): number[] {
-			const dinoz: DinozFiche = useDinozStore().getCurrentDinoz;
+			const dinoz = useDinozStore().getCurrentDinoz;
+			if (!dinoz) return [];
 			const placesToFill: number = dinoz.maxItems - dinoz.items.length;
 			return dinoz.items.concat(new Array(placesToFill).fill(undefined));
 		}

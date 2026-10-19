@@ -36,7 +36,9 @@ export default defineComponent({
 	},
 	methods: {
 		async sendToServer(): Promise<void> {
-			this.allSecrets = await AdminService.pushSecret(this.newSecret.key, this.newSecret.value);
+			const { key, value } = this.newSecret;
+			if (!key) return;
+			this.allSecrets = await AdminService.pushSecret(key, value ?? '');
 		}
 	},
 	async mounted(): Promise<void> {

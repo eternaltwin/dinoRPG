@@ -1,3 +1,5 @@
+import type { LogType } from '@drpg/prisma/enums';
+
 export const LogTypes = [
 	'ItemUsed',
 	'ItemBought',
@@ -44,4 +46,4 @@ export const LogTypes = [
 	'AdminUpdateQuest',
 	'AdminUpdatePlayer',
 	'AdminUpdateSecret'
-] as const;
+] as const satisfies readonly LogType[];

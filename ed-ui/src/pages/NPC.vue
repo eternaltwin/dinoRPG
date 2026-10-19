@@ -38,7 +38,7 @@ import { NavigationFailure } from 'vue-router';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { DinozService, NPCService, PlayerService } from '../services';
+import { DinozService, NPCService } from '../services';
 import { playerStore, sessionStore, useDinozStore } from '../store';
 import { errorHandler } from '../utils';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -99,7 +99,8 @@ export default defineComponent({
 
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
-							useDinozStore().setDinozList(await PlayerService.getDinozList());
+							// `/player/dinozList` only serves `DinozFicheLite`; the store holds full fiches.
+							await this.playerStore.update();
 
 							break;
 						case ServiceEnum.REFRESH_PLAYER:
@@ -141,7 +142,7 @@ export default defineComponent({
 				playerChoice: []
 			};
 		} else {
-			const npc = useDinozStore().getCurrentDinoz.npcAwait;
+			const npc = useDinozStore().getCurrentDinoz?.npcAwait;
 
 			let step: string | undefined = undefined;
 

@@ -9,11 +9,11 @@
 		<nav class="breadcrumb">
 			<template v-if="section.parent">
 				<RouterLink :to="{ name: 'ForumSection', params: { sectionId: section.parent.id } }">
-					{{ section.parent.display_name }}
+					{{ section.parent.displayName }}
 				</RouterLink>
 				›
 			</template>
-			<span>{{ section.display_name }}</span>
+			<span>{{ section.displayName }}</span>
 		</nav>
 
 		<div v-if="children.length > 0" class="sections">
@@ -21,12 +21,12 @@
 				v-for="child in children"
 				:key="child.id"
 				class="section"
-				:class="{ unread: (child.self?.unread_threads ?? 0) > 0 }"
+				:class="{ unread: child.self.unreadThreads > 0 }"
 				:to="{ name: 'ForumSection', params: { sectionId: child.id } }"
 			>
-				<span class="title">{{ child.display_name }}</span>
-				<span v-if="(child.self?.unread_threads ?? 0) > 0" class="unread-count" :title="$t('forum.unread')">
-					{{ child.self?.unread_threads }}
+				<span class="title">{{ child.displayName }}</span>
+				<span v-if="child.self.unreadThreads > 0" class="unread-count" :title="$t('forum.unread')">
+					{{ child.self.unreadThreads }}
 				</span>
 				<span class="quantity" :title="$t('forum.threadCount')">{{ child.threads.count }}</span>
 			</RouterLink>
@@ -48,13 +48,13 @@
 		<template v-if="threads.length > 0">
 			<div v-for="day in threads" :key="day.date.toDateString()">
 				<div class="date">{{ formatDate(day.date) }}</div>
-				<div v-for="thread in day.threads" :key="thread.id" class="thread" :class="{ unread: thread.self?.is_unread }">
+				<div v-for="thread in day.threads" :key="thread.id" class="thread" :class="{ unread: thread.self.isUnread }">
 					<div class="icon">
-						<img v-if="thread.is_pinned" :src="getImgURL('icons', 'thread')" :alt="$t('forum.pinned')" />
+						<img v-if="thread.isPinned" :src="getImgURL('icons', 'thread')" :alt="$t('forum.pinned')" />
 					</div>
 					<RouterLink class="title" :to="`/forum/${thread.id}/1`">
 						{{ thread.title }}
-						<span v-if="thread.is_locked" class="locked" :title="$t('forum.locked')">🔒</span>
+						<span v-if="thread.isLocked" class="locked" :title="$t('forum.locked')">🔒</span>
 					</RouterLink>
 					<div class="quantity">{{ thread.posts.count }}</div>
 				</div>
@@ -78,19 +78,28 @@ import { defineComponent } from 'vue';
 import { ForumService } from '../services/ForumService.js';
 import { ForumErrorCode, handleForumError } from '../utils/index.js';
 import { getImgURL } from '../mixin/mixin.js';
-import { DatedThread, ForumGrammar, ForumSectionSummary, ForumType } from '@drpg/core/models/forum/Forum';
+import type { ForumGrammar } from '@eternaltwin/core/forum/forum-grammar';
+import type { ForumSection } from '@eternaltwin/core/forum/forum-section';
+import type { ForumSectionMeta } from '@eternaltwin/core/forum/forum-section-meta';
+import type { ForumThreadMeta } from '@eternaltwin/core/forum/forum-thread-meta';
 import { localStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZButton from '../components/common/DZButton.vue';
 import ForumNewMessage from '../components/forum/ForumNewMessage.vue';
 import { formatDate } from '../utils/formatDateTime';
 
+/** Threads whose latest post falls on the same day. */
+interface DatedThread {
+	date: Date;
+	threads: ForumThreadMeta[];
+}
+
 export default defineComponent({
 	name: 'ForumPage',
 	components: { TitleHeader, DZButton, ForumNewMessage },
 	data() {
 		return {
-			section: undefined as undefined | ForumType,
+			section: undefined as undefined | ForumSection,
 			threads: [] as DatedThread[],
 			totalPages: 1,
 			currentPage: 1,
@@ -105,8 +114,7 @@ export default defineComponent({
 		sectionId(): string | undefined {
 			return (this.$route.params.sectionId as string | undefined) || undefined;
 		},
-		/** Absent on instances that predate nested sections. */
-		children(): ForumSectionSummary[] {
+		children(): ForumSectionMeta[] {
 			return this.section?.children ?? [];
 		},
 		/**
@@ -116,7 +124,7 @@ export default defineComponent({
 		 * on save.
 		 */
 		grammar(): ForumGrammar | undefined {
-			return this.section?.self?.grammar;
+			return this.section?.self.grammar;
 		},
 		/**
 		 * Whether to offer opening a thread.
@@ -125,7 +133,7 @@ export default defineComponent({
 		 * thread of its own, and a muted player or a token without `forum:write` land here too.
 		 */
 		canWrite(): boolean {
-			return this.section?.self?.can_create_thread === true;
+			return this.section?.self.canCreateThread === true;
 		}
 	},
 	watch: {
@@ -159,12 +167,12 @@ export default defineComponent({
 				this.reauthorize = handleForumError(e, this.$t, this.$toast) === ForumErrorCode.Reauthorize;
 			}
 		},
-		groupByDay(section: ForumType): DatedThread[] {
+		groupByDay(section: ForumSection): DatedThread[] {
 			const days: DatedThread[] = [];
 
 			for (const thread of section.threads.items) {
 				// Threads come ordered by their latest post, so that is the day they belong to.
-				const date = new Date(thread.last_post?.ctime ?? thread.ctime);
+				const date = thread.lastPost?.ctime ?? thread.ctime;
 				const day = days.find(a => a.date.toLocaleDateString() === date.toLocaleDateString());
 				if (day) {
 					day.threads.push(thread);

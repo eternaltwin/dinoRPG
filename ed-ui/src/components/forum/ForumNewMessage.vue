@@ -38,7 +38,7 @@ import DZButton from '../common/DZButton.vue';
 import ForumEditor from './ForumEditor.vue';
 import { ForumService } from '../../services/ForumService.js';
 import { handleForumError } from '../../utils/index.js';
-import { ForumGrammar } from '@drpg/core/models/forum/Forum';
+import type { ForumGrammar } from '@eternaltwin/core/forum/forum-grammar';
 
 /**
  * What Eternaltwin accepts as a thread title: trimmed, 2 to 64 characters.

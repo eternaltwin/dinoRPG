@@ -347,6 +347,7 @@ export default defineComponent({
 		dinozSkills() {
 			try {
 				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz) return [];
 				let skills = toSkillDetails(currentDinoz.skills);
 				this.sortSkills(skills); // Mutate the array
 				if (this.picked === 'desc') {
@@ -362,6 +363,7 @@ export default defineComponent({
 		assaultStats() {
 			try {
 				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz) return [];
 				return Object.values(AssaultElement).map(stat =>
 					getAssaultStat(
 						currentDinoz,
@@ -378,6 +380,7 @@ export default defineComponent({
 		defenseStats() {
 			try {
 				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz) return [];
 				return Object.values(DefenseElement).map(stat =>
 					getDefenseStat(
 						currentDinoz,
@@ -524,7 +527,7 @@ export default defineComponent({
 		hasAmulst(): boolean {
 			try {
 				const currentDinoz = useDinozStore().getCurrentDinoz;
-				return currentDinoz.status.some(s => s.statusId === statusList.id.amulst) ?? false;
+				return currentDinoz?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return false;
@@ -559,20 +562,22 @@ export default defineComponent({
 				try {
 					const currentDinoz = useDinozStore().getCurrentDinoz;
 					this.ownBuilds = await DinozBuildService.getOwn();
-					this.dinozBuild = currentDinoz.build?.id;
+					this.dinozBuild = currentDinoz?.build?.id;
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 				}
 			}
 		},
 		async changeDinozBuild() {
-			if (!this.dinozBuild || !useDinozStore().getCurrentDinoz.id) {
+			const dinozId = useDinozStore().getCurrentDinoz?.id;
+			if (!this.dinozBuild || !dinozId) {
 				return;
 			}
 
 			try {
-				await DinozService.assignBuild(useDinozStore().getCurrentDinoz.id, this.dinozBuild);
+				await DinozService.assignBuild(dinozId, this.dinozBuild);
 				const currentDinoz = useDinozStore().getCurrentDinoz;
+				if (!currentDinoz) return;
 				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
 
 				useDinozStore().setDinoz({ ...currentDinoz, build });

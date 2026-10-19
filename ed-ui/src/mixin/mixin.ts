@@ -1,3 +1,4 @@
+import type { ComponentPublicInstance } from 'vue';
 import { formatText } from '../utils/formatText.js';
 import { ConfirmOptions } from './confirmPlugin';
 import { PlayerService } from '../services';
@@ -42,7 +43,7 @@ export const mixin = {
 		getSWFUrl(path: string, imgName: string): string {
 			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url).toString();
 		},
-		$confirm(options: ConfirmOptions): Promise<boolean> {
+		$confirm(this: ComponentPublicInstance, options: ConfirmOptions): Promise<boolean> {
 			if (this.$globalConfirm) {
 				return this.$globalConfirm(options);
 			}

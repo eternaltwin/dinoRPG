@@ -1,5 +1,9 @@
+import { $ForumPost } from '@eternaltwin/core/forum/forum-post';
+import { $ForumSection } from '@eternaltwin/core/forum/forum-section';
+import { $ForumThread } from '@eternaltwin/core/forum/forum-thread';
 import { Request, Response, Router } from 'express';
 import { param, body, validationResult } from 'express-validator';
+import { JSON_WRITER } from 'kryo-json/json-writer';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
 import {
@@ -15,6 +19,10 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.forum;
 
+// The forum service returns decoded Eternaltwin values (camelCase, `Date`, symbols), which do not
+// survive `JSON.stringify`: each reply is encoded back to the Eternaltwin wire format, which the
+// interface decodes with the same codecs.
+
 routes.get(`${commonPath}/posts/:postId/source`, [param('postId').exists()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -22,7 +30,7 @@ routes.get(`${commonPath}/posts/:postId/source`, [param('postId').exists()], asy
 
 	try {
 		const response = await getPostSource(req);
-		return res.status(200).send(response);
+		return res.status(200).type('json').send($ForumPost.write(JSON_WRITER, response));
 	} catch (err) {
 		sendError(res, err);
 	}
@@ -38,7 +46,7 @@ routes.patch(
 
 		try {
 			const response = await updatePost(req);
-			return res.status(200).send(response);
+			return res.status(200).type('json').send($ForumPost.write(JSON_WRITER, response));
 		} catch (err) {
 			sendError(res, err);
 		}
@@ -55,7 +63,7 @@ routes.post(
 
 		try {
 			const response = await createThread(req);
-			return res.status(200).send(response);
+			return res.status(200).type('json').send($ForumThread.write(JSON_WRITER, response));
 		} catch (err) {
 			sendError(res, err);
 		}
@@ -72,7 +80,7 @@ routes.post(
 
 		try {
 			const response = await replyToThread(req);
-			return res.status(200).send(response);
+			return res.status(200).type('json').send($ForumPost.write(JSON_WRITER, response));
 		} catch (err) {
 			sendError(res, err);
 		}
@@ -86,7 +94,7 @@ routes.get(`${commonPath}/:page`, [param('page').exists().toInt().isNumeric()], 
 
 	try {
 		const response = await getSection(req);
-		return res.status(200).send(response);
+		return res.status(200).type('json').send($ForumSection.write(JSON_WRITER, response));
 	} catch (err) {
 		sendError(res, err);
 	}
@@ -102,7 +110,7 @@ routes.get(
 
 		try {
 			const response = await getSection(req);
-			return res.status(200).send(response);
+			return res.status(200).type('json').send($ForumSection.write(JSON_WRITER, response));
 		} catch (err) {
 			sendError(res, err);
 		}
@@ -119,7 +127,7 @@ routes.get(
 
 		try {
 			const response = await getThread(req);
-			return res.status(200).send(response);
+			return res.status(200).type('json').send($ForumThread.write(JSON_WRITER, response));
 		} catch (err) {
 			sendError(res, err);
 		}

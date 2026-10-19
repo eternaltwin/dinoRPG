@@ -1,6 +1,7 @@
 import { http } from '../utils/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
 import { TwinoStat } from '@drpg/core/models/import/twinoStat';

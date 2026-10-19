@@ -6,7 +6,7 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<div class="action_content">
-			<template v-for="d in dinozFullParty" :key="d">
+			<template v-for="d in dinozFullParty" :key="d.id">
 				<MissionHUDVue
 					v-if="d.missionHUD && d.missionId"
 					:missionId="d.missionId"

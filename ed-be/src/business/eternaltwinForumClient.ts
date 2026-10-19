@@ -1,12 +1,16 @@
-import type {
-	EternaltwinForumConfig,
-	ForumPostSource,
-	ForumSectionListing,
-	ForumType,
-	Thread,
-	forumPost
-} from '@drpg/core/models/forum/Forum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { $Config } from '@eternaltwin/core/config/config';
+import { $CreatePostOptions } from '@eternaltwin/core/forum/create-post-options';
+import { $CreateThreadOptions } from '@eternaltwin/core/forum/create-thread-options';
+import type { ForumConfig } from '@eternaltwin/core/forum/forum-config';
+import { $ForumPost, type ForumPost } from '@eternaltwin/core/forum/forum-post';
+import { $ForumSection, type ForumSection } from '@eternaltwin/core/forum/forum-section';
+import { $ForumSectionListing, type ForumSectionListing } from '@eternaltwin/core/forum/forum-section-listing';
+import { $ForumThread, type ForumThread } from '@eternaltwin/core/forum/forum-thread';
+import { $UpdatePostOptions } from '@eternaltwin/core/forum/update-post-options';
+import { type IoType, readOrThrow } from 'kryo';
+import { JSON_READER } from 'kryo-json/json-reader';
+import { JSON_WRITER } from 'kryo-json/json-writer';
 import urlJoin from 'url-join';
 import { GLOBAL } from '../context.js';
 import { deleteToken } from '../dao/eternaltwinTokenDao.js';
@@ -33,13 +37,15 @@ export class EternaltwinConflictError extends ExpectedError {}
 /**
  * Page sizes are a property of the instance, not of a request; one lookup per origin is enough.
  */
-const pageSizeCache = new Map<string, EternaltwinForumConfig['forum']>();
+const pageSizeCache = new Map<string, ForumConfig>();
 
 /**
  * A minimal Eternaltwin forum client.
  *
  * No official client library covers the forum — the Kotlin, Ruby, `@eternaltwin/client-node` and
- * PHP clients stop at `auth/self` and users — so this speaks plain HTTP.
+ * PHP clients stop at `auth/self` and users — so this speaks plain HTTP. The payloads still go
+ * through the codecs `@eternaltwin/core` ships: a reply that does not match them is rejected here,
+ * rather than reaching the interface half-read.
  *
  * It must only ever run on the server: Eternaltwin's CORS policy allows a single fixed origin, so
  * a call from a player's browser is blocked before it leaves, and the access token has no business
@@ -58,7 +64,7 @@ export class EternaltwinForumClient {
 		this.#origin = origin;
 	}
 
-	async #request<T>(path: string, init: RequestInit = {}): Promise<T> {
+	async #request<T>(path: string, resType: IoType<T>, init: RequestInit = {}): Promise<T> {
 		const uri = new URL(urlJoin(this.#origin, path));
 
 		const response = await fetch(uri, {
@@ -75,7 +81,7 @@ export class EternaltwinForumClient {
 			await this.#throwForStatus(response, uri);
 		}
 
-		return (await response.json()) as T;
+		return readOrThrow(resType, JSON_READER, await response.text());
 	}
 
 	async #throwForStatus(response: Response, uri: URL): Promise<never> {
@@ -103,56 +109,66 @@ export class EternaltwinForumClient {
 	/**
 	 * Page sizes used by the Eternaltwin site, so the game paginates the same way it does.
 	 */
-	public async getPageSizes(): Promise<EternaltwinForumConfig['forum']> {
+	public async getPageSizes(): Promise<ForumConfig> {
 		const cached = pageSizeCache.get(this.#origin);
 		if (cached !== undefined) {
 			return cached;
 		}
-		const config = await this.#request<EternaltwinForumConfig>('api/v1/config');
+		const config = await this.#request('api/v1/config', $Config);
 		pageSizeCache.set(this.#origin, config.forum);
 		return config.forum;
 	}
 
 	public async listSections(): Promise<ForumSectionListing> {
-		return this.#request<ForumSectionListing>('api/v1/forum/sections');
+		return this.#request('api/v1/forum/sections', $ForumSectionListing);
 	}
 
 	/**
 	 * A section and one page of its threads. `sectionRef` accepts a UUID or a section key.
 	 */
-	public async getSection(sectionRef: string, offset: number, limit: number): Promise<ForumType> {
-		return this.#request<ForumType>(`api/v1/forum/sections/${sectionRef}?offset=${offset}&limit=${limit}`);
+	public async getSection(sectionRef: string, offset: number, limit: number): Promise<ForumSection> {
+		return this.#request(`api/v1/forum/sections/${sectionRef}?offset=${offset}&limit=${limit}`, $ForumSection);
 	}
 
 	/** Open a thread. `body` is Marktwin. */
-	public async createThread(sectionRef: string, title: string, body: string): Promise<Thread> {
-		return this.#request<Thread>(`api/v1/forum/sections/${sectionRef}`, {
+	public async createThread(sectionRef: string, title: string, body: string): Promise<ForumThread> {
+		return this.#request(`api/v1/forum/sections/${sectionRef}`, $ForumThread, {
 			method: 'POST',
-			body: JSON.stringify({ title, body })
+			body: $CreateThreadOptions.write(JSON_WRITER, { title, body })
 		});
 	}
 
-	public async getThread(threadRef: string, offset: number, limit: number): Promise<Thread> {
-		return this.#request<Thread>(`api/v1/forum/threads/${threadRef}?offset=${offset}&limit=${limit}`);
+	public async getThread(threadRef: string, offset: number, limit: number): Promise<ForumThread> {
+		return this.#request(`api/v1/forum/threads/${threadRef}?offset=${offset}&limit=${limit}`, $ForumThread);
 	}
 
 	/** Reply to a thread. `body` is Marktwin. */
-	public async replyToThread(threadRef: string, body: string): Promise<forumPost> {
-		return this.#request<forumPost>(`api/v1/forum/threads/${threadRef}`, {
+	public async replyToThread(threadRef: string, body: string): Promise<ForumPost> {
+		return this.#request(`api/v1/forum/threads/${threadRef}`, $ForumPost, {
 			method: 'POST',
-			body: JSON.stringify({ body })
+			body: $CreatePostOptions.write(JSON_WRITER, { body })
 		});
 	}
 
-	public async getPost(postRef: string): Promise<forumPost> {
-		return this.#request<forumPost>(`api/v1/forum/posts/${postRef}`);
+	public async getPost(postRef: string): Promise<ForumPost> {
+		return this.#request(`api/v1/forum/posts/${postRef}`, $ForumPost);
 	}
 
 	/**
-	 * The Marktwin source of a post, for an editor. Ordinary reads do not carry it.
+	 * A post with the Marktwin source of its latest revision, for an editor. Ordinary reads do not
+	 * carry the source.
+	 *
+	 * The server lists revisions oldest first, so the latest one is on the last page: a first read of
+	 * a single revision gives the count, and a second one fetches the last when there is more than
+	 * one. `revisions.items` holds that latest revision alone.
 	 */
-	public async getPostSource(postRef: string): Promise<ForumPostSource> {
-		return this.#request<ForumPostSource>(`api/v1/forum/posts/${postRef}/source`);
+	public async getPostSource(postRef: string): Promise<ForumPost> {
+		const first = await this.#request(`api/v1/forum/posts/${postRef}/source?offset=0&limit=1`, $ForumPost);
+		const count = first.revisions.count;
+		if (count <= 1) {
+			return first;
+		}
+		return this.#request(`api/v1/forum/posts/${postRef}/source?offset=${count - 1}&limit=1`, $ForumPost);
 	}
 
 	/**
@@ -167,10 +183,10 @@ export class EternaltwinForumClient {
 		lastRevisionId: string,
 		content: string,
 		comment: string | null
-	): Promise<forumPost> {
-		return this.#request<forumPost>(`api/v1/forum/posts/${postRef}`, {
+	): Promise<ForumPost> {
+		return this.#request(`api/v1/forum/posts/${postRef}`, $ForumPost, {
 			method: 'PATCH',
-			body: JSON.stringify({ last_revision_id: lastRevisionId, content, comment })
+			body: $UpdatePostOptions.write(JSON_WRITER, { lastRevisionId, content, comment })
 		});
 	}
 }

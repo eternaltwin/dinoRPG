@@ -14,6 +14,7 @@ import {
 	EternaltwinForumClient,
 	EternaltwinNotFoundError
 } from '../../business/eternaltwinForumClient.js';
+import { postWire, revisionWire, sectionWire, threadWire } from '../helpers/eternaltwinForum.js';
 
 function jsonResponse(body: unknown, status = 200) {
 	return {
@@ -37,7 +38,7 @@ function client(origin = 'http://et/') {
 
 describe('EternaltwinForumClient', () => {
 	it('sends the bearer token on every call', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ type: 'ForumSection' }));
+		fetchMock.mockResolvedValue(jsonResponse(sectionWire));
 		await client().getSection('drpg_main', 0, 20);
 
 		const [, init] = fetchMock.mock.calls[0];
@@ -45,16 +46,20 @@ describe('EternaltwinForumClient', () => {
 	});
 
 	it('reads page sizes from the instance instead of assuming them', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ forum: { threads_per_page: 15, posts_per_page: 7 } }));
+		fetchMock.mockResolvedValue(
+			jsonResponse({ captcha: { enabled: false }, forum: { threads_per_page: 15, posts_per_page: 7 } })
+		);
 		// A distinct origin, so the module-level cache from other tests cannot answer.
 		const sizes = await client('http://sizes/').getPageSizes();
 
-		expect(sizes).toEqual({ threads_per_page: 15, posts_per_page: 7 });
+		expect(sizes).toEqual({ threadsPerPage: 15, postsPerPage: 7 });
 		expect(String(fetchMock.mock.calls[0][0])).toBe('http://sizes/api/v1/config');
 	});
 
 	it('caches page sizes per origin', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ forum: { threads_per_page: 20, posts_per_page: 10 } }));
+		fetchMock.mockResolvedValue(
+			jsonResponse({ captcha: { enabled: false }, forum: { threads_per_page: 20, posts_per_page: 10 } })
+		);
 		const c = client('http://cached/');
 		await c.getPageSizes();
 		await c.getPageSizes();
@@ -86,7 +91,7 @@ describe('EternaltwinForumClient', () => {
 	});
 
 	it('posts a thread as Marktwin title/body', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ type: 'ForumThread' }));
+		fetchMock.mockResolvedValue(jsonResponse(threadWire));
 		await client().createThread('drpg_main', 'Titre', '**gras**');
 
 		const [uri, init] = fetchMock.mock.calls[0];
@@ -96,7 +101,7 @@ describe('EternaltwinForumClient', () => {
 	});
 
 	it('sends last_revision_id when rewriting a post', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ type: 'ForumPost' }));
+		fetchMock.mockResolvedValue(jsonResponse(postWire(1, 0, [revisionWire('5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d')])));
 		await client().updatePost('post1', 'rev1', 'nouveau', 'typo');
 
 		const [uri, init] = fetchMock.mock.calls[0];
@@ -110,9 +115,44 @@ describe('EternaltwinForumClient', () => {
 	});
 
 	it('asks for the source on its own endpoint', async () => {
-		fetchMock.mockResolvedValue(jsonResponse({ type: 'ForumPost' }));
-		await client().getPostSource('post1');
+		fetchMock.mockResolvedValue(
+			jsonResponse(postWire(1, 0, [revisionWire('5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d', 'v1')]))
+		);
+		const post = await client().getPostSource('post1');
 
-		expect(String(fetchMock.mock.calls[0][0])).toBe('http://et/api/v1/forum/posts/post1/source');
+		expect(fetchMock).toHaveBeenCalledTimes(1);
+		expect(String(fetchMock.mock.calls[0][0])).toBe('http://et/api/v1/forum/posts/post1/source?offset=0&limit=1');
+		expect(post.revisions.items[0].content?.marktwin).toBe('v1');
+	});
+
+	it('reads the source of the latest revision, which the server lists last', async () => {
+		const first = revisionWire('5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d', 'v1');
+		const latest = revisionWire('6a3c4d5e-7f8a-4b9c-8d1e-2f3a4b5c6d7e', 'v3');
+		fetchMock
+			.mockResolvedValueOnce(jsonResponse(postWire(3, 0, [first])))
+			.mockResolvedValueOnce(jsonResponse(postWire(3, 2, [latest])));
+
+		const post = await client().getPostSource('post1');
+
+		expect(String(fetchMock.mock.calls[1][0])).toBe('http://et/api/v1/forum/posts/post1/source?offset=2&limit=1');
+		expect(post.revisions.items[0].id).toBe('6a3c4d5e-7f8a-4b9c-8d1e-2f3a4b5c6d7e');
+		expect(post.revisions.items[0].content?.marktwin).toBe('v3');
+	});
+
+	it('decodes replies into the @eternaltwin/core types', async () => {
+		fetchMock.mockResolvedValue(jsonResponse(threadWire));
+		const thread = await client().getThread('t1', 0, 10);
+
+		expect(thread.isLocked).toBe(false);
+		expect(thread.self.canPost).toBe(true);
+		expect(thread.section.self.grammar.strong).toBe(true);
+		expect(thread.posts.items[0].self.canEdit).toBe(true);
+		expect(thread.ctime).toBeInstanceOf(Date);
+	});
+
+	it('rejects a reply that does not match the expected type', async () => {
+		fetchMock.mockResolvedValue(jsonResponse({ type: 'ForumThread' }));
+
+		await expect(client().getThread('t1', 0, 10)).rejects.toThrow();
 	});
 });
