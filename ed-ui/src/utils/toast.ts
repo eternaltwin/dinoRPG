@@ -1,6 +1,6 @@
 import { App } from 'vue';
 import type { ToastPluginApi, ToastProps } from 'vue-toast-notification';
-import ToastPlugin from 'vue-toast-notification';
+import { useToast } from 'vue-toast-notification';
 import { playerStore } from '../store';
 import { formatText } from './formatText';
 
@@ -13,11 +13,9 @@ const activeToasts: ToastInstance[] = [];
 export const createToastPlugin = (options: ToastProps) => {
 	return {
 		install(app: App) {
-			// Install the original toast plugin
-			app.use(ToastPlugin, options);
-
-			// Get the original toast instance
-			const originalToast = app.config.globalProperties.$toast;
+			// Create the original toast instance (same as ToastPlugin.install, whose default export
+			// does not survive Vite's CommonJS interop)
+			const originalToast = useToast(options);
 
 			// Create a wrapper that tracks toasts
 			const wrappedToast: ToastPluginApi = {
