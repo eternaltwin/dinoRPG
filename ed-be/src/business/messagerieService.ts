@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { auth } from '../dao/playerDao.js';
+import { auth, getPlayerId } from '../dao/playerDao.js';
 import {
 	addMessage,
 	changePinMessage,
@@ -23,15 +23,20 @@ export async function startConversation(req: Request) {
 	const title = req.body.title;
 	const participants = req.body.participants;
 	const message = req.body.message;
+	const players = new Set<string>();
+	for (const participant of participants) {
+		const player = await getPlayerId(participant);
+		if (player) players.add(player.id);
+	}
 
-	if (participants.length > 9) {
+	if (players.size > 9) {
 		throw new ExpectedError(translate('maxParticipantInThread', authed));
 	}
 
-	const conversation = await createConversation(authed.id, participants, title, message);
-	participants
-		.filter((p: string) => p !== authed.id)
-		.forEach((p: string) => createNotification(p, conversation.id, NotificationSeverity.message));
+	const conversation = await createConversation(authed.id, [...players], title, message);
+	[...players]
+		.filter(p => p !== authed.id)
+		.forEach(p => createNotification(p, conversation.id, NotificationSeverity.message));
 	return conversation;
 }
 

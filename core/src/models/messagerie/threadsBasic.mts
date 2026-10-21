@@ -3,10 +3,10 @@ import { Player } from '@drpg/prisma';
 export interface ThreadsBasic {
 	id: string;
 	title: string;
-	createdById: number;
+	createdById: number | null;
 	createdBy: {
 		name: string;
-	};
+	} | null;
 	participants: {
 		playerId: string;
 	}[];

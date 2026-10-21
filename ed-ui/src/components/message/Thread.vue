@@ -131,7 +131,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		console.log('mounted');
 		try {
 			this.myThread = await MessagerieService.getThread(this.threadId);
 		} catch (e) {

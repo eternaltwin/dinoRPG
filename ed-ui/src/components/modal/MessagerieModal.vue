@@ -50,7 +50,7 @@
 							<img v-if="notifiedThreads.includes(thread.id)" :src="getImgURL('icons', 'small_notif')" />
 							{{ thread.title }}
 						</p>
-						<div>
+						<div v-if="thread.createdBy">
 							<span>
 								<b class="creator">{{ thread.createdBy.name }}</b>
 								, {{ thread.participants.length }} {{ $t('messagerie.participants') }},

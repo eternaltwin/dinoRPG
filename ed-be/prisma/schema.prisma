@@ -263,50 +263,50 @@ model NPC {
 
 model Player {
   customText             String?
-  name                   String             @db.VarChar
-  connexionToken         String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                   String                  @db.VarChar
+  connexionToken         String                  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   money                  Int
   quetzuBought           Int
-  leader                 Boolean            @default(false)
-  engineer               Boolean            @default(false)
-  cooker                 Boolean            @default(false)
-  shopKeeper             Boolean            @default(false)
-  merchant               Boolean            @default(false)
-  priest                 Boolean            @default(false)
-  teacher                Boolean            @default(false)
-  createdDate            DateTime           @default(now()) @db.Timestamp(6)
-  updatedDate            DateTime           @default(now()) @updatedAt @db.Timestamp(6)
-  lastLogin              DateTime           @default(now()) @db.Timestamp(6)
+  leader                 Boolean                 @default(false)
+  engineer               Boolean                 @default(false)
+  cooker                 Boolean                 @default(false)
+  shopKeeper             Boolean                 @default(false)
+  merchant               Boolean                 @default(false)
+  priest                 Boolean                 @default(false)
+  teacher                Boolean                 @default(false)
+  createdDate            DateTime                @default(now()) @db.Timestamp(6)
+  updatedDate            DateTime                @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin              DateTime                @default(now()) @db.Timestamp(6)
   clanId                 Int?
-  clan                   Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
-  matelasseur            Boolean            @default(false)
-  messie                 Boolean            @default(false)
-  labruteDone            Boolean            @default(false)
-  role                   AdminRole          @default(PLAYER)
-  lang                   Lang               @default(fr)
-  dailyGridRewards       Int                @default(0)
-  skipFight              Boolean            @default(false)
-  skipLevel              Boolean            @default(false)
-  autoReequipItems       Boolean            @default(false)
-  bypassGatheringGrid    Boolean            @default(false)
-  shareArchivedData      Boolean            @default(false)
+  clan                   Clan?                   @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  matelasseur            Boolean                 @default(false)
+  messie                 Boolean                 @default(false)
+  labruteDone            Boolean                 @default(false)
+  role                   AdminRole               @default(PLAYER)
+  lang                   Lang                    @default(fr)
+  dailyGridRewards       Int                     @default(0)
+  skipFight              Boolean                 @default(false)
+  skipLevel              Boolean                 @default(false)
+  autoReequipItems       Boolean                 @default(false)
+  bypassGatheringGrid    Boolean                 @default(false)
+  shareArchivedData      Boolean                 @default(false)
   archivedSiteId         Int?
-  displayedNotifications Int                @default(3)
-  banCaseId              Int?               @unique
-  discoveredSkills       Int[]              @default([])
-  lastVersionSeen        String             @default("0.16.3")
-  tosAccepted            Boolean            @default(false)
-  id                     String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
-  leaderOf               Clan?              @relation("leader")
+  displayedNotifications Int                     @default(3)
+  banCaseId              Int?                    @unique
+  discoveredSkills       Int[]                   @default([])
+  lastVersionSeen        String                  @default("0.16.3")
+  tosAccepted            Boolean                 @default(false)
+  id                     String                  @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
+  leaderOf               Clan?                   @relation("leader")
   ClanHistory            ClanHistory[]
-  ClanJoinRequest        ClanJoinRequest?   @relation("clanRequest")
+  ClanJoinRequest        ClanJoinRequest?        @relation("clanRequest")
   ClanMember             ClanMember?
-  createdConversations   Conversation[]     @relation("CreatedConversations")
+  createdConversations   Conversation[]          @relation("CreatedConversations")
   Conversation           Conversation[]
   logs                   Log[]
   messages               Message[]
-  reportedCases          Moderation[]       @relation("ReporterRelation")
-  targetedCases          Moderation[]       @relation("TargetRelation")
+  reportedCases          Moderation[]            @relation("ReporterRelation")
+  targetedCases          Moderation[]            @relation("TargetRelation")
   notifications          Notification[]
   offers                 Offer[]
   bids                   OfferBid[]
@@ -315,7 +315,7 @@ model Player {
   usernameHistory        UsernameHistory[]
   ClanMessage            ClanMessage[]
   dinoz                  Dinoz[]
-  banCase                Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
+  banCase                Moderation?             @relation("AcceptedBan", fields: [banCaseId], references: [id])
   playerTracking         PlayerTracking[]
   dinozShop              PlayerDinozShop[]
   demonShop              PlayerDemonShop[]
@@ -326,9 +326,9 @@ model Player {
   rewards                PlayerReward[]
   ranking                Ranking?
   Dojo                   Dojo?
-  FightArchive           FightArchive[]     @relation("PlayerRelation")
-  LeftFightArchives      FightArchive[]     @relation("LeftPlayerRelation")
-  RightFightArchives     FightArchive[]     @relation("RightPlayerRelation")
+  FightArchive           FightArchive[]          @relation("PlayerRelation")
+  LeftFightArchives      FightArchive[]          @relation("LeftPlayerRelation")
+  RightFightArchives     FightArchive[]          @relation("RightPlayerRelation")
   FightWatched           FightWatched[]
   GameDinoz              GameDinoz[]
   ips                    PlayerIp[]
@@ -448,9 +448,9 @@ model PlayerDinozShop {
 }
 
 model PlayerDemonShop {
-  id                 Int                      @id @default(autoincrement())
+  id                 Int                    @id @default(autoincrement())
   raceId             Int
-  display            String                   @db.VarChar
+  display            String                 @db.VarChar
   nextUpElementId    Int
   nextUpAltElementId Int
   nbrUpFire          Int
@@ -458,30 +458,30 @@ model PlayerDemonShop {
   nbrUpWater         Int
   nbrUpLightning     Int
   nbrUpAir           Int
-  seed               String                   @default(dbgenerated("uuid_generate_v4()"))
+  seed               String                 @default(dbgenerated("uuid_generate_v4()"))
   skills             DemonSkill[]
   unlockableSkills   DemonSkillUnlockable[]
-  playerId           String?                  @db.Uuid
-  player             Player?                  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  playerId           String?                @db.Uuid
+  player             Player?                @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("player_demon_shop")
 }
 
 model DemonSkill {
-  id          Int                 @id @default(autoincrement())
-  skillId     Int
-  dinozId     Int
-  dinoz       PlayerDemonShop     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id      Int             @id @default(autoincrement())
+  skillId Int
+  dinozId Int
+  dinoz   PlayerDemonShop @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([skillId, dinozId])
   @@map("demon_skill")
 }
 
 model DemonSkillUnlockable {
-  id          Int                 @id @default(autoincrement())
-  skillId     Int
-  dinozId     Int
-  dinoz       PlayerDemonShop     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id      Int             @id @default(autoincrement())
+  skillId Int
+  dinozId Int
+  dinoz   PlayerDemonShop @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([skillId, dinozId])
   @@map("demon_skill_unlockable")
@@ -875,8 +875,6 @@ model Participants {
   playerName     String
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   player         Player?      @relation(fields: [playerId], references: [id])
-
-  @@unique([playerId, conversationId])
 }
 
 model Message {
@@ -1236,38 +1234,38 @@ enum DungeonType {
 }
 
 model DungeonRun {
-  id        String   @id @default(cuid())
-  posX      Int      @map("pos_x")
-  posY      Int      @map("pos_y")
-  posL      Int      @map("pos_l")
-  revealed  String   @default("[]")
+  id          String   @id @default(cuid())
+  posX        Int      @map("pos_x")
+  posY        Int      @map("pos_y")
+  posL        Int      @map("pos_l")
+  revealed    String   @default("[]")
   // Cell keys ("l,x,y") of the monster teams this player has beaten.
-  defeated  String   @default("[]")
+  defeated    String   @default("[]")
   // Key indices (door.key / item.v in the sealed layout) this player has picked up.
-  keys      String   @default("[]")
+  keys        String   @default("[]")
   // Cell keys ("l,x,y") of the doors this player has unlocked.
-  opened    String   @default("[]")
+  opened      String   @default("[]")
   // Scenario indices (IScenario item.v) this player has read / been granted.
-  scenarios String   @default("[]")
+  scenarios   String   @default("[]")
   // Cell keys ("l,x,y") of the gold piles this player has collected.
-  gold      String   @default("[]")
+  gold        String   @default("[]")
   // Cell keys ("l,x,y") of the healing cells this player has used up for good.
-  healed    String   @default("[]")
+  healed      String   @default("[]")
   // The healing cell ("l,x,y") the party healed on and is still standing on: as
   // many items as they like until they step off, which spends it into `healed`.
   healPending String?
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  playerId  String   @db.Uuid
-  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  dungeonId String   @db.Uuid
-  dungeon   Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  playerId    String   @db.Uuid
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  dungeonId   String   @db.Uuid
+  dungeon     Dungeon  @relation(fields: [dungeonId], references: [id], onDelete: Cascade)
   // The dinoz that opened this run — only it can move/resume/exit it. Its
   // current followers (Dinoz.leaderId) ARE the rest of the team: no separate
   // roster to desync, since a dead/pulled dinoz is disconnected immediately.
   // Optional: the run outlives its leader (SetNull) — deleting the dinoz
   // shouldn't wipe out the run's progress.
-  leaderId  Int?
-  leader    Dinoz?   @relation("DungeonRunLeader", fields: [leaderId], references: [id], onDelete: SetNull)
+  leaderId    Int?
+  leader      Dinoz?   @relation("DungeonRunLeader", fields: [leaderId], references: [id], onDelete: SetNull)
 
   @@unique([playerId, dungeonId])
   @@unique([leaderId])
@@ -1277,36 +1275,36 @@ model DungeonRun {
 }
 
 model Dungeon {
-  id        String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String      @unique @default("")
-  cipher    Bytes
-  iv        Bytes
-  tag       Bytes
-  type      DungeonType
+  id               String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name             String      @unique @default("")
+  cipher           Bytes
+  iv               Bytes
+  tag              Bytes
+  type             DungeonType
   // Approximate total level of each monster team in this maze.
-  level     Int         @default(1)
+  level            Int         @default(1)
   // MonsterTeam[] — rolled once at creation, identical for every player: cell + composition per monster-guarded passage.
-  monsters  String      @default("[]")
+  monsters         String      @default("[]")
   // DungeonScenario[] with raw popup text (ex-DungeonList catalog: '[]' used to mean
   // "look up DungeonList by name" — every dungeon now carries its own scenarios).
-  scenarios String      @default("[]")
+  scenarios        String      @default("[]")
   // Place the dungeon-enter action appears at; null = no place gate (ex-builder
   // dungeons with no DungeonList entry).
-  placeStart  Int?
+  placeStart       Int?
   // Place returned to on exit. Not read by dungeonService yet (same as before this column existed).
-  placeEnd    Int?
+  placeEnd         Int?
   // Serialized Condition (core/src/models/npc/NpcConditions.mts), gates the enter
   // action on top of the place gate. '{}' = always true.
-  condition   String  @default("{}")
+  condition        String      @default("{}")
   // Monster[] pool this dungeon's teams are rolled from at (re)generation — distinct
   // from `monsters`, which holds the already-rolled MonsterTeam[] result.
-  monsterPool String  @default("[]")
+  monsterPool      String      @default("[]")
   // Fight background keys (core/src/models/fight/FightBackgroundList.mts) this dungeon draws
   // from at each fight; '[]' falls back to the placeStart place's own background.
-  fightBackgrounds String @default("[]")
+  fightBackgrounds String      @default("[]")
   // Lets a dungeon be created (and its layout/pool tuned) without going live yet —
   // gates the dinoz-side enter action.
-  isActive    Boolean @default(true)
+  isActive         Boolean     @default(true)
 
   dungeonRuns DungeonRun[]
 

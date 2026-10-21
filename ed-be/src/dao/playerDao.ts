@@ -518,11 +518,11 @@ export async function getRolePlayer(role: AdminRole[]) {
 	});
 }
 
-export async function getPlayerId(eternalTwinId: string) {
+export async function getPlayerId(id: string) {
 	return withSpan(getPlayerId.name, async () => {
 		const player = await prisma.player.findFirst({
 			where: {
-				id: eternalTwinId
+				id: id
 			},
 			select: {
 				id: true,
