@@ -1,5 +1,6 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import type { Request, Response, NextFunction } from 'express';
+import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
 
 const locks = new Map<string, NodeJS.Timeout>();
@@ -13,6 +14,12 @@ function deleteLock(key: string) {
 
 export default function lockMiddleware(req: Request, res: Response, next: NextFunction) {
 	const { method, path } = req;
+
+	// Eternaltwin signs every event with the same Basic login and may post several at once. Locking
+	// on it would reject the concurrent ones, and Eternaltwin never sends a failed event again.
+	if (path === apiRoutes.eternalTwinEventsRoute) {
+		return next();
+	}
 
 	const {
 		headers: { authorization }

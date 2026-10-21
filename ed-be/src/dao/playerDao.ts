@@ -624,6 +624,15 @@ export async function getEternalTwinId(playerId: string) {
 	});
 }
 
+export async function getPlayerName(playerId: string) {
+	return withSpan(getPlayerName.name, async () => {
+		return prisma.player.findUnique({
+			where: { id: playerId },
+			select: { id: true, name: true }
+		});
+	});
+}
+
 export async function getLBResponseInformation(playerId: string) {
 	return withSpan(getLBResponseInformation.name, async () => {
 		const player = await prisma.player.findFirst({

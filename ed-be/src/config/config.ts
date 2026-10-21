@@ -70,6 +70,14 @@ export interface EternaltwinConfig {
 	readonly channel: string;
 
 	/**
+	 * `backend.channel` of the Eternaltwin server itself (`production` on eternaltwin.org, `dev` locally).
+	 *
+	 * Not to be confused with {@link channel}: Eternaltwin signs the events it posts to our webhook
+	 * with the Basic login `eternaltwin.<serverChannel>`, and {@link secret} as the password.
+	 */
+	readonly serverChannel: string;
+
+	/**
 	 * Reference of the DinoRPG forum section: the root whose sub-sections make up the game's forum.
 	 *
 	 * Either the section UUID or its key (e.g. `dinorpg`); the API accepts both.
@@ -230,6 +238,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	const eternaltwinApp: string = env.ETERNALTWIN_APP ?? 'dinorpg';
 	const eternaltwinChannel: string = env.ETERNALTWIN_CHANNEL ?? 'dev';
 	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'dinorpg';
+	const eternaltwinServerChannel: string = env.ETERNALTWIN_SERVER_CHANNEL ?? 'dev';
 
 	const eternaltwin: EternaltwinConfig = {
 		url: eternaltwinUrl,
@@ -239,6 +248,7 @@ export function config(env: Record<string, string | undefined>): Config {
 		scope: eternaltwinScope,
 		app: eternaltwinApp,
 		channel: eternaltwinChannel,
+		serverChannel: eternaltwinServerChannel,
 		section: eternaltwinSection
 	};
 

@@ -2,11 +2,32 @@ import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import { checkPlayerLB } from '../business/eternaltwinService.js';
+import {
+	handleEternaltwinEvent,
+	isEternaltwinAuthorization,
+	readEternaltwinEvent
+} from '../business/eternaltwinEventService.js';
+import { LOGGER } from '../context.js';
 import sendError from '../utils/server/sendErrors.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.eternalTwinRoute;
+
+// Webhook Eternaltwin posts user events to (`event_stream_uri` of the app seed).
+routes.post(apiRoutes.eternalTwinEventsRoute, (req: Request, res: Response) => {
+	if (!isEternaltwinAuthorization(req.get('authorization'))) {
+		return res.sendStatus(401);
+	}
+	const event = readEternaltwinEvent(req.body);
+	// Unknown kinds and invalid bodies are acknowledged too: they are not errors to Eternaltwin.
+	res.sendStatus(204);
+	if (event !== null) {
+		handleEternaltwinEvent(event).catch((error: unknown) =>
+			LOGGER.error(`Eternaltwin event ${event.event} ${event.id} failed: ${error}`)
+		);
+	}
+});
 
 routes.get(`${commonPath}/:uuid`, [param('uuid').exists().isString()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {

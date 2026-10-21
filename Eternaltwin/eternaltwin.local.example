@@ -213,6 +213,7 @@ secret = "dev"
 display_name = "DinoRPG"
 uri = "http://localhost:8080/"
 oauth_callback = "http://localhost:8080/authentication"
+event_stream_uri = "http://localhost:8081/api/v1/eternaltwin/events"
 secret = "dev_secret"
 allowed_scopes = "forum:write"
 

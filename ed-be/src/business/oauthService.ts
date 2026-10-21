@@ -19,13 +19,7 @@ import { Config } from '../config/config.js';
 import { LOGGER } from '../context.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import {
-	archiveOldUsername,
-	createPlayer,
-	getCommonDataRequest,
-	setPlayer,
-	updateUsernameOnRelatedTables
-} from '../dao/playerDao.js';
+import { createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
 import { upsertToken } from '../dao/eternaltwinTokenDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
@@ -36,6 +30,7 @@ import { createState, verifyState } from '../utils/server/oauthState.js';
 import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
 import { eventState } from './clanWar.js';
+import { renamePlayer } from './eternaltwinEventService.js';
 import { gameConfig } from '../utils/gameConfig.js';
 
 /**
@@ -170,9 +165,7 @@ export class OAuth {
 
 			// Update display name if changed on ET side
 			if (player && player.name !== etwinUser.displayName.current.value) {
-				await setPlayer(player.id, { name: etwinUser.displayName.current.value });
-				await archiveOldUsername(player.id, player.name);
-				await updateUsernameOnRelatedTables(player.id, etwinUser.displayName.current.value);
+				await renamePlayer(player.id, player.name, etwinUser.displayName.current.value);
 			}
 
 			// Update ip address
