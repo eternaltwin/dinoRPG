@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 
-vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
+vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), getPlayerId: vi.fn() }));
 vi.mock('../../dao/messagerieDao.js', () => ({
 	addMessage: vi.fn(),
 	changePinMessage: vi.fn(),
@@ -13,7 +13,7 @@ vi.mock('../../dao/messagerieDao.js', () => ({
 vi.mock('../../dao/notificationDao.js', () => ({ createNotification: vi.fn(), readNotificationFromMessages: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 
-import { auth } from '../../dao/playerDao.js';
+import { auth, getPlayerId } from '../../dao/playerDao.js';
 import * as dao from '../../dao/messagerieDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
 import {
@@ -30,6 +30,7 @@ const req = (params = {}, body = {}) => makeRequest({ params, body });
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(auth).mockResolvedValue({ id: 'p1' } as never);
+	vi.mocked(getPlayerId).mockImplementation(async id => ({ id }) as never);
 });
 
 describe('messagerieService', () => {
