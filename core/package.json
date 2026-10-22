@@ -1,6 +1,6 @@
 {
   "name": "@drpg/core",
-  "version": "0.19.7",
+  "version": "0.19.8",
   "license": "PolyForm-Noncommercial-1.0.0",
   "scripts": {
     "build": "yarn tsc --build ./tsconfig.json",
