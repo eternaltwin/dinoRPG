@@ -145,24 +145,20 @@ export async function rewarder(
 					const showNotification = reward.notify ?? true;
 
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
-					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
-					if (playerItemData) {
-						if (reward.reverse) {
+					const ownedQuantity = playerShopData.items.find(item => item.itemId === itemRewarded.itemId)?.quantity ?? 0;
+					if (reward.reverse) {
+						if (ownedQuantity > 0) {
 							await decreaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
-						} else {
-							const maxQuantity = getItemMaxQuantity(playerShopData, itemRewarded);
-
-							if (playerItemData.quantity >= maxQuantity) break;
-
-							const actualQuantity = Math.min(maxQuantity - playerItemData.quantity, reward.quantity);
-							await increaseItemQuantity(playerId, itemRewarded.itemId, actualQuantity);
-							actualRewards.push([itemRewarded.itemId, actualQuantity]);
 						}
 					} else {
-						if (!reward.reverse) {
-							await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
-							actualRewards.push([itemRewarded.itemId, reward.quantity]);
-						}
+						const actualQuantity = Math.min(
+							getItemMaxQuantity(playerShopData, itemRewarded) - ownedQuantity,
+							reward.quantity
+						);
+						if (actualQuantity <= 0) break;
+
+						await increaseItemQuantity(playerId, itemRewarded.itemId, actualQuantity);
+						actualRewards.push([itemRewarded.itemId, actualQuantity]);
 					}
 					if (!reward.reverse && notify.includes(RewardEnum.ITEM) && showNotification) {
 						rewardsToNotify.push(reward);
