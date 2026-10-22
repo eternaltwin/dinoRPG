@@ -4,7 +4,11 @@ import { Assets, Texture } from 'pixi.js';
 import { ITEM_ASSETS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { Skin } from '@drpg/core/models/dungeon/DungeonClient';
 
-const ASSET_URLS = import.meta.glob('../../assets/dungeon/*.png', { eager: true, as: 'url' }) as Record<string, string>;
+const ASSET_URLS = import.meta.glob<string>('../../assets/dungeon/*.png', {
+	eager: true,
+	query: '?url',
+	import: 'default'
+});
 export const assetUrl = (name: string): string => ASSET_URLS[`../../assets/dungeon/${name}.png`] ?? '';
 
 const textures = new Map<string, Texture>();
