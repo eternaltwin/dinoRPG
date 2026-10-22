@@ -5297,6 +5297,11 @@
 		"edited": "(modifié)",
 		"unread": "Nouveaux messages",
 		"threadCount": "Nombre de sujets",
+		"columns": {
+			"subject": "Sujet",
+			"posts": "Messages",
+			"lastPost": "Dernier message"
+		},
 		"newThread": {
 			"open": "Nouveau sujet",
 			"title": "Nouveau sujet",
