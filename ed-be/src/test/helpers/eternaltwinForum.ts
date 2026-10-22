@@ -7,6 +7,7 @@ const USER_ID = '4b858afb-bd25-4b34-88ef-72ff80cda848';
 const SECTION_ID = '3e4f043e-dfb8-405c-9e13-24f3a5d7fd9b';
 const THREAD_ID = 'b1f0c5a4-2d7e-4c39-9a86-0f5e6d3c2b1a';
 const POST_ID = '422c47d7-da45-4aaf-98b2-edff96ee772b';
+const APP_ID = '7c3e9a21-5b4d-4f86-a0e2-9d1b6c8f3a57';
 const CTIME = '2026-09-16T20:48:24.264Z';
 
 const user = { type: 'User', id: USER_ID, display_name: { current: { value: 'Alice' } } };
@@ -36,7 +37,7 @@ const grammarWire = {
 	user: true
 };
 
-const sectionSelf = { roles: [], grammar: grammarWire, unread_threads: 0, can_create_thread: true };
+const sectionSelf = { roles: [], grammar: grammarWire, unread_threads: 0, can_create_thread: true, can_manage: false };
 
 const sectionMeta = {
 	type: 'ForumSection',
@@ -46,6 +47,8 @@ const sectionMeta = {
 	ctime: CTIME,
 	locale: 'fr-FR',
 	parent: null,
+	app: { type: 'App', id: APP_ID },
+	order: 0,
 	threads: { count: 0 },
 	self: sectionSelf
 };

@@ -13,6 +13,13 @@ updates:
     commit-message:
       prefix: deps
       prefix-development: deps-dev
+    ignore:
+      # The dungeon stage hosts sdino/smonster containers from @eternaltwin/dinorpg_animations,
+      # which is built on Pixi 7 (vite dedupes pixi.js): Pixi stays on 7 until that package moves.
+      - dependency-name: pixi.js
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@pixi/*'
+        update-types: ['version-update:semver-major']
     groups:
       prisma:
         patterns:

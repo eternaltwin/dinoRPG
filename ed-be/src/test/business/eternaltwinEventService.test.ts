@@ -21,13 +21,9 @@ vi.mock('../../dao/playerDao.js', () => ({
 
 import { getToken } from '../../dao/eternaltwinTokenDao.js';
 import { archiveOldUsername, getPlayerName, setPlayer, updateUsernameOnRelatedTables } from '../../dao/playerDao.js';
-import {
-	EternaltwinEvent,
-	EternaltwinEventKind,
-	handleEternaltwinEvent,
-	isEternaltwinAuthorization,
-	readEternaltwinEvent
-} from '../../business/eternaltwinEventService.js';
+import { readUserStoreEvent, type UserStoreEvent } from '@eternaltwin/core/user/user-store-event';
+import { UserStoreEventKind } from '@eternaltwin/core/user/user-store-event-kind';
+import { handleEternaltwinEvent, isEternaltwinAuthorization } from '../../business/eternaltwinEventService.js';
 
 const USER_ID = '8a1c5f0e-2d6b-4b7a-a1f3-6c2e9d0b4e57';
 const EVENT_ID = '0f6a2c39-8f3e-4d43-9b8e-1b0b6c4f7a21';
@@ -62,28 +58,28 @@ describe('isEternaltwinAuthorization', () => {
 	});
 });
 
-describe('readEternaltwinEvent', () => {
+// The body is read by `@eternaltwin/core`: these pin the contract the webhook relies on.
+describe('readUserStoreEvent', () => {
 	it('reads a valid event', () => {
-		expect(readEternaltwinEvent(body())).toEqual({
-			event: EternaltwinEventKind.UserUpdated,
-			id: EVENT_ID,
-			time: new Date('2026-10-19T14:03:12.481Z'),
-			user: { type: 'User', id: USER_ID }
-		});
+		const event = readUserStoreEvent(body());
+		expect(event?.event).toBe(UserStoreEventKind.UserUpdated);
+		expect(event?.id).toBe(EVENT_ID);
+		expect(event?.time).toEqual(new Date('2026-10-19T14:03:12.481Z'));
+		expect(event?.user.id).toBe(USER_ID);
 	});
 
 	it('returns null for an unknown kind or an invalid body', () => {
-		expect(readEternaltwinEvent(body({ event: 'UserDeleted' }))).toBeNull();
-		expect(readEternaltwinEvent(body({ id: 'not-a-uuid' }))).toBeNull();
-		expect(readEternaltwinEvent(body({ time: 'yesterday' }))).toBeNull();
-		expect(readEternaltwinEvent(body({ user: { type: 'User', id: 'x' } }))).toBeNull();
-		expect(readEternaltwinEvent(null)).toBeNull();
-		expect(readEternaltwinEvent({})).toBeNull();
+		expect(readUserStoreEvent(body({ event: 'UserDeleted' }))).toBeNull();
+		expect(readUserStoreEvent(body({ id: 'not-a-uuid' }))).toBeNull();
+		expect(readUserStoreEvent(body({ time: 'yesterday' }))).toBeNull();
+		expect(readUserStoreEvent(body({ user: { type: 'User', id: 'x' } }))).toBeNull();
+		expect(readUserStoreEvent(null)).toBeNull();
+		expect(readUserStoreEvent({})).toBeNull();
 	});
 });
 
 describe('handleEternaltwinEvent', () => {
-	const event = readEternaltwinEvent(body()) as EternaltwinEvent;
+	const event = readUserStoreEvent(body()) as UserStoreEvent;
 
 	it('renames the player with the name read back from Eternaltwin', async () => {
 		vi.mocked(getPlayerName).mockResolvedValue({ id: USER_ID, name: 'old' });
@@ -115,6 +111,14 @@ describe('handleEternaltwinEvent', () => {
 		await handleEternaltwinEvent(event);
 
 		expect(etwinClientInstance.getUserById).not.toHaveBeenCalled();
+		expect(setPlayer).not.toHaveBeenCalled();
+	});
+
+	it('ignores disabled and enabled accounts', async () => {
+		await handleEternaltwinEvent(readUserStoreEvent(body({ event: 'UserDisabled' })) as UserStoreEvent);
+		await handleEternaltwinEvent(readUserStoreEvent(body({ event: 'UserEnabled' })) as UserStoreEvent);
+
+		expect(getPlayerName).not.toHaveBeenCalled();
 		expect(setPlayer).not.toHaveBeenCalled();
 	});
 });

@@ -10,7 +10,7 @@
     "git": false
   },
   "devDependencies": {
-    "@eternaltwin/cli": "^0.16.4"
+    "@eternaltwin/cli": "^0.17.2"
   },
   "packageManager": "yarn@4.1.0"
 }
