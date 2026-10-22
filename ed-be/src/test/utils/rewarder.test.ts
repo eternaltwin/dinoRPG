@@ -130,13 +130,14 @@ describe('rewarder', () => {
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], withDinoz ? team() : [], 'p1', [
 			RewardEnum.ITEM
 		]);
-		expect(playerItemDao.insertItem).toHaveBeenCalled();
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('p1', 3, 2);
+		expect(playerItemDao.insertItem).not.toHaveBeenCalled();
 		expect(createNotification).toHaveBeenCalled();
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue({
 			items: [{ itemId: 3, quantity: 1 }]
 		} as never);
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 2 } as never], team(), 'p1');
-		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledTimes(2);
 		await rewarder([{ rewardType: RewardEnum.ITEM, value: 3, quantity: 1, reverse: true } as never], team(), 'p1');
 		expect(playerItemDao.decreaseItemQuantity).toHaveBeenCalled();
 	});
