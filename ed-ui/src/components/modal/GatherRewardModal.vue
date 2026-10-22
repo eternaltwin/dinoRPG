@@ -123,7 +123,7 @@ export default defineComponent({
 @use 'sass:color';
 
 .modal-background {
-	position: fixed;
+	position: absolute;
 	overflow-y: auto;
 	background: color.adjust(#09092d, $alpha: -0.4);
 	top: 0;
