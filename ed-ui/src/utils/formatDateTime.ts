@@ -27,3 +27,11 @@ export function formatDate(d: string) {
 		year: 'numeric'
 	});
 }
+
+export function formatTime(d: string) {
+	return format(d, {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false
+	});
+}

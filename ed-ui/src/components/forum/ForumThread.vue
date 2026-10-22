@@ -6,9 +6,9 @@
 	</div>
 
 	<template v-else>
-		<div class="wrapper" v-if="messages.length > 0">
-			<div v-for="message in messages" :key="message.id" class="container">
-				<div class="sender">
+		<ul class="msg" v-if="messages.length > 0">
+			<li v-for="message in messages" :key="message.id">
+				<div class="header">
 					<DZUser :user="authorOf(message.author)" />
 					<div class="date">
 						{{ formatDate(message.ctime) }}
@@ -30,10 +30,10 @@
 						<a @click="startEdit(message)">{{ $t('forum.edit.open') }}</a>
 					</div>
 				</template>
-			</div>
-		</div>
+			</li>
+		</ul>
 
-		<tr class="pagination-controls">
+		<div class="pagination-controls">
 			<button @click="previousPage" :disabled="currentPage === 1">
 				<img class="left" src="/src/assets/button/button-back-arrow.webp" />
 			</button>
@@ -41,7 +41,7 @@
 			<button @click="nextPage" :disabled="currentPage === totalPages">
 				<img class="right" src="/src/assets/button/button-back-arrow.webp" />
 			</button>
-		</tr>
+		</div>
 
 		<div class="reply" v-if="canPost">
 			<p class="label">{{ $t('forum.reply.title') }}</p>
@@ -232,12 +232,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-	overflow-y: auto;
-}
+// Transcribed from the original game's `.forum ul.msg` and `.forum .post` rules
+// (data.dinorpg.com/css/104/style.css).
 .notice {
 	background-color: #cb7c49;
 	color: #ffee92;
@@ -245,41 +241,46 @@ export default defineComponent({
 	margin: 4px 0;
 	font-size: 13px;
 }
-.container {
+ul.msg {
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(203 124 73);
-	border-color: rgb(112 67 40);
-	border-style: solid;
-	color: #ffee92;
-	border-width: 2px;
-	.sender {
+	gap: 5px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	li {
+		padding: 1px;
+		background-color: #f6d19a;
+		border: 1px solid #e4aa69;
+		color: #710;
+	}
+	.header {
 		display: flex;
-		background-color: rgb(174 97 57);
 		align-items: center;
-		gap: 0.75rem;
-		padding: 4px;
 		justify-content: space-between;
+		gap: 0.75rem;
+		min-height: 30px;
+		padding: 2px 5px 2px 4px;
+		border-bottom: 1px solid #bc683c;
+		background-color: #e4aa69;
 		.date {
-			font-size: 1rem;
-			line-height: 1.75rem;
+			color: #bc683c;
+			font-size: 9pt;
 			.edited {
-				font-size: 0.75rem;
 				font-style: italic;
 				margin-left: 4px;
 			}
 		}
 	}
 	.message {
-		padding: 5px;
-		font-feature-settings: normal;
-		font-size: 16px;
-		font-variation-settings: normal;
+		padding: 5px 8px;
+		font-size: 11pt;
+		line-height: 19px;
 		// A pasted URL is one long word: without this it pushes the post wider than the page.
 		overflow-wrap: break-word;
 		&.moderated {
 			font-style: italic;
-			opacity: 0.8;
+			color: #bc683c;
 		}
 
 		// --- The rendered Marktwin ---------------------------------------------------------------
@@ -290,19 +291,20 @@ export default defineComponent({
 		// `[admin]`. Icons emit `span.mkt-icon mkt-icon-<key>` and are left alone: Eternaltwin
 		// serves an empty icon list, so no key can reach us and there is no sprite to point at.
 		:deep(a) {
-			color: #fff1ad;
-			font-variant: normal;
+			color: #c84b35;
 			text-decoration: underline;
 			&:hover {
-				color: #ffffff;
+				color: #8e3e26;
 			}
 		}
 		:deep(strong) {
 			font-weight: bold;
-			color: #ffffff;
+			color: #955333;
 		}
 		:deep(em) {
 			font-style: italic;
+			color: #bc683c;
+			font-size: 10pt;
 		}
 		:deep(.strikethrough) {
 			text-decoration: line-through;
@@ -314,16 +316,15 @@ export default defineComponent({
 		:deep(.mod),
 		:deep(.mkt-admin) {
 			margin: 6px 0;
-			padding: 8px 8px 8px 26px;
-			border: 1px solid transparent;
-			border-bottom-width: 3px;
-			border-radius: 3px;
+			padding: 5px 5px 5px 26px;
+			border: 2px solid transparent;
 			background-repeat: no-repeat;
-			background-position: 6px 9px;
+			background-position: 6px 8px;
 		}
+		// The original's `span.modo`.
 		:deep(.mod) {
-			border-color: #ff9c5b;
-			background-color: #8d3e17;
+			border-color: #dd4837;
+			background-color: #fff0d1;
 			background-image: url('../../assets/icons/warning.png');
 			// The warning is 8px wide against the announce's 16: nudged to sit centred in the same
 			// gutter, so the two blocks still line up when a post carries both.
@@ -332,7 +333,13 @@ export default defineComponent({
 		:deep(.mkt-admin) {
 			border-color: #f9c825;
 			background-color: #5d2a11;
+			color: #ffee92;
 			background-image: url('../../assets/icons/adminAnnounce.png');
+		}
+		:deep(.mkt-admin strong),
+		:deep(.mkt-admin em),
+		:deep(.mkt-admin a) {
+			color: #fff1ad;
 		}
 	}
 	.post-actions {
@@ -341,8 +348,12 @@ export default defineComponent({
 		padding: 0 5px 3px;
 		a {
 			cursor: pointer;
-			font-size: 12px;
+			color: #bc683c;
+			font-size: 9pt;
 			text-decoration: underline;
+			&:hover {
+				color: #c84b35;
+			}
 		}
 	}
 }
@@ -356,6 +367,7 @@ export default defineComponent({
 	margin-top: 10px;
 	.label {
 		font-weight: bold;
+		font-variant: small-caps;
 	}
 }
 .actions {
@@ -369,6 +381,8 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: #8e3e26;
+	font-weight: bold;
 	button {
 		background-color: transparent;
 		margin: 0 10px;
@@ -377,6 +391,7 @@ export default defineComponent({
 		cursor: pointer;
 		&:disabled {
 			cursor: not-allowed;
+			opacity: 0.4;
 		}
 		.left,
 		.right {

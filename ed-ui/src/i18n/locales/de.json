@@ -5297,6 +5297,11 @@
 		"edited": "(bearbeitet)",
 		"unread": "Neue Beiträge",
 		"threadCount": "Anzahl der Themen",
+		"columns": {
+			"subject": "Thema",
+			"posts": "Beiträge",
+			"lastPost": "Letzter Beitrag"
+		},
 		"newThread": {
 			"open": "Neues Thema",
 			"title": "Neues Thema",
