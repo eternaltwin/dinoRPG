@@ -19,6 +19,7 @@ vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), addMoney: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({
 	getDinozFicheLiteRequest: vi.fn(),
 	getDinozFightDataRequest: vi.fn(),
+	getDungeonParty: vi.fn(),
 	getFollowingDinoz: vi.fn(),
 	getLeaderWithFollowers: vi.fn(),
 	updateDinoz: vi.fn(),
@@ -46,12 +47,18 @@ import {
 	dinozExitRun
 } from '../../dao/dungeonRunDao.js';
 import { auth } from '../../dao/playerDao.js';
-import { getDinozFightDataRequest, getFollowingDinoz, updateDinoz } from '../../dao/dinozDao.js';
+import { getDinozFightDataRequest, getDungeonParty, getFollowingDinoz, updateDinoz } from '../../dao/dinozDao.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../business/fightService.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { startRun, move, isOnHealingCell, markHealingCellUsed } from '../../business/dungeonService.js';
+import {
+	startRun,
+	move,
+	isOnHealingCell,
+	markHealingCellUsed,
+	leaveDungeonIfDead
+} from '../../business/dungeonService.js';
 import { DungeonItem } from '../../business/dungeon/types.js';
 import { OriginalGenerator } from '../../business/dungeon/original/index.js';
 import { DungeonCodec } from '../../business/dungeon/DungeonCodec.js';
@@ -70,6 +77,7 @@ function makeDinoz(overrides: Record<string, any> = {}): any {
 	return {
 		id: DEFAULT_DINOZ_ID,
 		placeId: TEST_PLACE_ID,
+		life: 10,
 		unavailableReason: null,
 		fight: true,
 		followers: [],
@@ -148,6 +156,17 @@ describe('dungeonService - startRun', () => {
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
 			'dungeon.wrongPlace'
 		);
+	});
+
+	it('throws if a team member is dead', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(
+			makeDinoz({ followers: [{ id: 2, life: 0, unavailableReason: null, fight: true }] })
+		);
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'dead'
+		);
+		expect(dinozEnterRun).not.toHaveBeenCalled();
+		expect(createRun).not.toHaveBeenCalled();
 	});
 
 	it('throws if Dinoz not available', async () => {
@@ -564,6 +583,100 @@ describe('dungeonService — leader dies in a fight', () => {
 		expect(r.leaderId).toBe(2);
 		expect(dinozEnterRun).toHaveBeenCalledWith('run1', 2);
 		expect(r.fight).toBeDefined();
+	});
+});
+
+describe('dungeonService — party stuck behind a dead leader', () => {
+	const d = OriginalGenerator.generate({ seed: 7, width: 24, height: 24, levels: 2 });
+	const DEAD = 1;
+	const SURVIVOR = 2;
+	const run = () => ({ ...runRowFor(d), leaderId: DEAD });
+
+	function partyMember(id: number, overrides: Record<string, any> = {}): any {
+		return { id, life: 10, unavailableReason: UnavailableReason.dungeon, skills: [], ...overrides };
+	}
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(getDungeonByName).mockResolvedValue(dungeonRowFor(d) as never);
+		vi.mocked(updateRun).mockResolvedValue({} as never);
+	});
+
+	it('a dead leader still marked in the dungeon leaves it and its follower takes the run', async () => {
+		vi.mocked(findRunByLeader).mockResolvedValue(run() as never);
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD, { life: 0 }), partyMember(SURVIVOR)] as never);
+
+		expect(await leaveDungeonIfDead({ id: DEAD, leaderId: null, life: 0, unavailableReason: 'dungeon' })).toBe(true);
+		expect(updateDinoz).toHaveBeenCalledWith(DEAD, { leader: { disconnect: true }, unavailableReason: null });
+		expect(updateDinoz).toHaveBeenCalledWith(SURVIVOR, { leader: { disconnect: true } });
+		expect(dinozEnterRun).toHaveBeenCalledWith('run1', SURVIVOR);
+	});
+
+	it('leaves a living or out-of-dungeon dinoz alone', async () => {
+		expect(await leaveDungeonIfDead({ id: 1, leaderId: null, life: 5, unavailableReason: 'dungeon' })).toBe(false);
+		expect(await leaveDungeonIfDead({ id: 1, leaderId: null, life: 0, unavailableReason: null })).toBe(false);
+		expect(getDungeonParty).not.toHaveBeenCalled();
+		expect(updateDinoz).not.toHaveBeenCalled();
+	});
+
+	it('a party wiped out frees the run, keeping its progress', async () => {
+		vi.mocked(findRunByLeader).mockResolvedValue(run() as never);
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD, { life: 0 })] as never);
+
+		await leaveDungeonIfDead({ id: DEAD, leaderId: null, life: 0, unavailableReason: 'dungeon' });
+		expect(dinozExitRun).toHaveBeenCalledWith('run1');
+		expect(dinozEnterRun).not.toHaveBeenCalled();
+	});
+
+	it('the run has no leader anymore: the survivors regroup without entering it', async () => {
+		vi.mocked(findRunByLeader).mockResolvedValue(null);
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD, { life: 0 }), partyMember(SURVIVOR)] as never);
+
+		await leaveDungeonIfDead({ id: DEAD, leaderId: null, life: 0, unavailableReason: 'dungeon' });
+		expect(updateDinoz).toHaveBeenCalledWith(SURVIVOR, { leader: { disconnect: true } });
+		expect(dinozEnterRun).not.toHaveBeenCalled();
+		expect(dinozExitRun).not.toHaveBeenCalled();
+	});
+
+	it('startRun: a follower of a dead leader is handed the lead and resumes the run', async () => {
+		vi.mocked(getFollowingDinoz)
+			.mockResolvedValueOnce(
+				makeDinoz({ id: SURVIVOR, leaderId: DEAD, unavailableReason: UnavailableReason.dungeon }) as never
+			)
+			.mockResolvedValueOnce(makeDinoz({ id: SURVIVOR, unavailableReason: UnavailableReason.dungeon }) as never);
+		vi.mocked(findRunByLeader).mockResolvedValue(run() as never);
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD, { life: 0 }), partyMember(SURVIVOR)] as never);
+		vi.mocked(findRun).mockResolvedValue(run() as never);
+
+		const r = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: SURVIVOR } }));
+		expect(r.run.status).toBe('resumed');
+		expect(dinozEnterRun).toHaveBeenLastCalledWith('run1', SURVIVOR);
+	});
+
+	it('startRun: a run left to a dead leader no longer locks the other party out', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ id: SURVIVOR }) as never);
+		vi.mocked(findRun).mockResolvedValue(run() as never);
+		vi.mocked(findRunByLeader).mockResolvedValue(run() as never);
+		// The dead leader leads no one anymore: its run is freed.
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD, { life: 0 })] as never);
+
+		const r = await startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: SURVIVOR } }));
+		expect(r.run.status).toBe('resumed');
+		expect(dinozExitRun).toHaveBeenCalledWith('run1');
+		expect(dinozEnterRun).toHaveBeenLastCalledWith('run1', SURVIVOR);
+	});
+
+	it('startRun: a living team in the run still locks the other party out', async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ id: SURVIVOR }) as never);
+		vi.mocked(findRun).mockResolvedValue(run() as never);
+		vi.mocked(findRunByLeader).mockResolvedValue(run() as never);
+		vi.mocked(getDungeonParty).mockResolvedValue([partyMember(DEAD)] as never);
+
+		await expect(
+			startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: SURVIVOR } }))
+		).rejects.toThrow('dungeon.wrongTeam');
+		expect(dinozEnterRun).not.toHaveBeenCalled();
 	});
 });
 

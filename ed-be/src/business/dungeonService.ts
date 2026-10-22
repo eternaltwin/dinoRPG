@@ -41,6 +41,7 @@ import type { MonsterTeam } from './dungeon/monsters.js';
 import {
 	getDinozFicheLiteRequest,
 	getDinozFightDataRequest,
+	getDungeonParty,
 	getFollowingDinoz,
 	getLeaderWithFollowers,
 	updateDinoz,
@@ -217,11 +218,12 @@ function pickNewLeader<T extends { skills: Pick<DinozSkill, 'skillId'>[] }>(surv
 }
 
 /**
- * Hand the run over to a survivor once its leader left the party. The others follow the new
- * leader up to what it can lead; the rest leave the dungeon. Returns the new team, leader first.
+ * Hand the run (if they lead one) over to a survivor once its leader left the party. The others
+ * follow the new leader up to what it can lead; the rest leave the dungeon. Returns the new team,
+ * leader first.
  */
 async function promoteLeader<T extends { id: number; skills: Pick<DinozSkill, 'skillId'>[] }>(
-	runId: string,
+	runId: string | null,
 	survivors: T[]
 ): Promise<T[]> {
 	const leader = pickNewLeader(survivors);
@@ -237,8 +239,61 @@ async function promoteLeader<T extends { id: number; skills: Pick<DinozSkill, 's
 			left.map(d => d.id),
 			true
 		);
-	await dinozEnterRun(runId, leader.id);
+	if (runId !== null) await dinozEnterRun(runId, leader.id);
 	return [leader, ...kept];
+}
+
+type PartyMember = Pick<Dinoz, 'id' | 'life' | 'unavailableReason'> & { skills: Pick<DinozSkill, 'skillId'>[] };
+
+/**
+ * Bring a party back in line with who can still be in the dungeon: dead or pulled-away members
+ * leave, a leader that left hands over to a survivor, and a run left with no one is freed (its
+ * progress kept, like after a lost fight). Idempotent. Returns the remaining team, leader first.
+ */
+async function settleParty<T extends PartyMember>(runId: string | null, leaderId: number, party: T[]): Promise<T[]> {
+	const dead = party.filter(d => d.life <= 0);
+	const pulledAway = party.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
+	if (dead.length > 0)
+		await dropFromTeam(
+			dead.map(d => d.id),
+			true
+		);
+	if (pulledAway.length > 0)
+		await dropFromTeam(
+			pulledAway.map(d => d.id),
+			false
+		);
+	const team = party.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
+	if (team.length === 0) {
+		if (runId !== null) await dinozExitRun(runId);
+		return team;
+	}
+	if (!team.some(d => d.id === leaderId)) return promoteLeader(runId, team);
+	// Leader first, as promoteLeader returns it.
+	return [team.find(d => d.id === leaderId)!, ...team.filter(d => d.id !== leaderId)];
+}
+
+/**
+ * Settle the dungeon party this dinoz belongs to (as leader or follower), and the run it leads.
+ * Returns the run's leader afterwards, null when the party leads no run (anymore).
+ */
+export async function settleDungeonParty(dinoz: Pick<Dinoz, 'id' | 'leaderId'>): Promise<number | null> {
+	const leaderId = dinoz.leaderId ?? dinoz.id;
+	const run = await findRunByLeader(leaderId);
+	const team = await settleParty(run?.id ?? null, leaderId, await getDungeonParty(leaderId));
+	return run ? (team[0]?.id ?? null) : null;
+}
+
+/**
+ * A dead dinoz is never in a dungeon: it leaves its party, which a survivor takes over.
+ * Returns whether it was freed, so callers stop treating it as busy in the dungeon.
+ */
+export async function leaveDungeonIfDead(
+	dinoz: Pick<Dinoz, 'id' | 'leaderId' | 'life' | 'unavailableReason'>
+): Promise<boolean> {
+	if (isAlive(dinoz) || dinoz.unavailableReason !== UnavailableReason.dungeon) return false;
+	await settleDungeonParty(dinoz);
+	return true;
 }
 
 /** Flag the team on cell (l,x,y) beaten for this run; its icon stops appearing in reveals. */
@@ -269,9 +324,18 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 		throw new ExpectedError(translate('dungeon.notFound', authed));
 	}
 	const dinozId = req.body.dinozId;
-	const dinoz = await getFollowingDinoz(dinozId);
+	let dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(translate('dinozNotFound', authed));
+	}
+	// A party member that died or left since is cleared out first: a survivor whose leader
+	// died may have just been handed the lead.
+	if (dinoz.unavailableReason === UnavailableReason.dungeon) {
+		await settleDungeonParty(dinoz);
+		dinoz = await getFollowingDinoz(dinozId);
+		if (!dinoz) {
+			throw new ExpectedError(translate('dinozNotFound', authed));
+		}
 	}
 	if (dinoz.leaderId !== null) {
 		throw new ExpectedError(translate('notLeader', authed));
@@ -287,6 +351,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (team.some(t => t.unavailableReason && t.unavailableReason !== UnavailableReason.dungeon)) {
 		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
+	// A dead dinoz never enters (nor leads) a run.
+	if (team.some(t => !isAlive(t))) {
+		throw new ExpectedError(translate('dead', authed));
+	}
 
 	const codec = new DungeonCodec();
 	codec.decode(
@@ -297,9 +365,13 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	// Resume: hand back the position and everything already revealed.
 	const existing = await findRun(dungeon.id, authed.id);
 	if (existing) {
-		// Only one team at a time in the dungeon.
+		// Only one team at a time in the dungeon — unless that team's leader died or left, in
+		// which case its party is settled first and may free the run.
 		if (existing.leaderId && existing.leaderId !== dinoz.id) {
-			throw new ExpectedError(translate('dungeon.wrongTeam', authed));
+			const runLeader = await settleDungeonParty({ id: existing.leaderId, leaderId: null });
+			if (runLeader !== null && runLeader !== dinoz.id) {
+				throw new ExpectedError(translate('dungeon.wrongTeam', authed));
+			}
 		}
 		await updateMultipleDinoz(
 			team.map(t => t.id),
@@ -586,25 +658,10 @@ export async function move(req: Request): Promise<MoveResult> {
 			}
 			let team = player.dinoz;
 
-			// Already-dead or pulled-away dinoz leave the party before being dragged into a fight.
-			const dead = team.filter(d => d.life <= 0);
-			const pulledAway = team.filter(d => d.life > 0 && d.unavailableReason !== UnavailableReason.dungeon);
-			if (dead.length > 0)
-				await dropFromTeam(
-					dead.map(d => d.id),
-					true
-				);
-			if (pulledAway.length > 0)
-				await dropFromTeam(
-					pulledAway.map(d => d.id),
-					false
-				);
-			team = team.filter(d => d.life > 0 && d.unavailableReason === UnavailableReason.dungeon);
-
-			// A leader that already left the party (e.g. a run stuck before leaders were handed
-			// over on death) passes the run to a survivor before the fight.
-			if (!team.some(d => d.id === dinozData?.id) && team.length > 0) {
-				team = await promoteLeader(run.id, team);
+			// Already-dead or pulled-away dinoz leave the party before being dragged into a fight,
+			// and a leader that already left it passes the run to a survivor first.
+			team = await settleParty(run.id, dinozData.id, team);
+			if (team.length > 0 && team[0].id !== dinozData.id) {
 				dinozData = team[0];
 				newLeaderId = dinozData.id;
 			}

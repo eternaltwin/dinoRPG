@@ -73,6 +73,7 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { getDungeonByPlaceStart } from '../dao/dungeonRunDao.js';
+import { leaveDungeonIfDead } from './dungeonService.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import {
@@ -158,6 +159,12 @@ export async function getAvailableActions(
 	];
 
 	const dinozPlace = actualPlace(dinoz);
+
+	// A dead dinoz never stays in a dungeon: one left stuck there (with its party) is freed on sight.
+	if (await leaveDungeonIfDead(dinoz)) {
+		dinoz.unavailableReason = null;
+		dinoz.followers = [];
+	}
 
 	if (dinoz.unavailableReason && noActionsReasons.includes(dinoz.unavailableReason)) {
 		return [];
@@ -859,6 +866,11 @@ export async function resurrectDinoz(req: Request) {
 		throw new ExpectedError(`${dinozData.name} is not dead`);
 	}
 
+	// Its dungeon party (if any) goes on without it, under a surviving leader.
+	if (await leaveDungeonIfDead(dinozData)) {
+		dinozData.followers = [];
+	}
+
 	await updateDinoz(dinozId, {
 		life: 1,
 		experience: Math.round(dinozData.experience / 2),
@@ -1451,6 +1463,11 @@ export async function disband(req: Request) {
 
 	if (!dinoz) {
 		throw new ExpectedError('No dinoz found');
+	}
+
+	// A dead leader stuck in a dungeon leaves it: a survivor takes its party, nothing is left to disband.
+	if (await leaveDungeonIfDead(dinoz)) {
+		return;
 	}
 
 	if (dinoz.unavailableReason) {

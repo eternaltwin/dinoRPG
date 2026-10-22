@@ -53,7 +53,7 @@ import {
 import { getLetter, getRandomInteger, getRandomLetter } from '../utils/index.js';
 import translate from '../utils/server/translate.js';
 import { applySkillEffect } from './skillService.js';
-import { isOnHealingCell, markHealingCellUsed } from './dungeonService.js';
+import { isOnHealingCell, leaveDungeonIfDead, markHealingCellUsed } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL } from '../context.js';
@@ -135,6 +135,10 @@ export async function useItem(req: Request) {
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
 	if (item === undefined) {
 		throw new ExpectedError(`This item didn't exist`);
+	}
+	// A dead dinoz left stuck in a dungeon leaves it, so it can be resurrected like any other.
+	if (await leaveDungeonIfDead(dinoz)) {
+		dinoz.unavailableReason = null;
 	}
 	// For some specific unavailable reasons, the Dinoz cannot use an item:
 	if (dinoz.unavailableReason && !CAN_STILL_USE_ITEMS.includes(dinoz.unavailableReason)) {

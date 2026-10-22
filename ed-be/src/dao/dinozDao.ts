@@ -452,6 +452,8 @@ export async function getDinozFicheLiteRequest(dinozId: number) {
 				name: true,
 				followers: true,
 				placeId: true,
+				leaderId: true,
+				unavailableReason: true,
 				player: {
 					select: {
 						id: true,
@@ -1130,10 +1132,26 @@ export async function getFollowingDinoz(dinozId: number) {
 				id: true,
 				placeId: true,
 				fight: true,
+				life: true,
 				unavailableReason: true,
 				dungeonRun: true,
-				followers: { select: { id: true, unavailableReason: true, dungeonRun: true, fight: true } },
+				followers: { select: { id: true, life: true, unavailableReason: true, dungeonRun: true, fight: true } },
 				leaderId: true
+			}
+		});
+	});
+}
+
+/** A leader and its followers, with just what settling a dungeon party needs. */
+export async function getDungeonParty(leaderId: number) {
+	return withSpan(getDungeonParty.name, async () => {
+		return await prisma.dinoz.findMany({
+			where: { OR: [{ id: leaderId }, { leaderId }] },
+			select: {
+				id: true,
+				life: true,
+				unavailableReason: true,
+				skills: { select: { skillId: true }, where: { state: { equals: true } } }
 			}
 		});
 	});

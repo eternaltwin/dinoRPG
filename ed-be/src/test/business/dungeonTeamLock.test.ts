@@ -6,6 +6,7 @@ vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), addMoney: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({
 	getDinozFicheLiteRequest: vi.fn(),
 	getDinozFightDataRequest: vi.fn(),
+	getDungeonParty: vi.fn(),
 	getFollowingDinoz: vi.fn(),
 	getLeaderWithFollowers: vi.fn(),
 	updateDinoz: vi.fn(),
@@ -14,6 +15,7 @@ vi.mock('../../dao/dinozDao.js', () => ({
 vi.mock('../../dao/dungeonRunDao.js', () => ({
 	createRun: vi.fn(),
 	findRun: vi.fn(),
+	findRunByLeader: vi.fn(),
 	getDungeonById: vi.fn(),
 	getDungeonByName: vi.fn(),
 	updateRun: vi.fn(),
@@ -47,8 +49,8 @@ vi.mock('../../business/dungeon/DungeonCodec.js', () => {
 });
 
 import { auth } from '../../dao/playerDao.js';
-import { getFollowingDinoz, updateMultipleDinoz } from '../../dao/dinozDao.js';
-import { createRun, findRun, getDungeonByName } from '../../dao/dungeonRunDao.js';
+import { getDungeonParty, getFollowingDinoz, updateMultipleDinoz } from '../../dao/dinozDao.js';
+import { createRun, findRun, findRunByLeader, getDungeonByName } from '../../dao/dungeonRunDao.js';
 import { startRun, exitRun } from '../../business/dungeonService.js';
 
 const dungeon = {
@@ -99,9 +101,10 @@ describe('dungeon team lock', () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
 			placeId: 1,
+			life: 10,
 			unavailableReason: null,
 			fight: true,
-			followers: [{ id: 2, unavailableReason: null, fight: true }],
+			followers: [{ id: 2, life: 10, unavailableReason: null, fight: true }],
 			leaderId: null
 		} as never);
 		vi.mocked(createRun).mockResolvedValue({ id: 'run1' } as never);
@@ -130,11 +133,17 @@ describe('dungeon team lock', () => {
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
 			placeId: 1,
+			life: 10,
 			unavailableReason: null,
 			fight: true,
 			followers: [],
 			leaderId: null
 		} as never);
+		// The other team is alive and still in its run.
+		vi.mocked(findRunByLeader).mockResolvedValue({ id: 'run1', leaderId: 9 } as never);
+		vi.mocked(getDungeonParty).mockResolvedValue([
+			{ id: 9, life: 10, unavailableReason: 'dungeon', skills: [] }
+		] as never);
 
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
 			'dungeon.wrongTeam'
