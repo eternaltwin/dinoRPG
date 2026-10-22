@@ -5300,7 +5300,7 @@
 		"unread": "Neue Beiträge",
 		"threadCount": "Anzahl der Themen",
 		"columns": {
-			"subject": "Thema",
+			"subject": "Betreff",
 			"posts": "Beiträge",
 			"lastPost": "Letzter Beitrag"
 		},
