@@ -45,7 +45,7 @@ Um einen Krieg zu starten, muss eure Schatzkammer über genügend Zutaten verfü
 
 # Angriff
 
-Ihr müsst eure Dinoz also herumbewegen, bis die feindliche Burg gefunden ist. Sobald dies geschehen ist, müsst ihr einfach die Aktion „Burg angreifen“ ausführen und ihr werdet Zeuge wie eure Dinoz-Gruppe die Burgverteidiger herausfordert, oder, falls letztere nicht vorhanden sind, die Burg direkt angreift.
+Um eine Burg anzugreifen, muss diese zunächst gefunden werden. Ihr müsst eure Dinoz also herumbewegen, bis die feindliche Burg gefunden ist. Sobald dies geschehen ist, müsst ihr einfach die Aktion „Burg angreifen“ ausführen und ihr werdet Zeuge wie eure Dinoz-Gruppe die Burgverteidiger herausfordert, oder, falls letztere nicht vorhanden sind, die Burg direkt angreift.
 
 Diese Angriffe sind zeitlich begrenzt und wenn die Verteidiger innerhalb dieser Zeit besiegt werden, können all eure Dinoz die Burg des Gegners direkt angreifen.
 
