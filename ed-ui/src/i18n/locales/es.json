@@ -5297,6 +5297,11 @@
 		"edited": "(editado)",
 		"unread": "Mensajes nuevos",
 		"threadCount": "Número de hilos",
+		"columns": {
+			"subject": "Tema",
+			"posts": "Mensajes",
+			"lastPost": "Último mensaje"
+		},
 		"newThread": {
 			"open": "Nuevo hilo",
 			"title": "Nuevo hilo",
