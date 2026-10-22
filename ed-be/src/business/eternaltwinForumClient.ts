@@ -7,6 +7,8 @@ import { $ForumPost, type ForumPost } from '@eternaltwin/core/forum/forum-post';
 import { $ForumSection, type ForumSection } from '@eternaltwin/core/forum/forum-section';
 import { $ForumSectionListing, type ForumSectionListing } from '@eternaltwin/core/forum/forum-section-listing';
 import { $ForumThread, type ForumThread } from '@eternaltwin/core/forum/forum-thread';
+import { $ForumThreadMetaSelf, type ForumThreadMetaSelf } from '@eternaltwin/core/forum/forum-thread-meta-self';
+import { $MarkThreadReadBody } from '@eternaltwin/core/forum/mark-thread-read-body';
 import { $UpdatePostOptions } from '@eternaltwin/core/forum/update-post-options';
 import { type IoType, readOrThrow } from 'kryo';
 import { JSON_READER } from 'kryo-json/json-reader';
@@ -140,6 +142,19 @@ export class EternaltwinForumClient {
 
 	public async getThread(threadRef: string, offset: number, limit: number): Promise<ForumThread> {
 		return this.#request(`api/v1/forum/threads/${threadRef}?offset=${offset}&limit=${limit}`, $ForumThread);
+	}
+
+	/**
+	 * Record that the player has been shown every post up to `upToPost`.
+	 *
+	 * The server only ever moves the marker forward, so reading an earlier page again does not
+	 * make the thread unread.
+	 */
+	public async markThreadRead(threadRef: string, upToPost: string): Promise<ForumThreadMetaSelf> {
+		return this.#request(`api/v1/forum/threads/${threadRef}/read`, $ForumThreadMetaSelf, {
+			method: 'POST',
+			body: $MarkThreadReadBody.write(JSON_WRITER, { upToPost })
+		});
 	}
 
 	/** Reply to a thread. `body` is Marktwin. */

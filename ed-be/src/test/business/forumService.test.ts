@@ -12,6 +12,7 @@ const clientInstance = {
 	getPageSizes: vi.fn(),
 	getSection: vi.fn(),
 	getThread: vi.fn(),
+	markThreadRead: vi.fn(),
 	createThread: vi.fn(),
 	replyToThread: vi.fn(),
 	getPostSource: vi.fn(),
@@ -23,6 +24,7 @@ vi.mock('../../business/eternaltwinForumClient.js', () => ({
 	})
 }));
 
+import { LOGGER } from '../../context.js';
 import { auth } from '../../dao/playerDao.js';
 import { getToken } from '../../dao/eternaltwinTokenDao.js';
 import { createThread, getSection, getThread, replyToThread, updatePost } from '../../business/forumService.js';
@@ -97,12 +99,43 @@ describe('forumService', () => {
 			canDelete: false,
 			canReport: true
 		};
-		clientInstance.getThread.mockResolvedValue({ posts: { count: 0 }, title: 'T', self });
+		clientInstance.getThread.mockResolvedValue({ posts: { count: 0, items: [] }, title: 'T', self });
 
 		const result = await getThread(makeRequest({ params: { threadId: 't1', page: '1' } } as never));
 
 		// Permissions are the server's to compute; the service must not re-derive or drop them.
 		expect(result.self).toBe(self);
+	});
+
+	it('marks the thread read up to the last post of the page returned', async () => {
+		clientInstance.getThread.mockResolvedValue({
+			id: 't1',
+			posts: { count: 12, items: [{ id: 'p11' }, { id: 'p12' }] }
+		});
+		clientInstance.markThreadRead.mockResolvedValue({ isUnread: false });
+
+		await getThread(makeRequest({ params: { threadId: 't1', page: '2' } } as never));
+
+		expect(clientInstance.markThreadRead).toHaveBeenCalledWith('t1', 'p12');
+	});
+
+	it('does not mark anything read when the page holds no post', async () => {
+		clientInstance.getThread.mockResolvedValue({ id: 't1', posts: { count: 0, items: [] } });
+
+		await getThread(makeRequest({ params: { threadId: 't1', page: '1' } } as never));
+
+		expect(clientInstance.markThreadRead).not.toHaveBeenCalled();
+	});
+
+	it('still returns the thread when marking it read fails', async () => {
+		const thread = { id: 't1', posts: { count: 1, items: [{ id: 'p1' }] } };
+		clientInstance.getThread.mockResolvedValue(thread);
+		clientInstance.markThreadRead.mockRejectedValue(new Error('boom'));
+
+		const result = await getThread(makeRequest({ params: { threadId: 't1', page: '1' } } as never));
+
+		expect(result).toBe(thread);
+		expect(LOGGER.error).toHaveBeenCalled();
 	});
 
 	it('creates a thread in the section the player picked', async () => {

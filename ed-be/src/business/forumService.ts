@@ -3,7 +3,7 @@ import type { ForumPost } from '@eternaltwin/core/forum/forum-post';
 import type { ForumSection } from '@eternaltwin/core/forum/forum-section';
 import type { ForumThread } from '@eternaltwin/core/forum/forum-thread';
 import { Request } from 'express';
-import { GLOBAL } from '../context.js';
+import { GLOBAL, LOGGER } from '../context.js';
 import { getToken } from '../dao/eternaltwinTokenDao.js';
 import { auth } from '../dao/playerDao.js';
 import { EternaltwinForumClient } from './eternaltwinForumClient.js';
@@ -55,6 +55,9 @@ export async function getSection(req: Request): Promise<ForumSection> {
  * The whole thread is returned: it carries `self` (what the player may do here), `section.self`
  * (the grammar to write with) and a `self` per post (whether it may still be edited). Dropping any
  * of them would leave the interface guessing at permissions it was handed.
+ *
+ * The thread is marked read up to the last post of the page returned. That is a side effect the
+ * reader can live without: a failure is logged, and the thread is still returned.
  */
 export async function getThread(req: Request): Promise<ForumThread> {
 	const { client } = await clientFor(req);
@@ -63,7 +66,18 @@ export async function getThread(req: Request): Promise<ForumThread> {
 
 	const { postsPerPage: limit } = await client.getPageSizes();
 
-	return client.getThread(threadId, (page - 1) * limit, limit);
+	const thread = await client.getThread(threadId, (page - 1) * limit, limit);
+
+	const lastPost = thread.posts.items[thread.posts.items.length - 1];
+	if (lastPost !== undefined) {
+		try {
+			await client.markThreadRead(thread.id, lastPost.id);
+		} catch (err) {
+			LOGGER.error(`Failed to mark forum thread ${thread.id} read up to ${lastPost.id}: ${err}`);
+		}
+	}
+
+	return thread;
 }
 
 /**

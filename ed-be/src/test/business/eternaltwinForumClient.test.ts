@@ -100,6 +100,17 @@ describe('EternaltwinForumClient', () => {
 		expect(JSON.parse(init.body)).toEqual({ title: 'Titre', body: '**gras**' });
 	});
 
+	it('marks a thread read up to the post shown', async () => {
+		fetchMock.mockResolvedValue(jsonResponse({ is_unread: false }));
+		const self = await client().markThreadRead('t1', '5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d');
+
+		const [uri, init] = fetchMock.mock.calls[0];
+		expect(String(uri)).toBe('http://et/api/v1/forum/threads/t1/read');
+		expect(init.method).toBe('POST');
+		expect(JSON.parse(init.body)).toEqual({ up_to_post: '5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d' });
+		expect(self).toEqual({ isUnread: false });
+	});
+
 	it('sends last_revision_id when rewriting a post', async () => {
 		fetchMock.mockResolvedValue(jsonResponse(postWire(1, 0, [revisionWire('5f2b3c4d-6e7f-4a8b-9c0d-1e2f3a4b5c6d')])));
 		await client().updatePost('post1', 'rev1', 'nouveau', 'typo');
