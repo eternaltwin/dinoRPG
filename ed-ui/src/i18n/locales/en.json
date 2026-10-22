@@ -5297,6 +5297,11 @@
 		"edited": "(edited)",
 		"unread": "New posts",
 		"threadCount": "Number of threads",
+		"columns": {
+			"subject": "Subject",
+			"posts": "Posts",
+			"lastPost": "Last post"
+		},
 		"newThread": {
 			"open": "New thread",
 			"title": "New thread",
