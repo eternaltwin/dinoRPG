@@ -56,4 +56,4 @@ Die Positionierung der Dinoz ist daher äußerst wichtig, wenn man im Kampf nich
 
 Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, denn der Gegner wird überrascht und kann keine Verstärkung herbeirufen. Der Kampf findet in diesem Fall eins gegen eins statt.
 
-Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann die Schlacht auch freiwillig verlassen, indem er an die Anfangslinie seines Klans zurückkehrt. In dem Fall kann er geheilt werden und dann die Schlacht wiederaufnehmen.
+Eine Schlacht findet an einem bestimmten Ort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Ein Spieler kann bis zu _3 Dinoz_ in eine Schlacht schicken und insgesamt können sich nicht mehr als _45 Dinoz_ eines Klans auf dem Schlachtfeld befinden.
