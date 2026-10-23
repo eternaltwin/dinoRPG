@@ -2763,7 +2763,7 @@
 			"available": "",
 			"unavailable": "",
 			"ongoing": "En curso...",
-			"finished": "Terminar",
+			"finished": "Completado",
 			"over": "¡Felicidades! ¡Has completado la misión \"{mission}\"!"
 		},
 		"name": {
