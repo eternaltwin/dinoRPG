@@ -31,7 +31,7 @@
     "kryo": "^0.16.1",
     "kryo-json": "^0.16.1",
     "mitt": "^3.0.1",
-    "pinia": "^2.1.7",
+    "pinia": "^4.1.0",
     "pinia-plugin-persistedstate": "^3.2.0",
     "pixi.js": "^7.4.3",
     "url-join": "^5.0.0",
