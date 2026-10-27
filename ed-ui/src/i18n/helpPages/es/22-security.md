@@ -4,7 +4,7 @@ icon:
   name: small_lock
 ---
 
-# Sécurité de mon compte
+# Seguridad de mi cuenta
 
 **Peu importe qui vous le demande**...
 
