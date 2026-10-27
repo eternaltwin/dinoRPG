@@ -8,7 +8,7 @@ icon:
 
 The world of Dinoland consists of many places to discover. These different locations are connected by paths that your Dinoz can traverse by moving. To **move** your Dinoz, simply click on the next point on the Map. The Dinoland Map is displayed as follows:
 
-![Déplacer son Dinoz](@guide/move)
+![Move your Dinoz](@guide/move)
 
 Paths starting from the current location of your Dinoz are displayed, and the locations you can travel to will begin to blink. Click on the location where you want to move your Dinoz to send it there.
 
