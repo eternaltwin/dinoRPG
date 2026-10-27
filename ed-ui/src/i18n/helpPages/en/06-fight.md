@@ -8,7 +8,7 @@ icon:
 
 A battle occurs when your Dinoz is attacked or attacks one or more monsters. The different participants then join the battle, which unfolds automatically:
 
-![Combattre un monstre](@guide/fight)
+![Fight Monsters](@guide/fight)
 
 Monsters and your Dinoz take turns attacking, based on their **initiative**, **speed**, and **energy**. With each hit, the opponent loses **health points** ![pv](@icons/small_pv), which are displayed. Your Dinoz must defeat all the monsters to win the battle.
 
