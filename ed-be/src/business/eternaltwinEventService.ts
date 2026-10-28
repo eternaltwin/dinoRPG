@@ -11,8 +11,8 @@ import { archiveOldUsername, getPlayerName, setPlayer, updateUsernameOnRelatedTa
  * Basic `eternaltwin.<server channel>:<client secret>`.
  */
 export function isEternaltwinAuthorization(authorization: string | undefined): boolean {
-	const { serverChannel, secret } = GLOBAL.config.eternaltwin;
-	const expected = Buffer.from('Basic ' + Buffer.from(`eternaltwin.${serverChannel}:${secret}`).toString('base64'));
+	const { channel, secret } = GLOBAL.config.eternaltwin;
+	const expected = Buffer.from('Basic ' + Buffer.from(`eternaltwin.${channel}:${secret}`).toString('base64'));
 	const got = Buffer.from(authorization ?? '');
 	return got.length === expected.length && timingSafeEqual(got, expected);
 }

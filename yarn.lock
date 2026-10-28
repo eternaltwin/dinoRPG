@@ -2043,37 +2043,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/cli@npm:^0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/cli@npm:0.17.2"
+"@eternaltwin/cli@npm:^0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/cli@npm:0.17.3"
   dependencies:
-    "@eternaltwin/exe": "npm:0.17.2"
+    "@eternaltwin/exe": "npm:0.17.3"
     foreground-child: "npm:^3.1.1"
     tslib: "npm:^2.6.2"
   bin:
     eternaltwin: ./bin/eternaltwin.mjs
-  checksum: 10/17eab26cc3d8aa02518258adb47d3ea93b9c9dcf3b76ac910df6e4924d86febfdc06e8bdd3319fe9cfcf94b68df8818bfe2eda44c9560dccd5a07b010b9f7ca1
+  checksum: 10/9da80af6212cfc5544367028128b44699828f0598a30d8980dab8184d6d7393d650acfaa7a19663f71df4a74a7bc3f91298334ee47a815a5ffe00a5d72fc657a
   languageName: node
   linkType: hard
 
-"@eternaltwin/client-node@npm:^0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/client-node@npm:0.17.2"
+"@eternaltwin/client-node@npm:^0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/client-node@npm:0.17.3"
   dependencies:
-    "@eternaltwin/core": "npm:^0.17.2"
+    "@eternaltwin/core": "npm:^0.17.3"
     "@types/jsonwebtoken": "npm:^9.0.2"
-    axios: "npm:^1.6.8"
+    axios: "npm:^1.20.0"
     jsonwebtoken: "npm:^9.0.2"
     kryo: "npm:^0.16.1"
     kryo-json: "npm:^0.16.1"
     kryo-search-params: "npm:^0.16.1"
     tslib: "npm:^2.6.2"
     url-join: "npm:^5.0.0"
-  checksum: 10/0c0392f63c77f589b30fb51ba80cf9a91d9e9ad06a779071f0887daa2f3ef0525bc9a4f6430f389472f6b551a9b97fda38a01161439f3c7188e47c3e243cb54f
+  checksum: 10/099db7eaf4c9e9e202286cde6e1142e36ac4ea2430bef0e19da5401d9f6b2fef124987ee407651744d5841059b326077ef3722e235545bf5756026b3356e8dfc
   languageName: node
   linkType: hard
 
-"@eternaltwin/core@npm:0.17.2, @eternaltwin/core@npm:^0.17.2":
+"@eternaltwin/core@npm:0.17.3, @eternaltwin/core@npm:^0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/core@npm:0.17.3"
+  dependencies:
+    "@types/jsonwebtoken": "npm:^9.0.2"
+    jsonwebtoken: "npm:^9.0.2"
+    kryo: "npm:^0.16.1"
+    kryo-json: "npm:^0.16.1"
+    rxjs: "npm:^7.8.1"
+    tslib: "npm:^2.6.2"
+  checksum: 10/293036bee8d9e64af7b45a79baa228e07229a786c45dfc21e9ca78107a6ac6344770cd21d6da494bc34bd947954bf8305d05bef45eb948bba5433128a6f390ee
+  languageName: node
+  linkType: hard
+
+"@eternaltwin/core@npm:^0.17.2":
   version: 0.17.2
   resolution: "@eternaltwin/core@npm:0.17.2"
   dependencies:
@@ -2114,50 +2128,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-apple-darwin@npm:0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.17.2"
+"@eternaltwin/exe-x86_64-apple-darwin@npm:0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.17.3"
   bin:
     eternaltwin-x86_64-apple-darwin: ./eternaltwin
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.17.2"
+"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.17.3"
   bin:
     eternaltwin-x86_64-pc-windows-gnu: ./eternaltwin.exe
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.17.2"
+"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.17.3"
   bin:
     eternaltwin-x86_64-unknown-linux-gnu: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.17.2"
+"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.17.3"
   bin:
     eternaltwin-x86_64-unknown-linux-musl: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe@npm:0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/exe@npm:0.17.2"
+"@eternaltwin/exe@npm:0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/exe@npm:0.17.3"
   dependencies:
-    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.17.2"
-    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.17.2"
-    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.17.2"
-    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.17.2"
+    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.17.3"
+    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.17.3"
+    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.17.3"
+    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.17.3"
     furi: "npm:^3.0.0"
     tslib: "npm:^2.6.2"
   dependenciesMeta:
@@ -2169,15 +2183,15 @@ __metadata:
       optional: true
     "@eternaltwin/exe-x86_64-unknown-linux-musl":
       optional: true
-  checksum: 10/7ee31094e182074be1e699e94752bdb97afe41773e7c59271a0cf7f40f165bb626960dfe40d81824f05d3e9670db604e00dda5c0c05fb71a01bddc7f329eb862
+  checksum: 10/e4a6f5a80966c462781a354d3747818c3c47fcfd6335ae2fa9f84f902a9ea99cd3443ce753c4d3a812ed98278ad6382bde1919792dd4c1927f5d9491fe4085bc
   languageName: node
   linkType: hard
 
-"@eternaltwin/oauth-client-http@npm:^0.17.2":
-  version: 0.17.2
-  resolution: "@eternaltwin/oauth-client-http@npm:0.17.2"
+"@eternaltwin/oauth-client-http@npm:^0.17.3":
+  version: 0.17.3
+  resolution: "@eternaltwin/oauth-client-http@npm:0.17.3"
   dependencies:
-    "@eternaltwin/core": "npm:0.17.2"
+    "@eternaltwin/core": "npm:0.17.3"
     "@types/auth-header": "npm:^1.0.6"
     "@types/jsonwebtoken": "npm:^9.0.10"
     "@types/jws": "npm:^3.2.11"
@@ -2189,7 +2203,7 @@ __metadata:
     kryo-json: "npm:^0.16.1"
     superagent: "npm:^10.3.0"
     tslib: "npm:^2.8.1"
-  checksum: 10/8857c2a537d1a746d0cf8990303f0a4372168f9f51971dd07e16a0a40e5873962bfda385296fa6339cf367db59dba76146eaf34d9eb3796b5021cb21365fe622
+  checksum: 10/2d25032ac90f0c201922c7556b4890b103ddded0bac13d9e370683603018f0b1620542eb968d7e8bf1188510518e33c019a1240687d2dc75881815c502d2dbed
   languageName: node
   linkType: hard
 
@@ -6406,6 +6420,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"agent-base@npm:6":
+  version: 6.0.2
+  resolution: "agent-base@npm:6.0.2"
+  dependencies:
+    debug: "npm:4"
+  checksum: 10/21fb903e0917e5cb16591b4d0ef6a028a54b83ac30cd1fca58dece3d4e0990512a8723f9f83130d88a41e2af8b1f7be1386fda3ea2d181bb1a62155e75e95e23
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:^7.0.2, agent-base@npm:^7.1.0":
   version: 7.1.0
   resolution: "agent-base@npm:7.1.0"
@@ -6766,6 +6789,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "axios@npm:1.20.0"
+  dependencies:
+    follow-redirects: "npm:^1.16.0"
+    form-data: "npm:^4.0.6"
+    https-proxy-agent: "npm:^5.0.1"
+    proxy-from-env: "npm:^2.1.0"
+  checksum: 10/0376b6178baecbe0f5d36088f5b5f6c21362ce301e0731f77172f9c89be740bdee20d8ae6ab186340d7cb752020c6a4f1381290e5a5cd10f6f9003941615ac77
+  languageName: node
+  linkType: hard
+
 "axios@npm:^1.6.0":
   version: 1.6.2
   resolution: "axios@npm:1.6.2"
@@ -6774,17 +6809,6 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/612bc93f8f738a518e7c5f9de9cc782bcd36aac6bae279160ef6a10260378e21c1786520eab3336898e3d66e0839ebdf739f327fb6d0431baa4d3235703a7652
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.6.8":
-  version: 1.7.9
-  resolution: "axios@npm:1.7.9"
-  dependencies:
-    follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
-    proxy-from-env: "npm:^1.1.0"
-  checksum: 10/b7a5f660ea53ba9c2a745bf5ad77ad8bf4f1338e13ccc3f9f09f810267d6c638c03dac88b55dae8dc98b79c57d2d6835be651d58d2af97c174f43d289a9fd007
   languageName: node
   linkType: hard
 
@@ -8739,9 +8763,9 @@ __metadata:
   dependencies:
     "@drpg/core": "workspace:^"
     "@drpg/renderer": "workspace:^"
-    "@eternaltwin/client-node": "npm:^0.17.2"
-    "@eternaltwin/core": "npm:^0.17.2"
-    "@eternaltwin/oauth-client-http": "npm:^0.17.2"
+    "@eternaltwin/client-node": "npm:^0.17.3"
+    "@eternaltwin/core": "npm:^0.17.3"
+    "@eternaltwin/oauth-client-http": "npm:^0.17.3"
     "@opentelemetry/api": "npm:^1.9.0"
     "@opentelemetry/exporter-trace-otlp-proto": "npm:^0.56.0"
     "@opentelemetry/instrumentation": "npm:^0.212.0"
@@ -9621,7 +9645,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eternal-twin@workspace:Eternaltwin"
   dependencies:
-    "@eternaltwin/cli": "npm:^0.17.2"
+    "@eternaltwin/cli": "npm:^0.17.3"
   languageName: unknown
   linkType: soft
 
@@ -10130,6 +10154,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.16.0":
+  version: 1.16.1
+  resolution: "follow-redirects@npm:1.16.1"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10/269c9f38e4bb413d7ab224fb5aa733118288a18e84d4d0a22821a850574624a55d45f2c6735fc09fc1cceedb6343a5539daf6d2dd70bce8980c8336d230a2f50
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -10219,7 +10253,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.5":
+"form-data@npm:^4.0.5, form-data@npm:^4.0.6":
   version: 4.0.6
   resolution: "form-data@npm:4.0.6"
   dependencies:
@@ -11014,6 +11048,16 @@ __metadata:
     quick-lru: "npm:^5.1.1"
     resolve-alpn: "npm:^1.2.0"
   checksum: 10/e7a5ac6548318e83fc0399cd832cdff6bbf902b165d211cad47a56ee732922e0aa1107246dd884b12532a1c4649d27c4d44f2480911c65202e93c90bde8fa29d
+  languageName: node
+  linkType: hard
+
+"https-proxy-agent@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "https-proxy-agent@npm:5.0.1"
+  dependencies:
+    agent-base: "npm:6"
+    debug: "npm:4"
+  checksum: 10/f0dce7bdcac5e8eaa0be3c7368bb8836ed010fb5b6349ffb412b172a203efe8f807d9a6681319105ea1b6901e1972c7b5ea899672a7b9aad58309f766dcbe0df
   languageName: node
   linkType: hard
 
@@ -14646,6 +14690,13 @@ __metadata:
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: 10/f0bb4a87cfd18f77bc2fba23ae49c3b378fb35143af16cc478171c623eebe181678f09439707ad80081d340d1593cd54a33a0113f3ccb3f4bc9451488780ee23
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "proxy-from-env@npm:2.1.0"
+  checksum: 10/fbbaf4dab2a6231dc9e394903a5f66f20475e36b734335790b46feb9da07c37d6b32e2c02e3e2ea4d4b23774c53d8562e5b7cc73282cb43f4a597b7eacaee2ee
   languageName: node
   linkType: hard
 

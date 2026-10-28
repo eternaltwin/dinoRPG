@@ -13,13 +13,11 @@ const commonPath: string = apiRoutes.eternalTwinRoute;
 
 // Webhook Eternaltwin posts user events to (`event_stream_uri` of the app seed).
 routes.post(apiRoutes.eternalTwinEventsRoute, (req: Request, res: Response) => {
-	console.log('event')
 	if (!isEternaltwinAuthorization(req.get('authorization'))) {
 		return res.sendStatus(401);
 	}
 	const event = readUserStoreEvent(req.body);
 	// Unknown kinds and invalid bodies are acknowledged too: they are not errors to Eternaltwin.
-	console.log(event)
 	res.sendStatus(204);
 	if (event !== null) {
 		handleEternaltwinEvent(event).catch((error: unknown) =>

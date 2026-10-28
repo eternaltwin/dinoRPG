@@ -8,7 +8,7 @@ vi.mock('@eternaltwin/client-node', () => ({
 	})
 }));
 vi.mock('../../context.js', () => ({
-	GLOBAL: { config: { eternaltwin: { url: 'http://api/', serverChannel: 'dev', secret: 'sec' } } },
+	GLOBAL: { config: { eternaltwin: { url: 'http://api/', channel: 'dev', secret: 'sec' } } },
 	LOGGER: { error: vi.fn(), log: vi.fn() }
 }));
 vi.mock('../../dao/eternaltwinTokenDao.js', () => ({ getToken: vi.fn() }));
