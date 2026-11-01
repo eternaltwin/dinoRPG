@@ -44,6 +44,22 @@ describe('messagerieService', () => {
 		await startConversation(req({}, { title: 't', participants: ['p1', 'p2', 'p3'], message: 'hi' }));
 		expect(createNotification).toHaveBeenCalledTimes(2);
 	});
+	it('startConversation stores the rendered Marktwin', async () => {
+		vi.mocked(dao.createConversation).mockResolvedValue({ id: 'conv' } as never);
+		await startConversation(req({}, { title: 't', participants: ['p2'], message: '**salut** <b>à</b> toi' }));
+		expect(dao.createConversation).toHaveBeenCalledWith(
+			'p1',
+			['p2'],
+			't',
+			'<strong>salut</strong> &lt;b&gt;à&lt;/b&gt; toi'
+		);
+	});
+	it('startConversation refuses an empty message', async () => {
+		await expect(startConversation(req({}, { title: 't', participants: ['p2'], message: '  ' }))).rejects.toThrow(
+			'messageEmpty'
+		);
+		expect(dao.createConversation).not.toHaveBeenCalled();
+	});
 	it('startConversation throws when too many participants', async () => {
 		await expect(
 			startConversation(req({}, { participants: Array.from({ length: 10 }, (_, i) => `p${i}`) }))
@@ -75,9 +91,18 @@ describe('messagerieService', () => {
 			participants: [{ player: { id: 'p1' } }, { player: { id: 'p2' } }]
 		} as never);
 		vi.mocked(dao.addMessage).mockResolvedValue({ id: 'm' } as never);
-		await sendMessage(req({ thread: 'c' }, { content: 'hello' }));
+		await sendMessage(req({ thread: 'c' }, { content: '_hello_' }));
 		expect(createNotification).toHaveBeenCalledTimes(1);
-		expect(dao.addMessage).toHaveBeenCalled();
+		expect(dao.addMessage).toHaveBeenCalledWith('c', '<em>hello</em>', 'p1');
+	});
+	it('sendMessage refuses an empty message without notifying', async () => {
+		vi.mocked(dao.getConversation).mockResolvedValue({
+			id: 'c',
+			participants: [{ player: { id: 'p1' } }, { player: { id: 'p2' } }]
+		} as never);
+		await expect(sendMessage(req({ thread: 'c' }, { content: '' }))).rejects.toThrow('messageEmpty');
+		expect(createNotification).not.toHaveBeenCalled();
+		expect(dao.addMessage).not.toHaveBeenCalled();
 	});
 	it('sendMessage throws when not a participant', async () => {
 		vi.mocked(dao.getConversation).mockResolvedValue({ id: 'c', participants: [{ player: { id: 'other' } }] } as never);

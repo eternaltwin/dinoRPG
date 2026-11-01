@@ -4334,7 +4334,8 @@
 		"pagination": {
 			"page": "Page",
 			"go_to": "Aller à la page"
-		}
+		},
+		"placeholder": "Écris ton message au clan…"
 	},
 	"clanHistory": {
 		"type": {
@@ -5322,12 +5323,6 @@
 			"open": "Éditer",
 			"submit": "Enregistrer"
 		},
-		"editor": {
-			"strong": "Gras",
-			"emphasis": "Italique",
-			"strikethrough": "Barré",
-			"link": "Lien"
-		},
 		"error": {
 			"reauthorize": "Ta session Eternaltwin a expiré. Reconnecte-toi pour accéder au forum.",
 			"forbidden": "Eternaltwin a refusé cette action. Elle ne passera pas en réessayant.",
@@ -5503,5 +5498,39 @@
 		"clause2": "L'utilisation de bots ou de tout script d'automatisation est interdite.",
 		"clause3": "L'exploitation volontaire d'un bug est interdite et doit être signalée à l'équipe.",
 		"accept_button": "J'accepte"
+	},
+	"editor": {
+		"toolbar": "Mise en forme",
+		"write": "Écrire",
+		"preview": "Aperçu",
+		"previewEmpty": "Rien à afficher pour l'instant.",
+		"previewError": "L'aperçu n'a pas pu être chargé. Le message sera tout de même mis en forme à l'envoi.",
+		"help": "Aide de mise en forme",
+		"submitHint": "Ctrl + Entrée pour envoyer",
+		"counter": "{count} / {max}",
+		"argument": {
+			"author": "auteur",
+			"character": "personnage",
+			"title": "titre",
+			"linkText": "texte du lien"
+		},
+		"tool": {
+			"strong": "Gras",
+			"emphasis": "Italique",
+			"underline": "Souligné",
+			"strikethrough": "Barré",
+			"big": "Gros texte",
+			"bad": "Texte fautif",
+			"spoiler": "Spoiler (caché jusqu'au clic)",
+			"code": "Code",
+			"quote": "Citation",
+			"rp": "Roleplay",
+			"sidenote": "Aparté",
+			"collapse": "Section repliable",
+			"list": "Liste à puces",
+			"orderedList": "Liste numérotée",
+			"codeBlock": "Bloc de code",
+			"link": "Lien"
+		}
 	}
 }

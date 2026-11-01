@@ -4334,7 +4334,8 @@
 		"pagination": {
 			"page": "Seite",
 			"go_to": "Zur Seite gehen"
-		}
+		},
+		"placeholder": "Schreib deine Nachricht an den Clan…"
 	},
 	"clanHistory": {
 		"type": {
@@ -5322,12 +5323,6 @@
 			"open": "Bearbeiten",
 			"submit": "Speichern"
 		},
-		"editor": {
-			"strong": "Fett",
-			"emphasis": "Kursiv",
-			"strikethrough": "Durchgestrichen",
-			"link": "Link"
-		},
 		"error": {
 			"reauthorize": "Deine Eternaltwin-Sitzung ist abgelaufen. Melde dich erneut an, um das Forum zu erreichen.",
 			"forbidden": "Eternaltwin hat diese Aktion abgelehnt. Ein erneuter Versuch ändert nichts.",
@@ -5503,5 +5498,39 @@
 		"clause2": "Die Nutzung von Bots und jeglicher Automatisierungsskripten ist nicht gestattet.",
 		"clause3": "Das absichtliche Ausnutzen von Fehlern ist nicht gestattet – diese müssen den Entwicklern gemeldet werden.",
 		"accept_button": "Ich stimme zu"
+	},
+	"editor": {
+		"toolbar": "Formatierung",
+		"write": "Schreiben",
+		"preview": "Vorschau",
+		"previewEmpty": "Noch nichts anzuzeigen.",
+		"previewError": "Die Vorschau konnte nicht geladen werden. Die Nachricht wird beim Senden trotzdem formatiert.",
+		"help": "Formatierungshilfe",
+		"submitHint": "Strg + Enter zum Senden",
+		"counter": "{count} / {max}",
+		"argument": {
+			"author": "Autor",
+			"character": "Figur",
+			"title": "Titel",
+			"linkText": "Linktext"
+		},
+		"tool": {
+			"strong": "Fett",
+			"emphasis": "Kursiv",
+			"underline": "Unterstrichen",
+			"strikethrough": "Durchgestrichen",
+			"big": "Großer Text",
+			"bad": "Falscher Text",
+			"spoiler": "Spoiler (verborgen bis zum Klick)",
+			"code": "Code",
+			"quote": "Zitat",
+			"rp": "Rollenspiel",
+			"sidenote": "Randnotiz",
+			"collapse": "Einklappbarer Abschnitt",
+			"list": "Aufzählung",
+			"orderedList": "Nummerierte Liste",
+			"codeBlock": "Codeblock",
+			"link": "Link"
+		}
 	}
 }

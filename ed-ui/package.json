@@ -19,15 +19,14 @@
     "git": false
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@eternaltwin/core": "^0.17.2",
     "@eternaltwin/dinorpg_animations": "^1.0.9",
+    "@eternaltwin/marktwin": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch",
     "@pixi/filter-drop-shadow": "^5.2.0",
     "@pixi/filter-glow": "^5.2.1",
     "@vueuse/core": "^14.2.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
-    "ckeditor5": "^45.0.0",
     "kryo": "^0.16.1",
     "kryo-json": "^0.16.1",
     "mitt": "^3.0.1",
@@ -68,6 +67,7 @@
     "vite": "^8.3.4",
     "vite-plugin-mkcert": "^1.17.6",
     "vite-plugin-vue-devtools": "^8.2.1",
+    "vite-plugin-wasm": "^3.6.0",
     "vue-tsc": "^3.3.13"
   },
   "gitHooks": {

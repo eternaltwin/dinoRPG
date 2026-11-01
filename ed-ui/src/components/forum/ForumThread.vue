@@ -17,14 +17,18 @@
 				</div>
 
 				<div class="message" v-if="editingPostId === message.id">
-					<ForumEditor v-model="editContent" :grammar="grammar" :disabled="sending" />
+					<MarktwinEditor v-model="editContent" :grammar="grammar" :disabled="sending" @submit="saveEdit()" />
 					<div class="actions">
 						<DZButton :off="sending" @click="saveEdit()">{{ $t('forum.edit.submit') }}</DZButton>
 						<DZButton @click="cancelEdit()">{{ $t('forum.cancel') }}</DZButton>
 					</div>
 				</div>
 				<template v-else>
-					<div class="message" v-if="message.revisions.last.content" v-html="message.revisions.last.content.html" />
+					<div
+						class="message mkt-content"
+						v-if="message.revisions.last.content"
+						v-html="message.revisions.last.content.html"
+					/>
 					<div class="message moderated" v-else>{{ $t('forum.moderated') }}</div>
 					<div class="post-actions" v-if="message.self.canEdit">
 						<a @click="startEdit(message)">{{ $t('forum.edit.open') }}</a>
@@ -45,11 +49,12 @@
 
 		<div class="reply" v-if="canPost">
 			<p class="label">{{ $t('forum.reply.title') }}</p>
-			<ForumEditor
+			<MarktwinEditor
 				v-model="replyContent"
 				:grammar="grammar"
 				:disabled="sending"
 				:placeholder="$t('forum.reply.placeholder')"
+				@submit="sendReply()"
 			/>
 			<div class="actions">
 				<DZButton :off="!canSendReply" @click="sendReply()">{{ $t('forum.reply.submit') }}</DZButton>
@@ -74,12 +79,12 @@ import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
 import TitleHeader from '../utils/TitleHeader.vue';
 import DZButton from '../common/DZButton.vue';
-import ForumEditor from './ForumEditor.vue';
+import MarktwinEditor from '../common/MarktwinEditor.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'ForumThread',
-	components: { DZButton, TitleHeader, DZUser, ForumEditor },
+	components: { DZButton, TitleHeader, DZUser, MarktwinEditor },
 	data() {
 		return {
 			thread: undefined as undefined | ForumThread,
@@ -283,64 +288,7 @@ ul.msg {
 			color: #bc683c;
 		}
 
-		// --- The rendered Marktwin ---------------------------------------------------------------
-		// `v-html`, so scoped selectors miss it: every rule below has to go through `:deep`.
-		//
-		// This is the whole set marktwin 0.5 emits (`src/emitter.rs`): `<strong>`, `<em>`,
-		// `span.strikethrough`, `<a>`, `<br />`, `div.mod` for `[mod]` and `div.mkt-admin` for
-		// `[admin]`. Icons emit `span.mkt-icon mkt-icon-<key>` and are left alone: Eternaltwin
-		// serves an empty icon list, so no key can reach us and there is no sprite to point at.
-		:deep(a) {
-			color: #c84b35;
-			text-decoration: underline;
-			&:hover {
-				color: #8e3e26;
-			}
-		}
-		:deep(strong) {
-			font-weight: bold;
-			color: #955333;
-		}
-		:deep(em) {
-			font-style: italic;
-			color: #bc683c;
-			font-size: 10pt;
-		}
-		:deep(.strikethrough) {
-			text-decoration: line-through;
-		}
-		// Who is speaking, said with a frame and an icon rather than a caption: `content:` cannot be
-		// translated, and the markup carries no text for the four locales to key off. The icons are
-		// Eternaltwin's own (`packages/website/src/static/assets/icons`), so the same `[mod]` block
-		// wears the same badge on both sites.
-		:deep(.mod),
-		:deep(.mkt-admin) {
-			margin: 6px 0;
-			padding: 5px 5px 5px 26px;
-			border: 2px solid transparent;
-			background-repeat: no-repeat;
-			background-position: 6px 8px;
-		}
-		// The original's `span.modo`.
-		:deep(.mod) {
-			border-color: #dd4837;
-			background-color: #fff0d1;
-			background-image: url('../../assets/icons/warning.png');
-			// The warning is 8px wide against the announce's 16: nudged to sit centred in the same
-			// gutter, so the two blocks still line up when a post carries both.
-			background-position-x: 9px;
-		}
-		:deep(.mkt-admin) {
-			border-color: #f9c825;
-			background-color: #5d2a11;
-			color: #ffee92;
-			background-image: url('../../assets/icons/adminAnnounce.png');
-		}
-		:deep(.mkt-admin strong),
-		:deep(.mkt-admin em),
-		:deep(.mkt-admin a) {
-			color: #fff1ad;
-		}
+		// The rendered Marktwin is styled by `css/_marktwin.scss`.
 	}
 	.post-actions {
 		display: flex;

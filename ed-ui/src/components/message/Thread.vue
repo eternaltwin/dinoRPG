@@ -41,7 +41,12 @@
 		</div>
 	</div>
 	<div v-if="answerMode" class="answer">
-		<Editor v-model="answer" />
+		<MarktwinEditor
+			v-model="answer"
+			:grammar="PLAYER_MARKTWIN_GRAMMAR"
+			:maxlength="PLAYER_MESSAGE_MAX_LENGTH"
+			@submit="sendMessage()"
+		/>
 		<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
 	</div>
 	<div v-if="myThread && myThread.pinnedMessage">
@@ -61,7 +66,8 @@ import Message from './Message.vue';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
-import Editor from '../common/Editor.vue';
+import MarktwinEditor from '../common/MarktwinEditor.vue';
+import { PLAYER_MARKTWIN_GRAMMAR, PLAYER_MESSAGE_MAX_LENGTH } from '@drpg/core/utils/marktwin';
 import { formatDate } from '../../utils/formatDateTime';
 
 export default defineComponent({
@@ -76,10 +82,12 @@ export default defineComponent({
 			answer: '',
 			myThread: undefined as undefined | FullThread,
 			currentThreadPage: 1,
-			showParticipants: false
+			showParticipants: false,
+			PLAYER_MARKTWIN_GRAMMAR,
+			PLAYER_MESSAGE_MAX_LENGTH
 		};
 	},
-	components: { DZUser, Message, DZButton, Editor },
+	components: { DZUser, Message, DZButton, MarktwinEditor },
 	methods: {
 		async answerMsg() {
 			this.answerMode = true;
@@ -96,7 +104,7 @@ export default defineComponent({
 			return formatDate(dateString);
 		},
 		async sendMessage() {
-			if (!this.answer || !this.myThread) return;
+			if (this.answer.trim().length === 0 || !this.myThread) return;
 			try {
 				const updatedThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
 				this.myThread.messages = updatedThread.messages;

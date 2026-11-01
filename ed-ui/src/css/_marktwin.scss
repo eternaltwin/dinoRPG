@@ -1,0 +1,205 @@
+// Rendered Marktwin, wherever it is read: forum posts, clan discussion, private messages and the
+// editor's preview. Put `.mkt-content` on the element that receives the `v-html`.
+//
+// The markup is what marktwin 0.6 emits, plus the `.mod` class Eternaltwin's older renderer still
+// serves on the forum. On a clay background (private messages), add `.mkt-content--clay`.
+
+.mkt-content {
+	--mkt-strong: #955333;
+	--mkt-soft: #bc683c;
+	--mkt-link: #c84b35;
+	--mkt-link-hover: #8e3e26;
+	--mkt-panel: rgba(228, 170, 105, 0.35);
+	--mkt-rule: #bc683c;
+	--mkt-code-bg: rgba(113, 17, 0, 0.08);
+
+	overflow-wrap: break-word;
+
+	&.mkt-content--clay {
+		--mkt-strong: #fff1ad;
+		--mkt-soft: #fce4b0;
+		--mkt-link: #ffee92;
+		--mkt-link-hover: #fff;
+		--mkt-panel: rgba(112, 67, 40, 0.3);
+		--mkt-rule: #ffee92;
+		--mkt-code-bg: rgba(0, 0, 0, 0.15);
+	}
+
+	a {
+		color: var(--mkt-link);
+		text-decoration: underline;
+		&:hover {
+			color: var(--mkt-link-hover);
+		}
+	}
+	strong {
+		font-weight: bold;
+		color: var(--mkt-strong);
+	}
+	em {
+		font-style: italic;
+		color: var(--mkt-soft);
+	}
+	.strikethrough {
+		text-decoration: line-through;
+	}
+	.mkt-big {
+		font-size: 1.35em;
+		font-weight: bold;
+		line-height: 1.2;
+	}
+	.mkt-bad {
+		color: #c0392b;
+		text-decoration: underline wavy #c0392b;
+		text-underline-offset: 3px;
+	}
+	.mkt-inline-code,
+	pre {
+		font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+		font-size: 0.9em;
+		background: var(--mkt-code-bg);
+		border-radius: 2px;
+	}
+	.mkt-inline-code {
+		padding: 0 3px;
+	}
+	pre {
+		margin: 6px 0;
+		padding: 6px 8px;
+		white-space: pre-wrap;
+	}
+
+	// Hidden behind a bar of its own colour until clicked (see `installMarktwinInteractions`).
+	.mkt-spoiler {
+		border-radius: 2px;
+		background-color: var(--mkt-panel);
+		transition:
+			color 0.15s,
+			background-color 0.15s;
+		&:not(.is-revealed) {
+			cursor: pointer;
+			background-color: var(--mkt-soft);
+			color: transparent;
+			* {
+				color: transparent;
+			}
+		}
+	}
+
+	blockquote,
+	.mkt-rp,
+	.mkt-sidenote {
+		margin: 6px 0;
+		padding: 4px 8px;
+		border-left: 3px solid var(--mkt-rule);
+		background: var(--mkt-panel);
+	}
+	.mkt-quoteauthor,
+	.mkt-rpauthor {
+		display: block;
+		font-weight: bold;
+		font-size: 0.9em;
+		color: var(--mkt-soft);
+	}
+	.mkt-quoteauthor:not(:empty)::after {
+		content: ' :';
+	}
+	.mkt-rp {
+		font-style: italic;
+		border-left-style: double;
+		border-left-width: 4px;
+		.mkt-rpauthor {
+			font-style: normal;
+		}
+	}
+	.mkt-sidenote {
+		font-size: 0.9em;
+		border-left-style: dotted;
+	}
+
+	ul,
+	ol {
+		margin: 4px 0;
+		padding-left: 24px;
+	}
+	ul {
+		list-style: disc;
+	}
+	ol {
+		list-style: decimal;
+	}
+
+	// `[collapse=label]`: the label is the toggle (see `installMarktwinInteractions`).
+	.mkt-collapsor {
+		cursor: pointer;
+		margin-top: 6px;
+		padding: 2px 8px;
+		font-weight: bold;
+		color: var(--mkt-strong);
+		background: var(--mkt-panel);
+		&::before {
+			content: '▸';
+			display: inline-block;
+			margin-right: 6px;
+			transition: transform 0.15s;
+		}
+		&.is-open::before {
+			transform: rotate(90deg);
+		}
+	}
+	.mkt-collapsed {
+		margin-bottom: 6px;
+		padding: 4px 8px;
+		border: 1px dashed var(--mkt-rule);
+		border-top: none;
+	}
+	.mkt-collapsor:not(.is-open) + .mkt-collapsed {
+		display: none;
+	}
+
+	// A block already sits on lines of its own: the line breaks typed around it would only
+	// leave gaps.
+	:is(blockquote, pre, ul, ol, div) + br,
+	br:has(+ :is(blockquote, pre, ul, ol, div)) {
+		display: none;
+	}
+
+	// Who is speaking, said with a frame and an icon rather than a caption. The icons are
+	// Eternaltwin's own, so the same `[mod]` block wears the same badge on both sites.
+	.mod,
+	.mkt-mod,
+	.mkt-admin {
+		margin: 6px 0;
+		padding: 5px 5px 5px 26px;
+		border: 2px solid transparent;
+		background-repeat: no-repeat;
+		background-position: 6px 8px;
+	}
+	.mod,
+	.mkt-mod {
+		border-color: #dd4837;
+		background-color: #fff0d1;
+		color: #710;
+		background-image: url('../assets/icons/warning.png');
+		// The warning is 8px wide against the announce's 16: nudged to sit centred in the same gutter.
+		background-position-x: 9px;
+	}
+	.mkt-admin {
+		border-color: #f9c825;
+		background-color: #5d2a11;
+		color: #ffee92;
+		background-image: url('../assets/icons/adminAnnounce.png');
+		strong,
+		em,
+		a {
+			color: #fff1ad;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.mkt-spoiler,
+		.mkt-collapsor::before {
+			transition: none;
+		}
+	}
+}

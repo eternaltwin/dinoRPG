@@ -4334,7 +4334,8 @@
 		"pagination": {
 			"page": "Página",
 			"go_to": "Ir a la página"
-		}
+		},
+		"placeholder": "Escribe tu mensaje al clan…"
 	},
 	"clanHistory": {
 		"type": {
@@ -5322,12 +5323,6 @@
 			"open": "Editar",
 			"submit": "Guardar"
 		},
-		"editor": {
-			"strong": "Negrita",
-			"emphasis": "Cursiva",
-			"strikethrough": "Tachado",
-			"link": "Link"
-		},
 		"error": {
 			"reauthorize": "Tu sesión de Eternaltwin ha caducado. Vuelve a conectarte para acceder al foro.",
 			"forbidden": "Eternaltwin ha rechazado esta acción. Reintentar no cambiará nada.",
@@ -5503,5 +5498,39 @@
 		"clause2": "Está prohibido el uso de bots o cualquier script de automatización.",
 		"clause3": "Está prohibido explotar voluntariamente un error y debe reportarse al equipo.",
 		"accept_button": "Acepto"
+	},
+	"editor": {
+		"toolbar": "Formato",
+		"write": "Escribir",
+		"preview": "Vista previa",
+		"previewEmpty": "Nada que mostrar por ahora.",
+		"previewError": "No se pudo cargar la vista previa. El mensaje se formateará igualmente al enviarlo.",
+		"help": "Ayuda de formato",
+		"submitHint": "Ctrl + Intro para enviar",
+		"counter": "{count} / {max}",
+		"argument": {
+			"author": "autor",
+			"character": "personaje",
+			"title": "título",
+			"linkText": "texto del enlace"
+		},
+		"tool": {
+			"strong": "Negrita",
+			"emphasis": "Cursiva",
+			"underline": "Subrayado",
+			"strikethrough": "Tachado",
+			"big": "Texto grande",
+			"bad": "Texto erróneo",
+			"spoiler": "Spoiler (oculto hasta hacer clic)",
+			"code": "Código",
+			"quote": "Cita",
+			"rp": "Rol",
+			"sidenote": "Aparte",
+			"collapse": "Sección plegable",
+			"list": "Lista con viñetas",
+			"orderedList": "Lista numerada",
+			"codeBlock": "Bloque de código",
+			"link": "Enlace"
+		}
 	}
 }

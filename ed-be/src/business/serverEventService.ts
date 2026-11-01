@@ -20,6 +20,7 @@ import { WsMsgResponseDeletion } from '@drpg/core/models/serverEvents/WsMsgRespo
 import { WsMsgResponseCreation } from '@drpg/core/models/serverEvents/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
+import { renderPlayerMessage } from '../utils/marktwin.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { UUID } from 'node:crypto';
@@ -337,7 +338,10 @@ async function saveWsMessageInDatabase(
 
 	if (!playerInfos.ClanMember) throw new ExpectedError(`The player is not in a clan`);
 
-	return await createClanMessageRequest(playerInfos.ClanMember.clan.id, wsData.playerId, message.toString());
+	// The frontend refuses an empty or oversized message before sending it, so a refusal here
+	// only reaches a client that skipped it — and costs that client its socket.
+	const content = await renderPlayerMessage(message);
+	return await createClanMessageRequest(playerInfos.ClanMember.clan.id, wsData.playerId, content);
 }
 
 async function deleteWsMessage(channel: ChannelInfos, wsId: string, msgId: number) {

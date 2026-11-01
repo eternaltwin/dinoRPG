@@ -29,6 +29,7 @@
 		"@drpg/renderer": "workspace:^",
 		"@eternaltwin/client-node": "^0.17.3",
 		"@eternaltwin/core": "^0.17.3",
+		"@eternaltwin/marktwin": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch",
 		"@eternaltwin/oauth-client-http": "^0.17.3",
 		"@opentelemetry/api": "^1.9.0",
 		"@opentelemetry/exporter-trace-otlp-proto": "^0.56.0",

@@ -97,7 +97,14 @@
 					</div>
 					<div class="message">
 						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
-						<textarea id="message" v-model="newThread.message" :placeholder="$t('messagerie.message')" />
+						<MarktwinEditor
+							field-id="message"
+							v-model="newThread.message"
+							:grammar="PLAYER_MARKTWIN_GRAMMAR"
+							:maxlength="PLAYER_MESSAGE_MAX_LENGTH"
+							:placeholder="$t('messagerie.message')"
+							@submit="sendMessage()"
+						/>
 					</div>
 					<div class="send">
 						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
@@ -123,12 +130,15 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
+import MarktwinEditor from '../common/MarktwinEditor.vue';
+import { PLAYER_MARKTWIN_GRAMMAR, PLAYER_MESSAGE_MAX_LENGTH } from '@drpg/core/utils/marktwin';
+import { errorHandler } from '../../utils/index.js';
 import { SelectOption } from '../common/DZSelect.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'messagerie',
-	components: { DZDisclaimer, DZUser, DZButton, Thread, SearchEntity },
+	components: { DZDisclaimer, DZUser, DZButton, Thread, SearchEntity, MarktwinEditor },
 	data() {
 		return {
 			localStore: localStore(),
@@ -138,6 +148,8 @@ export default defineComponent({
 			threads: [] as ThreadsBasic[], // Liste des messages de la conversation
 			creationMode: false as boolean,
 			newThread: {} as NewThread,
+			PLAYER_MARKTWIN_GRAMMAR,
+			PLAYER_MESSAGE_MAX_LENGTH,
 			response: undefined as undefined | string,
 			threadSelected: false as boolean,
 			selectedThreadId: null as string | null,
@@ -192,6 +204,7 @@ export default defineComponent({
 			return formatDateTime(dateString);
 		},
 		async sendMessage() {
+			if (!this.newThread.message?.trim()) return;
 			try {
 				const participants = this.newThread.participants?.map(p => p.id);
 				const newThread = await MessagerieService.createThread(
@@ -203,7 +216,7 @@ export default defineComponent({
 				this.creationMode = false;
 				this.newThread = {} as NewThread;
 			} catch (error) {
-				console.error("Erreur lors de l'envoi du message", error);
+				errorHandler.handle(error, this.$toast);
 			}
 		},
 		toggleSearch() {
@@ -431,21 +444,6 @@ dialog {
 				gap: 10px;
 				label {
 					width: 25%;
-				}
-				textarea {
-					background-color: #b05733;
-					outline: 1px solid transparent;
-					color: #ffee92;
-					font-weight: 400;
-					font-size: 16px;
-					outline-offset: 2px;
-					width: 100%;
-					border: none;
-					padding-left: 4px;
-					&:focus {
-						transition: outline-color 0.5s;
-						outline-color: #efdba8;
-					}
 				}
 			}
 			.send {

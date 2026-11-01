@@ -1,7 +1,13 @@
 <template>
 	<div class="new-message-container" v-if="hasAccess">
 		<div v-if="isConnectionOk">
-			<Editor v-model="newMessage" />
+			<MarktwinEditor
+				v-model="newMessage"
+				:grammar="PLAYER_MARKTWIN_GRAMMAR"
+				:maxlength="PLAYER_MESSAGE_MAX_LENGTH"
+				:placeholder="t('clanDiscussion.placeholder')"
+				@submit="createNewMessage()"
+			/>
 		</div>
 
 		<div v-if="isConnectionOk === false" class="msg-error">
@@ -67,7 +73,8 @@ import { ClanService } from '../../services';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
-import Editor from '../common/Editor.vue';
+import MarktwinEditor from '../common/MarktwinEditor.vue';
+import { PLAYER_MARKTWIN_GRAMMAR, PLAYER_MESSAGE_MAX_LENGTH } from '@drpg/core/utils/marktwin';
 import { ToastPluginApi } from 'vue-toast-notification';
 import { getGoal } from '@drpg/core/utils/twinoidGoals';
 import ClanMessageItem from './ClanMessageItem.vue';
@@ -118,7 +125,7 @@ function getTopItem(arr) {
 }
 
 async function createNewMessage(): Promise<void> {
-	if (!hasAccess.value || !newMessage.value) return;
+	if (!hasAccess.value || newMessage.value.trim().length === 0) return;
 	page.value = 1;
 	const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: newMessage.value };
 	webSocket.value?.send(JSON.stringify(payload));

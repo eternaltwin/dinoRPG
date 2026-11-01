@@ -1,6 +1,8 @@
 {
 	"tooManyActiveDinoz": "You have too many active Dinoz.",
 	"maxParticipantInThread": "You cannot add more than 9 people to this conversation",
+	"messageEmpty": "The message is empty.",
+	"messageTooLong": "The message is longer than {{max}} characters.",
 	"notEnoughMoney": "Vous n'avez pas assez d'or",
 	"notEnoughNapo": "You don't have enough Napodino.",
 	"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",

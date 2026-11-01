@@ -12,6 +12,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import { createNotification, readNotificationFromMessages } from '../dao/notificationDao.js';
 import { NotificationSeverity } from '@drpg/prisma';
+import { renderPlayerMessage } from '../utils/marktwin.js';
 
 export async function getMyConversation(req: Request) {
 	const authed = await auth(req);
@@ -22,7 +23,6 @@ export async function startConversation(req: Request) {
 	const authed = await auth(req);
 	const title = req.body.title;
 	const participants = req.body.participants;
-	const message = req.body.message;
 	const players = new Set<string>();
 	for (const participant of participants) {
 		const player = await getPlayerId(participant);
@@ -32,6 +32,7 @@ export async function startConversation(req: Request) {
 	if (players.size > 9) {
 		throw new ExpectedError(translate('maxParticipantInThread', authed));
 	}
+	const message = await renderPlayerMessage(req.body.message, authed);
 
 	const conversation = await createConversation(authed.id, [...players], title, message);
 	[...players]
@@ -70,13 +71,14 @@ export async function sendMessage(req: Request) {
 	if (!conversation.participants.map(p => p.player?.id).includes(authed.id)) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
+	const content = await renderPlayerMessage(req.body.content, authed);
 
 	conversation.participants
 		.filter(p => p.player && p.player.id !== authed.id)
 		.forEach(p => {
 			if (p.player) createNotification(p.player.id, conversation.id, NotificationSeverity.message);
 		});
-	return await addMessage(req.params.thread, req.body.content, authed.id);
+	return await addMessage(req.params.thread, content, authed.id);
 }
 
 export async function pinMesage(req: Request) {

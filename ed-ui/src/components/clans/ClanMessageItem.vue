@@ -25,7 +25,7 @@
 		</header>
 
 		<div class="msg-card__content">
-			<div v-html="contentHtml"></div>
+			<div class="mkt-content" v-html="contentHtml"></div>
 			<div class="actions divide-x">
 				<button class="btn" @click="emit('reply')">{{ t('messagerie.responseConv') }}</button>
 				<button v-if="canDelete" class="btn btn--danger" @click="emit('delete')">
@@ -167,8 +167,8 @@ function formatShortDate(iso: string | Date): string {
 	.divide-x > * + * {
 		border-left: 1px solid #8e3e25 !important;
 	}
+	// No `pre-line`: line breaks arrive as `<br />`, and keeping the newlines too would double them.
 	&__content {
-		white-space: pre-line;
 		word-break: break-word;
 	}
 	.badge {
