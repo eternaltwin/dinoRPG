@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import wasm from 'vite-plugin-wasm';
 import { fileURLToPath } from 'node:url';
 
 const STATIC_DIR = 'public';
@@ -10,7 +11,8 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
 
 	return {
-		plugins: [vue(), vueDevTools()],
+		// `@eternaltwin/marktwin` imports its parser as a wasm ES module.
+		plugins: [vue(), vueDevTools(), wasm()],
 		publicDir: STATIC_DIR,
 		resolve: {
 			extensions: ['.js', '.ts', '.json', '.vue'],
@@ -19,6 +21,8 @@ export default defineConfig(({ mode }) => {
 			// DisplayObject classes breaking `instanceof` checks at render time).
 			dedupe: ['pixi.js']
 		},
+		// Pre-bundling would copy the glue away from its `.wasm` file: leave it to the wasm plugin.
+		optimizeDeps: { exclude: ['@eternaltwin/marktwin'] },
 		css: {
 			preprocessorOptions: {
 				scss: { additionalData: `@use "${MIXINS}" as *;\n` }

@@ -109,9 +109,9 @@ describe('websocket channel flow', () => {
 		await processWsIncomingMessage(
 			wss,
 			(ws as { id: string }).id,
-			Buffer.from(JSON.stringify({ action: WsMessageAction.CREATE, message: 'hello' }))
+			Buffer.from(JSON.stringify({ action: WsMessageAction.CREATE, message: '**hello** <i>' }))
 		);
-		expect(createClanMessageRequest).toHaveBeenCalled();
+		expect(createClanMessageRequest).toHaveBeenCalledWith(1, expect.anything(), '<strong>hello</strong> &lt;i&gt;');
 		expect(client.send).toHaveBeenCalled();
 
 		await processWsIncomingMessage(

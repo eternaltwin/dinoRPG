@@ -12,6 +12,7 @@ import clickOutside from './directives/clickOutside.js';
 import ConfirmPlugin from './mixin/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
 import dayjs from 'dayjs';
+import { installMarktwinInteractions } from './utils/marktwin';
 import utc from 'dayjs/plugin/utc';
 
 const vueTippyProps = {
@@ -45,6 +46,7 @@ app.use(
 	})
 );
 app.directive('clickOutside', clickOutside);
+installMarktwinInteractions();
 
 app.component('Loading', Loading);
 

@@ -4334,7 +4334,8 @@
 		"pagination": {
 			"page": "Page",
 			"go_to": "Go to page"
-		}
+		},
+		"placeholder": "Write your message to the clan…"
 	},
 	"clanHistory": {
 		"type": {
@@ -5322,12 +5323,6 @@
 			"open": "Edit",
 			"submit": "Save"
 		},
-		"editor": {
-			"strong": "Bold",
-			"emphasis": "Italic",
-			"strikethrough": "Strikethrough",
-			"link": "Link"
-		},
 		"error": {
 			"reauthorize": "Your Eternaltwin session has expired. Sign in again to reach the forum.",
 			"forbidden": "Eternaltwin refused this action. Trying again will not help.",
@@ -5395,17 +5390,7 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": [
-			"Trees",
-			"Dragons",
-			"Squids",
-			"Goblins",
-			"Kabukis",
-			"Romeos",
-			"Wizards",
-			"Angels",
-			"Demons"
-		],
+		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
@@ -5503,5 +5488,39 @@
 		"clause2": "Using bots or any automation script is forbidden.",
 		"clause3": "Knowingly exploiting a bug is forbidden and must be reported to the team.",
 		"accept_button": "Accept"
+	},
+	"editor": {
+		"toolbar": "Formatting",
+		"write": "Write",
+		"preview": "Preview",
+		"previewEmpty": "Nothing to show yet.",
+		"previewError": "The preview could not load. The message will still be formatted when sent.",
+		"help": "Formatting help",
+		"submitHint": "Ctrl + Enter to send",
+		"counter": "{count} / {max}",
+		"argument": {
+			"author": "author",
+			"character": "character",
+			"title": "title",
+			"linkText": "link text"
+		},
+		"tool": {
+			"strong": "Bold",
+			"emphasis": "Italic",
+			"underline": "Underline",
+			"strikethrough": "Strikethrough",
+			"big": "Big text",
+			"bad": "Wrong text",
+			"spoiler": "Spoiler (hidden until clicked)",
+			"code": "Code",
+			"quote": "Quote",
+			"rp": "Roleplay",
+			"sidenote": "Aside",
+			"collapse": "Collapsible section",
+			"list": "Bulleted list",
+			"orderedList": "Numbered list",
+			"codeBlock": "Code block",
+			"link": "Link"
+		}
 	}
 }

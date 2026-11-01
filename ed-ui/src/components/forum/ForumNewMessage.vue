@@ -16,12 +16,13 @@
 		</div>
 		<div class="message">
 			<label for="threadMessage">{{ $t('forum.newThread.messageLabel') }}</label>
-			<ForumEditor
+			<MarktwinEditor
 				field-id="threadMessage"
 				v-model="messageThread"
 				:grammar="grammar"
 				:disabled="sending"
 				:placeholder="$t('forum.newThread.messagePlaceholder')"
+				@submit="send()"
 			/>
 		</div>
 		<p class="hint" v-if="error">{{ error }}</p>
@@ -35,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import DZButton from '../common/DZButton.vue';
-import ForumEditor from './ForumEditor.vue';
+import MarktwinEditor from '../common/MarktwinEditor.vue';
 import { ForumService } from '../../services/ForumService.js';
 import { handleForumError } from '../../utils/index.js';
 import type { ForumGrammar } from '@eternaltwin/core/forum/forum-grammar';
@@ -49,7 +50,7 @@ const TITLE_MAX_LENGTH = 64;
 
 export default defineComponent({
 	name: 'ForumNewMessage',
-	components: { DZButton, ForumEditor },
+	components: { DZButton, MarktwinEditor },
 	props: {
 		sectionId: { type: String, required: true },
 		grammar: { type: Object as PropType<ForumGrammar | undefined>, default: undefined }
