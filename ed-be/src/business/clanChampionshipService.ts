@@ -23,7 +23,6 @@ import {
 	parseEventConfig
 } from './clanEventService.js';
 
-
 /** Wraps a scheduled job so a failure is reported instead of becoming an unhandled rejection. */
 export function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promise<void> {
 	return async () => {
