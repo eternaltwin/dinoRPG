@@ -9,7 +9,8 @@
 		"notInRegistration": "Championship registrations are not open.",
 		"alreadyRegistered": "Your clan is already registered in the championship.",
 		"notRegistered": "Your clan is not registered in the championship.",
-		"clanAtWar": "Your clan still has a war in progress."
+		"clanAtWar": "Your clan still has a war in progress.",
+		"registeredNoDelete": "Your clan is registered in the championship and cannot be disbanded."
 	},
 	"noRight": "You do not have the required rights for this action.",
 	"tooManyActiveDinoz": "You have too many active Dinoz.",

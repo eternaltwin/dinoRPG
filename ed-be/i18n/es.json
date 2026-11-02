@@ -9,7 +9,8 @@
 		"notInRegistration": "Las inscripciones al campeonato no están abiertas.",
 		"alreadyRegistered": "Tu clan ya está inscrito en el campeonato.",
 		"notRegistered": "Tu clan no está inscrito en el campeonato.",
-		"clanAtWar": "Tu clan todavía tiene una guerra en curso."
+		"clanAtWar": "Tu clan todavía tiene una guerra en curso.",
+		"registeredNoDelete": "Tu clan está inscrito en el campeonato y no puede disolverse."
 	},
 	"noRight": "No tienes los derechos necesarios para esta acción.",
 	"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",

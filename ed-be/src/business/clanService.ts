@@ -60,6 +60,7 @@ import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 import { prisma } from '../prisma.js';
 import { updateDinoz } from '../dao/dinozDao.js';
+import { isClanInActiveChampionship } from './clanChampionshipService.js';
 
 /**
  * Get all the clans
@@ -300,6 +301,9 @@ export async function deleteClan(req: Request) {
 	const isPlayerLeader: boolean = await isPlayerLeaderOfClan(req);
 	if (!isPlayerLeader) {
 		throw new ExpectedError(`Player ${authed.name} is not leader of clan ${req.params.id}`);
+	}
+	if (await isClanInActiveChampionship(Number(req.params.id))) {
+		throw new ExpectedError(translate('clanChampionship.registeredNoDelete', authed));
 	}
 	const defendingDinoz = await prisma.clanCastle.findUnique({
 		where: {
