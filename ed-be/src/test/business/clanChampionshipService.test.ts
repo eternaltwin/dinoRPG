@@ -16,7 +16,8 @@ vi.mock('../../prisma.js', () => ({
 		clanEvent: { create: vi.fn(), findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
 		clanChampionshipRegistration: { create: vi.fn(), findMany: vi.fn(), deleteMany: vi.fn(), findFirst: vi.fn() },
 		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn() },
-		clanWar: { findFirst: vi.fn() }
+		clanWar: { findFirst: vi.fn() },
+		clan: { findUniqueOrThrow: vi.fn() }
 	}
 }));
 
@@ -143,6 +144,7 @@ describe('registerClan', () => {
 		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
 		p.clanWar.findFirst.mockResolvedValue(null);
+		p.clan.findUniqueOrThrow.mockResolvedValue({ name: 'Seven' });
 	});
 
 	const register = () => registerClan(makeRequest());
@@ -236,7 +238,7 @@ describe('registerClan', () => {
 	it('creates the registration', async () => {
 		await register();
 		expect(p.clanChampionshipRegistration.create).toHaveBeenCalledWith({
-			data: { eventId: 'ev-1', clanId: 7, registeredById: 'player-1' }
+			data: { eventId: 'ev-1', clanId: 7, clanName: 'Seven', registeredById: 'player-1' }
 		});
 	});
 });
@@ -285,7 +287,7 @@ describe('getCurrentChampionship', () => {
 	beforeEach(() => {
 		vi.useFakeTimers();
 		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
-		p.clanChampionshipRegistration.findMany.mockResolvedValue([{ clanId: 7, clan: { name: 'Seven' } }]);
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([{ clanId: 7, clanName: 'Seven' }]);
 		p.clanChampionshipMatch.findMany.mockResolvedValue([]);
 	});
 
@@ -302,6 +304,34 @@ describe('getCurrentChampionship', () => {
 			matches: [],
 			myClanRegistered: true,
 			canManageRegistration: true
+		});
+	});
+
+	it('maps a match whose clan was deleted to a null id with the snapshot name', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.clanChampionshipMatch.findMany.mockResolvedValue([
+			{
+				id: 'm1',
+				round: 0,
+				homeClanId: null,
+				homeClanName: 'Gone',
+				awayClanId: 7,
+				awayClanName: 'Seven',
+				placeId: null,
+				status: 'scheduled',
+				homeScore: 0,
+				awayScore: 0,
+				winnerClanId: null,
+				startsAt: new Date('2026-11-23T18:00:00.000Z'),
+				endsAt: new Date('2026-11-24T18:00:00.000Z')
+			}
+		]);
+		const dto = await getCurrentChampionship(makeRequest());
+		expect(dto?.matches[0]).toMatchObject({
+			homeClan: { id: null, name: 'Gone' },
+			awayClan: { id: 7, name: 'Seven' },
+			placeId: null,
+			status: 'scheduled'
 		});
 	});
 
@@ -353,7 +383,7 @@ describe('closeRegistrations', () => {
 		vi.setSystemTime(new Date('2026-11-23T00:00:01.000Z'));
 	});
 
-	const regs = (n: number) => Array.from({ length: n }, (_, i) => ({ clanId: i + 1 }));
+	const regs = (n: number) => Array.from({ length: n }, (_, i) => ({ clanId: i + 1, clanName: `Clan ${i + 1}` }));
 
 	it('cancels with fewer than 2 registrations', async () => {
 		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(1));
@@ -370,6 +400,10 @@ describe('closeRegistrations', () => {
 		await closeRegistrations('ev-1');
 		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
 		expect(matches).toHaveLength(6);
+		for (const m of matches) {
+			expect(m.homeClanName).toBe(`Clan ${m.homeClanId}`);
+			expect(m.awayClanName).toBe(`Clan ${m.awayClanId}`);
+		}
 		expect([...new Set(matches.map((m: any) => m.round))]).toEqual([0, 1, 2]);
 		expect(matches[0].startsAt).toEqual(new Date('2026-11-23T18:00:00.000Z'));
 		const arg = p.clanEvent.update.mock.calls[0][0];

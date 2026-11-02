@@ -590,6 +590,7 @@ exports.Prisma.ClanChampionshipRegistrationScalarFieldEnum = {
   id: 'id',
   eventId: 'eventId',
   clanId: 'clanId',
+  clanName: 'clanName',
   registeredById: 'registeredById',
   registeredAt: 'registeredAt'
 };
@@ -600,8 +601,30 @@ exports.Prisma.ClanChampionshipMatchScalarFieldEnum = {
   round: 'round',
   homeClanId: 'homeClanId',
   awayClanId: 'awayClanId',
+  homeClanName: 'homeClanName',
+  awayClanName: 'awayClanName',
   startsAt: 'startsAt',
-  endsAt: 'endsAt'
+  endsAt: 'endsAt',
+  placeId: 'placeId',
+  westClanId: 'westClanId',
+  obstacles: 'obstacles',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  ticksApplied: 'ticksApplied',
+  status: 'status',
+  winnerClanId: 'winnerClanId'
+};
+
+exports.Prisma.ClanChampionshipPieceScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  dinozId: 'dinozId',
+  playerId: 'playerId',
+  clanId: 'clanId',
+  state: 'state',
+  x: 'x',
+  y: 'y',
+  actionPoints: 'actionPoints'
 };
 
 exports.Prisma.ClanIngredientScalarFieldEnum = {
@@ -865,7 +888,8 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   defending: 'defending',
   restingAttack: 'restingAttack',
   dungeon: 'dungeon',
-  unsacrificing: 'unsacrificing'
+  unsacrificing: 'unsacrificing',
+  clanChampionship: 'clanChampionship'
 };
 
 exports.NewsType = exports.$Enums.NewsType = {
@@ -974,6 +998,18 @@ exports.ClanEventType = exports.$Enums.ClanEventType = {
   war: 'war',
   mana_war: 'mana_war',
   championship: 'championship'
+};
+
+exports.ClanChampionshipMatchStatus = exports.$Enums.ClanChampionshipMatchStatus = {
+  scheduled: 'scheduled',
+  live: 'live',
+  finished: 'finished'
+};
+
+exports.ClanChampionshipPieceState = exports.$Enums.ClanChampionshipPieceState = {
+  onBoard: 'onBoard',
+  left: 'left',
+  dead: 'dead'
 };
 
 exports.ModerationReason = exports.$Enums.ModerationReason = {
@@ -1096,6 +1132,7 @@ exports.Prisma.ModelName = {
   ClanEvent: 'ClanEvent',
   ClanChampionshipRegistration: 'ClanChampionshipRegistration',
   ClanChampionshipMatch: 'ClanChampionshipMatch',
+  ClanChampionshipPiece: 'ClanChampionshipPiece',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',

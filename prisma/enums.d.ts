@@ -12,7 +12,8 @@ export const UnavailableReason: {
   readonly defending: 'defending';
   readonly restingAttack: 'restingAttack';
   readonly dungeon: 'dungeon';
-  readonly unsacrificing: 'unsacrificing'
+  readonly unsacrificing: 'unsacrificing';
+  readonly clanChampionship: 'clanChampionship'
 };
 
 export namespace UnavailableReason {
@@ -25,7 +26,8 @@ export namespace UnavailableReason {
   export type defending = 'defending';
   export type restingAttack = 'restingAttack';
   export type dungeon = 'dungeon';
-  export type unsacrificing = 'unsacrificing'
+  export type unsacrificing = 'unsacrificing';
+  export type clanChampionship = 'clanChampionship'
 }
 
 export type UnavailableReason = typeof UnavailableReason[keyof typeof UnavailableReason];
@@ -260,6 +262,34 @@ export namespace ClanEventType {
 
 export type ClanEventType = typeof ClanEventType[keyof typeof ClanEventType];
 
+export const ClanChampionshipMatchStatus: {
+  readonly scheduled: 'scheduled';
+  readonly live: 'live';
+  readonly finished: 'finished'
+};
+
+export namespace ClanChampionshipMatchStatus {
+  export type scheduled = 'scheduled';
+  export type live = 'live';
+  export type finished = 'finished'
+}
+
+export type ClanChampionshipMatchStatus = typeof ClanChampionshipMatchStatus[keyof typeof ClanChampionshipMatchStatus];
+
+export const ClanChampionshipPieceState: {
+  readonly onBoard: 'onBoard';
+  readonly left: 'left';
+  readonly dead: 'dead'
+};
+
+export namespace ClanChampionshipPieceState {
+  export type onBoard = 'onBoard';
+  export type left = 'left';
+  export type dead = 'dead'
+}
+
+export type ClanChampionshipPieceState = typeof ClanChampionshipPieceState[keyof typeof ClanChampionshipPieceState];
+
 export const ModerationReason: {
   readonly multi: 'multi';
   readonly dinozName: 'dinozName';
@@ -419,6 +449,8 @@ export const $Enums: {
   readonly LogType: typeof LogType;
   readonly PantheonMotif: typeof PantheonMotif;
   readonly ClanEventType: typeof ClanEventType;
+  readonly ClanChampionshipMatchStatus: typeof ClanChampionshipMatchStatus;
+  readonly ClanChampionshipPieceState: typeof ClanChampionshipPieceState;
   readonly ModerationReason: typeof ModerationReason;
   readonly ModerationAction: typeof ModerationAction;
   readonly NotificationSeverity: typeof NotificationSeverity;
