@@ -223,6 +223,20 @@ describe('championship channel', () => {
 		for (const c of [a, b, other, closed]) disconnectWsUser(c.ws);
 	});
 
+	it('sends the current board version to a socket that just joined the match channel', async () => {
+		vi.mocked(findReadableMatchOfClan).mockResolvedValue({ id: MATCH, version: 9 } as never);
+		const { ticket } = await authenticate(reqFor(WsChannel.CLAN_CHAMPIONSHIP), ServerEventType.WEBSOCKET);
+		const ws = { id: '', isAlive: false, readyState: WebSocket.OPEN, send: vi.fn() } as any;
+		await connectUserToWsChannel(ws, {
+			url: `/ws?ticket=${ticket}`,
+			socket: { remoteAddress: '1.2.3.4' },
+			headers: { 'user-agent': 'jest' }
+		} as never);
+		expect(ws.send).toHaveBeenCalledTimes(1);
+		expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({ type: 'boardChanged', matchId: MATCH, version: 9 });
+		disconnectWsUser(ws);
+	});
+
 	it('publishToWsChannel is a no-op for an unknown channel', () => {
 		const client = { id: 'x', readyState: WebSocket.OPEN, send: vi.fn() };
 		setWebSocketServer({ clients: new Set([client]) } as never);
