@@ -1,4 +1,7 @@
 {
+	"clanEvent": {
+		"overlap": "Ya hay otro evento de clan en curso o programado."
+	},
 	"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",
 	"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
 	"messageEmpty": "El mensaje está vacío.",

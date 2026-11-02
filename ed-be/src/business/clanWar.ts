@@ -48,24 +48,10 @@ import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 import { getRandomArrayElement } from '../utils/tools.js';
 import equal from 'fast-deep-equal';
 import { gameConfig } from '../utils/gameConfig.js';
+import { findActiveWarEvent } from './clanEventService.js';
 
 export async function eventState() {
-	const currentWar = await prisma.clanEvent.findFirst({
-		where: {
-			AND: [
-				{
-					endDate: {
-						gt: new Date()
-					}
-				},
-				{
-					startDate: {
-						lt: new Date()
-					}
-				}
-			]
-		}
-	});
+	const currentWar = await findActiveWarEvent();
 	if (!currentWar) {
 		return undefined;
 	}
@@ -76,22 +62,7 @@ export async function eventState() {
 }
 
 export async function currentWar() {
-	const currentWar = await prisma.clanEvent.findFirst({
-		where: {
-			AND: [
-				{
-					endDate: {
-						gt: new Date()
-					}
-				},
-				{
-					startDate: {
-						lt: new Date()
-					}
-				}
-			]
-		}
-	});
+	const currentWar = await findActiveWarEvent();
 	if (!currentWar) {
 		throw new ExpectedError('No event in progress');
 	}
@@ -599,22 +570,7 @@ async function notifyWarResults(
 }
 
 export async function scheduleWarExpiration() {
-	const currentWar = await prisma.clanEvent.findFirst({
-		where: {
-			AND: [
-				{
-					endDate: {
-						gt: new Date()
-					}
-				},
-				{
-					startDate: {
-						lt: new Date()
-					}
-				}
-			]
-		}
-	});
+	const currentWar = await findActiveWarEvent();
 	if (!currentWar || currentWar.endDate < new Date()) {
 		LOGGER.log('No war event ongoing.');
 		return;

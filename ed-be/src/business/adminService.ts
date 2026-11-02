@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { assertNoClanEventOverlap } from './clanEventService.js';
 import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
@@ -1133,6 +1134,8 @@ export async function startClanWarEvent(req: Request) {
 		swampEnable: true,
 		warPlaces: warPlaces
 	};
+
+	await assertNoClanEventOverlap(startTime);
 
 	const event = await prisma.clanEvent.create({
 		data: {
