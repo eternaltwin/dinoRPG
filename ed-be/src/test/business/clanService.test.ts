@@ -74,6 +74,7 @@ import { createNotification } from '../../dao/notificationDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { getAllIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
 import { prisma } from '../../prisma.js';
+import { LOGGER } from '../../context.js';
 import { removePlayerFromBoards } from '../../business/clanChampionshipMatchService.js';
 import { updateDinoz } from '../../dao/dinozDao.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from '../../business/playerService.js';
@@ -383,6 +384,13 @@ describe('championship board hooks on clan exit', () => {
 		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ id: 1 } as never);
 		await svc.excludeClanMember(req({ clanId: '7', id: '1' }));
 		expect(removePlayerFromBoards).not.toHaveBeenCalled();
+	});
+	it('a failing hook is logged and does not fail the exit', async () => {
+		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);
+		vi.mocked(removePlayerFromBoards).mockRejectedValueOnce(new Error('boom'));
+		await expect(svc.leaveClanSelf(req())).resolves.toEqual(removed);
+		expect(LOGGER.error).toHaveBeenCalled();
 	});
 	it('leaveClanSelf removes the member from the boards', async () => {
 		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
