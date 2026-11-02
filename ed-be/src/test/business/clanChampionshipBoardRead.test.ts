@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { makeRequest } from '../helpers/req.js';
 
@@ -170,6 +170,39 @@ describe('getMyMatchBoard', () => {
 		expect(p.clanChampionshipMatch.findFirst).toHaveBeenLastCalledWith(
 			expect.objectContaining({ where: expect.objectContaining({ status: 'finished' }) })
 		);
+	});
+
+	describe('once the championship is finished', () => {
+		const finishedEvent = (endDate: Date) => ({
+			...event,
+			endDate,
+			config: JSON.stringify({ ...JSON.parse(event.config), phase: 'finished' })
+		});
+		beforeEach(() => {
+			vi.useFakeTimers();
+			vi.setSystemTime(new Date('2026-12-03T10:00:00.000Z'));
+			p.clanChampionshipPiece.findMany.mockResolvedValue([]);
+		});
+		afterEach(() => {
+			vi.useRealTimers();
+		});
+
+		it('still returns the last match board within the visibility window', async () => {
+			p.clanEvent.findFirst.mockResolvedValue(finishedEvent(new Date('2026-12-02T18:00:00.000Z')));
+			p.clanChampionshipMatch.findFirst.mockResolvedValue(match({ status: 'finished' }));
+			const board = await getMyMatchBoard(makeRequest());
+			expect(board).toMatchObject({ status: 'finished' });
+			expect(p.clanChampionshipMatch.findFirst).toHaveBeenLastCalledWith(
+				expect.objectContaining({ where: expect.objectContaining({ eventId: 'ev-1', status: 'finished' }) })
+			);
+		});
+
+		it('returns null beyond the visibility window', async () => {
+			p.clanEvent.findFirst.mockResolvedValue(finishedEvent(new Date('2026-11-20T18:00:00.000Z')));
+			p.clanChampionshipMatch.findFirst.mockResolvedValue(null);
+			expect(await getMyMatchBoard(makeRequest())).toBeNull();
+			expect(p.clanChampionshipMatch.findFirst).not.toHaveBeenCalled();
+		});
 	});
 
 	it('exposes the journal: archiveId only for participants, newest first, capped at 50', async () => {

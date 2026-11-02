@@ -48,7 +48,7 @@ import { computePvpXp } from '../utils/fight/pvpXp.js';
 import { gameConfig } from '../utils/gameConfig.js';
 import translate from '../utils/server/translate.js';
 import { getRandomArrayElement } from '../utils/tools.js';
-import { findActiveChampionshipEvent, parseEventConfig } from './clanEventService.js';
+import { findActiveChampionshipEvent, findVisibleChampionshipEvent, parseEventConfig } from './clanEventService.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { finishChampionship, runChampionshipJob } from './clanChampionshipService.js';
 import { publishToWsChannel } from './serverEventService.js';
@@ -253,11 +253,11 @@ export async function findLiveMatchOfClan(clanId: number, tx: LocalTransactionCl
 	});
 }
 
-/** The match a clan may follow: its live match, else its latest finished match of the active championship. */
+/** The match a clan may follow: its live match, else its latest finished one of the (still visible) championship. */
 export async function findReadableMatchOfClan(clanId: number) {
 	const live = await findLiveMatchOfClan(clanId);
 	if (live) return live;
-	const event = await findActiveChampionshipEvent();
+	const event = await findVisibleChampionshipEvent();
 	if (!event) return null;
 	return prisma.clanChampionshipMatch.findFirst({
 		where: {

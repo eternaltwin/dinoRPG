@@ -18,12 +18,11 @@ import translate from '../utils/server/translate.js';
 import {
 	assertNoClanEventOverlap,
 	findActiveChampionshipEvent,
+	findVisibleChampionshipEvent,
 	lockClanEventCreation,
 	parseEventConfig
 } from './clanEventService.js';
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-const RESULT_VISIBLE_DAYS = 7;
 
 /** Wraps a scheduled job so a failure is reported instead of becoming an unhandled rejection. */
 export function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promise<void> {
@@ -267,16 +266,7 @@ export async function unregisterClan(req: Request): Promise<void> {
 export async function getCurrentChampionship(req: Request): Promise<ClanChampionshipDTO | null> {
 	const authed = await auth(req);
 
-	let event = await findActiveChampionshipEvent();
-	if (!event) {
-		const latest = await prisma.clanEvent.findFirst({
-			where: { eventType: ClanEventType.championship },
-			orderBy: { startDate: 'desc' }
-		});
-		if (latest && latest.endDate && latest.endDate.getTime() > Date.now() - RESULT_VISIBLE_DAYS * DAY_MS) {
-			event = latest;
-		}
-	}
+	const event = await findVisibleChampionshipEvent();
 	if (!event) return null;
 
 	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
