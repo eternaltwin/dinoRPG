@@ -5,6 +5,7 @@
 
 <script lang="ts">
 const cache = new Map<string, string>();
+const inFlight = new Map<string, Promise<string | null>>();
 </script>
 
 <script setup lang="ts">
@@ -14,30 +15,46 @@ import { dino } from '@eternaltwin/dinorpg_animations';
 const props = defineProps<{ display: string; size: number }>();
 const src = ref<string | undefined>();
 
-function render() {
+function renderImage(key: string): Promise<string | null> {
+	let promise = inFlight.get(key);
+	if (!promise) {
+		promise = new Promise<string | null>(resolve => {
+			try {
+				const d = new dino({
+					data: props.display,
+					flip: false,
+					damages: 0,
+					dark: false,
+					scale: 1,
+					shadow: false,
+					congel: false
+				});
+				d.toRawImage(
+					value => {
+						cache.set(key, value);
+						resolve(value);
+					},
+					props.size,
+					props.size
+				);
+			} catch {
+				resolve(null);
+			}
+		}).finally(() => inFlight.delete(key));
+		inFlight.set(key, promise);
+	}
+	return promise;
+}
+
+async function render() {
 	const key = `${props.display}|${props.size}`;
 	const cached = cache.get(key);
 	if (cached) {
 		src.value = cached;
 		return;
 	}
-	const d = new dino({
-		data: props.display,
-		flip: false,
-		damages: 0,
-		dark: false,
-		scale: 1,
-		shadow: false,
-		congel: false
-	});
-	d.toRawImage(
-		value => {
-			cache.set(key, value);
-			if (key === `${props.display}|${props.size}`) src.value = value;
-		},
-		props.size,
-		props.size
-	);
+	const value = await renderImage(key);
+	if (value && key === `${props.display}|${props.size}`) src.value = value;
 }
 
 onMounted(render);

@@ -5551,6 +5551,7 @@
 		"calendar": "Spielplan",
 		"round": "Spieltag {round}",
 		"versus": "gegen",
+		"daysShort": "{days} T",
 		"noMatch": "Kein Spiel im Gange",
 		"viewBoard": "Spielfeld ansehen",
 		"backToBoard": "Zurück zum Spielfeld",

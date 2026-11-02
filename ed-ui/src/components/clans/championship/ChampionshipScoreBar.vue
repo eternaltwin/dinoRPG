@@ -39,7 +39,7 @@ const props = defineProps<{
 	status: ClanChampionshipMatchStatus;
 }>();
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const now = ref(Date.now());
 const timer = setInterval(() => (now.value = Date.now()), 1000);
 onBeforeUnmount(() => clearInterval(timer));
@@ -51,7 +51,7 @@ const countdown = computed(() => {
 	const m = Math.floor((total % 3600) / 60);
 	const s = total % 60;
 	const pad = (n: number) => String(n).padStart(2, '0');
-	return `${d > 0 ? `${d}j ` : ''}${pad(h)}:${pad(m)}:${pad(s)}`;
+	return `${d > 0 ? `${t('clanChampionship.daysShort', { days: d })} ` : ''}${pad(h)}:${pad(m)}:${pad(s)}`;
 });
 
 function formatDate(d?: Date | string): string {

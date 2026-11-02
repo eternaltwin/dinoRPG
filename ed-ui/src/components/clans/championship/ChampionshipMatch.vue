@@ -100,12 +100,9 @@ async function runAction(dinozId: number, action: () => Promise<void>) {
 		errorHandler.handle(e, $toast);
 	} finally {
 		await refetch();
-		try {
-			await dinozStore.refreshDinozFiche(dinozId);
-		} catch {
-			// the dinoz sheet refresh is best effort
-		}
 		pending.value = false;
+		// Best effort, does not block the board
+		dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
 	}
 }
 

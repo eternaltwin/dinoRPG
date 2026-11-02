@@ -21,7 +21,7 @@
 					ally: cell.piece.ally && !cell.piece.mine,
 					enemy: !cell.piece.mine && !cell.piece.ally,
 					selected: cell.piece.dinozId === selectedDinozId,
-					exhausted: isOurs(cell.piece) && !(cell.piece.actionPoints && cell.piece.actionPoints > 0)
+					exhausted: isOurs(cell.piece) && cell.piece.actionPoints === 0
 				}"
 				:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
 			>
@@ -92,7 +92,7 @@ interface Cell {
 	target: Target;
 }
 
-const cells = computed<Cell[]>(() => {
+const targets = computed(() => {
 	const sel = selected.value;
 	const targets = new Map<number, { direction: BoardDirection; target: Target }>();
 	if (sel && !props.disabled && (sel.actionPoints ?? 0) > 0) {
@@ -110,9 +110,13 @@ const cells = computed<Cell[]>(() => {
 			}
 		}
 	}
+	return targets;
+});
+
+const cells = computed<Cell[]>(() => {
 	const out: Cell[] = [];
 	for (let index = 0; index < BOARD_SIZE * BOARD_SIZE; index++) {
-		const t = targets.get(index);
+		const t = targets.value.get(index);
 		out.push({
 			index,
 			x: index % BOARD_SIZE,
@@ -149,7 +153,7 @@ function onKey(event: KeyboardEvent) {
 	const direction = map[event.key];
 	if (!direction) return;
 	event.preventDefault();
-	emit('move', direction);
+	if ([...targets.value.values()].some(t => t.direction === direction)) emit('move', direction);
 }
 
 onMounted(() => window.addEventListener('keydown', onKey));

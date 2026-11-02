@@ -55,8 +55,10 @@ export default defineComponent({
 	computed: {
 		backTo(): string | null {
 			const back = this.$route.query.back;
-			// Only internal paths
-			return typeof back === 'string' && back.startsWith('/') && !back.startsWith('//') ? back : null;
+			// Only internal clan paths
+			if (typeof back !== 'string' || !back.startsWith('/clan/')) return null;
+			if (back.includes('\\') || back.includes('//') || back.split(/[/?#]/).includes('..')) return null;
+			return back;
 		}
 	},
 	methods: {},
