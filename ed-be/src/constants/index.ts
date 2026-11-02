@@ -24,6 +24,7 @@ export const apiRoutes = {
 	eternalTwinEventsRoute: '/api/v1/eternaltwin/events',
 	clanRoutes: '/api/v1/clan',
 	clanWarRoutes: '/api/v1/clan/war',
+	clanChampionshipRoutes: '/api/v1/clan/championship',
 	moderation: '/api/v1/moderation',
 	pantheon: '/api/v1/pantheon',
 	messagerie: '/api/v1/messagerie',
