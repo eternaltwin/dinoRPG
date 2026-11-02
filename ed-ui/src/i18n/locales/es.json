@@ -5551,6 +5551,7 @@
 		"calendar": "Calendario",
 		"round": "Jornada {round}",
 		"versus": "contra",
+		"daysShort": "{days} d",
 		"noMatch": "Ningún partido en curso",
 		"viewBoard": "Ver el tablero",
 		"backToBoard": "Volver al tablero",

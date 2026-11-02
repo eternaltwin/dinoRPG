@@ -5541,6 +5541,7 @@
 		"calendar": "Calendar",
 		"round": "Round {round}",
 		"versus": "vs",
+		"daysShort": "{days}d",
 		"noMatch": "No match in progress",
 		"viewBoard": "View the board",
 		"backToBoard": "Back to the board",
