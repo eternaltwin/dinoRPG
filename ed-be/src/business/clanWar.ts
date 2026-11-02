@@ -27,7 +27,8 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { CLAN_WAR_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { archiveFight } from '../dao/archiveDao.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
-import { calculatePvPxp, calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { computePvpXp } from '../utils/fight/pvpXp.js';
 import { createLog } from '../dao/logDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -1199,23 +1200,15 @@ export async function attackCastle(req: Request) {
 	let levelup = false;
 	for (const d of team) {
 		let xp = 0;
-		// Factor based on the level of the Dinoz within the team total.
-		const team_factor = d.level / attackersTeamLevel;
-
-		for (const defender of defenders) {
+		const opponents = defenders.map(defender => {
 			// Skip defender if it escaped
 			const defenderFighter = fight.defenders.find(def => def.dinozId === defender.id);
 			if (!defenderFighter) {
 				throw new ExpectedError(`Defender ${defender.id} doesn't exist.`);
 			}
-			if (defenderFighter.escaped) continue;
-			// Factor based on level difference (if level is stricly above, then less xp)
-			const level_factor = defender.level >= d.level ? 1 : 4 / (4 + (d.level - defender.level));
-			// Factor based on starting HP, if defender was not full life, then less xp.
-			const hp_factor = defender.life / defender.maxLife;
-
-			xp += calculatePvPxp(defender.level, d.level) * level_factor * hp_factor * team_factor;
-		}
+			return { ...defender, escaped: defenderFighter.escaped };
+		});
+		xp = computePvpXp(d, opponents, attackersTeamLevel);
 
 		// Take into account bonuses and apply rounding.
 		xp = calculateXPBonus(d, xp, player);
@@ -1263,22 +1256,15 @@ export async function attackCastle(req: Request) {
 	let defenseOrder = activeWar.defender.castle.defenseOrder;
 	for (const d of defenders) {
 		let xp = 0;
-		// Factor based on the level of the Dinoz within the team total.
-		const team_factor = d.level / defendersTeamLevel;
-
-		for (const attacker of team) {
+		const opponents = team.map(attacker => {
 			// Ignore attackers that escaped
 			const attackerFigther = fight.attackers.find(att => att.dinozId === attacker.id);
 			if (!attackerFigther) {
 				throw new ExpectedError(`Defender ${attacker.id} doesn't exist.`);
 			}
-			if (attackerFigther.escaped) continue;
-			// Factor based on level (if level is stricly above, then less xp)
-			const level_factor = attacker.level >= d.level ? 1 : 4 / (4 + (d.level - attacker.level));
-			// Factor based on starting HP, if attacker was not full life, then less xp.
-			const hp_factor = attacker.life / attacker.maxLife;
-			xp += calculatePvPxp(attacker.level, d.level) * level_factor * hp_factor * team_factor;
-		}
+			return { ...attacker, escaped: attackerFigther.escaped };
+		});
+		xp = computePvpXp(d, opponents, defendersTeamLevel);
 
 		// Cannot apply defender xp bonuses without pulling in each Dinoz player data.
 		xp = Math.round(xp);

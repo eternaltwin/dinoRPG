@@ -1,6 +1,7 @@
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import type { LocalTransactionClient } from './clansDao.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import { GLOBAL } from '../context.js';
@@ -714,6 +715,38 @@ export async function getDinozFightClanDataRequest(dinozId: number, playerId: st
 		});
 
 		return player;
+	});
+}
+
+/** Fighter data of the dinoz of a clan championship board fight (any owner), with their player's cooker/teacher. */
+export async function getDinozForChampionshipFight(ids: number[], tx: LocalTransactionClient = prisma) {
+	return withSpan(getDinozForChampionshipFight.name, async () => {
+		return tx.dinoz.findMany({
+			where: { id: { in: ids } },
+			select: {
+				id: true,
+				display: true,
+				playerId: true,
+				name: true,
+				level: true,
+				life: true,
+				maxLife: true,
+				experience: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				items: { select: { itemId: true } },
+				skills: {
+					select: { skillId: true },
+					where: { state: { equals: true } }
+				},
+				status: { select: { statusId: true } },
+				catches: { select: { id: true, hp: true, monsterId: true } },
+				player: { select: { cooker: true, teacher: true } }
+			}
+		});
 	});
 }
 

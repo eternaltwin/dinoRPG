@@ -72,6 +72,12 @@ export const CLAN_WAR_PVP_RULES: FightRules = {
 	canUsePermanentEquipmentOnly: false
 };
 
+// Clan championship board fights: clan war rules without the castle.
+export const CLAN_CHAMPIONSHIP_PVP_RULES: FightRules = {
+	...CLAN_WAR_PVP_RULES,
+	castleFight: false
+};
+
 export interface FightConfiguration {
 	// Seed
 	seed: string;

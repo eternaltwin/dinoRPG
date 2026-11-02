@@ -7,28 +7,43 @@ import {
 } from '@drpg/core/models/clan/clanChampionship';
 import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { FightOutcome } from '@drpg/core/models/fight/FightResult';
+import { CLAN_CHAMPIONSHIP_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
+import { FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ClanChampionshipMatchStatus, ClanChampionshipPieceState, UnavailableReason } from '@drpg/prisma';
+import {
+	ClanChampionshipMatchStatus,
+	ClanChampionshipPieceState,
+	LogType,
+	Prisma,
+	UnavailableReason
+} from '@drpg/prisma';
 import { CronJob } from 'cron';
 import { Request } from 'express';
 import seedrandom from 'seedrandom';
 import { LocalTransactionClient } from '../dao/clansDao.js';
+import { archiveFight } from '../dao/archiveDao.js';
+import { getDinozForChampionshipFight } from '../dao/dinozDao.js';
 import { auth } from '../dao/playerDao.js';
 import { prisma } from '../prisma.js';
 import {
 	cellIndex,
 	entryColumn,
+	fightZone,
 	generateObstacles,
+	isBehindAttack,
 	isInBounds,
 	pickEntryCell,
 	scoreLine,
 	Side,
 	step
 } from '../utils/clanChampionship/board.js';
+import { computePvpXp } from '../utils/fight/pvpXp.js';
+import { gameConfig } from '../utils/gameConfig.js';
 import translate from '../utils/server/translate.js';
 import { getRandomArrayElement } from '../utils/tools.js';
 import { findActiveChampionshipEvent, parseEventConfig } from './clanEventService.js';
+import { calculateFightBetweenPlayers } from './fightService.js';
 import { finishChampionship, runChampionshipJob } from './clanChampionshipService.js';
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -206,18 +221,137 @@ export function sideOf(match: { westClanId: number | null }, clanId: number): Si
 	return match.westClanId === clanId ? 'west' : 'east';
 }
 
+type FighterResult = FightProcessResult['attackers'][number];
+
+type Fought = {
+	piece: PieceEntity;
+	dinoz: Awaited<ReturnType<typeof getDinozForChampionshipFight>>[number];
+};
+
 /**
- * Placeholder replaced by the fight resolution: the attacker stays in place, the fight is played
- * between the attacker and the defender pieces.
+ * Plays the fight of a board attack (the attacker stays in place): 1v1 from behind, otherwise every piece
+ * of the fight zone, by clan. Runs in the caller's transaction, under the match lock.
  */
 export async function resolveBoardAttack(
-	_tx: LocalTransactionClient,
-	_match: MatchEntity,
-	_attacker: PieceEntity,
-	_defender: { id: number; clanId: number; x: number | null; y: number | null },
+	tx: LocalTransactionClient,
+	match: MatchEntity,
+	attacker: PieceEntity,
+	defender: PieceEntity,
 	_authed: Authed
-): Promise<BoardMoveResult['fight']> {
-	throw new Error('resolveBoardAttack not implemented');
+): Promise<NonNullable<BoardMoveResult['fight']>> {
+	let pieces: PieceEntity[];
+	if (isBehindAttack(sideOf(match, defender.clanId), attacker as { x: number }, defender as { x: number })) {
+		pieces = [attacker, defender];
+	} else {
+		const onBoard = await tx.clanChampionshipPiece.findMany({
+			where: { matchId: match.id, state: ClanChampionshipPieceState.onBoard }
+		});
+		const zone = fightZone(attacker as { x: number; y: number }, defender as { x: number; y: number });
+		pieces = onBoard.filter(p => p.x !== null && p.y !== null && zone.has(cellIndex(p.x, p.y)));
+		for (const own of [attacker, defender]) {
+			if (!pieces.some(p => p.id === own.id)) pieces.push(own);
+		}
+	}
+
+	const rows = await getDinozForChampionshipFight(
+		pieces.map(p => p.dinozId),
+		tx
+	);
+	const fighters: Fought[] = [];
+	for (const piece of pieces) {
+		const dinoz = rows.find(r => r.id === piece.dinozId);
+		if (dinoz && dinoz.life > 0) fighters.push({ piece, dinoz });
+	}
+	const teamA = fighters.filter(f => f.piece.clanId === attacker.clanId);
+	const teamB = fighters.filter(f => f.piece.clanId !== attacker.clanId);
+
+	const fight = calculateFightBetweenPlayers(
+		CLAN_CHAMPIONSHIP_PVP_RULES,
+		teamA.map(f => f.dinoz),
+		teamA.some(f => f.dinoz.player.cooker),
+		teamB.map(f => f.dinoz),
+		teamB.some(f => f.dinoz.player.cooker),
+		match.placeId as PlaceEnum
+	);
+
+	const archive = await archiveFight(
+		fight,
+		fight.outcome === FightOutcome.AttackerWin,
+		attacker.playerId,
+		defender.playerId,
+		JSON.stringify({ kind: 'clanChampionship', matchId: match.id })
+	);
+
+	const config = gameConfig();
+	const deadDinozIds: number[] = [];
+	const settle = async (
+		team: Fought[],
+		opposing: Fought[],
+		results: FighterResult[],
+		opposingResults: FighterResult[]
+	) => {
+		const teamLevel = team.reduce((acc, f) => acc + f.dinoz.level, 0);
+		const opponents = opposing.map(o => ({
+			level: o.dinoz.level,
+			life: o.dinoz.life,
+			maxLife: o.dinoz.maxLife,
+			escaped: opposingResults.find(r => r.dinozId === o.dinoz.id)?.escaped ?? false
+		}));
+		for (const { piece, dinoz } of team) {
+			const result = results.find(r => r.dinozId === dinoz.id);
+			if (!result) continue;
+			const dead = result.hpLost >= dinoz.life;
+			const data: Prisma.DinozUpdateInput = { life: { decrement: Math.min(result.hpLost, dinoz.life) } };
+			let xp = 0;
+			if (!dead && !result.escaped) {
+				xp = calculateXPBonus(dinoz, computePvpXp(dinoz, opponents, teamLevel), dinoz.player);
+				if (dinoz.experience >= getMaxXp(dinoz, config)) xp = 0;
+				data.experience = { increment: xp };
+			}
+			await tx.dinoz.update({ where: { id: dinoz.id }, data });
+			await addLog(tx, LogType.XPEarned, dinoz, xp);
+			await addLog(tx, LogType.HPLost, dinoz, result.hpLost);
+
+			if (dead) {
+				deadDinozIds.push(dinoz.id);
+				await addLog(tx, LogType.Death, dinoz);
+				await tx.clanChampionshipPiece.updateMany({
+					where: { id: piece.id, state: ClanChampionshipPieceState.onBoard },
+					data: { state: ClanChampionshipPieceState.dead, x: null, y: null, actionPoints: 0 }
+				});
+				await tx.dinoz.updateMany({
+					where: { id: dinoz.id, unavailableReason: UnavailableReason.clanChampionship },
+					data: { unavailableReason: null }
+				});
+			}
+			for (const itemId of result.itemsUsed) {
+				const item = await tx.dinozItem.findFirst({ where: { dinozId: dinoz.id, itemId }, select: { id: true } });
+				if (item) await tx.dinozItem.delete({ where: { id: item.id } });
+			}
+		}
+	};
+	await settle(teamA, teamB, fight.attackers, fight.defenders);
+	await settle(teamB, teamA, fight.defenders, fight.attackers);
+
+	return { archiveId: archive.id, outcome: fight.outcome, deadDinozIds };
+}
+
+function addLog(
+	tx: LocalTransactionClient,
+	type: LogType,
+	dinoz: { id: number; playerId: string | null },
+	...values: number[]
+) {
+	return tx.log.create({
+		data: {
+			player: { connect: { id: dinoz.playerId as string } },
+			dinoz: { connect: { id: dinoz.id } },
+			type,
+			values: values.map(v => v.toString()),
+			playerOldId: dinoz.playerId as string
+		},
+		select: { id: true }
+	});
 }
 
 /** Runs an action on the player's live match, under the match lock and re-validating its liveness. */
@@ -355,8 +489,7 @@ export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
 		if (match.obstacles.includes(cellIndex(target.x, target.y))) throw fail('obstacle');
 
 		const onBoard = await tx.clanChampionshipPiece.findMany({
-			where: { matchId: match.id, state: ClanChampionshipPieceState.onBoard },
-			select: { id: true, clanId: true, x: true, y: true }
+			where: { matchId: match.id, state: ClanChampionshipPieceState.onBoard }
 		});
 		const occupant = onBoard.find(o => o.x === target.x && o.y === target.y);
 		if (occupant && occupant.clanId === clanId) throw fail('cellOccupied');
