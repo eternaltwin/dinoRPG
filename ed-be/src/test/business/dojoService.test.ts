@@ -8,6 +8,7 @@ vi.mock('../../dao/archiveDao.js', () => ({
 	archiveFight: vi.fn(),
 	getAllArchivedFightRequest: vi.fn(),
 	getArchivedFightRequest: vi.fn(),
+	getClanChampionshipFightParticipants: vi.fn(),
 	viewFight: vi.fn()
 }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozForDojoFight: vi.fn(), getRandomDinozFromLevel: vi.fn() }));
@@ -286,6 +287,32 @@ describe('getArchivedFight / getAllArchivedFight', () => {
 	it('throws when archive not found', async () => {
 		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue(null as never);
 		await expect(getArchivedFight(req({}, { id: 'f1' }))).rejects.toThrow('archiveNotFound');
+	});
+	describe('clan championship archives', () => {
+		const cdcArchive = () =>
+			vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+				fighters: '[]',
+				result: true,
+				steps: '[]',
+				seed: 's',
+				leftPlayer: null,
+				rightPlayer: null,
+				metadata: JSON.stringify({ kind: 'clanChampionship', matchId: 'm', placeId: 1 })
+			} as never);
+		it('denies a non-participant without recording a view', async () => {
+			cdcArchive();
+			vi.mocked(archiveDao.viewFight).mockClear();
+			vi.mocked(archiveDao.getClanChampionshipFightParticipants).mockResolvedValue(['p2']);
+			await expect(getArchivedFight(req({}, { id: 'f1' }))).rejects.toThrow('No replay found.');
+			expect(archiveDao.viewFight).not.toHaveBeenCalled();
+		});
+		it('allows a participant', async () => {
+			cdcArchive();
+			vi.mocked(archiveDao.getClanChampionshipFightParticipants).mockResolvedValue(['p1']);
+			const result = await getArchivedFight(req({}, { id: 'f1' }));
+			expect(result.id).toBe('f1');
+			expect(archiveDao.viewFight).toHaveBeenCalledWith('p1', 'f1');
+		});
 	});
 	it('returns filtered dojo archives', async () => {
 		vi.mocked(archiveDao.getAllArchivedFightRequest).mockResolvedValue({
