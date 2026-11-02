@@ -654,7 +654,8 @@ const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
 	UnavailableReason.sacrificed,
 	UnavailableReason.unsacrificing,
 	UnavailableReason.selling,
-	UnavailableReason.unfreezing
+	UnavailableReason.unfreezing,
+	UnavailableReason.clanChampionship
 ];
 
 function availableDinozIds(dinoz: { id: number; unavailableReason: UnavailableReason | null }[]): number[] {

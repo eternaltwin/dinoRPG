@@ -257,6 +257,17 @@ describe('getDojoFriendData', () => {
 		let result = await getFriendDinoz(req({}, { id: 1 }));
 		expect(result.length).toBe(2);
 	});
+	it('excludes dinoz locked on the clan championship board', async () => {
+		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({
+			dinoz: [
+				{ id: 1, name: 'abc', display: '0123', level: 1, unavailableReason: null },
+				{ id: 2, name: 'abc', display: '0123', level: 1, unavailableReason: UnavailableReason.clanChampionship }
+			],
+			clanId: 1
+		});
+		const result = await getFriendDinoz(req({}, { id: 1 }));
+		expect(result.map(d => d.id)).toEqual([1]);
+	});
 });
 
 describe('getArchivedFight / getAllArchivedFight', () => {

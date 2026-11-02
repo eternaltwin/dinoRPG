@@ -199,7 +199,8 @@ export async function getDinozPlace(dinozId: number) {
 			where: { id: dinozId },
 			select: {
 				id: true,
-				placeId: true
+				placeId: true,
+				unavailableReason: true
 			}
 		});
 		return dinoz;
@@ -920,6 +921,7 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 						life: true,
 						items: { select: { itemId: true } },
 						gather: true,
+						unavailableReason: true,
 						player: {},
 						skills: { select: { skillId: true } },
 						status: { select: { statusId: true } },

@@ -138,6 +138,10 @@ export async function createOffer(req: Request) {
 		}
 
 		const dinozPlace = await getDinozPlace(dinozId);
+		// A dinoz locked on the clan championship board cannot be put on sale (it would overwrite the lock)
+		if (dinozPlace?.unavailableReason === UnavailableReason.clanChampionship) {
+			throw new ExpectedError(translate(`UnavailableReason.${dinozPlace.unavailableReason}`, authed));
+		}
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('Dinoz is not at the right place to do this.');
 		}
