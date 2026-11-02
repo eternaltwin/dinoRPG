@@ -5554,6 +5554,7 @@
 		"versus": "contre",
 		"daysShort": "{days} j",
 		"noMatch": "Aucun match en cours",
+		"loadError": "Impossible de charger le damier.",
 		"viewBoard": "Voir le damier",
 		"backToBoard": "Retour au damier",
 		"matchFinished": "Match terminé",

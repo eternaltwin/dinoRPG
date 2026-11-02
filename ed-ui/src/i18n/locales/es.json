@@ -5553,6 +5553,7 @@
 		"versus": "contra",
 		"daysShort": "{days} d",
 		"noMatch": "Ningún partido en curso",
+		"loadError": "No se pudo cargar el tablero.",
 		"viewBoard": "Ver el tablero",
 		"backToBoard": "Volver al tablero",
 		"matchFinished": "Partido terminado",

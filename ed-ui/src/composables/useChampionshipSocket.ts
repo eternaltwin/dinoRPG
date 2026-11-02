@@ -7,12 +7,13 @@ const MIN_DELAY = 1000;
 const MAX_DELAY = 30000;
 
 /**
- * Follows the board channel of the player's current match. Calls `onChanged(version)` on every `boardChanged`
- * message and `onChanged(-1)` after every successful (re)connection so the caller refetches the board.
+ * Follows the board channel of the player's current match. Calls `onChanged(version, matchId)` on every
+ * `boardChanged` message and `onChanged(-1, null)` after every successful (re)connection so the caller refetches
+ * the board. While `options.enabled` is false the socket stays closed (and nothing retries).
  */
 export function useChampionshipSocket(
-	onChanged: (version: number) => void,
-	options?: { matchId?: Ref<string | null> }
+	onChanged: (version: number, matchId: string | null) => void,
+	options?: { matchId?: Ref<string | null>; enabled?: Ref<boolean> }
 ): { connected: Ref<boolean>; reconnect(): void; close(): void } {
 	const connected = ref(false);
 	let socket: WebSocket | null = null;
@@ -21,6 +22,7 @@ export function useChampionshipSocket(
 	let closed = false;
 	// Incremented on every (re)connection so stale callbacks of a replaced socket are ignored
 	let generation = 0;
+	const isEnabled = () => options?.enabled?.value ?? true;
 
 	function dropSocket() {
 		if (timer) {
@@ -41,7 +43,7 @@ export function useChampionshipSocket(
 	}
 
 	function scheduleRetry(gen: number) {
-		if (closed || gen !== generation || timer) return;
+		if (closed || !isEnabled() || gen !== generation || timer) return;
 		const wait = delay;
 		delay = Math.min(delay * 2, MAX_DELAY);
 		timer = setTimeout(() => {
@@ -54,6 +56,7 @@ export function useChampionshipSocket(
 		if (closed) return;
 		dropSocket();
 		const gen = ++generation;
+		if (!isEnabled()) return;
 		try {
 			const ticket = await ServerEventsService.getWsTicket(WsChannel.CLAN_CHAMPIONSHIP);
 			if (closed || gen !== generation) return;
@@ -67,14 +70,14 @@ export function useChampionshipSocket(
 				if (gen !== generation) return;
 				delay = MIN_DELAY;
 				connected.value = true;
-				onChanged(-1);
+				onChanged(-1, null);
 			};
 			ws.onmessage = (event: MessageEvent) => {
 				if (gen !== generation) return;
 				try {
 					const message = JSON.parse(event.data) as Partial<BoardChangedMessage>;
 					if (message?.type === 'boardChanged' && typeof message.version === 'number') {
-						onChanged(message.version);
+						onChanged(message.version, typeof message.matchId === 'string' ? message.matchId : null);
 					}
 				} catch {
 					// malformed message: ignore
@@ -111,6 +114,9 @@ export function useChampionshipSocket(
 
 	if (options?.matchId) {
 		watch(options.matchId, () => reconnect());
+	}
+	if (options?.enabled) {
+		watch(options.enabled, () => reconnect());
 	}
 	if (getCurrentInstance()) onBeforeUnmount(close);
 

@@ -2,7 +2,7 @@
 	<div class="cdc-tabs">
 		<ul class="tab-list">
 			<li v-for="t in tabs" :key="t" :class="{ active: tab === t }">
-				<a @click="tab = t">{{ $t(`clanChampionship.tabs.${t}`) }}</a>
+				<button type="button" :data-testid="`tab-${t}`" @click="tab = t">{{ $t(`clanChampionship.tabs.${t}`) }}</button>
 			</li>
 		</ul>
 
@@ -179,12 +179,16 @@ function formatDate(d: Date | string): string {
 	background: #d19860;
 	li {
 		cursor: pointer;
-		a {
+		button {
 			display: block;
 			padding: 5px 12px;
+			border: 0;
+			background: transparent;
+			font: inherit;
+			cursor: pointer;
 			color: white;
 		}
-		&.active a {
+		&.active button {
 			background: #fbe7c5;
 			color: #4a2a1a;
 		}

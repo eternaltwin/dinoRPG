@@ -1,6 +1,7 @@
 <template>
 	<div class="championship-match" :style="rootStyle">
-		<p v-if="loaded && !board" class="no-match">{{ $t('clanChampionship.noMatch') }}</p>
+		<p v-if="loadError" class="no-match error" data-testid="board-error">{{ $t('clanChampionship.loadError') }}</p>
+		<p v-if="loaded && !board && !loadError" class="no-match">{{ $t('clanChampionship.noMatch') }}</p>
 		<template v-else-if="board">
 			<ChampionshipScoreBar
 				:west="board.west"
@@ -43,6 +44,7 @@ import ChampionshipBoard from './ChampionshipBoard.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
 
 const REFETCH_DELAY = 60_000;
+const RETRY_DELAY = 5_000;
 
 const route = useRoute();
 const router = useRouter();
@@ -52,6 +54,7 @@ const player = playerStore();
 
 const board = ref<MatchBoardDTO | null>(null);
 const loaded = ref(false);
+const loadError = ref(false);
 const selectedDinozId = ref<number | null>(null);
 const pending = ref(false);
 const version = computed(() => board.value?.version ?? -1);
@@ -69,9 +72,14 @@ const rootStyle = computed(() => {
 	};
 });
 
-async function refetch() {
+let unmounted = false;
+let retryTimer: ReturnType<typeof setTimeout> | null = null;
+
+async function refetch(retry = true) {
 	try {
 		const result = await ClanChampionshipService.getMatch();
+		if (unmounted) return;
+		loadError.value = false;
 		// Ignore stale responses of the same match
 		if (!(result && board.value && result.matchId === board.value.matchId && result.version < board.value.version)) {
 			board.value = result;
@@ -79,22 +87,32 @@ async function refetch() {
 		const sel = selectedDinozId.value;
 		if (sel !== null && !board.value?.pieces.some(p => p.dinozId === sel && p.mine)) selectedDinozId.value = null;
 	} catch (e) {
+		if (unmounted) return;
+		// Keep the last board: only flag the failure, then retry once
+		loadError.value = true;
 		errorHandler.handle(e, $toast);
+		if (retry && !retryTimer) {
+			retryTimer = setTimeout(() => {
+				retryTimer = null;
+				void refetch(false);
+			}, RETRY_DELAY);
+		}
 	} finally {
 		loaded.value = true;
 	}
 }
 
 useChampionshipSocket(
-	v => {
-		if (v === -1 || v > version.value) void refetch();
+	(v, pushedMatchId) => {
+		if (v === -1 || pushedMatchId !== matchId.value || v > version.value) void refetch();
 	},
-	{ matchId }
+	// No board, no match channel: do not ask for tickets that cannot be granted
+	{ matchId, enabled: computed(() => matchId.value !== null) }
 );
 
 // Round transitions: while there is no live board, look for the next match every minute
 const timer = setInterval(() => {
-	if (loaded.value && (!board.value || board.value.status !== 'live')) void refetch();
+	if (!unmounted && loaded.value && (!board.value || board.value.status !== 'live')) void refetch();
 }, REFETCH_DELAY);
 
 async function runAction(dinozId: number, action: () => Promise<void>) {
@@ -103,13 +121,14 @@ async function runAction(dinozId: number, action: () => Promise<void>) {
 	try {
 		await action();
 	} catch (e) {
-		errorHandler.handle(e, $toast);
-	} finally {
-		await refetch();
-		pending.value = false;
-		// Best effort, does not block the board
-		dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
+		if (!unmounted) errorHandler.handle(e, $toast);
 	}
+	// The page may have navigated away (fight replay): nothing left to refresh
+	if (unmounted) return;
+	await refetch();
+	pending.value = false;
+	// Best effort, does not block the board
+	dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
 }
 
 async function onMove(direction: BoardDirection) {
@@ -138,9 +157,26 @@ async function onLeave(dinozId: number) {
 	});
 }
 
-onMounted(() => void refetch());
+// The board is the one of the player's own clan: any other clan id in the URL is redirected
+function ensureOwnClanRoute(): boolean {
+	const ownClanId = player.clanId;
+	const routeId = String(route.params.id);
+	if (ownClanId !== undefined && routeId === String(ownClanId)) return true;
+	void router.replace(
+		ownClanId !== undefined
+			? { name: 'ClanChampionshipMatch', params: { id: ownClanId } }
+			: { name: 'Clan', params: { id: routeId } }
+	);
+	return false;
+}
+
+onMounted(() => {
+	if (ensureOwnClanRoute()) void refetch();
+});
 onBeforeUnmount(() => {
+	unmounted = true;
 	clearInterval(timer);
+	if (retryTimer) clearTimeout(retryTimer);
 });
 
 defineExpose({ onEnter, onLeave });

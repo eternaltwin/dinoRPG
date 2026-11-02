@@ -5543,6 +5543,7 @@
 		"versus": "vs",
 		"daysShort": "{days}d",
 		"noMatch": "No match in progress",
+		"loadError": "Unable to load the board.",
 		"viewBoard": "View the board",
 		"backToBoard": "Back to the board",
 		"matchFinished": "Match finished",

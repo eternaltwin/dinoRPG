@@ -5553,6 +5553,7 @@
 		"versus": "gegen",
 		"daysShort": "{days} T",
 		"noMatch": "Kein Spiel im Gange",
+		"loadError": "Das Spielfeld konnte nicht geladen werden.",
 		"viewBoard": "Spielfeld ansehen",
 		"backToBoard": "Zurück zum Spielfeld",
 		"matchFinished": "Spiel beendet",

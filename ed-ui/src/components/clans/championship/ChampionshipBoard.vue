@@ -144,7 +144,8 @@ function onCellClick(cell: Cell) {
 function onKey(event: KeyboardEvent) {
 	if (props.disabled || !selected.value) return;
 	const target = event.target as HTMLElement | null;
-	if (target && (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable)) return;
+	if (target && (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target.tagName) || target.isContentEditable))
+		return;
 	if (event.ctrlKey || event.metaKey || event.altKey) return;
 	const map: Record<string, BoardDirection> = {
 		ArrowUp: BoardDirection.N,
