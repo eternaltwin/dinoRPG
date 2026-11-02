@@ -1,6 +1,8 @@
 {
 	"tooManyActiveDinoz": "Du hast bereits zu viele aktive Dinoz.",
 	"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
+	"messageEmpty": "Die Nachricht ist leer.",
+	"messageTooLong": "Die Nachricht ist länger als {{max}} Zeichen.",
 	"notEnoughMoney": "Du hast nicht genügend Gold.",
 	"notEnoughNapo": "Du hast nicht genug Napodinos.",
 	"OnlyLettersAndNumbers": "Name ungültig! Er muss aus Buchstaben oder Zahlen bestehen und 3-16 Zeichen lang sein.",
