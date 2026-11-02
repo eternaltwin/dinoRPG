@@ -125,7 +125,9 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
 ### Déplacements et combats
 
 - **Déplacement** : un dinoz peut aller sur une case adjacente (N, S, E ou O)
-  si elle est libre et sans obstacle. Cela coûte 1 PA.
+  si elle est libre et sans obstacle. Cela coûte 1 PA. Un dinoz ne peut pas
+  s'arrêter sur la **colonne d'entrée du clan adverse** (il peut en revanche
+  attaquer un ennemi qui s'y trouve) : la ligne de score plafonne donc à 18.
 - **Attaque** : un dinoz attaque en tentant d'aller sur la case d'un ennemi.
   Cela coûte 1 PA à l'attaquant, et **l'attaquant reste sur place**.
   - **Attaque par derrière** : l'attaquant arrive par le côté du camp de la
@@ -145,8 +147,9 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
     - Les dinoz morts (PV à 0, c'est-à-dire une vraie mort en jeu, avec
       `LogType.Death`) sortent du match et ne peuvent plus y revenir.
     - Les survivants gardent leurs PV perdus.
-    - L'XP est attribuée comme pour la guerre (`calculatePvPxp`), et les
-      combats sont archivés (`archiveFight`).
+    - L'XP est calculée avec la formule de la guerre (`calculatePvPxp`) et
+      attribuée à **tous les survivants des deux camps** (pas seulement au
+      camp gagnant). Les combats sont archivés (`archiveFight`).
     - Les combats du damier sont limités **uniquement par les PA**. Ils ne
       consomment pas le combat normal du dinoz (`fight`) et n'imposent aucun
       temps de repos (`restingAttack`).
