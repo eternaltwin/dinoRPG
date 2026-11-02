@@ -2,6 +2,16 @@
 	"clanEvent": {
 		"overlap": "Ya hay otro evento de clan en curso o programado."
 	},
+	"clanChampionship": {
+		"notMonday": "El campeonato debe empezar un lunes.",
+		"startInPast": "La fecha de inicio no puede estar en el pasado.",
+		"noPlaces": "Selecciona al menos un lugar válido.",
+		"notInRegistration": "Las inscripciones al campeonato no están abiertas.",
+		"alreadyRegistered": "Tu clan ya está inscrito en el campeonato.",
+		"notRegistered": "Tu clan no está inscrito en el campeonato.",
+		"clanAtWar": "Tu clan todavía tiene una guerra en curso."
+	},
+	"noRight": "No tienes los derechos necesarios para esta acción.",
 	"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",
 	"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
 	"messageEmpty": "El mensaje está vacío.",
