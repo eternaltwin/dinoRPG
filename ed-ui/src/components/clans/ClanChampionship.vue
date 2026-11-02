@@ -21,7 +21,7 @@
 		<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
 		<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
 		<ul v-else class="registrations">
-			<li v-for="r in championship.registrations" :key="r.clanName" :class="{ mine: r.clanId === viewedClanId }">
+			<li v-for="(r, i) in championship.registrations" :key="i" :class="{ mine: r.clanId === viewedClanId }">
 				<RouterLink v-if="r.clanId !== null" :to="{ name: 'Clan', params: { id: r.clanId } }">{{
 					r.clanName
 				}}</RouterLink>

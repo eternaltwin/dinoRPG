@@ -54,7 +54,7 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 		if (config.phase !== 'registration') return null;
 
 		const registrations = await tx.clanChampionshipRegistration.findMany({ where: { eventId } });
-		if (registrations.length < 2) {
+		if (registrations.filter(r => r.clanId !== null).length < 2) {
 			await tx.clanEvent.update({
 				where: { id: eventId },
 				data: { config: serializeConfig(config, 'cancelled'), endDate: new Date() }

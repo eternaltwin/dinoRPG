@@ -395,6 +395,17 @@ describe('closeRegistrations', () => {
 		expect(scheduleJob).not.toHaveBeenCalled();
 	});
 
+	it('cancels when fewer than 2 registrations still have a live clan', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([
+			{ clanId: 1, clanName: 'Clan 1' },
+			{ clanId: null, clanName: 'Gone' }
+		]);
+		await closeRegistrations('ev-1');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).phase).toBe('cancelled');
+		expect(scheduleJob).not.toHaveBeenCalled();
+	});
+
 	it('builds the calendar with 4 registrations', async () => {
 		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(4));
 		await closeRegistrations('ev-1');
