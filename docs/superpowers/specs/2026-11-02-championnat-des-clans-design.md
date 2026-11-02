@@ -45,7 +45,10 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
   jamais avoir lieu en même temps. Un seul événement de clan peut être en
   cours ou programmé à la fois, quel que soit son type.
 - **Dissolution** : un clan inscrit ne peut pas être dissous avant la fin du
-  CDC.
+  CDC. Un clan supprimé une fois le CDC terminé (ou supprimé par un admin)
+  **reste dans le classement et dans le calendrier** : ses matchs et son
+  inscription sont conservés avec le nom du clan figé, ils ne sont pas
+  supprimés en cascade.
 - **Tournois** : ils ne sont pas affectés par le CDC.
 - **Classement** : 3 points pour une victoire, 1 pour un nul, 0 pour une
   défaite. En cas d'égalité, on départage d'abord par la différence de score
@@ -56,8 +59,10 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
 - **Durée** : un match oppose 2 clans pendant 48h.
 - **Lieu** : il est tiré au sort parmi les lieux choisis par l'admin, avec
   `getRandomArrayElement` comme pour le château de la guerre des clans.
-  - Le tirage a lieu et est révélé aux deux clans **un peu avant le match**,
-    **[choix Claude]** 24h avant le coup d'envoi.
+  - Le lieu est révélé aux deux clans **dès son tirage**. Les lieux de la
+    première journée sont tirés à la clôture des inscriptions (le premier
+    match commence 18h après) ; ceux des journées suivantes sont tirés
+    **[choix Claude]** 24h avant leur coup d'envoi.
   - Plusieurs matchs peuvent avoir lieu au même endroit, chacun sur son propre
     damier.
 - **Ordres** : seul le propriétaire d'un dinoz peut le faire entrer, le
