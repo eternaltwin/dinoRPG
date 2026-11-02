@@ -816,6 +816,7 @@ model ClanChampionshipMatch {
   homeClan     Clan?                       @relation("championshipHome", fields: [homeClanId], references: [id], onDelete: SetNull)
   awayClan     Clan?                       @relation("championshipAway", fields: [awayClanId], references: [id], onDelete: SetNull)
   pieces       ClanChampionshipPiece[]
+  fights       ClanChampionshipFight[]
 
   @@index([eventId, round])
   @@map("clan_championship_match")
@@ -837,6 +838,22 @@ model ClanChampionshipPiece {
   @@unique([matchId, dinozId])
   @@index([matchId, state])
   @@map("clan_championship_piece")
+}
+
+model ClanChampionshipFight {
+  id                   Int                   @id @default(autoincrement())
+  matchId              String                @db.Uuid
+  archiveId            String                @unique @db.Uuid
+  attackerClanId       Int
+  attackerWon          Boolean
+  participantDinozIds  Int[]
+  participantPlayerIds String[]              @db.Uuid
+  deadDinozIds         Int[]
+  createdAt            DateTime              @default(now()) @db.Timestamp(6)
+  match                ClanChampionshipMatch @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@index([matchId, createdAt])
+  @@map("clan_championship_fight")
 }
 
 model ClanIngredient {

@@ -69,6 +69,16 @@ export interface BoardSideDTO {
 	quotaUsed: number;
 }
 
+export interface FightJournalEntryDTO {
+	createdAt: Date;
+	attackerClanId: number;
+	attackerWon: boolean;
+	participantCount: number;
+	deadDinozIds: number[];
+	/** Only set when the reader took part in the fight. */
+	archiveId: string | null;
+}
+
 export interface MatchBoardDTO {
 	matchId: string;
 	round: number;
@@ -82,6 +92,7 @@ export interface MatchBoardDTO {
 	obstacles: number[];
 	pieces: BoardPieceDTO[];
 	deadDinozIds: number[];
+	fights: FightJournalEntryDTO[];
 }
 
 export interface ChampionshipForm {

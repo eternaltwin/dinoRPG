@@ -22,7 +22,15 @@ import { archiveFight } from '../../dao/archiveDao.js';
 import { getDinozForChampionshipFight } from '../../dao/dinozDao.js';
 
 const MATCH_ID = 'a0000000-0000-4000-8000-000000000001';
-const match = { id: MATCH_ID, westClanId: 1, homeClanId: 1, awayClanId: 2, placeId: 1 } as never;
+const match = {
+	id: MATCH_ID,
+	westClanId: 1,
+	homeClanId: 1,
+	awayClanId: 2,
+	homeClanName: 'Home',
+	awayClanName: 'Away',
+	placeId: 1
+} as never;
 const authed = { id: 'p1', clanId: 1 } as never;
 
 const piece = (id: number, clanId: number, x: number, y: number, o: Record<string, unknown> = {}) => ({
@@ -79,7 +87,8 @@ function makeTx(onBoard: ReturnType<typeof piece>[]) {
 		},
 		dinoz: { update: vi.fn(), updateMany: vi.fn() },
 		dinozItem: { findFirst: vi.fn().mockResolvedValue({ id: 99 }), delete: vi.fn() },
-		log: { create: vi.fn() }
+		log: { create: vi.fn() },
+		clanChampionshipFight: { create: vi.fn() }
 	};
 }
 
@@ -190,6 +199,36 @@ describe('resolveBoardAttack', () => {
 		expect(types).toContain('XPEarned');
 	});
 
+	it('writes one journal row with participants, players and deaths', async () => {
+		const att = piece(1, 1, 5, 5, { playerId: 'p1' });
+		const def = piece(2, 2, 6, 5, { playerId: 'p2' });
+		const ally = piece(3, 2, 6, 6, { playerId: 'p2' });
+		const tx = makeTx([att, def, ally]);
+		setup(
+			r => dinozRow(r as never),
+			() => ({
+				outcome: FightOutcome.AttackerWin,
+				attackers: [fiche({ dinozId: 10, playerId: 'p2' } as never)],
+				defenders: [
+					fiche({ dinozId: 20, playerId: 'p1' } as never, { hpLost: 60 }),
+					fiche({ dinozId: 30, playerId: 'p1' } as never)
+				]
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		expect(tx.clanChampionshipFight.create).toHaveBeenCalledTimes(1);
+		const data = tx.clanChampionshipFight.create.mock.calls[0][0].data;
+		expect(data).toMatchObject({
+			matchId: MATCH_ID,
+			archiveId: 'arch-1',
+			attackerClanId: 1,
+			attackerWon: true,
+			deadDinozIds: [20]
+		});
+		expect([...data.participantDinozIds].sort((a: number, b: number) => a - b)).toEqual([10, 20, 30]);
+		expect([...data.participantPlayerIds].sort()).toEqual(['p1', 'p2']);
+	});
+
 	it('archives with the championship meta', async () => {
 		const att = piece(1, 2, 6, 3, { playerId: 'p2' });
 		const def = piece(2, 1, 7, 3, { playerId: 'p1' });
@@ -208,7 +247,7 @@ describe('resolveBoardAttack', () => {
 			false,
 			'p2',
 			'p1',
-			JSON.stringify({ kind: 'clanChampionship', matchId: MATCH_ID }),
+			JSON.stringify({ kind: 'clanChampionship', matchId: MATCH_ID, placeId: 1, rightClanName: 'Home' }),
 			tx
 		);
 	});

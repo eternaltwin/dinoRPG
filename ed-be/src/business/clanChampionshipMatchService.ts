@@ -4,6 +4,7 @@ import {
 	BOARD_TICK_MINUTES,
 	BoardDirection,
 	BoardPieceDTO,
+	FightJournalEntryDTO,
 	MatchBoardDTO,
 	PLACE_REVEAL_HOURS
 } from '@drpg/core/models/clan/clanChampionship';
@@ -296,7 +297,12 @@ export async function resolveBoardAttack(
 		fight.outcome === FightOutcome.AttackerWin,
 		attacker.playerId,
 		defender.playerId,
-		JSON.stringify({ kind: 'clanChampionship', matchId: match.id }),
+		JSON.stringify({
+			kind: 'clanChampionship',
+			matchId: match.id,
+			placeId: match.placeId,
+			rightClanName: defender.clanId === match.homeClanId ? match.homeClanName : match.awayClanName
+		}),
 		tx
 	);
 
@@ -349,6 +355,18 @@ export async function resolveBoardAttack(
 			if (item) await tx.dinozItem.delete({ where: { id: item.id } });
 		}
 	}
+
+	await tx.clanChampionshipFight.create({
+		data: {
+			matchId: match.id,
+			archiveId: archive.id,
+			attackerClanId: attacker.clanId,
+			attackerWon: fight.outcome === FightOutcome.AttackerWin,
+			participantDinozIds: fighters.map(f => f.dinoz.id),
+			participantPlayerIds: [...new Set(fighters.map(f => f.piece.playerId))],
+			deadDinozIds
+		}
+	});
 
 	return { archiveId: archive.id, outcome: fight.outcome, deadDinozIds };
 }
@@ -637,6 +655,20 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 		return dto;
 	});
 
+	const journal = await prisma.clanChampionshipFight.findMany({
+		where: { matchId: match.id },
+		orderBy: { createdAt: 'desc' },
+		take: 50
+	});
+	const fights: FightJournalEntryDTO[] = journal.map(f => ({
+		createdAt: f.createdAt,
+		attackerClanId: f.attackerClanId,
+		attackerWon: f.attackerWon,
+		participantCount: f.participantDinozIds.length,
+		deadDinozIds: f.deadDinozIds,
+		archiveId: f.participantPlayerIds.includes(authed.id) ? f.archiveId : null
+	}));
+
 	return {
 		matchId: match.id,
 		round: match.round,
@@ -649,6 +681,7 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 		east: side(!westIsHome, eastPieces, westPieces, 'east'),
 		obstacles: match.obstacles,
 		pieces,
-		deadDinozIds: all.filter(p => p.state === ClanChampionshipPieceState.dead).map(p => p.dinozId)
+		deadDinozIds: all.filter(p => p.state === ClanChampionshipPieceState.dead).map(p => p.dinozId),
+		fights
 	};
 }
