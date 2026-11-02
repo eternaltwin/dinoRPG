@@ -102,6 +102,12 @@ describe('eventState / currentWar', () => {
 		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue(null as never);
 		expect(await eventState()).toBeUndefined();
 	});
+	it('eventState only looks at war event types (a championship is ignored)', async () => {
+		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue(null as never);
+		expect(await eventState()).toBeUndefined();
+		const where = vi.mocked(prisma.clanEvent.findFirst).mock.calls.at(-1)![0]!.where;
+		expect(JSON.stringify(where)).toContain('"eventType":{"in":["war","mana_war"]}');
+	});
 	it('currentWar returns parsed config', async () => {
 		const result = await currentWar();
 		expect(result.config.warPlaces).toEqual([1, 2]);

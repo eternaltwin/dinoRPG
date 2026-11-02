@@ -1,4 +1,5 @@
 import { PlayerForConditionCheck } from '@drpg/core/constants';
+import { WAR_EVENT_TYPES } from './clanEventService.js';
 import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -191,7 +192,8 @@ export async function getAvailableActions(
 		where: {
 			endDate: {
 				gt: new Date()
-			}
+			},
+			eventType: { in: WAR_EVENT_TYPES }
 		}
 	});
 	if (
