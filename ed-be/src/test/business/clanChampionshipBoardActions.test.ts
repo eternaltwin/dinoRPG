@@ -8,6 +8,10 @@ vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
+vi.mock('../../dao/archiveDao.js', () => ({ archiveFight: vi.fn() }));
+vi.mock('../../dao/dinozDao.js', () => ({ getDinozForChampionshipFight: vi.fn() }));
+vi.mock('../../utils/gameConfig.js', () => ({ gameConfig: () => ({ dinoz: { maxLevel: 50 } }) }));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
@@ -26,6 +30,9 @@ vi.mock('../../prisma.js', () => ({
 	}
 }));
 
+import { calculateFightBetweenPlayers } from '../../business/fightService.js';
+import { archiveFight } from '../../dao/archiveDao.js';
+import { getDinozForChampionshipFight } from '../../dao/dinozDao.js';
 import { auth } from '../../dao/playerDao.js';
 import { prisma } from '../../prisma.js';
 import {
@@ -317,7 +324,18 @@ describe('moveOnBoard', () => {
 	});
 	it('an enemy target reaches the attack resolution after paying the AP', async () => {
 		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: AWAY, x: 6, y: 5 }]);
-		await expect(move(BoardDirection.E)).rejects.toThrow('resolveBoardAttack not implemented');
+		// No dinoz returned for the fight: the engine is mocked, an empty result is enough.
+		vi.mocked(getDinozForChampionshipFight).mockResolvedValue([]);
+		vi.mocked(calculateFightBetweenPlayers).mockReturnValue({
+			outcome: 0,
+			attackers: [],
+			defenders: [],
+			steps: [],
+			fighters: []
+		} as never);
+		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
+		const r = await move(BoardDirection.E);
+		expect(r).toEqual({ fight: { archiveId: 'arch-1', outcome: 0, deadDinozIds: [] } });
 		expect(p.clanChampionshipPiece.update).toHaveBeenCalledWith({
 			where: { id: 1 },
 			data: { actionPoints: { decrement: 1 } }
