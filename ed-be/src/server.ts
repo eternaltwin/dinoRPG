@@ -31,6 +31,7 @@ import { resumeTournaments } from './business/forceBruteService.js';
 import { scheduleAtStart } from './business/scheduleService.js';
 import { schedulePollExpiration } from './business/newsService.js';
 import { scheduleWarExpiration } from './business/clanWar.js';
+import { scheduleClanChampionship } from './business/clanChampionshipService.js';
 import { scheduleDinozEndOfUnavailability } from './business/dinozService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
@@ -102,6 +103,9 @@ export function main(cx: ServerContext) {
 	scheduleEndedOffersExpiration();
 	schedulePollExpiration();
 	scheduleWarExpiration();
+	scheduleClanChampionship().catch((error: Error) => {
+		cx.discord.sendError(error);
+	});
 	scheduleProspector();
 	TournamentManager.resume(prisma);
 	resumeTournaments();

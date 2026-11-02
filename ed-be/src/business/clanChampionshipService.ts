@@ -8,17 +8,106 @@ import { Request } from 'express';
 import { scheduleJob } from 'node-schedule';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { auth } from '../dao/playerDao.js';
-import { prisma } from '../prisma.js';
-import { computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
+import { prisma, PismaClientLocal } from '../prisma.js';
+import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
+import { computeMatchSlots, computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
+import { shuffle } from '../utils/tools.js';
 import translate from '../utils/server/translate.js';
 import { assertNoClanEventOverlap, findActiveChampionshipEvent, parseEventConfig } from './clanEventService.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const RESULT_VISIBLE_DAYS = 7;
 
-// Placeholder: Task 5 implements the closing of registrations (cancel or build the calendar).
+function serializeConfig(config: ClanChampionshipEventConfig, phase: ClanChampionshipEventConfig['phase']): string {
+	return JSON.stringify({ ...config, phase });
+}
+
+/**
+ * Closes registrations (job at registrationEnd): cancels with fewer than 2 clans, otherwise builds
+ * the round-robin calendar and switches to running. No-op unless the phase is still `registration`.
+ */
 export async function closeRegistrations(eventId: string): Promise<void> {
-	void eventId;
+	const finishAt = await prisma.$transaction(async tx => {
+		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
+		const event = await tx.clanEvent.findUnique({ where: { id: eventId } });
+		if (!event) return null;
+		const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+		if (config.phase !== 'registration') return null;
+
+		const registrations = await tx.clanChampionshipRegistration.findMany({ where: { eventId } });
+		if (registrations.length < 2) {
+			await tx.clanEvent.update({
+				where: { id: eventId },
+				data: { config: serializeConfig(config, 'cancelled'), endDate: new Date() }
+			});
+			return null;
+		}
+
+		const rounds = roundRobin(shuffle(registrations.map(r => r.clanId)));
+		const slots = computeMatchSlots(new Date(config.registrationEnd), rounds.length);
+		await tx.clanChampionshipMatch.createMany({
+			data: rounds.flatMap((pairs, round) =>
+				pairs.map(([homeClanId, awayClanId]) => ({
+					eventId,
+					round,
+					homeClanId,
+					awayClanId,
+					startsAt: slots[round].startsAt,
+					endsAt: slots[round].endsAt
+				}))
+			)
+		});
+		const endDate = slots[slots.length - 1].endsAt;
+		await tx.clanEvent.update({
+			where: { id: eventId },
+			data: { config: serializeConfig(config, 'running'), endDate }
+		});
+		return endDate;
+	});
+
+	if (finishAt) {
+		scheduleJob(`championshipFinish_${eventId}`, finishAt, () => finishChampionship(eventId));
+	}
+}
+
+/** running -> finished (match resolution comes in a later lot). */
+export async function finishChampionship(eventId: string): Promise<void> {
+	await prisma.$transaction(async tx => {
+		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
+		const event = await tx.clanEvent.findUnique({ where: { id: eventId } });
+		if (!event) return;
+		const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+		if (config.phase !== 'running') return;
+		await tx.clanEvent.update({ where: { id: eventId }, data: { config: serializeConfig(config, 'finished') } });
+	});
+}
+
+/** Boot: re-arm (or run now if overdue) the close / finish job of the active championship. */
+export async function scheduleClanChampionship(): Promise<void> {
+	const event = await findActiveChampionshipEvent();
+	if (!event) return;
+	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+	const now = new Date();
+
+	if (config.phase === 'registration') {
+		const end = new Date(config.registrationEnd);
+		if (end <= now) await closeRegistrations(event.id);
+		else scheduleJob(`championshipClose_${event.id}`, end, () => closeRegistrations(event.id));
+	} else if (config.phase === 'running' && event.endDate) {
+		if (event.endDate <= now) await finishChampionship(event.id);
+		else scheduleJob(`championshipFinish_${event.id}`, event.endDate, () => finishChampionship(event.id));
+	}
+}
+
+/** True when the clan is registered to the active (registration or running) championship. */
+export async function isClanInActiveChampionship(
+	clanId: number,
+	tx: PismaClientLocal | LocalTransactionClient = prisma
+) {
+	const event = await findActiveChampionshipEvent(tx);
+	if (!event) return false;
+	const registration = await tx.clanChampionshipRegistration.findFirst({ where: { eventId: event.id, clanId } });
+	return !!registration;
 }
 
 export async function startClanChampionship(req: Request): Promise<{ id: string }> {

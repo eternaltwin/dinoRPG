@@ -187,9 +187,19 @@ describe('join flow', () => {
 	});
 });
 
+vi.mock('../../business/clanChampionshipService.js', () => ({ isClanInActiveChampionship: vi.fn() }));
+import { isClanInActiveChampionship } from '../../business/clanChampionshipService.js';
+
 describe('deleteClan', () => {
+	it('rejects when the clan is registered in the active championship', async () => {
+		vi.mocked(isPlayerLeaderOfClan).mockResolvedValue(true as never);
+		vi.mocked(isClanInActiveChampionship).mockResolvedValue(true as never);
+		await expect(svc.deleteClan(req({ id: '3' }))).rejects.toThrow('clanChampionship.registeredNoDelete');
+		expect(clansDao.deleteClanRequest).not.toHaveBeenCalled();
+	});
 	it('deletes when leader, freeing defenders', async () => {
 		vi.mocked(isPlayerLeaderOfClan).mockResolvedValue(true as never);
+		vi.mocked(isClanInActiveChampionship).mockResolvedValue(false as never);
 		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ defenseOrder: [10, 11] } as never);
 		expect(await svc.deleteClan(req({ id: '3' }))).toBe(3);
 		expect(updateDinoz).toHaveBeenCalledTimes(2);

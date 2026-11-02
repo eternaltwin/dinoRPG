@@ -9,7 +9,8 @@
 		"notInRegistration": "Die Anmeldung zur Meisterschaft ist nicht geöffnet.",
 		"alreadyRegistered": "Dein Clan ist bereits für die Meisterschaft angemeldet.",
 		"notRegistered": "Dein Clan ist nicht für die Meisterschaft angemeldet.",
-		"clanAtWar": "Dein Clan hat noch einen laufenden Krieg."
+		"clanAtWar": "Dein Clan hat noch einen laufenden Krieg.",
+		"registeredNoDelete": "Dein Clan ist zur Meisterschaft angemeldet und kann nicht aufgelöst werden."
 	},
 	"noRight": "Du hast nicht die nötigen Rechte für diese Aktion.",
 	"tooManyActiveDinoz": "Du hast bereits zu viele aktive Dinoz.",
