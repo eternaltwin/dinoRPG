@@ -3,6 +3,7 @@ import {
 	BOARD_TICK_AP,
 	BOARD_TICK_MINUTES,
 	BoardDirection,
+	BoardMoveResult,
 	BoardPieceDTO,
 	FightJournalEntryDTO,
 	MatchBoardDTO,
@@ -238,10 +239,6 @@ export function startChampionshipTicker(): CronJob {
 type Authed = Awaited<ReturnType<typeof auth>>;
 type MatchEntity = NonNullable<Awaited<ReturnType<typeof prisma.clanChampionshipMatch.findUnique>>>;
 type PieceEntity = NonNullable<Awaited<ReturnType<typeof prisma.clanChampionshipPiece.findUnique>>>;
-
-export type BoardMoveResult = {
-	fight: { archiveId: string; outcome: FightOutcome; deadDinozIds: number[] } | null;
-};
 
 /** The live match of the active championship in which the clan plays, if any. */
 export async function findLiveMatchOfClan(clanId: number, tx: LocalTransactionClient = prisma) {

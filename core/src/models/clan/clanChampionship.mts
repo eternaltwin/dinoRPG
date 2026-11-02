@@ -1,3 +1,4 @@
+import { FightOutcome } from '../fight/FightResult.mjs';
 import { ChampionshipPhase } from './clanEventConfig.mjs';
 
 export const CHAMPIONSHIP_REGISTRATION_WEEKS = 2;
@@ -104,3 +105,8 @@ export interface ChampionshipForm {
 
 /** The only message pushed over the match channel: the client refetches the board when its version is older. */
 export type BoardChangedMessage = { type: 'boardChanged'; matchId: string; version: number };
+
+/** Result of a board move: the fight it triggered, if any. */
+export type BoardMoveResult = {
+	fight: { archiveId: string; outcome: FightOutcome; deadDinozIds: number[] } | null;
+};
