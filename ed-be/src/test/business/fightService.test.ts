@@ -23,7 +23,10 @@ vi.mock('../../dao/eventsDao.js', () => ({
 	getPlayerEventProgression: vi.fn(),
 	increasePlayerEventProgression: vi.fn()
 }));
-vi.mock('../../dao/archiveDao.js', () => ({ getArchivedFightRequest: vi.fn() }));
+vi.mock('../../dao/archiveDao.js', () => ({
+	getArchivedFightRequest: vi.fn(),
+	getClanChampionshipFightParticipants: vi.fn()
+}));
 vi.mock('../../business/missionsService.js', () => ({ checkMissionFight: vi.fn() }));
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
 vi.mock('../../utils/scenarioChecker.js', () => ({ scenarioChecker: vi.fn() }));
@@ -34,7 +37,7 @@ import { createCatch, removeCatch, updateCatch } from '../../dao/dinozCatchDao.j
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { getPlayerEventProgression } from '../../dao/eventsDao.js';
-import { getArchivedFightRequest } from '../../dao/archiveDao.js';
+import { getArchivedFightRequest, getClanChampionshipFightParticipants } from '../../dao/archiveDao.js';
 import { movementListener } from '../../business/specialService.js';
 import {
 	processFight,
@@ -452,5 +455,53 @@ describe('replayFight', () => {
 	it('throws when no replay', async () => {
 		vi.mocked(getArchivedFightRequest).mockResolvedValue(null as never);
 		await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found');
+	});
+	describe('clan championship archives', () => {
+		const cdcArchive = () =>
+			vi.mocked(getArchivedFightRequest).mockResolvedValue({
+				fighters: '[]',
+				result: true,
+				steps: '[]',
+				seed: 's',
+				leftPlayer: null,
+				rightPlayer: null,
+				metadata: JSON.stringify({ kind: 'clanChampionship', matchId: 'm', placeId: 1, rightClanName: 'x' })
+			} as never);
+		it('returns the replay to a participant', async () => {
+			cdcArchive();
+			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(['p1', 'p2']);
+			const result = await replayFight(req({ archiveId: 'a1' }));
+			expect(result.id).toBe('a1');
+		});
+		it('hides the replay from a non-participant', async () => {
+			cdcArchive();
+			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(['p2']);
+			await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found.');
+		});
+		it('hides the replay when there is no journal row', async () => {
+			cdcArchive();
+			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(null);
+			await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found.');
+		});
+		it('hides the replay when unauthenticated', async () => {
+			cdcArchive();
+			vi.mocked(playerDao.auth).mockRejectedValueOnce(new Error('Missing authorization header'));
+			await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found.');
+		});
+		it('keeps non-CDC replays public even with malformed metadata', async () => {
+			vi.mocked(playerDao.auth).mockRejectedValue(new Error('nope'));
+			vi.mocked(getArchivedFightRequest).mockResolvedValue({
+				fighters: '[]',
+				result: true,
+				steps: '[]',
+				seed: 's',
+				leftPlayer: null,
+				rightPlayer: null,
+				metadata: '{"kind":"other"}'
+			} as never);
+			const result = await replayFight(req({ archiveId: 'a1' }));
+			expect(result.id).toBe('a1');
+			vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
+		});
 	});
 });
