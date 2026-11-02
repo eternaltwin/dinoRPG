@@ -15,7 +15,7 @@ vi.mock('../../prisma.js', () => ({
 		$executeRaw: vi.fn(),
 		clanEvent: { create: vi.fn(), findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
 		clanChampionshipRegistration: { create: vi.fn(), findMany: vi.fn(), deleteMany: vi.fn(), findFirst: vi.fn() },
-		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn() },
+		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn(), update: vi.fn() },
 		clanWar: { findFirst: vi.fn() },
 		clan: { findUniqueOrThrow: vi.fn() }
 	}
@@ -65,6 +65,7 @@ beforeEach(() => {
 	p.$transaction.mockImplementation(async (fn: any) => fn(p));
 	p.clanEvent.findFirst.mockResolvedValue(null);
 	p.clanEvent.findUnique.mockResolvedValue(activeEvent());
+	p.clanChampionshipMatch.findMany.mockResolvedValue([]);
 });
 
 afterEach(() => {
@@ -420,11 +421,17 @@ describe('closeRegistrations', () => {
 		const arg = p.clanEvent.update.mock.calls[0][0];
 		expect(JSON.parse(arg.data.config).phase).toBe('running');
 		expect(arg.data.endDate).toEqual(new Date('2026-12-02T18:00:00.000Z'));
-		expect(scheduleJob).toHaveBeenCalledWith(
-			'championshipFinish_ev-1',
-			new Date('2026-12-02T18:00:00.000Z'),
-			expect.any(Function)
-		);
+		expect(scheduleJob).not.toHaveBeenCalled();
+	});
+
+	it('draws the place of the round-0 matches only', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(4));
+		p.clanChampionshipMatch.findMany.mockResolvedValue([{ id: 'm1' }, { id: 'm2' }]);
+		await closeRegistrations('ev-1');
+		expect(p.clanChampionshipMatch.findMany).toHaveBeenCalledWith({ where: { eventId: 'ev-1', round: 0 } });
+		const updates = p.clanChampionshipMatch.update.mock.calls.map((c: any) => c[0]);
+		expect(updates.map((u: any) => u.where.id)).toEqual(['m1', 'm2']);
+		for (const u of updates) expect([PlaceEnum.DINOVILLE]).toContain(u.data.placeId);
 	});
 
 	it('does nothing when the championship is not in registration', async () => {
@@ -486,40 +493,20 @@ describe('scheduleClanChampionship', () => {
 		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).phase).toBe('cancelled');
 	});
 
-	it('finishes a running championship whose endDate is past', async () => {
-		vi.setSystemTime(new Date('2026-12-03T00:00:00.000Z'));
-		const running = activeEvent({
-			endDate: new Date('2026-12-02T18:00:00.000Z'),
-			config: JSON.stringify({
-				eventType: 'championship',
-				places: [],
-				registrationEnd: registrationEnd.toISOString(),
-				phase: 'running'
+	it('arms no job for a running championship (the tick drives it)', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(
+			activeEvent({
+				config: JSON.stringify({
+					eventType: 'championship',
+					places: [],
+					registrationEnd: registrationEnd.toISOString(),
+					phase: 'running'
+				})
 			})
-		});
-		p.clanEvent.findFirst.mockResolvedValue(running);
-		p.clanEvent.findUnique.mockResolvedValue(running);
-		await scheduleClanChampionship();
-		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).phase).toBe('finished');
-	});
-
-	it('re-arms the finish job for a running championship in the future', async () => {
-		const running = activeEvent({
-			endDate: new Date('2026-12-02T18:00:00.000Z'),
-			config: JSON.stringify({
-				eventType: 'championship',
-				places: [],
-				registrationEnd: registrationEnd.toISOString(),
-				phase: 'running'
-			})
-		});
-		p.clanEvent.findFirst.mockResolvedValue(running);
-		await scheduleClanChampionship();
-		expect(scheduleJob).toHaveBeenCalledWith(
-			'championshipFinish_ev-1',
-			new Date('2026-12-02T18:00:00.000Z'),
-			expect.any(Function)
 		);
+		await scheduleClanChampionship();
+		expect(scheduleJob).not.toHaveBeenCalled();
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
 	});
 
 	it('does nothing without an active championship', async () => {

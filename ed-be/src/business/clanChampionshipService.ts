@@ -12,6 +12,7 @@ import { auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
 import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
 import { computeMatchSlots, computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
+import { drawMatchPlace } from './clanChampionshipMatchService.js';
 import { shuffle } from '../utils/tools.js';
 import translate from '../utils/server/translate.js';
 import {
@@ -25,7 +26,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const RESULT_VISIBLE_DAYS = 7;
 
 /** Wraps a scheduled job so a failure is reported instead of becoming an unhandled rejection. */
-function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promise<void> {
+export function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promise<void> {
 	return async () => {
 		try {
 			await fn();
@@ -46,12 +47,12 @@ function serializeConfig(config: ClanChampionshipEventConfig, phase: ClanChampio
  * the round-robin calendar and switches to running. No-op unless the phase is still `registration`.
  */
 export async function closeRegistrations(eventId: string): Promise<void> {
-	const finishAt = await prisma.$transaction(async tx => {
+	await prisma.$transaction(async tx => {
 		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
 		const event = await tx.clanEvent.findUnique({ where: { id: eventId } });
-		if (!event) return null;
+		if (!event) return;
 		const config = parseEventConfig(event) as ClanChampionshipEventConfig;
-		if (config.phase !== 'registration') return null;
+		if (config.phase !== 'registration') return;
 
 		const registrations = await tx.clanChampionshipRegistration.findMany({ where: { eventId } });
 		if (registrations.filter(r => r.clanId !== null).length < 2) {
@@ -59,7 +60,7 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 				where: { id: eventId },
 				data: { config: serializeConfig(config, 'cancelled'), endDate: new Date() }
 			});
-			return null;
+			return;
 		}
 
 		const clanNames = new Map<number, string>();
@@ -85,19 +86,12 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 			where: { id: eventId },
 			data: { config: serializeConfig(config, 'running'), endDate }
 		});
-		return endDate;
+		const firstRound = await tx.clanChampionshipMatch.findMany({ where: { eventId, round: 0 } });
+		for (const match of firstRound) await drawMatchPlace(tx, match, config.places);
 	});
-
-	if (finishAt) {
-		scheduleJob(
-			`championshipFinish_${eventId}`,
-			finishAt,
-			runChampionshipJob(`championshipFinish_${eventId}`, () => finishChampionship(eventId))
-		);
-	}
 }
 
-/** running -> finished (match resolution comes in a later lot). */
+/** running -> finished (called by the tick once every match is finished). */
 export async function finishChampionship(eventId: string): Promise<void> {
 	await prisma.$transaction(async tx => {
 		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
@@ -109,7 +103,7 @@ export async function finishChampionship(eventId: string): Promise<void> {
 	});
 }
 
-/** Boot: re-arm (or run now if overdue) the close / finish job of the active championship. */
+/** Boot: re-arm (or run now if overdue) the close job of the active championship. */
 export async function scheduleClanChampionship(): Promise<void> {
 	const event = await findActiveChampionshipEvent();
 	if (!event) return;
@@ -124,15 +118,6 @@ export async function scheduleClanChampionship(): Promise<void> {
 				`championshipClose_${event.id}`,
 				end,
 				runChampionshipJob(`championshipClose_${event.id}`, () => closeRegistrations(event.id))
-			);
-	} else if (config.phase === 'running' && event.endDate) {
-		if (event.endDate <= now) {
-			await runChampionshipJob(`championshipFinish_${event.id}`, () => finishChampionship(event.id))();
-		} else
-			scheduleJob(
-				`championshipFinish_${event.id}`,
-				event.endDate,
-				runChampionshipJob(`championshipFinish_${event.id}`, () => finishChampionship(event.id))
 			);
 	}
 }
