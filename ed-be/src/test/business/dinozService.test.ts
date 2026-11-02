@@ -235,6 +235,11 @@ describe('getAvailableActions', () => {
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.restingAttack }) as never, player())
 		).toEqual([]);
 	});
+	it('returns [] when on the clan championship board', async () => {
+		expect(
+			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never, player())
+		).toEqual([]);
+	});
 	it('returns [] when unsacrificing', async () => {
 		expect(
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.unsacrificing }) as never, player())
@@ -842,6 +847,13 @@ describe('betaMove', () => {
 	it('throws when the dinoz is unavailable', async () => {
 		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
 			fightablePlayer({ unavailableReason: 'frozen' }) as never
+		);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('not able to move');
+	});
+
+	it('throws when the dinoz is locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
+			fightablePlayer({ unavailableReason: UnavailableReason.clanChampionship }) as never
 		);
 		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('not able to move');
 	});

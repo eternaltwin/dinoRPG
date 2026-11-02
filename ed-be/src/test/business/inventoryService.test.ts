@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { UnavailableReason } from '@drpg/prisma';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
@@ -206,6 +208,21 @@ describe('useItem', () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(6) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '6' }))).rejects.toThrow('WTF');
 	});
+	it('heals a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			withItem(3, { unavailableReason: UnavailableReason.clanChampionship }) as never
+		);
+		const result = await useItem(req({ dinozId: '1', itemId: '3' }));
+		expect(result[0].category).toBe(ItemEffect.HEAL);
+		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+	});
+	it('refuses a non-healing item on a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
+			withItem(1, { unavailableReason: UnavailableReason.clanChampionship }) as never
+		);
+		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('UnavailableReason.clanChampionship');
+		expect(decreaseItemQuantity).not.toHaveBeenCalled();
+	});
 });
 
 describe('useItem - egg hatching', () => {
@@ -304,6 +321,13 @@ describe('equipItem', () => {
 		const result = await equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }));
 		expect(decreaseItemQuantity).toHaveBeenCalled();
 		expect(result).toBeDefined();
+	});
+	it('equips an item on a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(
+			equipDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never
+		);
+		vi.mocked(addItemToDinoz).mockResolvedValue({ id: 9, itemId: 3 } as never);
+		await expect(equipItem(req({ dinozId: '1' }, { itemId: 3, equip: true }))).resolves.toBeDefined();
 	});
 	it('unequips an item', async () => {
 		vi.mocked(dinozDao.getDinozEquipItemRequest).mockResolvedValue(

@@ -119,7 +119,8 @@ const CAN_STILL_USE_ITEMS: UnavailableReason[] = [
 	UnavailableReason.defending,
 	UnavailableReason.restingAttack,
 	UnavailableReason.unsacrificing,
-	UnavailableReason.unfreezing
+	UnavailableReason.unfreezing,
+	UnavailableReason.clanChampionship
 ];
 
 export async function useItem(req: Request) {
@@ -150,6 +151,11 @@ export async function useItem(req: Request) {
 			// Only item usable in a dungeon outside of a healing zone are irma potions
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
 		}
+	}
+
+	// A Dinoz locked on the clan championship board can only be healed
+	if (dinoz.unavailableReason === UnavailableReason.clanChampionship && item.effect?.category !== ItemEffect.HEAL) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 
 	// If player found is different from player who do the request, throw exception
