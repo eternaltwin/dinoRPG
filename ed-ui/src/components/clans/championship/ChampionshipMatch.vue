@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import type { BoardDirection, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
@@ -90,7 +90,7 @@ async function refetch(retry = true) {
 		if (unmounted) return;
 		// Keep the last board: only flag the failure, then retry once
 		loadError.value = true;
-		errorHandler.handle(e, $toast);
+		if (retry) errorHandler.handle(e, $toast);
 		if (retry && !retryTimer) {
 			retryTimer = setTimeout(() => {
 				retryTimer = null;
@@ -170,9 +170,13 @@ function ensureOwnClanRoute(): boolean {
 	return false;
 }
 
-onMounted(() => {
+function init() {
 	if (ensureOwnClanRoute()) void refetch();
-});
+}
+
+onMounted(init);
+// The redirect only changes `:id`: the component is reused, so reload once the route is the right one
+watch(() => route.params.id, init);
 onBeforeUnmount(() => {
 	unmounted = true;
 	clearInterval(timer);
