@@ -7,6 +7,11 @@
 			:rightName="rightClanName"
 			:rightTitle="rightClanName ? $t('fight.clan') : null"
 		/>
+		<div v-if="backTo" class="back">
+			<RouterLink :to="backTo"
+				><DZButton back>{{ $t('clanChampionship.backToBoard') }}</DZButton></RouterLink
+			>
+		</div>
 		<template v-if="fightTransformed">
 			<div v-show="loaded" class="content">
 				<Suspense>
@@ -28,11 +33,13 @@ import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import FightersHeader from '../components/fight/FightersHeader.vue';
 import { FightService } from '../services';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ReplayFight',
 	components: {
 		TitleHeader,
+		DZButton,
 		FightersHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
@@ -44,6 +51,13 @@ export default defineComponent({
 			rightPlayer: null as null | { id: string; name: string },
 			rightClanName: null as null | string
 		};
+	},
+	computed: {
+		backTo(): string | null {
+			const back = this.$route.query.back;
+			// Only internal paths
+			return typeof back === 'string' && back.startsWith('/') && !back.startsWith('//') ? back : null;
+		}
 	},
 	methods: {},
 	async mounted() {
@@ -87,6 +101,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 #shareFight {
 	align-self: center;
+}
+.back {
+	display: flex;
+	justify-content: center;
+	margin: 6px 0;
 }
 .subtitle {
 	text-transform: uppercase;

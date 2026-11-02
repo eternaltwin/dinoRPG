@@ -11,6 +11,10 @@
 			{{ $t('clanChampionship.endDate', { date: formatDate(championship.endDate) }) }}
 		</p>
 
+		<RouterLink v-if="canViewBoard" :to="{ name: 'ClanChampionshipMatch' }">
+			<DZButton>{{ $t('clanChampionship.viewBoard') }}</DZButton>
+		</RouterLink>
+
 		<div v-if="canRegister">
 			<DZButton v-if="championship.myClanRegistered" :off="loading" @click="unregister">{{
 				$t('clanChampionship.unregister')
@@ -88,6 +92,13 @@ export default defineComponent({
 				this.championship.canManageRegistration &&
 				this.championship.phase === 'registration' &&
 				this.registrationStarted &&
+				this.playerStore.clanId === this.viewedClanId
+			);
+		},
+		canViewBoard(): boolean {
+			return (
+				!!this.championship &&
+				(this.championship.phase === 'running' || this.championship.phase === 'finished') &&
 				this.playerStore.clanId === this.viewedClanId
 			);
 		},

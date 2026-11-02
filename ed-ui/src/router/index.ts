@@ -473,6 +473,11 @@ const router = createRouter({
 							component: () => import('../components/clans/ClanChampionship.vue')
 						},
 						{
+							path: 'championship/match',
+							name: 'ClanChampionshipMatch',
+							component: () => import('../components/clans/championship/ChampionshipMatch.vue')
+						},
+						{
 							path: 'builds',
 							name: 'ClanBuilds',
 							component: () => import('../components/clans/ClanBuilds.vue')

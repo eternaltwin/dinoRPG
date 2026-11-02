@@ -5551,6 +5551,20 @@
 		"noRegistration": "Aucun clan inscrit pour le moment.",
 		"calendar": "Calendrier",
 		"round": "Journée {round}",
-		"versus": "contre"
+		"versus": "contre",
+		"noMatch": "Aucun match en cours",
+		"viewBoard": "Voir le damier",
+		"backToBoard": "Retour au damier",
+		"matchFinished": "Match terminé",
+		"scoreLine": "Ligne de score : {line}",
+		"quota": "Quota : {used}/{max}",
+		"timeLeft": "Temps restant : {time}",
+		"startsAt": "Début : {date}",
+		"level": "niv. {level}",
+		"status": {
+			"scheduled": "À venir",
+			"live": "En cours",
+			"finished": "Terminé"
+		}
 	}
 }

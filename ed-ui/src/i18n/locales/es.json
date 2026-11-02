@@ -5550,6 +5550,20 @@
 		"noRegistration": "Ningún clan inscrito por ahora.",
 		"calendar": "Calendario",
 		"round": "Jornada {round}",
-		"versus": "contra"
+		"versus": "contra",
+		"noMatch": "Ningún partido en curso",
+		"viewBoard": "Ver el tablero",
+		"backToBoard": "Volver al tablero",
+		"matchFinished": "Partido terminado",
+		"scoreLine": "Línea de puntuación: {line}",
+		"quota": "Cupo: {used}/{max}",
+		"timeLeft": "Tiempo restante: {time}",
+		"startsAt": "Inicio: {date}",
+		"level": "niv. {level}",
+		"status": {
+			"scheduled": "Próximo",
+			"live": "En curso",
+			"finished": "Terminado"
+		}
 	}
 }
