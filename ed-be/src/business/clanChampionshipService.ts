@@ -3,10 +3,10 @@ import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventCon
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ClanEventType } from '@drpg/prisma';
+import { ClanEventType, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { scheduleJob } from 'node-schedule';
-import { playerHasRightRequest } from '../dao/clansDao.js';
+import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { auth } from '../dao/playerDao.js';
 import { prisma } from '../prisma.js';
 import { computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
@@ -65,14 +65,33 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 	return { id: event.id };
 }
 
+function isOpenForRegistration(event: { config: string }): boolean {
+	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+	return config.phase === 'registration' && new Date() < new Date(config.registrationEnd);
+}
+
 /** Active championship still open to (un)registration, or throws. */
 async function getOpenRegistrationEvent(authed: { clanId: number | null }) {
 	const event = await findActiveChampionshipEvent();
-	if (event) {
-		const config = parseEventConfig(event) as ClanChampionshipEventConfig;
-		if (config.phase === 'registration' && new Date() < new Date(config.registrationEnd)) return event;
-	}
+	if (event && isOpenForRegistration(event)) return event;
 	throw new ExpectedError(translate('clanChampionship.notInRegistration', authed as never));
+}
+
+/**
+ * Locks the championship event row (serialises with the closing job) and re-validates, inside the
+ * transaction, that registrations are still open. Throws notInRegistration otherwise.
+ */
+export async function lockOpenRegistrationEvent(
+	tx: LocalTransactionClient,
+	eventId: string,
+	authed: { clanId: number | null }
+) {
+	await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
+	const event = await tx.clanEvent.findUnique({ where: { id: eventId } });
+	if (!event || !isOpenForRegistration(event)) {
+		throw new ExpectedError(translate('clanChampionship.notInRegistration', authed as never));
+	}
+	return event;
 }
 
 async function assertCanManageRegistration(authed: { id: string; clanId: number | null }): Promise<number> {
@@ -91,21 +110,23 @@ export async function registerClan(req: Request): Promise<void> {
 	const event = await getOpenRegistrationEvent(authed);
 
 	await prisma.$transaction(async tx => {
+		await lockOpenRegistrationEvent(tx, event.id, authed);
 		const war = await tx.clanWar.findFirst({
 			where: { winnerClanId: null, OR: [{ attackerClanId: clanId }, { defenderClanId: clanId }] }
 		});
 		if (war) {
 			throw new ExpectedError(translate('clanChampionship.clanAtWar', authed));
 		}
-		const existing = await tx.clanChampionshipRegistration.findUnique({
-			where: { eventId_clanId: { eventId: event.id, clanId } }
-		});
-		if (existing) {
-			throw new ExpectedError(translate('clanChampionship.alreadyRegistered', authed));
+		try {
+			await tx.clanChampionshipRegistration.create({
+				data: { eventId: event.id, clanId, registeredById: authed.id }
+			});
+		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+				throw new ExpectedError(translate('clanChampionship.alreadyRegistered', authed));
+			}
+			throw error;
 		}
-		await tx.clanChampionshipRegistration.create({
-			data: { eventId: event.id, clanId, registeredById: authed.id }
-		});
 	});
 }
 
@@ -114,13 +135,13 @@ export async function unregisterClan(req: Request): Promise<void> {
 	const clanId = await assertCanManageRegistration(authed);
 	const event = await getOpenRegistrationEvent(authed);
 
-	const existing = await prisma.clanChampionshipRegistration.findUnique({
-		where: { eventId_clanId: { eventId: event.id, clanId } }
+	await prisma.$transaction(async tx => {
+		await lockOpenRegistrationEvent(tx, event.id, authed);
+		const { count } = await tx.clanChampionshipRegistration.deleteMany({ where: { eventId: event.id, clanId } });
+		if (count === 0) {
+			throw new ExpectedError(translate('clanChampionship.notRegistered', authed));
+		}
 	});
-	if (!existing) {
-		throw new ExpectedError(translate('clanChampionship.notRegistered', authed));
-	}
-	await prisma.clanChampionshipRegistration.delete({ where: { eventId_clanId: { eventId: event.id, clanId } } });
 }
 
 export async function getCurrentChampionship(req: Request): Promise<ClanChampionshipDTO | null> {

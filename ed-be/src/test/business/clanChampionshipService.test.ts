@@ -10,13 +10,15 @@ vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k })
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
-		clanEvent: { create: vi.fn(), findFirst: vi.fn() },
-		clanChampionshipRegistration: { create: vi.fn(), findUnique: vi.fn(), findMany: vi.fn(), delete: vi.fn() },
+		$queryRaw: vi.fn(),
+		clanEvent: { create: vi.fn(), findFirst: vi.fn(), findUnique: vi.fn() },
+		clanChampionshipRegistration: { create: vi.fn(), findMany: vi.fn(), deleteMany: vi.fn() },
 		clanChampionshipMatch: { findMany: vi.fn() },
 		clanWar: { findFirst: vi.fn() }
 	}
 }));
 
+import { Prisma } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
 import { prisma } from '../../prisma.js';
 import { auth } from '../../dao/playerDao.js';
@@ -54,6 +56,7 @@ beforeEach(() => {
 	vi.mocked(playerHasRightRequest).mockResolvedValue(true as any);
 	p.$transaction.mockImplementation(async (fn: any) => fn(p));
 	p.clanEvent.findFirst.mockResolvedValue(null);
+	p.clanEvent.findUnique.mockResolvedValue(activeEvent());
 });
 
 afterEach(() => {
@@ -121,7 +124,6 @@ describe('registerClan', () => {
 		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
 		p.clanWar.findFirst.mockResolvedValue(null);
-		p.clanChampionshipRegistration.findUnique.mockResolvedValue(null);
 	});
 
 	const register = () => registerClan(makeRequest());
@@ -165,8 +167,40 @@ describe('registerClan', () => {
 		});
 	});
 
-	it('rejects when already registered', async () => {
-		p.clanChampionshipRegistration.findUnique.mockResolvedValue({ id: 1 });
+	it('locks the event row then re-validates inside the transaction', async () => {
+		p.clanEvent.findUnique.mockResolvedValue(
+			activeEvent({
+				config: JSON.stringify({
+					eventType: 'championship',
+					places: [],
+					registrationEnd: registrationEnd.toISOString(),
+					phase: 'running'
+				})
+			})
+		);
+		await expect(register()).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.$queryRaw).toHaveBeenCalled();
+		expect(p.clanChampionshipRegistration.create).not.toHaveBeenCalled();
+	});
+
+	it('rejects inside the transaction when the deadline has passed meanwhile', async () => {
+		p.clanEvent.findUnique.mockResolvedValue(
+			activeEvent({
+				config: JSON.stringify({
+					eventType: 'championship',
+					places: [],
+					registrationEnd: '2026-11-10T09:00:00.000Z',
+					phase: 'registration'
+				})
+			})
+		);
+		await expect(register()).rejects.toThrow('clanChampionship.notInRegistration');
+	});
+
+	it('maps a concurrent duplicate (P2002) to alreadyRegistered', async () => {
+		p.clanChampionshipRegistration.create.mockRejectedValue(
+			new Prisma.PrismaClientKnownRequestError('dup', { code: 'P2002', clientVersion: 'x' })
+		);
 		await expect(register()).rejects.toThrow('clanChampionship.alreadyRegistered');
 	});
 
@@ -183,7 +217,7 @@ describe('unregisterClan', () => {
 		vi.useFakeTimers();
 		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
-		p.clanChampionshipRegistration.findUnique.mockResolvedValue({ id: 1 });
+		p.clanChampionshipRegistration.deleteMany.mockResolvedValue({ count: 1 });
 	});
 
 	it('rejects after registration end', async () => {
@@ -191,16 +225,30 @@ describe('unregisterClan', () => {
 		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notInRegistration');
 	});
 
-	it('rejects when not registered', async () => {
-		p.clanChampionshipRegistration.findUnique.mockResolvedValue(null);
+	it('rejects inside the transaction when the phase changed meanwhile', async () => {
+		p.clanEvent.findUnique.mockResolvedValue(
+			activeEvent({
+				config: JSON.stringify({
+					eventType: 'championship',
+					places: [],
+					registrationEnd: registrationEnd.toISOString(),
+					phase: 'cancelled'
+				})
+			})
+		);
+		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.clanChampionshipRegistration.deleteMany).not.toHaveBeenCalled();
+	});
+
+	it('rejects when not registered (count 0)', async () => {
+		p.clanChampionshipRegistration.deleteMany.mockResolvedValue({ count: 0 });
 		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notRegistered');
 	});
 
 	it('deletes the registration', async () => {
 		await unregisterClan(makeRequest());
-		expect(p.clanChampionshipRegistration.delete).toHaveBeenCalledWith({
-			where: { eventId_clanId: { eventId: 'ev-1', clanId: 7 } }
-		});
+		expect(p.$queryRaw).toHaveBeenCalled();
+		expect(p.clanChampionshipRegistration.deleteMany).toHaveBeenCalledWith({ where: { eventId: 'ev-1', clanId: 7 } });
 	});
 });
 
