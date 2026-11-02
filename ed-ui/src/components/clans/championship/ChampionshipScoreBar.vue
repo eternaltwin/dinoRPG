@@ -1,7 +1,7 @@
 <template>
 	<div class="score-bar">
 		<div class="side west">
-			<strong class="clan-name">{{ west.name }}</strong>
+			<strong class="clan-name" data-testid="clan-name">{{ west.name }}</strong>
 			<span class="score">{{ west.score }}</span>
 			<span class="detail">{{ $t('clanChampionship.scoreLine', { line: west.scoreLine }) }}</span>
 			<span class="detail">{{ $t('clanChampionship.quota', { used: west.quotaUsed, max: QUOTA }) }}</span>
@@ -16,7 +16,7 @@
 			}}</span>
 		</div>
 		<div class="side east">
-			<strong class="clan-name">{{ east.name }}</strong>
+			<strong class="clan-name" data-testid="clan-name">{{ east.name }}</strong>
 			<span class="score">{{ east.score }}</span>
 			<span class="detail">{{ $t('clanChampionship.scoreLine', { line: east.scoreLine }) }}</span>
 			<span class="detail">{{ $t('clanChampionship.quota', { used: east.quotaUsed, max: QUOTA }) }}</span>

@@ -14,7 +14,9 @@
 						<DinozIcon :display="d.display" :size="32" />
 						<span class="name">{{ d.name }}</span>
 						<span class="muted">{{ $t('clanChampionship.level', { level: d.level }) }}</span>
-						<DZButton :off="pending" @click="emit('enter', d.id)">{{ $t('clanChampionship.enter') }}</DZButton>
+						<DZButton :off="pending" :data-testid="`enter-${d.id}`" @click="emit('enter', d.id)">{{
+							$t('clanChampionship.enter')
+						}}</DZButton>
 					</li>
 				</ul>
 				<p v-else class="muted">{{ $t('clanChampionship.noEligible') }}</p>
