@@ -4335,7 +4335,7 @@
 			"page": "Seite",
 			"go_to": "Zur Seite gehen"
 		},
-		"placeholder": "Schreib deine Nachricht an den Clan…"
+		"placeholder": "Schreibe deinem Klan eine Nachricht..."
 	},
 	"clanHistory": {
 		"type": {
@@ -5503,16 +5503,16 @@
 		"toolbar": "Formatierung",
 		"write": "Schreiben",
 		"preview": "Vorschau",
-		"previewEmpty": "Noch nichts anzuzeigen.",
-		"previewError": "Die Vorschau konnte nicht geladen werden. Die Nachricht wird beim Senden trotzdem formatiert.",
+		"previewEmpty": "Derzeit nichts zum Darstellen.",
+		"previewError": "Die Vorschau konnte nicht geladen werden. Die Nachricht wird beim Absenden dennoch formatiert.",
 		"help": "Formatierungshilfe",
-		"submitHint": "Strg + Enter zum Senden",
+		"submitHint": "Strg + Eingabe zum Absenden",
 		"counter": "{count} / {max}",
 		"argument": {
-			"author": "Autor",
-			"character": "Figur",
+			"author": "Verfasser",
+			"character": "Charakter",
 			"title": "Titel",
-			"linkText": "Linktext"
+			"linkText": "Link-Text"
 		},
 		"tool": {
 			"strong": "Fett",
@@ -5521,15 +5521,15 @@
 			"strikethrough": "Durchgestrichen",
 			"big": "Großer Text",
 			"bad": "Falscher Text",
-			"spoiler": "Spoiler (verborgen bis zum Klick)",
+			"spoiler": "Spoiler (verborgen bis angeklickt)",
 			"code": "Code",
 			"quote": "Zitat",
 			"rp": "Rollenspiel",
 			"sidenote": "Randnotiz",
 			"collapse": "Einklappbarer Abschnitt",
-			"list": "Aufzählung",
+			"list": "Punktliste",
 			"orderedList": "Nummerierte Liste",
-			"codeBlock": "Codeblock",
+			"codeBlock": "Code-Block",
 			"link": "Link"
 		}
 	}
