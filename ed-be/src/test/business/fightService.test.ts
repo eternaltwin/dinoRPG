@@ -488,8 +488,9 @@ describe('replayFight', () => {
 			vi.mocked(playerDao.auth).mockRejectedValueOnce(new Error('Missing authorization header'));
 			await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found.');
 		});
-		it('keeps non-CDC replays public even with malformed metadata', async () => {
-			vi.mocked(playerDao.auth).mockRejectedValue(new Error('nope'));
+		it('keeps non-CDC replays public without authentication or journal lookup', async () => {
+			vi.mocked(playerDao.auth).mockClear();
+			vi.mocked(getClanChampionshipFightParticipants).mockClear();
 			vi.mocked(getArchivedFightRequest).mockResolvedValue({
 				fighters: '[]',
 				result: true,
@@ -501,7 +502,8 @@ describe('replayFight', () => {
 			} as never);
 			const result = await replayFight(req({ archiveId: 'a1' }));
 			expect(result.id).toBe('a1');
-			vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
+			expect(playerDao.auth).not.toHaveBeenCalled();
+			expect(getClanChampionshipFightParticipants).not.toHaveBeenCalled();
 		});
 	});
 });

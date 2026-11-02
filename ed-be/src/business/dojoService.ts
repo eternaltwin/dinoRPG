@@ -44,6 +44,7 @@ import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
+import { assertCanReadArchive } from '../utils/archiveAccess.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FullFightStats } from '@drpg/core/models/fight/FightResult';
@@ -239,6 +240,7 @@ export async function getArchivedFight(req: Request): Promise<DojoFightResume> {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
 
+	await assertCanReadArchive(fight.metadata, fightId, authed.id);
 	await viewFight(authed.id, fightId);
 
 	return {

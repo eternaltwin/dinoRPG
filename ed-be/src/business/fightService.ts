@@ -26,6 +26,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
+import { LOGGER } from '../context.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -50,7 +51,8 @@ import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
-import { getArchivedFightRequest, getClanChampionshipFightParticipants } from '../dao/archiveDao.js';
+import { getArchivedFightRequest } from '../dao/archiveDao.js';
+import { assertCanReadArchive, isClanChampionshipArchive } from '../utils/archiveAccess.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { gameConfig } from '../utils/gameConfig.js';
 
@@ -781,17 +783,17 @@ export async function replayFight(req: Request): Promise<FightReplay> {
 
 	// Clan championship fights are only visible to their participants.
 	// Every failure gives the same answer as a missing archive, so existence is not revealed.
-	if (metadata?.kind === 'clanChampionship') {
+	if (isClanChampionshipArchive(fight.metadata)) {
 		let playerId: string;
 		try {
 			playerId = (await auth(req)).id;
-		} catch {
+		} catch (err) {
+			if (!(err instanceof ExpectedError)) {
+				LOGGER.error('Unexpected failure while authenticating a clan championship replay', err);
+			}
 			throw new ExpectedError('No replay found.');
 		}
-		const participants = await getClanChampionshipFightParticipants(archiveId);
-		if (!participants?.includes(playerId)) {
-			throw new ExpectedError('No replay found.');
-		}
+		await assertCanReadArchive(fight.metadata, archiveId, playerId);
 	}
 
 	const replay: FightReplay = {
