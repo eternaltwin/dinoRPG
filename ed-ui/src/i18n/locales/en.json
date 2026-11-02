@@ -4178,6 +4178,7 @@
 			"members": "Members list",
 			"treasure": "Clan treasure",
 			"war": "War information",
+			"championship": "Championship",
 			"builds": "Skill Plans",
 			"discussion": "Discussion thread",
 			"history": "Clan history",
@@ -5522,5 +5523,22 @@
 			"codeBlock": "Code block",
 			"link": "Link"
 		}
+	},
+	"clanChampionship": {
+		"phase": {
+			"registration": "Registrations open",
+			"running": "Championship in progress",
+			"cancelled": "Championship cancelled",
+			"finished": "Championship finished"
+		},
+		"registrationEnd": "Registrations close: {date}",
+		"endDate": "Championship ends: {date}",
+		"register": "Register the clan",
+		"unregister": "Unregister the clan",
+		"registeredClans": "Registered clans ({count})",
+		"noRegistration": "No clan registered yet.",
+		"calendar": "Calendar",
+		"round": "Round {round}",
+		"versus": "vs"
 	}
 }

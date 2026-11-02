@@ -61,6 +61,17 @@
 				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
 			</RouterLink>
 			<RouterLink
+				v-if="hasChampionship"
+				class="tab"
+				:to="{ name: 'ClanChampionship' }"
+				v-tippy="{
+					content: formatContent($t('clan.tabs.championship')),
+					theme: 'small'
+				}"
+			>
+				<img :src="getImgURL('icons', 'act_fight')" :alt="$t('clan.tabs.championship')" />
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember && playerStore.playerOptions.hasPAC"
 				class="tab"
 				:to="{ name: 'ClanBuilds' }"
@@ -119,6 +130,7 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import ClanHeader from '../../components/clans/ClanHeader.vue';
 
 import { ClanService } from '../../services/ClanService';
+import { ClanChampionshipService } from '../../services/ClanChampionshipService';
 import { errorHandler } from '../../utils/errorHandler';
 
 import { playerStore } from '../../store';
@@ -137,7 +149,8 @@ export default defineComponent({
 			clanStore: clanStore(),
 			isClanMember: false as boolean,
 			hasBannerEditRight: false as boolean,
-			war: false as boolean
+			war: false as boolean,
+			hasChampionship: false as boolean
 		};
 	},
 	methods: {
@@ -147,6 +160,13 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
+			}
+		},
+		async loadChampionship(): Promise<void> {
+			try {
+				this.hasChampionship = (await ClanChampionshipService.getCurrent()) !== null;
+			} catch {
+				this.hasChampionship = false;
 			}
 		},
 		async getHasBannerEditRight() {
@@ -168,6 +188,7 @@ export default defineComponent({
 	async created(): Promise<void> {
 		await this.getClan();
 		await this.getHasBannerEditRight();
+		await this.loadChampionship();
 	},
 	watch: {
 		// Reload page if player goes on another clan page

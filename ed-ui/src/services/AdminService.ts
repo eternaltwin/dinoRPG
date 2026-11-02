@@ -8,6 +8,7 @@ import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
+import { ChampionshipForm } from '@drpg/core/models/clan/clanChampionship';
 import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
 import { DungeonGrid } from '@drpg/core/models/dungeon/DungeonEditor';
 
@@ -235,6 +236,10 @@ export const AdminService = {
 	},
 	async startClanWarEvent(form: EventForm) {
 		const res = await http().put(`/admin/event/start`, form);
+		return res.data;
+	},
+	async startClanChampionship(form: ChampionshipForm): Promise<{ id: string }> {
+		const res = await http().put(`/admin/championship/start`, form);
 		return res.data;
 	},
 	async getOngoingEvent(): Promise<OngoingEvent[]> {

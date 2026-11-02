@@ -4178,6 +4178,7 @@
 			"members": "Liste der Mitglieder",
 			"treasure": "Schatzkammer des Klans",
 			"war": "Infos zum Krieg",
+			"championship": "Meisterschaft",
 			"builds": "Pläne der Fähigkeiten",
 			"discussion": "Diskussionen",
 			"history": "Chronik des Klans",
@@ -5532,5 +5533,22 @@
 			"codeBlock": "Codeblock",
 			"link": "Link"
 		}
+	},
+	"clanChampionship": {
+		"phase": {
+			"registration": "Anmeldung geöffnet",
+			"running": "Meisterschaft läuft",
+			"cancelled": "Meisterschaft abgesagt",
+			"finished": "Meisterschaft beendet"
+		},
+		"registrationEnd": "Anmeldeschluss: {date}",
+		"endDate": "Ende der Meisterschaft: {date}",
+		"register": "Clan anmelden",
+		"unregister": "Clan abmelden",
+		"registeredClans": "Angemeldete Clans ({count})",
+		"noRegistration": "Noch kein Clan angemeldet.",
+		"calendar": "Spielplan",
+		"round": "Spieltag {round}",
+		"versus": "gegen"
 	}
 }

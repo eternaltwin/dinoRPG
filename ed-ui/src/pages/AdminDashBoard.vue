@@ -46,6 +46,7 @@
 		</li>
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/event"> Events </RouterLink>
+			<RouterLink to="/admin/championship"> Championnat </RouterLink>
 		</li>
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/dungeon"> Dungeons </RouterLink>

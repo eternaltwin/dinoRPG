@@ -1,0 +1,147 @@
+<template>
+	<div class="clan_wrapper" v-if="championship">
+		<DZDisclaimer round :content="$t(`clanChampionship.phase.${championship.phase}`)" />
+		<p v-if="championship.phase === 'registration'">
+			{{ $t('clanChampionship.registrationEnd', { date: formatDate(championship.registrationEnd) }) }}
+		</p>
+		<p>{{ $t('clanChampionship.endDate', { date: formatDate(championship.endDate) }) }}</p>
+
+		<div v-if="canRegister">
+			<DZButton v-if="championship.myClanRegistered" :off="loading" @click="unregister">{{
+				$t('clanChampionship.unregister')
+			}}</DZButton>
+			<DZButton v-else :off="loading" @click="register">{{ $t('clanChampionship.register') }}</DZButton>
+		</div>
+
+		<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
+		<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
+		<ul v-else class="registrations">
+			<li v-for="r in championship.registrations" :key="r.clanId" :class="{ mine: r.clanId === viewedClanId }">
+				<RouterLink :to="{ name: 'Clan', params: { id: r.clanId } }">{{ r.clanName }}</RouterLink>
+			</li>
+		</ul>
+
+		<template v-if="rounds.length > 0">
+			<h3>{{ $t('clanChampionship.calendar') }}</h3>
+			<DZTable v-for="round in rounds" :key="round.round">
+				<tr>
+					<th class="dinoz-header" colspan="3">{{ $t('clanChampionship.round', { round: round.round }) }}</th>
+				</tr>
+				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
+					<td>
+						<RouterLink :to="{ name: 'Clan', params: { id: m.homeClan.id } }">{{ m.homeClan.name }}</RouterLink>
+						{{ $t('clanChampionship.versus') }}
+						<RouterLink :to="{ name: 'Clan', params: { id: m.awayClan.id } }">{{ m.awayClan.name }}</RouterLink>
+					</td>
+					<td>{{ formatDate(m.startsAt) }}</td>
+					<td>{{ formatDate(m.endsAt) }}</td>
+				</tr>
+			</DZTable>
+		</template>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import DZButton from '../common/DZButton.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZTable from '../common/DZTable.vue';
+import { ClanChampionshipService } from '../../services';
+import { errorHandler } from '../../utils';
+import { playerStore } from '../../store';
+import { ClanChampionshipDTO, ClanChampionshipMatchDTO } from '@drpg/core/models/clan/clanChampionship';
+
+export default defineComponent({
+	name: 'ClanChampionship',
+	components: { DZButton, DZDisclaimer, DZTable },
+	data() {
+		return {
+			playerStore: playerStore(),
+			championship: null as ClanChampionshipDTO | null,
+			loading: false as boolean
+		};
+	},
+	computed: {
+		viewedClanId(): number {
+			return +this.$route.params.id;
+		},
+		canRegister(): boolean {
+			return (
+				!!this.championship &&
+				this.championship.canManageRegistration &&
+				this.championship.phase === 'registration' &&
+				this.playerStore.clanId === this.viewedClanId
+			);
+		},
+		rounds(): { round: number; matches: ClanChampionshipMatchDTO[] }[] {
+			const byRound = new Map<number, ClanChampionshipMatchDTO[]>();
+			for (const m of this.championship?.matches ?? []) {
+				byRound.set(m.round, [...(byRound.get(m.round) ?? []), m]);
+			}
+			return [...byRound.entries()].sort((a, b) => a[0] - b[0]).map(([round, matches]) => ({ round, matches }));
+		}
+	},
+	methods: {
+		formatDate(d: Date | string): string {
+			return new Date(d).toLocaleString(this.$i18n.locale, { dateStyle: 'short', timeStyle: 'short' });
+		},
+		isMine(m: ClanChampionshipMatchDTO): boolean {
+			return m.homeClan.id === this.viewedClanId || m.awayClan.id === this.viewedClanId;
+		},
+		async load() {
+			try {
+				this.championship = await ClanChampionshipService.getCurrent();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async register() {
+			await this.change(() => ClanChampionshipService.register());
+		},
+		async unregister() {
+			await this.change(() => ClanChampionshipService.unregister());
+		},
+		async change(action: () => Promise<void>) {
+			this.loading = true;
+			try {
+				await action();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			} finally {
+				await this.load();
+				this.loading = false;
+			}
+		}
+	},
+	async mounted() {
+		await this.load();
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+.clan_wrapper {
+	width: 95%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding-bottom: 5px;
+}
+h3 {
+	color: #874a16;
+	text-transform: uppercase;
+	font-size: 0.9em;
+	letter-spacing: 1px;
+}
+.registrations {
+	columns: 2;
+	li.mine a {
+		font-weight: bold;
+	}
+}
+tr.mine td {
+	background-color: #f3ca92;
+	font-weight: bold;
+}
+</style>
