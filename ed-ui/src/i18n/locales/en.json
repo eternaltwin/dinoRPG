@@ -5540,6 +5540,20 @@
 		"noRegistration": "No clan registered yet.",
 		"calendar": "Calendar",
 		"round": "Round {round}",
-		"versus": "vs"
+		"versus": "vs",
+		"noMatch": "No match in progress",
+		"viewBoard": "View the board",
+		"backToBoard": "Back to the board",
+		"matchFinished": "Match finished",
+		"scoreLine": "Score line: {line}",
+		"quota": "Quota: {used}/{max}",
+		"timeLeft": "Time left: {time}",
+		"startsAt": "Starts: {date}",
+		"level": "lvl {level}",
+		"status": {
+			"scheduled": "Upcoming",
+			"live": "Live",
+			"finished": "Finished"
+		}
 	}
 }

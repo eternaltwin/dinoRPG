@@ -5550,6 +5550,20 @@
 		"noRegistration": "Noch kein Clan angemeldet.",
 		"calendar": "Spielplan",
 		"round": "Spieltag {round}",
-		"versus": "gegen"
+		"versus": "gegen",
+		"noMatch": "Kein Spiel im Gange",
+		"viewBoard": "Spielfeld ansehen",
+		"backToBoard": "Zurück zum Spielfeld",
+		"matchFinished": "Spiel beendet",
+		"scoreLine": "Punktelinie: {line}",
+		"quota": "Kontingent: {used}/{max}",
+		"timeLeft": "Verbleibende Zeit: {time}",
+		"startsAt": "Beginn: {date}",
+		"level": "Lvl. {level}",
+		"status": {
+			"scheduled": "Bevorstehend",
+			"live": "Läuft",
+			"finished": "Beendet"
+		}
 	}
 }
