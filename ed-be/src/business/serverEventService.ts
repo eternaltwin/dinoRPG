@@ -196,7 +196,12 @@ export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingM
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
 
-	await putUserInWsChannel(ticket, ws.id);
+	const { championship } = await putUserInWsChannel(ticket, ws.id);
+
+	// A push sent before the socket registered is lost: tell the new socket where the board stands now.
+	if (championship && ws.readyState === WebSocket.OPEN) {
+		ws.send(JSON.stringify({ type: 'boardChanged', matchId: championship.matchId, version: championship.version }));
+	}
 }
 
 /**
@@ -243,8 +248,9 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
-	const channelName = await getChannelName(ticket);
+async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<ChannelTarget> {
+	const target = await getChannelTarget(ticket);
+	const channelName = target.channelName;
 
 	const channel: WsChannelData[] | undefined = wsChannels.get(channelName);
 
@@ -253,6 +259,7 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
 	} else {
 		wsChannels.set(channelName, [{ connectionId: wsId, playerId: ticket.playerId }]);
 	}
+	return target;
 }
 
 /**
@@ -264,7 +271,7 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
  * @param res -> The response from the incoming request. Kept alive while the connection is opened.
  */
 async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string, res: Response): Promise<void> {
-	const channelName = await getChannelName(ticket);
+	const { channelName } = await getChannelTarget(ticket);
 
 	ticketToChannelMap.set(ticketUuid, channelName);
 
@@ -273,17 +280,22 @@ async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string
 	sseChannels.set(channelName, channel);
 }
 
-async function getChannelName(ticket: ServerEventTicket): Promise<string> {
+type ChannelTarget = { channelName: string; championship?: { matchId: string; version: number } };
+
+async function getChannelTarget(ticket: ServerEventTicket): Promise<ChannelTarget> {
 	if (ticket.channel === WsChannel.CLAN_FORUM) {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
-		return `${ticket.channel}.${playerData.ClanMember.clan.id}`;
+		return { channelName: `${ticket.channel}.${playerData.ClanMember.clan.id}` };
 	} else if (ticket.channel === WsChannel.CLAN_CHAMPIONSHIP) {
 		const match = await findChampionshipMatchOfPlayer(ticket.playerId);
-		return `${ticket.channel}.${match.id}`;
+		return {
+			channelName: `${ticket.channel}.${match.id}`,
+			championship: { matchId: match.id, version: match.version }
+		};
 	} else if (ticket.channel === SseChannel.NOTIFICATION) {
-		return ticket.channel;
+		return { channelName: ticket.channel };
 	}
 
 	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
