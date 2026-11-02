@@ -157,7 +157,8 @@ export async function getAvailableActions(
 		UnavailableReason.unfreezing,
 		UnavailableReason.restingAttack,
 		UnavailableReason.unsacrificing,
-		UnavailableReason.sacrificed
+		UnavailableReason.sacrificed,
+		UnavailableReason.clanChampionship
 	];
 
 	const dinozPlace = actualPlace(dinoz);
