@@ -19,6 +19,7 @@ import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
 import { WsMsgResponseDeletion } from '@drpg/core/models/serverEvents/WsMsgResponseDeletion';
 import { WsMsgResponseCreation } from '@drpg/core/models/serverEvents/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
+import { findReadableMatchOfClan } from './clanChampionshipMatchService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
 import { renderPlayerMessage } from '../utils/marktwin.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -32,6 +33,12 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
+let webSocketServer: WebSocketServerCustom | undefined;
+
+/** Registers the running WebSocket server, so that services can push to channels without holding it. */
+export function setWebSocketServer(wss: WebSocketServerCustom): void {
+	webSocketServer = wss;
+}
 
 // Tickets garbage collector
 setInterval(() => {
@@ -141,7 +148,22 @@ async function doSpecificVerifications(req: Request, authed: Auth, serverEventTy
 async function doSpecificVerificationsForWs(req: Request, authed: Auth): Promise<void> {
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
 		await checkPlayerIsInClan(authed);
+	} else if (req.body.channel === WsChannel.CLAN_CHAMPIONSHIP) {
+		await findChampionshipMatchOfPlayer(authed.id);
 	}
+}
+
+/** The match a player may follow: the one of their clan (live, else the latest finished). Refuses otherwise. */
+async function findChampionshipMatchOfPlayer(playerId: string) {
+	const clanForPlayer = await getClanIdAndNameFromPlayerId(playerId);
+	if (clanForPlayer.ClanMember === null) {
+		throw new Error(`The player is not in a clan.`);
+	}
+	const match = await findReadableMatchOfClan(clanForPlayer.ClanMember.clan.id);
+	if (!match) {
+		throw new ExpectedError(`The clan has no championship match to follow.`);
+	}
+	return match;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -257,6 +279,9 @@ async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
 		return `${ticket.channel}.${playerData.ClanMember.clan.id}`;
+	} else if (ticket.channel === WsChannel.CLAN_CHAMPIONSHIP) {
+		const match = await findChampionshipMatchOfPlayer(ticket.playerId);
+		return `${ticket.channel}.${match.id}`;
 	} else if (ticket.channel === SseChannel.NOTIFICATION) {
 		return ticket.channel;
 	}
@@ -277,6 +302,9 @@ export async function processWsIncomingMessage(
 	bufferedMessage: RawData
 ): Promise<void> {
 	const channel: ChannelInfos = getWsChannelDetailsFromConnectionId(wsId);
+
+	// The championship channels only push server messages: nothing a client sends is a clan forum message.
+	if (channel.channelName.startsWith(`${WsChannel.CLAN_CHAMPIONSHIP}.`)) return;
 
 	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
 
@@ -388,11 +416,58 @@ function sendMessageToPeopleInWsChannel(
 }
 
 /**
+ * Send a message to every open connection of a channel. Does nothing for an unknown channel.
+ *
+ * @param channelName -> The channel, e.g. `WsClanChampionship.<matchId>`
+ * @param message -> The message to send, serialised as JSON
+ */
+export function publishToWsChannel(channelName: string, message: object): void {
+	const members = wsChannels.get(channelName);
+	if (!members || !webSocketServer) return;
+	const payload = Buffer.from(JSON.stringify(message));
+	webSocketServer.clients.forEach(client => {
+		if (client.readyState !== WebSocket.OPEN || !members.some(user => user.connectionId === client.id)) return;
+		client.send(payload, { binary: false });
+	});
+}
+
+/**
+ * Closes the connections of a player on the channels whose name starts with one of the prefixes,
+ * and forgets them. Used when a player loses the right to follow a channel (clan exit).
+ *
+ * @param playerId -> The player to disconnect
+ * @param channelPrefixes -> e.g. `WsClanForum.<clanId>` and `WsClanChampionship.`
+ */
+export function kickPlayerFromWsChannels(playerId: string, channelPrefixes: string[]): void {
+	for (const [channelName, members] of [...wsChannels.entries()]) {
+		// A prefix ending with a dot matches a family of channels; otherwise the name must be exactly the prefix
+		// (`WsClanForum.1` must not kick from `WsClanForum.10`).
+		if (
+			!channelPrefixes.some(prefix => (prefix.endsWith('.') ? channelName.startsWith(prefix) : channelName === prefix))
+		)
+			continue;
+		const kicked = members.filter(user => user.playerId === playerId);
+		if (kicked.length === 0) continue;
+
+		const remaining = members.filter(user => user.playerId !== playerId);
+		if (remaining.length === 0) wsChannels.delete(channelName);
+		else wsChannels.set(channelName, remaining);
+
+		webSocketServer?.clients.forEach(client => {
+			if (kicked.some(user => user.connectionId === client.id)) client.close();
+		});
+	}
+}
+
+/**
  * Get channel data and remove the player from the channel he wants to leave
  *
  * @param ws -> The WebSocket connection
  */
 export function disconnectWsUser(ws: WebSocketCustom): void {
+	// A connection already removed (kicked) has nothing left to clean.
+	const known = [...wsChannels.values()].some(members => members.some(user => user.connectionId === ws.id));
+	if (!known) return;
 	const channel = getWsChannelDetailsFromConnectionId(ws.id);
 
 	removeUserFromWsChannel(channel, ws.id);

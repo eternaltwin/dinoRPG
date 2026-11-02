@@ -611,6 +611,7 @@ exports.Prisma.ClanChampionshipMatchScalarFieldEnum = {
   homeScore: 'homeScore',
   awayScore: 'awayScore',
   ticksApplied: 'ticksApplied',
+  version: 'version',
   status: 'status',
   winnerClanId: 'winnerClanId'
 };

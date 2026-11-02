@@ -62,6 +62,8 @@ import { prisma } from '../prisma.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { isClanInActiveChampionship } from './clanChampionshipService.js';
 import { removePlayerFromBoards } from './clanChampionshipMatchService.js';
+import { kickPlayerFromWsChannels } from './serverEventService.js';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 
 /**
  * Get all the clans
@@ -439,6 +441,11 @@ async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number
 	});
 	if (stillMember?.clanId === member.clanId) return;
 	try {
+		// The member no longer belongs to the clan: no more forum nor match channel for them.
+		kickPlayerFromWsChannels(member.playerId, [
+			`${WsChannel.CLAN_FORUM}.${member.clanId}`,
+			`${WsChannel.CLAN_CHAMPIONSHIP}.`
+		]);
 		await removePlayerFromBoards(member.playerId, member.clanId);
 	} catch (err) {
 		// The clan exit is already committed: do not fail it.

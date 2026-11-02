@@ -81,6 +81,8 @@ export interface FightJournalEntryDTO {
 
 export interface MatchBoardDTO {
 	matchId: string;
+	/** Board version, bumped on every change; compared with the one pushed over the match channel. */
+	version: number;
 	round: number;
 	placeId: number | null;
 	status: ClanChampionshipMatchStatus;
@@ -99,3 +101,6 @@ export interface ChampionshipForm {
 	start: string; // YYYY-MM-DD
 	places: number[];
 }
+
+/** The only message pushed over the match channel: the client refetches the board when its version is older. */
+export type BoardChangedMessage = { type: 'boardChanged'; matchId: string; version: number };

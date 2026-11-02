@@ -6,6 +6,10 @@ vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+vi.mock('../../business/serverEventService.js', () => ({
+	publishToWsChannel: vi.fn(),
+	kickPlayerFromWsChannels: vi.fn()
+}));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
@@ -19,6 +23,7 @@ vi.mock('../../prisma.js', () => ({
 
 import { DISCORD } from '../../context.js';
 import { prisma } from '../../prisma.js';
+import { publishToWsChannel } from '../../business/serverEventService.js';
 import { championshipTick, startChampionshipTicker } from '../../business/clanChampionshipMatchService.js';
 
 const p = prisma as any;
@@ -74,6 +79,7 @@ function setup(m: ReturnType<typeof match>, pieces: any[] = [], remaining = 1) {
 	p.clanChampionshipMatch.findMany.mockResolvedValue([{ id: m.id }]);
 	p.clanChampionshipMatch.findUnique.mockResolvedValue(m);
 	p.clanChampionshipMatch.count.mockResolvedValue(remaining);
+	p.clanChampionshipMatch.update.mockResolvedValue({ version: 5 });
 	p.clanChampionshipPiece.findMany.mockResolvedValue(pieces);
 }
 
@@ -141,7 +147,7 @@ describe('championshipTick', () => {
 		// home west at x=5 (line 5), away east at x=15 (line 4): nobody passed
 		setup(live(), [piece(1, HOME, 5), piece(2, AWAY, 15)]);
 		await championshipTick(min(25));
-		expect(matchUpdate().data).toEqual({ homeScore: 10, awayScore: 8, ticksApplied: 2 });
+		expect(matchUpdate().data).toEqual({ homeScore: 10, awayScore: 8, ticksApplied: 2, version: { increment: 1 } });
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
 			data: { actionPoints: { increment: 4 } }
@@ -151,7 +157,7 @@ describe('championshipTick', () => {
 	it('maps the sides when the away clan is west', async () => {
 		setup(live({ westClanId: AWAY }), [piece(1, HOME, 15), piece(2, AWAY, 5)]);
 		await championshipTick(min(10));
-		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 5, ticksApplied: 1 });
+		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 5, ticksApplied: 1, version: { increment: 1 } });
 	});
 
 	it('applies nothing the second time at the same instant', async () => {
@@ -216,7 +222,7 @@ describe('championshipTick', () => {
 		setup(live({ westClanId: null, awayClanId: null }), [piece(1, HOME, 15)]);
 		await championshipTick(min(10));
 		// the home clan is east (away was the deleted west clan): east line = 4
-		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 0, ticksApplied: 1 });
+		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 0, ticksApplied: 1, version: { increment: 1 } });
 	});
 
 	it('gives the win to the away clan with the higher score', async () => {
@@ -281,5 +287,57 @@ describe('startChampionshipTicker', () => {
 	it('builds a stopped 10-minute UTC cron job', () => {
 		const job = startChampionshipTicker();
 		expect(job.running).toBeFalsy();
+	});
+});
+
+describe('championshipTick board version', () => {
+	const id = match().id;
+	const channel = `WsClanChampionship.${id}`;
+	const published = { type: 'boardChanged', matchId: id, version: 5 };
+
+	it('a scoring tick bumps the version in the match update and publishes once after commit', async () => {
+		setup(live(), [piece(1, HOME, 5)]);
+		let committed = false;
+		p.$transaction.mockImplementation(async (fn: any) => {
+			const r = await fn(p);
+			expect(publishToWsChannel).not.toHaveBeenCalled();
+			committed = true;
+			return r;
+		});
+		await championshipTick(min(25));
+		expect(committed).toBe(true);
+		expect(matchUpdate()).toMatchObject({ data: { version: { increment: 1 } }, select: { version: true } });
+		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+		expect(publishToWsChannel).toHaveBeenCalledWith(channel, published);
+	});
+	it('the kick-off bumps and publishes', async () => {
+		setup(match());
+		await championshipTick(startsAt);
+		expect(matchUpdate().data.version).toEqual({ increment: 1 });
+		expect(publishToWsChannel).toHaveBeenCalledWith(channel, published);
+	});
+	it('drawing the place alone bumps and publishes', async () => {
+		setup(match({ placeId: null, startsAt: new Date('2026-11-26T18:00:00.000Z') }));
+		await championshipTick(new Date('2026-11-25T18:00:00.000Z'));
+		expect(matchUpdate()).toMatchObject({ data: { version: { increment: 1 } } });
+		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+	});
+	it('the end of the match bumps and publishes', async () => {
+		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+		await championshipTick(new Date(endsAt.getTime() - 1));
+		expect(matchUpdate().data.version).toEqual({ increment: 1 });
+		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+	});
+	it('a tick that changes nothing neither bumps nor publishes', async () => {
+		setup(live({ ticksApplied: 2 }), [piece(1, HOME, 5)]);
+		await championshipTick(min(25));
+		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
+		expect(publishToWsChannel).not.toHaveBeenCalled();
+	});
+	it('a failing match publishes nothing', async () => {
+		setup(live(), [piece(1, HOME, 5)]);
+		p.clanChampionshipMatch.update.mockRejectedValue(new Error('db down'));
+		await championshipTick(min(25));
+		expect(publishToWsChannel).not.toHaveBeenCalled();
 	});
 });

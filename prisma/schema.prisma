@@ -810,6 +810,8 @@ model ClanChampionshipMatch {
   homeScore    Int                         @default(0)
   awayScore    Int                         @default(0)
   ticksApplied Int                         @default(0)
+  /// Bumped on every board change, pushed to the match channel
+  version      Int                         @default(0)
   status       ClanChampionshipMatchStatus @default(scheduled)
   winnerClanId Int?
   event        ClanEvent                   @relation(fields: [eventId], references: [id], onDelete: Cascade)
