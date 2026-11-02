@@ -8,6 +8,7 @@ import {
 	MatchBoardDTO,
 	PLACE_REVEAL_HOURS
 } from '@drpg/core/models/clan/clanChampionship';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { CLAN_CHAMPIONSHIP_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
@@ -28,6 +29,7 @@ import { LocalTransactionClient } from '../dao/clansDao.js';
 import { archiveFight } from '../dao/archiveDao.js';
 import { getDinozForChampionshipFight } from '../dao/dinozDao.js';
 import { auth } from '../dao/playerDao.js';
+import { LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import {
 	cellIndex,
@@ -48,6 +50,7 @@ import { getRandomArrayElement } from '../utils/tools.js';
 import { findActiveChampionshipEvent, parseEventConfig } from './clanEventService.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { finishChampionship, runChampionshipJob } from './clanChampionshipService.js';
+import { publishToWsChannel } from './serverEventService.js';
 
 const HOUR_MS = 60 * 60 * 1000;
 const TICK_MS = BOARD_TICK_MINUTES * 60 * 1000;
@@ -67,6 +70,25 @@ export async function lockMatch(tx: LocalTransactionClient, matchId: string): Pr
 	await tx.$queryRaw`SELECT id FROM "clan_championship_match" WHERE id = ${matchId}::uuid FOR UPDATE`;
 }
 
+/** Bumps the board version inside the caller's transaction; returns the new version. */
+async function bumpVersion(tx: LocalTransactionClient, matchId: string): Promise<number> {
+	const updated = await tx.clanChampionshipMatch.update({
+		where: { id: matchId },
+		data: { version: { increment: 1 } },
+		select: { version: true }
+	});
+	return updated.version;
+}
+
+/** Tells the match channel that the board changed. Called after the commit; never throws. */
+function publishBoardChanged(matchId: string, version: number): void {
+	try {
+		publishToWsChannel(`${WsChannel.CLAN_CHAMPIONSHIP}.${matchId}`, { type: 'boardChanged', matchId, version });
+	} catch (err) {
+		LOGGER.error(`Cannot publish the board version of match ${matchId}`, err);
+	}
+}
+
 /** Reveals the place of a match by drawing it among the championship places. */
 export async function drawMatchPlace(tx: LocalTransactionClient, match: { id: string }, places: PlaceEnum[]) {
 	await tx.clanChampionshipMatch.update({
@@ -76,14 +98,21 @@ export async function drawMatchPlace(tx: LocalTransactionClient, match: { id: st
 }
 
 async function processMatch(matchId: string, places: PlaceEnum[], wallNow: Date): Promise<void> {
+	const version = await processMatchInTransaction(matchId, places, wallNow);
+	if (version !== null) publishBoardChanged(matchId, version);
+}
+
+/** Returns the new board version when the run changed the match (bumped once), null otherwise. */
+async function processMatchInTransaction(matchId: string, places: PlaceEnum[], wallNow: Date): Promise<number | null> {
 	const now = new Date(wallNow.getTime() + TICK_TOLERANCE_MS);
-	await prisma.$transaction(
+	return prisma.$transaction(
 		async tx => {
 			await lockMatch(tx, matchId);
 			const match = await tx.clanChampionshipMatch.findUnique({ where: { id: matchId } });
-			if (!match || match.status === ClanChampionshipMatchStatus.finished) return;
+			if (!match || match.status === ClanChampionshipMatchStatus.finished) return null;
 
 			const data: Record<string, unknown> = {};
+			let placeDrawn = false;
 			let status = match.status;
 			let westClanId = match.westClanId;
 			let ticksApplied = match.ticksApplied;
@@ -92,6 +121,7 @@ async function processMatch(matchId: string, places: PlaceEnum[], wallNow: Date)
 
 			if (match.placeId === null && now.getTime() >= match.startsAt.getTime() - PLACE_REVEAL_HOURS * HOUR_MS) {
 				await drawMatchPlace(tx, match as MatchRow, places);
+				placeDrawn = true;
 			}
 
 			if (status === ClanChampionshipMatchStatus.scheduled && now >= match.startsAt) {
@@ -156,9 +186,13 @@ async function processMatch(matchId: string, places: PlaceEnum[], wallNow: Date)
 				}
 			}
 
-			if (Object.keys(data).length > 0) {
-				await tx.clanChampionshipMatch.update({ where: { id: matchId }, data });
-			}
+			if (Object.keys(data).length === 0 && !placeDrawn) return null;
+			const updated = await tx.clanChampionshipMatch.update({
+				where: { id: matchId },
+				data: { ...data, version: { increment: 1 } },
+				select: { version: true }
+			});
+			return updated.version;
 		},
 		{ timeout: 15000 }
 	);
@@ -219,6 +253,22 @@ export async function findLiveMatchOfClan(clanId: number, tx: LocalTransactionCl
 			status: ClanChampionshipMatchStatus.live,
 			OR: [{ homeClanId: clanId }, { awayClanId: clanId }]
 		}
+	});
+}
+
+/** The match a clan may follow: its live match, else its latest finished match of the active championship. */
+export async function findReadableMatchOfClan(clanId: number) {
+	const live = await findLiveMatchOfClan(clanId);
+	if (live) return live;
+	const event = await findActiveChampionshipEvent();
+	if (!event) return null;
+	return prisma.clanChampionshipMatch.findFirst({
+		where: {
+			eventId: event.id,
+			status: ClanChampionshipMatchStatus.finished,
+			OR: [{ homeClanId: clanId }, { awayClanId: clanId }]
+		},
+		orderBy: { endsAt: 'desc' }
 	});
 }
 
@@ -402,7 +452,7 @@ async function withLiveMatch<T>(
 	const found = await findLiveMatchOfClan(clanId);
 	if (!found) throw noLiveMatch();
 
-	return prisma.$transaction(
+	const { result, version } = await prisma.$transaction(
 		async tx => {
 			await lockMatch(tx, found.id);
 			const match = await tx.clanChampionshipMatch.findUnique({ where: { id: found.id } });
@@ -410,10 +460,14 @@ async function withLiveMatch<T>(
 			if (!match || match.status !== ClanChampionshipMatchStatus.live || Date.now() >= match.endsAt.getTime()) {
 				throw noLiveMatch();
 			}
-			return action(tx, match, authed, clanId, sideOf(match, clanId));
+			const result = await action(tx, match, authed, clanId, sideOf(match, clanId));
+			// One bump per action, whatever it touched (a fight included), in the action's own transaction.
+			return { result, version: await bumpVersion(tx, match.id) };
 		},
 		{ timeout: 15000 }
 	);
+	publishBoardChanged(found.id, version);
+	return result;
 }
 
 export async function enterBoard(req: Request): Promise<void> {
@@ -553,14 +607,14 @@ export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
 export async function removePlayerFromBoards(playerId: string, clanId: number): Promise<void> {
 	const found = await findLiveMatchOfClan(clanId);
 	if (!found) return;
-	await prisma.$transaction(
+	const version = await prisma.$transaction(
 		async tx => {
 			await lockMatch(tx, found.id);
 			const current = await tx.clanChampionshipMatch.findUnique({ where: { id: found.id } });
-			if (!current || current.status !== ClanChampionshipMatchStatus.live) return;
+			if (!current || current.status !== ClanChampionshipMatchStatus.live) return null;
 			const where = { matchId: found.id, playerId, state: { not: ClanChampionshipPieceState.dead } };
 			const pieces = await tx.clanChampionshipPiece.findMany({ where, select: { dinozId: true } });
-			if (pieces.length === 0) return;
+			if (pieces.length === 0) return null;
 			await tx.clanChampionshipPiece.deleteMany({ where });
 			await tx.dinoz.updateMany({
 				where: {
@@ -569,9 +623,11 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 				},
 				data: { unavailableReason: null }
 			});
+			return bumpVersion(tx, found.id);
 		},
 		{ timeout: 15000 }
 	);
+	if (version !== null) publishBoardChanged(found.id, version);
 }
 
 /** The reader's clan board: its live match, else its latest finished match of the active championship. */
@@ -580,19 +636,7 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 	const clanId = authed.clanId;
 	if (clanId === null || clanId === undefined) return null;
 
-	let match = await findLiveMatchOfClan(clanId);
-	if (!match) {
-		const event = await findActiveChampionshipEvent();
-		if (!event) return null;
-		match = await prisma.clanChampionshipMatch.findFirst({
-			where: {
-				eventId: event.id,
-				status: ClanChampionshipMatchStatus.finished,
-				OR: [{ homeClanId: clanId }, { awayClanId: clanId }]
-			},
-			orderBy: { endsAt: 'desc' }
-		});
-	}
+	const match = await findReadableMatchOfClan(clanId);
 	if (!match) return null;
 
 	const all = await prisma.clanChampionshipPiece.findMany({
@@ -671,6 +715,7 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 
 	return {
 		matchId: match.id,
+		version: match.version,
 		round: match.round,
 		placeId: match.placeId,
 		status: match.status,

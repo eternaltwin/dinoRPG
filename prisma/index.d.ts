@@ -69114,6 +69114,7 @@ export namespace Prisma {
     homeScore: number | null
     awayScore: number | null
     ticksApplied: number | null
+    version: number | null
     winnerClanId: number | null
   }
 
@@ -69127,6 +69128,7 @@ export namespace Prisma {
     homeScore: number | null
     awayScore: number | null
     ticksApplied: number | null
+    version: number | null
     winnerClanId: number | null
   }
 
@@ -69145,6 +69147,7 @@ export namespace Prisma {
     homeScore: number | null
     awayScore: number | null
     ticksApplied: number | null
+    version: number | null
     status: $Enums.ClanChampionshipMatchStatus | null
     winnerClanId: number | null
   }
@@ -69164,6 +69167,7 @@ export namespace Prisma {
     homeScore: number | null
     awayScore: number | null
     ticksApplied: number | null
+    version: number | null
     status: $Enums.ClanChampionshipMatchStatus | null
     winnerClanId: number | null
   }
@@ -69184,6 +69188,7 @@ export namespace Prisma {
     homeScore: number
     awayScore: number
     ticksApplied: number
+    version: number
     status: number
     winnerClanId: number
     _all: number
@@ -69200,6 +69205,7 @@ export namespace Prisma {
     homeScore?: true
     awayScore?: true
     ticksApplied?: true
+    version?: true
     winnerClanId?: true
   }
 
@@ -69213,6 +69219,7 @@ export namespace Prisma {
     homeScore?: true
     awayScore?: true
     ticksApplied?: true
+    version?: true
     winnerClanId?: true
   }
 
@@ -69231,6 +69238,7 @@ export namespace Prisma {
     homeScore?: true
     awayScore?: true
     ticksApplied?: true
+    version?: true
     status?: true
     winnerClanId?: true
   }
@@ -69250,6 +69258,7 @@ export namespace Prisma {
     homeScore?: true
     awayScore?: true
     ticksApplied?: true
+    version?: true
     status?: true
     winnerClanId?: true
   }
@@ -69270,6 +69279,7 @@ export namespace Prisma {
     homeScore?: true
     awayScore?: true
     ticksApplied?: true
+    version?: true
     status?: true
     winnerClanId?: true
     _all?: true
@@ -69377,6 +69387,7 @@ export namespace Prisma {
     homeScore: number
     awayScore: number
     ticksApplied: number
+    version: number
     status: $Enums.ClanChampionshipMatchStatus
     winnerClanId: number | null
     _count: ClanChampionshipMatchCountAggregateOutputType | null
@@ -69416,6 +69427,7 @@ export namespace Prisma {
     homeScore?: boolean
     awayScore?: boolean
     ticksApplied?: boolean
+    version?: boolean
     status?: boolean
     winnerClanId?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
@@ -69442,6 +69454,7 @@ export namespace Prisma {
     homeScore?: boolean
     awayScore?: boolean
     ticksApplied?: boolean
+    version?: boolean
     status?: boolean
     winnerClanId?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
@@ -69465,6 +69478,7 @@ export namespace Prisma {
     homeScore?: boolean
     awayScore?: boolean
     ticksApplied?: boolean
+    version?: boolean
     status?: boolean
     winnerClanId?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
@@ -69488,11 +69502,12 @@ export namespace Prisma {
     homeScore?: boolean
     awayScore?: boolean
     ticksApplied?: boolean
+    version?: boolean
     status?: boolean
     winnerClanId?: boolean
   }
 
-  export type ClanChampionshipMatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "round" | "homeClanId" | "awayClanId" | "homeClanName" | "awayClanName" | "startsAt" | "endsAt" | "placeId" | "westClanId" | "obstacles" | "homeScore" | "awayScore" | "ticksApplied" | "status" | "winnerClanId", ExtArgs["result"]["clanChampionshipMatch"]>
+  export type ClanChampionshipMatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "round" | "homeClanId" | "awayClanId" | "homeClanName" | "awayClanName" | "startsAt" | "endsAt" | "placeId" | "westClanId" | "obstacles" | "homeScore" | "awayScore" | "ticksApplied" | "version" | "status" | "winnerClanId", ExtArgs["result"]["clanChampionshipMatch"]>
   export type ClanChampionshipMatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
     homeClan?: boolean | ClanChampionshipMatch$homeClanArgs<ExtArgs>
@@ -69546,6 +69561,10 @@ export namespace Prisma {
       homeScore: number
       awayScore: number
       ticksApplied: number
+      /**
+       * Bumped on every board change, pushed to the match channel
+       */
+      version: number
       status: $Enums.ClanChampionshipMatchStatus
       winnerClanId: number | null
     }, ExtArgs["result"]["clanChampionshipMatch"]>
@@ -69991,6 +70010,7 @@ export namespace Prisma {
     readonly homeScore: FieldRef<"ClanChampionshipMatch", 'Int'>
     readonly awayScore: FieldRef<"ClanChampionshipMatch", 'Int'>
     readonly ticksApplied: FieldRef<"ClanChampionshipMatch", 'Int'>
+    readonly version: FieldRef<"ClanChampionshipMatch", 'Int'>
     readonly status: FieldRef<"ClanChampionshipMatch", 'ClanChampionshipMatchStatus'>
     readonly winnerClanId: FieldRef<"ClanChampionshipMatch", 'Int'>
   }
@@ -97621,6 +97641,7 @@ export namespace Prisma {
     homeScore: 'homeScore',
     awayScore: 'awayScore',
     ticksApplied: 'ticksApplied',
+    version: 'version',
     status: 'status',
     winnerClanId: 'winnerClanId'
   };
@@ -101913,6 +101934,7 @@ export namespace Prisma {
     homeScore?: IntFilter<"ClanChampionshipMatch"> | number
     awayScore?: IntFilter<"ClanChampionshipMatch"> | number
     ticksApplied?: IntFilter<"ClanChampionshipMatch"> | number
+    version?: IntFilter<"ClanChampionshipMatch"> | number
     status?: EnumClanChampionshipMatchStatusFilter<"ClanChampionshipMatch"> | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: IntNullableFilter<"ClanChampionshipMatch"> | number | null
     event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
@@ -101938,6 +101960,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     status?: SortOrder
     winnerClanId?: SortOrderInput | SortOrder
     event?: ClanEventOrderByWithRelationInput
@@ -101966,6 +101989,7 @@ export namespace Prisma {
     homeScore?: IntFilter<"ClanChampionshipMatch"> | number
     awayScore?: IntFilter<"ClanChampionshipMatch"> | number
     ticksApplied?: IntFilter<"ClanChampionshipMatch"> | number
+    version?: IntFilter<"ClanChampionshipMatch"> | number
     status?: EnumClanChampionshipMatchStatusFilter<"ClanChampionshipMatch"> | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: IntNullableFilter<"ClanChampionshipMatch"> | number | null
     event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
@@ -101991,6 +102015,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     status?: SortOrder
     winnerClanId?: SortOrderInput | SortOrder
     _count?: ClanChampionshipMatchCountOrderByAggregateInput
@@ -102019,6 +102044,7 @@ export namespace Prisma {
     homeScore?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
     awayScore?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
     ticksApplied?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
+    version?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
     status?: EnumClanChampionshipMatchStatusWithAggregatesFilter<"ClanChampionshipMatch"> | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: IntNullableWithAggregatesFilter<"ClanChampionshipMatch"> | number | null
   }
@@ -107269,6 +107295,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
@@ -107294,6 +107321,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     pieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutMatchInput
@@ -107313,6 +107341,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
@@ -107338,6 +107367,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     pieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutMatchNestedInput
@@ -107360,6 +107390,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
   }
@@ -107377,6 +107408,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -107397,6 +107429,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -112549,6 +112582,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     status?: SortOrder
     winnerClanId?: SortOrder
   }
@@ -112563,6 +112597,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     winnerClanId?: SortOrder
   }
 
@@ -112581,6 +112616,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     status?: SortOrder
     winnerClanId?: SortOrder
   }
@@ -112600,6 +112636,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     status?: SortOrder
     winnerClanId?: SortOrder
   }
@@ -112614,6 +112651,7 @@ export namespace Prisma {
     homeScore?: SortOrder
     awayScore?: SortOrder
     ticksApplied?: SortOrder
+    version?: SortOrder
     winnerClanId?: SortOrder
   }
 
@@ -137432,6 +137470,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
@@ -137455,6 +137494,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     pieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutMatchInput
@@ -137484,6 +137524,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
@@ -137507,6 +137548,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     pieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutMatchInput
@@ -138085,6 +138127,7 @@ export namespace Prisma {
     homeScore?: IntFilter<"ClanChampionshipMatch"> | number
     awayScore?: IntFilter<"ClanChampionshipMatch"> | number
     ticksApplied?: IntFilter<"ClanChampionshipMatch"> | number
+    version?: IntFilter<"ClanChampionshipMatch"> | number
     status?: EnumClanChampionshipMatchStatusFilter<"ClanChampionshipMatch"> | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: IntNullableFilter<"ClanChampionshipMatch"> | number | null
   }
@@ -139570,6 +139613,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     homeClan?: ClanCreateNestedOneWithoutChampionshipHomeMatchesInput
@@ -139593,6 +139637,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     pieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutMatchInput
@@ -140257,6 +140302,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
@@ -140281,6 +140327,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     fights?: ClanChampionshipFightUncheckedCreateNestedManyWithoutMatchInput
@@ -140423,6 +140470,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
@@ -140447,6 +140495,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     fights?: ClanChampionshipFightUncheckedUpdateManyWithoutMatchNestedInput
@@ -140579,6 +140628,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
@@ -140603,6 +140653,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
     pieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutMatchInput
@@ -140637,6 +140688,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
@@ -140661,6 +140713,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     pieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutMatchNestedInput
@@ -152572,6 +152625,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
   }
@@ -152591,6 +152645,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
   }
@@ -153111,6 +153166,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
@@ -153134,6 +153190,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     pieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutMatchNestedInput
@@ -153155,6 +153212,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -153172,6 +153230,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
@@ -153195,6 +153254,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     pieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutMatchNestedInput
@@ -153216,6 +153276,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -153476,6 +153537,7 @@ export namespace Prisma {
     homeScore?: number
     awayScore?: number
     ticksApplied?: number
+    version?: number
     status?: $Enums.ClanChampionshipMatchStatus
     winnerClanId?: number | null
   }
@@ -153584,6 +153646,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     homeClan?: ClanUpdateOneWithoutChampionshipHomeMatchesNestedInput
@@ -153607,6 +153670,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
     pieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutMatchNestedInput
@@ -153628,6 +153692,7 @@ export namespace Prisma {
     homeScore?: IntFieldUpdateOperationsInput | number
     awayScore?: IntFieldUpdateOperationsInput | number
     ticksApplied?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
     status?: EnumClanChampionshipMatchStatusFieldUpdateOperationsInput | $Enums.ClanChampionshipMatchStatus
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
   }

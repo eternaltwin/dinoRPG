@@ -7,6 +7,10 @@ vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+vi.mock('../../business/serverEventService.js', () => ({
+	publishToWsChannel: vi.fn(),
+	kickPlayerFromWsChannels: vi.fn()
+}));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		clanEvent: { findFirst: vi.fn() },
@@ -50,6 +54,7 @@ const match = (o: Record<string, unknown> = {}) => ({
 	homeScore: 7,
 	awayScore: 3,
 	ticksApplied: 4,
+	version: 12,
 	placeId: 1,
 	obstacles: [5],
 	startsAt: new Date('2026-11-23T18:00:00.000Z'),
@@ -88,6 +93,12 @@ describe('getMyMatchBoard', () => {
 	it('returns null without a live or finished match', async () => {
 		p.clanChampionshipMatch.findFirst.mockResolvedValue(null);
 		expect(await getMyMatchBoard(makeRequest())).toBeNull();
+	});
+
+	it('exposes the board version', async () => {
+		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
+		const board = await getMyMatchBoard(makeRequest());
+		expect(board!.version).toBe(12);
 	});
 
 	it('hides life, maxLife and actionPoints of enemy pieces only', async () => {

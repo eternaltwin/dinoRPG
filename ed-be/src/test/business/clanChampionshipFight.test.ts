@@ -6,6 +6,10 @@ vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+vi.mock('../../business/serverEventService.js', () => ({
+	publishToWsChannel: vi.fn(),
+	kickPlayerFromWsChannels: vi.fn()
+}));
 vi.mock('../../prisma.js', () => ({ prisma: {} }));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
 vi.mock('../../dao/archiveDao.js', () => ({ archiveFight: vi.fn() }));

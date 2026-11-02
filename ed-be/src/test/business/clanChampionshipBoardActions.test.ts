@@ -8,6 +8,10 @@ vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+vi.mock('../../business/serverEventService.js', () => ({
+	publishToWsChannel: vi.fn(),
+	kickPlayerFromWsChannels: vi.fn()
+}));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
 vi.mock('../../dao/archiveDao.js', () => ({ archiveFight: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozForChampionshipFight: vi.fn() }));
@@ -17,7 +21,7 @@ vi.mock('../../prisma.js', () => ({
 		$transaction: vi.fn(),
 		$queryRaw: vi.fn(),
 		clanEvent: { findFirst: vi.fn(), findUnique: vi.fn() },
-		clanChampionshipMatch: { findFirst: vi.fn(), findUnique: vi.fn() },
+		clanChampionshipMatch: { findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
 		clanChampionshipPiece: {
 			findMany: vi.fn(),
 			findUnique: vi.fn(),
@@ -36,6 +40,8 @@ import { calculateFightBetweenPlayers } from '../../business/fightService.js';
 import { archiveFight } from '../../dao/archiveDao.js';
 import { getDinozForChampionshipFight } from '../../dao/dinozDao.js';
 import { auth } from '../../dao/playerDao.js';
+import { LOGGER } from '../../context.js';
+import { publishToWsChannel } from '../../business/serverEventService.js';
 import { prisma } from '../../prisma.js';
 import {
 	enterBoard,
@@ -117,6 +123,7 @@ function setup(m: ReturnType<typeof liveMatch> | null = liveMatch()) {
 	p.dinoz.findUnique.mockResolvedValue(dinozRow());
 	p.dinoz.updateMany.mockResolvedValue({ count: 1 });
 	p.clanMember.findUnique.mockResolvedValue({ clanId: HOME });
+	p.clanChampionshipMatch.update.mockResolvedValue({ version: 7 });
 }
 
 beforeEach(() => {
@@ -417,5 +424,103 @@ describe('removePlayerFromBoards', () => {
 		setup(null);
 		await removePlayerFromBoards(PLAYER, HOME);
 		expect(p.$transaction).not.toHaveBeenCalled();
+	});
+});
+
+describe('board version and realtime publication', () => {
+	const matchId = liveMatch().id;
+	const channel = `WsClanChampionship.${matchId}`;
+	const bumpCall = {
+		where: { id: matchId },
+		data: { version: { increment: 1 } },
+		select: { version: true }
+	};
+	const fightSetup = () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 5, y: 5 }));
+		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: AWAY, x: 6, y: 5 }]);
+		vi.mocked(getDinozForChampionshipFight).mockResolvedValue([]);
+		vi.mocked(calculateFightBetweenPlayers).mockReturnValue({
+			outcome: 0,
+			attackers: [],
+			defenders: [],
+			steps: [],
+			fighters: []
+		} as never);
+		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
+	};
+	const expectPublishedOnce = () => {
+		expect(p.clanChampionshipMatch.update).toHaveBeenCalledTimes(1);
+		expect(p.clanChampionshipMatch.update).toHaveBeenCalledWith(bumpCall);
+		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+		expect(publishToWsChannel).toHaveBeenCalledWith(channel, { type: 'boardChanged', matchId, version: 7 });
+		expect(vi.mocked(publishToWsChannel).mock.invocationCallOrder[0]).toBeGreaterThan(
+			p.clanChampionshipMatch.update.mock.invocationCallOrder[0]
+		);
+	};
+	beforeEach(() => setup());
+
+	it('enterBoard bumps the version and publishes once', async () => {
+		await enterBoard(body({ dinozId: 5 }));
+		expectPublishedOnce();
+	});
+	it('leaveBoard bumps the version and publishes once', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
+		await leaveBoard(body({ dinozId: 5 }));
+		expectPublishedOnce();
+	});
+	it('a move bumps the version and publishes once', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 5, y: 5 }));
+		await moveOnBoard(body({ dinozId: 5, direction: BoardDirection.E }));
+		expectPublishedOnce();
+	});
+	it('a move that triggers a fight bumps once, not once per participant', async () => {
+		fightSetup();
+		await moveOnBoard(body({ dinozId: 5, direction: BoardDirection.E }));
+		expectPublishedOnce();
+	});
+	it('publishes only after the transaction resolved', async () => {
+		let committed = false;
+		p.$transaction.mockImplementation(async (cb: any) => {
+			const r = await cb(p);
+			expect(publishToWsChannel).not.toHaveBeenCalled();
+			committed = true;
+			return r;
+		});
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
+		await leaveBoard(body({ dinozId: 5 }));
+		expect(committed).toBe(true);
+		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+	});
+	it('a rejected action publishes nothing', async () => {
+		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('clanChampionship.notOnBoard');
+		expect(publishToWsChannel).not.toHaveBeenCalled();
+	});
+	it('a failure after the bump (transaction rolled back) publishes nothing', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
+		p.$transaction.mockImplementation(async (cb: any) => {
+			await cb(p);
+			throw new Error('commit failed');
+		});
+		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('commit failed');
+		expect(publishToWsChannel).not.toHaveBeenCalled();
+	});
+	it('a publishing failure is logged, never thrown', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
+		vi.mocked(publishToWsChannel).mockImplementationOnce(() => {
+			throw new Error('socket down');
+		});
+		await expect(leaveBoard(body({ dinozId: 5 }))).resolves.toBeUndefined();
+		expect(LOGGER.error).toHaveBeenCalled();
+	});
+	it('removePlayerFromBoards bumps the version and publishes once', async () => {
+		p.clanChampionshipPiece.findMany.mockResolvedValue([{ dinozId: 5 }]);
+		await removePlayerFromBoards(PLAYER, HOME);
+		expectPublishedOnce();
+	});
+	it('removePlayerFromBoards without pieces changes nothing and publishes nothing', async () => {
+		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
+		await removePlayerFromBoards(PLAYER, HOME);
+		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
+		expect(publishToWsChannel).not.toHaveBeenCalled();
 	});
 });

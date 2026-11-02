@@ -17,6 +17,7 @@ import {
 	connectUserToWsChannel,
 	disconnectWsUser,
 	processWsIncomingMessage,
+	setWebSocketServer,
 	setWsConnectionToAlive
 } from './business/serverEventService.js';
 import { RawData, WebSocketServer } from 'ws';
@@ -79,6 +80,7 @@ export function main(cx: ServerContext) {
 		cx.logger.info(`Server listening on port ${port}`);
 
 		const wss = new WebSocketServer({ port: wssPort });
+		setWebSocketServer(wss as WebSocketServerCustom);
 		handleWsEvents(wss);
 
 		/*// Trigger daily job

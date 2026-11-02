@@ -3,12 +3,7 @@ import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
 import { body, validationResult } from 'express-validator';
 import { BoardDirection } from '@drpg/core/models/clan/clanChampionship';
-import {
-	enterBoard,
-	getMyMatchBoard,
-	leaveBoard,
-	moveOnBoard
-} from '../business/clanChampionshipMatchService.js';
+import { enterBoard, getMyMatchBoard, leaveBoard, moveOnBoard } from '../business/clanChampionshipMatchService.js';
 import { getCurrentChampionship, registerClan, unregisterClan } from '../business/clanChampionshipService.js';
 
 const routes: Router = Router();
