@@ -36,6 +36,22 @@ export async function findActiveChampionshipEvent(tx: Tx = prisma) {
 	return config.phase === 'registration' || config.phase === 'running' ? event : null;
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+/** How long a finished championship stays visible (board, results). */
+export const RESULT_VISIBLE_DAYS = 7;
+
+/** The active championship, else the latest one while its results are still visible. */
+export async function findVisibleChampionshipEvent(tx: Tx = prisma) {
+	const active = await findActiveChampionshipEvent(tx);
+	if (active) return active;
+	const latest = await tx.clanEvent.findFirst({
+		where: { eventType: ClanEventType.championship },
+		orderBy: { startDate: 'desc' }
+	});
+	if (latest && latest.endDate && latest.endDate.getTime() > Date.now() - RESULT_VISIBLE_DAYS * DAY_MS) return latest;
+	return null;
+}
+
 /** Shared advisory-lock key serialising every clan event creation (check + create must be atomic). */
 export const CLAN_EVENT_CREATION_LOCK = 748201;
 
