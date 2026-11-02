@@ -81,32 +81,15 @@ export function advancement(side: Side, x: number): number {
 
 /**
  * Max advancement of own pieces not passed by an enemy piece; 0 if none.
- * A west piece crosses an east piece when its x is greater (east/west mirrored). When two pieces cross each other,
- * only the less advanced one is the passer: a piece is passed by a crossing, unpassed enemy that is strictly less
- * advanced than itself (resolved from the least advanced piece up, so the spec example gives 7 for A and 10 for B).
+ * A west piece at x is passed when some east piece has x' < x; an east piece at x when some west piece has x' > x.
+ * Crossing is mutual: both crossed pieces are passed.
  */
 export function scoreLine(side: Side, own: BoardPiece[], enemies: BoardPiece[]): number {
-	const enemySide: Side = side === 'west' ? 'east' : 'west';
-	const crosses = (westX: number, eastX: number) => westX > eastX;
-	const tagged = [...own.map(p => ({ p, side })), ...enemies.map(p => ({ p, side: enemySide }))].sort(
-		(a, b) => advancement(a.side, a.p.x) - advancement(b.side, b.p.x)
-	);
-	const passed = new Map<BoardPiece, boolean>();
-	for (const { p, side: s } of tagged) {
-		const adv = advancement(s, p.x);
-		passed.set(
-			p,
-			tagged.some(
-				o =>
-					o.side !== s &&
-					advancement(o.side, o.p.x) < adv &&
-					!passed.get(o.p) &&
-					(s === 'west' ? crosses(p.x, o.p.x) : crosses(o.p.x, p.x))
-			)
-		);
-	}
 	let best = 0;
-	for (const p of own) if (!passed.get(p)) best = Math.max(best, advancement(side, p.x));
+	for (const p of own) {
+		const passed = enemies.some(e => (side === 'west' ? e.x < p.x : e.x > p.x));
+		if (!passed) best = Math.max(best, advancement(side, p.x));
+	}
 	return best;
 }
 
