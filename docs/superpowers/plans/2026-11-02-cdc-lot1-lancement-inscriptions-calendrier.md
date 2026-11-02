@@ -2,35 +2,37 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Let an admin launch a Clan Championship (CDC), let clan leaders / war officers register their clan for two weeks, then freeze the list and generate the round-robin calendar (or cancel when fewer than 2 clans registered).
+**Goal:** Let an admin launch a Clan Championship (CDC) as a `ClanEvent` of type `championship`, let clan leaders / war officers register their clan for two weeks, then freeze the list and generate the round-robin calendar (or cancel when fewer than 2 clans registered).
 
-**Architecture:** A dedicated Prisma model `ClanChampionship` (NOT a `ClanEvent`: `eventState()`/`currentWar()` in `ed-be/src/business/clanWar.ts:52-100` pick up *any* active `ClanEvent` regardless of type, so a CDC stored there would be mistaken for a war). Pure date / pairing logic lives in `ed-be/src/utils/clanChampionship/` and is unit-tested without mocks; the business service orchestrates Prisma + `node-schedule` jobs re-armed at boot from DB state (same pattern as `scheduleWarExpiration`, `clanWar.ts:601`). Lots 2–4 (match engine, board UI, standings) build on this.
+**Architecture:** `ClanEvent` becomes a real multi-type container: a new `ClanEventType.championship`, a discriminated-union config, and every war query filtered on war types so a CDC is never mistaken for a war. War and CDC are mutually exclusive: only one clan event (any type) may be ongoing or scheduled at a time. CDC registrations and matches are child tables of `ClanEvent`. Pure date / pairing logic lives in `ed-be/src/utils/clanChampionship/` (unit-tested without mocks); the business service orchestrates Prisma + `node-schedule` jobs re-armed at boot (same pattern as `scheduleWarExpiration`, `ed-be/src/business/clanWar.ts:601`). Lots 2–4 (match engine, board UI, standings) build on this.
 
-**Tech Stack:** Prisma/PostgreSQL, Express, dayjs (+ `utc`/`timezone` plugins, bundled with dayjs), node-schedule, Vitest, Vue 3.
+**Tech Stack:** Prisma/PostgreSQL, Express, dayjs (UTC), node-schedule, Vitest, Vue 3.
 
 **Spec:** `docs/superpowers/specs/2026-11-02-championnat-des-clans-design.md`
 
 ## Global Constraints
 
-- All CDC times are computed in `Europe/Paris` (`CHAMPIONSHIP_TIMEZONE`), stored as UTC `DateTime`.
-- A CDC starts on a Monday; registration lasts 2 weeks: from start Monday 00:00 to start Monday + 14 days 00:00 (Paris).
-- Match slots: Monday 20:00 → Wednesday 20:00 and Thursday 20:00 → Saturday 20:00 (Paris); first slot = the Monday registration closes.
-- Only one CDC in state `registration` or `running` at a time.
+- All CDC times are **UTC** (no timezone handling): use `dayjs.utc` (`dayjs/plugin/utc`) or plain UTC `Date` arithmetic.
+- A CDC starts on a Monday; registration: start Monday 00:00 UTC → start Monday + 14 days 00:00 UTC.
+- Match slots: Monday 18:00 UTC → Wednesday 18:00 UTC, Thursday 18:00 UTC → Saturday 18:00 UTC; first slot = the Monday registration closes.
+- **War and CDC are exclusive**: creating any clan event (war, mana_war or championship) is refused while another clan event is ongoing or scheduled (its `endDate` is after the requested start, or it is a championship not yet closed).
+- War code must only ever see war events: `WAR_EVENT_TYPES = [ClanEventType.war, ClanEventType.mana_war]`.
 - Register/unregister: clan leader or `ClanMemberRight.WAR_OFFICER` only (`playerHasRightRequest` already accepts the leader, `ed-be/src/dao/clansDao.ts:708`).
-- Registration refused while the clan has a war in progress (as attacker or defender, `winnerClanId: null`).
-- A registered clan (CDC in `registration` or `running`) cannot declare or receive a war, and cannot be dissolved.
+- Registration refused while the clan still has a war in progress (attacker or defender, `winnerClanId: null`) — a war declared at the end of a previous war event can outlive it.
+- A clan registered in a CDC that is in `registration` or `running` phase cannot be dissolved.
 - < 2 registered clans at closing → CDC `cancelled`.
-- Round robin, circle method; odd N → one bye per round (no match row for the bye).
+- Round robin, circle method: N even → N−1 rounds; N odd → N rounds with one bye per round (no match row for the bye).
+- Tournaments are untouched by a CDC (keep `tournamentManager.ts:713` filtering on `war` only).
 - Prettier: tabs, single quotes, no trailing commas, 120 cols. Backend imports enums from `@drpg/prisma`, frontend from `@drpg/prisma/enums`.
 - Every user-facing string goes through i18n in fr/en/es/de (backend `ed-be/i18n/*.json`, frontend `ed-ui/src/i18n/locales/*.json`).
 
 ## Review Focus
 
-1. **DST boundary** — a CDC whose slots straddle the last Sunday of March/October must still start at 20:00 Paris local time (UTC hour changes). Test in Task 2.
-2. **Server restart around closing** — if the server is down at `registrationEnd`, the boot scheduler must close registrations immediately, and closing twice must be a no-op (state guard). Test in Task 4.
-3. **Registration at the deadline** — a register/unregister request at or after `registrationEnd` must be refused even if the closing job hasn't run yet. Test in Task 3.
-4. **Admin start date not a Monday / in the past / no places** — rejected with an `ExpectedError`, nothing created. Test in Task 3.
-5. **War declared against a registered clan** (not only by it) — must be refused. Test in Task 5.
+1. **A CDC leaking into war code** — while a CDC is ongoing, `GET /api/v1/clan/war/` must report no event, the dinoz war actions must not appear, and `scheduleWarExpiration` must ignore it. Tests in Task 2.
+2. **Server restart around closing** — if the server is down at `registrationEnd`, the boot scheduler must close registrations immediately, and closing twice must be a no-op (phase guard). Test in Task 5.
+3. **Registration at the deadline** — a register/unregister request at or after `registrationEnd` is refused even if the closing job hasn't run yet. Test in Task 4.
+4. **Admin start date not a Monday / in the past / no places** — rejected with an `ExpectedError`, nothing created. Test in Task 4.
+5. **Overlapping events** — creating a war event while a CDC is in registration (its `endDate` not yet extended), or a CDC while a future war event is scheduled, is refused. Tests in Task 2 and Task 4.
 
 ---
 
@@ -38,71 +40,94 @@
 
 | File | Responsibility |
 |------|----------------|
-| `ed-be/prisma/schema.prisma` (modify) | `ClanChampionship`, `ClanChampionshipRegistration`, `ClanChampionshipMatch`, enum `ClanChampionshipState` |
-| `core/src/models/clan/clanChampionship.mts` (create) | Shared constants + DTO types |
-| `ed-be/src/utils/clanChampionship/schedule.ts` (create) | Pure: registration window, match slots (Paris tz) |
-| `ed-be/src/utils/clanChampionship/roundRobin.ts` (create) | Pure: circle-method pairings |
-| `ed-be/src/business/clanChampionshipService.ts` (create) | Start, register, unregister, close, finish, boot scheduling, `isClanInActiveChampionship` |
+| `ed-be/prisma/schema.prisma` (modify) | `ClanEventType.championship`, `ClanChampionshipRegistration`, `ClanChampionshipMatch` |
+| `core/src/models/clan/clanEventConfig.mts` (modify) | Config discriminated union |
+| `core/src/models/clan/clanChampionship.mts` (create) | CDC constants + DTO types |
+| `ed-be/src/business/clanEventService.ts` (create) | Typed event lookups + exclusivity check shared by war and CDC |
+| `ed-be/src/utils/clanChampionship/schedule.ts`, `roundRobin.ts` (create) | Pure date / pairing logic |
+| `ed-be/src/business/clanChampionshipService.ts` (create) | Start, register, unregister, close, boot scheduling, dissolution guard |
 | `ed-be/src/routes/clan.championship.routes.ts` (create) | Player endpoints |
 | `ed-be/src/routes/admin.routes.ts`, `ed-be/src/routes/index.ts`, `ed-be/src/constants/index.ts`, `ed-be/src/server.ts` (modify) | Wiring |
-| `ed-be/src/business/clanWar.ts`, `ed-be/src/business/clanService.ts` (modify) | War / dissolution guards |
 | `ed-ui/src/services/ClanChampionshipService.ts`, `ed-ui/src/components/clans/ClanChampionship.vue`, `ed-ui/src/components/admin/ChampionshipCreation.vue` (create) | UI |
 
 ---
 
-### Task 1: Schema + shared model
+### Task 1: Schema + shared models
 
 **Files:**
-- Modify: `ed-be/prisma/schema.prisma`
+- Modify: `ed-be/prisma/schema.prisma`, `core/src/models/clan/clanEventConfig.mts`
 - Create: `core/src/models/clan/clanChampionship.mts`
 
 **Interfaces:**
 - Produces (Prisma):
   ```prisma
-  enum ClanChampionshipState { registration running finished cancelled }
+  enum ClanEventType { war mana_war championship }
 
-  model ClanChampionship {
-    id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-    state             ClanChampionshipState @default(registration)
-    registrationStart DateTime @db.Timestamp(6)
-    registrationEnd   DateTime @db.Timestamp(6)
-    places            Int[]
-    createdAt         DateTime @default(now()) @db.Timestamp(6)
-    registrations     ClanChampionshipRegistration[]
-    matches           ClanChampionshipMatch[]
-    @@index([state])
-    @@map("clan_championship")
-  }
   model ClanChampionshipRegistration {
-    id             Int      @id @default(autoincrement())
-    championshipId String   @db.Uuid   // relation onDelete: Cascade
-    clanId         Int                 // relation to Clan
-    registeredById String   @db.Uuid
-    registeredAt   DateTime @default(now()) @db.Timestamp(6)
-    @@unique([championshipId, clanId])
+    id             Int       @id @default(autoincrement())
+    eventId        String    @db.Uuid    // -> ClanEvent, onDelete: Cascade
+    clanId         Int                   // -> Clan, onDelete: Cascade
+    registeredById String    @db.Uuid
+    registeredAt   DateTime  @default(now()) @db.Timestamp(6)
+    @@unique([eventId, clanId])
     @@map("clan_championship_registration")
   }
   model ClanChampionshipMatch {
-    id             String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-    championshipId String   @db.Uuid
-    round          Int      // 0-based, = slot index
-    homeClanId     Int
-    awayClanId     Int
-    startsAt       DateTime @db.Timestamp(6)
-    endsAt         DateTime @db.Timestamp(6)
-    @@index([championshipId, round])
+    id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+    eventId    String   @db.Uuid         // -> ClanEvent, onDelete: Cascade
+    round      Int                       // 0-based = slot index
+    homeClanId Int                       // -> Clan (named relation)
+    awayClanId Int                       // -> Clan (named relation)
+    startsAt   DateTime @db.Timestamp(6)
+    endsAt     DateTime @db.Timestamp(6)
+    @@index([eventId, round])
     @@map("clan_championship_match")
   }
   ```
-  Add the back-relations on `Clan` (`championshipRegistrations`, `championshipHomeMatches` / `championshipAwayMatches` with named relations). Lot 2 will add place / score / board fields to `ClanChampionshipMatch`.
-- Produces (core): `CHAMPIONSHIP_TIMEZONE = 'Europe/Paris'`, `CHAMPIONSHIP_REGISTRATION_WEEKS = 2`, `CHAMPIONSHIP_MATCH_HOUR = 20`, types `ClanChampionshipDTO { id; state; registrationStart; registrationEnd; places: number[]; registrations: { clanId: number; clanName: string }[]; matches: ClanChampionshipMatchDTO[]; myClanRegistered: boolean; canManageRegistration: boolean }`, `ClanChampionshipMatchDTO { id; round; homeClan: { id; name }; awayClan: { id; name }; startsAt; endsAt }`, `ChampionshipForm { start: string /* YYYY-MM-DD */; places: number[] }`.
+  Back-relations: `ClanEvent.championshipRegistrations`, `ClanEvent.championshipMatches`, and on `Clan`. Lot 2 adds place / score / board fields to the match.
+- Produces (core, `clanEventConfig.mts`): rename today's `ClanEventConfig` type to `ClanWarEventConfig` (`eventType: ClanEventType.war | ClanEventType.mana_war`), add
+  ```ts
+  export type ChampionshipPhase = 'registration' | 'running' | 'cancelled' | 'finished';
+  export type ClanChampionshipEventConfig = {
+  	eventType: ClanEventType.championship;
+  	places: PlaceEnum[];
+  	registrationEnd: string; // ISO UTC
+  	phase: ChampionshipPhase;
+  };
+  export type ClanEventConfig = ClanWarEventConfig | ClanChampionshipEventConfig;
+  ```
+  and update existing imports (`adminService.ts:37`, `clanWar.ts:18`) to `ClanWarEventConfig`.
+- Produces (core, `clanChampionship.mts`): `CHAMPIONSHIP_REGISTRATION_WEEKS = 2`, `CHAMPIONSHIP_MATCH_UTC_HOUR = 18`, `ClanChampionshipDTO { id: string; phase: ChampionshipPhase; registrationStart: Date; registrationEnd: Date; endDate: Date; places: number[]; registrations: { clanId: number; clanName: string }[]; matches: ClanChampionshipMatchDTO[]; myClanRegistered: boolean; canManageRegistration: boolean }`, `ClanChampionshipMatchDTO { id: string; round: number; homeClan: { id: number; name: string }; awayClan: { id: number; name: string }; startsAt: Date; endsAt: Date }`, `ChampionshipForm { start: string /* YYYY-MM-DD */; places: number[] }`.
+- Event dates convention for a championship `ClanEvent`: `startDate` = registration start; `endDate` = `registrationEnd` until closing, then the last match `endsAt` (or the closing time when cancelled).
 
-- [ ] **Step 1:** Add the models/enum above to the schema.
-- [ ] **Step 2:** Run `yarn db:migrate:manual` (name it `clan_championship`), then `yarn db:sync:dev`. Expected: migration created under `ed-be/prisma/migrations/`, client regenerated, `ClanChampionshipState` exported from `@drpg/prisma/enums`.
-- [ ] **Step 3:** Create `core/src/models/clan/clanChampionship.mts`; run `yarn build:core`. Expected: success.
-- [ ] **Step 4:** Commit `feat(cdc): schéma et modèle partagé du championnat des clans`.
+- [ ] **Step 1:** Edit schema + core files.
+- [ ] **Step 2:** `yarn db:migrate:manual` (name `clan_championship`), then `yarn db:sync:dev`. Expected: migration under `ed-be/prisma/migrations/`, client regenerated, `ClanEventType.championship` available from `@drpg/prisma/enums`.
+- [ ] **Step 3:** `yarn build:core && yarn build:back` → success (renamed type compiles everywhere).
+- [ ] **Step 4:** Commit `feat(cdc): ClanEvent multi-type et tables du championnat`.
 
-### Task 2: Pure scheduling utils
+### Task 2: ClanEvent typed lookups + exclusivity, war code fixed
+
+**Files:**
+- Create: `ed-be/src/business/clanEventService.ts`
+- Modify: `ed-be/src/business/clanWar.ts` (`eventState` :52, `currentWar` :78, `scheduleWarExpiration` :601), `ed-be/src/business/dinozService.ts:189`, `ed-be/src/business/adminService.ts` (`startClanWarEvent` :1109, `getOngoingEvent` :1147)
+- Test: `ed-be/src/test/business/clanEventService.test.ts`, existing `ed-be/src/test/business/clanWar.test.ts`, `dinozService.test.ts`
+
+**Interfaces:**
+- Produces:
+  - `WAR_EVENT_TYPES: ClanEventType[]` = `[war, mana_war]`.
+  - `findActiveWarEvent(tx = prisma)` — `startDate < now < endDate` **and** `eventType in WAR_EVENT_TYPES`; replaces the three untyped `findFirst` in `clanWar.ts` and the one in `dinozService.ts` (that one keeps its `endDate > now` only semantics + type filter).
+  - `findActiveChampionshipEvent(tx = prisma)` — latest `championship` event whose parsed `config.phase` is `registration` or `running` (query `eventType: championship`, `orderBy: { startDate: 'desc' }`, `take: 1`, then check phase).
+  - `assertNoClanEventOverlap(start: Date, tx = prisma): Promise<void>` — throws `ExpectedError('clanEvent.overlap')` if any `ClanEvent` has `endDate > start`, or `findActiveChampionshipEvent` returns one.
+  - `parseEventConfig(event: { config: string }): ClanEventConfig`.
+- `startClanWarEvent` calls `assertNoClanEventOverlap(startTime)` before creating.
+
+- [ ] **Step 1: Failing tests** (`clanEventService.test.ts`, prisma mocked): `findActiveWarEvent` passes `eventType: { in: [war, mana_war] }` in its `where`; `assertNoClanEventOverlap` throws when `clanEvent.findFirst` returns an event ending after `start`, throws when the latest championship has phase `registration` even if its `endDate` is past, passes otherwise. In `clanWar.test.ts`: `eventState()` returns `undefined` when only a championship exists (assert on the `where` passed to the mock including the war types filter).
+- [ ] **Step 2:** `cd ed-be && yarn vitest run src/test/business/clanEventService.test.ts src/test/business/clanWar.test.ts` → FAIL.
+- [ ] **Step 3:** Implement and replace the call sites; add `clanEvent.overlap` to `ed-be/i18n/{fr,en,es,de}.json`.
+- [ ] **Step 4:** Re-run those files plus `dinozService.test.ts` → PASS (fix existing mocks if they assert the old `where`).
+- [ ] **Step 5:** Commit `feat(cdc): ClanEvent filtré par type et événements exclusifs`.
+
+### Task 3: Pure scheduling utils
 
 **Files:**
 - Create: `ed-be/src/utils/clanChampionship/schedule.ts`, `ed-be/src/utils/clanChampionship/roundRobin.ts`
@@ -110,45 +135,36 @@
 
 **Interfaces:**
 - Produces:
-  - `isParisMonday(date: string): boolean` — `date` is `YYYY-MM-DD`.
+  - `isMonday(date: string): boolean` — `date` is `YYYY-MM-DD`, evaluated in UTC.
   - `computeRegistrationWindow(start: string): { registrationStart: Date; registrationEnd: Date }`
-  - `computeMatchSlots(registrationEnd: Date, count: number): { startsAt: Date; endsAt: Date }[]` — slot `k`: week `⌊k/2⌋` after the `registrationEnd` Monday; even `k` → Mon 20:00→Wed 20:00, odd `k` → Thu 20:00→Sat 20:00 (Paris).
-  - `roundRobin(clanIds: number[]): [home: number, away: number][][]` — one array per round; N even → N−1 rounds of N/2 matches; N odd → N rounds of (N−1)/2 matches (bye = phantom, dropped).
+  - `computeMatchSlots(registrationEnd: Date, count: number): { startsAt: Date; endsAt: Date }[]` — slot `k`: week `⌊k/2⌋` after `registrationEnd`; even `k` → Mon 18:00→Wed 18:00 UTC, odd `k` → Thu 18:00→Sat 18:00 UTC.
+  - `roundRobin(clanIds: number[]): [home: number, away: number][][]`
 
 - [ ] **Step 1: Write the failing tests**
 
 ```ts
 describe('computeRegistrationWindow', () => {
-	it('spans two weeks from Monday 00:00 Paris', () => {
+	it('spans two weeks from Monday 00:00 UTC', () => {
 		const w = computeRegistrationWindow('2026-11-09');
-		expect(w.registrationStart.toISOString()).toBe('2026-11-08T23:00:00.000Z');
-		expect(w.registrationEnd.toISOString()).toBe('2026-11-22T23:00:00.000Z');
-	});
-	it('handles the March DST switch', () => {
-		const w = computeRegistrationWindow('2027-03-15');
-		expect(w.registrationStart.toISOString()).toBe('2027-03-14T23:00:00.000Z');
-		expect(w.registrationEnd.toISOString()).toBe('2027-03-28T22:00:00.000Z');
+		expect(w.registrationStart.toISOString()).toBe('2026-11-09T00:00:00.000Z');
+		expect(w.registrationEnd.toISOString()).toBe('2026-11-23T00:00:00.000Z');
 	});
 });
-describe('isParisMonday', () => {
+describe('isMonday', () => {
 	it('accepts a Monday and rejects a Sunday', () => {
-		expect(isParisMonday('2026-11-09')).toBe(true);
-		expect(isParisMonday('2026-11-08')).toBe(false);
+		expect(isMonday('2026-11-09')).toBe(true);
+		expect(isMonday('2026-11-08')).toBe(false);
 	});
 });
 describe('computeMatchSlots', () => {
-	it('alternates Mon→Wed and Thu→Sat at 20:00 Paris', () => {
+	it('alternates Mon→Wed and Thu→Sat at 18:00 UTC', () => {
 		const end = computeRegistrationWindow('2026-11-09').registrationEnd;
 		const s = computeMatchSlots(end, 3).map(x => [x.startsAt.toISOString(), x.endsAt.toISOString()]);
 		expect(s).toEqual([
-			['2026-11-23T19:00:00.000Z', '2026-11-25T19:00:00.000Z'],
-			['2026-11-26T19:00:00.000Z', '2026-11-28T19:00:00.000Z'],
-			['2026-11-30T19:00:00.000Z', '2026-12-02T19:00:00.000Z']
+			['2026-11-23T18:00:00.000Z', '2026-11-25T18:00:00.000Z'],
+			['2026-11-26T18:00:00.000Z', '2026-11-28T18:00:00.000Z'],
+			['2026-11-30T18:00:00.000Z', '2026-12-02T18:00:00.000Z']
 		]);
-	});
-	it('keeps 20:00 local after DST', () => {
-		const end = computeRegistrationWindow('2027-03-15').registrationEnd;
-		expect(computeMatchSlots(end, 1)[0].startsAt.toISOString()).toBe('2027-03-29T18:00:00.000Z');
 	});
 });
 describe('roundRobin', () => {
@@ -172,65 +188,49 @@ describe('roundRobin', () => {
 });
 ```
 
-- [ ] **Step 2:** `cd ed-be && yarn vitest run src/test/utils/clanChampionshipSchedule.test.ts` → FAIL (modules missing).
-- [ ] **Step 3:** Implement. Use `dayjs.extend(utc); dayjs.extend(timezone)` locally in `schedule.ts` and `dayjs.tz(..., CHAMPIONSHIP_TIMEZONE)`. Round robin: fix the first element, rotate the others; alternate home/away of the fixed element each round so home/away are balanced.
+- [ ] **Step 2:** `cd ed-be && yarn vitest run src/test/utils/clanChampionshipSchedule.test.ts` → FAIL.
+- [ ] **Step 3:** Implement. Round robin: fix the first element, rotate the others; alternate the fixed element's home/away each round.
 - [ ] **Step 4:** Re-run → PASS.
 - [ ] **Step 5:** Commit `feat(cdc): calcul des créneaux et du round-robin`.
 
-### Task 3: Service — start, register, unregister
+### Task 4: Service — start, register, unregister, read
 
 **Files:**
 - Create: `ed-be/src/business/clanChampionshipService.ts`
-- Test: `ed-be/src/test/business/clanChampionshipService.test.ts` (mock `../../prisma.js`, `../../dao/playerDao.js` `auth`, `../../dao/clansDao.js` `playerHasRightRequest`, `node-schedule`, translate → identity; same style as `ed-be/src/test/business/dojoService.test.ts`)
+- Test: `ed-be/src/test/business/clanChampionshipService.test.ts` (mock `../../prisma.js`, `../../dao/playerDao.js` `auth`, `../../dao/clansDao.js` `playerHasRightRequest`, `node-schedule`, translate → identity; style of `ed-be/src/test/business/dojoService.test.ts`)
 
 **Interfaces:**
-- Consumes: Task 2 utils; `auth` (`ed-be/src/dao/playerDao.ts`), `playerHasRightRequest` (`ed-be/src/dao/clansDao.ts:708`), `PlaceEnum`.
+- Consumes: Task 2 `assertNoClanEventOverlap`, `findActiveChampionshipEvent`, `parseEventConfig`; Task 3 utils.
 - Produces:
-  - `startClanChampionship(req: Request): Promise<{ id: string }>` — body `ChampionshipForm`.
-  - `registerClan(req: Request): Promise<void>` / `unregisterClan(req: Request): Promise<void>` — uses `authed.clanId`.
-  - `getCurrentChampionship(req: Request): Promise<ClanChampionshipDTO | null>` — latest CDC in `registration`/`running`, else the latest `finished` one, else `null`; computes `myClanRegistered` and `canManageRegistration` for the caller.
-  - `getActiveChampionship(tx = prisma)` — the CDC in `registration`/`running` or `null`.
-  - `scheduleClosing(championshipId: string, at: Date): void` — `scheduleJob(\`championshipClose_${id}\`, at, () => closeRegistrations(id))` (implemented in Task 4; stub-safe import).
-- Error keys (`ExpectedError(translate(key, authed))`, add to `ed-be/i18n/{fr,en,es,de}.json` under `clanChampionship`): `alreadyActive`, `notMonday`, `startInPast`, `noPlaces`, `notInRegistration`, `alreadyRegistered`, `notRegistered`, `clanAtWar`; reuse existing `noClan`, `noRight`.
+  - `startClanChampionship(req: Request): Promise<{ id: string }>` — body `ChampionshipForm`; creates `ClanEvent { eventType: championship, startDate: registrationStart, endDate: registrationEnd, config: { eventType, places, registrationEnd, phase: 'registration' } }`; schedules `championshipClose_${id}` at `registrationEnd` (calls `closeRegistrations`, Task 5).
+  - `registerClan(req: Request): Promise<void>` / `unregisterClan(req: Request): Promise<void>` — on `authed.clanId`.
+  - `getCurrentChampionship(req: Request): Promise<ClanChampionshipDTO | null>` — `findActiveChampionshipEvent`, else the latest `championship` event if it ended < 7 days ago, else `null`; fills `myClanRegistered` and `canManageRegistration` for the caller.
+- Error keys (`ExpectedError(translate(key, authed))`, under `clanChampionship` in `ed-be/i18n/{fr,en,es,de}.json`): `notMonday`, `startInPast`, `noPlaces`, `notInRegistration`, `alreadyRegistered`, `notRegistered`, `clanAtWar`; reuse `noClan`, `noRight`; overlap uses `clanEvent.overlap` from Task 2.
 
-- [ ] **Step 1: Write failing tests** (one `it` each):
-  - `startClanChampionship` rejects `start: '2026-11-08'` with `clanChampionship.notMonday`, rejects a past Monday with `startInPast`, rejects `places: []` or only invalid ids with `noPlaces`, rejects when `getActiveChampionship` returns a row with `alreadyActive`; on success calls `prisma.clanChampionship.create` with `registrationStart`/`registrationEnd` from `computeRegistrationWindow` and filtered `places`, and calls `scheduleJob` with `registrationEnd`.
-  - `registerClan` rejects without clan (`noClan`), without right (`noRight`), when `now >= registrationEnd` (`notInRegistration`, with `vi.setSystemTime`), when a `clanWar` with `winnerClanId: null` and `attackerClanId` or `defenderClanId` = clan exists (`clanAtWar`), when already registered (`alreadyRegistered`); on success creates the registration with `registeredById: authed.id`.
+- [ ] **Step 1: Failing tests** (one `it` each):
+  - `startClanChampionship` rejects `'2026-11-08'` (`notMonday`), a past Monday (`startInPast`, with `vi.setSystemTime`), `places: []` or only invalid ids (`noPlaces`), and propagates `clanEvent.overlap`; on success calls `prisma.clanEvent.create` with the dates from `computeRegistrationWindow`, filtered places and `phase: 'registration'`, and `scheduleJob` with `registrationEnd`.
+  - `registerClan` rejects without clan (`noClan`), without right (`noRight`), when no active championship or `now >= registrationEnd` (`notInRegistration`), when a `clanWar` with `winnerClanId: null` has the clan as attacker or defender (`clanAtWar`), when already registered (`alreadyRegistered`); on success creates the registration with `registeredById: authed.id`.
   - `unregisterClan` rejects after `registrationEnd` and when not registered; on success deletes the row.
-- [ ] **Step 2:** `cd ed-be && yarn vitest run src/test/business/clanChampionshipService.test.ts` → FAIL.
-- [ ] **Step 3:** Implement. Do the war check + insert inside one `prisma.$transaction`.
-- [ ] **Step 4:** Re-run → PASS.
+- [ ] **Step 2:** Run → FAIL. **Step 3:** Implement (war check + insert in one `prisma.$transaction`). **Step 4:** Run → PASS.
 - [ ] **Step 5:** Commit `feat(cdc): lancement admin et inscriptions des clans`.
 
-### Task 4: Service — closing, finishing, boot scheduling
+### Task 5: Service — closing, boot scheduling, dissolution guard
 
 **Files:**
-- Modify: `ed-be/src/business/clanChampionshipService.ts`, `ed-be/src/server.ts:96-108`
-- Test: `ed-be/src/test/business/clanChampionshipService.test.ts`
+- Modify: `ed-be/src/business/clanChampionshipService.ts`, `ed-be/src/server.ts:96-108`, `ed-be/src/business/clanService.ts` (`deleteClan` :297)
+- Test: `ed-be/src/test/business/clanChampionshipService.test.ts`, `ed-be/src/test/business/clanService.test.ts`
 
 **Interfaces:**
 - Produces:
-  - `closeRegistrations(championshipId: string): Promise<void>` — no-op unless state is `registration`; < 2 registrations → `cancelled`; else `roundRobin` (clan ids shuffled first) + `computeMatchSlots(registrationEnd, rounds.length)` → `createMany` matches (`round` = index), state `running`, then `scheduleJob(\`championshipFinish_${id}\`, lastSlot.endsAt, () => finishChampionship(id))`. All DB writes in one transaction.
-  - `finishChampionship(championshipId: string): Promise<void>` — `running` → `finished` (Lot 2 will hook match resolution before this).
-  - `scheduleClanChampionship(): Promise<void>` — called at boot in `server.ts` next to `scheduleWarExpiration()`: for the active CDC, re-arm the close or finish job, or run it immediately if its date is past.
+  - `closeRegistrations(eventId: string): Promise<void>` — no-op unless `phase === 'registration'`; < 2 registrations → `phase: 'cancelled'`, `endDate = now`; else shuffle clan ids, `roundRobin` + `computeMatchSlots(registrationEnd, rounds.length)` → `createMany` matches (`round` = index), `phase: 'running'`, `endDate` = last slot `endsAt`; schedule `championshipFinish_${id}` at that date → `finishChampionship`. All writes in one transaction.
+  - `finishChampionship(eventId: string): Promise<void>` — `running` → `finished` (Lot 2 will resolve matches before this).
+  - `scheduleClanChampionship(): Promise<void>` — at boot (in `server.ts`, next to `scheduleWarExpiration()`): for `findActiveChampionshipEvent`, re-arm close or finish job, or run it now if its date is past.
+  - `isClanInActiveChampionship(clanId: number, tx = prisma): Promise<boolean>`.
+- Error key: `clanChampionship.registeredNoDelete`.
 
-- [ ] **Step 1: Failing tests:** closing with 1 registration sets `cancelled` and creates no match; closing with 4 creates 6 matches over rounds 0–2 with the Task 2 slot dates; closing a CDC already `running` does nothing; `scheduleClanChampionship` with a `registration` CDC whose `registrationEnd` is past calls the close path immediately, and with a future one calls `scheduleJob` with `registrationEnd`; with a `running` CDC whose last match ended → `finished`.
-- [ ] **Step 2:** Run → FAIL. **Step 3:** Implement + call `scheduleClanChampionship()` in `server.ts`. **Step 4:** Run → PASS.
+- [ ] **Step 1: Failing tests:** closing with 1 registration → `cancelled`, no match; closing with 4 → 6 matches over rounds 0–2 with Task 3 slot dates and `endDate` = `2026-12-02T18:00:00.000Z` for a CDC started `2026-11-09`; closing a `running` CDC does nothing; boot with a `registration` CDC whose `registrationEnd` is past closes immediately, with a future one calls `scheduleJob` at `registrationEnd`; boot with a `running` CDC whose `endDate` is past → `finished`; `deleteClan` rejects with `registeredNoDelete` when `isClanInActiveChampionship` is true.
+- [ ] **Step 2:** Run → FAIL. **Step 3:** Implement + wire `scheduleClanChampionship()` in `server.ts`. **Step 4:** Run → PASS (existing `clanService.test.ts` still green).
 - [ ] **Step 5:** Commit `feat(cdc): clôture des inscriptions et génération du calendrier`.
-
-### Task 5: Guards on war and clan dissolution
-
-**Files:**
-- Modify: `ed-be/src/business/clanChampionshipService.ts`, `ed-be/src/business/clanWar.ts` (`declareWar`, ~line 190), `ed-be/src/business/clanService.ts` (`deleteClan`, line 297)
-- Test: `ed-be/src/test/business/clanWar.test.ts`, `ed-be/src/test/business/clanService.test.ts`
-
-**Interfaces:**
-- Produces: `isClanInActiveChampionship(clanId: number, tx = prisma): Promise<boolean>` — a registration exists for a CDC in `registration`/`running`.
-- Error keys: `clanChampionship.registeredNoWar`, `clanChampionship.registeredNoDelete`.
-
-- [ ] **Step 1: Failing tests:** `declareWar` rejects with `registeredNoWar` when the attacker clan is registered **and** when the target clan is registered (mock `isClanInActiveChampionship`); `deleteClan` rejects with `registeredNoDelete` when the clan is registered.
-- [ ] **Step 2:** Run both test files → FAIL. **Step 3:** Add the checks (in `declareWar` before the transaction, for `authed.clanId` and `+req.params.clanId`). **Step 4:** Run → PASS, and the existing tests in both files still pass.
-- [ ] **Step 5:** Commit `feat(cdc): pas de guerre ni de dissolution pour un clan inscrit`.
 
 ### Task 6: Routes
 
@@ -239,32 +239,31 @@ describe('roundRobin', () => {
 - Modify: `ed-be/src/constants/index.ts` (`clanChampionshipRoutes: '/api/v1/clan/championship'`), `ed-be/src/routes/index.ts` (register **before** `clanRoutes`, like `clanWarRoutes`), `ed-be/src/routes/admin.routes.ts`
 
 **Interfaces:**
-- Produces:
-  - `GET /api/v1/clan/championship` → `ClanChampionshipDTO | null`
-  - `POST /api/v1/clan/championship/registration` → 200
-  - `DELETE /api/v1/clan/championship/registration` → 200
-  - `PUT /api/v1/admin/championship/start` (`checkRole([AdminRole.ADMIN])`, body validated: `start` ISO date, `places` int array) → `{ id }`
-- Follow the `clan.war.routes.ts` style (`sendError`, endpoint list comment).
+- `GET /api/v1/clan/championship` → `ClanChampionshipDTO | null`
+- `POST /api/v1/clan/championship/registration` → 200
+- `DELETE /api/v1/clan/championship/registration` → 200
+- `PUT /api/v1/admin/championship/start` (`checkRole([AdminRole.ADMIN])`, `start` ISO date, `places` int array) → `{ id }`
+- Style of `clan.war.routes.ts` (`sendError`, endpoint list comment).
 
-- [ ] **Step 1:** Implement routes + wiring. **Step 2:** `yarn build:back` → success. **Step 3:** `yarn start:back`, then `curl -s localhost:8081/api/v1/clan/championship` with a dev session cookie → `null` (no CDC yet). **Step 4:** Commit `feat(cdc): routes du championnat`.
+- [ ] **Step 1:** Implement + wiring. **Step 2:** `yarn build:back` → success. **Step 3:** Commit `feat(cdc): routes du championnat`.
 
 ### Task 7: Frontend — admin launch + clan tab
 
 **Files:**
 - Create: `ed-ui/src/services/ClanChampionshipService.ts` (`getCurrent()`, `register()`, `unregister()`), `ed-ui/src/components/admin/ChampionshipCreation.vue`, `ed-ui/src/components/clans/ClanChampionship.vue`
-- Modify: `ed-ui/src/services/AdminService.ts` (`startClanChampionship(form: ChampionshipForm)`), `ed-ui/src/services/index.ts`, `ed-ui/src/router/index.ts` (admin route next to the event one ~187-224; clan child route `championship` / name `ClanChampionship` next to `ClanWar` ~462), `ed-ui/src/pages/Clan/Clan.vue` (tab shown when `getCurrent()` is non-null, icon reused from the war tab set), `ed-ui/src/i18n/locales/{fr,en,es,de}.json` (`clan.tabs.championship`, `clanChampionship.*`)
+- Modify: `ed-ui/src/services/AdminService.ts` (`startClanChampionship(form: ChampionshipForm)`), `ed-ui/src/services/index.ts`, `ed-ui/src/router/index.ts` (admin route next to the event one ~187-224; clan child route `championship` / name `ClanChampionship` next to `ClanWar` ~462), `ed-ui/src/pages/Clan/Clan.vue` (tab shown when `getCurrent()` is non-null), `ed-ui/src/components/admin/EventCreation.vue` (config display copes with the union), `ed-ui/src/i18n/locales/{fr,en,es,de}.json` (`clan.tabs.championship`, `clanChampionship.*`)
 
 **Interfaces:**
 - Consumes: Task 6 endpoints, `ClanChampionshipDTO`, `ChampionshipForm`.
-- `ChampionshipCreation.vue`: date input (Monday) + place checkboxes, same `placeList.filter(p => p.warPlace)` as `EventCreation.vue`; shows the active CDC (state, dates).
-- `ClanChampionship.vue`: state + registration deadline; register / unregister button when `canManageRegistration` and state `registration`; list of registered clans; once `running`, the calendar grouped by round (date range in the player's locale, opponent name, highlight own clan's matches).
+- `ChampionshipCreation.vue`: Monday date input + place checkboxes (`placeList.filter(p => p.warPlace)`, as in `EventCreation.vue`); shows current CDC phase and dates.
+- `ClanChampionship.vue`: phase + registration deadline; register / unregister button when `canManageRegistration` and phase `registration`; registered clans list; when `running`, calendar grouped by round (dates in player locale, opponent name, own clan's matches highlighted).
 
 - [ ] **Step 1:** Implement. **Step 2:** `yarn build:front` and `yarn lint:test` → no errors.
-- [ ] **Step 3:** Manual check with `yarn dev:windows`: as admin launch a CDC on next Monday → as clan leader the tab shows and register works → as a plain member no button → set `registrationEnd` to a past date in DB and restart the backend: the boot path closes registrations and the calendar appears on the tab.
-- [ ] **Step 4:** Commit `feat(cdc): écran admin et onglet championnat du clan`.
+- [ ] **Step 3:** Commit `feat(cdc): écran admin et onglet championnat du clan`.
 
 ### Task 8: Final verification
 
 - [ ] `yarn lint:test` → clean.
-- [ ] `yarn test:ci` → all green, new files covered.
+- [ ] `yarn test:ci` → all green.
 - [ ] `yarn build` → success.
+- [ ] Manual (with `yarn dev:windows`, reported to the user if not runnable here): admin launches a CDC on next Monday → creating a war event now fails with the overlap message → clan leader registers from the tab, plain member sees no button → set the event's `config.registrationEnd` and `endDate` in the past in DB and restart the backend: calendar generated and shown.
