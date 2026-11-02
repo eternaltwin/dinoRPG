@@ -34,7 +34,7 @@ import {
 	updateClanLanguagesRequest
 } from '../dao/clansDao.js';
 import dayjs from 'dayjs';
-import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
+import { ClanWarEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import TournamentManager from '../utils/tournamentManager.js';
 import { OriginalGenerator } from './dungeon/original/index.js';
 import { DungeonCodec } from './dungeon/DungeonCodec.js';
@@ -1118,7 +1118,7 @@ export async function startClanWarEvent(req: Request) {
 	const endTime = dayjs(startTime).add(duration, 'weeks').endOf('day').toDate();
 
 	const warPlaces = places.filter(p => Object.values(PlaceEnum).includes(p)).map(p => p as PlaceEnum);
-	const config: ClanEventConfig = {
+	const config: ClanWarEventConfig = {
 		eventType: ClanEventType.war,
 		rewards: {
 			winner: winnerReward as Reward,

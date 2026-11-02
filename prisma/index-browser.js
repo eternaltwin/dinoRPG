@@ -586,6 +586,24 @@ exports.Prisma.ClanEventScalarFieldEnum = {
   config: 'config'
 };
 
+exports.Prisma.ClanChampionshipRegistrationScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  clanId: 'clanId',
+  registeredById: 'registeredById',
+  registeredAt: 'registeredAt'
+};
+
+exports.Prisma.ClanChampionshipMatchScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  round: 'round',
+  homeClanId: 'homeClanId',
+  awayClanId: 'awayClanId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt'
+};
+
 exports.Prisma.ClanIngredientScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
@@ -954,7 +972,8 @@ exports.PantheonMotif = exports.$Enums.PantheonMotif = {
 
 exports.ClanEventType = exports.$Enums.ClanEventType = {
   war: 'war',
-  mana_war: 'mana_war'
+  mana_war: 'mana_war',
+  championship: 'championship'
 };
 
 exports.ModerationReason = exports.$Enums.ModerationReason = {
@@ -1075,6 +1094,8 @@ exports.Prisma.ModelName = {
   ClanWar: 'ClanWar',
   ClanWarRanking: 'ClanWarRanking',
   ClanEvent: 'ClanEvent',
+  ClanChampionshipRegistration: 'ClanChampionshipRegistration',
+  ClanChampionshipMatch: 'ClanChampionshipMatch',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',

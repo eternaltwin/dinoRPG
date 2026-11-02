@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
-import { ClanEventConfig } from '@drpg/core/models/clan/clanEventConfig';
+import { ClanWarEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 
 vi.mock('../../context.js', () => ({ LOGGER: { log: vi.fn(), error: vi.fn() } }));
 vi.mock('../../dao/clansDao.js', () => ({
@@ -72,7 +72,7 @@ import {
 } from '../../business/clanWar.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
-const warConfig: ClanEventConfig = { warPlaces: [1, 2], fight: { defenderActiveMax: 5 } } as never;
+const warConfig: ClanWarEventConfig = { warPlaces: [1, 2], fight: { defenderActiveMax: 5 } } as never;
 const ongoingWar = () => ({
 	id: 'w1',
 	endDate: new Date(Date.now() + 1000000),

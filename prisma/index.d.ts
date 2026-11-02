@@ -264,6 +264,16 @@ export type ClanWarRanking = $Result.DefaultSelection<Prisma.$ClanWarRankingPayl
  */
 export type ClanEvent = $Result.DefaultSelection<Prisma.$ClanEventPayload>
 /**
+ * Model ClanChampionshipRegistration
+ * 
+ */
+export type ClanChampionshipRegistration = $Result.DefaultSelection<Prisma.$ClanChampionshipRegistrationPayload>
+/**
+ * Model ClanChampionshipMatch
+ * 
+ */
+export type ClanChampionshipMatch = $Result.DefaultSelection<Prisma.$ClanChampionshipMatchPayload>
+/**
  * Model ClanIngredient
  * 
  */
@@ -581,7 +591,8 @@ export type EventType = (typeof EventType)[keyof typeof EventType]
 
 export const ClanEventType: {
   war: 'war',
-  mana_war: 'mana_war'
+  mana_war: 'mana_war',
+  championship: 'championship'
 };
 
 export type ClanEventType = (typeof ClanEventType)[keyof typeof ClanEventType]
@@ -1272,6 +1283,26 @@ export class PrismaClient<
     * ```
     */
   get clanEvent(): Prisma.ClanEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanChampionshipRegistration`: Exposes CRUD operations for the **ClanChampionshipRegistration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanChampionshipRegistrations
+    * const clanChampionshipRegistrations = await prisma.clanChampionshipRegistration.findMany()
+    * ```
+    */
+  get clanChampionshipRegistration(): Prisma.ClanChampionshipRegistrationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanChampionshipMatch`: Exposes CRUD operations for the **ClanChampionshipMatch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanChampionshipMatches
+    * const clanChampionshipMatches = await prisma.clanChampionshipMatch.findMany()
+    * ```
+    */
+  get clanChampionshipMatch(): Prisma.ClanChampionshipMatchDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.clanIngredient`: Exposes CRUD operations for the **ClanIngredient** model.
@@ -1968,6 +1999,8 @@ export namespace Prisma {
     ClanWar: 'ClanWar',
     ClanWarRanking: 'ClanWarRanking',
     ClanEvent: 'ClanEvent',
+    ClanChampionshipRegistration: 'ClanChampionshipRegistration',
+    ClanChampionshipMatch: 'ClanChampionshipMatch',
     ClanIngredient: 'ClanIngredient',
     ClanMessage: 'ClanMessage',
     ClanHistory: 'ClanHistory',
@@ -2003,7 +2036,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerEternaltwinToken" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerEternaltwinToken" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanChampionshipRegistration" | "clanChampionshipMatch" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5633,6 +5666,154 @@ export namespace Prisma {
           }
         }
       }
+      ClanChampionshipRegistration: {
+        payload: Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>
+        fields: Prisma.ClanChampionshipRegistrationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanChampionshipRegistrationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanChampionshipRegistrationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanChampionshipRegistrationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanChampionshipRegistrationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          findMany: {
+            args: Prisma.ClanChampionshipRegistrationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>[]
+          }
+          create: {
+            args: Prisma.ClanChampionshipRegistrationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          createMany: {
+            args: Prisma.ClanChampionshipRegistrationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanChampionshipRegistrationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanChampionshipRegistrationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          update: {
+            args: Prisma.ClanChampionshipRegistrationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanChampionshipRegistrationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanChampionshipRegistrationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanChampionshipRegistrationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanChampionshipRegistrationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipRegistrationPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanChampionshipRegistrationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanChampionshipRegistration>
+          }
+          groupBy: {
+            args: Prisma.ClanChampionshipRegistrationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanChampionshipRegistrationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanChampionshipRegistrationCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanChampionshipRegistrationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanChampionshipMatch: {
+        payload: Prisma.$ClanChampionshipMatchPayload<ExtArgs>
+        fields: Prisma.ClanChampionshipMatchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanChampionshipMatchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanChampionshipMatchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanChampionshipMatchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanChampionshipMatchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          findMany: {
+            args: Prisma.ClanChampionshipMatchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>[]
+          }
+          create: {
+            args: Prisma.ClanChampionshipMatchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          createMany: {
+            args: Prisma.ClanChampionshipMatchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanChampionshipMatchCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanChampionshipMatchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          update: {
+            args: Prisma.ClanChampionshipMatchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanChampionshipMatchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanChampionshipMatchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanChampionshipMatchUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanChampionshipMatchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanChampionshipMatchPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanChampionshipMatchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanChampionshipMatch>
+          }
+          groupBy: {
+            args: Prisma.ClanChampionshipMatchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanChampionshipMatchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanChampionshipMatchCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanChampionshipMatchCountAggregateOutputType> | number
+          }
+        }
+      }
       ClanIngredient: {
         payload: Prisma.$ClanIngredientPayload<ExtArgs>
         fields: Prisma.ClanIngredientFieldRefs
@@ -7285,6 +7466,8 @@ export namespace Prisma {
     clanWar?: ClanWarOmit
     clanWarRanking?: ClanWarRankingOmit
     clanEvent?: ClanEventOmit
+    clanChampionshipRegistration?: ClanChampionshipRegistrationOmit
+    clanChampionshipMatch?: ClanChampionshipMatchOmit
     clanIngredient?: ClanIngredientOmit
     clanMessage?: ClanMessageOmit
     clanHistory?: ClanHistoryOmit
@@ -8206,6 +8389,9 @@ export namespace Prisma {
     players: number
     targetedCases: number
     warWon: number
+    championshipRegistrations: number
+    championshipHomeMatches: number
+    championshipAwayMatches: number
   }
 
   export type ClanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8221,6 +8407,9 @@ export namespace Prisma {
     players?: boolean | ClanCountOutputTypeCountPlayersArgs
     targetedCases?: boolean | ClanCountOutputTypeCountTargetedCasesArgs
     warWon?: boolean | ClanCountOutputTypeCountWarWonArgs
+    championshipRegistrations?: boolean | ClanCountOutputTypeCountChampionshipRegistrationsArgs
+    championshipHomeMatches?: boolean | ClanCountOutputTypeCountChampionshipHomeMatchesArgs
+    championshipAwayMatches?: boolean | ClanCountOutputTypeCountChampionshipAwayMatchesArgs
   }
 
   // Custom InputTypes
@@ -8318,6 +8507,27 @@ export namespace Prisma {
     where?: ClanWarWhereInput
   }
 
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountChampionshipRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipRegistrationWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountChampionshipHomeMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipMatchWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountChampionshipAwayMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipMatchWhereInput
+  }
+
 
   /**
    * Count Type ClanCastleCountOutputType
@@ -8366,11 +8576,15 @@ export namespace Prisma {
   export type ClanEventCountOutputType = {
     clanWarRankings: number
     clanWars: number
+    championshipRegistrations: number
+    championshipMatches: number
   }
 
   export type ClanEventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clanWarRankings?: boolean | ClanEventCountOutputTypeCountClanWarRankingsArgs
     clanWars?: boolean | ClanEventCountOutputTypeCountClanWarsArgs
+    championshipRegistrations?: boolean | ClanEventCountOutputTypeCountChampionshipRegistrationsArgs
+    championshipMatches?: boolean | ClanEventCountOutputTypeCountChampionshipMatchesArgs
   }
 
   // Custom InputTypes
@@ -8396,6 +8610,20 @@ export namespace Prisma {
    */
   export type ClanEventCountOutputTypeCountClanWarsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ClanWarWhereInput
+  }
+
+  /**
+   * ClanEventCountOutputType without action
+   */
+  export type ClanEventCountOutputTypeCountChampionshipRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipRegistrationWhereInput
+  }
+
+  /**
+   * ClanEventCountOutputType without action
+   */
+  export type ClanEventCountOutputTypeCountChampionshipMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipMatchWhereInput
   }
 
 
@@ -59029,6 +59257,9 @@ export namespace Prisma {
     players?: boolean | Clan$playersArgs<ExtArgs>
     targetedCases?: boolean | Clan$targetedCasesArgs<ExtArgs>
     warWon?: boolean | Clan$warWonArgs<ExtArgs>
+    championshipRegistrations?: boolean | Clan$championshipRegistrationsArgs<ExtArgs>
+    championshipHomeMatches?: boolean | Clan$championshipHomeMatchesArgs<ExtArgs>
+    championshipAwayMatches?: boolean | Clan$championshipAwayMatchesArgs<ExtArgs>
     _count?: boolean | ClanCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clan"]>
 
@@ -59080,6 +59311,9 @@ export namespace Prisma {
     players?: boolean | Clan$playersArgs<ExtArgs>
     targetedCases?: boolean | Clan$targetedCasesArgs<ExtArgs>
     warWon?: boolean | Clan$warWonArgs<ExtArgs>
+    championshipRegistrations?: boolean | Clan$championshipRegistrationsArgs<ExtArgs>
+    championshipHomeMatches?: boolean | Clan$championshipHomeMatchesArgs<ExtArgs>
+    championshipAwayMatches?: boolean | Clan$championshipAwayMatchesArgs<ExtArgs>
     _count?: boolean | ClanCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -59106,6 +59340,9 @@ export namespace Prisma {
       players: Prisma.$PlayerPayload<ExtArgs>[]
       targetedCases: Prisma.$ModerationPayload<ExtArgs>[]
       warWon: Prisma.$ClanWarPayload<ExtArgs>[]
+      championshipRegistrations: Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>[]
+      championshipHomeMatches: Prisma.$ClanChampionshipMatchPayload<ExtArgs>[]
+      championshipAwayMatches: Prisma.$ClanChampionshipMatchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -59523,6 +59760,9 @@ export namespace Prisma {
     players<T extends Clan$playersArgs<ExtArgs> = {}>(args?: Subset<T, Clan$playersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     targetedCases<T extends Clan$targetedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Clan$targetedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     warWon<T extends Clan$warWonArgs<ExtArgs> = {}>(args?: Subset<T, Clan$warWonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    championshipRegistrations<T extends Clan$championshipRegistrationsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$championshipRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    championshipHomeMatches<T extends Clan$championshipHomeMatchesArgs<ExtArgs> = {}>(args?: Subset<T, Clan$championshipHomeMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    championshipAwayMatches<T extends Clan$championshipAwayMatchesArgs<ExtArgs> = {}>(args?: Subset<T, Clan$championshipAwayMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -60273,6 +60513,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ClanWarScalarFieldEnum | ClanWarScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.championshipRegistrations
+   */
+  export type Clan$championshipRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    where?: ClanChampionshipRegistrationWhereInput
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanChampionshipRegistrationScalarFieldEnum | ClanChampionshipRegistrationScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.championshipHomeMatches
+   */
+  export type Clan$championshipHomeMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    where?: ClanChampionshipMatchWhereInput
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.championshipAwayMatches
+   */
+  export type Clan$championshipAwayMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    where?: ClanChampionshipMatchWhereInput
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
   }
 
   /**
@@ -66339,6 +66651,8 @@ export namespace Prisma {
     config?: boolean
     clanWarRankings?: boolean | ClanEvent$clanWarRankingsArgs<ExtArgs>
     clanWars?: boolean | ClanEvent$clanWarsArgs<ExtArgs>
+    championshipRegistrations?: boolean | ClanEvent$championshipRegistrationsArgs<ExtArgs>
+    championshipMatches?: boolean | ClanEvent$championshipMatchesArgs<ExtArgs>
     _count?: boolean | ClanEventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clanEvent"]>
 
@@ -66370,6 +66684,8 @@ export namespace Prisma {
   export type ClanEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clanWarRankings?: boolean | ClanEvent$clanWarRankingsArgs<ExtArgs>
     clanWars?: boolean | ClanEvent$clanWarsArgs<ExtArgs>
+    championshipRegistrations?: boolean | ClanEvent$championshipRegistrationsArgs<ExtArgs>
+    championshipMatches?: boolean | ClanEvent$championshipMatchesArgs<ExtArgs>
     _count?: boolean | ClanEventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClanEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -66380,6 +66696,8 @@ export namespace Prisma {
     objects: {
       clanWarRankings: Prisma.$ClanWarRankingPayload<ExtArgs>[]
       clanWars: Prisma.$ClanWarPayload<ExtArgs>[]
+      championshipRegistrations: Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>[]
+      championshipMatches: Prisma.$ClanChampionshipMatchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -66783,6 +67101,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     clanWarRankings<T extends ClanEvent$clanWarRankingsArgs<ExtArgs> = {}>(args?: Subset<T, ClanEvent$clanWarRankingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarRankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     clanWars<T extends ClanEvent$clanWarsArgs<ExtArgs> = {}>(args?: Subset<T, ClanEvent$clanWarsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    championshipRegistrations<T extends ClanEvent$championshipRegistrationsArgs<ExtArgs> = {}>(args?: Subset<T, ClanEvent$championshipRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    championshipMatches<T extends ClanEvent$championshipMatchesArgs<ExtArgs> = {}>(args?: Subset<T, ClanEvent$championshipMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -67267,6 +67587,54 @@ export namespace Prisma {
   }
 
   /**
+   * ClanEvent.championshipRegistrations
+   */
+  export type ClanEvent$championshipRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    where?: ClanChampionshipRegistrationWhereInput
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanChampionshipRegistrationScalarFieldEnum | ClanChampionshipRegistrationScalarFieldEnum[]
+  }
+
+  /**
+   * ClanEvent.championshipMatches
+   */
+  export type ClanEvent$championshipMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    where?: ClanChampionshipMatchWhereInput
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
+  }
+
+  /**
    * ClanEvent without action
    */
   export type ClanEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -67282,6 +67650,2280 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ClanEventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanChampionshipRegistration
+   */
+
+  export type AggregateClanChampionshipRegistration = {
+    _count: ClanChampionshipRegistrationCountAggregateOutputType | null
+    _avg: ClanChampionshipRegistrationAvgAggregateOutputType | null
+    _sum: ClanChampionshipRegistrationSumAggregateOutputType | null
+    _min: ClanChampionshipRegistrationMinAggregateOutputType | null
+    _max: ClanChampionshipRegistrationMaxAggregateOutputType | null
+  }
+
+  export type ClanChampionshipRegistrationAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanChampionshipRegistrationSumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanChampionshipRegistrationMinAggregateOutputType = {
+    id: number | null
+    eventId: string | null
+    clanId: number | null
+    registeredById: string | null
+    registeredAt: Date | null
+  }
+
+  export type ClanChampionshipRegistrationMaxAggregateOutputType = {
+    id: number | null
+    eventId: string | null
+    clanId: number | null
+    registeredById: string | null
+    registeredAt: Date | null
+  }
+
+  export type ClanChampionshipRegistrationCountAggregateOutputType = {
+    id: number
+    eventId: number
+    clanId: number
+    registeredById: number
+    registeredAt: number
+    _all: number
+  }
+
+
+  export type ClanChampionshipRegistrationAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanChampionshipRegistrationSumAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanChampionshipRegistrationMinAggregateInputType = {
+    id?: true
+    eventId?: true
+    clanId?: true
+    registeredById?: true
+    registeredAt?: true
+  }
+
+  export type ClanChampionshipRegistrationMaxAggregateInputType = {
+    id?: true
+    eventId?: true
+    clanId?: true
+    registeredById?: true
+    registeredAt?: true
+  }
+
+  export type ClanChampionshipRegistrationCountAggregateInputType = {
+    id?: true
+    eventId?: true
+    clanId?: true
+    registeredById?: true
+    registeredAt?: true
+    _all?: true
+  }
+
+  export type ClanChampionshipRegistrationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanChampionshipRegistration to aggregate.
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipRegistrations to fetch.
+     */
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanChampionshipRegistrations
+    **/
+    _count?: true | ClanChampionshipRegistrationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanChampionshipRegistrationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanChampionshipRegistrationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanChampionshipRegistrationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanChampionshipRegistrationMaxAggregateInputType
+  }
+
+  export type GetClanChampionshipRegistrationAggregateType<T extends ClanChampionshipRegistrationAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanChampionshipRegistration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanChampionshipRegistration[P]>
+      : GetScalarType<T[P], AggregateClanChampionshipRegistration[P]>
+  }
+
+
+
+
+  export type ClanChampionshipRegistrationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipRegistrationWhereInput
+    orderBy?: ClanChampionshipRegistrationOrderByWithAggregationInput | ClanChampionshipRegistrationOrderByWithAggregationInput[]
+    by: ClanChampionshipRegistrationScalarFieldEnum[] | ClanChampionshipRegistrationScalarFieldEnum
+    having?: ClanChampionshipRegistrationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanChampionshipRegistrationCountAggregateInputType | true
+    _avg?: ClanChampionshipRegistrationAvgAggregateInputType
+    _sum?: ClanChampionshipRegistrationSumAggregateInputType
+    _min?: ClanChampionshipRegistrationMinAggregateInputType
+    _max?: ClanChampionshipRegistrationMaxAggregateInputType
+  }
+
+  export type ClanChampionshipRegistrationGroupByOutputType = {
+    id: number
+    eventId: string
+    clanId: number
+    registeredById: string
+    registeredAt: Date
+    _count: ClanChampionshipRegistrationCountAggregateOutputType | null
+    _avg: ClanChampionshipRegistrationAvgAggregateOutputType | null
+    _sum: ClanChampionshipRegistrationSumAggregateOutputType | null
+    _min: ClanChampionshipRegistrationMinAggregateOutputType | null
+    _max: ClanChampionshipRegistrationMaxAggregateOutputType | null
+  }
+
+  type GetClanChampionshipRegistrationGroupByPayload<T extends ClanChampionshipRegistrationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanChampionshipRegistrationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanChampionshipRegistrationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanChampionshipRegistrationGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanChampionshipRegistrationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanChampionshipRegistrationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    clanId?: boolean
+    registeredById?: boolean
+    registeredAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipRegistration"]>
+
+  export type ClanChampionshipRegistrationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    clanId?: boolean
+    registeredById?: boolean
+    registeredAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipRegistration"]>
+
+  export type ClanChampionshipRegistrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    clanId?: boolean
+    registeredById?: boolean
+    registeredAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipRegistration"]>
+
+  export type ClanChampionshipRegistrationSelectScalar = {
+    id?: boolean
+    eventId?: boolean
+    clanId?: boolean
+    registeredById?: boolean
+    registeredAt?: boolean
+  }
+
+  export type ClanChampionshipRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "clanId" | "registeredById" | "registeredAt", ExtArgs["result"]["clanChampionshipRegistration"]>
+  export type ClanChampionshipRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanChampionshipRegistrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanChampionshipRegistrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanChampionshipRegistrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanChampionshipRegistration"
+    objects: {
+      event: Prisma.$ClanEventPayload<ExtArgs>
+      clan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      eventId: string
+      clanId: number
+      registeredById: string
+      registeredAt: Date
+    }, ExtArgs["result"]["clanChampionshipRegistration"]>
+    composites: {}
+  }
+
+  type ClanChampionshipRegistrationGetPayload<S extends boolean | null | undefined | ClanChampionshipRegistrationDefaultArgs> = $Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload, S>
+
+  type ClanChampionshipRegistrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanChampionshipRegistrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanChampionshipRegistrationCountAggregateInputType | true
+    }
+
+  export interface ClanChampionshipRegistrationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanChampionshipRegistration'], meta: { name: 'ClanChampionshipRegistration' } }
+    /**
+     * Find zero or one ClanChampionshipRegistration that matches the filter.
+     * @param {ClanChampionshipRegistrationFindUniqueArgs} args - Arguments to find a ClanChampionshipRegistration
+     * @example
+     * // Get one ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanChampionshipRegistrationFindUniqueArgs>(args: SelectSubset<T, ClanChampionshipRegistrationFindUniqueArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanChampionshipRegistration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanChampionshipRegistrationFindUniqueOrThrowArgs} args - Arguments to find a ClanChampionshipRegistration
+     * @example
+     * // Get one ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanChampionshipRegistrationFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanChampionshipRegistrationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanChampionshipRegistration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationFindFirstArgs} args - Arguments to find a ClanChampionshipRegistration
+     * @example
+     * // Get one ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanChampionshipRegistrationFindFirstArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationFindFirstArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanChampionshipRegistration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationFindFirstOrThrowArgs} args - Arguments to find a ClanChampionshipRegistration
+     * @example
+     * // Get one ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanChampionshipRegistrationFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanChampionshipRegistrations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanChampionshipRegistrations
+     * const clanChampionshipRegistrations = await prisma.clanChampionshipRegistration.findMany()
+     * 
+     * // Get first 10 ClanChampionshipRegistrations
+     * const clanChampionshipRegistrations = await prisma.clanChampionshipRegistration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanChampionshipRegistrationWithIdOnly = await prisma.clanChampionshipRegistration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanChampionshipRegistrationFindManyArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanChampionshipRegistration.
+     * @param {ClanChampionshipRegistrationCreateArgs} args - Arguments to create a ClanChampionshipRegistration.
+     * @example
+     * // Create one ClanChampionshipRegistration
+     * const ClanChampionshipRegistration = await prisma.clanChampionshipRegistration.create({
+     *   data: {
+     *     // ... data to create a ClanChampionshipRegistration
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanChampionshipRegistrationCreateArgs>(args: SelectSubset<T, ClanChampionshipRegistrationCreateArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanChampionshipRegistrations.
+     * @param {ClanChampionshipRegistrationCreateManyArgs} args - Arguments to create many ClanChampionshipRegistrations.
+     * @example
+     * // Create many ClanChampionshipRegistrations
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanChampionshipRegistrationCreateManyArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanChampionshipRegistrations and returns the data saved in the database.
+     * @param {ClanChampionshipRegistrationCreateManyAndReturnArgs} args - Arguments to create many ClanChampionshipRegistrations.
+     * @example
+     * // Create many ClanChampionshipRegistrations
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanChampionshipRegistrations and only return the `id`
+     * const clanChampionshipRegistrationWithIdOnly = await prisma.clanChampionshipRegistration.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanChampionshipRegistrationCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanChampionshipRegistration.
+     * @param {ClanChampionshipRegistrationDeleteArgs} args - Arguments to delete one ClanChampionshipRegistration.
+     * @example
+     * // Delete one ClanChampionshipRegistration
+     * const ClanChampionshipRegistration = await prisma.clanChampionshipRegistration.delete({
+     *   where: {
+     *     // ... filter to delete one ClanChampionshipRegistration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanChampionshipRegistrationDeleteArgs>(args: SelectSubset<T, ClanChampionshipRegistrationDeleteArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanChampionshipRegistration.
+     * @param {ClanChampionshipRegistrationUpdateArgs} args - Arguments to update one ClanChampionshipRegistration.
+     * @example
+     * // Update one ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanChampionshipRegistrationUpdateArgs>(args: SelectSubset<T, ClanChampionshipRegistrationUpdateArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanChampionshipRegistrations.
+     * @param {ClanChampionshipRegistrationDeleteManyArgs} args - Arguments to filter ClanChampionshipRegistrations to delete.
+     * @example
+     * // Delete a few ClanChampionshipRegistrations
+     * const { count } = await prisma.clanChampionshipRegistration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanChampionshipRegistrationDeleteManyArgs>(args?: SelectSubset<T, ClanChampionshipRegistrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanChampionshipRegistrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanChampionshipRegistrations
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanChampionshipRegistrationUpdateManyArgs>(args: SelectSubset<T, ClanChampionshipRegistrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanChampionshipRegistrations and returns the data updated in the database.
+     * @param {ClanChampionshipRegistrationUpdateManyAndReturnArgs} args - Arguments to update many ClanChampionshipRegistrations.
+     * @example
+     * // Update many ClanChampionshipRegistrations
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanChampionshipRegistrations and only return the `id`
+     * const clanChampionshipRegistrationWithIdOnly = await prisma.clanChampionshipRegistration.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanChampionshipRegistrationUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanChampionshipRegistrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanChampionshipRegistration.
+     * @param {ClanChampionshipRegistrationUpsertArgs} args - Arguments to update or create a ClanChampionshipRegistration.
+     * @example
+     * // Update or create a ClanChampionshipRegistration
+     * const clanChampionshipRegistration = await prisma.clanChampionshipRegistration.upsert({
+     *   create: {
+     *     // ... data to create a ClanChampionshipRegistration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanChampionshipRegistration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanChampionshipRegistrationUpsertArgs>(args: SelectSubset<T, ClanChampionshipRegistrationUpsertArgs<ExtArgs>>): Prisma__ClanChampionshipRegistrationClient<$Result.GetResult<Prisma.$ClanChampionshipRegistrationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanChampionshipRegistrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationCountArgs} args - Arguments to filter ClanChampionshipRegistrations to count.
+     * @example
+     * // Count the number of ClanChampionshipRegistrations
+     * const count = await prisma.clanChampionshipRegistration.count({
+     *   where: {
+     *     // ... the filter for the ClanChampionshipRegistrations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanChampionshipRegistrationCountArgs>(
+      args?: Subset<T, ClanChampionshipRegistrationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanChampionshipRegistrationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanChampionshipRegistration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanChampionshipRegistrationAggregateArgs>(args: Subset<T, ClanChampionshipRegistrationAggregateArgs>): Prisma.PrismaPromise<GetClanChampionshipRegistrationAggregateType<T>>
+
+    /**
+     * Group by ClanChampionshipRegistration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipRegistrationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanChampionshipRegistrationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanChampionshipRegistrationGroupByArgs['orderBy'] }
+        : { orderBy?: ClanChampionshipRegistrationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanChampionshipRegistrationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanChampionshipRegistrationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanChampionshipRegistration model
+   */
+  readonly fields: ClanChampionshipRegistrationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanChampionshipRegistration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanChampionshipRegistrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    event<T extends ClanEventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanEventDefaultArgs<ExtArgs>>): Prisma__ClanEventClient<$Result.GetResult<Prisma.$ClanEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanChampionshipRegistration model
+   */
+  interface ClanChampionshipRegistrationFieldRefs {
+    readonly id: FieldRef<"ClanChampionshipRegistration", 'Int'>
+    readonly eventId: FieldRef<"ClanChampionshipRegistration", 'String'>
+    readonly clanId: FieldRef<"ClanChampionshipRegistration", 'Int'>
+    readonly registeredById: FieldRef<"ClanChampionshipRegistration", 'String'>
+    readonly registeredAt: FieldRef<"ClanChampionshipRegistration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanChampionshipRegistration findUnique
+   */
+  export type ClanChampionshipRegistrationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipRegistration to fetch.
+     */
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration findUniqueOrThrow
+   */
+  export type ClanChampionshipRegistrationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipRegistration to fetch.
+     */
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration findFirst
+   */
+  export type ClanChampionshipRegistrationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipRegistration to fetch.
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipRegistrations to fetch.
+     */
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanChampionshipRegistrations.
+     */
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipRegistrations.
+     */
+    distinct?: ClanChampionshipRegistrationScalarFieldEnum | ClanChampionshipRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration findFirstOrThrow
+   */
+  export type ClanChampionshipRegistrationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipRegistration to fetch.
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipRegistrations to fetch.
+     */
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanChampionshipRegistrations.
+     */
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipRegistrations.
+     */
+    distinct?: ClanChampionshipRegistrationScalarFieldEnum | ClanChampionshipRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration findMany
+   */
+  export type ClanChampionshipRegistrationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipRegistrations to fetch.
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipRegistrations to fetch.
+     */
+    orderBy?: ClanChampionshipRegistrationOrderByWithRelationInput | ClanChampionshipRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanChampionshipRegistrations.
+     */
+    cursor?: ClanChampionshipRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipRegistrations.
+     */
+    distinct?: ClanChampionshipRegistrationScalarFieldEnum | ClanChampionshipRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration create
+   */
+  export type ClanChampionshipRegistrationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanChampionshipRegistration.
+     */
+    data: XOR<ClanChampionshipRegistrationCreateInput, ClanChampionshipRegistrationUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration createMany
+   */
+  export type ClanChampionshipRegistrationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanChampionshipRegistrations.
+     */
+    data: ClanChampionshipRegistrationCreateManyInput | ClanChampionshipRegistrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanChampionshipRegistration createManyAndReturn
+   */
+  export type ClanChampionshipRegistrationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanChampionshipRegistrations.
+     */
+    data: ClanChampionshipRegistrationCreateManyInput | ClanChampionshipRegistrationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanChampionshipRegistration update
+   */
+  export type ClanChampionshipRegistrationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanChampionshipRegistration.
+     */
+    data: XOR<ClanChampionshipRegistrationUpdateInput, ClanChampionshipRegistrationUncheckedUpdateInput>
+    /**
+     * Choose, which ClanChampionshipRegistration to update.
+     */
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration updateMany
+   */
+  export type ClanChampionshipRegistrationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanChampionshipRegistrations.
+     */
+    data: XOR<ClanChampionshipRegistrationUpdateManyMutationInput, ClanChampionshipRegistrationUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanChampionshipRegistrations to update
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * Limit how many ClanChampionshipRegistrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanChampionshipRegistration updateManyAndReturn
+   */
+  export type ClanChampionshipRegistrationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanChampionshipRegistrations.
+     */
+    data: XOR<ClanChampionshipRegistrationUpdateManyMutationInput, ClanChampionshipRegistrationUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanChampionshipRegistrations to update
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * Limit how many ClanChampionshipRegistrations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanChampionshipRegistration upsert
+   */
+  export type ClanChampionshipRegistrationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanChampionshipRegistration to update in case it exists.
+     */
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    /**
+     * In case the ClanChampionshipRegistration found by the `where` argument doesn't exist, create a new ClanChampionshipRegistration with this data.
+     */
+    create: XOR<ClanChampionshipRegistrationCreateInput, ClanChampionshipRegistrationUncheckedCreateInput>
+    /**
+     * In case the ClanChampionshipRegistration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanChampionshipRegistrationUpdateInput, ClanChampionshipRegistrationUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration delete
+   */
+  export type ClanChampionshipRegistrationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter which ClanChampionshipRegistration to delete.
+     */
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipRegistration deleteMany
+   */
+  export type ClanChampionshipRegistrationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanChampionshipRegistrations to delete
+     */
+    where?: ClanChampionshipRegistrationWhereInput
+    /**
+     * Limit how many ClanChampionshipRegistrations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanChampionshipRegistration without action
+   */
+  export type ClanChampionshipRegistrationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipRegistration
+     */
+    select?: ClanChampionshipRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipRegistration
+     */
+    omit?: ClanChampionshipRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipRegistrationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanChampionshipMatch
+   */
+
+  export type AggregateClanChampionshipMatch = {
+    _count: ClanChampionshipMatchCountAggregateOutputType | null
+    _avg: ClanChampionshipMatchAvgAggregateOutputType | null
+    _sum: ClanChampionshipMatchSumAggregateOutputType | null
+    _min: ClanChampionshipMatchMinAggregateOutputType | null
+    _max: ClanChampionshipMatchMaxAggregateOutputType | null
+  }
+
+  export type ClanChampionshipMatchAvgAggregateOutputType = {
+    round: number | null
+    homeClanId: number | null
+    awayClanId: number | null
+  }
+
+  export type ClanChampionshipMatchSumAggregateOutputType = {
+    round: number | null
+    homeClanId: number | null
+    awayClanId: number | null
+  }
+
+  export type ClanChampionshipMatchMinAggregateOutputType = {
+    id: string | null
+    eventId: string | null
+    round: number | null
+    homeClanId: number | null
+    awayClanId: number | null
+    startsAt: Date | null
+    endsAt: Date | null
+  }
+
+  export type ClanChampionshipMatchMaxAggregateOutputType = {
+    id: string | null
+    eventId: string | null
+    round: number | null
+    homeClanId: number | null
+    awayClanId: number | null
+    startsAt: Date | null
+    endsAt: Date | null
+  }
+
+  export type ClanChampionshipMatchCountAggregateOutputType = {
+    id: number
+    eventId: number
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: number
+    endsAt: number
+    _all: number
+  }
+
+
+  export type ClanChampionshipMatchAvgAggregateInputType = {
+    round?: true
+    homeClanId?: true
+    awayClanId?: true
+  }
+
+  export type ClanChampionshipMatchSumAggregateInputType = {
+    round?: true
+    homeClanId?: true
+    awayClanId?: true
+  }
+
+  export type ClanChampionshipMatchMinAggregateInputType = {
+    id?: true
+    eventId?: true
+    round?: true
+    homeClanId?: true
+    awayClanId?: true
+    startsAt?: true
+    endsAt?: true
+  }
+
+  export type ClanChampionshipMatchMaxAggregateInputType = {
+    id?: true
+    eventId?: true
+    round?: true
+    homeClanId?: true
+    awayClanId?: true
+    startsAt?: true
+    endsAt?: true
+  }
+
+  export type ClanChampionshipMatchCountAggregateInputType = {
+    id?: true
+    eventId?: true
+    round?: true
+    homeClanId?: true
+    awayClanId?: true
+    startsAt?: true
+    endsAt?: true
+    _all?: true
+  }
+
+  export type ClanChampionshipMatchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanChampionshipMatch to aggregate.
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipMatches to fetch.
+     */
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipMatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipMatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanChampionshipMatches
+    **/
+    _count?: true | ClanChampionshipMatchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanChampionshipMatchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanChampionshipMatchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanChampionshipMatchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanChampionshipMatchMaxAggregateInputType
+  }
+
+  export type GetClanChampionshipMatchAggregateType<T extends ClanChampionshipMatchAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanChampionshipMatch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanChampionshipMatch[P]>
+      : GetScalarType<T[P], AggregateClanChampionshipMatch[P]>
+  }
+
+
+
+
+  export type ClanChampionshipMatchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanChampionshipMatchWhereInput
+    orderBy?: ClanChampionshipMatchOrderByWithAggregationInput | ClanChampionshipMatchOrderByWithAggregationInput[]
+    by: ClanChampionshipMatchScalarFieldEnum[] | ClanChampionshipMatchScalarFieldEnum
+    having?: ClanChampionshipMatchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanChampionshipMatchCountAggregateInputType | true
+    _avg?: ClanChampionshipMatchAvgAggregateInputType
+    _sum?: ClanChampionshipMatchSumAggregateInputType
+    _min?: ClanChampionshipMatchMinAggregateInputType
+    _max?: ClanChampionshipMatchMaxAggregateInputType
+  }
+
+  export type ClanChampionshipMatchGroupByOutputType = {
+    id: string
+    eventId: string
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: Date
+    endsAt: Date
+    _count: ClanChampionshipMatchCountAggregateOutputType | null
+    _avg: ClanChampionshipMatchAvgAggregateOutputType | null
+    _sum: ClanChampionshipMatchSumAggregateOutputType | null
+    _min: ClanChampionshipMatchMinAggregateOutputType | null
+    _max: ClanChampionshipMatchMaxAggregateOutputType | null
+  }
+
+  type GetClanChampionshipMatchGroupByPayload<T extends ClanChampionshipMatchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanChampionshipMatchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanChampionshipMatchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanChampionshipMatchGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanChampionshipMatchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanChampionshipMatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    round?: boolean
+    homeClanId?: boolean
+    awayClanId?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipMatch"]>
+
+  export type ClanChampionshipMatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    round?: boolean
+    homeClanId?: boolean
+    awayClanId?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipMatch"]>
+
+  export type ClanChampionshipMatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventId?: boolean
+    round?: boolean
+    homeClanId?: boolean
+    awayClanId?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanChampionshipMatch"]>
+
+  export type ClanChampionshipMatchSelectScalar = {
+    id?: boolean
+    eventId?: boolean
+    round?: boolean
+    homeClanId?: boolean
+    awayClanId?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+  }
+
+  export type ClanChampionshipMatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "round" | "homeClanId" | "awayClanId" | "startsAt" | "endsAt", ExtArgs["result"]["clanChampionshipMatch"]>
+  export type ClanChampionshipMatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanChampionshipMatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanChampionshipMatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | ClanEventDefaultArgs<ExtArgs>
+    homeClan?: boolean | ClanDefaultArgs<ExtArgs>
+    awayClan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanChampionshipMatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanChampionshipMatch"
+    objects: {
+      event: Prisma.$ClanEventPayload<ExtArgs>
+      homeClan: Prisma.$ClanPayload<ExtArgs>
+      awayClan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      eventId: string
+      round: number
+      homeClanId: number
+      awayClanId: number
+      startsAt: Date
+      endsAt: Date
+    }, ExtArgs["result"]["clanChampionshipMatch"]>
+    composites: {}
+  }
+
+  type ClanChampionshipMatchGetPayload<S extends boolean | null | undefined | ClanChampionshipMatchDefaultArgs> = $Result.GetResult<Prisma.$ClanChampionshipMatchPayload, S>
+
+  type ClanChampionshipMatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanChampionshipMatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanChampionshipMatchCountAggregateInputType | true
+    }
+
+  export interface ClanChampionshipMatchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanChampionshipMatch'], meta: { name: 'ClanChampionshipMatch' } }
+    /**
+     * Find zero or one ClanChampionshipMatch that matches the filter.
+     * @param {ClanChampionshipMatchFindUniqueArgs} args - Arguments to find a ClanChampionshipMatch
+     * @example
+     * // Get one ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanChampionshipMatchFindUniqueArgs>(args: SelectSubset<T, ClanChampionshipMatchFindUniqueArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanChampionshipMatch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanChampionshipMatchFindUniqueOrThrowArgs} args - Arguments to find a ClanChampionshipMatch
+     * @example
+     * // Get one ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanChampionshipMatchFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanChampionshipMatchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanChampionshipMatch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchFindFirstArgs} args - Arguments to find a ClanChampionshipMatch
+     * @example
+     * // Get one ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanChampionshipMatchFindFirstArgs>(args?: SelectSubset<T, ClanChampionshipMatchFindFirstArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanChampionshipMatch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchFindFirstOrThrowArgs} args - Arguments to find a ClanChampionshipMatch
+     * @example
+     * // Get one ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanChampionshipMatchFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanChampionshipMatchFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanChampionshipMatches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanChampionshipMatches
+     * const clanChampionshipMatches = await prisma.clanChampionshipMatch.findMany()
+     * 
+     * // Get first 10 ClanChampionshipMatches
+     * const clanChampionshipMatches = await prisma.clanChampionshipMatch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanChampionshipMatchWithIdOnly = await prisma.clanChampionshipMatch.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanChampionshipMatchFindManyArgs>(args?: SelectSubset<T, ClanChampionshipMatchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanChampionshipMatch.
+     * @param {ClanChampionshipMatchCreateArgs} args - Arguments to create a ClanChampionshipMatch.
+     * @example
+     * // Create one ClanChampionshipMatch
+     * const ClanChampionshipMatch = await prisma.clanChampionshipMatch.create({
+     *   data: {
+     *     // ... data to create a ClanChampionshipMatch
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanChampionshipMatchCreateArgs>(args: SelectSubset<T, ClanChampionshipMatchCreateArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanChampionshipMatches.
+     * @param {ClanChampionshipMatchCreateManyArgs} args - Arguments to create many ClanChampionshipMatches.
+     * @example
+     * // Create many ClanChampionshipMatches
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanChampionshipMatchCreateManyArgs>(args?: SelectSubset<T, ClanChampionshipMatchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanChampionshipMatches and returns the data saved in the database.
+     * @param {ClanChampionshipMatchCreateManyAndReturnArgs} args - Arguments to create many ClanChampionshipMatches.
+     * @example
+     * // Create many ClanChampionshipMatches
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanChampionshipMatches and only return the `id`
+     * const clanChampionshipMatchWithIdOnly = await prisma.clanChampionshipMatch.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanChampionshipMatchCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanChampionshipMatchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanChampionshipMatch.
+     * @param {ClanChampionshipMatchDeleteArgs} args - Arguments to delete one ClanChampionshipMatch.
+     * @example
+     * // Delete one ClanChampionshipMatch
+     * const ClanChampionshipMatch = await prisma.clanChampionshipMatch.delete({
+     *   where: {
+     *     // ... filter to delete one ClanChampionshipMatch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanChampionshipMatchDeleteArgs>(args: SelectSubset<T, ClanChampionshipMatchDeleteArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanChampionshipMatch.
+     * @param {ClanChampionshipMatchUpdateArgs} args - Arguments to update one ClanChampionshipMatch.
+     * @example
+     * // Update one ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanChampionshipMatchUpdateArgs>(args: SelectSubset<T, ClanChampionshipMatchUpdateArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanChampionshipMatches.
+     * @param {ClanChampionshipMatchDeleteManyArgs} args - Arguments to filter ClanChampionshipMatches to delete.
+     * @example
+     * // Delete a few ClanChampionshipMatches
+     * const { count } = await prisma.clanChampionshipMatch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanChampionshipMatchDeleteManyArgs>(args?: SelectSubset<T, ClanChampionshipMatchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanChampionshipMatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanChampionshipMatches
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanChampionshipMatchUpdateManyArgs>(args: SelectSubset<T, ClanChampionshipMatchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanChampionshipMatches and returns the data updated in the database.
+     * @param {ClanChampionshipMatchUpdateManyAndReturnArgs} args - Arguments to update many ClanChampionshipMatches.
+     * @example
+     * // Update many ClanChampionshipMatches
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanChampionshipMatches and only return the `id`
+     * const clanChampionshipMatchWithIdOnly = await prisma.clanChampionshipMatch.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanChampionshipMatchUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanChampionshipMatchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanChampionshipMatch.
+     * @param {ClanChampionshipMatchUpsertArgs} args - Arguments to update or create a ClanChampionshipMatch.
+     * @example
+     * // Update or create a ClanChampionshipMatch
+     * const clanChampionshipMatch = await prisma.clanChampionshipMatch.upsert({
+     *   create: {
+     *     // ... data to create a ClanChampionshipMatch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanChampionshipMatch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanChampionshipMatchUpsertArgs>(args: SelectSubset<T, ClanChampionshipMatchUpsertArgs<ExtArgs>>): Prisma__ClanChampionshipMatchClient<$Result.GetResult<Prisma.$ClanChampionshipMatchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanChampionshipMatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchCountArgs} args - Arguments to filter ClanChampionshipMatches to count.
+     * @example
+     * // Count the number of ClanChampionshipMatches
+     * const count = await prisma.clanChampionshipMatch.count({
+     *   where: {
+     *     // ... the filter for the ClanChampionshipMatches we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanChampionshipMatchCountArgs>(
+      args?: Subset<T, ClanChampionshipMatchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanChampionshipMatchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanChampionshipMatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanChampionshipMatchAggregateArgs>(args: Subset<T, ClanChampionshipMatchAggregateArgs>): Prisma.PrismaPromise<GetClanChampionshipMatchAggregateType<T>>
+
+    /**
+     * Group by ClanChampionshipMatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanChampionshipMatchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanChampionshipMatchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanChampionshipMatchGroupByArgs['orderBy'] }
+        : { orderBy?: ClanChampionshipMatchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanChampionshipMatchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanChampionshipMatchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanChampionshipMatch model
+   */
+  readonly fields: ClanChampionshipMatchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanChampionshipMatch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanChampionshipMatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    event<T extends ClanEventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanEventDefaultArgs<ExtArgs>>): Prisma__ClanEventClient<$Result.GetResult<Prisma.$ClanEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    homeClan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    awayClan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanChampionshipMatch model
+   */
+  interface ClanChampionshipMatchFieldRefs {
+    readonly id: FieldRef<"ClanChampionshipMatch", 'String'>
+    readonly eventId: FieldRef<"ClanChampionshipMatch", 'String'>
+    readonly round: FieldRef<"ClanChampionshipMatch", 'Int'>
+    readonly homeClanId: FieldRef<"ClanChampionshipMatch", 'Int'>
+    readonly awayClanId: FieldRef<"ClanChampionshipMatch", 'Int'>
+    readonly startsAt: FieldRef<"ClanChampionshipMatch", 'DateTime'>
+    readonly endsAt: FieldRef<"ClanChampionshipMatch", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanChampionshipMatch findUnique
+   */
+  export type ClanChampionshipMatchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipMatch to fetch.
+     */
+    where: ClanChampionshipMatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch findUniqueOrThrow
+   */
+  export type ClanChampionshipMatchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipMatch to fetch.
+     */
+    where: ClanChampionshipMatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch findFirst
+   */
+  export type ClanChampionshipMatchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipMatch to fetch.
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipMatches to fetch.
+     */
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanChampionshipMatches.
+     */
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipMatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipMatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipMatches.
+     */
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch findFirstOrThrow
+   */
+  export type ClanChampionshipMatchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipMatch to fetch.
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipMatches to fetch.
+     */
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanChampionshipMatches.
+     */
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipMatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipMatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipMatches.
+     */
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch findMany
+   */
+  export type ClanChampionshipMatchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanChampionshipMatches to fetch.
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanChampionshipMatches to fetch.
+     */
+    orderBy?: ClanChampionshipMatchOrderByWithRelationInput | ClanChampionshipMatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanChampionshipMatches.
+     */
+    cursor?: ClanChampionshipMatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanChampionshipMatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanChampionshipMatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanChampionshipMatches.
+     */
+    distinct?: ClanChampionshipMatchScalarFieldEnum | ClanChampionshipMatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch create
+   */
+  export type ClanChampionshipMatchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanChampionshipMatch.
+     */
+    data: XOR<ClanChampionshipMatchCreateInput, ClanChampionshipMatchUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch createMany
+   */
+  export type ClanChampionshipMatchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanChampionshipMatches.
+     */
+    data: ClanChampionshipMatchCreateManyInput | ClanChampionshipMatchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanChampionshipMatch createManyAndReturn
+   */
+  export type ClanChampionshipMatchCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanChampionshipMatches.
+     */
+    data: ClanChampionshipMatchCreateManyInput | ClanChampionshipMatchCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanChampionshipMatch update
+   */
+  export type ClanChampionshipMatchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanChampionshipMatch.
+     */
+    data: XOR<ClanChampionshipMatchUpdateInput, ClanChampionshipMatchUncheckedUpdateInput>
+    /**
+     * Choose, which ClanChampionshipMatch to update.
+     */
+    where: ClanChampionshipMatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch updateMany
+   */
+  export type ClanChampionshipMatchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanChampionshipMatches.
+     */
+    data: XOR<ClanChampionshipMatchUpdateManyMutationInput, ClanChampionshipMatchUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanChampionshipMatches to update
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * Limit how many ClanChampionshipMatches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanChampionshipMatch updateManyAndReturn
+   */
+  export type ClanChampionshipMatchUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanChampionshipMatches.
+     */
+    data: XOR<ClanChampionshipMatchUpdateManyMutationInput, ClanChampionshipMatchUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanChampionshipMatches to update
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * Limit how many ClanChampionshipMatches to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanChampionshipMatch upsert
+   */
+  export type ClanChampionshipMatchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanChampionshipMatch to update in case it exists.
+     */
+    where: ClanChampionshipMatchWhereUniqueInput
+    /**
+     * In case the ClanChampionshipMatch found by the `where` argument doesn't exist, create a new ClanChampionshipMatch with this data.
+     */
+    create: XOR<ClanChampionshipMatchCreateInput, ClanChampionshipMatchUncheckedCreateInput>
+    /**
+     * In case the ClanChampionshipMatch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanChampionshipMatchUpdateInput, ClanChampionshipMatchUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch delete
+   */
+  export type ClanChampionshipMatchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
+    /**
+     * Filter which ClanChampionshipMatch to delete.
+     */
+    where: ClanChampionshipMatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanChampionshipMatch deleteMany
+   */
+  export type ClanChampionshipMatchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanChampionshipMatches to delete
+     */
+    where?: ClanChampionshipMatchWhereInput
+    /**
+     * Limit how many ClanChampionshipMatches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanChampionshipMatch without action
+   */
+  export type ClanChampionshipMatchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanChampionshipMatch
+     */
+    select?: ClanChampionshipMatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanChampionshipMatch
+     */
+    omit?: ClanChampionshipMatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanChampionshipMatchInclude<ExtArgs> | null
   }
 
 
@@ -92027,6 +94669,30 @@ export namespace Prisma {
   export type ClanEventScalarFieldEnum = (typeof ClanEventScalarFieldEnum)[keyof typeof ClanEventScalarFieldEnum]
 
 
+  export const ClanChampionshipRegistrationScalarFieldEnum: {
+    id: 'id',
+    eventId: 'eventId',
+    clanId: 'clanId',
+    registeredById: 'registeredById',
+    registeredAt: 'registeredAt'
+  };
+
+  export type ClanChampionshipRegistrationScalarFieldEnum = (typeof ClanChampionshipRegistrationScalarFieldEnum)[keyof typeof ClanChampionshipRegistrationScalarFieldEnum]
+
+
+  export const ClanChampionshipMatchScalarFieldEnum: {
+    id: 'id',
+    eventId: 'eventId',
+    round: 'round',
+    homeClanId: 'homeClanId',
+    awayClanId: 'awayClanId',
+    startsAt: 'startsAt',
+    endsAt: 'endsAt'
+  };
+
+  export type ClanChampionshipMatchScalarFieldEnum = (typeof ClanChampionshipMatchScalarFieldEnum)[keyof typeof ClanChampionshipMatchScalarFieldEnum]
+
+
   export const ClanIngredientScalarFieldEnum: {
     id: 'id',
     ingredientId: 'ingredientId',
@@ -95645,6 +98311,9 @@ export namespace Prisma {
     players?: PlayerListRelationFilter
     targetedCases?: ModerationListRelationFilter
     warWon?: ClanWarListRelationFilter
+    championshipRegistrations?: ClanChampionshipRegistrationListRelationFilter
+    championshipHomeMatches?: ClanChampionshipMatchListRelationFilter
+    championshipAwayMatches?: ClanChampionshipMatchListRelationFilter
   }
 
   export type ClanOrderByWithRelationInput = {
@@ -95669,6 +98338,9 @@ export namespace Prisma {
     players?: PlayerOrderByRelationAggregateInput
     targetedCases?: ModerationOrderByRelationAggregateInput
     warWon?: ClanWarOrderByRelationAggregateInput
+    championshipRegistrations?: ClanChampionshipRegistrationOrderByRelationAggregateInput
+    championshipHomeMatches?: ClanChampionshipMatchOrderByRelationAggregateInput
+    championshipAwayMatches?: ClanChampionshipMatchOrderByRelationAggregateInput
   }
 
   export type ClanWhereUniqueInput = Prisma.AtLeast<{
@@ -95696,6 +98368,9 @@ export namespace Prisma {
     players?: PlayerListRelationFilter
     targetedCases?: ModerationListRelationFilter
     warWon?: ClanWarListRelationFilter
+    championshipRegistrations?: ClanChampionshipRegistrationListRelationFilter
+    championshipHomeMatches?: ClanChampionshipMatchListRelationFilter
+    championshipAwayMatches?: ClanChampionshipMatchListRelationFilter
   }, "id" | "name" | "leaderId">
 
   export type ClanOrderByWithAggregationInput = {
@@ -96104,6 +98779,8 @@ export namespace Prisma {
     config?: StringFilter<"ClanEvent"> | string
     clanWarRankings?: ClanWarRankingListRelationFilter
     clanWars?: ClanWarListRelationFilter
+    championshipRegistrations?: ClanChampionshipRegistrationListRelationFilter
+    championshipMatches?: ClanChampionshipMatchListRelationFilter
   }
 
   export type ClanEventOrderByWithRelationInput = {
@@ -96114,6 +98791,8 @@ export namespace Prisma {
     config?: SortOrder
     clanWarRankings?: ClanWarRankingOrderByRelationAggregateInput
     clanWars?: ClanWarOrderByRelationAggregateInput
+    championshipRegistrations?: ClanChampionshipRegistrationOrderByRelationAggregateInput
+    championshipMatches?: ClanChampionshipMatchOrderByRelationAggregateInput
   }
 
   export type ClanEventWhereUniqueInput = Prisma.AtLeast<{
@@ -96127,6 +98806,8 @@ export namespace Prisma {
     config?: StringFilter<"ClanEvent"> | string
     clanWarRankings?: ClanWarRankingListRelationFilter
     clanWars?: ClanWarListRelationFilter
+    championshipRegistrations?: ClanChampionshipRegistrationListRelationFilter
+    championshipMatches?: ClanChampionshipMatchListRelationFilter
   }, "id" | "id">
 
   export type ClanEventOrderByWithAggregationInput = {
@@ -96149,6 +98830,140 @@ export namespace Prisma {
     startDate?: DateTimeWithAggregatesFilter<"ClanEvent"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"ClanEvent"> | Date | string
     config?: StringWithAggregatesFilter<"ClanEvent"> | string
+  }
+
+  export type ClanChampionshipRegistrationWhereInput = {
+    AND?: ClanChampionshipRegistrationWhereInput | ClanChampionshipRegistrationWhereInput[]
+    OR?: ClanChampionshipRegistrationWhereInput[]
+    NOT?: ClanChampionshipRegistrationWhereInput | ClanChampionshipRegistrationWhereInput[]
+    id?: IntFilter<"ClanChampionshipRegistration"> | number
+    eventId?: UuidFilter<"ClanChampionshipRegistration"> | string
+    clanId?: IntFilter<"ClanChampionshipRegistration"> | number
+    registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
+    registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+    event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanChampionshipRegistrationOrderByWithRelationInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    clanId?: SortOrder
+    registeredById?: SortOrder
+    registeredAt?: SortOrder
+    event?: ClanEventOrderByWithRelationInput
+    clan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanChampionshipRegistrationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    eventId_clanId?: ClanChampionshipRegistrationEventIdClanIdCompoundUniqueInput
+    AND?: ClanChampionshipRegistrationWhereInput | ClanChampionshipRegistrationWhereInput[]
+    OR?: ClanChampionshipRegistrationWhereInput[]
+    NOT?: ClanChampionshipRegistrationWhereInput | ClanChampionshipRegistrationWhereInput[]
+    eventId?: UuidFilter<"ClanChampionshipRegistration"> | string
+    clanId?: IntFilter<"ClanChampionshipRegistration"> | number
+    registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
+    registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+    event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id" | "eventId_clanId">
+
+  export type ClanChampionshipRegistrationOrderByWithAggregationInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    clanId?: SortOrder
+    registeredById?: SortOrder
+    registeredAt?: SortOrder
+    _count?: ClanChampionshipRegistrationCountOrderByAggregateInput
+    _avg?: ClanChampionshipRegistrationAvgOrderByAggregateInput
+    _max?: ClanChampionshipRegistrationMaxOrderByAggregateInput
+    _min?: ClanChampionshipRegistrationMinOrderByAggregateInput
+    _sum?: ClanChampionshipRegistrationSumOrderByAggregateInput
+  }
+
+  export type ClanChampionshipRegistrationScalarWhereWithAggregatesInput = {
+    AND?: ClanChampionshipRegistrationScalarWhereWithAggregatesInput | ClanChampionshipRegistrationScalarWhereWithAggregatesInput[]
+    OR?: ClanChampionshipRegistrationScalarWhereWithAggregatesInput[]
+    NOT?: ClanChampionshipRegistrationScalarWhereWithAggregatesInput | ClanChampionshipRegistrationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanChampionshipRegistration"> | number
+    eventId?: UuidWithAggregatesFilter<"ClanChampionshipRegistration"> | string
+    clanId?: IntWithAggregatesFilter<"ClanChampionshipRegistration"> | number
+    registeredById?: UuidWithAggregatesFilter<"ClanChampionshipRegistration"> | string
+    registeredAt?: DateTimeWithAggregatesFilter<"ClanChampionshipRegistration"> | Date | string
+  }
+
+  export type ClanChampionshipMatchWhereInput = {
+    AND?: ClanChampionshipMatchWhereInput | ClanChampionshipMatchWhereInput[]
+    OR?: ClanChampionshipMatchWhereInput[]
+    NOT?: ClanChampionshipMatchWhereInput | ClanChampionshipMatchWhereInput[]
+    id?: UuidFilter<"ClanChampionshipMatch"> | string
+    eventId?: UuidFilter<"ClanChampionshipMatch"> | string
+    round?: IntFilter<"ClanChampionshipMatch"> | number
+    homeClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    awayClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    startsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+    endsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+    event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
+    homeClan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    awayClan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanChampionshipMatchOrderByWithRelationInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    event?: ClanEventOrderByWithRelationInput
+    homeClan?: ClanOrderByWithRelationInput
+    awayClan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanChampionshipMatchWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ClanChampionshipMatchWhereInput | ClanChampionshipMatchWhereInput[]
+    OR?: ClanChampionshipMatchWhereInput[]
+    NOT?: ClanChampionshipMatchWhereInput | ClanChampionshipMatchWhereInput[]
+    eventId?: UuidFilter<"ClanChampionshipMatch"> | string
+    round?: IntFilter<"ClanChampionshipMatch"> | number
+    homeClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    awayClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    startsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+    endsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+    event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
+    homeClan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    awayClan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id">
+
+  export type ClanChampionshipMatchOrderByWithAggregationInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    _count?: ClanChampionshipMatchCountOrderByAggregateInput
+    _avg?: ClanChampionshipMatchAvgOrderByAggregateInput
+    _max?: ClanChampionshipMatchMaxOrderByAggregateInput
+    _min?: ClanChampionshipMatchMinOrderByAggregateInput
+    _sum?: ClanChampionshipMatchSumOrderByAggregateInput
+  }
+
+  export type ClanChampionshipMatchScalarWhereWithAggregatesInput = {
+    AND?: ClanChampionshipMatchScalarWhereWithAggregatesInput | ClanChampionshipMatchScalarWhereWithAggregatesInput[]
+    OR?: ClanChampionshipMatchScalarWhereWithAggregatesInput[]
+    NOT?: ClanChampionshipMatchScalarWhereWithAggregatesInput | ClanChampionshipMatchScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"ClanChampionshipMatch"> | string
+    eventId?: UuidWithAggregatesFilter<"ClanChampionshipMatch"> | string
+    round?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
+    homeClanId?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
+    awayClanId?: IntWithAggregatesFilter<"ClanChampionshipMatch"> | number
+    startsAt?: DateTimeWithAggregatesFilter<"ClanChampionshipMatch"> | Date | string
+    endsAt?: DateTimeWithAggregatesFilter<"ClanChampionshipMatch"> | Date | string
   }
 
   export type ClanIngredientWhereInput = {
@@ -100632,6 +103447,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateInput = {
@@ -100655,6 +103473,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUpdateInput = {
@@ -100677,6 +103498,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateInput = {
@@ -100700,6 +103524,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanCreateManyInput = {
@@ -101088,6 +103915,8 @@ export namespace Prisma {
     config: string
     clanWarRankings?: ClanWarRankingCreateNestedManyWithoutEventInput
     clanWars?: ClanWarCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventUncheckedCreateInput = {
@@ -101098,6 +103927,8 @@ export namespace Prisma {
     config: string
     clanWarRankings?: ClanWarRankingUncheckedCreateNestedManyWithoutEventInput
     clanWars?: ClanWarUncheckedCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventUpdateInput = {
@@ -101108,6 +103939,8 @@ export namespace Prisma {
     config?: StringFieldUpdateOperationsInput | string
     clanWarRankings?: ClanWarRankingUpdateManyWithoutEventNestedInput
     clanWars?: ClanWarUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUpdateManyWithoutEventNestedInput
   }
 
   export type ClanEventUncheckedUpdateInput = {
@@ -101118,6 +103951,8 @@ export namespace Prisma {
     config?: StringFieldUpdateOperationsInput | string
     clanWarRankings?: ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput
     clanWars?: ClanWarUncheckedUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type ClanEventCreateManyInput = {
@@ -101142,6 +103977,124 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     config?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanChampionshipRegistrationCreateInput = {
+    registeredById: string
+    registeredAt?: Date | string
+    event: ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput
+    clan: ClanCreateNestedOneWithoutChampionshipRegistrationsInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedCreateInput = {
+    id?: number
+    eventId: string
+    clanId: number
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipRegistrationUpdateInput = {
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
+    clan?: ClanUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    clanId?: IntFieldUpdateOperationsInput | number
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipRegistrationCreateManyInput = {
+    id?: number
+    eventId: string
+    clanId: number
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipRegistrationUpdateManyMutationInput = {
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    clanId?: IntFieldUpdateOperationsInput | number
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchCreateInput = {
+    id?: string
+    round: number
+    startsAt: Date | string
+    endsAt: Date | string
+    event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
+    homeClan: ClanCreateNestedOneWithoutChampionshipHomeMatchesInput
+    awayClan: ClanCreateNestedOneWithoutChampionshipAwayMatchesInput
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateInput = {
+    id?: string
+    eventId: string
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
+    homeClan?: ClanUpdateOneRequiredWithoutChampionshipHomeMatchesNestedInput
+    awayClan?: ClanUpdateOneRequiredWithoutChampionshipAwayMatchesNestedInput
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchCreateManyInput = {
+    id?: string
+    eventId: string
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClanIngredientCreateInput = {
@@ -105630,6 +108583,18 @@ export namespace Prisma {
     none?: PlayerWhereInput
   }
 
+  export type ClanChampionshipRegistrationListRelationFilter = {
+    every?: ClanChampionshipRegistrationWhereInput
+    some?: ClanChampionshipRegistrationWhereInput
+    none?: ClanChampionshipRegistrationWhereInput
+  }
+
+  export type ClanChampionshipMatchListRelationFilter = {
+    every?: ClanChampionshipMatchWhereInput
+    some?: ClanChampionshipMatchWhereInput
+    none?: ClanChampionshipMatchWhereInput
+  }
+
   export type ClanJoinRequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -105655,6 +108620,14 @@ export namespace Prisma {
   }
 
   export type PlayerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanChampionshipRegistrationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanChampionshipMatchOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -106026,6 +108999,87 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumClanEventTypeFilter<$PrismaModel>
     _max?: NestedEnumClanEventTypeFilter<$PrismaModel>
+  }
+
+  export type ClanChampionshipRegistrationEventIdClanIdCompoundUniqueInput = {
+    eventId: string
+    clanId: number
+  }
+
+  export type ClanChampionshipRegistrationCountOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    clanId?: SortOrder
+    registeredById?: SortOrder
+    registeredAt?: SortOrder
+  }
+
+  export type ClanChampionshipRegistrationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanChampionshipRegistrationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    clanId?: SortOrder
+    registeredById?: SortOrder
+    registeredAt?: SortOrder
+  }
+
+  export type ClanChampionshipRegistrationMinOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    clanId?: SortOrder
+    registeredById?: SortOrder
+    registeredAt?: SortOrder
+  }
+
+  export type ClanChampionshipRegistrationSumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanChampionshipMatchCountOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+  }
+
+  export type ClanChampionshipMatchAvgOrderByAggregateInput = {
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+  }
+
+  export type ClanChampionshipMatchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+  }
+
+  export type ClanChampionshipMatchMinOrderByAggregateInput = {
+    id?: SortOrder
+    eventId?: SortOrder
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+  }
+
+  export type ClanChampionshipMatchSumOrderByAggregateInput = {
+    round?: SortOrder
+    homeClanId?: SortOrder
+    awayClanId?: SortOrder
   }
 
   export type ClanIngredientIngredientIdClanIdCompoundUniqueInput = {
@@ -111110,6 +114164,27 @@ export namespace Prisma {
     connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
   }
 
+  export type ClanChampionshipRegistrationCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput> | ClanChampionshipRegistrationCreateWithoutClanInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutClanInput | ClanChampionshipRegistrationCreateOrConnectWithoutClanInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyClanInputEnvelope
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput> | ClanChampionshipMatchCreateWithoutHomeClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput | ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyHomeClanInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput> | ClanChampionshipMatchCreateWithoutAwayClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput | ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyAwayClanInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+  }
+
   export type ClanCastleUncheckedCreateNestedOneWithoutClanInput = {
     create?: XOR<ClanCastleCreateWithoutClanInput, ClanCastleUncheckedCreateWithoutClanInput>
     connectOrCreate?: ClanCastleCreateOrConnectWithoutClanInput
@@ -111198,6 +114273,27 @@ export namespace Prisma {
     connectOrCreate?: ClanWarCreateOrConnectWithoutWinnerInput | ClanWarCreateOrConnectWithoutWinnerInput[]
     createMany?: ClanWarCreateManyWinnerInputEnvelope
     connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput> | ClanChampionshipRegistrationCreateWithoutClanInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutClanInput | ClanChampionshipRegistrationCreateOrConnectWithoutClanInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyClanInputEnvelope
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput> | ClanChampionshipMatchCreateWithoutHomeClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput | ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyHomeClanInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput> | ClanChampionshipMatchCreateWithoutAwayClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput | ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyAwayClanInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
   }
 
   export type ClanUpdatelangsInput = {
@@ -111391,6 +114487,48 @@ export namespace Prisma {
     deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
   }
 
+  export type ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput> | ClanChampionshipRegistrationCreateWithoutClanInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutClanInput | ClanChampionshipRegistrationCreateOrConnectWithoutClanInput[]
+    upsert?: ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutClanInput | ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyClanInputEnvelope
+    set?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    disconnect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    delete?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    update?: ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutClanInput | ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanChampionshipRegistrationUpdateManyWithWhereWithoutClanInput | ClanChampionshipRegistrationUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput> | ClanChampionshipMatchCreateWithoutHomeClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput | ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyHomeClanInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutHomeClanInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutHomeClanInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutHomeClanInput | ClanChampionshipMatchUpdateManyWithWhereWithoutHomeClanInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput> | ClanChampionshipMatchCreateWithoutAwayClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput | ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutAwayClanInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutAwayClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyAwayClanInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutAwayClanInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutAwayClanInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutAwayClanInput | ClanChampionshipMatchUpdateManyWithWhereWithoutAwayClanInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+  }
+
   export type ClanCastleUncheckedUpdateOneWithoutClanNestedInput = {
     create?: XOR<ClanCastleCreateWithoutClanInput, ClanCastleUncheckedCreateWithoutClanInput>
     connectOrCreate?: ClanCastleCreateOrConnectWithoutClanInput
@@ -111567,6 +114705,48 @@ export namespace Prisma {
     update?: ClanWarUpdateWithWhereUniqueWithoutWinnerInput | ClanWarUpdateWithWhereUniqueWithoutWinnerInput[]
     updateMany?: ClanWarUpdateManyWithWhereWithoutWinnerInput | ClanWarUpdateManyWithWhereWithoutWinnerInput[]
     deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput> | ClanChampionshipRegistrationCreateWithoutClanInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutClanInput | ClanChampionshipRegistrationCreateOrConnectWithoutClanInput[]
+    upsert?: ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutClanInput | ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyClanInputEnvelope
+    set?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    disconnect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    delete?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    update?: ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutClanInput | ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanChampionshipRegistrationUpdateManyWithWhereWithoutClanInput | ClanChampionshipRegistrationUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput> | ClanChampionshipMatchCreateWithoutHomeClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput | ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyHomeClanInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutHomeClanInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutHomeClanInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutHomeClanInput | ClanChampionshipMatchUpdateManyWithWhereWithoutHomeClanInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput> | ClanChampionshipMatchCreateWithoutAwayClanInput[] | ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput | ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutAwayClanInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutAwayClanInput[]
+    createMany?: ClanChampionshipMatchCreateManyAwayClanInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutAwayClanInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutAwayClanInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutAwayClanInput | ClanChampionshipMatchUpdateManyWithWhereWithoutAwayClanInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
   }
 
   export type ClanCastleCreatedefenseOrderInput = {
@@ -111826,6 +115006,20 @@ export namespace Prisma {
     connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
   }
 
+  export type ClanChampionshipRegistrationCreateNestedManyWithoutEventInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput> | ClanChampionshipRegistrationCreateWithoutEventInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutEventInput | ClanChampionshipRegistrationCreateOrConnectWithoutEventInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyEventInputEnvelope
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchCreateNestedManyWithoutEventInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput> | ClanChampionshipMatchCreateWithoutEventInput[] | ClanChampionshipMatchUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutEventInput | ClanChampionshipMatchCreateOrConnectWithoutEventInput[]
+    createMany?: ClanChampionshipMatchCreateManyEventInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+  }
+
   export type ClanWarRankingUncheckedCreateNestedManyWithoutEventInput = {
     create?: XOR<ClanWarRankingCreateWithoutEventInput, ClanWarRankingUncheckedCreateWithoutEventInput> | ClanWarRankingCreateWithoutEventInput[] | ClanWarRankingUncheckedCreateWithoutEventInput[]
     connectOrCreate?: ClanWarRankingCreateOrConnectWithoutEventInput | ClanWarRankingCreateOrConnectWithoutEventInput[]
@@ -111838,6 +115032,20 @@ export namespace Prisma {
     connectOrCreate?: ClanWarCreateOrConnectWithoutEventInput | ClanWarCreateOrConnectWithoutEventInput[]
     createMany?: ClanWarCreateManyEventInputEnvelope
     connect?: ClanWarWhereUniqueInput | ClanWarWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput> | ClanChampionshipRegistrationCreateWithoutEventInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutEventInput | ClanChampionshipRegistrationCreateOrConnectWithoutEventInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyEventInputEnvelope
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput> | ClanChampionshipMatchCreateWithoutEventInput[] | ClanChampionshipMatchUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutEventInput | ClanChampionshipMatchCreateOrConnectWithoutEventInput[]
+    createMany?: ClanChampionshipMatchCreateManyEventInputEnvelope
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
   }
 
   export type EnumClanEventTypeFieldUpdateOperationsInput = {
@@ -111872,6 +115080,34 @@ export namespace Prisma {
     deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
   }
 
+  export type ClanChampionshipRegistrationUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput> | ClanChampionshipRegistrationCreateWithoutEventInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutEventInput | ClanChampionshipRegistrationCreateOrConnectWithoutEventInput[]
+    upsert?: ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutEventInput | ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyEventInputEnvelope
+    set?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    disconnect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    delete?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    update?: ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutEventInput | ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ClanChampionshipRegistrationUpdateManyWithWhereWithoutEventInput | ClanChampionshipRegistrationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput> | ClanChampionshipMatchCreateWithoutEventInput[] | ClanChampionshipMatchUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutEventInput | ClanChampionshipMatchCreateOrConnectWithoutEventInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutEventInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ClanChampionshipMatchCreateManyEventInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutEventInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutEventInput | ClanChampionshipMatchUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+  }
+
   export type ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput = {
     create?: XOR<ClanWarRankingCreateWithoutEventInput, ClanWarRankingUncheckedCreateWithoutEventInput> | ClanWarRankingCreateWithoutEventInput[] | ClanWarRankingUncheckedCreateWithoutEventInput[]
     connectOrCreate?: ClanWarRankingCreateOrConnectWithoutEventInput | ClanWarRankingCreateOrConnectWithoutEventInput[]
@@ -111898,6 +115134,104 @@ export namespace Prisma {
     update?: ClanWarUpdateWithWhereUniqueWithoutEventInput | ClanWarUpdateWithWhereUniqueWithoutEventInput[]
     updateMany?: ClanWarUpdateManyWithWhereWithoutEventInput | ClanWarUpdateManyWithWhereWithoutEventInput[]
     deleteMany?: ClanWarScalarWhereInput | ClanWarScalarWhereInput[]
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput> | ClanChampionshipRegistrationCreateWithoutEventInput[] | ClanChampionshipRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipRegistrationCreateOrConnectWithoutEventInput | ClanChampionshipRegistrationCreateOrConnectWithoutEventInput[]
+    upsert?: ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutEventInput | ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ClanChampionshipRegistrationCreateManyEventInputEnvelope
+    set?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    disconnect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    delete?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    connect?: ClanChampionshipRegistrationWhereUniqueInput | ClanChampionshipRegistrationWhereUniqueInput[]
+    update?: ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutEventInput | ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ClanChampionshipRegistrationUpdateManyWithWhereWithoutEventInput | ClanChampionshipRegistrationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput> | ClanChampionshipMatchCreateWithoutEventInput[] | ClanChampionshipMatchUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ClanChampionshipMatchCreateOrConnectWithoutEventInput | ClanChampionshipMatchCreateOrConnectWithoutEventInput[]
+    upsert?: ClanChampionshipMatchUpsertWithWhereUniqueWithoutEventInput | ClanChampionshipMatchUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ClanChampionshipMatchCreateManyEventInputEnvelope
+    set?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    disconnect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    delete?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    connect?: ClanChampionshipMatchWhereUniqueInput | ClanChampionshipMatchWhereUniqueInput[]
+    update?: ClanChampionshipMatchUpdateWithWhereUniqueWithoutEventInput | ClanChampionshipMatchUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ClanChampionshipMatchUpdateManyWithWhereWithoutEventInput | ClanChampionshipMatchUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+  }
+
+  export type ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput = {
+    create?: XOR<ClanEventCreateWithoutChampionshipRegistrationsInput, ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput>
+    connectOrCreate?: ClanEventCreateOrConnectWithoutChampionshipRegistrationsInput
+    connect?: ClanEventWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutChampionshipRegistrationsInput = {
+    create?: XOR<ClanCreateWithoutChampionshipRegistrationsInput, ClanUncheckedCreateWithoutChampionshipRegistrationsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipRegistrationsInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput = {
+    create?: XOR<ClanEventCreateWithoutChampionshipRegistrationsInput, ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput>
+    connectOrCreate?: ClanEventCreateOrConnectWithoutChampionshipRegistrationsInput
+    upsert?: ClanEventUpsertWithoutChampionshipRegistrationsInput
+    connect?: ClanEventWhereUniqueInput
+    update?: XOR<XOR<ClanEventUpdateToOneWithWhereWithoutChampionshipRegistrationsInput, ClanEventUpdateWithoutChampionshipRegistrationsInput>, ClanEventUncheckedUpdateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput = {
+    create?: XOR<ClanCreateWithoutChampionshipRegistrationsInput, ClanUncheckedCreateWithoutChampionshipRegistrationsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipRegistrationsInput
+    upsert?: ClanUpsertWithoutChampionshipRegistrationsInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutChampionshipRegistrationsInput, ClanUpdateWithoutChampionshipRegistrationsInput>, ClanUncheckedUpdateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanEventCreateNestedOneWithoutChampionshipMatchesInput = {
+    create?: XOR<ClanEventCreateWithoutChampionshipMatchesInput, ClanEventUncheckedCreateWithoutChampionshipMatchesInput>
+    connectOrCreate?: ClanEventCreateOrConnectWithoutChampionshipMatchesInput
+    connect?: ClanEventWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutChampionshipHomeMatchesInput = {
+    create?: XOR<ClanCreateWithoutChampionshipHomeMatchesInput, ClanUncheckedCreateWithoutChampionshipHomeMatchesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipHomeMatchesInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutChampionshipAwayMatchesInput = {
+    create?: XOR<ClanCreateWithoutChampionshipAwayMatchesInput, ClanUncheckedCreateWithoutChampionshipAwayMatchesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipAwayMatchesInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput = {
+    create?: XOR<ClanEventCreateWithoutChampionshipMatchesInput, ClanEventUncheckedCreateWithoutChampionshipMatchesInput>
+    connectOrCreate?: ClanEventCreateOrConnectWithoutChampionshipMatchesInput
+    upsert?: ClanEventUpsertWithoutChampionshipMatchesInput
+    connect?: ClanEventWhereUniqueInput
+    update?: XOR<XOR<ClanEventUpdateToOneWithWhereWithoutChampionshipMatchesInput, ClanEventUpdateWithoutChampionshipMatchesInput>, ClanEventUncheckedUpdateWithoutChampionshipMatchesInput>
+  }
+
+  export type ClanUpdateOneRequiredWithoutChampionshipHomeMatchesNestedInput = {
+    create?: XOR<ClanCreateWithoutChampionshipHomeMatchesInput, ClanUncheckedCreateWithoutChampionshipHomeMatchesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipHomeMatchesInput
+    upsert?: ClanUpsertWithoutChampionshipHomeMatchesInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutChampionshipHomeMatchesInput, ClanUpdateWithoutChampionshipHomeMatchesInput>, ClanUncheckedUpdateWithoutChampionshipHomeMatchesInput>
+  }
+
+  export type ClanUpdateOneRequiredWithoutChampionshipAwayMatchesNestedInput = {
+    create?: XOR<ClanCreateWithoutChampionshipAwayMatchesInput, ClanUncheckedCreateWithoutChampionshipAwayMatchesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutChampionshipAwayMatchesInput
+    upsert?: ClanUpsertWithoutChampionshipAwayMatchesInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutChampionshipAwayMatchesInput, ClanUpdateWithoutChampionshipAwayMatchesInput>, ClanUncheckedUpdateWithoutChampionshipAwayMatchesInput>
   }
 
   export type ClanCreateNestedOneWithoutIngredientsInput = {
@@ -119420,6 +122754,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutPlayersInput = {
@@ -119442,6 +122779,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutPlayersInput = {
@@ -119468,6 +122808,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutLeaderInput = {
@@ -119490,6 +122833,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutLeaderInput = {
@@ -120746,6 +124092,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutPlayersInput = {
@@ -120768,6 +124117,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUpsertWithoutLeaderInput = {
@@ -120800,6 +124152,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutLeaderInput = {
@@ -120822,6 +124177,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -129988,6 +133346,85 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ClanChampionshipRegistrationCreateWithoutClanInput = {
+    registeredById: string
+    registeredAt?: Date | string
+    event: ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedCreateWithoutClanInput = {
+    id?: number
+    eventId: string
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipRegistrationCreateOrConnectWithoutClanInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    create: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanChampionshipRegistrationCreateManyClanInputEnvelope = {
+    data: ClanChampionshipRegistrationCreateManyClanInput | ClanChampionshipRegistrationCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanChampionshipMatchCreateWithoutHomeClanInput = {
+    id?: string
+    round: number
+    startsAt: Date | string
+    endsAt: Date | string
+    event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
+    awayClan: ClanCreateNestedOneWithoutChampionshipAwayMatchesInput
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput = {
+    id?: string
+    eventId: string
+    round: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateOrConnectWithoutHomeClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    create: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput>
+  }
+
+  export type ClanChampionshipMatchCreateManyHomeClanInputEnvelope = {
+    data: ClanChampionshipMatchCreateManyHomeClanInput | ClanChampionshipMatchCreateManyHomeClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanChampionshipMatchCreateWithoutAwayClanInput = {
+    id?: string
+    round: number
+    startsAt: Date | string
+    endsAt: Date | string
+    event: ClanEventCreateNestedOneWithoutChampionshipMatchesInput
+    homeClan: ClanCreateNestedOneWithoutChampionshipHomeMatchesInput
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput = {
+    id?: string
+    eventId: string
+    round: number
+    homeClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateOrConnectWithoutAwayClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    create: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput>
+  }
+
+  export type ClanChampionshipMatchCreateManyAwayClanInputEnvelope = {
+    data: ClanChampionshipMatchCreateManyAwayClanInput | ClanChampionshipMatchCreateManyAwayClanInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanCastleUpsertWithoutClanInput = {
     update: XOR<ClanCastleUpdateWithoutClanInput, ClanCastleUncheckedUpdateWithoutClanInput>
     create: XOR<ClanCastleCreateWithoutClanInput, ClanCastleUncheckedCreateWithoutClanInput>
@@ -130487,6 +133924,78 @@ export namespace Prisma {
     data: XOR<ClanWarUpdateManyMutationInput, ClanWarUncheckedUpdateManyWithoutWinnerInput>
   }
 
+  export type ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    update: XOR<ClanChampionshipRegistrationUpdateWithoutClanInput, ClanChampionshipRegistrationUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanChampionshipRegistrationCreateWithoutClanInput, ClanChampionshipRegistrationUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    data: XOR<ClanChampionshipRegistrationUpdateWithoutClanInput, ClanChampionshipRegistrationUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanChampionshipRegistrationUpdateManyWithWhereWithoutClanInput = {
+    where: ClanChampionshipRegistrationScalarWhereInput
+    data: XOR<ClanChampionshipRegistrationUpdateManyMutationInput, ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanChampionshipRegistrationScalarWhereInput = {
+    AND?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+    OR?: ClanChampionshipRegistrationScalarWhereInput[]
+    NOT?: ClanChampionshipRegistrationScalarWhereInput | ClanChampionshipRegistrationScalarWhereInput[]
+    id?: IntFilter<"ClanChampionshipRegistration"> | number
+    eventId?: UuidFilter<"ClanChampionshipRegistration"> | string
+    clanId?: IntFilter<"ClanChampionshipRegistration"> | number
+    registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
+    registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+  }
+
+  export type ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    update: XOR<ClanChampionshipMatchUpdateWithoutHomeClanInput, ClanChampionshipMatchUncheckedUpdateWithoutHomeClanInput>
+    create: XOR<ClanChampionshipMatchCreateWithoutHomeClanInput, ClanChampionshipMatchUncheckedCreateWithoutHomeClanInput>
+  }
+
+  export type ClanChampionshipMatchUpdateWithWhereUniqueWithoutHomeClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    data: XOR<ClanChampionshipMatchUpdateWithoutHomeClanInput, ClanChampionshipMatchUncheckedUpdateWithoutHomeClanInput>
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithWhereWithoutHomeClanInput = {
+    where: ClanChampionshipMatchScalarWhereInput
+    data: XOR<ClanChampionshipMatchUpdateManyMutationInput, ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanInput>
+  }
+
+  export type ClanChampionshipMatchScalarWhereInput = {
+    AND?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+    OR?: ClanChampionshipMatchScalarWhereInput[]
+    NOT?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
+    id?: UuidFilter<"ClanChampionshipMatch"> | string
+    eventId?: UuidFilter<"ClanChampionshipMatch"> | string
+    round?: IntFilter<"ClanChampionshipMatch"> | number
+    homeClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    awayClanId?: IntFilter<"ClanChampionshipMatch"> | number
+    startsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+    endsAt?: DateTimeFilter<"ClanChampionshipMatch"> | Date | string
+  }
+
+  export type ClanChampionshipMatchUpsertWithWhereUniqueWithoutAwayClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    update: XOR<ClanChampionshipMatchUpdateWithoutAwayClanInput, ClanChampionshipMatchUncheckedUpdateWithoutAwayClanInput>
+    create: XOR<ClanChampionshipMatchCreateWithoutAwayClanInput, ClanChampionshipMatchUncheckedCreateWithoutAwayClanInput>
+  }
+
+  export type ClanChampionshipMatchUpdateWithWhereUniqueWithoutAwayClanInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    data: XOR<ClanChampionshipMatchUpdateWithoutAwayClanInput, ClanChampionshipMatchUncheckedUpdateWithoutAwayClanInput>
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithWhereWithoutAwayClanInput = {
+    where: ClanChampionshipMatchScalarWhereInput
+    data: XOR<ClanChampionshipMatchUpdateManyMutationInput, ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanInput>
+  }
+
   export type ClanCreateWithoutCastleInput = {
     name: string
     treasureValue?: number
@@ -130506,6 +134015,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutCastleInput = {
@@ -130528,6 +134040,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutCastleInput = {
@@ -130705,6 +134220,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutCastleInput = {
@@ -130727,6 +134245,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutCastleInput = {
@@ -130848,6 +134369,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutJoinRequestsInput = {
@@ -130870,6 +134394,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutJoinRequestsInput = {
@@ -131062,6 +134589,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutJoinRequestsInput = {
@@ -131084,6 +134614,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type PlayerUpsertWithoutClanJoinRequestInput = {
@@ -131254,6 +134787,8 @@ export namespace Prisma {
     endDate: Date | string
     config: string
     clanWarRankings?: ClanWarRankingCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventUncheckedCreateWithoutClanWarsInput = {
@@ -131263,6 +134798,8 @@ export namespace Prisma {
     endDate: Date | string
     config: string
     clanWarRankings?: ClanWarRankingUncheckedCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventCreateOrConnectWithoutClanWarsInput = {
@@ -131289,6 +134826,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutAttackingWarsInput = {
@@ -131311,6 +134851,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutAttackingWarsInput = {
@@ -131337,6 +134880,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutDefendingWarsInput = {
@@ -131359,6 +134905,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutDefendingWarsInput = {
@@ -131385,6 +134934,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutWarWonInput = {
@@ -131407,6 +134959,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutWarWonInput = {
@@ -131432,6 +134987,8 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     config?: StringFieldUpdateOperationsInput | string
     clanWarRankings?: ClanWarRankingUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUpdateManyWithoutEventNestedInput
   }
 
   export type ClanEventUncheckedUpdateWithoutClanWarsInput = {
@@ -131441,6 +134998,8 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     config?: StringFieldUpdateOperationsInput | string
     clanWarRankings?: ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type ClanUpsertWithoutAttackingWarsInput = {
@@ -131473,6 +135032,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutAttackingWarsInput = {
@@ -131495,6 +135057,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUpsertWithoutDefendingWarsInput = {
@@ -131527,6 +135092,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutDefendingWarsInput = {
@@ -131549,6 +135117,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUpsertWithoutWarWonInput = {
@@ -131581,6 +135152,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutWarWonInput = {
@@ -131603,6 +135177,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanCreateWithoutClanWarRankingInput = {
@@ -131624,6 +135201,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutClanWarRankingInput = {
@@ -131646,6 +135226,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutClanWarRankingInput = {
@@ -131660,6 +135243,8 @@ export namespace Prisma {
     endDate: Date | string
     config: string
     clanWars?: ClanWarCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventUncheckedCreateWithoutClanWarRankingsInput = {
@@ -131669,6 +135254,8 @@ export namespace Prisma {
     endDate: Date | string
     config: string
     clanWars?: ClanWarUncheckedCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type ClanEventCreateOrConnectWithoutClanWarRankingsInput = {
@@ -131706,6 +135293,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutClanWarRankingInput = {
@@ -131728,6 +135318,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanEventUpsertWithoutClanWarRankingsInput = {
@@ -131748,6 +135341,8 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     config?: StringFieldUpdateOperationsInput | string
     clanWars?: ClanWarUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUpdateManyWithoutEventNestedInput
   }
 
   export type ClanEventUncheckedUpdateWithoutClanWarRankingsInput = {
@@ -131757,6 +135352,8 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     config?: StringFieldUpdateOperationsInput | string
     clanWars?: ClanWarUncheckedUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type ClanWarRankingCreateWithoutEventInput = {
@@ -131824,6 +135421,57 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ClanChampionshipRegistrationCreateWithoutEventInput = {
+    registeredById: string
+    registeredAt?: Date | string
+    clan: ClanCreateNestedOneWithoutChampionshipRegistrationsInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedCreateWithoutEventInput = {
+    id?: number
+    clanId: number
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipRegistrationCreateOrConnectWithoutEventInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    create: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput>
+  }
+
+  export type ClanChampionshipRegistrationCreateManyEventInputEnvelope = {
+    data: ClanChampionshipRegistrationCreateManyEventInput | ClanChampionshipRegistrationCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanChampionshipMatchCreateWithoutEventInput = {
+    id?: string
+    round: number
+    startsAt: Date | string
+    endsAt: Date | string
+    homeClan: ClanCreateNestedOneWithoutChampionshipHomeMatchesInput
+    awayClan: ClanCreateNestedOneWithoutChampionshipAwayMatchesInput
+  }
+
+  export type ClanChampionshipMatchUncheckedCreateWithoutEventInput = {
+    id?: string
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateOrConnectWithoutEventInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    create: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput>
+  }
+
+  export type ClanChampionshipMatchCreateManyEventInputEnvelope = {
+    data: ClanChampionshipMatchCreateManyEventInput | ClanChampionshipMatchCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanWarRankingUpsertWithWhereUniqueWithoutEventInput = {
     where: ClanWarRankingWhereUniqueInput
     update: XOR<ClanWarRankingUpdateWithoutEventInput, ClanWarRankingUncheckedUpdateWithoutEventInput>
@@ -131856,6 +135504,500 @@ export namespace Prisma {
     data: XOR<ClanWarUpdateManyMutationInput, ClanWarUncheckedUpdateManyWithoutEventInput>
   }
 
+  export type ClanChampionshipRegistrationUpsertWithWhereUniqueWithoutEventInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    update: XOR<ClanChampionshipRegistrationUpdateWithoutEventInput, ClanChampionshipRegistrationUncheckedUpdateWithoutEventInput>
+    create: XOR<ClanChampionshipRegistrationCreateWithoutEventInput, ClanChampionshipRegistrationUncheckedCreateWithoutEventInput>
+  }
+
+  export type ClanChampionshipRegistrationUpdateWithWhereUniqueWithoutEventInput = {
+    where: ClanChampionshipRegistrationWhereUniqueInput
+    data: XOR<ClanChampionshipRegistrationUpdateWithoutEventInput, ClanChampionshipRegistrationUncheckedUpdateWithoutEventInput>
+  }
+
+  export type ClanChampionshipRegistrationUpdateManyWithWhereWithoutEventInput = {
+    where: ClanChampionshipRegistrationScalarWhereInput
+    data: XOR<ClanChampionshipRegistrationUpdateManyMutationInput, ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type ClanChampionshipMatchUpsertWithWhereUniqueWithoutEventInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    update: XOR<ClanChampionshipMatchUpdateWithoutEventInput, ClanChampionshipMatchUncheckedUpdateWithoutEventInput>
+    create: XOR<ClanChampionshipMatchCreateWithoutEventInput, ClanChampionshipMatchUncheckedCreateWithoutEventInput>
+  }
+
+  export type ClanChampionshipMatchUpdateWithWhereUniqueWithoutEventInput = {
+    where: ClanChampionshipMatchWhereUniqueInput
+    data: XOR<ClanChampionshipMatchUpdateWithoutEventInput, ClanChampionshipMatchUncheckedUpdateWithoutEventInput>
+  }
+
+  export type ClanChampionshipMatchUpdateManyWithWhereWithoutEventInput = {
+    where: ClanChampionshipMatchScalarWhereInput
+    data: XOR<ClanChampionshipMatchUpdateManyMutationInput, ClanChampionshipMatchUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type ClanEventCreateWithoutChampionshipRegistrationsInput = {
+    id?: string
+    eventType: $Enums.ClanEventType
+    startDate: Date | string
+    endDate: Date | string
+    config: string
+    clanWarRankings?: ClanWarRankingCreateNestedManyWithoutEventInput
+    clanWars?: ClanWarCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchCreateNestedManyWithoutEventInput
+  }
+
+  export type ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput = {
+    id?: string
+    eventType: $Enums.ClanEventType
+    startDate: Date | string
+    endDate: Date | string
+    config: string
+    clanWarRankings?: ClanWarRankingUncheckedCreateNestedManyWithoutEventInput
+    clanWars?: ClanWarUncheckedCreateNestedManyWithoutEventInput
+    championshipMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type ClanEventCreateOrConnectWithoutChampionshipRegistrationsInput = {
+    where: ClanEventWhereUniqueInput
+    create: XOR<ClanEventCreateWithoutChampionshipRegistrationsInput, ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanCreateWithoutChampionshipRegistrationsInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleCreateNestedOneWithoutClanInput
+    leader: PlayerCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
+    players?: PlayerCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutChampionshipRegistrationsInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
+    players?: PlayerUncheckedCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutChampionshipRegistrationsInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutChampionshipRegistrationsInput, ClanUncheckedCreateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanEventUpsertWithoutChampionshipRegistrationsInput = {
+    update: XOR<ClanEventUpdateWithoutChampionshipRegistrationsInput, ClanEventUncheckedUpdateWithoutChampionshipRegistrationsInput>
+    create: XOR<ClanEventCreateWithoutChampionshipRegistrationsInput, ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput>
+    where?: ClanEventWhereInput
+  }
+
+  export type ClanEventUpdateToOneWithWhereWithoutChampionshipRegistrationsInput = {
+    where?: ClanEventWhereInput
+    data: XOR<ClanEventUpdateWithoutChampionshipRegistrationsInput, ClanEventUncheckedUpdateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanEventUpdateWithoutChampionshipRegistrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventType?: EnumClanEventTypeFieldUpdateOperationsInput | $Enums.ClanEventType
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: StringFieldUpdateOperationsInput | string
+    clanWarRankings?: ClanWarRankingUpdateManyWithoutEventNestedInput
+    clanWars?: ClanWarUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUpdateManyWithoutEventNestedInput
+  }
+
+  export type ClanEventUncheckedUpdateWithoutChampionshipRegistrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventType?: EnumClanEventTypeFieldUpdateOperationsInput | $Enums.ClanEventType
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: StringFieldUpdateOperationsInput | string
+    clanWarRankings?: ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput
+    clanWars?: ClanWarUncheckedUpdateManyWithoutEventNestedInput
+    championshipMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type ClanUpsertWithoutChampionshipRegistrationsInput = {
+    update: XOR<ClanUpdateWithoutChampionshipRegistrationsInput, ClanUncheckedUpdateWithoutChampionshipRegistrationsInput>
+    create: XOR<ClanCreateWithoutChampionshipRegistrationsInput, ClanUncheckedCreateWithoutChampionshipRegistrationsInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutChampionshipRegistrationsInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutChampionshipRegistrationsInput, ClanUncheckedUpdateWithoutChampionshipRegistrationsInput>
+  }
+
+  export type ClanUpdateWithoutChampionshipRegistrationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUpdateOneWithoutClanNestedInput
+    leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
+    players?: PlayerUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutChampionshipRegistrationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
+    players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
+  }
+
+  export type ClanEventCreateWithoutChampionshipMatchesInput = {
+    id?: string
+    eventType: $Enums.ClanEventType
+    startDate: Date | string
+    endDate: Date | string
+    config: string
+    clanWarRankings?: ClanWarRankingCreateNestedManyWithoutEventInput
+    clanWars?: ClanWarCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutEventInput
+  }
+
+  export type ClanEventUncheckedCreateWithoutChampionshipMatchesInput = {
+    id?: string
+    eventType: $Enums.ClanEventType
+    startDate: Date | string
+    endDate: Date | string
+    config: string
+    clanWarRankings?: ClanWarRankingUncheckedCreateNestedManyWithoutEventInput
+    clanWars?: ClanWarUncheckedCreateNestedManyWithoutEventInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type ClanEventCreateOrConnectWithoutChampionshipMatchesInput = {
+    where: ClanEventWhereUniqueInput
+    create: XOR<ClanEventCreateWithoutChampionshipMatchesInput, ClanEventUncheckedCreateWithoutChampionshipMatchesInput>
+  }
+
+  export type ClanCreateWithoutChampionshipHomeMatchesInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleCreateNestedOneWithoutClanInput
+    leader: PlayerCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
+    players?: PlayerCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutChampionshipHomeMatchesInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
+    players?: PlayerUncheckedCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutChampionshipHomeMatchesInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutChampionshipHomeMatchesInput, ClanUncheckedCreateWithoutChampionshipHomeMatchesInput>
+  }
+
+  export type ClanCreateWithoutChampionshipAwayMatchesInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleCreateNestedOneWithoutClanInput
+    leader: PlayerCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
+    players?: PlayerCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutChampionshipAwayMatchesInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedCreateNestedOneWithoutClanInput
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    attackingWars?: ClanWarUncheckedCreateNestedManyWithoutAttackerInput
+    defendingWars?: ClanWarUncheckedCreateNestedManyWithoutDefenderInput
+    clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
+    players?: PlayerUncheckedCreateNestedManyWithoutClanInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
+    warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutChampionshipAwayMatchesInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutChampionshipAwayMatchesInput, ClanUncheckedCreateWithoutChampionshipAwayMatchesInput>
+  }
+
+  export type ClanEventUpsertWithoutChampionshipMatchesInput = {
+    update: XOR<ClanEventUpdateWithoutChampionshipMatchesInput, ClanEventUncheckedUpdateWithoutChampionshipMatchesInput>
+    create: XOR<ClanEventCreateWithoutChampionshipMatchesInput, ClanEventUncheckedCreateWithoutChampionshipMatchesInput>
+    where?: ClanEventWhereInput
+  }
+
+  export type ClanEventUpdateToOneWithWhereWithoutChampionshipMatchesInput = {
+    where?: ClanEventWhereInput
+    data: XOR<ClanEventUpdateWithoutChampionshipMatchesInput, ClanEventUncheckedUpdateWithoutChampionshipMatchesInput>
+  }
+
+  export type ClanEventUpdateWithoutChampionshipMatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventType?: EnumClanEventTypeFieldUpdateOperationsInput | $Enums.ClanEventType
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: StringFieldUpdateOperationsInput | string
+    clanWarRankings?: ClanWarRankingUpdateManyWithoutEventNestedInput
+    clanWars?: ClanWarUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutEventNestedInput
+  }
+
+  export type ClanEventUncheckedUpdateWithoutChampionshipMatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventType?: EnumClanEventTypeFieldUpdateOperationsInput | $Enums.ClanEventType
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: StringFieldUpdateOperationsInput | string
+    clanWarRankings?: ClanWarRankingUncheckedUpdateManyWithoutEventNestedInput
+    clanWars?: ClanWarUncheckedUpdateManyWithoutEventNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type ClanUpsertWithoutChampionshipHomeMatchesInput = {
+    update: XOR<ClanUpdateWithoutChampionshipHomeMatchesInput, ClanUncheckedUpdateWithoutChampionshipHomeMatchesInput>
+    create: XOR<ClanCreateWithoutChampionshipHomeMatchesInput, ClanUncheckedCreateWithoutChampionshipHomeMatchesInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutChampionshipHomeMatchesInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutChampionshipHomeMatchesInput, ClanUncheckedUpdateWithoutChampionshipHomeMatchesInput>
+  }
+
+  export type ClanUpdateWithoutChampionshipHomeMatchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUpdateOneWithoutClanNestedInput
+    leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
+    players?: PlayerUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutChampionshipHomeMatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
+    players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
+  }
+
+  export type ClanUpsertWithoutChampionshipAwayMatchesInput = {
+    update: XOR<ClanUpdateWithoutChampionshipAwayMatchesInput, ClanUncheckedUpdateWithoutChampionshipAwayMatchesInput>
+    create: XOR<ClanCreateWithoutChampionshipAwayMatchesInput, ClanUncheckedCreateWithoutChampionshipAwayMatchesInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutChampionshipAwayMatchesInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutChampionshipAwayMatchesInput, ClanUncheckedUpdateWithoutChampionshipAwayMatchesInput>
+  }
+
+  export type ClanUpdateWithoutChampionshipAwayMatchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUpdateOneWithoutClanNestedInput
+    leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
+    players?: PlayerUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutChampionshipAwayMatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Lang[]
+    castle?: ClanCastleUncheckedUpdateOneWithoutClanNestedInput
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    attackingWars?: ClanWarUncheckedUpdateManyWithoutAttackerNestedInput
+    defendingWars?: ClanWarUncheckedUpdateManyWithoutDefenderNestedInput
+    clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
+    players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
+    warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+  }
+
   export type ClanCreateWithoutIngredientsInput = {
     name: string
     treasureValue?: number
@@ -131875,6 +136017,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutIngredientsInput = {
@@ -131897,6 +136042,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutIngredientsInput = {
@@ -131934,6 +136082,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutIngredientsInput = {
@@ -131956,6 +136107,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type PlayerCreateWithoutClanMessageInput = {
@@ -132132,6 +136286,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutDiscussionInput = {
@@ -132154,6 +136311,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutDiscussionInput = {
@@ -132352,6 +136512,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutDiscussionInput = {
@@ -132374,6 +136537,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type PlayerCreateWithoutClanHistoryInput = {
@@ -132550,6 +136716,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutHistoryInput = {
@@ -132572,6 +136741,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutHistoryInput = {
@@ -132770,6 +136942,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutHistoryInput = {
@@ -132792,6 +136967,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanCreateWithoutMembersInput = {
@@ -132813,6 +136991,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutMembersInput = {
@@ -132835,6 +137016,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutMembersInput = {
@@ -133027,6 +137211,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutMembersInput = {
@@ -133049,6 +137236,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type PlayerUpsertWithoutClanMemberInput = {
@@ -133231,6 +137421,9 @@ export namespace Prisma {
     players?: PlayerCreateNestedManyWithoutClanInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutPagesInput = {
@@ -133253,6 +137446,9 @@ export namespace Prisma {
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutPagesInput = {
@@ -133290,6 +137486,9 @@ export namespace Prisma {
     players?: PlayerUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutPagesInput = {
@@ -133312,6 +137511,9 @@ export namespace Prisma {
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type DinozCreateWithoutModerationInput = {
@@ -133904,6 +138106,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingCreateNestedManyWithoutClanInput
     players?: PlayerCreateNestedManyWithoutClanInput
     warWon?: ClanWarCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanUncheckedCreateWithoutTargetedCasesInput = {
@@ -133926,6 +138131,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedCreateNestedManyWithoutClanInput
     players?: PlayerUncheckedCreateNestedManyWithoutClanInput
     warWon?: ClanWarUncheckedCreateNestedManyWithoutWinnerInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedCreateNestedManyWithoutClanInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutHomeClanInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedCreateNestedManyWithoutAwayClanInput
   }
 
   export type ClanCreateOrConnectWithoutTargetedCasesInput = {
@@ -134558,6 +138766,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUpdateManyWithoutClanNestedInput
     players?: PlayerUpdateManyWithoutClanNestedInput
     warWon?: ClanWarUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUpdateManyWithoutAwayClanNestedInput
   }
 
   export type ClanUncheckedUpdateWithoutTargetedCasesInput = {
@@ -134580,6 +138791,9 @@ export namespace Prisma {
     clanWarRanking?: ClanWarRankingUncheckedUpdateManyWithoutClanNestedInput
     players?: PlayerUncheckedUpdateManyWithoutClanNestedInput
     warWon?: ClanWarUncheckedUpdateManyWithoutWinnerNestedInput
+    championshipRegistrations?: ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanNestedInput
+    championshipHomeMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanNestedInput
+    championshipAwayMatches?: ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanNestedInput
   }
 
   export type PlayerCreateWithoutCreatedConversationsInput = {
@@ -143606,6 +147820,31 @@ export namespace Prisma {
     isCastleDestroyed?: boolean
   }
 
+  export type ClanChampionshipRegistrationCreateManyClanInput = {
+    id?: number
+    eventId: string
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateManyHomeClanInput = {
+    id?: string
+    eventId: string
+    round: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateManyAwayClanInput = {
+    id?: string
+    eventId: string
+    round: number
+    homeClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
   export type ClanHistoryUpdateWithoutClanInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
@@ -144086,6 +148325,80 @@ export namespace Prisma {
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type ClanChampionshipRegistrationUpdateWithoutClanInput = {
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUpdateWithoutHomeClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
+    awayClan?: ClanUpdateOneRequiredWithoutChampionshipAwayMatchesNestedInput
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateWithoutHomeClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutHomeClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUpdateWithoutAwayClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: ClanEventUpdateOneRequiredWithoutChampionshipMatchesNestedInput
+    homeClan?: ClanUpdateOneRequiredWithoutChampionshipHomeMatchesNestedInput
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateWithoutAwayClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutAwayClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DinozCreateManyCastleInput = {
     id?: number
     leaderId?: number | null
@@ -144317,6 +148630,22 @@ export namespace Prisma {
     winnerClanId?: number | null
   }
 
+  export type ClanChampionshipRegistrationCreateManyEventInput = {
+    id?: number
+    clanId: number
+    registeredById: string
+    registeredAt?: Date | string
+  }
+
+  export type ClanChampionshipMatchCreateManyEventInput = {
+    id?: string
+    round: number
+    homeClanId: number
+    awayClanId: number
+    startsAt: Date | string
+    endsAt: Date | string
+  }
+
   export type ClanWarRankingUpdateWithoutEventInput = {
     reputation?: FloatFieldUpdateOperationsInput | number
     downtimeCount?: IntFieldUpdateOperationsInput | number
@@ -144383,6 +148712,53 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isCastleDestroyed?: BoolFieldUpdateOperationsInput | boolean
     winnerClanId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ClanChampionshipRegistrationUpdateWithoutEventInput = {
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clan?: ClanUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateWithoutEventInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    registeredById?: StringFieldUpdateOperationsInput | string
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    homeClan?: ClanUpdateOneRequiredWithoutChampionshipHomeMatchesNestedInput
+    awayClan?: ClanUpdateOneRequiredWithoutChampionshipAwayMatchesNestedInput
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanChampionshipMatchUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    round?: IntFieldUpdateOperationsInput | number
+    homeClanId?: IntFieldUpdateOperationsInput | number
+    awayClanId?: IntFieldUpdateOperationsInput | number
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateManyConversationInput = {
