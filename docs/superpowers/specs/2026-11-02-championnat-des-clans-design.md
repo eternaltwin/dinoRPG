@@ -18,10 +18,11 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
 ## 1. Cycle de vie d'un CDC
 
 - **Lancement** : un admin lance le CDC en choisissant un lundi de début et la
-  liste des lieux possibles. Un seul CDC peut être actif à la fois.
-  Réutilisation proposée : `ClanEvent` avec un nouveau `ClanEventType`
-  `championship` et une config dédiée, sur le modèle de `startClanWarEvent`
-  (`ed-be/src/business/adminService.ts:1109`).
+  liste des lieux possibles. Le CDC **est un `ClanEvent`** avec un nouveau
+  `ClanEventType` `championship` et une config dédiée, sur le modèle de
+  `startClanWarEvent` (`ed-be/src/business/adminService.ts:1109`).
+  `ClanEvent` doit gérer correctement les différents types d'événements : le
+  code de la guerre ne doit jamais prendre un CDC pour une guerre.
 - **Inscriptions** : elles durent 2 semaines à partir du lundi de début.
   Seuls le chef de clan et les membres qui ont le droit
   `ClanMemberRight.WAR_OFFICER` peuvent inscrire leur clan, sans aucune
@@ -33,15 +34,16 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
   - S'il y a moins de 2 clans inscrits, le CDC est annulé automatiquement.
   - Sinon, on génère un calendrier en round-robin (méthode du cercle) :
     chaque clan affronte une fois chacun des autres, soit N−1 journées.
-  - Si N est impair, un clan est exempt à chaque journée et marque 0 point.
-- **Calendrier** : il y a 2 créneaux par semaine, **du lundi 20h au mercredi
-  20h** et **du jeudi 20h au samedi 20h**, à l'heure de Paris.
+  - Si N est impair, il faut N journées : à chaque journée, un clan est
+    exempt et marque 0 point.
+- **Calendrier** : il y a 2 créneaux par semaine, **du lundi 18h UTC au
+  mercredi 18h UTC** et **du jeudi 18h UTC au samedi 18h UTC**. Tout est
+  calculé en UTC, sans gestion de fuseau horaire.
   - Le premier match se joue le lundi de la 3e semaine.
-  - **[choix Claude]** Les inscriptions ferment ce même lundi à 00h00.
-  - Le serveur ne gère actuellement aucun fuseau horaire : il faut donc
-    introduire `Europe/Paris` pour les calculs du CDC.
-- **Exclusivité avec la guerre** : un clan inscrit ne peut ni déclarer ni
-  recevoir de guerre, depuis son inscription jusqu'à la fin du CDC.
+  - **[choix Claude]** Les inscriptions ferment ce même lundi à 00h00 UTC.
+- **Exclusivité avec la guerre** : une guerre des clans et un CDC ne peuvent
+  jamais avoir lieu en même temps. Un seul événement de clan peut être en
+  cours ou programmé à la fois, quel que soit son type.
 - **Dissolution** : un clan inscrit ne peut pas être dissous avant la fin du
   CDC.
 - **Tournois** : ils ne sont pas affectés par le CDC.
