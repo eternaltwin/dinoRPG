@@ -86,8 +86,5 @@
 		"release-it": "^17.6.0",
 		"rimraf": "^5.0.5",
 		"typescript": "^5.7.2"
-	},
-	"resolutions": {
-		"@eternaltwin/marktwin@npm:^0.6.0": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch"
 	}
 }

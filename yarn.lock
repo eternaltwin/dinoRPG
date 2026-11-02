@@ -1101,17 +1101,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/marktwin@npm:0.6.0":
-  version: 0.6.0
-  resolution: "@eternaltwin/marktwin@npm:0.6.0"
-  checksum: 10/f4ef5aa145145d60136246c76df29c08967e8365a490f746e331685104c3c4c34fa5e1797e819b8419cb5a406cdc51f387802e5e52a9eba0f863c7b7480583aa
-  languageName: node
-  linkType: hard
-
-"@eternaltwin/marktwin@patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch":
-  version: 0.6.0
-  resolution: "@eternaltwin/marktwin@patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch::version=0.6.0&hash=b64203"
-  checksum: 10/b000b8562e8e98da86a5a88f8b84cfada0c8084d4c9fc08bab71954d63a3be3c01dde59e83ea16e7d49bbb381b70bc5ca65e5b30ee1b3a3da38f75fd820eafd7
+"@eternaltwin/marktwin@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@eternaltwin/marktwin@npm:0.6.1"
+  checksum: 10/6b92dd7372b5c608f248cd59c7c96fd10ab6630500f4e25a138bb20569aaf6ded101b80ea591238f42d26cf9442d005c9d66cb783e92299adc39dd094506cb32
   languageName: node
   linkType: hard
 
@@ -7555,7 +7548,7 @@ __metadata:
     "@drpg/renderer": "workspace:^"
     "@eternaltwin/client-node": "npm:^0.17.3"
     "@eternaltwin/core": "npm:^0.17.3"
-    "@eternaltwin/marktwin": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch"
+    "@eternaltwin/marktwin": "npm:^0.6.1"
     "@eternaltwin/oauth-client-http": "npm:^0.17.3"
     "@opentelemetry/api": "npm:^1.9.0"
     "@opentelemetry/exporter-trace-otlp-proto": "npm:^0.56.0"
@@ -7624,7 +7617,7 @@ __metadata:
     "@drpg/core": "workspace:^"
     "@eternaltwin/core": "npm:^0.17.2"
     "@eternaltwin/dinorpg_animations": "npm:^1.0.9"
-    "@eternaltwin/marktwin": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch"
+    "@eternaltwin/marktwin": "npm:^0.6.1"
     "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"
     "@types/upng-js": "npm:^2"

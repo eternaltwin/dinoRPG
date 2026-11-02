@@ -21,7 +21,7 @@
   "dependencies": {
     "@eternaltwin/core": "^0.17.2",
     "@eternaltwin/dinorpg_animations": "^1.0.9",
-    "@eternaltwin/marktwin": "patch:@eternaltwin/marktwin@npm%3A0.6.0#~/.yarn/patches/@eternaltwin-marktwin-npm-0.6.0-0ff8251b96.patch",
+    "@eternaltwin/marktwin": "^0.6.1",
     "@pixi/filter-drop-shadow": "^5.2.0",
     "@pixi/filter-glow": "^5.2.1",
     "@vueuse/core": "^14.2.0",

@@ -36,7 +36,6 @@ node_modules/
 !**/.yarn/sdks
 !.yarn/versions
 !**/.yarn/versions
-!.yarn/patches
 .pnp.*
 # We only use `yarn.lock` files, ensure npm's `package-lock.json` is not commited
 package-lock.json

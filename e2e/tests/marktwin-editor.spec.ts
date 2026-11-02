@@ -15,7 +15,7 @@ test('a clan message is written in Marktwin, previewed and stored as escaped HTM
 	const field = editor.locator('textarea');
 	await expect(field).toBeVisible();
 
-	// Accents in the middle of the text: marktwin 0.6.0 as published panics on them.
+	// Accents in the middle of the text: marktwin 0.6.0 panicked on them.
 	await field.fill('Salut à tous, ça roule ? <b>pas du html</b>');
 	await field.selectText();
 	await editor.getByRole('button', { name: /^Gras/ }).click();
