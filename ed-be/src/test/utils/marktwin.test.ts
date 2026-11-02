@@ -12,8 +12,8 @@ describe('renderPlayerMessage', () => {
 		);
 	});
 
-	// marktwin 0.6.0 as published panics on these: its wasm-bindgen glue hands Rust a buffer
-	// larger than the string, which Rust then frees with the wrong size. Fixed by the yarn patch.
+	// marktwin 0.6.0 panicked on these: its wasm-bindgen glue handed Rust a buffer
+	// larger than the string, which Rust then freed with the wrong size. Fixed in 0.6.1.
 	it('survives non-ASCII text in the middle of a message', async () => {
 		expect(await renderPlayerMessage('Salut à tous, ça va ? 🦖 日本語 ok')).toBe('Salut à tous, ça va ? 🦖 日本語 ok');
 	});
