@@ -3,8 +3,9 @@ import { ClanEventConfig, ClanChampionshipEventConfig } from '@drpg/core/models/
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { prisma, PismaClientLocal } from '../prisma.js';
 import translate from '../utils/server/translate.js';
+import type { LocalTransactionClient } from '../dao/clansDao.js';
 
-type Tx = PismaClientLocal;
+type Tx = PismaClientLocal | LocalTransactionClient;
 
 /** War code must only ever see war events. */
 export const WAR_EVENT_TYPES: ClanEventType[] = [ClanEventType.war, ClanEventType.mana_war];

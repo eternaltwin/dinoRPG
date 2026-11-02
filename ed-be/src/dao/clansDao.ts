@@ -1391,7 +1391,7 @@ export async function applyProspectorUpdates(eventId: string, updates: Prospecto
 }
 
 // Transaction client matching the local (extended) prisma client, usable both standalone and inside $transaction.
-type LocalTransactionClient = Omit<
+export type LocalTransactionClient = Omit<
 	typeof prisma,
 	'$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'
 >;
