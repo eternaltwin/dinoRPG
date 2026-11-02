@@ -271,7 +271,7 @@ export async function enterBoard(req: Request): Promise<void> {
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
 		});
 		if (existing?.state === ClanChampionshipPieceState.dead) throw fail('deadInMatch');
-		if (!existing) {
+		if (!existing || existing.clanId !== clanId) {
 			const used = await tx.clanChampionshipPiece.count({ where: { matchId: match.id, clanId } });
 			if (used >= BOARD_MATCH_QUOTA) throw fail('quotaReached');
 		}
@@ -283,6 +283,12 @@ export async function enterBoard(req: Request): Promise<void> {
 		const occupied = new Set(onBoard.map(o => cellIndex(o.x as number, o.y as number)));
 		const cell = pickEntryCell(side, occupied, seedrandom());
 		if (!cell) throw fail('entryFull');
+
+		const locked = await tx.dinoz.updateMany({
+			where: { id: dinozId, unavailableReason: null, placeId: match.placeId, life: { gt: 0 } },
+			data: { unavailableReason: UnavailableReason.clanChampionship }
+		});
+		if (locked.count === 0) throw fail('dinozBusy');
 
 		await tx.clanChampionshipPiece.upsert({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } },
@@ -296,9 +302,15 @@ export async function enterBoard(req: Request): Promise<void> {
 				y: cell.y,
 				actionPoints: 0
 			},
-			update: { state: ClanChampionshipPieceState.onBoard, x: cell.x, y: cell.y, actionPoints: 0 }
+			update: {
+				playerId: authed.id,
+				clanId,
+				state: ClanChampionshipPieceState.onBoard,
+				x: cell.x,
+				y: cell.y,
+				actionPoints: 0
+			}
 		});
-		await tx.dinoz.update({ where: { id: dinozId }, data: { unavailableReason: UnavailableReason.clanChampionship } });
 	});
 }
 
@@ -317,7 +329,10 @@ export async function leaveBoard(req: Request): Promise<void> {
 			where: { id: own.id },
 			data: { state: ClanChampionshipPieceState.left, x: null, y: null, actionPoints: 0 }
 		});
-		await tx.dinoz.update({ where: { id: dinozId }, data: { unavailableReason: null } });
+		await tx.dinoz.updateMany({
+			where: { id: dinozId, unavailableReason: UnavailableReason.clanChampionship },
+			data: { unavailableReason: null }
+		});
 	});
 }
 
@@ -367,6 +382,8 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 	await prisma.$transaction(
 		async tx => {
 			await lockMatch(tx, found.id);
+			const current = await tx.clanChampionshipMatch.findUnique({ where: { id: found.id } });
+			if (!current || current.status !== ClanChampionshipMatchStatus.live) return;
 			const where = { matchId: found.id, playerId, state: { not: ClanChampionshipPieceState.dead } };
 			const pieces = await tx.clanChampionshipPiece.findMany({ where, select: { dinozId: true } });
 			if (pieces.length === 0) return;

@@ -437,7 +437,13 @@ async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number
 		where: { playerId: member.playerId },
 		select: { id: true }
 	});
-	if (!stillMember) await removePlayerFromBoards(member.playerId, member.clanId);
+	if (stillMember) return;
+	try {
+		await removePlayerFromBoards(member.playerId, member.clanId);
+	} catch (err) {
+		// The clan exit is already committed: do not fail it.
+		LOGGER.error('removePlayerFromBoards failed', err);
+	}
 }
 
 /**

@@ -22,7 +22,7 @@ vi.mock('../../prisma.js', () => ({
 			update: vi.fn(),
 			deleteMany: vi.fn()
 		},
-		dinoz: { findUnique: vi.fn(), update: vi.fn(), updateMany: vi.fn() }
+		dinoz: { findUnique: vi.fn(), updateMany: vi.fn() }
 	}
 }));
 
@@ -106,6 +106,7 @@ function setup(m: ReturnType<typeof liveMatch> | null = liveMatch()) {
 	p.clanChampionshipPiece.findUnique.mockResolvedValue(null);
 	p.clanChampionshipPiece.count.mockResolvedValue(0);
 	p.dinoz.findUnique.mockResolvedValue(dinozRow());
+	p.dinoz.updateMany.mockResolvedValue({ count: 1 });
 }
 
 beforeEach(() => {
@@ -206,12 +207,41 @@ describe('enterBoard', () => {
 			actionPoints: 0
 		});
 		expect(call.update).toMatchObject({ state: 'onBoard', x: 0, actionPoints: 0 });
-		expect(p.dinoz.update).toHaveBeenCalledWith({ where: { id: 5 }, data: { unavailableReason: 'clanChampionship' } });
+		expect(p.dinoz.updateMany).toHaveBeenCalledWith({
+			where: { id: 5, unavailableReason: null, placeId: 1, life: { gt: 0 } },
+			data: { unavailableReason: 'clanChampionship' }
+		});
 	});
 	it('east clan enters on column 19', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: AWAY } as never);
 		await enter();
 		expect(p.clanChampionshipPiece.upsert.mock.calls[0][0].create.x).toBe(19);
+	});
+	it('dinozBusy when the conditional lock matches nothing', async () => {
+		p.dinoz.updateMany.mockResolvedValue({ count: 0 });
+		await expect(enter()).rejects.toThrow('clanChampionship.dinozBusy');
+		expect(p.clanChampionshipPiece.upsert).not.toHaveBeenCalled();
+	});
+	it('re-entry by a player of the other clan counts the quota and takes over the piece', async () => {
+		vi.mocked(auth).mockResolvedValue({ id: 'buyer', clanId: AWAY } as never);
+		p.dinoz.findUnique.mockResolvedValue(dinozRow({ playerId: 'buyer' }));
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'left', x: null, y: null }));
+		p.clanChampionshipPiece.count.mockResolvedValue(100);
+		await expect(enter()).rejects.toThrow('clanChampionship.quotaReached');
+		p.clanChampionshipPiece.count.mockResolvedValue(3);
+		await enter();
+		expect(p.clanChampionshipPiece.count).toHaveBeenCalledWith({ where: { matchId: liveMatch().id, clanId: AWAY } });
+		const call = p.clanChampionshipPiece.upsert.mock.calls[0][0];
+		expect(call.update).toMatchObject({ playerId: 'buyer', clanId: AWAY, x: 19, state: 'onBoard' });
+	});
+	it('re-entry by another player of the same clan updates the owner without quota', async () => {
+		vi.mocked(auth).mockResolvedValue({ id: 'buyer', clanId: HOME } as never);
+		p.dinoz.findUnique.mockResolvedValue(dinozRow({ playerId: 'buyer' }));
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'left', x: null, y: null }));
+		p.clanChampionshipPiece.count.mockResolvedValue(100);
+		await enter();
+		expect(p.clanChampionshipPiece.count).not.toHaveBeenCalled();
+		expect(p.clanChampionshipPiece.upsert.mock.calls[0][0].update).toMatchObject({ playerId: 'buyer', clanId: HOME });
 	});
 	it('re-entry of a left piece does not count the quota', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'left', x: null, y: null }));
@@ -243,7 +273,10 @@ describe('leaveBoard', () => {
 			where: { id: 1 },
 			data: { state: 'left', x: null, y: null, actionPoints: 0 }
 		});
-		expect(p.dinoz.update).toHaveBeenCalledWith({ where: { id: 5 }, data: { unavailableReason: null } });
+		expect(p.dinoz.updateMany).toHaveBeenCalledWith({
+			where: { id: 5, unavailableReason: 'clanChampionship' },
+			data: { unavailableReason: null }
+		});
 	});
 });
 
@@ -308,6 +341,12 @@ describe('removePlayerFromBoards', () => {
 			data: { unavailableReason: null }
 		});
 		expect(p.$queryRaw).toHaveBeenCalled();
+	});
+	it('does nothing when the match is no longer live under the lock', async () => {
+		setup();
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(liveMatch({ status: 'finished' }));
+		await removePlayerFromBoards(PLAYER, HOME);
+		expect(p.clanChampionshipPiece.deleteMany).not.toHaveBeenCalled();
 	});
 	it('does nothing without live match', async () => {
 		setup(null);
