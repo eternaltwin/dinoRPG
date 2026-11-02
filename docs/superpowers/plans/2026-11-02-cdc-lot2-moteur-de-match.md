@@ -130,7 +130,7 @@ it('scoreLine follows the spec example (0-based: A at 7 and 11, B at 9)', () => 
 	const a = [{ id: 1, clanId: 1, x: 7, y: 3 }, { id: 2, clanId: 1, x: 11, y: 5 }];
 	const b = [{ id: 3, clanId: 2, x: 9, y: 0 }];
 	expect(scoreLine('west', a, b)).toBe(7);
-	expect(scoreLine('east', b, a)).toBe(19 - 9);
+	expect(scoreLine('east', b, a)).toBe(0); // mutual passing: east 9 is passed by west 11
 });
 it('scoreLine is 0 without pieces', () => expect(scoreLine('west', [], [])).toBe(0));
 it('east pieces are passed by west pieces with a greater x', () => {
