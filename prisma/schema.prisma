@@ -652,27 +652,30 @@ model Pantheon {
 }
 
 model Clan {
-  id             Int               @id @default(autoincrement())
-  name           String            @unique
-  treasureValue  Int               @default(0)
-  creationDate   DateTime          @default(now()) @db.Timestamp(6)
-  banner         Bytes?
-  leaderId       String            @unique @db.Uuid
-  langs          Lang[]            @default([fr])
-  castle         ClanCastle?
-  leader         Player            @relation("leader", fields: [leaderId], references: [id])
-  history        ClanHistory[]
-  joinRequests   ClanJoinRequest[]
-  members        ClanMember[]      @relation("member")
-  pages          ClanPage[]
-  ingredients    ClanIngredient[]
-  discussion     ClanMessage[]
-  attackingWars  ClanWar[]         @relation("attacker")
-  defendingWars  ClanWar[]         @relation("defender")
-  clanWarRanking ClanWarRanking[]
-  players        Player[]
-  targetedCases  Moderation[]      @relation("TargetClanRelation")
-  warWon         ClanWar[]         @relation("warWon")
+  id                        Int                            @id @default(autoincrement())
+  name                      String                         @unique
+  treasureValue             Int                            @default(0)
+  creationDate              DateTime                       @default(now()) @db.Timestamp(6)
+  banner                    Bytes?
+  leaderId                  String                         @unique @db.Uuid
+  langs                     Lang[]                         @default([fr])
+  castle                    ClanCastle?
+  leader                    Player                         @relation("leader", fields: [leaderId], references: [id])
+  history                   ClanHistory[]
+  joinRequests              ClanJoinRequest[]
+  members                   ClanMember[]                   @relation("member")
+  pages                     ClanPage[]
+  ingredients               ClanIngredient[]
+  discussion                ClanMessage[]
+  attackingWars             ClanWar[]                      @relation("attacker")
+  defendingWars             ClanWar[]                      @relation("defender")
+  clanWarRanking            ClanWarRanking[]
+  players                   Player[]
+  targetedCases             Moderation[]                   @relation("TargetClanRelation")
+  warWon                    ClanWar[]                      @relation("warWon")
+  championshipRegistrations ClanChampionshipRegistration[]
+  championshipHomeMatches   ClanChampionshipMatch[]        @relation("championshipHome")
+  championshipAwayMatches   ClanChampionshipMatch[]        @relation("championshipAway")
 }
 
 model ClanCastle {
@@ -761,13 +764,44 @@ model ClanWarRanking {
 }
 
 model ClanEvent {
-  id              String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  eventType       ClanEventType
-  startDate       DateTime         @db.Timestamp(6)
-  endDate         DateTime         @db.Timestamp(6)
-  config          String           @db.Text
-  clanWarRankings ClanWarRanking[]
-  clanWars        ClanWar[]
+  id                        String                         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventType                 ClanEventType
+  startDate                 DateTime                       @db.Timestamp(6)
+  endDate                   DateTime                       @db.Timestamp(6)
+  config                    String                         @db.Text
+  clanWarRankings           ClanWarRanking[]
+  clanWars                  ClanWar[]
+  championshipRegistrations ClanChampionshipRegistration[]
+  championshipMatches       ClanChampionshipMatch[]
+}
+
+model ClanChampionshipRegistration {
+  id             Int       @id @default(autoincrement())
+  eventId        String    @db.Uuid
+  clanId         Int
+  registeredById String    @db.Uuid
+  registeredAt   DateTime  @default(now()) @db.Timestamp(6)
+  event          ClanEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  clan           Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, clanId])
+  @@map("clan_championship_registration")
+}
+
+model ClanChampionshipMatch {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventId    String    @db.Uuid
+  round      Int
+  homeClanId Int
+  awayClanId Int
+  startsAt   DateTime  @db.Timestamp(6)
+  endsAt     DateTime  @db.Timestamp(6)
+  event      ClanEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  homeClan   Clan      @relation("championshipHome", fields: [homeClanId], references: [id], onDelete: Cascade)
+  awayClan   Clan      @relation("championshipAway", fields: [awayClanId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, round])
+  @@map("clan_championship_match")
 }
 
 model ClanIngredient {
@@ -1221,6 +1255,7 @@ enum EventType {
 enum ClanEventType {
   war
   mana_war
+  championship
 }
 
 enum DungeonType {

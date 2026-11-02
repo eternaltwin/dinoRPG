@@ -2,13 +2,24 @@ import { Reward } from '../reward/RewardList.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { ClanEventType } from '@drpg/prisma/enums';
 
-export type ClanEventConfig = {
-	eventType: ClanEventType.war;
+export type ClanWarEventConfig = {
+	eventType: ClanEventType.war | ClanEventType.mana_war;
 	rewards: ClanEventReward;
 	fight: ClanEventFight;
 	warPlaces: PlaceEnum[];
 	swampEnable: boolean;
 };
+
+export type ChampionshipPhase = 'registration' | 'running' | 'cancelled' | 'finished';
+
+export type ClanChampionshipEventConfig = {
+	eventType: ClanEventType.championship;
+	places: PlaceEnum[];
+	registrationEnd: string; // ISO UTC
+	phase: ChampionshipPhase;
+};
+
+export type ClanEventConfig = ClanWarEventConfig | ClanChampionshipEventConfig;
 
 export interface ClanEventReward {
 	winner: Reward;

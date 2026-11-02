@@ -248,12 +248,14 @@ export type PantheonMotif = typeof PantheonMotif[keyof typeof PantheonMotif];
 
 export const ClanEventType: {
   readonly war: 'war';
-  readonly mana_war: 'mana_war'
+  readonly mana_war: 'mana_war';
+  readonly championship: 'championship'
 };
 
 export namespace ClanEventType {
   export type war = 'war';
-  export type mana_war = 'mana_war'
+  export type mana_war = 'mana_war';
+  export type championship = 'championship'
 }
 
 export type ClanEventType = typeof ClanEventType[keyof typeof ClanEventType];

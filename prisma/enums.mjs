@@ -119,7 +119,8 @@ export const PantheonMotif = {
 
 export const ClanEventType = {
   war: 'war',
-  mana_war: 'mana_war'
+  mana_war: 'mana_war',
+  championship: 'championship'
 };
 
 export const ModerationReason = {
