@@ -12,6 +12,7 @@ vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
 		$queryRaw: vi.fn(),
+		$executeRaw: vi.fn(),
 		clanEvent: { create: vi.fn(), findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
 		clanChampionshipRegistration: { create: vi.fn(), findMany: vi.fn(), deleteMany: vi.fn(), findFirst: vi.fn() },
 		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn() },
@@ -110,7 +111,7 @@ describe('startClanChampionship', () => {
 	it('takes the advisory lock inside the transaction before the overlap check, and schedules after commit', async () => {
 		await start({ start: '2026-11-09', places: [PlaceEnum.DINOVILLE] });
 		expect(p.$transaction).toHaveBeenCalled();
-		const lockOrder = p.$queryRaw.mock.invocationCallOrder[0];
+		const lockOrder = p.$executeRaw.mock.invocationCallOrder[0];
 		expect(lockOrder).toBeLessThan(p.clanEvent.findFirst.mock.invocationCallOrder[0]);
 		expect(lockOrder).toBeLessThan(p.clanEvent.create.mock.invocationCallOrder[0]);
 		expect(p.$transaction.mock.invocationCallOrder[0]).toBeLessThan(lockOrder);
