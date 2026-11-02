@@ -17,9 +17,14 @@
 				@select="selectedDinozId = $event"
 				@move="onMove"
 			/>
-			<!-- Task 6: ChampionshipTabs (Sélection / Mes dinoz / Journal) plug in here, using
-				selectedDinozId, pending, onEnter and onLeave -->
-			<div class="tabs-slot" />
+			<ChampionshipTabs
+				:board="board"
+				:selectedDinozId="selectedDinozId"
+				:pending="pending"
+				@enter="onEnter"
+				@leave="onLeave"
+				@select="selectedDinozId = $event"
+			/>
 		</template>
 	</div>
 </template>
@@ -35,6 +40,7 @@ import { errorHandler } from '../../../utils';
 import { playerStore, useDinozStore } from '../../../store';
 import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import ChampionshipBoard from './ChampionshipBoard.vue';
+import ChampionshipTabs from './ChampionshipTabs.vue';
 
 const REFETCH_DELAY = 60_000;
 
@@ -121,7 +127,6 @@ async function onMove(direction: BoardDirection) {
 	});
 }
 
-// Used by the tabs added in Task 6
 async function onEnter(dinozId: number) {
 	await runAction(dinozId, () => ClanChampionshipService.enter(dinozId));
 }

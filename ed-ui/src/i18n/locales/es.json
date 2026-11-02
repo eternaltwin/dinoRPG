@@ -5565,6 +5565,34 @@
 			"scheduled": "Próximo",
 			"live": "En curso",
 			"finished": "Terminado"
+		},
+		"tabs": {
+			"mine": "Mis dinoz",
+			"selection": "Selección",
+			"journal": "Registro"
+		},
+		"matchPlace": "Lugar del partido: {place}",
+		"enter": "Entrar",
+		"leave": "Salir",
+		"noEligible": "Ningún dinoz disponible para entrar.",
+		"elsewhere": "{count} dinoz en otro lugar",
+		"onBoard": "En el tablero",
+		"noneOnBoard": "Ningún dinoz en el tablero.",
+		"hp": "PV",
+		"ap": "PA",
+		"position": "Posición: ({x}, {y})",
+		"noSelection": "Ningún dinoz seleccionado.",
+		"won": "victoria",
+		"lost": "derrota",
+		"journalEntry": "{clan} ataca: {outcome}, {count} participantes, {dead} muertos",
+		"replay": "Ver de nuevo",
+		"noFights": "Aún no hay combates.",
+		"reason": {
+			"dead": "Muerto",
+			"deadInMatch": "Muerto en este partido",
+			"wrongPlace": "Lugar incorrecto",
+			"inGroup": "En un grupo",
+			"busy": "No disponible"
 		}
 	}
 }

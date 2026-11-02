@@ -5555,6 +5555,34 @@
 			"scheduled": "Upcoming",
 			"live": "Live",
 			"finished": "Finished"
+		},
+		"tabs": {
+			"mine": "My dinoz",
+			"selection": "Selection",
+			"journal": "Journal"
+		},
+		"matchPlace": "Match location: {place}",
+		"enter": "Enter",
+		"leave": "Leave",
+		"noEligible": "No dinoz available to enter.",
+		"elsewhere": "{count} dinoz elsewhere",
+		"onBoard": "On the board",
+		"noneOnBoard": "No dinoz on the board.",
+		"hp": "HP",
+		"ap": "AP",
+		"position": "Position: ({x}, {y})",
+		"noSelection": "No dinoz selected.",
+		"won": "victory",
+		"lost": "defeat",
+		"journalEntry": "{clan} attacks: {outcome}, {count} participants, {dead} dead",
+		"replay": "Replay",
+		"noFights": "No fights yet.",
+		"reason": {
+			"dead": "Dead",
+			"deadInMatch": "Dead in this match",
+			"wrongPlace": "Wrong place",
+			"inGroup": "In a group",
+			"busy": "Unavailable"
 		}
 	}
 }

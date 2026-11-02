@@ -5565,6 +5565,34 @@
 			"scheduled": "Bevorstehend",
 			"live": "Läuft",
 			"finished": "Beendet"
+		},
+		"tabs": {
+			"mine": "Meine Dinoz",
+			"selection": "Auswahl",
+			"journal": "Protokoll"
+		},
+		"matchPlace": "Spielort: {place}",
+		"enter": "Betreten",
+		"leave": "Verlassen",
+		"noEligible": "Kein Dinoz zum Betreten verfügbar.",
+		"elsewhere": "{count} Dinoz anderswo",
+		"onBoard": "Auf dem Brett",
+		"noneOnBoard": "Kein Dinoz auf dem Brett.",
+		"hp": "LP",
+		"ap": "AP",
+		"position": "Position: ({x}, {y})",
+		"noSelection": "Kein Dinoz ausgewählt.",
+		"won": "Sieg",
+		"lost": "Niederlage",
+		"journalEntry": "{clan} greift an: {outcome}, {count} Teilnehmer, {dead} Tote",
+		"replay": "Ansehen",
+		"noFights": "Noch keine Kämpfe.",
+		"reason": {
+			"dead": "Tot",
+			"deadInMatch": "In diesem Spiel gestorben",
+			"wrongPlace": "Falscher Ort",
+			"inGroup": "In einer Gruppe",
+			"busy": "Nicht verfügbar"
 		}
 	}
 }
