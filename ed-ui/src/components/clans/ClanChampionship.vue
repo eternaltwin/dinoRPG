@@ -21,8 +21,11 @@
 		<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
 		<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
 		<ul v-else class="registrations">
-			<li v-for="r in championship.registrations" :key="r.clanId" :class="{ mine: r.clanId === viewedClanId }">
-				<RouterLink :to="{ name: 'Clan', params: { id: r.clanId } }">{{ r.clanName }}</RouterLink>
+			<li v-for="r in championship.registrations" :key="r.clanName" :class="{ mine: r.clanId === viewedClanId }">
+				<RouterLink v-if="r.clanId !== null" :to="{ name: 'Clan', params: { id: r.clanId } }">{{
+					r.clanName
+				}}</RouterLink>
+				<span v-else>{{ r.clanName }}</span>
 			</li>
 		</ul>
 
@@ -34,9 +37,15 @@
 				</tr>
 				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
 					<td>
-						<RouterLink :to="{ name: 'Clan', params: { id: m.homeClan.id } }">{{ m.homeClan.name }}</RouterLink>
+						<RouterLink v-if="m.homeClan.id !== null" :to="{ name: 'Clan', params: { id: m.homeClan.id } }">{{
+							m.homeClan.name
+						}}</RouterLink>
+						<span v-else>{{ m.homeClan.name }}</span>
 						{{ $t('clanChampionship.versus') }}
-						<RouterLink :to="{ name: 'Clan', params: { id: m.awayClan.id } }">{{ m.awayClan.name }}</RouterLink>
+						<RouterLink v-if="m.awayClan.id !== null" :to="{ name: 'Clan', params: { id: m.awayClan.id } }">{{
+							m.awayClan.name
+						}}</RouterLink>
+						<span v-else>{{ m.awayClan.name }}</span>
 					</td>
 					<td>{{ formatDate(m.startsAt) }}</td>
 					<td>{{ formatDate(m.endsAt) }}</td>

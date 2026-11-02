@@ -62,7 +62,9 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 			return null;
 		}
 
-		const rounds = roundRobin(shuffle(registrations.map(r => r.clanId)));
+		const clanNames = new Map<number, string>();
+		for (const r of registrations) if (r.clanId !== null) clanNames.set(r.clanId, r.clanName);
+		const rounds = roundRobin(shuffle([...clanNames.keys()]));
 		const slots = computeMatchSlots(new Date(config.registrationEnd), rounds.length);
 		await tx.clanChampionshipMatch.createMany({
 			data: rounds.flatMap((pairs, round) =>
@@ -71,6 +73,8 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 					round,
 					homeClanId,
 					awayClanId,
+					homeClanName: clanNames.get(homeClanId) as string,
+					awayClanName: clanNames.get(awayClanId) as string,
 					startsAt: slots[round].startsAt,
 					endsAt: slots[round].endsAt
 				}))
@@ -247,9 +251,10 @@ export async function registerClan(req: Request): Promise<void> {
 		if (war) {
 			throw new ExpectedError(translate('clanChampionship.clanAtWar', authed));
 		}
+		const { name: clanName } = await tx.clan.findUniqueOrThrow({ where: { id: clanId }, select: { name: true } });
 		try {
 			await tx.clanChampionshipRegistration.create({
-				data: { eventId: event.id, clanId, registeredById: authed.id }
+				data: { eventId: event.id, clanId, clanName, registeredById: authed.id }
 			});
 		} catch (error) {
 			if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
@@ -293,12 +298,10 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 	const [registrations, matches] = await Promise.all([
 		prisma.clanChampionshipRegistration.findMany({
 			where: { eventId: event.id },
-			include: { clan: { select: { name: true } } },
 			orderBy: { registeredAt: 'asc' }
 		}),
 		prisma.clanChampionshipMatch.findMany({
 			where: { eventId: event.id },
-			include: { homeClan: { select: { id: true, name: true } }, awayClan: { select: { id: true, name: true } } },
 			orderBy: [{ round: 'asc' }, { startsAt: 'asc' }]
 		})
 	]);
@@ -314,12 +317,17 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 		registrationEnd: new Date(config.registrationEnd),
 		endDate: event.endDate as Date,
 		places: config.places,
-		registrations: registrations.map(r => ({ clanId: r.clanId, clanName: r.clan.name })),
+		registrations: registrations.map(r => ({ clanId: r.clanId, clanName: r.clanName })),
 		matches: matches.map(m => ({
 			id: m.id,
 			round: m.round,
-			homeClan: m.homeClan,
-			awayClan: m.awayClan,
+			homeClan: { id: m.homeClanId, name: m.homeClanName },
+			awayClan: { id: m.awayClanId, name: m.awayClanName },
+			placeId: m.placeId,
+			status: m.status,
+			homeScore: m.homeScore,
+			awayScore: m.awayScore,
+			winnerClanId: m.winnerClanId,
 			startsAt: m.startsAt,
 			endsAt: m.endsAt
 		})),

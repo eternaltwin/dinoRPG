@@ -12,7 +12,8 @@ export const UnavailableReason = {
   defending: 'defending',
   restingAttack: 'restingAttack',
   dungeon: 'dungeon',
-  unsacrificing: 'unsacrificing'
+  unsacrificing: 'unsacrificing',
+  clanChampionship: 'clanChampionship'
 };
 
 export const NewsType = {
@@ -123,6 +124,18 @@ export const ClanEventType = {
   championship: 'championship'
 };
 
+export const ClanChampionshipMatchStatus = {
+  scheduled: 'scheduled',
+  live: 'live',
+  finished: 'finished'
+};
+
+export const ClanChampionshipPieceState = {
+  onBoard: 'onBoard',
+  left: 'left',
+  dead: 'dead'
+};
+
 export const ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
@@ -200,6 +213,8 @@ export const $Enums = {
   LogType,
   PantheonMotif,
   ClanEventType,
+  ClanChampionshipMatchStatus,
+  ClanChampionshipPieceState,
   ModerationReason,
   ModerationAction,
   NotificationSeverity,

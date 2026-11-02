@@ -16,16 +16,17 @@ model Concentration {
 }
 
 model Dinoz {
-  id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
-  leaderId           Int?                   @map("following")
-  name               String                 @db.VarChar
+  championshipPieces ClanChampionshipPiece[]
+  id                 Int                     @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
+  leaderId           Int?                    @map("following")
+  name               String                  @db.VarChar
   raceId             Int
   level              Int
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
   canChangeName      Boolean
-  display            String                 @db.VarChar
+  display            String                  @db.VarChar
   life               Int
   maxLife            Int
   experience         Int
@@ -34,32 +35,32 @@ model Dinoz {
   nbrUpWater         Int
   nbrUpLightning     Int
   nbrUpAir           Int
-  createdDate        DateTime               @default(now()) @db.Timestamp(6)
-  updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
+  createdDate        DateTime                @default(now()) @db.Timestamp(6)
+  updatedDate        DateTime                @default(now()) @updatedAt @db.Timestamp(6)
   order              Int?
   concentrationId    Int?
   castleId           Int?
-  castle             ClanCastle?            @relation(fields: [castleId], references: [id])
-  fight              Boolean                @default(true)
-  gather             Boolean                @default(true)
-  remaining          Int                    @default(2)
-  FBTournamentStep   Int                    @default(0)
+  castle             ClanCastle?             @relation(fields: [castleId], references: [id])
+  fight              Boolean                 @default(true)
+  gather             Boolean                 @default(true)
+  remaining          Int                     @default(2)
+  FBTournamentStep   Int                     @default(0)
   unavailableReason  UnavailableReason?
   unavailableUntil   DateTime?
-  seed               String                 @default(dbgenerated("uuid_generate_v4()"))
-  playerId           String                 @db.Uuid
-  buildId            String?                @db.Uuid
-  build              DinozBuild?            @relation(fields: [buildId], references: [id], onDelete: SetNull)
+  seed               String                  @default(dbgenerated("uuid_generate_v4()"))
+  playerId           String                  @db.Uuid
+  buildId            String?                 @db.Uuid
+  build              DinozBuild?             @relation(fields: [buildId], references: [id], onDelete: SetNull)
   catches            DinozCatch[]
-  dungeonRun         DungeonRun?            @relation("DungeonRunLeader")
+  dungeonRun         DungeonRun?             @relation("DungeonRunLeader")
   logs               Log[]
   Moderation         Moderation[]
   offers             Offer[]
   Pantheon           Pantheon[]
-  player             Player                 @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
-  concentration      Concentration?         @relation(fields: [concentrationId], references: [id], onUpdate: NoAction, map: "FK_693d1e839cbd13471ff3721b994")
-  leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
-  followers          Dinoz[]                @relation("DinozFollowers")
+  player             Player                  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
+  concentration      Concentration?          @relation(fields: [concentrationId], references: [id], onUpdate: NoAction, map: "FK_693d1e839cbd13471ff3721b994")
+  leader             Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers          Dinoz[]                 @relation("DinozFollowers")
   items              DinozItem[]
   dinozItemsToDinoz  DinozItemToDinoz[]
   missions           DinozMission[]
@@ -778,30 +779,64 @@ model ClanEvent {
 model ClanChampionshipRegistration {
   id             Int       @id @default(autoincrement())
   eventId        String    @db.Uuid
-  clanId         Int
+  clanId         Int?
+  /// Snapshot of the clan name, kept when the clan is deleted
+  clanName       String
   registeredById String    @db.Uuid
   registeredAt   DateTime  @default(now()) @db.Timestamp(6)
   event          ClanEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  clan           Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  clan           Clan?     @relation(fields: [clanId], references: [id], onDelete: SetNull)
 
   @@unique([eventId, clanId])
   @@map("clan_championship_registration")
 }
 
 model ClanChampionshipMatch {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  eventId    String    @db.Uuid
-  round      Int
-  homeClanId Int
-  awayClanId Int
-  startsAt   DateTime  @db.Timestamp(6)
-  endsAt     DateTime  @db.Timestamp(6)
-  event      ClanEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  homeClan   Clan      @relation("championshipHome", fields: [homeClanId], references: [id], onDelete: Cascade)
-  awayClan   Clan      @relation("championshipAway", fields: [awayClanId], references: [id], onDelete: Cascade)
+  id           String                      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  eventId      String                      @db.Uuid
+  /// 0-based round index (display as round + 1)
+  round        Int
+  homeClanId   Int?
+  awayClanId   Int?
+  /// Snapshots of the clan names, kept when a clan is deleted
+  homeClanName String
+  awayClanName String
+  startsAt     DateTime                    @db.Timestamp(6)
+  endsAt       DateTime                    @db.Timestamp(6)
+  placeId      Int?
+  westClanId   Int?
+  /// cell index = y * 20 + x
+  obstacles    Int[]                       @default([])
+  homeScore    Int                         @default(0)
+  awayScore    Int                         @default(0)
+  ticksApplied Int                         @default(0)
+  status       ClanChampionshipMatchStatus @default(scheduled)
+  winnerClanId Int?
+  event        ClanEvent                   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  homeClan     Clan?                       @relation("championshipHome", fields: [homeClanId], references: [id], onDelete: SetNull)
+  awayClan     Clan?                       @relation("championshipAway", fields: [awayClanId], references: [id], onDelete: SetNull)
+  pieces       ClanChampionshipPiece[]
 
   @@index([eventId, round])
   @@map("clan_championship_match")
+}
+
+model ClanChampionshipPiece {
+  id           Int                        @id @default(autoincrement())
+  matchId      String                     @db.Uuid
+  dinozId      Int
+  playerId     String                     @db.Uuid
+  clanId       Int
+  state        ClanChampionshipPieceState @default(onBoard)
+  x            Int?
+  y            Int?
+  actionPoints Int                        @default(0)
+  match        ClanChampionshipMatch      @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  dinoz        Dinoz                      @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, dinozId])
+  @@index([matchId, state])
+  @@map("clan_championship_piece")
 }
 
 model ClanIngredient {
@@ -1103,6 +1138,7 @@ enum UnavailableReason {
   restingAttack
   dungeon
   unsacrificing
+  clanChampionship
 }
 
 enum Lang {
@@ -1346,4 +1382,16 @@ model Dungeon {
 
   @@index([id])
   @@map("dungeon")
+}
+
+enum ClanChampionshipMatchStatus {
+  scheduled
+  live
+  finished
+}
+
+enum ClanChampionshipPieceState {
+  onBoard
+  left
+  dead
 }
