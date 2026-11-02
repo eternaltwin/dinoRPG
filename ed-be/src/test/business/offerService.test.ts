@@ -139,6 +139,17 @@ describe('createOffer', () => {
 		await createOffer(req({}, { dinoz: '7', total: 1000, ingredients: [], items: [] }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(7, { unavailableReason: UnavailableReason.selling });
 	});
+	it('refuses a dinoz locked on the clan championship board without overwriting the lock', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getDinozPlace).mockResolvedValue({
+			placeId: PlaceEnum.PLACE_DU_MARCHE,
+			unavailableReason: UnavailableReason.clanChampionship
+		} as never);
+		await expect(createOffer(req({}, { dinoz: '7', total: 1000, ingredients: [], items: [] }))).rejects.toThrow(
+			'UnavailableReason.clanChampionship'
+		);
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
+	});
 	it('throws when already has an offer', async () => {
 		vi.mocked(offerDao.getOffers).mockResolvedValue({ offers: [{ id: 1 }] } as never);
 		await expect(createOffer(req({}, { total: 1, ingredients: [], items: [] }))).rejects.toThrow('alreadyOffer');

@@ -107,6 +107,16 @@ describe('createTournamentTeam', () => {
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('alreadyRegistered');
 	});
 
+	it('refuses a dinoz locked on the clan championship board (absent from the eligible list)', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(latest() as never);
+		// The DAO only returns eligible dinoz: the locked dinoz 2 is excluded
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
+			playerDinoz({ dinoz: [{ id: 1, raceId: 1, level: 20 }] }) as never
+		);
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('dinozNotPlayer');
+		expect(prisma.tournamentTeam.create).not.toHaveBeenCalled();
+	});
+
 	it('throws when player misses a dinoz', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest() as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);

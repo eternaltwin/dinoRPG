@@ -931,6 +931,9 @@ export async function digWithDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
+	if (dinozData.unavailableReason === UnavailableReason.clanChampionship) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinozData.unavailableReason}`, authed));
+	}
 	if (
 		!dinozData.status.some(
 			status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL
@@ -1024,6 +1027,9 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
+	if (dinozData.unavailableReason === UnavailableReason.clanChampionship) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinozData.unavailableReason}`, authed));
+	}
 	const place = actualPlace(dinozData);
 
 	const typeOfGridArray = Object.entries(GatherType).filter(g => {
@@ -1087,6 +1093,9 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
+	if (dinozData.unavailableReason === UnavailableReason.clanChampionship) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinozData.unavailableReason}`, authed));
+	}
 	const place = actualPlace(dinozData);
 	const typeOfGridArray = Object.entries(GatherType).filter(g => {
 		if (g[1] === place.gather || g[1] === place.specialGather) return true;

@@ -902,6 +902,21 @@ describe('digWithDinoz', () => {
 		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue(null as never);
 		await expect(digWithDinoz(req({ id: '1' }))).rejects.toThrow('playerNotFound');
 	});
+
+	it('refuses a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozFicheRequest).mockResolvedValue({
+			dinoz: [
+				{
+					id: 1,
+					placeId: 1,
+					status: [{ statusId: DinozStatusId.SHOVEL }],
+					unavailableReason: UnavailableReason.clanChampionship
+				}
+			]
+		} as never);
+		await expect(digWithDinoz(req({ id: '1' }))).rejects.toThrow('UnavailableReason.clanChampionship');
+		expect(rewarder).not.toHaveBeenCalled();
+	});
 });
 
 describe('gather', () => {
@@ -939,6 +954,26 @@ describe('gather', () => {
 		await getGatherGrid(req({ id: '1', type: 'fish' }));
 		expect(updateGrid).toHaveBeenCalledTimes(1);
 		expect(createLog).not.toHaveBeenCalledWith(LogType.Gather, expect.anything(), expect.anything());
+	});
+
+	it('getGatherGrid refuses a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozGatherData).mockResolvedValue(
+			gatherPlayer({
+				dinoz: [{ id: 1, placeId: 1, gather: true, unavailableReason: UnavailableReason.clanChampionship }]
+			}) as never
+		);
+		await expect(getGatherGrid(req({ id: '1', type: 'fish' }))).rejects.toThrow('UnavailableReason.clanChampionship');
+	});
+
+	it('gatherWithDinoz refuses a dinoz locked on the clan championship board', async () => {
+		vi.mocked(dinozDao.getDinozGatherData).mockResolvedValue(
+			gatherPlayer({
+				dinoz: [{ id: 1, placeId: 1, gather: true, unavailableReason: UnavailableReason.clanChampionship }]
+			}) as never
+		);
+		const r = makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } });
+		await expect(gatherWithDinoz(r)).rejects.toThrow('UnavailableReason.clanChampionship');
+		expect(updateGrid).not.toHaveBeenCalled();
 	});
 
 	it('getGatherGrid throws for an unknown grid type', async () => {
