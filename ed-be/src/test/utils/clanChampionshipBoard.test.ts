@@ -11,12 +11,21 @@ import {
 } from '../../utils/clanChampionship/board.js';
 
 describe('clanChampionship board rules', () => {
-	it('scoreLine follows the spec example (0-based: A at 7 and 11, B at 9)', () => {
+	it('scoreLine follows the spec example (0-based: A at 7 and 11, B at 9; 11 and 9 pass each other)', () => {
 		const a = [
 			{ id: 1, clanId: 1, x: 7, y: 3 },
 			{ id: 2, clanId: 1, x: 11, y: 5 }
 		];
 		const b = [{ id: 3, clanId: 2, x: 9, y: 0 }];
+		expect(scoreLine('west', a, b)).toBe(7);
+		expect(scoreLine('east', b, a)).toBe(0); // crossing is mutual: 9 is passed by the west piece at 11
+	});
+	it('scoreLine: no crossing means both lines count', () => {
+		const a = [{ id: 1, clanId: 1, x: 7, y: 3 }];
+		const b = [
+			{ id: 2, clanId: 2, x: 9, y: 0 },
+			{ id: 3, clanId: 2, x: 12, y: 1 }
+		];
 		expect(scoreLine('west', a, b)).toBe(7);
 		expect(scoreLine('east', b, a)).toBe(19 - 9);
 	});
