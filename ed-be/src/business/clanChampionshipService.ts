@@ -5,6 +5,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ClanEventType, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
+import { DISCORD } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { auth } from '../dao/playerDao.js';
@@ -17,6 +18,17 @@ import { assertNoClanEventOverlap, findActiveChampionshipEvent, parseEventConfig
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const RESULT_VISIBLE_DAYS = 7;
+
+/** Wraps a scheduled job so a failure is reported instead of becoming an unhandled rejection. */
+function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promise<void> {
+	return async () => {
+		try {
+			await fn();
+		} catch (error) {
+			DISCORD.sendError(new Error(`Championship job ${name} failed: ${(error as Error)?.message}`));
+		}
+	};
+}
 
 function serializeConfig(config: ClanChampionshipEventConfig, phase: ClanChampionshipEventConfig['phase']): string {
 	return JSON.stringify({ ...config, phase });
@@ -66,7 +78,11 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 	});
 
 	if (finishAt) {
-		scheduleJob(`championshipFinish_${eventId}`, finishAt, () => finishChampionship(eventId));
+		scheduleJob(
+			`championshipFinish_${eventId}`,
+			finishAt,
+			runChampionshipJob(`championshipFinish_${eventId}`, () => finishChampionship(eventId))
+		);
 	}
 }
 
@@ -91,11 +107,22 @@ export async function scheduleClanChampionship(): Promise<void> {
 
 	if (config.phase === 'registration') {
 		const end = new Date(config.registrationEnd);
-		if (end <= now) await closeRegistrations(event.id);
-		else scheduleJob(`championshipClose_${event.id}`, end, () => closeRegistrations(event.id));
+		if (end <= now) await runChampionshipJob(`championshipClose_${event.id}`, () => closeRegistrations(event.id))();
+		else
+			scheduleJob(
+				`championshipClose_${event.id}`,
+				end,
+				runChampionshipJob(`championshipClose_${event.id}`, () => closeRegistrations(event.id))
+			);
 	} else if (config.phase === 'running' && event.endDate) {
-		if (event.endDate <= now) await finishChampionship(event.id);
-		else scheduleJob(`championshipFinish_${event.id}`, event.endDate, () => finishChampionship(event.id));
+		if (event.endDate <= now) {
+			await runChampionshipJob(`championshipFinish_${event.id}`, () => finishChampionship(event.id))();
+		} else
+			scheduleJob(
+				`championshipFinish_${event.id}`,
+				event.endDate,
+				runChampionshipJob(`championshipFinish_${event.id}`, () => finishChampionship(event.id))
+			);
 	}
 }
 
@@ -149,7 +176,11 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 		}
 	});
 
-	scheduleJob(`championshipClose_${event.id}`, registrationEnd, () => closeRegistrations(event.id));
+	scheduleJob(
+		`championshipClose_${event.id}`,
+		registrationEnd,
+		runChampionshipJob(`championshipClose_${event.id}`, () => closeRegistrations(event.id))
+	);
 
 	return { id: event.id };
 }
