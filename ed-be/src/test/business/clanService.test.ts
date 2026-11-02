@@ -62,7 +62,10 @@ vi.mock('../../business/playerService.js', () => ({
 	canJoinClan: vi.fn(),
 	isPlayerLeaderOfClan: vi.fn()
 }));
-vi.mock('../../prisma.js', () => ({ prisma: { clanCastle: { findUnique: vi.fn() } } }));
+vi.mock('../../prisma.js', () => ({
+	prisma: { clanCastle: { findUnique: vi.fn() }, clanMember: { findUnique: vi.fn() } }
+}));
+vi.mock('../../business/clanChampionshipMatchService.js', () => ({ removePlayerFromBoards: vi.fn() }));
 vi.mock('@drpg/core/models/event/Events', () => ({ currentEvents: () => [{ name: 'evt' }] }));
 
 import * as clansDao from '../../dao/clansDao.js';
@@ -71,6 +74,7 @@ import { createNotification } from '../../dao/notificationDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { getAllIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
 import { prisma } from '../../prisma.js';
+import { removePlayerFromBoards } from '../../business/clanChampionshipMatchService.js';
 import { updateDinoz } from '../../dao/dinozDao.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from '../../business/playerService.js';
 import * as svc from '../../business/clanService.js';
@@ -361,5 +365,35 @@ describe('checkMessageCanBeDeleted', () => {
 			authorId: 'other'
 		} as never);
 		await expect(svc.checkMessageCanBeDeleted(1, 'p1')).rejects.toThrow('not able to delete');
+	});
+});
+
+describe('championship board hooks on clan exit', () => {
+	const removed = { id: 1, playerId: 'p2', clanId: 7 };
+	it('excludeClanMember removes the excluded member from the boards', async () => {
+		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(true as never);
+		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);
+		await svc.excludeClanMember(req({ clanId: '7', id: '1' }));
+		expect(removePlayerFromBoards).toHaveBeenCalledWith('p2', 7);
+	});
+	it('excludeClanMember skips the hook when the member stays (leader)', async () => {
+		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(true as never);
+		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ id: 1 } as never);
+		await svc.excludeClanMember(req({ clanId: '7', id: '1' }));
+		expect(removePlayerFromBoards).not.toHaveBeenCalled();
+	});
+	it('leaveClanSelf removes the member from the boards', async () => {
+		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);
+		await svc.leaveClanSelf(req());
+		expect(removePlayerFromBoards).toHaveBeenCalledWith('p2', 7);
+	});
+	it('leaveClanSelf skips the hook when the member stays (leader)', async () => {
+		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ id: 1 } as never);
+		await svc.leaveClanSelf(req());
+		expect(removePlayerFromBoards).not.toHaveBeenCalled();
 	});
 });

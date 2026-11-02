@@ -61,6 +61,7 @@ import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drp
 import { prisma } from '../prisma.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { isClanInActiveChampionship } from './clanChampionshipService.js';
+import { removePlayerFromBoards } from './clanChampionshipMatchService.js';
 
 /**
  * Get all the clans
@@ -429,6 +430,16 @@ export async function updateClanMember(
 	return member;
 }
 
+/** The DAOs leave the clan leader in place: only a member who is really gone leaves the championship boards. */
+async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number } | null) {
+	if (!member) return;
+	const stillMember = await prisma.clanMember.findUnique({
+		where: { playerId: member.playerId },
+		select: { id: true }
+	});
+	if (!stillMember) await removePlayerFromBoards(member.playerId, member.clanId);
+}
+
 /**
  * Exclude clan member
  * @param req
@@ -445,6 +456,7 @@ export async function excludeClanMember(req: Request) {
 	}
 
 	const member = await excludeClanMemberRequest(+req.params.id, authed.id);
+	await removeFromBoardsIfLeft(member);
 
 	return member;
 }
@@ -458,6 +470,7 @@ export async function leaveClanSelf(req: Request) {
 	const authed = await auth(req);
 
 	const member = await leaveClanSelfRequest(authed.id);
+	await removeFromBoardsIfLeft(member);
 
 	return member;
 }
