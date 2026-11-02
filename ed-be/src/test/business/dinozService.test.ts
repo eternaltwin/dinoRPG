@@ -240,6 +240,14 @@ describe('getAvailableActions', () => {
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never, player())
 		).toEqual([]);
 	});
+	it('offers only the level up when the locked dinoz can level up', async () => {
+		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
+		const result = await getAvailableActions(
+			baseDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never,
+			player()
+		);
+		expect(result.map(a => a.name)).toEqual([Action.LEVEL_UP]);
+	});
 	it('returns [] when unsacrificing', async () => {
 		expect(
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.unsacrificing }) as never, player())

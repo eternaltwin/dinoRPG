@@ -435,9 +435,9 @@ async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number
 	if (!member) return;
 	const stillMember = await prisma.clanMember.findUnique({
 		where: { playerId: member.playerId },
-		select: { id: true }
+		select: { clanId: true }
 	});
-	if (stillMember) return;
+	if (stillMember?.clanId === member.clanId) return;
 	try {
 		await removePlayerFromBoards(member.playerId, member.clanId);
 	} catch (err) {

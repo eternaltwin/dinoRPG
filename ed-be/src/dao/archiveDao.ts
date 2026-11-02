@@ -1,4 +1,5 @@
 import { prisma } from '../prisma.js';
+import type { LocalTransactionClient } from './clansDao.js';
 import { FighterRecap, FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { withSpan } from '../utils/server/tracing.js';
@@ -8,11 +9,12 @@ export async function archiveFight(
 	winner: boolean,
 	leftPlayerId: string,
 	rightPlayerId: string | null,
-	metaData?: string
+	metaData?: string,
+	tx: LocalTransactionClient = prisma
 ) {
 	return withSpan(archiveFight.name, async () => {
 		const playerSelect = { select: { id: true, name: true } };
-		const archive = await prisma.fightArchive.create({
+		const archive = await tx.fightArchive.create({
 			data: {
 				fighters: JSON.stringify(
 					fight.fighters.map(f => {

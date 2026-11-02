@@ -97,7 +97,14 @@ describe('getMyMatchBoard', () => {
 		const board = await getMyMatchBoard(makeRequest());
 		const [mine, ally, enemy] = board!.pieces;
 		expect(mine).toMatchObject({ mine: true, ally: false, life: 8, maxLife: 10, actionPoints: 2 });
-		expect(ally).toMatchObject({ mine: false, ally: true, life: 8, maxLife: 10, actionPoints: 2, playerName: 'p-mate' });
+		expect(ally).toMatchObject({
+			mine: false,
+			ally: true,
+			life: 8,
+			maxLife: 10,
+			actionPoints: 2,
+			playerName: 'p-mate'
+		});
 		expect(enemy).toMatchObject({ mine: false, ally: false, name: 'd3', display: 'disp', level: 3 });
 		expect(enemy).not.toHaveProperty('life');
 		expect(enemy).not.toHaveProperty('maxLife');
@@ -134,10 +141,16 @@ describe('getMyMatchBoard', () => {
 		expect(board!.east).toMatchObject({ clanId: HOME, name: 'Home', score: 7 });
 	});
 
+	it('puts the surviving clan east when the deleted west clan has no id', async () => {
+		p.clanChampionshipMatch.findFirst.mockResolvedValue(match({ westClanId: null, awayClanId: null }));
+		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
+		const board = await getMyMatchBoard(makeRequest());
+		expect(board!.east).toMatchObject({ clanId: HOME, name: 'Home' });
+		expect(board!.west).toMatchObject({ clanId: null, name: 'Away' });
+	});
+
 	it('falls back to the latest finished match', async () => {
-		p.clanChampionshipMatch.findFirst
-			.mockResolvedValueOnce(null)
-			.mockResolvedValueOnce(match({ status: 'finished' }));
+		p.clanChampionshipMatch.findFirst.mockResolvedValueOnce(null).mockResolvedValueOnce(match({ status: 'finished' }));
 		p.clanChampionshipPiece.findMany.mockResolvedValue([piece(1, HOME, ME, { state: 'left', x: null, y: null })]);
 		const board = await getMyMatchBoard(makeRequest());
 		expect(board).toMatchObject({ status: 'finished', pieces: [], west: { quotaUsed: 1 } });
