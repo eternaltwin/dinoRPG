@@ -400,6 +400,20 @@ describe('championship board hooks on clan exit', () => {
 		await expect(svc.leaveClanSelf(req())).resolves.toEqual(removed);
 		expect(LOGGER.error).toHaveBeenCalled();
 	});
+	it('still removes the member from the boards when the channel kick fails, and the reverse', async () => {
+		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);
+		vi.mocked(kickPlayerFromWsChannels).mockImplementationOnce(() => {
+			throw new Error('kick');
+		});
+		await expect(svc.leaveClanSelf(req())).resolves.toEqual(removed);
+		expect(removePlayerFromBoards).toHaveBeenCalledWith('p2', 7);
+
+		vi.mocked(removePlayerFromBoards).mockRejectedValueOnce(new Error('boom'));
+		await expect(svc.leaveClanSelf(req())).resolves.toEqual(removed);
+		expect(kickPlayerFromWsChannels).toHaveBeenCalledTimes(2);
+		expect(LOGGER.error).toHaveBeenCalledTimes(2);
+	});
 	it('leaveClanSelf removes the member from the boards', async () => {
 		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
 		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);

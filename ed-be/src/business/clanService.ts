@@ -440,16 +440,20 @@ async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number
 		select: { clanId: true }
 	});
 	if (stillMember?.clanId === member.clanId) return;
+	// The clan exit is already committed: neither cleanup may fail it, nor skip the other.
+	try {
+		await removePlayerFromBoards(member.playerId, member.clanId);
+	} catch (err) {
+		LOGGER.error('removePlayerFromBoards failed', err);
+	}
 	try {
 		// The member no longer belongs to the clan: no more forum nor match channel for them.
 		kickPlayerFromWsChannels(member.playerId, [
 			`${WsChannel.CLAN_FORUM}.${member.clanId}`,
 			`${WsChannel.CLAN_CHAMPIONSHIP}.`
 		]);
-		await removePlayerFromBoards(member.playerId, member.clanId);
 	} catch (err) {
-		// The clan exit is already committed: do not fail it.
-		LOGGER.error('removePlayerFromBoards failed', err);
+		LOGGER.error('kickPlayerFromWsChannels failed', err);
 	}
 }
 

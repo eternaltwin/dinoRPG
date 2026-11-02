@@ -326,6 +326,17 @@ describe('getArchivedFight / getAllArchivedFight', () => {
 		expect(result.quantity).toBe(2);
 		expect(result.archive.length).toBe(2);
 	});
+	it('excludes clan championship archives even when their place is the dojo', async () => {
+		vi.mocked(archiveDao.getAllArchivedFightRequest).mockResolvedValue({
+			archive: [
+				{ id: 1, fighters: '[]', metadata: JSON.stringify({ kind: 'clanChampionship', placeId: PlaceEnum.DOJO }) },
+				{ id: 2, fighters: '[]', metadata: JSON.stringify({ placeId: PlaceEnum.DOJO }) }
+			],
+			totalArchive: 2
+		} as never);
+		const result = await getAllArchivedFight(req({}, { page: '0' }));
+		expect(result.archive.map(f => f.id)).toEqual([2]);
+	});
 });
 
 describe('fightChallenge', () => {

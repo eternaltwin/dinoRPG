@@ -266,7 +266,7 @@ export async function getAllArchivedFight(req: Request) {
 		.filter(f => {
 			if (f.metadata) {
 				const metadata = JSON.parse(f.metadata);
-				return metadata.placeId === PlaceEnum.DOJO;
+				return metadata.kind !== 'clanChampionship' && metadata.placeId === PlaceEnum.DOJO;
 			} else {
 				return true;
 			}
