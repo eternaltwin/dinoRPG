@@ -51,6 +51,8 @@ import { finishChampionship, runChampionshipJob } from './clanChampionshipServic
 const HOUR_MS = 60 * 60 * 1000;
 const TICK_MS = BOARD_TICK_MINUTES * 60 * 1000;
 const MAX_TICKS = 288;
+/** The cron may fire a few ms early: ticks, kick-off and end are computed this far ahead of the wall clock. */
+const TICK_TOLERANCE_MS = 5000;
 
 type MatchRow = {
 	id: string;
@@ -72,7 +74,8 @@ export async function drawMatchPlace(tx: LocalTransactionClient, match: { id: st
 	});
 }
 
-async function processMatch(matchId: string, places: PlaceEnum[], now: Date): Promise<void> {
+async function processMatch(matchId: string, places: PlaceEnum[], wallNow: Date): Promise<void> {
+	const now = new Date(wallNow.getTime() + TICK_TOLERANCE_MS);
 	await prisma.$transaction(
 		async tx => {
 			await lockMatch(tx, matchId);
@@ -108,10 +111,9 @@ async function processMatch(matchId: string, places: PlaceEnum[], now: Date): Pr
 						where: { matchId, state: ClanChampionshipPieceState.onBoard }
 					});
 					// The board does not change between catch-up ticks, so every missed tick scores the same.
-					const westIsHome = westClanId !== null ? westClanId === match.homeClanId : match.homeClanId === null;
-					const eastId = westIsHome ? match.awayClanId : match.homeClanId;
-					const isWest = (p: { clanId: number }) =>
-						westClanId !== null ? p.clanId === westClanId : p.clanId !== eastId;
+					const sides = { homeClanId: match.homeClanId, awayClanId: match.awayClanId, westClanId };
+					const westIsHome = westIsHomeOf(sides);
+					const isWest = (p: { clanId: number }) => isWestClan(sides, p.clanId);
 					const board = pieces.map(p => ({ id: p.id, clanId: p.clanId, x: p.x as number, y: p.y as number }));
 					const west = board.filter(isWest);
 					const east = board.filter(p => !isWest(p));
@@ -219,6 +221,19 @@ export async function findLiveMatchOfClan(clanId: number, tx: LocalTransactionCl
 	});
 }
 
+type MatchSides = { homeClanId: number | null; awayClanId: number | null; westClanId: number | null };
+
+/** Whether the home clan is the west one; a deleted west clan (null id) is the one whose id is null. */
+export function westIsHomeOf(match: MatchSides) {
+	return match.westClanId !== null ? match.westClanId === match.homeClanId : match.homeClanId === null;
+}
+
+/** Whether a (present) clan plays west, also when the west clan was deleted. */
+export function isWestClan(match: MatchSides, clanId: number) {
+	if (match.westClanId !== null) return clanId === match.westClanId;
+	return clanId !== (westIsHomeOf(match) ? match.awayClanId : match.homeClanId);
+}
+
 export function sideOf(match: { westClanId: number | null }, clanId: number): Side {
 	return match.westClanId === clanId ? 'west' : 'east';
 }
@@ -281,17 +296,13 @@ export async function resolveBoardAttack(
 		fight.outcome === FightOutcome.AttackerWin,
 		attacker.playerId,
 		defender.playerId,
-		JSON.stringify({ kind: 'clanChampionship', matchId: match.id })
+		JSON.stringify({ kind: 'clanChampionship', matchId: match.id }),
+		tx
 	);
 
 	const config = gameConfig();
 	const deadDinozIds: number[] = [];
-	const settle = async (
-		team: Fought[],
-		opposing: Fought[],
-		results: FighterResult[],
-		opposingResults: FighterResult[]
-	) => {
+	const contexts = (team: Fought[], opposing: Fought[], results: FighterResult[], opposingResults: FighterResult[]) => {
 		const teamLevel = team.reduce((acc, f) => acc + f.dinoz.level, 0);
 		const opponents = opposing.map(o => ({
 			level: o.dinoz.level,
@@ -299,41 +310,45 @@ export async function resolveBoardAttack(
 			maxLife: o.dinoz.maxLife,
 			escaped: opposingResults.find(r => r.dinozId === o.dinoz.id)?.escaped ?? false
 		}));
-		for (const { piece, dinoz } of team) {
-			const result = results.find(r => r.dinozId === dinoz.id);
-			if (!result) continue;
-			const dead = result.hpLost >= dinoz.life;
-			const data: Prisma.DinozUpdateInput = { life: { decrement: Math.min(result.hpLost, dinoz.life) } };
-			let xp = 0;
-			if (!dead && !result.escaped) {
-				xp = calculateXPBonus(dinoz, computePvpXp(dinoz, opponents, teamLevel), dinoz.player);
-				if (dinoz.experience >= getMaxXp(dinoz, config)) xp = 0;
-				data.experience = { increment: xp };
-			}
-			await tx.dinoz.update({ where: { id: dinoz.id }, data });
-			await addLog(tx, LogType.XPEarned, dinoz, xp);
-			await addLog(tx, LogType.HPLost, dinoz, result.hpLost);
-
-			if (dead) {
-				deadDinozIds.push(dinoz.id);
-				await addLog(tx, LogType.Death, dinoz);
-				await tx.clanChampionshipPiece.updateMany({
-					where: { id: piece.id, state: ClanChampionshipPieceState.onBoard },
-					data: { state: ClanChampionshipPieceState.dead, x: null, y: null, actionPoints: 0 }
-				});
-				await tx.dinoz.updateMany({
-					where: { id: dinoz.id, unavailableReason: UnavailableReason.clanChampionship },
-					data: { unavailableReason: null }
-				});
-			}
-			for (const itemId of result.itemsUsed) {
-				const item = await tx.dinozItem.findFirst({ where: { dinozId: dinoz.id, itemId }, select: { id: true } });
-				if (item) await tx.dinozItem.delete({ where: { id: item.id } });
-			}
-		}
+		return team.map(f => ({ ...f, results, teamLevel, opponents }));
 	};
-	await settle(teamA, teamB, fight.attackers, fight.defenders);
-	await settle(teamB, teamA, fight.defenders, fight.attackers);
+	// Settled by dinoz id, whatever the team: other code paths lock dinoz ORDER BY id (deadlock avoidance).
+	const participants = [
+		...contexts(teamA, teamB, fight.attackers, fight.defenders),
+		...contexts(teamB, teamA, fight.defenders, fight.attackers)
+	].sort((x, y) => x.dinoz.id - y.dinoz.id);
+	for (const { piece, dinoz, results, teamLevel, opponents } of participants) {
+		const result = results.find(r => r.dinozId === dinoz.id);
+		if (!result) continue;
+		const dead = result.hpLost >= dinoz.life;
+		const data: Prisma.DinozUpdateInput = { life: { decrement: Math.min(result.hpLost, dinoz.life) } };
+		let xp = 0;
+		if (!dead && !result.escaped) {
+			xp = calculateXPBonus(dinoz, computePvpXp(dinoz, opponents, teamLevel), dinoz.player);
+			if (dinoz.experience >= getMaxXp(dinoz, config)) xp = 0;
+			data.experience = { increment: xp };
+		}
+		await tx.dinoz.update({ where: { id: dinoz.id }, data });
+		await addLog(tx, LogType.XPEarned, dinoz, xp);
+		await addLog(tx, LogType.HPLost, dinoz, result.hpLost);
+
+		if (dead) {
+			deadDinozIds.push(dinoz.id);
+			await addLog(tx, LogType.Death, dinoz);
+			await tx.clanChampionshipPiece.updateMany({
+				where: { id: piece.id, state: ClanChampionshipPieceState.onBoard },
+				data: { state: ClanChampionshipPieceState.dead, x: null, y: null, actionPoints: 0 }
+			});
+			await tx.dinoz.updateMany({
+				where: { id: dinoz.id, unavailableReason: UnavailableReason.clanChampionship },
+				data: { unavailableReason: null }
+			});
+		}
+		for (const itemId of result.itemsUsed) {
+			const item = await tx.dinozItem.findFirst({ where: { dinozId: dinoz.id, itemId }, select: { id: true } });
+			if (item) await tx.dinozItem.delete({ where: { id: item.id } });
+		}
+	}
 
 	return { archiveId: archive.id, outcome: fight.outcome, deadDinozIds };
 }
@@ -344,13 +359,14 @@ function addLog(
 	dinoz: { id: number; playerId: string | null },
 	...values: number[]
 ) {
+	if (dinoz.playerId === null) return Promise.resolve();
 	return tx.log.create({
 		data: {
-			player: { connect: { id: dinoz.playerId as string } },
+			player: { connect: { id: dinoz.playerId } },
 			dinoz: { connect: { id: dinoz.id } },
 			type,
 			values: values.map(v => v.toString()),
-			playerOldId: dinoz.playerId as string
+			playerOldId: dinoz.playerId
 		},
 		select: { id: true }
 	});
@@ -386,6 +402,9 @@ export async function enterBoard(req: Request): Promise<void> {
 	const dinozId = Number(req.body.dinozId);
 	await withLiveMatch(req, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
+		// The membership may have changed since the match was found, before the lock.
+		const membership = await tx.clanMember.findUnique({ where: { playerId: authed.id }, select: { clanId: true } });
+		if (membership?.clanId !== clanId) throw fail('noLiveMatch');
 		const dinoz = await tx.dinoz.findUnique({
 			where: { id: dinozId },
 			select: {
@@ -452,13 +471,13 @@ export async function enterBoard(req: Request): Promise<void> {
 
 export async function leaveBoard(req: Request): Promise<void> {
 	const dinozId = Number(req.body.dinozId);
-	await withLiveMatch(req, async (tx, match, authed, _clanId, side) => {
+	await withLiveMatch(req, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
 		});
 		if (!own || own.state !== ClanChampionshipPieceState.onBoard) throw fail('notOnBoard');
-		if (own.playerId !== authed.id) throw fail('notYourDinoz');
+		if (own.playerId !== authed.id || own.clanId !== clanId) throw fail('notYourDinoz');
 		if (own.x !== entryColumn(side)) throw fail('notOnEntryColumn');
 
 		await tx.clanChampionshipPiece.update({
@@ -475,7 +494,7 @@ export async function leaveBoard(req: Request): Promise<void> {
 export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
 	const dinozId = Number(req.body.dinozId);
 	const direction = req.body.direction as BoardDirection;
-	return withLiveMatch(req, async (tx, match, authed, clanId) => {
+	return withLiveMatch(req, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
@@ -483,7 +502,7 @@ export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
 		if (!own || own.state !== ClanChampionshipPieceState.onBoard || own.x === null || own.y === null) {
 			throw fail('notOnBoard');
 		}
-		if (own.playerId !== authed.id) throw fail('notYourDinoz');
+		if (own.playerId !== authed.id || own.clanId !== clanId) throw fail('notYourDinoz');
 		if (own.actionPoints < 1) throw fail('noActionPoints');
 
 		const target = step(own.x, own.y, direction);
@@ -497,6 +516,8 @@ export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
 		if (occupant && occupant.clanId === clanId) throw fail('cellOccupied');
 
 		if (!occupant) {
+			// Attacking an enemy on its entry column is fine (the attacker stays); stopping there is not.
+			if (target.x === entryColumn(side === 'west' ? 'east' : 'west')) throw fail('enemyEntryColumn');
 			await tx.clanChampionshipPiece.update({
 				where: { id: own.id },
 				data: { x: target.x, y: target.y, actionPoints: { decrement: 1 } }
@@ -577,10 +598,8 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 			: []
 	);
 
-	const westId = match.westClanId;
-	const westIsHome = westId !== null ? westId === match.homeClanId : true;
-	const eastId = westIsHome ? match.awayClanId : match.homeClanId;
-	const isWest = (p: { clanId: number }) => (westId !== null ? p.clanId === westId : p.clanId !== eastId);
+	const westIsHome = westIsHomeOf(match);
+	const isWest = (p: { clanId: number }) => isWestClan(match, p.clanId);
 	const board = onBoard.map(p => ({ id: p.id, clanId: p.clanId, x: p.x, y: p.y }));
 	const westPieces = board.filter(isWest);
 	const eastPieces = board.filter(p => !isWest(p));

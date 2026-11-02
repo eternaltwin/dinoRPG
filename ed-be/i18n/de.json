@@ -22,6 +22,7 @@
 		"entryFull": "Die Eintrittsspalte ist voll.",
 		"notOnBoard": "Dieser Dinoz befindet sich nicht auf dem Spielfeld.",
 		"notOnEntryColumn": "Dieser Dinoz befindet sich nicht auf deiner Eintrittsspalte.",
+		"enemyEntryColumn": "Du kannst nicht auf der gegnerischen Eintrittsspalte stehen bleiben.",
 		"noActionPoints": "Dieser Dinoz hat keine Aktionspunkte mehr.",
 		"outOfBoard": "Außerhalb des Spielfelds.",
 		"obstacle": "Ein Hindernis versperrt den Weg.",

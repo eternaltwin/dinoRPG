@@ -157,8 +157,7 @@ export async function getAvailableActions(
 		UnavailableReason.unfreezing,
 		UnavailableReason.restingAttack,
 		UnavailableReason.unsacrificing,
-		UnavailableReason.sacrificed,
-		UnavailableReason.clanChampionship
+		UnavailableReason.sacrificed
 	];
 
 	const dinozPlace = actualPlace(dinoz);
@@ -167,6 +166,11 @@ export async function getAvailableActions(
 	if (await leaveDungeonIfDead(dinoz)) {
 		dinoz.unavailableReason = null;
 		dinoz.followers = [];
+	}
+
+	// On a championship board: only the level up (the other actions are locked)
+	if (dinoz.unavailableReason === UnavailableReason.clanChampionship) {
+		return (await canLevelUpNow(dinoz)) ? [actionList[Action.LEVEL_UP]] : [];
 	}
 
 	if (dinoz.unavailableReason && noActionsReasons.includes(dinoz.unavailableReason)) {

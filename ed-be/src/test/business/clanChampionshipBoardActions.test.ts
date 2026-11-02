@@ -26,7 +26,8 @@ vi.mock('../../prisma.js', () => ({
 			update: vi.fn(),
 			deleteMany: vi.fn()
 		},
-		dinoz: { findUnique: vi.fn(), updateMany: vi.fn() }
+		dinoz: { findUnique: vi.fn(), updateMany: vi.fn() },
+		clanMember: { findUnique: vi.fn() }
 	}
 }));
 
@@ -114,6 +115,7 @@ function setup(m: ReturnType<typeof liveMatch> | null = liveMatch()) {
 	p.clanChampionshipPiece.count.mockResolvedValue(0);
 	p.dinoz.findUnique.mockResolvedValue(dinozRow());
 	p.dinoz.updateMany.mockResolvedValue({ count: 1 });
+	p.clanMember.findUnique.mockResolvedValue({ clanId: HOME });
 }
 
 beforeEach(() => {
@@ -221,8 +223,16 @@ describe('enterBoard', () => {
 	});
 	it('east clan enters on column 19', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: AWAY } as never);
+		p.clanMember.findUnique.mockResolvedValue({ clanId: AWAY });
 		await enter();
 		expect(p.clanChampionshipPiece.upsert.mock.calls[0][0].create.x).toBe(19);
+	});
+	it('noLiveMatch when the player left the clan since the match was found', async () => {
+		p.clanMember.findUnique.mockResolvedValue(null);
+		await expect(enter()).rejects.toThrow('clanChampionship.noLiveMatch');
+		p.clanMember.findUnique.mockResolvedValue({ clanId: AWAY });
+		await expect(enter()).rejects.toThrow('clanChampionship.noLiveMatch');
+		expect(p.clanChampionshipPiece.upsert).not.toHaveBeenCalled();
 	});
 	it('dinozBusy when the conditional lock matches nothing', async () => {
 		p.dinoz.updateMany.mockResolvedValue({ count: 0 });
@@ -231,6 +241,7 @@ describe('enterBoard', () => {
 	});
 	it('re-entry by a player of the other clan counts the quota and takes over the piece', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: 'buyer', clanId: AWAY } as never);
+		p.clanMember.findUnique.mockResolvedValue({ clanId: AWAY });
 		p.dinoz.findUnique.mockResolvedValue(dinozRow({ playerId: 'buyer' }));
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'left', x: null, y: null }));
 		p.clanChampionshipPiece.count.mockResolvedValue(100);
@@ -269,6 +280,10 @@ describe('leaveBoard', () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ playerId: 'other' }));
 		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('clanChampionship.notYourDinoz');
 	});
+	it('notYourDinoz when the piece belongs to the other clan', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ clanId: AWAY }));
+		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('clanChampionship.notYourDinoz');
+	});
 	it('notOnEntryColumn', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 1 }));
 		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('clanChampionship.notOnEntryColumn');
@@ -297,6 +312,36 @@ describe('moveOnBoard', () => {
 	it('notOnBoard', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(null);
 		await expect(move(BoardDirection.E)).rejects.toThrow('clanChampionship.notOnBoard');
+	});
+	it('notYourDinoz when the piece belongs to the other clan', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 5, y: 5, clanId: AWAY }));
+		await expect(move(BoardDirection.E)).rejects.toThrow('clanChampionship.notYourDinoz');
+	});
+	it('enemyEntryColumn: west cannot step onto x = 19', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 18, y: 5 }));
+		await expect(move(BoardDirection.E)).rejects.toThrow('clanChampionship.enemyEntryColumn');
+		expect(p.clanChampionshipPiece.update).not.toHaveBeenCalled();
+	});
+	it('enemyEntryColumn: east cannot step onto x = 0', async () => {
+		vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: AWAY } as never);
+		p.clanMember.findUnique.mockResolvedValue({ clanId: AWAY });
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ clanId: AWAY, x: 1, y: 5 }));
+		await expect(move(BoardDirection.W)).rejects.toThrow('clanChampionship.enemyEntryColumn');
+	});
+	it('attacking an enemy standing on the enemy entry column is still allowed', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 18, y: 5 }));
+		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: AWAY, x: 19, y: 5 }]);
+		vi.mocked(getDinozForChampionshipFight).mockResolvedValue([]);
+		vi.mocked(calculateFightBetweenPlayers).mockReturnValue({
+			outcome: 0,
+			attackers: [],
+			defenders: [],
+			steps: [],
+			fighters: []
+		} as never);
+		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
+		const r = await move(BoardDirection.E);
+		expect(r.fight).not.toBeNull();
 	});
 	it('noActionPoints', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 5, y: 5, actionPoints: 0 }));
@@ -336,6 +381,7 @@ describe('moveOnBoard', () => {
 		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
 		const r = await move(BoardDirection.E);
 		expect(r).toEqual({ fight: { archiveId: 'arch-1', outcome: 0, deadDinozIds: [] } });
+		expect(vi.mocked(archiveFight).mock.calls[0][5]).toBe(p);
 		expect(p.clanChampionshipPiece.update).toHaveBeenCalledWith({
 			where: { id: 1 },
 			data: { actionPoints: { decrement: 1 } }

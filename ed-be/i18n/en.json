@@ -22,6 +22,7 @@
 		"entryFull": "The entry column is full.",
 		"notOnBoard": "This Dinoz is not on the board.",
 		"notOnEntryColumn": "This Dinoz is not on your entry column.",
+		"enemyEntryColumn": "You cannot stop on the enemy entry column.",
 		"noActionPoints": "This Dinoz has no action points left.",
 		"outOfBoard": "Outside the board.",
 		"obstacle": "An obstacle blocks the way.",

@@ -82,6 +82,7 @@ export function advancement(side: Side, x: number): number {
 /**
  * Max advancement of own pieces not passed by an enemy piece; 0 if none.
  * A west piece at x is passed when some east piece has x' < x; an east piece at x when some west piece has x' > x.
+ * A piece cannot stop on the enemy entry column, so the advancement is at most 18 (attacking from there is allowed).
  * Crossing is mutual: both crossed pieces are passed.
  */
 export function scoreLine(side: Side, own: BoardPiece[], enemies: BoardPiece[]): number {

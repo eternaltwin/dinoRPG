@@ -22,6 +22,7 @@
 		"entryFull": "La colonne d'entrée est pleine.",
 		"notOnBoard": "Ce Dinoz n'est pas sur le damier.",
 		"notOnEntryColumn": "Ce Dinoz n'est pas sur votre colonne d'entrée.",
+		"enemyEntryColumn": "Vous ne pouvez pas vous arrêter sur la colonne d'entrée ennemie.",
 		"noActionPoints": "Ce Dinoz n'a plus de points d'action.",
 		"outOfBoard": "Hors du damier.",
 		"obstacle": "Un obstacle bloque le passage.",

@@ -187,6 +187,38 @@ describe('championshipTick', () => {
 		});
 	});
 
+	it('tolerates a cron firing a few ms early: one tick at startsAt + 10 min - 1 ms', async () => {
+		setup(live(), [piece(1, HOME, 5)]);
+		await championshipTick(new Date(min(10).getTime() - 1));
+		expect(matchUpdate().data).toMatchObject({ ticksApplied: 1 });
+	});
+
+	it('tolerates a cron firing early at the end: 288 ticks and finished at endsAt - 1 ms', async () => {
+		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+		await championshipTick(new Date(endsAt.getTime() - 1));
+		expect(matchUpdate().data).toMatchObject({ ticksApplied: 288, status: 'finished' });
+	});
+
+	it('kicks off a few ms before startsAt', async () => {
+		setup(match());
+		await championshipTick(new Date(startsAt.getTime() - 1));
+		expect(matchUpdate().data.status).toBe('live');
+	});
+
+	it('does not tick 6 s before the tick', async () => {
+		setup(live(), [piece(1, HOME, 5)]);
+		await championshipTick(new Date(min(10).getTime() - 6000));
+		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
+	});
+
+	it('maps the sides the same way when the west clan was deleted (away deleted, home west unknown)', async () => {
+		// westClanId null (west clan deleted): the deleted side is the null one
+		setup(live({ westClanId: null, awayClanId: null }), [piece(1, HOME, 15)]);
+		await championshipTick(min(10));
+		// the home clan is east (away was the deleted west clan): east line = 4
+		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 0, ticksApplied: 1 });
+	});
+
 	it('gives the win to the away clan with the higher score', async () => {
 		setup(live({ ticksApplied: 288, homeScore: 1, awayScore: 2 }), [], 0);
 		await championshipTick(endsAt);

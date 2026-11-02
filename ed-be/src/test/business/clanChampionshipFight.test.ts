@@ -208,7 +208,8 @@ describe('resolveBoardAttack', () => {
 			false,
 			'p2',
 			'p1',
-			JSON.stringify({ kind: 'clanChampionship', matchId: MATCH_ID })
+			JSON.stringify({ kind: 'clanChampionship', matchId: MATCH_ID }),
+			tx
 		);
 	});
 
@@ -228,5 +229,79 @@ describe('resolveBoardAttack', () => {
 		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
 		const [, , , teamB] = vi.mocked(calculateFightBetweenPlayers).mock.calls[0];
 		expect(ids(teamB)).toEqual([20]);
+	});
+
+	it('settles participants sorted by dinoz id', async () => {
+		const att = piece(3, 2, 6, 3, { playerId: 'p2' });
+		const def = piece(2, 1, 7, 3, { playerId: 'p1' });
+		const ally = piece(1, 1, 7, 4, { playerId: 'p1' });
+		const tx = makeTx([att, def, ally]);
+		setup(
+			r => dinozRow(r as never),
+			(a, d) => ({
+				outcome: FightOutcome.AttackerWin,
+				attackers: a.map(x => fiche({ dinozId: x.id, playerId: 'p2' } as never)),
+				defenders: d.map(x => fiche({ dinozId: x.id, playerId: 'p1' } as never))
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		const order = tx.dinoz.update.mock.calls.map(c => c[0].where.id);
+		expect(order).toEqual([...order].sort((a, b) => a - b));
+	});
+
+	it('skips the logs of a participant without player', async () => {
+		const att = piece(1, 2, 6, 3, { playerId: 'p2' });
+		const def = piece(2, 1, 7, 3, { playerId: 'p1' });
+		const tx = makeTx([att, def]);
+		setup(
+			r => dinozRow(r as never, (r as any).dinozId === 10 ? { playerId: null } : {}),
+			(a, d) => ({
+				outcome: FightOutcome.AttackerWin,
+				attackers: a.map(x => fiche({ dinozId: x.id, playerId: 'p2' } as never, { hpLost: 1 })),
+				defenders: d.map(x => fiche({ dinozId: x.id, playerId: 'p1' } as never, { hpLost: 1 }))
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		const logged = tx.log.create.mock.calls.map(c => c[0].data.dinoz.connect.id);
+		expect(logged).not.toContain(10);
+		expect(logged).toContain(20);
+	});
+});
+
+describe('resolveBoardAttack xp', () => {
+	const duel = async (
+		hp: { att: any; def: any },
+		rowOverrides: Record<number, Record<string, unknown>> = {},
+		outcome = FightOutcome.AttackerWin
+	) => {
+		const att = piece(1, 2, 6, 3, { playerId: 'p2' });
+		const def = piece(2, 1, 7, 3, { playerId: 'p1' });
+		const tx = makeTx([att, def]);
+		setup(
+			r => dinozRow(r as never, rowOverrides[(r as any).dinozId] ?? {}),
+			() => ({
+				outcome,
+				attackers: [fiche({ dinozId: 10, playerId: 'p2' } as never, hp.att)],
+				defenders: [fiche({ dinozId: 20, playerId: 'p1' } as never, hp.def)]
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		return (id: number) => tx.dinoz.update.mock.calls.map(c => c[0]).find(u => u.where.id === id);
+	};
+
+	it('a surviving dinoz on the losing side gains xp', async () => {
+		const upd = await duel({ att: { hpLost: 0 }, def: { hpLost: 10 } });
+		expect(upd(20).data.experience.increment).toBeGreaterThan(0);
+	});
+
+	it('an escaped survivor gains 0 xp', async () => {
+		const upd = await duel({ att: { hpLost: 0 }, def: { hpLost: 10, escaped: true } });
+		expect(upd(20).data.experience).toBeUndefined();
+	});
+
+	it('xp is zero for a dinoz at the xp cap', async () => {
+		const upd = await duel({ att: { hpLost: 0 }, def: { hpLost: 10 } }, { 10: { experience: 1000 } });
+		expect(upd(10).data.experience.increment).toBe(0);
+		expect(upd(20).data.experience.increment).toBeGreaterThan(0);
 	});
 });

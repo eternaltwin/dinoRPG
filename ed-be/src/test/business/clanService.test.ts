@@ -381,9 +381,15 @@ describe('championship board hooks on clan exit', () => {
 	it('excludeClanMember skips the hook when the member stays (leader)', async () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(true as never);
 		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue(removed as never);
-		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ id: 1 } as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ clanId: 7 } as never);
 		await svc.excludeClanMember(req({ clanId: '7', id: '1' }));
 		expect(removePlayerFromBoards).not.toHaveBeenCalled();
+	});
+	it('removes the pieces when the player already joined another clan', async () => {
+		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ clanId: 8 } as never);
+		await svc.leaveClanSelf(req());
+		expect(removePlayerFromBoards).toHaveBeenCalledWith('p2', 7);
 	});
 	it('a failing hook is logged and does not fail the exit', async () => {
 		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
@@ -400,7 +406,7 @@ describe('championship board hooks on clan exit', () => {
 	});
 	it('leaveClanSelf skips the hook when the member stays (leader)', async () => {
 		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
-		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ id: 1 } as never);
+		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue({ clanId: 7 } as never);
 		await svc.leaveClanSelf(req());
 		expect(removePlayerFromBoards).not.toHaveBeenCalled();
 	});
