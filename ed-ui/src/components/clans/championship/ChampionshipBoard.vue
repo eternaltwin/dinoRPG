@@ -3,6 +3,7 @@
 		<div
 			v-for="cell in cells"
 			:key="cell.index"
+			:data-testid="`board-cell-${cell.x}-${cell.y}`"
 			class="cell"
 			:class="{
 				'entry-west': cell.x === 0,
@@ -23,6 +24,7 @@
 					selected: cell.piece.dinozId === selectedDinozId,
 					exhausted: isOurs(cell.piece) && cell.piece.actionPoints === 0
 				}"
+				data-testid="board-piece"
 				:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
 			>
 				<DinozIcon :display="cell.piece.display" :size="ICON_SIZE" />
