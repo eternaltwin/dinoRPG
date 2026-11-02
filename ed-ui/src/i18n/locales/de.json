@@ -5542,6 +5542,7 @@
 			"finished": "Meisterschaft beendet"
 		},
 		"registrationEnd": "Anmeldeschluss: {date}",
+		"registrationStart": "Anmeldung geöffnet ab dem {date}",
 		"endDate": "Ende der Meisterschaft: {date}",
 		"register": "Clan anmelden",
 		"unregister": "Clan abmelden",

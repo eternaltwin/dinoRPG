@@ -32,7 +32,7 @@
 			</div>
 		</fieldset>
 
-		<input type="submit" value="Lancer le championnat" />
+		<input type="submit" value="Lancer le championnat" :disabled="submitting" />
 	</form>
 </template>
 
@@ -51,7 +51,8 @@ export default defineComponent({
 		return {
 			placesList: Object.values(placeList).filter(r => r.warPlace),
 			form: { start: '', places: [] } as ChampionshipForm,
-			current: null as ClanChampionshipDTO | null
+			current: null as ClanChampionshipDTO | null,
+			submitting: false as boolean
 		};
 	},
 	methods: {
@@ -63,11 +64,15 @@ export default defineComponent({
 			}
 		},
 		async handleSubmit() {
+			if (this.submitting) return;
+			this.submitting = true;
 			try {
 				await AdminService.startClanChampionship({ start: this.form.start, places: this.form.places });
 				await this.loadCurrent();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+			} finally {
+				this.submitting = false;
 			}
 		}
 	},

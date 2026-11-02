@@ -5,7 +5,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
-vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() } }));
+vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() }, LOGGER: { error: vi.fn() } }));
 vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../prisma.js', () => ({
@@ -20,7 +20,7 @@ vi.mock('../../prisma.js', () => ({
 }));
 
 import { Prisma } from '@drpg/prisma';
-import { DISCORD } from '../../context.js';
+import { DISCORD, LOGGER } from '../../context.js';
 import { scheduleJob } from 'node-schedule';
 import { prisma } from '../../prisma.js';
 import { auth } from '../../dao/playerDao.js';
@@ -107,6 +107,18 @@ describe('startClanChampionship', () => {
 		await expect(start({ start: '2026-11-09', places: [PlaceEnum.DINOVILLE] })).rejects.toThrow('clanEvent.overlap');
 	});
 
+	it('takes the advisory lock inside the transaction before the overlap check, and schedules after commit', async () => {
+		await start({ start: '2026-11-09', places: [PlaceEnum.DINOVILLE] });
+		expect(p.$transaction).toHaveBeenCalled();
+		const lockOrder = p.$queryRaw.mock.invocationCallOrder[0];
+		expect(lockOrder).toBeLessThan(p.clanEvent.findFirst.mock.invocationCallOrder[0]);
+		expect(lockOrder).toBeLessThan(p.clanEvent.create.mock.invocationCallOrder[0]);
+		expect(p.$transaction.mock.invocationCallOrder[0]).toBeLessThan(lockOrder);
+		expect(vi.mocked(scheduleJob).mock.invocationCallOrder[0]).toBeGreaterThan(
+			p.clanEvent.create.mock.invocationCallOrder[0]
+		);
+	});
+
 	it('creates the event and schedules the close job', async () => {
 		const result = await start({ start: '2026-11-09', places: [PlaceEnum.DINOVILLE, -5] });
 		expect(result).toEqual({ id: 'ev-1' });
@@ -162,6 +174,16 @@ describe('registerClan', () => {
 			})
 		);
 		await expect(register()).rejects.toThrow('clanChampionship.notInRegistration');
+	});
+
+	it('rejects registration before the start date (outside and inside the transaction)', async () => {
+		vi.setSystemTime(new Date('2026-11-05T10:00:00.000Z'));
+		await expect(register()).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.$transaction).not.toHaveBeenCalled();
+		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
+		p.clanEvent.findUnique.mockResolvedValue(activeEvent({ startDate: new Date('2026-11-11T00:00:00.000Z') }));
+		await expect(register()).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.clanChampionshipRegistration.create).not.toHaveBeenCalled();
 	});
 
 	it('rejects a clan with a war in progress', async () => {
@@ -486,6 +508,9 @@ describe('scheduled job error handling', () => {
 		const callback = vi.mocked(scheduleJob).mock.calls[0][2] as unknown as () => Promise<void>;
 		await expect(callback()).resolves.toBeUndefined();
 		expect(DISCORD.sendError).toHaveBeenCalled();
+		const sent = vi.mocked(DISCORD.sendError).mock.calls[0][0] as Error;
+		expect((sent.cause as Error).message).toBe('db down');
+		expect(LOGGER.error).toHaveBeenCalled();
 	});
 
 	it('does not throw at boot when the immediate close fails', async () => {

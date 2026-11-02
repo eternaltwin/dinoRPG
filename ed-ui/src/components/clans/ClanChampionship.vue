@@ -1,10 +1,15 @@
 <template>
 	<div class="clan_wrapper" v-if="championship">
 		<DZDisclaimer round :content="$t(`clanChampionship.phase.${championship.phase}`)" />
-		<p v-if="championship.phase === 'registration'">
+		<p v-if="championship.phase === 'registration' && !registrationStarted">
+			{{ $t('clanChampionship.registrationStart', { date: formatDate(championship.registrationStart) }) }}
+		</p>
+		<p v-else-if="championship.phase === 'registration'">
 			{{ $t('clanChampionship.registrationEnd', { date: formatDate(championship.registrationEnd) }) }}
 		</p>
-		<p>{{ $t('clanChampionship.endDate', { date: formatDate(championship.endDate) }) }}</p>
+		<p v-if="championship.phase === 'running' || championship.phase === 'finished'">
+			{{ $t('clanChampionship.endDate', { date: formatDate(championship.endDate) }) }}
+		</p>
 
 		<div v-if="canRegister">
 			<DZButton v-if="championship.myClanRegistered" :off="loading" @click="unregister">{{
@@ -25,7 +30,7 @@
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">
 				<tr>
-					<th class="dinoz-header" colspan="3">{{ $t('clanChampionship.round', { round: round.round }) }}</th>
+					<th class="dinoz-header" colspan="3">{{ $t('clanChampionship.round', { round: round.round + 1 }) }}</th>
 				</tr>
 				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
 					<td>
@@ -65,11 +70,15 @@ export default defineComponent({
 		viewedClanId(): number {
 			return +this.$route.params.id;
 		},
+		registrationStarted(): boolean {
+			return !!this.championship && new Date() >= new Date(this.championship.registrationStart);
+		},
 		canRegister(): boolean {
 			return (
 				!!this.championship &&
 				this.championship.canManageRegistration &&
 				this.championship.phase === 'registration' &&
+				this.registrationStarted &&
 				this.playerStore.clanId === this.viewedClanId
 			);
 		},
