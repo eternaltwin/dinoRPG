@@ -45,6 +45,45 @@ export interface ClanChampionshipDTO {
 	canManageRegistration: boolean;
 }
 
+export interface BoardPieceDTO {
+	dinozId: number;
+	clanId: number;
+	x: number;
+	y: number;
+	mine: boolean;
+	ally: boolean;
+	name: string;
+	display: string;
+	level: number;
+	life?: number;
+	maxLife?: number;
+	actionPoints?: number;
+	playerName: string;
+}
+
+export interface BoardSideDTO {
+	clanId: number | null;
+	name: string;
+	score: number;
+	scoreLine: number;
+	quotaUsed: number;
+}
+
+export interface MatchBoardDTO {
+	matchId: string;
+	round: number;
+	placeId: number | null;
+	status: ClanChampionshipMatchStatus;
+	startsAt: Date;
+	endsAt: Date;
+	ticksApplied: number;
+	west: BoardSideDTO;
+	east: BoardSideDTO;
+	obstacles: number[];
+	pieces: BoardPieceDTO[];
+	deadDinozIds: number[];
+}
+
 export interface ChampionshipForm {
 	start: string; // YYYY-MM-DD
 	places: number[];

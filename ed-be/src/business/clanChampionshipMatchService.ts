@@ -3,6 +3,8 @@ import {
 	BOARD_TICK_AP,
 	BOARD_TICK_MINUTES,
 	BoardDirection,
+	BoardPieceDTO,
+	MatchBoardDTO,
 	PLACE_REVEAL_HOURS
 } from '@drpg/core/models/clan/clanChampionship';
 import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventConfig';
@@ -531,4 +533,103 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 		},
 		{ timeout: 15000 }
 	);
+}
+
+/** The reader's clan board: its live match, else its latest finished match of the active championship. */
+export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | null> {
+	const authed = await auth(req);
+	const clanId = authed.clanId;
+	if (clanId === null || clanId === undefined) return null;
+
+	let match = await findLiveMatchOfClan(clanId);
+	if (!match) {
+		const event = await findActiveChampionshipEvent();
+		if (!event) return null;
+		match = await prisma.clanChampionshipMatch.findFirst({
+			where: {
+				eventId: event.id,
+				status: ClanChampionshipMatchStatus.finished,
+				OR: [{ homeClanId: clanId }, { awayClanId: clanId }]
+			},
+			orderBy: { endsAt: 'desc' }
+		});
+	}
+	if (!match) return null;
+
+	const all = await prisma.clanChampionshipPiece.findMany({
+		where: { matchId: match.id },
+		include: {
+			dinoz: {
+				select: {
+					name: true,
+					display: true,
+					level: true,
+					life: true,
+					maxLife: true,
+					player: { select: { name: true } }
+				}
+			}
+		}
+	});
+	const onBoard = all.flatMap(piece =>
+		piece.state === ClanChampionshipPieceState.onBoard && piece.x !== null && piece.y !== null
+			? [{ ...piece, x: piece.x, y: piece.y }]
+			: []
+	);
+
+	const westId = match.westClanId;
+	const westIsHome = westId !== null ? westId === match.homeClanId : true;
+	const eastId = westIsHome ? match.awayClanId : match.homeClanId;
+	const isWest = (p: { clanId: number }) => (westId !== null ? p.clanId === westId : p.clanId !== eastId);
+	const board = onBoard.map(p => ({ id: p.id, clanId: p.clanId, x: p.x, y: p.y }));
+	const westPieces = board.filter(isWest);
+	const eastPieces = board.filter(p => !isWest(p));
+	const side = (isHome: boolean, pieces: typeof board, enemies: typeof board, which: Side) => {
+		const id = isHome ? match.homeClanId : match.awayClanId;
+		return {
+			clanId: id,
+			name: isHome ? match.homeClanName : match.awayClanName,
+			score: isHome ? match.homeScore : match.awayScore,
+			scoreLine: scoreLine(which, pieces, enemies),
+			quotaUsed: all.filter(p => p.clanId === id).length
+		};
+	};
+
+	const pieces: BoardPieceDTO[] = onBoard.map(p => {
+		const mine = p.playerId === authed.id;
+		const ally = !mine && p.clanId === clanId;
+		const dto: BoardPieceDTO = {
+			dinozId: p.dinozId,
+			clanId: p.clanId,
+			x: p.x,
+			y: p.y,
+			mine,
+			ally,
+			name: p.dinoz.name,
+			display: p.dinoz.display,
+			level: p.dinoz.level,
+			playerName: p.dinoz.player?.name ?? ''
+		};
+		if (mine || ally) {
+			dto.life = p.dinoz.life;
+			dto.maxLife = p.dinoz.maxLife;
+			dto.actionPoints = p.actionPoints;
+		}
+		return dto;
+	});
+
+	return {
+		matchId: match.id,
+		round: match.round,
+		placeId: match.placeId,
+		status: match.status,
+		startsAt: match.startsAt,
+		endsAt: match.endsAt,
+		ticksApplied: match.ticksApplied,
+		west: side(westIsHome, westPieces, eastPieces, 'west'),
+		east: side(!westIsHome, eastPieces, westPieces, 'east'),
+		obstacles: match.obstacles,
+		pieces,
+		deadDinozIds: all.filter(p => p.state === ClanChampionshipPieceState.dead).map(p => p.dinozId)
+	};
 }
