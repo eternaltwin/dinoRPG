@@ -5,6 +5,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
 vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
+vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() } }));
 vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../prisma.js', () => ({
@@ -19,6 +20,7 @@ vi.mock('../../prisma.js', () => ({
 }));
 
 import { Prisma } from '@drpg/prisma';
+import { DISCORD } from '../../context.js';
 import { scheduleJob } from 'node-schedule';
 import { prisma } from '../../prisma.js';
 import { auth } from '../../dao/playerDao.js';
@@ -471,5 +473,27 @@ describe('isClanInActiveChampionship', () => {
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
 		p.clanChampionshipRegistration.findFirst.mockResolvedValue(null);
 		expect(await isClanInActiveChampionship(7, p)).toBe(false);
+	});
+});
+
+describe('scheduled job error handling', () => {
+	it('reports a failing close job instead of rejecting', async () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-11-20T00:00:00.000Z'));
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.$transaction.mockRejectedValue(new Error('db down'));
+		await scheduleClanChampionship();
+		const callback = vi.mocked(scheduleJob).mock.calls[0][2] as unknown as () => Promise<void>;
+		await expect(callback()).resolves.toBeUndefined();
+		expect(DISCORD.sendError).toHaveBeenCalled();
+	});
+
+	it('does not throw at boot when the immediate close fails', async () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-11-24T00:00:00.000Z'));
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.$transaction.mockRejectedValue(new Error('db down'));
+		await expect(scheduleClanChampionship()).resolves.toBeUndefined();
+		expect(DISCORD.sendError).toHaveBeenCalled();
 	});
 });
