@@ -11,7 +11,8 @@ vi.mock('../../prisma.js', () => ({
 	prisma: {
 		clanEvent: { findFirst: vi.fn() },
 		clanChampionshipMatch: { findFirst: vi.fn() },
-		clanChampionshipPiece: { findMany: vi.fn() }
+		clanChampionshipPiece: { findMany: vi.fn() },
+		clanChampionshipFight: { findMany: vi.fn() }
 	}
 }));
 
@@ -74,6 +75,7 @@ beforeEach(() => {
 	vi.clearAllMocks();
 	p.clanEvent.findFirst.mockResolvedValue(event);
 	p.clanChampionshipMatch.findFirst.mockResolvedValue(match());
+	p.clanChampionshipFight.findMany.mockResolvedValue([]);
 	(auth as any).mockResolvedValue({ id: ME, clanId: HOME });
 });
 
@@ -157,5 +159,34 @@ describe('getMyMatchBoard', () => {
 		expect(p.clanChampionshipMatch.findFirst).toHaveBeenLastCalledWith(
 			expect.objectContaining({ where: expect.objectContaining({ status: 'finished' }) })
 		);
+	});
+
+	it('exposes the journal: archiveId only for participants, newest first, capped at 50', async () => {
+		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
+		const row = (id: number, players: string[]) => ({
+			createdAt: new Date(2026, 10, 24, 10, id),
+			attackerClanId: AWAY,
+			attackerWon: true,
+			participantDinozIds: [1, 2, 3],
+			participantPlayerIds: players,
+			deadDinozIds: [2],
+			archiveId: `arch-${id}`
+		});
+		p.clanChampionshipFight.findMany.mockResolvedValue([row(2, [ME, 'foe']), row(1, ['foe'])]);
+		const board = await getMyMatchBoard(makeRequest());
+		expect(p.clanChampionshipFight.findMany).toHaveBeenCalledWith(
+			expect.objectContaining({ orderBy: { createdAt: 'desc' }, take: 50 })
+		);
+		expect(board!.fights).toEqual([
+			{
+				createdAt: row(2, []).createdAt,
+				attackerClanId: AWAY,
+				attackerWon: true,
+				participantCount: 3,
+				deadDinozIds: [2],
+				archiveId: 'arch-2'
+			},
+			expect.objectContaining({ archiveId: null, participantCount: 3 })
+		]);
 	});
 });

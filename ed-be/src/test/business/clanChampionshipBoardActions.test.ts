@@ -27,6 +27,7 @@ vi.mock('../../prisma.js', () => ({
 			deleteMany: vi.fn()
 		},
 		dinoz: { findUnique: vi.fn(), updateMany: vi.fn() },
+		clanChampionshipFight: { create: vi.fn() },
 		clanMember: { findUnique: vi.fn() }
 	}
 }));
