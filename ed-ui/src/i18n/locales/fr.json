@@ -4178,6 +4178,7 @@
 			"members": "Liste des membres",
 			"treasure": "Trésor du Clan",
 			"war": "Infos de guerre",
+			"championship": "Championnat",
 			"builds": "Plans de compétences",
 			"discussion": "Fil de discussion",
 			"history": "Historique du Clan",
@@ -5533,5 +5534,22 @@
 			"codeBlock": "Bloc de code",
 			"link": "Lien"
 		}
+	},
+	"clanChampionship": {
+		"phase": {
+			"registration": "Inscriptions ouvertes",
+			"running": "Championnat en cours",
+			"cancelled": "Championnat annulé",
+			"finished": "Championnat terminé"
+		},
+		"registrationEnd": "Fin des inscriptions : {date}",
+		"endDate": "Fin du championnat : {date}",
+		"register": "Inscrire le clan",
+		"unregister": "Désinscrire le clan",
+		"registeredClans": "Clans inscrits ({count})",
+		"noRegistration": "Aucun clan inscrit pour le moment.",
+		"calendar": "Calendrier",
+		"round": "Journée {round}",
+		"versus": "contre"
 	}
 }

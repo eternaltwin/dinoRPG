@@ -15,3 +15,4 @@ export * from './OauthService.js';
 export * from './PlayerService.js';
 export * from './ClanService.js';
 export * from './ReportService.js';
+export * from './ClanChampionshipService.js';

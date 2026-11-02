@@ -10,7 +10,7 @@
 			<td>{{ event.id }}</td>
 			<td>{{ event.eventType }}</td>
 			<td>{{ event.endDate }}</td>
-			<td>{{ event.config }}</td>
+			<td>{{ describeConfig(event.config) }}</td>
 		</tr>
 	</DZTable>
 	<form @submit.prevent="handleSubmit">
@@ -78,7 +78,8 @@ import { errorHandler } from '../../utils';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { RewardType } from '@drpg/core/models/reward/EpicReward';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
+import { ClanEventConfig, EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
+import { ClanEventType } from '@drpg/prisma/enums';
 import DZTable from '../common/DZTable.vue';
 
 export default defineComponent({
@@ -100,6 +101,12 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		describeConfig(config: ClanEventConfig): string {
+			if (config.eventType === ClanEventType.championship) {
+				return `${config.eventType} - ${config.phase} (inscriptions jusqu'au ${config.registrationEnd})`;
+			}
+			return JSON.stringify(config);
+		},
 		async handleSubmit() {
 			try {
 				if (!this.form.winner || !this.form.podium || !this.form.participant) {

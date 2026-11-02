@@ -224,6 +224,11 @@ const router = createRouter({
 							component: () => import('../components/admin/EventCreation.vue')
 						},
 						{
+							path: 'championship',
+							name: 'ChampionshipCreation',
+							component: () => import('../components/admin/ChampionshipCreation.vue')
+						},
+						{
 							path: 'dungeon',
 							name: 'DungeonEdit',
 							component: () => import('../components/admin/DungeonEdit.vue')
@@ -461,6 +466,11 @@ const router = createRouter({
 							path: 'war',
 							name: 'ClanWar',
 							component: () => import('../components/clans/ClanWar.vue')
+						},
+						{
+							path: 'championship',
+							name: 'ClanChampionship',
+							component: () => import('../components/clans/ClanChampionship.vue')
 						},
 						{
 							path: 'builds',
