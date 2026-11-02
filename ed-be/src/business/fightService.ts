@@ -50,7 +50,7 @@ import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
-import { getArchivedFightRequest } from '../dao/archiveDao.js';
+import { getArchivedFightRequest, getClanChampionshipFightParticipants } from '../dao/archiveDao.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { gameConfig } from '../utils/gameConfig.js';
 
@@ -777,6 +777,23 @@ export async function replayFight(req: Request): Promise<FightReplay> {
 		throw new ExpectedError('No replay found.');
 	}
 
+	const metadata = fight.metadata ? JSON.parse(fight.metadata) : undefined;
+
+	// Clan championship fights are only visible to their participants.
+	// Every failure gives the same answer as a missing archive, so existence is not revealed.
+	if (metadata?.kind === 'clanChampionship') {
+		let playerId: string;
+		try {
+			playerId = (await auth(req)).id;
+		} catch {
+			throw new ExpectedError('No replay found.');
+		}
+		const participants = await getClanChampionshipFightParticipants(archiveId);
+		if (!participants?.includes(playerId)) {
+			throw new ExpectedError('No replay found.');
+		}
+	}
+
 	const replay: FightReplay = {
 		id: archiveId,
 		fighters: JSON.parse(fight.fighters) as FighterRecap[],
@@ -785,7 +802,7 @@ export async function replayFight(req: Request): Promise<FightReplay> {
 		seed: fight.seed,
 		leftPlayer: fight.leftPlayer,
 		rightPlayer: fight.rightPlayer,
-		metadata: fight.metadata ? JSON.parse(fight.metadata) : undefined
+		metadata
 	};
 
 	return replay;

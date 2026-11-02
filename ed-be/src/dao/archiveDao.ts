@@ -167,3 +167,13 @@ export async function getAllArchivedFightRequest(playerId: string, page: number)
 		return { archive, totalArchive };
 	});
 }
+
+export async function getClanChampionshipFightParticipants(archiveId: string): Promise<string[] | null> {
+	return withSpan(getClanChampionshipFightParticipants.name, async () => {
+		const row = await prisma.clanChampionshipFight.findUnique({
+			where: { archiveId },
+			select: { participantPlayerIds: true }
+		});
+		return row ? row.participantPlayerIds : null;
+	});
+}
