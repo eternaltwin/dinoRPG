@@ -791,6 +791,7 @@ model ClanChampionshipRegistration {
 model ClanChampionshipMatch {
   id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   eventId    String    @db.Uuid
+  /// 0-based round index (display as round + 1)
   round      Int
   homeClanId Int
   awayClanId Int

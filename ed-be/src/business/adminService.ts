@@ -1,5 +1,6 @@
 import { Request } from 'express';
-import { assertNoClanEventOverlap } from './clanEventService.js';
+import { assertNoClanEventOverlap, lockClanEventCreation } from './clanEventService.js';
+import { isClanInActiveChampionship } from './clanChampionshipService.js';
 import { getDinozForDojoFight, getDinozForSkillEffect, getDinozInfoForAdmin, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
@@ -15,6 +16,7 @@ import { ClanEventType, LogType, NotificationSeverity } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
+import translate from '../utils/server/translate.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -1015,6 +1017,9 @@ export async function kickClanMemberAdmin(playerId: string, adminId: string) {
  * @return {Promise<{id: number}>} The ID of the deleted clan
  */
 export async function deleteClanAdmin(clanId: number, adminId: string) {
+	if (await isClanInActiveChampionship(clanId)) {
+		throw new ExpectedError(translate('clanChampionship.registeredNoDelete'));
+	}
 	await deleteClanRequest(clanId);
 	await createLog(LogType.AdminUpdateClan, adminId, undefined, `Deleted clan ${clanId}`);
 	return clanId;
@@ -1135,15 +1140,17 @@ export async function startClanWarEvent(req: Request) {
 		warPlaces: warPlaces
 	};
 
-	await assertNoClanEventOverlap(startTime);
-
-	const event = await prisma.clanEvent.create({
-		data: {
-			eventType: ClanEventType.war,
-			startDate: startTime,
-			endDate: endTime,
-			config: JSON.stringify(config)
-		}
+	await prisma.$transaction(async tx => {
+		await lockClanEventCreation(tx);
+		await assertNoClanEventOverlap(startTime, tx);
+		await tx.clanEvent.create({
+			data: {
+				eventType: ClanEventType.war,
+				startDate: startTime,
+				endDate: endTime,
+				config: JSON.stringify(config)
+			}
+		});
 	});
 
 	await TournamentManager.postponeNextTournamentCreation(prisma, endTime);

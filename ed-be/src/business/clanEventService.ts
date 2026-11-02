@@ -36,6 +36,14 @@ export async function findActiveChampionshipEvent(tx: Tx = prisma) {
 	return config.phase === 'registration' || config.phase === 'running' ? event : null;
 }
 
+/** Shared advisory-lock key serialising every clan event creation (check + create must be atomic). */
+export const CLAN_EVENT_CREATION_LOCK = 748201;
+
+/** Takes the transaction-scoped advisory lock guarding clan event creation. */
+export async function lockClanEventCreation(tx: LocalTransactionClient): Promise<void> {
+	await tx.$queryRaw`SELECT pg_advisory_xact_lock(${CLAN_EVENT_CREATION_LOCK})`;
+}
+
 /** War and championship are exclusive: refuse any clan event overlapping or scheduled after `start`. */
 export async function assertNoClanEventOverlap(start: Date, tx: Tx = prisma): Promise<void> {
 	const other = await tx.clanEvent.findFirst({ where: { endDate: { gt: start } } });

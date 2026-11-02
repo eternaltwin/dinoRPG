@@ -5,7 +5,7 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ClanEventType, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
-import { DISCORD } from '../context.js';
+import { DISCORD, LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { auth } from '../dao/playerDao.js';
@@ -14,7 +14,12 @@ import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
 import { computeMatchSlots, computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
 import { shuffle } from '../utils/tools.js';
 import translate from '../utils/server/translate.js';
-import { assertNoClanEventOverlap, findActiveChampionshipEvent, parseEventConfig } from './clanEventService.js';
+import {
+	assertNoClanEventOverlap,
+	findActiveChampionshipEvent,
+	lockClanEventCreation,
+	parseEventConfig
+} from './clanEventService.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const RESULT_VISIBLE_DAYS = 7;
@@ -25,7 +30,9 @@ function runChampionshipJob(name: string, fn: () => Promise<void>): () => Promis
 		try {
 			await fn();
 		} catch (error) {
-			DISCORD.sendError(new Error(`Championship job ${name} failed: ${(error as Error)?.message}`));
+			LOGGER.error(error);
+			const wrapped = new Error(`Championship job ${name} failed: ${(error as Error)?.message}`);
+			DISCORD.sendError(Object.assign(wrapped, { cause: error }));
 		}
 	};
 }
@@ -159,21 +166,23 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 		throw new ExpectedError(translate('clanChampionship.noPlaces', authed));
 	}
 
-	await assertNoClanEventOverlap(registrationStart);
-
 	const config: ClanChampionshipEventConfig = {
 		eventType: ClanEventType.championship,
 		places: championshipPlaces,
 		registrationEnd: registrationEnd.toISOString(),
 		phase: 'registration'
 	};
-	const event = await prisma.clanEvent.create({
-		data: {
-			eventType: ClanEventType.championship,
-			startDate: registrationStart,
-			endDate: registrationEnd,
-			config: JSON.stringify(config)
-		}
+	const event = await prisma.$transaction(async tx => {
+		await lockClanEventCreation(tx);
+		await assertNoClanEventOverlap(registrationStart, tx);
+		return tx.clanEvent.create({
+			data: {
+				eventType: ClanEventType.championship,
+				startDate: registrationStart,
+				endDate: registrationEnd,
+				config: JSON.stringify(config)
+			}
+		});
 	});
 
 	scheduleJob(
@@ -185,9 +194,10 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 	return { id: event.id };
 }
 
-function isOpenForRegistration(event: { config: string }): boolean {
+function isOpenForRegistration(event: { config: string; startDate: Date }): boolean {
 	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
-	return config.phase === 'registration' && new Date() < new Date(config.registrationEnd);
+	const now = new Date();
+	return config.phase === 'registration' && now >= event.startDate && now < new Date(config.registrationEnd);
 }
 
 /** Active championship still open to (un)registration, or throws. */

@@ -5532,6 +5532,7 @@
 			"finished": "Championship finished"
 		},
 		"registrationEnd": "Registrations close: {date}",
+		"registrationStart": "Registrations open from {date}",
 		"endDate": "Championship ends: {date}",
 		"register": "Register the clan",
 		"unregister": "Unregister the clan",

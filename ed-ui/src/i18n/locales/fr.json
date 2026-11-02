@@ -5543,6 +5543,7 @@
 			"finished": "Championnat terminé"
 		},
 		"registrationEnd": "Fin des inscriptions : {date}",
+		"registrationStart": "Inscriptions ouvertes à partir du {date}",
 		"endDate": "Fin du championnat : {date}",
 		"register": "Inscrire le clan",
 		"unregister": "Désinscrire le clan",
