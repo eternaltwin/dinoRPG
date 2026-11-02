@@ -41,7 +41,7 @@ export const CLAN_EVENT_CREATION_LOCK = 748201;
 
 /** Takes the transaction-scoped advisory lock guarding clan event creation. */
 export async function lockClanEventCreation(tx: LocalTransactionClient): Promise<void> {
-	await tx.$queryRaw`SELECT pg_advisory_xact_lock(${CLAN_EVENT_CREATION_LOCK})`;
+	await tx.$executeRaw`SELECT pg_advisory_xact_lock(${CLAN_EVENT_CREATION_LOCK})`;
 }
 
 /** War and championship are exclusive: refuse any clan event overlapping or scheduled after `start`. */
