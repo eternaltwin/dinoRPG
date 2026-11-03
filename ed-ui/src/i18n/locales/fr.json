@@ -5606,6 +5606,7 @@
 		"journalEntry": "{clan} attaque : {outcome}, {count} participants, {dead} morts",
 		"replay": "Revoir",
 		"noFights": "Aucun combat pour le moment.",
+		"moreFights": "Voir plus",
 		"reason": {
 			"dead": "Mort",
 			"deadInMatch": "Mort dans ce match",
