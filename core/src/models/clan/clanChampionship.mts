@@ -33,6 +33,20 @@ export interface ClanChampionshipMatchDTO {
 	endsAt: Date;
 }
 
+export interface ClanChampionshipStandingDTO {
+	rank: number; // 1-based, shared on a full tie
+	clanId: number | null;
+	clanName: string;
+	played: number;
+	won: number;
+	drawn: number;
+	lost: number;
+	points: number;
+	scoreFor: number;
+	scoreAgainst: number;
+	scoreDiff: number;
+}
+
 export interface ClanChampionshipDTO {
 	id: string;
 	phase: ChampionshipPhase;
@@ -42,6 +56,7 @@ export interface ClanChampionshipDTO {
 	places: number[];
 	registrations: { clanId: number | null; clanName: string }[];
 	matches: ClanChampionshipMatchDTO[];
+	standings: ClanChampionshipStandingDTO[];
 	myClanRegistered: boolean;
 	canManageRegistration: boolean;
 }
