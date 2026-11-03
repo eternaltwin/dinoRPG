@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { makeRequest } from '../helpers/req.js';
 
 vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() }, LOGGER: { error: vi.fn() } }));
@@ -14,7 +15,7 @@ vi.mock('../../business/serverEventService.js', () => ({
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		clanEvent: { findFirst: vi.fn() },
-		clanChampionshipMatch: { findFirst: vi.fn() },
+		clanChampionshipMatch: { findFirst: vi.fn(), findUnique: vi.fn() },
 		clanChampionshipPiece: { findMany: vi.fn() },
 		clanChampionshipFight: { findMany: vi.fn() }
 	}
@@ -22,7 +23,7 @@ vi.mock('../../prisma.js', () => ({
 
 import { auth } from '../../dao/playerDao.js';
 import { prisma } from '../../prisma.js';
-import { getMyMatchBoard } from '../../business/clanChampionshipMatchService.js';
+import { getMatchFights, getMyMatchBoard } from '../../business/clanChampionshipMatchService.js';
 
 const p = prisma as any;
 const HOME = 1;
@@ -208,6 +209,7 @@ describe('getMyMatchBoard', () => {
 	it('exposes the journal: archiveId only for participants, newest first, capped at 50', async () => {
 		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
 		const row = (id: number, players: string[]) => ({
+			id,
 			createdAt: new Date(2026, 10, 24, 10, id),
 			attackerClanId: AWAY,
 			attackerWon: true,
@@ -219,10 +221,11 @@ describe('getMyMatchBoard', () => {
 		p.clanChampionshipFight.findMany.mockResolvedValue([row(2, [ME, 'foe']), row(1, ['foe'])]);
 		const board = await getMyMatchBoard(makeRequest());
 		expect(p.clanChampionshipFight.findMany).toHaveBeenCalledWith(
-			expect.objectContaining({ orderBy: { createdAt: 'desc' }, take: 50 })
+			expect.objectContaining({ orderBy: { id: 'desc' }, take: 50 })
 		);
 		expect(board!.fights).toEqual([
 			{
+				id: 2,
 				createdAt: row(2, []).createdAt,
 				attackerClanId: AWAY,
 				attackerWon: true,
@@ -230,7 +233,56 @@ describe('getMyMatchBoard', () => {
 				deadDinozIds: [2],
 				archiveId: 'arch-2'
 			},
-			expect.objectContaining({ archiveId: null, participantCount: 3 })
+			expect.objectContaining({ id: 1, archiveId: null, participantCount: 3 })
 		]);
+	});
+});
+
+describe('getMatchFights', () => {
+	const MATCH_ID = 'a0000000-0000-4000-8000-000000000001';
+	const row = (id: number, players: string[]) => ({
+		id,
+		createdAt: new Date(2026, 10, 24, 10, id),
+		attackerClanId: AWAY,
+		attackerWon: true,
+		participantDinozIds: [1, 2],
+		participantPlayerIds: players,
+		deadDinozIds: [2],
+		archiveId: `arch-${id}`
+	});
+
+	beforeEach(() => {
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(match());
+	});
+
+	it('returns the page before the cursor with ids', async () => {
+		p.clanChampionshipFight.findMany.mockResolvedValue([row(119, [ME]), row(118, ['foe'])]);
+		const fights = await getMatchFights(makeRequest(), MATCH_ID, 120);
+		expect(p.clanChampionshipFight.findMany).toHaveBeenCalledWith(
+			expect.objectContaining({ where: { matchId: MATCH_ID, id: { lt: 120 } }, orderBy: { id: 'desc' }, take: 50 })
+		);
+		expect(fights.map(f => f.id)).toEqual([119, 118]);
+	});
+
+	it('hides the archive of a fight the reader did not take part in', async () => {
+		p.clanChampionshipFight.findMany.mockResolvedValue([row(119, [ME]), row(118, ['foe'])]);
+		const fights = await getMatchFights(makeRequest(), MATCH_ID, 120);
+		expect(fights.map(f => f.archiveId)).toEqual(['arch-119', null]);
+	});
+
+	it('refuses a match the reader clan does not play', async () => {
+		(auth as any).mockResolvedValue({ id: ME, clanId: 3 });
+		await expect(getMatchFights(makeRequest(), MATCH_ID, 120)).rejects.toBeInstanceOf(ExpectedError);
+		expect(p.clanChampionshipFight.findMany).not.toHaveBeenCalled();
+	});
+
+	it('refuses a match outside the visible championship', async () => {
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ eventId: 'ev-old' }));
+		await expect(getMatchFights(makeRequest(), MATCH_ID, 120)).rejects.toBeInstanceOf(ExpectedError);
+	});
+
+	it('refuses an unknown match', async () => {
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(null);
+		await expect(getMatchFights(makeRequest(), MATCH_ID, 120)).rejects.toBeInstanceOf(ExpectedError);
 	});
 });

@@ -9,6 +9,7 @@ export const BOARD_TICK_MINUTES = 10;
 export const BOARD_TICK_AP = 2;
 export const BOARD_MATCH_QUOTA = 100;
 export const PLACE_REVEAL_HOURS = 24;
+export const JOURNAL_PAGE_SIZE = 50;
 
 export enum BoardDirection {
 	N = 'N',
@@ -86,6 +87,7 @@ export interface BoardSideDTO {
 }
 
 export interface FightJournalEntryDTO {
+	id: number;
 	createdAt: Date;
 	attackerClanId: number;
 	attackerWon: boolean;
