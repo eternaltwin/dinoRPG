@@ -4,6 +4,9 @@ const PLACE_ID = 5; // PlaceEnum.DINOVILLE
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
 
+// The backend serves a single active championship: tests creating one must not run in parallel workers.
+test.describe.configure({ mode: 'serial' });
+
 test('a clan leader enters the board and moves a piece in a live championship match', async ({
 	page,
 	player,
@@ -114,6 +117,79 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 		// Pieces and matches cascade from the event; clans and players are left to the unique names.
 		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.dinoz.deleteMany({ where: { playerId: player.id } });
+		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
+});
+
+test('the championship page shows the standings and the next match', async ({ page, player, createPlayer, db }) => {
+	const suffix = player.id.slice(0, 8);
+	const rival = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
+	await db.clanMember.create({ data: { clanId: clanA.id, playerId: player.id, rights: [] } });
+	await db.clanMember.create({ data: { clanId: clanB.id, playerId: rival.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clanA.id } });
+	await db.player.update({ where: { id: rival.id }, data: { clanId: clanB.id } });
+
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - 3 * DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * DAY).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	const base = {
+		eventId: event.id,
+		homeClanId: clanA.id,
+		awayClanId: clanB.id,
+		homeClanName: clanA.name,
+		awayClanName: clanB.name,
+		placeId: PLACE_ID,
+		westClanId: clanA.id,
+		obstacles: [],
+		ticksApplied: 0,
+		version: 0
+	};
+	await db.clanChampionshipMatch.create({
+		data: {
+			...base,
+			round: 0,
+			startsAt: new Date(now - 2 * DAY),
+			endsAt: new Date(now - DAY),
+			status: 'finished',
+			homeScore: 12,
+			awayScore: 3,
+			winnerClanId: clanA.id
+		}
+	});
+	await db.clanChampionshipMatch.create({
+		data: { ...base, round: 1, startsAt: new Date(now + DAY), endsAt: new Date(now + 2 * DAY), status: 'scheduled' }
+	});
+
+	try {
+		await page.goto(`/clan/${clanA.id}/championship`);
+
+		const standings = page.getByTestId('standings');
+		await expect(standings.getByRole('row').filter({ hasText: clanA.name })).toContainText('3');
+		await expect(standings.getByRole('row').filter({ hasText: clanB.name })).toContainText('0');
+
+		const next = page.getByTestId('next-match');
+		await expect(next).toContainText(clanB.name);
+		await expect(next).toContainText('Lieu du match : Dinoville');
+
+		await expect(page.getByText('Terminé', { exact: true })).toBeVisible();
+		await expect(page.getByText('12 – 3')).toBeVisible();
+	} finally {
+		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
 		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
 		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
