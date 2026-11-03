@@ -336,6 +336,51 @@ describe('getCurrentChampionship', () => {
 		});
 	});
 
+	const matchRow = (over: Record<string, unknown>) => ({
+		id: 'm',
+		round: 0,
+		homeClanId: 7,
+		homeClanName: 'Seven',
+		awayClanId: 8,
+		awayClanName: 'Eight',
+		placeId: 5,
+		status: 'scheduled',
+		homeScore: 0,
+		awayScore: 0,
+		winnerClanId: null,
+		startsAt: new Date('2026-11-23T18:00:00.000Z'),
+		endsAt: new Date('2026-11-24T18:00:00.000Z'),
+		...over
+	});
+
+	it('returns the standings computed from the matches', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.clanChampionshipMatch.findMany.mockResolvedValue([
+			matchRow({ status: 'finished', homeScore: 6, awayScore: 2, winnerClanId: 7 })
+		]);
+		const dto = await getCurrentChampionship(makeRequest());
+		expect(dto?.standings[0]).toMatchObject({ clanName: 'Seven', points: 3, rank: 1 });
+	});
+
+	it("hides the place of a scheduled match the reader's clan does not play", async () => {
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.clanChampionshipMatch.findMany.mockResolvedValue([
+			matchRow({ id: 'a' }),
+			matchRow({ id: 'b', homeClanId: 9, homeClanName: 'Nine', awayClanId: 10, awayClanName: 'Ten', placeId: 6 }),
+			matchRow({
+				id: 'c',
+				homeClanId: 9,
+				homeClanName: 'Nine',
+				awayClanId: 10,
+				awayClanName: 'Ten',
+				placeId: 6,
+				status: 'finished'
+			})
+		]);
+		const dto = await getCurrentChampionship(makeRequest());
+		expect(dto?.matches.map(m => m.placeId)).toEqual([5, null, 6]);
+	});
+
 	it('works for a caller without clan', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: 'player-1', clanId: null } as any);
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());

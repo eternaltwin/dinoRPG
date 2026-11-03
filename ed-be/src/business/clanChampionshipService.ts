@@ -10,6 +10,7 @@ import { scheduleJob } from 'node-schedule';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
+import { computeStandings } from '../utils/clanChampionship/standings.js';
 import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
 import { computeMatchSlots, computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
 import { drawMatchPlace } from './clanChampionshipMatchService.js';
@@ -284,6 +285,9 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 		? !!(await playerHasRightRequest(authed.clanId, authed.id, ClanMemberRight.WAR_OFFICER))
 		: false;
 
+	const isReaderClan = (m: { homeClanId: number | null; awayClanId: number | null }) =>
+		!!authed.clanId && (m.homeClanId === authed.clanId || m.awayClanId === authed.clanId);
+
 	return {
 		id: event.id,
 		phase: config.phase,
@@ -297,7 +301,7 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 			round: m.round,
 			homeClan: { id: m.homeClanId, name: m.homeClanName },
 			awayClan: { id: m.awayClanId, name: m.awayClanName },
-			placeId: m.placeId,
+			placeId: m.status === 'scheduled' && !isReaderClan(m) ? null : m.placeId,
 			status: m.status,
 			homeScore: m.homeScore,
 			awayScore: m.awayScore,
@@ -305,6 +309,7 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 			startsAt: m.startsAt,
 			endsAt: m.endsAt
 		})),
+		standings: computeStandings(matches),
 		myClanRegistered: !!authed.clanId && registrations.some(r => r.clanId === authed.clanId),
 		canManageRegistration
 	};
