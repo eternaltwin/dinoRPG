@@ -1,9 +1,15 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
-import { body, validationResult } from 'express-validator';
+import { body, param, query, validationResult } from 'express-validator';
 import { BoardDirection } from '@drpg/core/models/clan/clanChampionship';
-import { enterBoard, getMyMatchBoard, leaveBoard, moveOnBoard } from '../business/clanChampionshipMatchService.js';
+import {
+	enterBoard,
+	getMatchFights,
+	getMyMatchBoard,
+	leaveBoard,
+	moveOnBoard
+} from '../business/clanChampionshipMatchService.js';
 import { getCurrentChampionship, registerClan, unregisterClan } from '../business/clanChampionshipService.js';
 
 const routes: Router = Router();
@@ -20,6 +26,8 @@ DELETE 			/registration
 	Unregister the clan from the championship
 GET 				/match
 	Get the board of the clan live (or latest finished) match, or null
+GET 				/match/:matchId/fights?before=<id>
+	Get an older page of the match fight journal (fights with an id lower than `before`)
 POST 				/match/enter
 	Put a dinoz on the board
 POST 				/match/leave
@@ -69,6 +77,23 @@ routes.get(`${commonPath}/match`, async (req: Request, res: Response) => {
 		sendError(res, err);
 	}
 });
+
+routes.get(
+	`${commonPath}/match/:matchId/fights`,
+	param('matchId').isUUID(),
+	query('before').isInt({ min: 1 }).toInt(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+		try {
+			const response = await getMatchFights(req, req.params.matchId as string, Number(req.query.before));
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
 
 routes.post(`${commonPath}/match/enter`, dinozIdValidator, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {

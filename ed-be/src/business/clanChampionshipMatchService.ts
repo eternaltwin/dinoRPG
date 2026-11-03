@@ -6,6 +6,7 @@ import {
 	BoardMoveResult,
 	BoardPieceDTO,
 	FightJournalEntryDTO,
+	JOURNAL_PAGE_SIZE,
 	MatchBoardDTO,
 	PLACE_REVEAL_HOURS
 } from '@drpg/core/models/clan/clanChampionship';
@@ -627,6 +628,49 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 	if (version !== null) publishBoardChanged(found.id, version);
 }
 
+type JournalRow = {
+	id: number;
+	createdAt: Date;
+	attackerClanId: number;
+	attackerWon: boolean;
+	participantDinozIds: number[];
+	participantPlayerIds: string[];
+	deadDinozIds: number[];
+	archiveId: string;
+};
+
+/** A journal line; the archive is only linked for a fight the reader took part in. */
+function toJournalEntry(f: JournalRow, readerId: string): FightJournalEntryDTO {
+	return {
+		id: f.id,
+		createdAt: f.createdAt,
+		attackerClanId: f.attackerClanId,
+		attackerWon: f.attackerWon,
+		participantCount: f.participantDinozIds.length,
+		deadDinozIds: f.deadDinozIds,
+		archiveId: f.participantPlayerIds.includes(readerId) ? f.archiveId : null
+	};
+}
+
+/** One older page of a match journal (`id < before`, newest first); only the two clans of the match may read it. */
+export async function getMatchFights(req: Request, matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
+	const authed = await auth(req);
+	const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
+	const clanId = authed.clanId;
+	if (clanId === null || clanId === undefined) throw fail('noLiveMatch');
+	const match = await prisma.clanChampionshipMatch.findUnique({ where: { id: matchId } });
+	if (!match || (match.homeClanId !== clanId && match.awayClanId !== clanId)) throw fail('noLiveMatch');
+	const event = await findVisibleChampionshipEvent();
+	if (!event || event.id !== match.eventId) throw fail('noLiveMatch');
+
+	const journal = await prisma.clanChampionshipFight.findMany({
+		where: { matchId, id: { lt: before } },
+		orderBy: { id: 'desc' },
+		take: JOURNAL_PAGE_SIZE
+	});
+	return journal.map(f => toJournalEntry(f, authed.id));
+}
+
 /** The reader's clan board: its live match, else its latest finished match of the active championship. */
 export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | null> {
 	const authed = await auth(req);
@@ -698,17 +742,10 @@ export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | nul
 
 	const journal = await prisma.clanChampionshipFight.findMany({
 		where: { matchId: match.id },
-		orderBy: { createdAt: 'desc' },
-		take: 50
+		orderBy: { id: 'desc' },
+		take: JOURNAL_PAGE_SIZE
 	});
-	const fights: FightJournalEntryDTO[] = journal.map(f => ({
-		createdAt: f.createdAt,
-		attackerClanId: f.attackerClanId,
-		attackerWon: f.attackerWon,
-		participantCount: f.participantDinozIds.length,
-		deadDinozIds: f.deadDinozIds,
-		archiveId: f.participantPlayerIds.includes(authed.id) ? f.archiveId : null
-	}));
+	const fights = journal.map(f => toJournalEntry(f, authed.id));
 
 	return {
 		matchId: match.id,
