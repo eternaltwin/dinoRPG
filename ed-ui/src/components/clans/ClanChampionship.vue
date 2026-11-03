@@ -11,9 +11,15 @@
 			{{ $t('clanChampionship.endDate', { date: formatDate(championship.endDate) }) }}
 		</p>
 
-		<RouterLink v-if="canViewBoard" :to="{ name: 'ClanChampionshipMatch' }">
+		<RouterLink v-if="canViewBoard && nextMatch?.status !== 'live'" :to="{ name: 'ClanChampionshipMatch' }">
 			<DZButton>{{ $t('clanChampionship.viewBoard') }}</DZButton>
 		</RouterLink>
+
+		<template v-if="nextMatchVisible">
+			<h3>{{ $t('clanChampionship.nextMatch') }}</h3>
+			<ChampionshipNextMatch v-if="nextMatch" :match="nextMatch" :clanId="viewedClanId" />
+			<p v-else>{{ $t('clanChampionship.noNextMatch') }}</p>
+		</template>
 
 		<div v-if="canRegister">
 			<DZButton v-if="championship.myClanRegistered" :off="loading" @click="unregister">{{
@@ -33,11 +39,16 @@
 			</li>
 		</ul>
 
+		<template v-if="championship.phase === 'running' || championship.phase === 'finished'">
+			<h3>{{ $t('clanChampionship.standings') }}</h3>
+			<ChampionshipStandings :standings="championship.standings" :highlightClanId="viewedClanId" />
+		</template>
+
 		<template v-if="rounds.length > 0">
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">
 				<tr>
-					<th class="dinoz-header" colspan="3">{{ $t('clanChampionship.round', { round: round.round + 1 }) }}</th>
+					<th class="dinoz-header" colspan="4">{{ $t('clanChampionship.round', { round: round.round + 1 }) }}</th>
 				</tr>
 				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
 					<td>
@@ -50,9 +61,14 @@
 							m.awayClan.name
 						}}</RouterLink>
 						<span v-else>{{ m.awayClan.name }}</span>
+						<div v-if="isMine(m) && m.placeId !== null" class="place">{{ placeName(m.placeId) }}</div>
 					</td>
 					<td>{{ formatDate(m.startsAt) }}</td>
 					<td>{{ formatDate(m.endsAt) }}</td>
+					<td>
+						<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
+						<span v-if="m.status !== 'scheduled'">{{ m.homeScore }} – {{ m.awayScore }}</span>
+					</td>
 				</tr>
 			</DZTable>
 		</template>
@@ -64,14 +80,17 @@ import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZTable from '../common/DZTable.vue';
+import ChampionshipNextMatch from './championship/ChampionshipNextMatch.vue';
+import ChampionshipStandings from './championship/ChampionshipStandings.vue';
 import { ClanChampionshipService } from '../../services';
 import { errorHandler } from '../../utils';
 import { playerStore } from '../../store';
 import { ClanChampionshipDTO, ClanChampionshipMatchDTO } from '@drpg/core/models/clan/clanChampionship';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'ClanChampionship',
-	components: { DZButton, DZDisclaimer, DZTable },
+	components: { ChampionshipNextMatch, ChampionshipStandings, DZButton, DZDisclaimer, DZTable },
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -102,6 +121,18 @@ export default defineComponent({
 				this.playerStore.clanId === this.viewedClanId
 			);
 		},
+		nextMatchVisible(): boolean {
+			return (
+				!!this.championship && this.championship.phase === 'running' && this.playerStore.clanId === this.viewedClanId
+			);
+		},
+		nextMatch(): ClanChampionshipMatchDTO | null {
+			return (
+				(this.championship?.matches ?? [])
+					.filter(m => this.isMine(m) && m.status !== 'finished')
+					.sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())[0] ?? null
+			);
+		},
 		rounds(): { round: number; matches: ClanChampionshipMatchDTO[] }[] {
 			const byRound = new Map<number, ClanChampionshipMatchDTO[]>();
 			for (const m of this.championship?.matches ?? []) {
@@ -113,6 +144,10 @@ export default defineComponent({
 	methods: {
 		formatDate(d: Date | string): string {
 			return new Date(d).toLocaleString(this.$i18n.locale, { dateStyle: 'short', timeStyle: 'short' });
+		},
+		placeName(placeId: number): string {
+			const place = Object.values(placeList).find(p => p.placeId === placeId);
+			return place ? this.$t(`place.name.${place.name}`) : '?';
 		},
 		isMine(m: ClanChampionshipMatchDTO): boolean {
 			return m.homeClan.id === this.viewedClanId || m.awayClan.id === this.viewedClanId;
@@ -168,6 +203,10 @@ h3 {
 	li.mine a {
 		font-weight: bold;
 	}
+}
+.place {
+	font-weight: normal;
+	font-size: 0.85em;
 }
 tr.mine td {
 	background-color: #f3ca92;
