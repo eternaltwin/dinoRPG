@@ -72,8 +72,8 @@ export function computeStandings(matches: StandingMatch[]): ClanChampionshipStan
 			b.points - a.points ||
 			b.scoreDiff - a.scoreDiff ||
 			b.scoreFor - a.scoreFor ||
-			a.clanName.localeCompare(b.clanName)
+			a.clanName.localeCompare(b.clanName, 'fr')
 	);
 	const tied = (a: Row, b: Row) => a.points === b.points && a.scoreDiff === b.scoreDiff && a.scoreFor === b.scoreFor;
-	return sorted.map((row, i) => ({ rank: sorted.findIndex(o => tied(o, row)) + 1 || i + 1, ...row }));
+	return sorted.map(row => ({ rank: sorted.findIndex(o => tied(o, row)) + 1, ...row }));
 }

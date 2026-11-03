@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { FightJournalEntryDTO, mergeFightJournal } from '@drpg/core/models/clan/clanChampionship';
+import {
+	FightJournalEntryDTO,
+	journalPagesDisconnected,
+	mergeFightJournal
+} from '@drpg/core/models/clan/clanChampionship';
 
 function range(from: number, to: number): FightJournalEntryDTO[] {
 	const out: FightJournalEntryDTO[] = [];
@@ -32,5 +36,23 @@ describe('mergeFightJournal', () => {
 
 	it('returns the older entries when the board has no fights', () => {
 		expect(ids(mergeFightJournal([], [...range(10, 6), ...range(8, 1)]))).toEqual(seq(10, 1));
+	});
+});
+
+describe('journalPagesDisconnected', () => {
+	it('is false when the refreshed page still overlaps the previous one', () => {
+		expect(journalPagesDisconnected(range(60, 11), range(75, 26))).toBe(false);
+	});
+
+	it('is true when a full refreshed page no longer reaches the previous one', () => {
+		expect(journalPagesDisconnected(range(60, 11), range(160, 111))).toBe(true);
+	});
+
+	it('is false for a short refreshed page', () => {
+		expect(journalPagesDisconnected(range(60, 11), range(70, 61))).toBe(false);
+	});
+
+	it('is false without a previous page', () => {
+		expect(journalPagesDisconnected([], range(160, 111))).toBe(false);
 	});
 });

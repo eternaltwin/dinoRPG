@@ -105,6 +105,7 @@ import { useToast } from 'vue-toast-notification';
 import {
 	BOARD_SIZE,
 	JOURNAL_PAGE_SIZE,
+	journalPagesDisconnected,
 	mergeFightJournal,
 	type FightJournalEntryDTO,
 	type MatchBoardDTO
@@ -137,6 +138,16 @@ watch(
 		older.value = [];
 		exhausted.value = false;
 		loadingMore.value = false;
+	}
+);
+
+watch(
+	() => props.board.fights,
+	(next, prev) => {
+		if (older.value.length && journalPagesDisconnected(prev, next)) {
+			older.value = [];
+			exhausted.value = false;
+		}
 	}
 );
 

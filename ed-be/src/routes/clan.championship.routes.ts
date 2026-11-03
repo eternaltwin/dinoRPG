@@ -81,7 +81,7 @@ routes.get(`${commonPath}/match`, async (req: Request, res: Response) => {
 routes.get(
 	`${commonPath}/match/:matchId/fights`,
 	param('matchId').isUUID(),
-	query('before').isInt({ min: 1 }).toInt(),
+	query('before').isInt({ min: 1, max: 2147483647 }).toInt(),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

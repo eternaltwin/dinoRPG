@@ -179,8 +179,8 @@ test('the championship page shows the standings and the next match', async ({ pa
 		await page.goto(`/clan/${clanA.id}/championship`);
 
 		const standings = page.getByTestId('standings');
-		await expect(standings.getByRole('row').filter({ hasText: clanA.name })).toContainText('3');
-		await expect(standings.getByRole('row').filter({ hasText: clanB.name })).toContainText('0');
+		await expect(standings.getByRole('row').filter({ hasText: clanA.name }).getByRole('cell').last()).toHaveText('3');
+		await expect(standings.getByRole('row').filter({ hasText: clanB.name }).getByRole('cell').last()).toHaveText('0');
 
 		const next = page.getByTestId('next-match');
 		await expect(next).toContainText(clanB.name);

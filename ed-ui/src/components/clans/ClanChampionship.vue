@@ -67,7 +67,7 @@
 					<td>{{ formatDate(m.endsAt) }}</td>
 					<td>
 						<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
-						<span v-if="m.status !== 'scheduled'">{{ m.homeScore }} – {{ m.awayScore }}</span>
+						<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
 					</td>
 				</tr>
 			</DZTable>
