@@ -5605,6 +5605,7 @@
 		"journalEntry": "{clan} greift an: {outcome}, {count} Teilnehmer, {dead} Tote",
 		"replay": "Ansehen",
 		"noFights": "Noch keine Kämpfe.",
+		"moreFights": "Mehr anzeigen",
 		"reason": {
 			"dead": "Tot",
 			"deadInMatch": "In diesem Spiel gestorben",

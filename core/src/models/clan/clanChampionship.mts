@@ -115,6 +115,25 @@ export interface MatchBoardDTO {
 	fights: FightJournalEntryDTO[];
 }
 
+/**
+ * Journal shown to the player: the latest page from the board, then the older pages already loaded.
+ * Merged by id (the cursor), so a board refresh neither duplicates nor skips entries.
+ */
+export function mergeFightJournal(
+	newest: FightJournalEntryDTO[],
+	older: FightJournalEntryDTO[]
+): FightJournalEntryDTO[] {
+	const ceiling = newest.length ? Math.min(...newest.map(f => f.id)) : Infinity;
+	const seen = new Set(newest.map(f => f.id));
+	const result = [...newest];
+	for (const f of [...older].sort((a, b) => b.id - a.id)) {
+		if (f.id >= ceiling || seen.has(f.id)) continue;
+		seen.add(f.id);
+		result.push(f);
+	}
+	return result;
+}
+
 export interface ChampionshipForm {
 	start: string; // YYYY-MM-DD
 	places: number[];

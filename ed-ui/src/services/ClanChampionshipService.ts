@@ -3,6 +3,7 @@ import {
 	BoardDirection,
 	BoardMoveResult,
 	ClanChampionshipDTO,
+	FightJournalEntryDTO,
 	MatchBoardDTO
 } from '@drpg/core/models/clan/clanChampionship';
 
@@ -19,6 +20,10 @@ export const ClanChampionshipService = {
 	},
 	async getMatch(): Promise<MatchBoardDTO | null> {
 		const res = await http().get(`/clan/championship/match`);
+		return res.data;
+	},
+	async getFights(matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
+		const res = await http().get(`/clan/championship/match/${matchId}/fights`, { params: { before } });
 		return res.data;
 	},
 	async enter(dinozId: number): Promise<void> {

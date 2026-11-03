@@ -71,8 +71,8 @@
 		</div>
 
 		<div v-else class="tab-body">
-			<ul v-if="board.fights.length" class="list">
-				<li v-for="(f, i) in board.fights" :key="i" class="fight">
+			<ul v-if="journal.length" class="list">
+				<li v-for="f in journal" :key="f.id" class="fight">
 					<span class="muted">{{ formatDate(f.createdAt) }}</span>
 					<span>{{
 						$t('clanChampionship.journalEntry', {
@@ -90,6 +90,9 @@
 				</li>
 			</ul>
 			<p v-else class="muted">{{ $t('clanChampionship.noFights') }}</p>
+			<DZButton v-if="canLoadMore" :off="loadingMore" data-testid="more-fights" @click="loadMore">{{
+				$t('clanChampionship.moreFights')
+			}}</DZButton>
 		</div>
 	</div>
 </template>
@@ -98,10 +101,19 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { BOARD_SIZE, type MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
+import { useToast } from 'vue-toast-notification';
+import {
+	BOARD_SIZE,
+	JOURNAL_PAGE_SIZE,
+	mergeFightJournal,
+	type FightJournalEntryDTO,
+	type MatchBoardDTO
+} from '@drpg/core/models/clan/clanChampionship';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import type { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { useDinozStore } from '../../../store';
+import { ClanChampionshipService } from '../../../services';
+import { errorHandler } from '../../../utils';
 import DZButton from '../../common/DZButton.vue';
 import DinozIcon from './DinozIcon.vue';
 
@@ -113,6 +125,42 @@ const tab = ref<(typeof tabs)[number]>('mine');
 const { locale, t } = useI18n();
 const route = useRoute();
 const dinozStore = useDinozStore();
+const $toast = useToast();
+
+const older = ref<FightJournalEntryDTO[]>([]);
+const exhausted = ref(false);
+const loadingMore = ref(false);
+
+watch(
+	() => props.board.matchId,
+	() => {
+		older.value = [];
+		exhausted.value = false;
+		loadingMore.value = false;
+	}
+);
+
+const journal = computed(() => mergeFightJournal(props.board.fights, older.value));
+const canLoadMore = computed(
+	() => journal.value.length > 0 && !exhausted.value && props.board.fights.length === JOURNAL_PAGE_SIZE
+);
+
+async function loadMore(): Promise<void> {
+	if (loadingMore.value) return;
+	const matchId = props.board.matchId;
+	loadingMore.value = true;
+	try {
+		const before = journal.value[journal.value.length - 1].id;
+		const page = await ClanChampionshipService.getFights(matchId, before);
+		if (matchId !== props.board.matchId) return;
+		older.value = [...older.value, ...page];
+		if (page.length < JOURNAL_PAGE_SIZE) exhausted.value = true;
+	} catch (e) {
+		errorHandler.handle(e, $toast);
+	} finally {
+		if (matchId === props.board.matchId) loadingMore.value = false;
+	}
+}
 
 const finished = computed(() => props.board.status === 'finished');
 const myPieces = computed(() => props.board.pieces.filter(p => p.mine));
