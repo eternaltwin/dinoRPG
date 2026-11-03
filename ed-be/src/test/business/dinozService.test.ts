@@ -10,6 +10,7 @@ vi.mock('../../dao/dinozDao.js', () =>
 		[
 			'checkFrozenDinoz',
 			'checkRestDinoz',
+			'consumeRemainingAction',
 			'createDinoz',
 			'getActiveDinoz',
 			'getAvailableDinozToFollow',
@@ -53,6 +54,7 @@ vi.mock('../../dao/playerGatherDao.js', () => ({
 }));
 vi.mock('../../dao/playerIngredientDao.js', () => ({ increaseIngredientQuantity: vi.fn(), setIngredient: vi.fn() }));
 vi.mock('../../dao/playerItemDao.js', () => ({
+	consumeItem: vi.fn(),
 	decreaseItemQuantity: vi.fn(),
 	increaseItemQuantity: vi.fn(),
 	insertItem: vi.fn()
@@ -114,6 +116,7 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 });
 
 import * as dinozDao from '../../dao/dinozDao.js';
+import * as playerItemDao from '../../dao/playerItemDao.js';
 import { setSkillStateRequest } from '../../dao/dinozSkillDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { getDinozShopDetailsRequest } from '../../dao/playerDinozShopDao.js';
@@ -696,8 +699,70 @@ describe('useIrma', () => {
 			followers: [],
 			player: { id: 'p1', items: [{ itemId: 1, quantity: 5 }] }
 		} as never);
+		vi.mocked(playerItemDao.consumeItem).mockResolvedValue(true as never);
 		const result = await useIrma(req({ id: '1' }));
 		expect(result.category).toBeDefined();
+		expect(result.value).toBe(1);
+		expect(playerItemDao.consumeItem).toHaveBeenCalledWith('p1', 1, 1);
+		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { fight: true, gather: true });
+	});
+	it('grants no action when the potion was consumed by a concurrent request', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 0,
+			followers: [],
+			player: { id: 'p1', items: [{ itemId: 1, quantity: 1 }] }
+		} as never);
+		vi.mocked(playerItemDao.consumeItem).mockResolvedValue(false as never);
+		await expect(useIrma(req({ id: '1' }))).rejects.toThrow('notEnoughIrma');
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
+	});
+	it('uses a free action without consuming any potion', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 1,
+			followers: [],
+			player: { id: 'p1', items: [] }
+		} as never);
+		vi.mocked(dinozDao.consumeRemainingAction).mockResolvedValue(true as never);
+		const result = await useIrma(req({ id: '1' }));
+		expect(result.value).toBe(0);
+		expect(playerItemDao.consumeItem).not.toHaveBeenCalled();
+	});
+	it('falls back on a potion when a concurrent request took the free action', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 1,
+			followers: [],
+			player: { id: 'p1', items: [{ itemId: 1, quantity: 1 }] }
+		} as never);
+		vi.mocked(dinozDao.consumeRemainingAction).mockResolvedValue(false as never);
+		vi.mocked(playerItemDao.consumeItem).mockResolvedValue(true as never);
+		const result = await useIrma(req({ id: '1' }));
+		expect(result.value).toBe(1);
+		expect(playerItemDao.consumeItem).toHaveBeenCalledWith('p1', 1, 1);
+	});
+	it('never treats a negative action counter as a free action', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: -1,
+			followers: [],
+			player: { id: 'p1', items: [] }
+		} as never);
+		await expect(useIrma(req({ id: '1' }))).rejects.toThrow('notEnoughIrma');
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
 	});
 	it('throws when not enough irma', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);

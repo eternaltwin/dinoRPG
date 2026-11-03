@@ -1171,6 +1171,22 @@ export async function getLeaderWithFollowers(dinozId: number) {
 	});
 }
 
+/**
+ * Spend one of the dinoz's free daily actions to refresh it. The check and the write are a single
+ * statement, so concurrent requests can't take the counter below zero.
+ * @returns `true` if a free action was spent, `false` if none is left
+ */
+export async function consumeRemainingAction(dinozId: number): Promise<boolean> {
+	return withSpan(consumeRemainingAction.name, async () => {
+		const updated = await prisma.dinoz.updateMany({
+			where: { id: dinozId, remaining: { gt: 0 } },
+			data: { fight: true, gather: true, remaining: { decrement: 1 } }
+		});
+
+		return updated.count > 0;
+	});
+}
+
 export async function getIrmaUsageInfo(dinozId: number) {
 	return withSpan(getIrmaUsageInfo.name, async () => {
 		return await prisma.dinoz.findUnique({
