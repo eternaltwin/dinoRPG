@@ -70,9 +70,7 @@ describe('computeStandings', () => {
 	});
 
 	it('keeps a deleted clan under its snapshot name', () => {
-		const rows = computeStandings([
-			{ ...match('Gone', 'B', 3, 1, 'finished'), homeClanId: null }
-		]);
+		const rows = computeStandings([{ ...match('Gone', 'B', 3, 1, 'finished'), homeClanId: null }]);
 		expect(rows[0]).toMatchObject({ clanId: null, clanName: 'Gone', points: 3 });
 	});
 });

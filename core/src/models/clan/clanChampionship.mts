@@ -134,6 +134,18 @@ export function mergeFightJournal(
 	return result;
 }
 
+/**
+ * True when a refreshed newest page (full) no longer reaches the previous newest page: fights happened in between,
+ * so the older pages already loaded would leave a hole and must be dropped.
+ */
+export function journalPagesDisconnected(
+	prevNewest: FightJournalEntryDTO[],
+	nextNewest: FightJournalEntryDTO[]
+): boolean {
+	if (!prevNewest.length || nextNewest.length < JOURNAL_PAGE_SIZE) return false;
+	return Math.min(...nextNewest.map(f => f.id)) > Math.max(...prevNewest.map(f => f.id));
+}
+
 export interface ChampionshipForm {
 	start: string; // YYYY-MM-DD
 	places: number[];
