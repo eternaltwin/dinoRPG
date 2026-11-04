@@ -70,3 +70,20 @@ export async function deleteDinozInShopRequest(playerId: string) {
 		});
 	});
 }
+
+/**
+ * Empty the player's dinoz shop if it still offers the given dinoz, which reserves that purchase. It is a single
+ * statement: a concurrent purchase waits on the row locks, then finds nothing left to delete and is refused.
+ * @returns `true` if the shop was claimed, `false` if the offer is gone
+ */
+export async function claimDinozShop(playerId: string, dinozId: number): Promise<boolean> {
+	return withSpan(claimDinozShop.name, async () => {
+		const deleted = await prisma.$executeRaw`
+			DELETE FROM player_dinoz_shop
+			WHERE "playerId" = ${playerId}::uuid
+				AND EXISTS (SELECT 1 FROM player_dinoz_shop WHERE id = ${dinozId} AND "playerId" = ${playerId}::uuid)
+		`;
+
+		return deleted > 0;
+	});
+}

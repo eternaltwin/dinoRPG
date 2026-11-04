@@ -83,9 +83,9 @@ import {
 	getPlayerCompletion,
 	ownsDinoz,
 	removeDailyGridRewards,
-	removeMoney
+	spendMoney
 } from '../dao/playerDao.js';
-import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
+import { claimDinozShop, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
 import { consumeItem, decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
@@ -573,11 +573,15 @@ export async function buyDinoz(req: Request) {
 
 	const newDinozProps = initializeDinoz(race, dinozShopData.player.id, dinozShopData.display);
 
-	// Set player money
-	await removeMoney(dinozShopData.player.id, race.price);
+	// Reserve the purchase by emptying the shop, so concurrent purchases are refused
+	if (!(await claimDinozShop(authed.id, dinozId))) {
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
 
-	// Delete all dinoz from dinoz shop
-	await deleteDinozInShopRequest(authed.id);
+	// Set player money
+	if (!(await spendMoney(dinozShopData.player.id, race.price))) {
+		throw new ExpectedError(translate('notEnoughMoney', authed));
+	}
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(newDinozProps);
