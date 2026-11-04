@@ -21,7 +21,10 @@ import {
 	createMultipleDemonDinoz,
 	deleteDinozInDemonShopRequest,
 	getDinozFromDemonShopRequest,
-	getSacrificedDinozRequest
+	getSacrificedDinozRequest,
+	claimDinozForSacrifice,
+	claimDinozForUnsacrifice,
+	releaseDinozFromUnsacrifice
 } from '../dao/demonShopDao.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -29,7 +32,7 @@ import translate from '../utils/server/translate.js';
 import { DinozSkill, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { createDinoz, getDinozFicheRequest, getDinozUnavailableReason, updateDinoz } from '../dao/dinozDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { consumeItem, decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { scheduleJob } from 'node-schedule';
@@ -469,10 +472,9 @@ export async function sacrificeDinoz(req: Request) {
 	// -- DB updates
 	// Update Dinoz unavailable reason and no remaining action
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
-	await updateDinoz(dinozId, {
-		unavailableReason: UnavailableReason.sacrificed,
-		remaining: 0
-	});
+	if (!(await claimDinozForSacrifice(dinozId, dinoz.player.id))) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
+	}
 	const promises = [];
 	// Ungroup if leading one or part of one
 	if (dinoz.leaderId) {
@@ -484,11 +486,7 @@ export async function sacrificeDinoz(req: Request) {
 		}
 	}
 	// Update demon tickets of player
-	if (dinoz.player.items.some(i => i.itemId === Item.DEMON_TICKET)) {
-		promises.push(increaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, demonTickets));
-	} else {
-		promises.push(insertItem(dinoz.player.id, { itemId: Item.DEMON_TICKET, quantity: demonTickets }));
-	}
+	promises.push(increaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, demonTickets));
 	// Update player U skills
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking
@@ -548,13 +546,15 @@ export async function unsacrificeDinoz(req: Request) {
 	// Do this immediately as it sets the unavailable reason that will block subsequent calls
 	const duration = GLOBAL.config.isProduction ? UNSACRIFICE_DURATION : UNSACRIFICE_DURATION_DEBUG;
 	const endDate = new Date(Date.now() + duration);
-	await updateDinoz(dinozId, {
-		unavailableReason: UnavailableReason.unsacrificing,
-		unavailableUntil: endDate
-	});
-	const promises = [];
+	if (!(await claimDinozForUnsacrifice(dinozId, dinoz.player.id, endDate))) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
+	}
 	// Update demon tickets stockpile
-	promises.push(decreaseItemQuantity(dinoz.player.id, Item.DEMON_TICKET, cost));
+	if (!(await consumeItem(dinoz.player.id, Item.DEMON_TICKET, cost))) {
+		await releaseDinozFromUnsacrifice(dinozId);
+		throw new ExpectedError(translate('error.notEnoughTickets', authed));
+	}
+	const promises = [];
 	// Update player U skills
 	promises.push(computeUSkillsForPlayer(dinoz.player.id));
 	// Update player ranking

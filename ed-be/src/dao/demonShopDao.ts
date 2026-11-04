@@ -227,3 +227,45 @@ export async function deleteDinozInDemonShopRequest(playerId: string) {
 		});
 	});
 }
+
+/**
+ * Mark a dinoz as sacrificed if it is still available. The check and the write are a single statement, so concurrent
+ * requests can't sacrifice the same dinoz twice.
+ * @returns `true` if the dinoz was claimed, `false` if it is no longer available
+ */
+export async function claimDinozForSacrifice(dinozId: number, playerId: string): Promise<boolean> {
+	return withSpan(claimDinozForSacrifice.name, async () => {
+		const updated = await prisma.dinoz.updateMany({
+			where: { id: dinozId, playerId, unavailableReason: null },
+			data: { unavailableReason: UnavailableReason.sacrificed, remaining: 0 }
+		});
+
+		return updated.count > 0;
+	});
+}
+
+/**
+ * Start the resurrection of a dinoz if it is still sacrificed. The check and the write are a single statement, so
+ * concurrent requests can't resurrect the same dinoz twice.
+ * @returns `true` if the dinoz was claimed, `false` if it is no longer sacrificed
+ */
+export async function claimDinozForUnsacrifice(dinozId: number, playerId: string, until: Date): Promise<boolean> {
+	return withSpan(claimDinozForUnsacrifice.name, async () => {
+		const updated = await prisma.dinoz.updateMany({
+			where: { id: dinozId, playerId, unavailableReason: UnavailableReason.sacrificed },
+			data: { unavailableReason: UnavailableReason.unsacrificing, unavailableUntil: until }
+		});
+
+		return updated.count > 0;
+	});
+}
+
+/** Put back a dinoz claimed by `claimDinozForUnsacrifice` whose tickets could not be paid. */
+export async function releaseDinozFromUnsacrifice(dinozId: number) {
+	return withSpan(releaseDinozFromUnsacrifice.name, async () => {
+		await prisma.dinoz.updateMany({
+			where: { id: dinozId, unavailableReason: UnavailableReason.unsacrificing },
+			data: { unavailableReason: UnavailableReason.sacrificed, unavailableUntil: null }
+		});
+	});
+}
