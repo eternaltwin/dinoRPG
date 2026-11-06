@@ -6,6 +6,7 @@ export interface ServerEventTicket {
 	userAgent: string;
 	ipAddress: string;
 	playerId: string;
+	connexionToken: string;
 	timestamp: number;
 	type: ServerEventType;
 }

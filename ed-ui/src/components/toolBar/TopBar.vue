@@ -54,6 +54,7 @@ import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 import { ServerEventsService } from '../../services/ServerEventsService';
+import { clanSocket } from '../../services/clanSocket';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 import { errorHandler } from '../../utils';
@@ -82,6 +83,9 @@ export default defineComponent({
 		ssePlayerId(): string | null {
 			const playerId = this.playerStore.getPlayerId;
 			return this.playerStore.getTosAccepted && typeof playerId === 'string' ? playerId : null;
+		},
+		socketClanId(): number | null {
+			return this.ssePlayerId !== null ? (this.playerStore.getClanId ?? null) : null;
 		}
 	},
 	methods: {
@@ -173,6 +177,12 @@ export default defineComponent({
 		},
 		ssePlayerId() {
 			this.startSseForNotification();
+		},
+		socketClanId: {
+			immediate: true,
+			handler(clanId: number | null) {
+				clanSocket.follow(clanId);
+			}
 		}
 	},
 	mounted() {
@@ -184,6 +194,7 @@ export default defineComponent({
 	unmounted() {
 		if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
 		this.eventSource?.close();
+		clanSocket.follow(null);
 	}
 });
 </script>

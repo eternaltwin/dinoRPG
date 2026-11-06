@@ -10,6 +10,7 @@ vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/serverEventService.js', () => ({
 	publishToWsChannel: vi.fn(),
+	publishToWsChannelFamily: vi.fn(),
 	kickPlayerFromWsChannels: vi.fn()
 }));
 vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers: vi.fn() }));
@@ -44,9 +45,9 @@ import { LOGGER } from '../../context.js';
 import { publishToWsChannel } from '../../business/serverEventService.js';
 import { prisma } from '../../prisma.js';
 import {
-	enterBoard,
-	leaveBoard,
-	moveOnBoard,
+	enterBoard as enterBoardAs,
+	leaveBoard as leaveBoardAs,
+	moveOnBoard as moveOnBoardAs,
 	removePlayerFromBoards,
 	sideOf
 } from '../../business/clanChampionshipMatchService.js';
@@ -109,7 +110,11 @@ const pc = (o: Record<string, unknown> = {}) => ({
 	...o
 });
 
-const body = (b: Record<string, unknown>) => makeRequest({ body: b } as never);
+const body = (b: Record<string, unknown>) => b as { dinozId: number; direction: BoardDirection };
+const enterBoard = async (b: { dinozId: number }) => enterBoardAs(await auth(makeRequest()), b.dinozId);
+const leaveBoard = async (b: { dinozId: number }) => leaveBoardAs(await auth(makeRequest()), b.dinozId);
+const moveOnBoard = async (b: { dinozId: number; direction: BoardDirection }) =>
+	moveOnBoardAs(await auth(makeRequest()), b.dinozId, b.direction);
 
 function setup(m: ReturnType<typeof liveMatch> | null = liveMatch()) {
 	vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: HOME } as never);
@@ -429,7 +434,6 @@ describe('removePlayerFromBoards', () => {
 
 describe('board version and realtime publication', () => {
 	const matchId = liveMatch().id;
-	const channel = `WsClanChampionship.${matchId}`;
 	const bumpCall = {
 		where: { id: matchId },
 		data: { version: { increment: 1 } },
@@ -451,8 +455,10 @@ describe('board version and realtime publication', () => {
 	const expectPublishedOnce = () => {
 		expect(p.clanChampionshipMatch.update).toHaveBeenCalledTimes(1);
 		expect(p.clanChampionshipMatch.update).toHaveBeenCalledWith(bumpCall);
-		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
-		expect(publishToWsChannel).toHaveBeenCalledWith(channel, { type: 'boardChanged', matchId, version: 7 });
+		const message = { type: 'boardChanged', matchId, version: 7 };
+		expect(publishToWsChannel).toHaveBeenCalledTimes(2);
+		expect(publishToWsChannel).toHaveBeenCalledWith(`WsClanForum.${HOME}`, message);
+		expect(publishToWsChannel).toHaveBeenCalledWith(`WsClanForum.${AWAY}`, message);
 		expect(vi.mocked(publishToWsChannel).mock.invocationCallOrder[0]).toBeGreaterThan(
 			p.clanChampionshipMatch.update.mock.invocationCallOrder[0]
 		);
@@ -489,7 +495,7 @@ describe('board version and realtime publication', () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
 		await leaveBoard(body({ dinozId: 5 }));
 		expect(committed).toBe(true);
-		expect(publishToWsChannel).toHaveBeenCalledTimes(1);
+		expect(publishToWsChannel).toHaveBeenCalledTimes(2);
 	});
 	it('a rejected action publishes nothing', async () => {
 		await expect(leaveBoard(body({ dinozId: 5 }))).rejects.toThrow('clanChampionship.notOnBoard');

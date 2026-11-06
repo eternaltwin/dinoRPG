@@ -6,19 +6,24 @@ vi.mock('../../context.js', () => ({
 	GLOBAL: { liveStats: { addConnectedPlayers: vi.fn(), removeConnectedPlayers: vi.fn() } },
 	LOGGER: { warn: vi.fn(), log: vi.fn(), error: vi.fn(), info: vi.fn() }
 }));
-vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn(), getClanIdAndNameFromPlayerId: vi.fn() }));
+vi.mock('../../dao/playerDao.js', () => ({
+	auth: vi.fn(),
+	authPlayer: vi.fn(),
+	getClanIdAndNameFromPlayerId: vi.fn()
+}));
 vi.mock('../../dao/clansDao.js', () => ({ createClanMessageRequest: vi.fn(), deleteClanMessageRequest: vi.fn() }));
 vi.mock('../../business/clanService.js', () => ({ checkMessageCanBeDeleted: vi.fn() }));
-vi.mock('../../business/clanChampionshipMatchService.js', () => ({ findReadableMatchOfClan: vi.fn() }));
+vi.mock('../../business/clanSocketRequestService.js', () => ({ answerClanSocketRequest: vi.fn() }));
 vi.mock('../../utils/helpers/ValidatorHelper.js', () => ({ isJson: vi.fn().mockReturnValue(true) }));
 
 import { WebSocket } from 'ws';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
-import { auth, getClanIdAndNameFromPlayerId } from '../../dao/playerDao.js';
+import { auth, authPlayer, getClanIdAndNameFromPlayerId } from '../../dao/playerDao.js';
 import { createClanMessageRequest } from '../../dao/clansDao.js';
 import { checkMessageCanBeDeleted } from '../../business/clanService.js';
-import { findReadableMatchOfClan } from '../../business/clanChampionshipMatchService.js';
+import { answerClanSocketRequest } from '../../business/clanSocketRequestService.js';
 import {
 	authenticate,
 	connectUserToWsChannel,
@@ -31,6 +36,8 @@ import {
 	sendSseMessageToUserInChannel,
 	setWebSocketServer,
 	publishToWsChannel,
+	publishToWsChannelFamily,
+	sendWsReady,
 	kickPlayerFromWsChannels
 } from '../../business/serverEventService.js';
 
@@ -162,21 +169,20 @@ describe('SSE helpers', () => {
 	});
 });
 
-describe('championship channel', () => {
-	const MATCH = 'a0000000-0000-4000-8000-000000000001';
+describe('clan socket', () => {
 	const ua = 'jest';
 
-	async function ticketFor(playerId: string, ip: string, channel: string = WsChannel.CLAN_CHAMPIONSHIP) {
-		vi.mocked(auth).mockResolvedValue({ id: playerId } as never);
-		const dto = await authenticate(
-			{ body: { channel }, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+	async function connect(playerId: string, ip: string, clanId = 1) {
+		vi.mocked(auth).mockResolvedValue({ id: playerId, connexionToken: `token-${playerId}` } as never);
+		vi.mocked(getClanIdAndNameFromPlayerId).mockResolvedValue({ ClanMember: { clan: { id: clanId } } } as never);
+		const { ticket } = await authenticate(
+			{
+				body: { channel: WsChannel.CLAN_FORUM },
+				socket: { remoteAddress: ip },
+				headers: { 'user-agent': ua }
+			} as never,
 			ServerEventType.WEBSOCKET
 		);
-		return dto.ticket;
-	}
-
-	async function connect(playerId: string, ip: string, channel?: string) {
-		const ticket = await ticketFor(playerId, ip, channel);
 		const ws = { id: '', isAlive: false } as any;
 		await connectUserToWsChannel(ws, {
 			url: `/ws?ticket=${ticket}`,
@@ -186,99 +192,121 @@ describe('championship channel', () => {
 		const client = { id: ws.id, readyState: WebSocket.OPEN, send: vi.fn(), close: vi.fn() };
 		return { ws, client };
 	}
+	const sent = (c: { send: ReturnType<typeof vi.fn> }) => c.send.mock.calls.map(([buf]) => JSON.parse(buf.toString()));
 
-	beforeEach(() => {
-		vi.mocked(getClanIdAndNameFromPlayerId).mockResolvedValue({ ClanMember: { clan: { id: 1 } } } as never);
-		vi.mocked(findReadableMatchOfClan).mockResolvedValue({ id: MATCH } as never);
-	});
-
-	it('refuses the ticket to a player without a clan', async () => {
+	it('refuses the ticket to a player without a clan, as an expected refusal', async () => {
+		vi.mocked(auth).mockResolvedValue({ id: 'p-noclan' } as never);
 		vi.mocked(getClanIdAndNameFromPlayerId).mockResolvedValue({ ClanMember: null } as never);
-		await expect(ticketFor('p-noclan', '2.0.0.1')).rejects.toThrow('not in a clan');
+		const error = await authenticate(
+			{
+				body: { channel: WsChannel.CLAN_FORUM },
+				socket: { remoteAddress: '2.0.0.1' },
+				headers: { 'user-agent': ua }
+			} as never,
+			ServerEventType.WEBSOCKET
+		).catch(err => err);
+		expect(error).toBeInstanceOf(ExpectedError);
 	});
 
-	it('refuses the ticket to a player whose clan has no live or finished match', async () => {
-		vi.mocked(findReadableMatchOfClan).mockResolvedValue(null);
-		await expect(ticketFor('p-nomatch', '2.0.0.2')).rejects.toThrow();
-		expect(findReadableMatchOfClan).toHaveBeenCalledWith(1);
+	it('says ready only to an open connection', () => {
+		const open = { readyState: WebSocket.OPEN, send: vi.fn() };
+		const closing = { readyState: WebSocket.CLOSING, send: vi.fn() };
+		sendWsReady(open as never);
+		sendWsReady(closing as never);
+		expect(open.send).toHaveBeenCalledWith(JSON.stringify({ type: 'ready' }));
+		expect(closing.send).not.toHaveBeenCalled();
 	});
 
-	it('names the channel after the match id and delivers only to its open connections', async () => {
+	it('names the channel after the clan and delivers only to its open connections', async () => {
 		const a = await connect('p-a', '2.0.1.1');
 		const b = await connect('p-b', '2.0.1.2');
-		vi.mocked(findReadableMatchOfClan).mockResolvedValue({ id: 'other-match' } as never);
-		const other = await connect('p-c', '2.0.1.3');
+		const other = await connect('p-c', '2.0.1.3', 2);
 		const closed = await connect('p-d', '2.0.1.4');
 		closed.client.readyState = WebSocket.CLOSED;
 		setWebSocketServer({ clients: new Set([a.client, b.client, other.client, closed.client]) } as never);
 
-		publishToWsChannel(`${WsChannel.CLAN_CHAMPIONSHIP}.${MATCH}`, { type: 'boardChanged', matchId: MATCH, version: 3 });
+		publishToWsChannel(`${WsChannel.CLAN_FORUM}.1`, { type: 'boardChanged', version: 3 });
 
-		const sent = (c: { send: ReturnType<typeof vi.fn> }) => c.send.mock.calls.map(([buf]) => buf.toString());
-		const expected = JSON.stringify({ type: 'boardChanged', matchId: MATCH, version: 3 });
-		expect(sent(a.client)).toEqual([expected]);
-		expect(sent(b.client)).toEqual([expected]);
+		expect(sent(a.client)).toEqual([{ type: 'boardChanged', version: 3 }]);
+		expect(sent(b.client)).toEqual([{ type: 'boardChanged', version: 3 }]);
 		expect(other.client.send).not.toHaveBeenCalled();
 		expect(closed.client.send).not.toHaveBeenCalled();
 		for (const c of [a, b, other, closed]) disconnectWsUser(c.ws);
 	});
 
-	it('sends the current board version to a socket that just joined the match channel', async () => {
-		vi.mocked(findReadableMatchOfClan).mockResolvedValue({ id: MATCH, version: 9 } as never);
-		const { ticket } = await authenticate(reqFor(WsChannel.CLAN_CHAMPIONSHIP), ServerEventType.WEBSOCKET);
-		const ws = { id: '', isAlive: false, readyState: WebSocket.OPEN, send: vi.fn() } as any;
-		await connectUserToWsChannel(ws, {
-			url: `/ws?ticket=${ticket}`,
-			socket: { remoteAddress: '1.2.3.4' },
-			headers: { 'user-agent': 'jest' }
-		} as never);
-		expect(ws.send).toHaveBeenCalledTimes(1);
-		expect(JSON.parse(ws.send.mock.calls[0][0])).toEqual({ type: 'boardChanged', matchId: MATCH, version: 9 });
-		disconnectWsUser(ws);
+	it('publishes to every clan channel of a family, and only those', async () => {
+		const a = await connect('p-f1', '2.0.1.5', 3);
+		const b = await connect('p-f2', '2.0.1.6', 4);
+		const stranger = { id: 'not-in-a-channel', readyState: WebSocket.OPEN, send: vi.fn() };
+		setWebSocketServer({ clients: new Set([a.client, b.client, stranger]) } as never);
+
+		publishToWsChannelFamily(`${WsChannel.CLAN_FORUM}.`, { type: 'championshipChanged' });
+
+		expect(sent(a.client)).toEqual([{ type: 'championshipChanged' }]);
+		expect(sent(b.client)).toEqual([{ type: 'championshipChanged' }]);
+		expect(stranger.send).not.toHaveBeenCalled();
+		for (const c of [a, b]) disconnectWsUser(c.ws);
 	});
 
 	it('publishToWsChannel is a no-op for an unknown channel', () => {
 		const client = { id: 'x', readyState: WebSocket.OPEN, send: vi.fn() };
 		setWebSocketServer({ clients: new Set([client]) } as never);
-		expect(() => publishToWsChannel('WsClanChampionship.nope', { a: 1 })).not.toThrow();
+		expect(() => publishToWsChannel('WsClanForum.nope', { a: 1 })).not.toThrow();
 		expect(client.send).not.toHaveBeenCalled();
 	});
 
-	it('ignores incoming messages on a championship channel', async () => {
-		const a = await connect('p-e', '2.0.2.1');
-		const wss = { clients: new Set([a.client]) } as never;
-		await processWsIncomingMessage(
-			wss,
-			a.ws.id,
-			Buffer.from(JSON.stringify({ action: WsMessageAction.CREATE, message: 'hello' }))
-		);
+	it('answers a request to the connection that sent it only, with its own credentials', async () => {
+		const a = await connect('p-r1', '2.0.2.1');
+		const b = await connect('p-r2', '2.0.2.2');
+		const wss = { clients: new Set([a.client, b.client]) } as never;
+		const response = { type: 'response', requestId: 'r1', ok: true, data: null };
+		vi.mocked(answerClanSocketRequest).mockResolvedValue(response as never);
+		const request = { requestId: 'r1', action: 'championship.register' };
+
+		await processWsIncomingMessage(wss, a.ws.id, Buffer.from(JSON.stringify(request)));
+
+		expect(answerClanSocketRequest).toHaveBeenCalledWith('p-r1', 'token-p-r1', request);
+		expect(sent(a.client)).toEqual([response]);
+		expect(b.client.send).not.toHaveBeenCalled();
 		expect(createClanMessageRequest).not.toHaveBeenCalled();
-		expect(a.client.send).not.toHaveBeenCalled();
+		for (const c of [a, b]) disconnectWsUser(c.ws);
+	});
+
+	it('checks the player again before a forum message: a ban lands on an already open socket', async () => {
+		const a = await connect('p-banned', '2.0.2.3');
+		const wss = { clients: new Set([a.client]) } as never;
+		vi.mocked(createClanMessageRequest).mockClear();
+		vi.mocked(authPlayer).mockRejectedValueOnce(new ExpectedError('Action forbidden: you have been banned'));
+
+		await expect(
+			processWsIncomingMessage(
+				wss,
+				a.ws.id,
+				Buffer.from(JSON.stringify({ action: WsMessageAction.CREATE, message: 'hello' }))
+			)
+		).rejects.toThrow('banned');
+
+		expect(authPlayer).toHaveBeenCalledWith('p-banned', 'token-p-banned');
+		expect(createClanMessageRequest).not.toHaveBeenCalled();
 		disconnectWsUser(a.ws);
 	});
 
 	it('kickPlayerFromWsChannels closes only that player matching connections', async () => {
 		const kicked = await connect('p-kick', '2.0.3.1');
 		const mate = await connect('p-mate', '2.0.3.2');
-		const forum = await connect('p-kick', '2.0.3.3', WsChannel.CLAN_FORUM);
-		const otherForum = await connect('p-kick', '2.0.3.4', WsChannel.CLAN_FORUM);
-		void otherForum;
-		setWebSocketServer({ clients: new Set([kicked.client, mate.client, forum.client]) } as never);
+		const otherClan = await connect('p-kick', '2.0.3.3', 10);
+		setWebSocketServer({ clients: new Set([kicked.client, mate.client, otherClan.client]) } as never);
 
-		kickPlayerFromWsChannels('p-kick', [`${WsChannel.CLAN_CHAMPIONSHIP}.`]);
+		kickPlayerFromWsChannels('p-kick', [`${WsChannel.CLAN_FORUM}.1`]);
 
 		expect(kicked.client.close).toHaveBeenCalled();
 		expect(mate.client.close).not.toHaveBeenCalled();
-		expect(forum.client.close).not.toHaveBeenCalled();
+		expect(otherClan.client.close).not.toHaveBeenCalled();
 
 		// Removed from the map: nothing is delivered to it any more.
-		publishToWsChannel(`${WsChannel.CLAN_CHAMPIONSHIP}.${MATCH}`, { a: 1 });
+		publishToWsChannel(`${WsChannel.CLAN_FORUM}.1`, { a: 1 });
 		expect(kicked.client.send).not.toHaveBeenCalled();
 		expect(mate.client.send).toHaveBeenCalledTimes(1);
-
-		// The forum prefix of this clan kicks the forum connections.
-		kickPlayerFromWsChannels('p-kick', [`${WsChannel.CLAN_FORUM}.1`]);
-		expect(forum.client.close).toHaveBeenCalled();
-		disconnectWsUser(mate.ws);
+		for (const c of [mate, otherClan]) disconnectWsUser(c.ws);
 	});
 });

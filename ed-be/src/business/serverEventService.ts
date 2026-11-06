@@ -10,16 +10,17 @@ import { WsChannelData } from '@drpg/core/models/serverEvents/WsChannelData';
 import { ChannelInfos } from '@drpg/core/models/serverEvents/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
-import { Auth, auth, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
+import { Auth, auth, authPlayer, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsMsgRequest } from '@drpg/core/models/serverEvents/WsMsgRequest';
+import { WsClanReadyMessage, WsClanRequest } from '@drpg/core/models/serverEvents/WsClanSocket';
 import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
 import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
 import { WsMsgResponseDeletion } from '@drpg/core/models/serverEvents/WsMsgResponseDeletion';
 import { WsMsgResponseCreation } from '@drpg/core/models/serverEvents/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
-import { findReadableMatchOfClan } from './clanChampionshipMatchService.js';
+import { answerClanSocketRequest } from './clanSocketRequestService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
 import { renderPlayerMessage } from '../utils/marktwin.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -89,6 +90,7 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		userAgent,
 		ipAddress: ip,
 		playerId: authed.id,
+		connexionToken: authed.connexionToken,
 		timestamp: Date.now(),
 		type: serverEventType
 	});
@@ -148,22 +150,7 @@ async function doSpecificVerifications(req: Request, authed: Auth, serverEventTy
 async function doSpecificVerificationsForWs(req: Request, authed: Auth): Promise<void> {
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
 		await checkPlayerIsInClan(authed);
-	} else if (req.body.channel === WsChannel.CLAN_CHAMPIONSHIP) {
-		await findChampionshipMatchOfPlayer(authed.id);
 	}
-}
-
-/** The match a player may follow: the one of their clan (live, else the latest finished). Refuses otherwise. */
-async function findChampionshipMatchOfPlayer(playerId: string) {
-	const clanForPlayer = await getClanIdAndNameFromPlayerId(playerId);
-	if (clanForPlayer.ClanMember === null) {
-		throw new Error(`The player is not in a clan.`);
-	}
-	const match = await findReadableMatchOfClan(clanForPlayer.ClanMember.clan.id);
-	if (!match) {
-		throw new ExpectedError(`The clan has no championship match to follow.`);
-	}
-	return match;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -174,8 +161,9 @@ async function doSpecificVerificationsForSse(_req: Request, _authed: Auth): Prom
 
 async function checkPlayerIsInClan(authed: Auth): Promise<void> {
 	const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
+	// Expected: a tab that missed the clan exit keeps asking for a ticket until it learns about it.
 	if (clanForPlayer.ClanMember === null) {
-		throw new Error(`The player is not in a clan.`);
+		throw new ExpectedError(`The player is not in a clan.`);
 	}
 }
 
@@ -196,12 +184,19 @@ export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingM
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
 
-	const { championship } = await putUserInWsChannel(ticket, ws.id);
+	await putUserInWsChannel(ticket, ws.id);
+}
 
-	// A push sent before the socket registered is lost: tell the new socket where the board stands now.
-	if (championship && ws.readyState === WebSocket.OPEN) {
-		ws.send(JSON.stringify({ type: 'boardChanged', matchId: championship.matchId, version: championship.version }));
-	}
+/**
+ * Tells a client that the server now listens to its connection. Whatever a client sends before this is lost,
+ * and any push it missed while connecting is covered by the read it does on `ready`.
+ *
+ * @param ws -> The WebSocket connection
+ */
+export function sendWsReady(ws: WebSocketCustom): void {
+	if (ws.readyState !== WebSocket.OPEN) return;
+	const message: WsClanReadyMessage = { type: 'ready' };
+	ws.send(JSON.stringify(message));
 }
 
 /**
@@ -248,18 +243,21 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<ChannelTarget> {
-	const target = await getChannelTarget(ticket);
-	const channelName = target.channelName;
+async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
+	const { channelName } = await getChannelTarget(ticket);
 
 	const channel: WsChannelData[] | undefined = wsChannels.get(channelName);
+	const member: WsChannelData = {
+		connectionId: wsId,
+		playerId: ticket.playerId,
+		connexionToken: ticket.connexionToken
+	};
 
 	if (channel !== undefined) {
-		channel.push({ connectionId: wsId, playerId: ticket.playerId });
+		channel.push(member);
 	} else {
-		wsChannels.set(channelName, [{ connectionId: wsId, playerId: ticket.playerId }]);
+		wsChannels.set(channelName, [member]);
 	}
-	return target;
 }
 
 /**
@@ -280,7 +278,7 @@ async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string
 	sseChannels.set(channelName, channel);
 }
 
-type ChannelTarget = { channelName: string; championship?: { matchId: string; version: number } };
+type ChannelTarget = { channelName: string };
 
 async function getChannelTarget(ticket: ServerEventTicket): Promise<ChannelTarget> {
 	if (ticket.channel === WsChannel.CLAN_FORUM) {
@@ -288,12 +286,6 @@ async function getChannelTarget(ticket: ServerEventTicket): Promise<ChannelTarge
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
 		return { channelName: `${ticket.channel}.${playerData.ClanMember.clan.id}` };
-	} else if (ticket.channel === WsChannel.CLAN_CHAMPIONSHIP) {
-		const match = await findChampionshipMatchOfPlayer(ticket.playerId);
-		return {
-			channelName: `${ticket.channel}.${match.id}`,
-			championship: { matchId: match.id, version: match.version }
-		};
 	} else if (ticket.channel === SseChannel.NOTIFICATION) {
 		return { channelName: ticket.channel };
 	}
@@ -315,10 +307,17 @@ export async function processWsIncomingMessage(
 ): Promise<void> {
 	const channel: ChannelInfos = getWsChannelDetailsFromConnectionId(wsId);
 
-	// The championship channels only push server messages: nothing a client sends is a clan forum message.
-	if (channel.channelName.startsWith(`${WsChannel.CLAN_CHAMPIONSHIP}.`)) return;
+	const message = getMessageFromString(bufferedMessage);
+	const member = getPlayerWsDataFromChannelData(channel, wsId);
 
-	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
+	if (isClanRequest(message)) {
+		const response = await answerClanSocketRequest(member.playerId, member.connexionToken, message);
+		sendMessageToWsConnection(wss, wsId, response);
+		return;
+	}
+
+	// The ticket was checked at connection time, and this connection may have been open for hours.
+	await authPlayer(member.playerId, member.connexionToken);
 
 	if (message.action === WsMessageAction.CREATE) {
 		const dataSaved = await saveWsMessageInDatabase(channel, wsId, message.message);
@@ -361,10 +360,14 @@ function getWsChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
  * @param message -> The message we want to get
  * @returns -> The message converted to string
  */
-function getMessageFromString(message: RawData): WsMsgRequest {
+function getMessageFromString(message: RawData): WsMsgRequest | WsClanRequest {
 	if (!isJson(message.toString())) throw new Error('The data sent is not a valid JSON object.');
 
 	return JSON.parse(message.toString());
+}
+
+function isClanRequest(message: WsMsgRequest | WsClanRequest): message is WsClanRequest {
+	return typeof (message as WsClanRequest).requestId === 'string';
 }
 
 async function saveWsMessageInDatabase(
@@ -427,10 +430,19 @@ function sendMessageToPeopleInWsChannel(
 	});
 }
 
+/** Send a message to one connection only. Does nothing if it is gone. */
+function sendMessageToWsConnection(wss: WebSocketServerCustom, wsId: string, message: object): void {
+	for (const client of wss.clients) {
+		if (client.id !== wsId) continue;
+		if (client.readyState === WebSocket.OPEN) client.send(Buffer.from(JSON.stringify(message)), { binary: false });
+		return;
+	}
+}
+
 /**
  * Send a message to every open connection of a channel. Does nothing for an unknown channel.
  *
- * @param channelName -> The channel, e.g. `WsClanChampionship.<matchId>`
+ * @param channelName -> The channel, e.g. `WsClanForum.<clanId>`
  * @param message -> The message to send, serialised as JSON
  */
 export function publishToWsChannel(channelName: string, message: object): void {
@@ -444,11 +456,30 @@ export function publishToWsChannel(channelName: string, message: object): void {
 }
 
 /**
+ * Send a message to every open connection of every channel whose name starts with the prefix.
+ *
+ * @param prefix -> e.g. `WsClanForum.` for all the clans
+ * @param message -> The message to send, serialised as JSON
+ */
+export function publishToWsChannelFamily(prefix: string, message: object): void {
+	if (!webSocketServer) return;
+	const connectionIds = new Set<string>();
+	for (const [channelName, members] of wsChannels.entries()) {
+		if (channelName.startsWith(prefix)) members.forEach(member => connectionIds.add(member.connectionId));
+	}
+	if (connectionIds.size === 0) return;
+	const payload = Buffer.from(JSON.stringify(message));
+	webSocketServer.clients.forEach(client => {
+		if (client.readyState === WebSocket.OPEN && connectionIds.has(client.id)) client.send(payload, { binary: false });
+	});
+}
+
+/**
  * Closes the connections of a player on the channels whose name starts with one of the prefixes,
  * and forgets them. Used when a player loses the right to follow a channel (clan exit).
  *
  * @param playerId -> The player to disconnect
- * @param channelPrefixes -> e.g. `WsClanForum.<clanId>` and `WsClanChampionship.`
+ * @param channelPrefixes -> e.g. `WsClanForum.<clanId>`
  */
 export function kickPlayerFromWsChannels(playerId: string, channelPrefixes: string[]): void {
 	for (const [channelName, members] of [...wsChannels.entries()]) {

@@ -83,6 +83,7 @@ import DZTable from '../common/DZTable.vue';
 import ChampionshipNextMatch from './championship/ChampionshipNextMatch.vue';
 import ChampionshipStandings from './championship/ChampionshipStandings.vue';
 import { ClanChampionshipService } from '../../services';
+import { clanSocket } from '../../services/clanSocket';
 import { errorHandler } from '../../utils';
 import { playerStore } from '../../store';
 import { ClanChampionshipDTO, ClanChampionshipMatchDTO } from '@drpg/core/models/clan/clanChampionship';
@@ -95,7 +96,9 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			championship: null as ClanChampionshipDTO | null,
-			loading: false as boolean
+			loading: false as boolean,
+			stopListening: undefined as (() => void) | undefined,
+			stopWaitingForReady: undefined as (() => void) | undefined
 		};
 	},
 	computed: {
@@ -178,7 +181,16 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
+		this.stopListening = clanSocket.onMessage(message => {
+			if (message.type === 'championshipChanged') void this.load();
+		});
+		// Pushes may have been missed while the connection was down
+		this.stopWaitingForReady = clanSocket.onReady(() => void this.load());
 		await this.load();
+	},
+	beforeUnmount() {
+		this.stopListening?.();
+		this.stopWaitingForReady?.();
 	}
 });
 </script>

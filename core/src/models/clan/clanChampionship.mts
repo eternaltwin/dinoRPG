@@ -151,8 +151,11 @@ export interface ChampionshipForm {
 	places: number[];
 }
 
-/** The only message pushed over the match channel: the client refetches the board when its version is older. */
+/** Pushed to both clans of a match: the client asks for the board again when its version is older. */
 export type BoardChangedMessage = { type: 'boardChanged'; matchId: string; version: number };
+
+/** Pushed to every clan: registrations, phase or calendar changed, the championship page is out of date. */
+export type ChampionshipChangedMessage = { type: 'championshipChanged' };
 
 /** Result of a board move: the fight it triggered, if any. */
 export type BoardMoveResult = {

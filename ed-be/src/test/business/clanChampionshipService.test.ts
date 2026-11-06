@@ -150,7 +150,7 @@ describe('registerClan', () => {
 		p.clan.findUniqueOrThrow.mockResolvedValue({ name: 'Seven' });
 	});
 
-	const register = () => registerClan(makeRequest());
+	const register = () => auth(makeRequest()).then(registerClan);
 
 	it('rejects without clan', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: 'player-1', clanId: null } as any);
@@ -256,7 +256,7 @@ describe('unregisterClan', () => {
 
 	it('rejects after registration end', async () => {
 		vi.setSystemTime(registrationEnd);
-		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notInRegistration');
+		await expect(auth(makeRequest()).then(unregisterClan)).rejects.toThrow('clanChampionship.notInRegistration');
 	});
 
 	it('rejects inside the transaction when the phase changed meanwhile', async () => {
@@ -270,17 +270,17 @@ describe('unregisterClan', () => {
 				})
 			})
 		);
-		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notInRegistration');
+		await expect(auth(makeRequest()).then(unregisterClan)).rejects.toThrow('clanChampionship.notInRegistration');
 		expect(p.clanChampionshipRegistration.deleteMany).not.toHaveBeenCalled();
 	});
 
 	it('rejects when not registered (count 0)', async () => {
 		p.clanChampionshipRegistration.deleteMany.mockResolvedValue({ count: 0 });
-		await expect(unregisterClan(makeRequest())).rejects.toThrow('clanChampionship.notRegistered');
+		await expect(auth(makeRequest()).then(unregisterClan)).rejects.toThrow('clanChampionship.notRegistered');
 	});
 
 	it('deletes the registration', async () => {
-		await unregisterClan(makeRequest());
+		await auth(makeRequest()).then(unregisterClan);
 		expect(p.$queryRaw).toHaveBeenCalled();
 		expect(p.clanChampionshipRegistration.deleteMany).toHaveBeenCalledWith({ where: { eventId: 'ev-1', clanId: 7 } });
 	});

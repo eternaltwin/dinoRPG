@@ -154,6 +154,13 @@ export async function auth(request: Request, banByPass = false, tosByPass = fals
 			throw new ExpectedError('Invalid user ID');
 		}
 
+		return authPlayer(playerId, token, banByPass, tosByPass);
+	});
+}
+
+/** The checks of `auth` for a caller that already holds the credentials (a socket has no request to read them from). */
+export async function authPlayer(playerId: string, token: string, banByPass = false, tosByPass = false) {
+	return withSpan(authPlayer.name, async () => {
 		const user = await prisma.player.findFirst({
 			where: {
 				id: playerId
