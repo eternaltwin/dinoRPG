@@ -30,12 +30,21 @@ match ; pas de brouillard de guerre ; pas de match aller-retour.
   le clan est en guerre ou qu'une guerre lui a été déclarée.
   **[choix Claude]** Le clan peut se désinscrire tant que les inscriptions
   sont ouvertes.
+  **Ouverture anticipée** : un admin peut ouvrir les inscriptions tout de
+  suite (« Ouvrir les inscriptions maintenant ») ; `startDate` passe à
+  l'instant présent et la fin des inscriptions ne change pas.
 - **Clôture** : la liste des clans inscrits est figée.
   - S'il y a moins de 2 clans inscrits, le CDC est annulé automatiquement.
   - Sinon, on génère un calendrier en round-robin (méthode du cercle) :
     chaque clan affronte une fois chacun des autres, soit N−1 journées.
   - Si N est impair, il faut N journées : à chaque journée, un clan est
     exempt et marque 0 point.
+  - **Démarrage forcé** : un admin peut clore les inscriptions et démarrer
+    les matchs immédiatement. Avec moins de 2 clans inscrits, l'action est
+    refusée et le CDC reste ouvert (il n'est pas annulé). Sinon la journée 1
+    commence à cet instant (48 h de match) et les suivantes gardent le
+    rythme : J+3, J+7, J+10... La fin des inscriptions devient l'instant du
+    démarrage ; la tâche de clôture déjà planifiée devient sans effet.
 - **Calendrier** : il y a 2 créneaux par semaine, **du lundi 18h UTC au
   mercredi 18h UTC** et **du jeudi 18h UTC au samedi 18h UTC**. Tout est
   calculé en UTC, sans gestion de fuseau horaire.

@@ -4,6 +4,9 @@
 	},
 	"clanChampionship": {
 		"notMonday": "Die Meisterschaft muss an einem Montag beginnen.",
+		"noActive": "Es gibt keine aktive Clanmeisterschaft.",
+		"registrationsAlreadyOpen": "Die Anmeldungen sind bereits geöffnet.",
+		"notEnoughClans": "Es sind mindestens 2 angemeldete Clans nötig, um die Spiele zu starten.",
 		"startInPast": "Das Startdatum darf nicht in der Vergangenheit liegen.",
 		"noPlaces": "Wähle mindestens einen gültigen Ort aus.",
 		"notInRegistration": "Die Anmeldung zur Meisterschaft ist nicht geöffnet.",

@@ -242,6 +242,12 @@ export const AdminService = {
 		const res = await http().put(`/admin/championship/start`, form);
 		return res.data;
 	},
+	async openChampionshipRegistrations(): Promise<void> {
+		await http().post(`/admin/championship/open-registrations`);
+	},
+	async startChampionshipMatches(): Promise<void> {
+		await http().post(`/admin/championship/start-matches`);
+	},
 	async getOngoingEvent(): Promise<OngoingEvent[]> {
 		const res = await http().get(`/admin/event`);
 		return res.data;

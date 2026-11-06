@@ -31,6 +31,8 @@ import {
 	closeRegistrations,
 	finishChampionship,
 	isClanInActiveChampionship,
+	openChampionshipRegistrations,
+	startChampionshipMatches,
 	scheduleClanChampionship,
 	getCurrentChampionship,
 	registerClan,
@@ -490,6 +492,124 @@ describe('closeRegistrations', () => {
 				})
 			})
 		);
+		await closeRegistrations('ev-1');
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+	});
+});
+
+describe('openChampionshipRegistrations', () => {
+	beforeEach(() => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-11-06T10:00:00.000Z'));
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+	});
+	const open = () => openChampionshipRegistrations(makeRequest({}));
+
+	it('sets startDate to now under the event lock and keeps registrationEnd', async () => {
+		await open();
+		expect(p.$queryRaw).toHaveBeenCalled();
+		const arg = p.clanEvent.update.mock.calls[0][0];
+		expect(arg.where).toEqual({ id: 'ev-1' });
+		expect(arg.data).toEqual({ startDate: new Date('2026-11-06T10:00:00.000Z') });
+	});
+
+	it('rejects when there is no active championship', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(null);
+		await expect(open()).rejects.toThrow('clanChampionship.noActive');
+	});
+
+	it('rejects when registrations are already open', async () => {
+		const event = activeEvent({ startDate: new Date('2026-11-04T00:00:00.000Z') });
+		p.clanEvent.findFirst.mockResolvedValue(event);
+		p.clanEvent.findUnique.mockResolvedValue(event);
+		await expect(open()).rejects.toThrow('clanChampionship.registrationsAlreadyOpen');
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+	});
+
+	it('rejects when the championship is running', async () => {
+		const event = activeEvent({
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PlaceEnum.DINOVILLE],
+				registrationEnd: registrationEnd.toISOString(),
+				phase: 'running'
+			})
+		});
+		p.clanEvent.findFirst.mockResolvedValue(event);
+		p.clanEvent.findUnique.mockResolvedValue(event);
+		await expect(open()).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+	});
+});
+
+describe('startChampionshipMatches', () => {
+	const now = new Date('2026-11-06T14:37:00.000Z');
+	beforeEach(() => {
+		vi.useFakeTimers();
+		vi.setSystemTime(now);
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+	});
+	const startMatches = () => startChampionshipMatches(makeRequest({}));
+	const regs = (n: number) => Array.from({ length: n }, (_, i) => ({ clanId: i + 1, clanName: `Clan ${i + 1}` }));
+
+	it('refuses under 2 clans and leaves the championship open', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(1));
+		await expect(startMatches()).rejects.toThrow('clanChampionship.notEnoughClans');
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+	});
+
+	it('does not count registrations whose clan is gone', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([
+			{ clanId: 1, clanName: 'Clan 1' },
+			{ clanId: null, clanName: 'Gone' }
+		]);
+		await expect(startMatches()).rejects.toThrow('clanChampionship.notEnoughClans');
+	});
+
+	it('builds the calendar from now, updates registrationEnd and draws the round-0 place', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(4));
+		p.clanChampionshipMatch.findMany.mockResolvedValue([{ id: 'm1' }, { id: 'm2' }]);
+		await startMatches();
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(matches).toHaveLength(6);
+		expect(matches[0].startsAt).toEqual(now);
+		expect(matches[0].endsAt).toEqual(new Date('2026-11-08T14:37:00.000Z'));
+		const arg = p.clanEvent.update.mock.calls[0][0];
+		const config = JSON.parse(arg.data.config);
+		expect(config.phase).toBe('running');
+		expect(config.registrationEnd).toBe(now.toISOString());
+		expect(arg.data.endDate).toEqual(new Date('2026-11-15T14:37:00.000Z'));
+		expect(p.clanChampionshipMatch.findMany).toHaveBeenCalledWith({ where: { eventId: 'ev-1', round: 0 } });
+		expect(p.clanChampionshipMatch.update.mock.calls.map((c: any) => c[0].where.id)).toEqual(['m1', 'm2']);
+	});
+
+	it('rejects outside the registration phase', async () => {
+		const event = activeEvent({
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PlaceEnum.DINOVILLE],
+				registrationEnd: registrationEnd.toISOString(),
+				phase: 'running'
+			})
+		});
+		p.clanEvent.findFirst.mockResolvedValue(event);
+		p.clanEvent.findUnique.mockResolvedValue(event);
+		await expect(startMatches()).rejects.toThrow('clanChampionship.notInRegistration');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+	});
+
+	it('makes the already scheduled close job a no-op afterwards', async () => {
+		const running = activeEvent({
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PlaceEnum.DINOVILLE],
+				registrationEnd: now.toISOString(),
+				phase: 'running'
+			})
+		});
+		p.clanEvent.findUnique.mockResolvedValue(running);
 		await closeRegistrations('ev-1');
 		expect(p.clanEvent.update).not.toHaveBeenCalled();
 		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();

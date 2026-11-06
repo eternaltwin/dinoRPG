@@ -3,16 +3,28 @@
 		<tr>
 			<th class="dinoz-header">ID</th>
 			<th class="items-header">Phase</th>
+			<th class="items-header">Début des inscriptions</th>
 			<th class="items-header">Fin des inscriptions</th>
+			<th class="items-header">Clans inscrits</th>
 			<th class="items-header">Fin</th>
 		</tr>
 		<tr>
 			<td>{{ current.id }}</td>
 			<td>{{ current.phase }}</td>
+			<td>{{ new Date(current.registrationStart).toLocaleString($i18n.locale) }}</td>
 			<td>{{ new Date(current.registrationEnd).toLocaleString($i18n.locale) }}</td>
+			<td>{{ current.registrations.length }}</td>
 			<td>{{ new Date(current.endDate).toLocaleString($i18n.locale) }}</td>
 		</tr>
 	</DZTable>
+	<div v-if="current && current.phase === 'registration'" class="championship-actions">
+		<button v-if="!registrationsOpen" type="button" :disabled="submitting" @click="openRegistrations">
+			Ouvrir les inscriptions maintenant
+		</button>
+		<button v-else type="button" :disabled="submitting" @click="startMatches">
+			Clore les inscriptions et démarrer les matchs
+		</button>
+	</div>
 	<form @submit.prevent="handleSubmit">
 		<fieldset>
 			<legend>Championnat des clans</legend>
@@ -55,7 +67,43 @@ export default defineComponent({
 			submitting: false as boolean
 		};
 	},
+	computed: {
+		registrationsOpen(): boolean {
+			return !!this.current && new Date(this.current.registrationStart).getTime() <= Date.now();
+		}
+	},
 	methods: {
+		async runAction(message: string, action: () => Promise<void>) {
+			if (this.submitting) return;
+			const confirmed: boolean = await this.$confirm({
+				message,
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-exclamation-triangle'
+			});
+			if (!confirmed) return;
+			this.submitting = true;
+			try {
+				await action();
+				await this.loadCurrent();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			} finally {
+				this.submitting = false;
+			}
+		},
+		async openRegistrations() {
+			await this.runAction('Ouvrir dès maintenant les inscriptions du championnat ?', () =>
+				AdminService.openChampionshipRegistrations()
+			);
+		},
+		async startMatches() {
+			await this.runAction(
+				'Clore les inscriptions et démarrer la première journée immédiatement ? Cette action est définitive.',
+				() => AdminService.startChampionshipMatches()
+			);
+		},
 		async loadCurrent() {
 			try {
 				this.current = await ClanChampionshipService.getCurrent();
@@ -83,6 +131,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.championship-actions {
+	margin-top: 10px;
+	button {
+		background-color: #c64e36;
+		color: #fffdba;
+		border: none;
+		padding: 10px 20px;
+		cursor: pointer;
+		border-radius: 5px;
+	}
+}
 form {
 	width: 100%;
 	margin-top: 20px;

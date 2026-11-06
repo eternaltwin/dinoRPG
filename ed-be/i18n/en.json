@@ -4,6 +4,9 @@
 	},
 	"clanChampionship": {
 		"notMonday": "The championship must start on a Monday.",
+		"noActive": "There is no active clan championship.",
+		"registrationsAlreadyOpen": "Registrations are already open.",
+		"notEnoughClans": "At least 2 registered clans are needed to start the matches.",
 		"startInPast": "The start date cannot be in the past.",
 		"noPlaces": "Select at least one valid place.",
 		"notInRegistration": "Championship registrations are not open.",
