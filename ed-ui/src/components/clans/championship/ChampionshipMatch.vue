@@ -119,7 +119,7 @@ async function runAction(dinozId: number, action: () => Promise<void>) {
 	await refetch();
 	pending.value = false;
 	// Best effort, does not block the board
-	dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
+	// dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
 }
 
 async function onMove(direction: BoardDirection) {

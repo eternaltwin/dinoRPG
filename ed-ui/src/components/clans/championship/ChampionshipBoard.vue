@@ -48,7 +48,11 @@
 					data-testid="board-piece"
 					:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
 				>
-					<DinozIcon :display="cell.piece.display" :size="ICON_SIZE" :flip="cell.piece.clanId === props.board.west.clanId" />
+					<DinozIcon
+						:display="cell.piece.display"
+						:size="ICON_SIZE"
+						:flip="cell.piece.clanId === props.board.west.clanId"
+					/>
 					<div v-if="isOurs(cell.piece) && cell.piece.maxLife" class="hp">
 						<div class="hp-fill" :style="{ width: `${hpPercent(cell.piece)}%` }" />
 					</div>
