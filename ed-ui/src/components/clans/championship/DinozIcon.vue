@@ -50,7 +50,7 @@ function trimToContent(source: string): Promise<string> {
 import { onMounted, ref, watch } from 'vue';
 import { dino } from '@eternaltwin/dinorpg_animations';
 
-const props = defineProps<{ display: string; size: number; flip: boolean }>();
+const props = defineProps<{ display: string; size: number; flip?: boolean }>();
 const src = ref<string | undefined>();
 
 function renderImage(display: string, flip: boolean): Promise<string | null> {
@@ -88,7 +88,7 @@ function renderImage(display: string, flip: boolean): Promise<string | null> {
 
 async function render() {
 	const display = props.display;
-	const flip = props.flip;
+	const flip = props.flip?? false;
 	const cached = cache.get(display);
 	if (cached) {
 		src.value = cached;
