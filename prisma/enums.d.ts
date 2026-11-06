@@ -166,7 +166,8 @@ export const LogType: {
   readonly ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated';
   readonly ClanWarCastleAttacked: 'ClanWarCastleAttacked';
   readonly ClanWarCastleRepaired: 'ClanWarCastleRepaired';
-  readonly ClanWarResolved: 'ClanWarResolved'
+  readonly ClanWarResolved: 'ClanWarResolved';
+  readonly BypassGatheringGridUpdated: 'BypassGatheringGridUpdated'
 };
 
 export namespace LogType {
@@ -227,7 +228,8 @@ export namespace LogType {
   export type ClanWarDefenseOrderUpdated = 'ClanWarDefenseOrderUpdated';
   export type ClanWarCastleAttacked = 'ClanWarCastleAttacked';
   export type ClanWarCastleRepaired = 'ClanWarCastleRepaired';
-  export type ClanWarResolved = 'ClanWarResolved'
+  export type ClanWarResolved = 'ClanWarResolved';
+  export type BypassGatheringGridUpdated = 'BypassGatheringGridUpdated'
 }
 
 export type LogType = typeof LogType[keyof typeof LogType];

@@ -108,7 +108,8 @@ export const LogType = {
   ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated',
   ClanWarCastleAttacked: 'ClanWarCastleAttacked',
   ClanWarCastleRepaired: 'ClanWarCastleRepaired',
-  ClanWarResolved: 'ClanWarResolved'
+  ClanWarResolved: 'ClanWarResolved',
+  BypassGatheringGridUpdated: 'BypassGatheringGridUpdated'
 };
 
 export const PantheonMotif = {

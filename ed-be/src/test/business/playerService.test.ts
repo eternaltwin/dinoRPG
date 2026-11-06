@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
-import { OfferStatus } from '@drpg/prisma';
+import { LogType, OfferStatus } from '@drpg/prisma';
 
 vi.mock('../../dao/dinozDao.js', () => ({ getAllDinozFicheLite: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({
@@ -33,8 +33,10 @@ vi.mock('@drpg/core/utils/DinozUtils', () => ({
 	toDinozPublicFiche: (d: unknown) => d
 }));
 vi.mock('@drpg/core/utils/twinoidGoals', () => ({ convertToPlayerStats: () => [] }));
+vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 
 import * as playerDao from '../../dao/playerDao.js';
+import { createLog } from '../../dao/logDao.js';
 import { getAllDinozFicheLite } from '../../dao/dinozDao.js';
 import { getLatestTournament } from '../../dao/tournamentDao.js';
 import fetch from 'node-fetch';
@@ -292,6 +294,14 @@ describe('updatePlayerSettings', () => {
 			expect(playerDao.setPlayer).toHaveBeenCalledWith('p1', { [setting]: true });
 		}
 	);
+
+	it('logs bypassGatheringGrid changes only', async () => {
+		vi.mocked(createLog).mockClear();
+		await updatePlayerSettings(req({ setting: 'skipFight' }, { setting: true }));
+		expect(createLog).not.toHaveBeenCalled();
+		await updatePlayerSettings(req({ setting: 'bypassGatheringGrid' }, { setting: false }));
+		expect(createLog).toHaveBeenCalledWith(LogType.BypassGatheringGridUpdated, 'p1', undefined, 'false');
+	});
 
 	it('updates displayedNotifications when valid', async () => {
 		await updatePlayerSettings(req({ setting: 'displayedNotifications' }, { setting: 5 }));

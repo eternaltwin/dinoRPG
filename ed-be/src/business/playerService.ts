@@ -4,7 +4,8 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche, toDinozFicheLite, toDinozPublicFiche } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { convertToPlayerStats } from '@drpg/core/utils/twinoidGoals';
-import { OfferStatus } from '@drpg/prisma';
+import { LogType, OfferStatus } from '@drpg/prisma';
+import { createLog } from '../dao/logDao.js';
 import { Request } from 'express';
 import sanitizeHtml from 'sanitize-html';
 import { getAllDinozFicheLite } from '../dao/dinozDao.js';
@@ -344,6 +345,9 @@ export async function updatePlayerSettings(req: Request) {
 	}
 	if (req.params.setting === 'bypassGatheringGrid') {
 		await setPlayer(authed.id, { bypassGatheringGrid: req.body.setting });
+		if (typeof req.body.setting === 'boolean') {
+			await createLog(LogType.BypassGatheringGridUpdated, authed.id, undefined, String(req.body.setting));
+		}
 	}
 	if (req.params.setting === 'archivedSiteId') {
 		await setPlayer(authed.id, { archivedSiteId: req.body.setting });

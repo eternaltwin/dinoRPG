@@ -341,6 +341,9 @@ const getLogPropsForTranslation = (
 		case 'ClanWarResolved':
 			values = { warId: log.values[0], winnerClanId: log.values[1], reason: log.values[2] };
 			break;
+		case 'BypassGatheringGridUpdated':
+			values = { value: log.values[0] };
+			break;
 		default:
 			break;
 	}

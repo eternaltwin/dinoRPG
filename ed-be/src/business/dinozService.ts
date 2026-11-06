@@ -1049,12 +1049,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(box => box === -1)) {
-		myGrid = await updateGrid(
-			player.id,
-			dinozId,
-			myGrid.id,
-			initializeGatherGrid(authed.id, place.placeId, gatherPlace)
-		);
+		myGrid = await updateGrid(myGrid.id, initializeGatherGrid(authed.id, place.placeId, gatherPlace));
 	}
 
 	const hiddenGrid = hideGridIngredients(myGrid.grid);
@@ -1136,7 +1131,8 @@ export async function gatherWithDinoz(req: Request) {
 	}
 
 	const returnGrid = discoverBox(myGrid, player, gatherPlace, ...boxToOpen);
-	await updateGrid(player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
+	await updateGrid(myGrid.id, saveGrid(myGrid, ...boxToOpen));
+	await createLog(LogType.Gather, player.id, dinozId);
 
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
 		const itemToReward = player.items.find(items => items.itemId === i.id);
@@ -1525,6 +1521,7 @@ export async function useIrma(req: Request) {
 
 	if (neededIrma > 0) {
 		await decreaseItemQuantity(dinoz.player.id, itemList[Item.POTION_IRMA].itemId, neededIrma);
+		await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemList[Item.POTION_IRMA].itemId, neededIrma);
 	}
 	return {
 		category: ItemEffect.ACTION,

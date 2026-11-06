@@ -527,7 +527,8 @@ export const LogType: {
   ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated',
   ClanWarCastleAttacked: 'ClanWarCastleAttacked',
   ClanWarCastleRepaired: 'ClanWarCastleRepaired',
-  ClanWarResolved: 'ClanWarResolved'
+  ClanWarResolved: 'ClanWarResolved',
+  BypassGatheringGridUpdated: 'BypassGatheringGridUpdated'
 };
 
 export type LogType = (typeof LogType)[keyof typeof LogType]
@@ -96669,7 +96670,6 @@ export namespace Prisma {
 
   export type ParticipantsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    playerId_conversationId?: ParticipantsPlayerIdConversationIdCompoundUniqueInput
     AND?: ParticipantsWhereInput | ParticipantsWhereInput[]
     OR?: ParticipantsWhereInput[]
     NOT?: ParticipantsWhereInput | ParticipantsWhereInput[]
@@ -96679,7 +96679,7 @@ export namespace Prisma {
     playerName?: StringFilter<"Participants"> | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
-  }, "id" | "playerId_conversationId">
+  }, "id">
 
   export type ParticipantsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -106358,11 +106358,6 @@ export namespace Prisma {
   export type ConversationScalarRelationFilter = {
     is?: ConversationWhereInput
     isNot?: ConversationWhereInput
-  }
-
-  export type ParticipantsPlayerIdConversationIdCompoundUniqueInput = {
-    playerId: string
-    conversationId: string
   }
 
   export type ParticipantsCountOrderByAggregateInput = {

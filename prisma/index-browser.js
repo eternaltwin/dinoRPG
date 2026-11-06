@@ -943,7 +943,8 @@ exports.LogType = exports.$Enums.LogType = {
   ClanWarDefenseOrderUpdated: 'ClanWarDefenseOrderUpdated',
   ClanWarCastleAttacked: 'ClanWarCastleAttacked',
   ClanWarCastleRepaired: 'ClanWarCastleRepaired',
-  ClanWarResolved: 'ClanWarResolved'
+  ClanWarResolved: 'ClanWarResolved',
+  BypassGatheringGridUpdated: 'BypassGatheringGridUpdated'
 };
 
 exports.PantheonMotif = exports.$Enums.PantheonMotif = {

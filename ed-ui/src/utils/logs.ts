@@ -45,5 +45,6 @@ export const LogTypes = [
 	'AdminRemoveIngredient',
 	'AdminUpdateQuest',
 	'AdminUpdatePlayer',
-	'AdminUpdateSecret'
+	'AdminUpdateSecret',
+	'BypassGatheringGridUpdated'
 ] as const satisfies readonly LogType[];

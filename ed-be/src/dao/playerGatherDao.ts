@@ -1,6 +1,5 @@
-import { LogType, Prisma } from '@drpg/prisma';
+import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-import { createLog } from './logDao.js';
 
 export async function getCommonGatherInfo(playerId: string) {
 	const gathers = await prisma.playerGather.findMany({
@@ -28,13 +27,8 @@ export async function createGrid(grid: Prisma.PlayerGatherCreateInput) {
 	});
 }
 
-export async function updateGrid(
-	playerId: string,
-	dinozId: number,
-	gridId: number,
-	grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>
-) {
-	const newGrid = prisma.playerGather.update({
+export async function updateGrid(gridId: number, grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>) {
+	return prisma.playerGather.update({
 		where: {
 			id: gridId
 		},
@@ -43,8 +37,4 @@ export async function updateGrid(
 			player: { select: { id: true } }
 		}
 	});
-
-	await createLog(LogType.Gather, playerId, dinozId);
-
-	return newGrid;
 }

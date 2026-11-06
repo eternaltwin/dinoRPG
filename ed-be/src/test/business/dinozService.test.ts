@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
-import { UnavailableReason } from '@drpg/prisma';
+import { LogType, UnavailableReason } from '@drpg/prisma';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -126,6 +126,7 @@ import { movementListener } from '../../business/specialService.js';
 import * as fightService from '../../business/fightService.js';
 import { rewarder } from '../../utils/rewarder.js';
 import { getCommonGatherInfo, createGrid, updateGrid } from '../../dao/playerGatherDao.js';
+import { createLog } from '../../dao/logDao.js';
 import { increaseIngredientQuantity } from '../../dao/playerIngredientDao.js';
 import { discoverBox } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
@@ -696,8 +697,25 @@ describe('useIrma', () => {
 			followers: [],
 			player: { id: 'p1', items: [{ itemId: 1, quantity: 5 }] }
 		} as never);
+		vi.mocked(createLog).mockClear();
 		const result = await useIrma(req({ id: '1' }));
 		expect(result.category).toBeDefined();
+		expect(createLog).toHaveBeenCalledTimes(1);
+		expect(createLog).toHaveBeenCalledWith(LogType.ItemUsed, 'p1', 1, 1, 1);
+	});
+	it('does not log when no potion is consumed', async () => {
+		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+		vi.mocked(dinozDao.getIrmaUsageInfo).mockResolvedValue({
+			id: 1,
+			fight: false,
+			gather: false,
+			remaining: 1,
+			followers: [],
+			player: { id: 'p1', items: [] }
+		} as never);
+		vi.mocked(createLog).mockClear();
+		await useIrma(req({ id: '1' }));
+		expect(createLog).not.toHaveBeenCalled();
 	});
 	it('throws when not enough irma', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
@@ -823,6 +841,17 @@ describe('gather', () => {
 		expect(result.gatherTurn).toBe(3);
 	});
 
+	it('getGatherGrid regenerates a finished grid without logging a gather', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([
+			{ id: 'g1', grid: [-1, -1, -1, -1, -1], place: 1, type: 0 }
+		] as never);
+		vi.mocked(updateGrid).mockClear();
+		vi.mocked(createLog).mockClear();
+		await getGatherGrid(req({ id: '1', type: 'fish' }));
+		expect(updateGrid).toHaveBeenCalledTimes(1);
+		expect(createLog).not.toHaveBeenCalledWith(LogType.Gather, expect.anything(), expect.anything());
+	});
+
 	it('getGatherGrid throws for an unknown grid type', async () => {
 		await expect(getGatherGrid(req({ id: '1', type: 'nonexistent' }))).rejects.toThrow("doesn't exist");
 	});
@@ -830,9 +859,11 @@ describe('gather', () => {
 	it('gatherWithDinoz opens boxes and consumes the action', async () => {
 		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 }] as never);
 		const r = makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } });
+		vi.mocked(createLog).mockClear();
 		const result = await gatherWithDinoz(r);
 		expect(result).toBeDefined();
 		expect(updateGrid).toHaveBeenCalled();
+		expect(vi.mocked(createLog).mock.calls.filter(c => c[0] === LogType.Gather)).toEqual([[LogType.Gather, 'p1', 1]]);
 	});
 
 	it('gatherWithDinoz grants item and ingredient rewards', async () => {

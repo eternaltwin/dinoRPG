@@ -875,8 +875,6 @@ model Participants {
   playerName     String
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   player         Player?      @relation(fields: [playerId], references: [id])
-
-  @@unique([playerId, conversationId])
 }
 
 model Message {
@@ -1181,6 +1179,7 @@ enum LogType {
   ClanWarCastleAttacked
   ClanWarCastleRepaired
   ClanWarResolved
+  BypassGatheringGridUpdated
 }
 
 enum NotificationSeverity {
