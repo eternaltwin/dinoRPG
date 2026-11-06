@@ -1,35 +1,57 @@
 <template>
-	<div class="board" :class="{ disabled }" :style="{ '--size': BOARD_SIZE }">
-		<div
-			v-for="cell in cells"
-			:key="cell.index"
-			:data-testid="`board-cell-${cell.x}-${cell.y}`"
-			class="cell"
-			:class="{
-				'entry-west': cell.x === 0,
-				'entry-east': cell.x === BOARD_SIZE - 1,
-				blocked: cell.blocked,
-				reachable: cell.target === 'move',
-				attackable: cell.target === 'attack'
-			}"
-			@click="onCellClick(cell)"
-		>
+	<div class="board-frame" :class="{ disabled }">
+		<div class="board" :style="{ '--size': BOARD_SIZE }">
+			<template v-if="board.status !== 'scheduled'">
+				<div
+					class="score-line west"
+					data-testid="score-line-west"
+					:style="{ left: columnEdge(board.west.scoreLine + 1) }"
+				/>
+				<div
+					class="score-line east"
+					data-testid="score-line-east"
+					:style="{ left: columnEdge(BOARD_SIZE - 1 - board.east.scoreLine) }"
+				/>
+			</template>
 			<div
-				v-if="cell.piece"
-				class="piece"
+				v-for="cell in cells"
+				:key="cell.index"
+				:data-testid="`board-cell-${cell.x}-${cell.y}`"
+				class="cell"
 				:class="{
-					own: cell.piece.mine,
-					ally: cell.piece.ally && !cell.piece.mine,
-					enemy: !cell.piece.mine && !cell.piece.ally,
-					selected: cell.piece.dinozId === selectedDinozId,
-					exhausted: isOurs(cell.piece) && cell.piece.actionPoints === 0
+					'entry-west': cell.x === 0,
+					'entry-east': cell.x === BOARD_SIZE - 1,
+					blocked: cell.blocked,
+					reachable: cell.target === 'move',
+					attackable: cell.target === 'attack'
 				}"
-				data-testid="board-piece"
-				:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
+				@click="onCellClick(cell)"
 			>
-				<DinozIcon :display="cell.piece.display" :size="ICON_SIZE" />
-				<div v-if="isOurs(cell.piece) && cell.piece.maxLife" class="hp">
-					<div class="hp-fill" :style="{ width: `${hpPercent(cell.piece)}%` }" />
+				<img
+					v-if="cell.blocked"
+					class="obstacle"
+					:src="obstacleSprite(cell.index).src"
+					:style="{ width: obstacleSprite(cell.index).width }"
+					draggable="false"
+					alt=""
+				/>
+				<div
+					v-if="cell.piece"
+					class="piece"
+					:class="{
+						own: cell.piece.mine,
+						ally: cell.piece.ally && !cell.piece.mine,
+						enemy: !cell.piece.mine && !cell.piece.ally,
+						selected: cell.piece.dinozId === selectedDinozId,
+						exhausted: isOurs(cell.piece) && cell.piece.actionPoints === 0
+					}"
+					data-testid="board-piece"
+					:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
+				>
+					<DinozIcon :display="cell.piece.display" :size="ICON_SIZE" />
+					<div v-if="isOurs(cell.piece) && cell.piece.maxLife" class="hp">
+						<div class="hp-fill" :style="{ width: `${hpPercent(cell.piece)}%` }" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -40,10 +62,34 @@
 import { computed, onBeforeUnmount, onMounted } from 'vue';
 import { BOARD_SIZE, BoardDirection } from '@drpg/core/models/clan/clanChampionship';
 import type { BoardPieceDTO, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
+import { getImgURL } from '../../../mixin/mixin';
 import { playerStore } from '../../../store';
 import DinozIcon from './DinozIcon.vue';
 
 const ICON_SIZE = 40;
+
+// Widths relative to a cell keep the sprites at the same scale as each other
+const OBSTACLE_SPRITES = [
+	{ name: 'boulders', width: '99%' },
+	{ name: 'log', width: '82%' },
+	{ name: 'crate', width: '90%' },
+	{ name: 'cactus', width: '82%' },
+	{ name: 'cactus_double', width: '104%' },
+	{ name: 'rock', width: '97%' },
+	{ name: 'rock_dark', width: '85%' },
+	{ name: 'mushroom', width: '92%' }
+].map(({ name, width }) => ({ src: getImgURL('clan/championship', name), width }));
+
+/** Purely visual: the board only stores blocked cells, so the sprite is derived from the cell to stay stable. */
+function obstacleSprite(index: number) {
+	// Multiplicative hash: its high bits scatter neighbouring cells
+	const hash = ((index * 2654435761) >>> 0) / 2 ** 32;
+	return OBSTACLE_SPRITES[Math.floor(hash * OBSTACLE_SPRITES.length)];
+}
+
+function columnEdge(column: number): string {
+	return `${(column / BOARD_SIZE) * 100}%`;
+}
 
 const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; disabled: boolean }>();
 const emit = defineEmits<{
@@ -164,81 +210,140 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
 </script>
 
 <style lang="scss" scoped>
+$dirt: #a88c3a;
+$rim: #49652a;
+$chalk: #b4c088;
+$rim-width: 11px;
+
+.board-frame {
+	padding: 7px + $rim-width;
+	// Grainy dirt strip around the pitch
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .15 0 0 0 0 0 0 0 0 .7 -.05'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),
+		$dirt;
+	&.disabled .board {
+		filter: saturate(0.6) brightness(0.92);
+	}
+}
 .board {
+	position: relative;
 	display: grid;
 	grid-template-columns: repeat(var(--size), 1fr);
 	width: 100%;
 	max-width: 100%;
 	aspect-ratio: 1;
-	border: 2px solid #874a16;
-	background-color: #fbe6c4;
-	&.disabled {
-		opacity: 0.8;
+	// Chalk line, then the darker grass between the line and the dirt
+	box-shadow:
+		0 0 0 3px $chalk,
+		0 0 0 $rim-width $rim,
+		0 0 3px ($rim-width + 1px) $rim;
+	background: radial-gradient(ellipse 34% 30% at 50% 50%, rgba(160, 145, 15, 0.85), rgba(160, 145, 15, 0) 100%),
+		radial-gradient(ellipse at 50% 50%, #637023, #4e6a22 75%);
+}
+.score-line {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 0;
+	margin-left: -1px;
+	border-left: 2px dotted;
+	pointer-events: none;
+	&.west {
+		border-color: var(--cdc-west);
+		filter: drop-shadow(0 0 2px var(--cdc-west));
+	}
+	&.east {
+		border-color: var(--cdc-east);
+		filter: drop-shadow(0 0 2px var(--cdc-east));
 	}
 }
 .cell {
 	position: relative;
 	aspect-ratio: 1;
 	min-width: 0;
-	border: 1px solid rgba(135, 74, 22, 0.15);
+	box-sizing: border-box;
+	border: 1px solid rgba(190, 205, 80, 0.1);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	&.entry-west {
-		background-color: color-mix(in srgb, var(--cdc-west, #2b6cb0) 20%, transparent);
+		background-color: color-mix(in srgb, var(--cdc-west) 16%, transparent);
 	}
 	&.entry-east {
-		background-color: color-mix(in srgb, var(--cdc-east, #b03a2e) 20%, transparent);
-	}
-	&.blocked {
-		background: repeating-linear-gradient(45deg, #6b5a46, #6b5a46 4px, #4a3d2e 4px, #4a3d2e 8px);
+		background-color: color-mix(in srgb, var(--cdc-east) 16%, transparent);
 	}
 	&.reachable {
-		background-color: rgba(80, 180, 80, 0.45);
+		background-color: rgba(175, 205, 90, 0.42);
 		cursor: pointer;
 	}
 	&.attackable {
 		cursor: pointer;
-		box-shadow: inset 0 0 0 2px #d00;
+		background-color: rgba(230, 70, 40, 0.3);
+		box-shadow: inset 0 0 0 2px #ff5a3c;
 	}
+}
+// Anchored on the bottom of its cell: a tall sprite overlaps the row behind it, without catching its clicks
+.obstacle {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	height: auto;
+	transform: translateX(-50%);
+	pointer-events: none;
+	user-select: none;
 }
 .piece {
 	position: relative;
-	width: 92%;
-	height: 92%;
-	box-sizing: border-box;
-	border: 2px solid var(--cdc-enemy, #b03a2e);
-	border-radius: 4px;
-	background-color: rgba(255, 255, 255, 0.55);
+	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
-	&.own,
-	&.ally {
-		border-color: var(--cdc-mine, #2b6cb0);
+	// The side is told by the ground marker, the dinoz itself stands on the grass
+	&::before {
+		content: '';
+		position: absolute;
+		left: 8%;
+		right: 8%;
+		bottom: 2%;
+		height: 34%;
+		border-radius: 50%;
+		background-color: color-mix(in srgb, var(--cdc-enemy) 55%, transparent);
+		box-shadow: 0 0 0 1.5px var(--cdc-enemy);
+	}
+	&.own::before,
+	&.ally::before {
+		background-color: color-mix(in srgb, var(--cdc-mine) 55%, transparent);
+		box-shadow: 0 0 0 1.5px var(--cdc-mine);
 	}
 	&.own {
 		cursor: pointer;
-		background-color: rgba(255, 255, 255, 0.85);
 	}
-	&.exhausted {
-		filter: grayscale(0.6);
+	&.exhausted :deep(.dinoz-icon) {
+		filter: grayscale(0.7) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 	}
-	&.selected {
-		box-shadow: 0 0 0 2px #f5c518;
-		z-index: 1;
+	&.selected::before {
+		background-color: rgba(245, 197, 24, 0.6);
+		box-shadow:
+			0 0 0 2px #f5c518,
+			0 0 6px 2px rgba(245, 197, 24, 0.8);
+	}
+	:deep(.dinoz-icon) {
+		position: relative;
+		filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 	}
 	.hp {
 		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 4px;
+		left: 10%;
+		right: 10%;
+		top: -1px;
+		height: 3px;
+		border-radius: 2px;
 		background-color: #6b2d2d;
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+		overflow: hidden;
 		.hp-fill {
 			height: 100%;
-			background-color: #3fbf3f;
+			background-color: #6ee04a;
 		}
 	}
 }
