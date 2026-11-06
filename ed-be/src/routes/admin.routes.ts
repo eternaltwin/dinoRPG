@@ -1,6 +1,12 @@
 import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { Request, Response, Router } from 'express';
-import { startClanChampionship } from '../business/clanChampionshipService.js';
+import {
+	openChampionshipRegistrations,
+	runChampionshipJob,
+	startChampionshipMatches,
+	startClanChampionship
+} from '../business/clanChampionshipService.js';
+import { championshipTick } from '../business/clanChampionshipMatchService.js';
 import { body, param, validationResult } from 'express-validator';
 import {
 	addSecret,
@@ -861,6 +867,34 @@ routes.put(
 		try {
 			const response = await startClanChampionship(req);
 			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/championship/open-registrations`,
+	checkRole([AdminRole.ADMIN]),
+	async (req: Request, res: Response) => {
+		try {
+			await openChampionshipRegistrations(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/championship/start-matches`,
+	checkRole([AdminRole.ADMIN]),
+	async (req: Request, res: Response) => {
+		try {
+			await startChampionshipMatches(req);
+			// Day 1 starts now: flip it live immediately instead of waiting for the next tick.
+			await runChampionshipJob('championshipTick', () => championshipTick())();
+			return res.status(200).send();
 		} catch (err) {
 			sendError(res, err);
 		}

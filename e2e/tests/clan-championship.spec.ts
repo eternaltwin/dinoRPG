@@ -195,3 +195,45 @@ test('the championship page shows the standings and the next match', async ({ pa
 		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
 	}
 });
+
+test('the register button appears for the clan leader once an admin has opened registrations', async ({
+	page,
+	player,
+	db
+}) => {
+	const suffix = player.id.slice(0, 8);
+	const clan = await db.clan.create({ data: { name: `e2e-R-${suffix}`, leaderId: player.id } });
+	await db.clanMember.create({ data: { clanId: clan.id, playerId: player.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clan.id } });
+
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now + 3 * DAY),
+			endDate: new Date(now + 17 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now + 17 * DAY).toISOString(),
+				phase: 'registration'
+			})
+		}
+	});
+
+	try {
+		await page.goto(`/clan/${clan.id}/championship`);
+		await expect(page.getByText('Inscriptions ouvertes à partir du')).toBeVisible();
+		await expect(page.getByText('Inscrire le clan', { exact: true })).toHaveCount(0);
+
+		// What the admin "open registrations now" action does.
+		await db.clanEvent.update({ where: { id: event.id }, data: { startDate: new Date(now - MINUTE) } });
+		await page.reload();
+		await expect(page.getByText('Inscrire le clan', { exact: true })).toBeVisible();
+	} finally {
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.player.updateMany({ where: { id: player.id }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: clan.id } });
+		await db.clan.deleteMany({ where: { id: clan.id } });
+	}
+});

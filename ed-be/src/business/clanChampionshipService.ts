@@ -12,7 +12,12 @@ import { auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
 import { computeStandings } from '../utils/clanChampionship/standings.js';
 import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
-import { computeMatchSlots, computeRegistrationWindow, isMonday } from '../utils/clanChampionship/schedule.js';
+import {
+	computeMatchSlots,
+	computeMatchSlotsFrom,
+	computeRegistrationWindow,
+	isMonday
+} from '../utils/clanChampionship/schedule.js';
 import { drawMatchPlace } from './clanChampionshipMatchService.js';
 import { shuffle } from '../utils/tools.js';
 import translate from '../utils/server/translate.js';
@@ -41,6 +46,44 @@ function serializeConfig(config: ClanChampionshipEventConfig, phase: ClanChampio
 	return JSON.stringify({ ...config, phase });
 }
 
+type Slots = { startsAt: Date; endsAt: Date }[];
+
+/** Draws the round-robin, creates the matches, switches to running and draws the round-0 place. */
+async function createCalendar(
+	tx: LocalTransactionClient,
+	event: { id: string },
+	config: ClanChampionshipEventConfig,
+	registrations: { clanId: number | null; clanName: string }[],
+	slotsFor: (roundCount: number) => Slots
+): Promise<void> {
+	const eventId = event.id;
+	const clanNames = new Map<number, string>();
+	for (const r of registrations) if (r.clanId !== null) clanNames.set(r.clanId, r.clanName);
+	const rounds = roundRobin(shuffle([...clanNames.keys()]));
+	const slots = slotsFor(rounds.length);
+	await tx.clanChampionshipMatch.createMany({
+		data: rounds.flatMap((pairs, round) =>
+			pairs.map(([homeClanId, awayClanId]) => ({
+				eventId,
+				round,
+				homeClanId,
+				awayClanId,
+				homeClanName: clanNames.get(homeClanId) as string,
+				awayClanName: clanNames.get(awayClanId) as string,
+				startsAt: slots[round].startsAt,
+				endsAt: slots[round].endsAt
+			}))
+		)
+	});
+	const endDate = slots[slots.length - 1].endsAt;
+	await tx.clanEvent.update({
+		where: { id: eventId },
+		data: { config: serializeConfig(config, 'running'), endDate }
+	});
+	const firstRound = await tx.clanChampionshipMatch.findMany({ where: { eventId, round: 0 } });
+	for (const match of firstRound) await drawMatchPlace(tx, match, config.places);
+}
+
 /**
  * Closes registrations (job at registrationEnd): cancels with fewer than 2 clans, otherwise builds
  * the round-robin calendar and switches to running. No-op unless the phase is still `registration`.
@@ -62,31 +105,9 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 			return;
 		}
 
-		const clanNames = new Map<number, string>();
-		for (const r of registrations) if (r.clanId !== null) clanNames.set(r.clanId, r.clanName);
-		const rounds = roundRobin(shuffle([...clanNames.keys()]));
-		const slots = computeMatchSlots(new Date(config.registrationEnd), rounds.length);
-		await tx.clanChampionshipMatch.createMany({
-			data: rounds.flatMap((pairs, round) =>
-				pairs.map(([homeClanId, awayClanId]) => ({
-					eventId,
-					round,
-					homeClanId,
-					awayClanId,
-					homeClanName: clanNames.get(homeClanId) as string,
-					awayClanName: clanNames.get(awayClanId) as string,
-					startsAt: slots[round].startsAt,
-					endsAt: slots[round].endsAt
-				}))
-			)
-		});
-		const endDate = slots[slots.length - 1].endsAt;
-		await tx.clanEvent.update({
-			where: { id: eventId },
-			data: { config: serializeConfig(config, 'running'), endDate }
-		});
-		const firstRound = await tx.clanChampionshipMatch.findMany({ where: { eventId, round: 0 } });
-		for (const match of firstRound) await drawMatchPlace(tx, match, config.places);
+		await createCalendar(tx, event, config, registrations, rounds =>
+			computeMatchSlots(new Date(config.registrationEnd), rounds)
+		);
 	});
 }
 
@@ -180,6 +201,52 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 	);
 
 	return { id: event.id };
+}
+
+/** Locks the active championship row and returns it with its parsed config, or throws noActive. */
+async function lockActiveChampionship(tx: LocalTransactionClient, authed: { clanId: number | null }) {
+	const active = await findActiveChampionshipEvent(tx);
+	if (!active) throw new ExpectedError(translate('clanChampionship.noActive', authed as never));
+	await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${active.id}::uuid FOR UPDATE`;
+	const event = await tx.clanEvent.findUnique({ where: { id: active.id } });
+	if (!event) throw new ExpectedError(translate('clanChampionship.noActive', authed as never));
+	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+	if (config.phase !== 'registration') {
+		throw new ExpectedError(translate('clanChampionship.notInRegistration', authed as never));
+	}
+	return { event, config };
+}
+
+/** Admin: opens the registrations of the current championship right now (registrationEnd is unchanged). */
+export async function openChampionshipRegistrations(req: Request): Promise<void> {
+	const authed = await auth(req);
+	await prisma.$transaction(async tx => {
+		const { event } = await lockActiveChampionship(tx, authed);
+		const now = new Date();
+		if (event.startDate <= now) {
+			throw new ExpectedError(translate('clanChampionship.registrationsAlreadyOpen', authed));
+		}
+		await tx.clanEvent.update({ where: { id: event.id }, data: { startDate: now } });
+	});
+}
+
+/**
+ * Admin: closes the registrations now and starts day 1 immediately (next days keep the 48 h / J+3, J+7 rhythm).
+ * Unlike the automatic closing, fewer than 2 clans is refused and the championship stays open.
+ */
+export async function startChampionshipMatches(req: Request): Promise<void> {
+	const authed = await auth(req);
+	await prisma.$transaction(async tx => {
+		const { event, config } = await lockActiveChampionship(tx, authed);
+		const registrations = await tx.clanChampionshipRegistration.findMany({ where: { eventId: event.id } });
+		if (registrations.filter(r => r.clanId !== null).length < 2) {
+			throw new ExpectedError(translate('clanChampionship.notEnoughClans', authed));
+		}
+		const now = new Date();
+		await createCalendar(tx, event, { ...config, registrationEnd: now.toISOString() }, registrations, count =>
+			computeMatchSlotsFrom(now, count)
+		);
+	});
 }
 
 function isOpenForRegistration(event: { config: string; startDate: Date }): boolean {

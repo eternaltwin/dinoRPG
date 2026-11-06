@@ -33,17 +33,23 @@ export function computeRegistrationWindow(start: string): { registrationStart: D
 }
 
 /**
+ * Match slots from an arbitrary first start: slot k starts `floor(k / 2)` weeks after it, plus 3 days when k is odd,
+ * and lasts 2 days (so 0-2, 3-5, 7-9, 10-12...).
+ */
+export function computeMatchSlotsFrom(firstStart: Date, count: number): { startsAt: Date; endsAt: Date }[] {
+	return Array.from({ length: count }, (_, k) => {
+		const startsAt = new Date(firstStart.getTime() + Math.floor(k / 2) * WEEK_MS + (k % 2 === 0 ? 0 : 3 * DAY_MS));
+		return { startsAt, endsAt: new Date(startsAt.getTime() + 2 * DAY_MS) };
+	});
+}
+
+/**
  * Match slots, starting from the Monday registration closes. Slot k belongs to week floor(k / 2):
  * even k runs Mon -> Wed 18:00 UTC, odd k runs Thu -> Sat 18:00 UTC.
  */
 export function computeMatchSlots(registrationEnd: Date, count: number): { startsAt: Date; endsAt: Date }[] {
-	const hourMs = CHAMPIONSHIP_MATCH_UTC_HOUR * 60 * 60 * 1000;
-	return Array.from({ length: count }, (_, k) => {
-		const weekStart = registrationEnd.getTime() + Math.floor(k / 2) * WEEK_MS;
-		const [startOffsetDays, endOffsetDays] = k % 2 === 0 ? [0, 2] : [3, 5];
-		return {
-			startsAt: new Date(weekStart + startOffsetDays * DAY_MS + hourMs),
-			endsAt: new Date(weekStart + endOffsetDays * DAY_MS + hourMs)
-		};
-	});
+	return computeMatchSlotsFrom(
+		new Date(registrationEnd.getTime() + CHAMPIONSHIP_MATCH_UTC_HOUR * 60 * 60 * 1000),
+		count
+	);
 }
