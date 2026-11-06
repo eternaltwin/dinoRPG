@@ -10,8 +10,8 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 	const dinozList: Ref<DinozFiche[]> = ref([]);
 	const currentDinozId: Ref<number | undefined> = ref();
 
-	const refreshDinozFiche = async (dinozId: number): Promise<DinozFiche> => {
-		const dinozFiche = await DinozService.getDinozFiche(dinozId);
+	const refreshDinozFiche = async (dinozId: number, silent = false): Promise<DinozFiche> => {
+		const dinozFiche = await DinozService.getDinozFiche(dinozId, silent);
 		const list = dinozList.value;
 		const dinozIndex = list.findIndex(d => d.id === dinozId);
 
@@ -24,7 +24,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 
 		if (dinozFiche.followers.length >= 1) {
 			for (const follower of dinozFiche.followers) {
-				const followerFiche = await DinozService.getDinozFiche(follower.id);
+				const followerFiche = await DinozService.getDinozFiche(follower.id, silent);
 				const followerIndex = list.findIndex(d => d.id === followerFiche.id);
 				// No shadow merge, full replace.
 				list.splice(followerIndex, 1, followerFiche);
@@ -145,12 +145,6 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		dinozToUpdate.items = items;
 	};
 
-	const setDinozLife = (dinozId: number, life: number): void => {
-		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
-		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
-		dinozToUpdate.life = life;
-	};
-
 	const setDinozAttackTimer = (dinozId: number): void => {
 		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
@@ -203,7 +197,6 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		setNpc,
 		clearNpc,
 		setItems,
-		setDinozLife,
 		setDinozAttackTimer,
 		getDinozAttackTimer,
 		resetDinozAttackTimer,

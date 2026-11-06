@@ -13,6 +13,8 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 	createPlayer,
 	db
 }) => {
+	// Long scenario: over the default timeout when the Vite dev server is still cold
+	test.setTimeout(60_000);
 	const suffix = player.id.slice(0, 8);
 	// Dinoz sheets need the weekly itinerant merchant place, normally set by a cron job.
 	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
@@ -103,8 +105,24 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 		await page.reload();
 		await expect(page.getByTestId(`board-cell-0-${y}`).getByTestId('board-piece')).toBeVisible();
 
+		// The full page loader blocks the clicks: selecting and moving must never turn it on
+		await page.evaluate(() => {
+			const app = (document.querySelector('#app') as unknown as { __vue_app__: any }).__vue_app__;
+			const win = window as unknown as { loaderCalls: number };
+			win.loaderCalls = 0;
+			app.config.globalProperties.$pinia._s.get('loading').$onAction(({ name }: { name: string }) => {
+				if (name === 'setLoaderOn') win.loaderCalls++;
+			});
+		});
+		const fiche = page.waitForResponse(response => response.url().includes(`/dinoz/fiche/${dinoz.id}`));
+
 		await page.getByTestId(`board-cell-0-${y}`).click();
 		await page.getByTestId(`board-cell-1-${y}`).click();
+
+		// The dinoz sheet is still refreshed after the move, silently
+		await fiche;
+		await page.waitForLoadState('networkidle');
+		expect(await page.evaluate(() => (window as unknown as { loaderCalls: number }).loaderCalls)).toBe(0);
 
 		await expect(page.getByTestId(`board-cell-1-${y}`).getByTestId('board-piece')).toBeVisible();
 		await expect

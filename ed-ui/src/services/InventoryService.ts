@@ -6,8 +6,8 @@ import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 // For Player's inventory
 
 export const InventoryService = {
-	async getAllItemsData(): Promise<Array<ItemFicheDTO>> {
-		const res = await http().get('/inventory/all');
+	async getAllItemsData(silent = false): Promise<Array<ItemFicheDTO>> {
+		const res = await http().get('/inventory/all', { silent });
 		return res.data;
 	},
 	async useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack[]> {
