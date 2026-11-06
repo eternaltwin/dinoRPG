@@ -665,6 +665,7 @@ export async function truncateAll(req: Request) {
 			messie: false,
 			labruteDone: false,
 			dailyGridRewards: 0,
+			dailyFightGold: 0,
 			createdDate: new Date()
 		}
 	});

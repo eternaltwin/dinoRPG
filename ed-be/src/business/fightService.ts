@@ -29,7 +29,8 @@ import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
-import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
+import { addDailyFightGold, addMoney, auth, removeMoney } from '../dao/playerDao.js';
+import { applyGoldDiminishing } from '@drpg/core/utils/fightGold';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomInteger, getRandomNumber } from '../utils/index.js';
@@ -475,7 +476,13 @@ export async function rewardFightVsMonsters(
 	}
 
 	// If attackers won
+	const rawGold = gold;
 	if (victory) {
+		if (rawGold > 0) {
+			// The total is read back from the increment so that concurrent fights each see their own share of the day.
+			const { dailyFightGold } = await addDailyFightGold(playerId, rawGold);
+			gold = applyGoldDiminishing(dailyFightGold - rawGold, rawGold, gameConfig().general.fightGoldDiminishing);
+		}
 		await addMoney(playerId, gold);
 	} else if (goldLost) {
 		await removeMoney(playerId, goldLost);
@@ -547,7 +554,8 @@ export async function rewardFightVsMonsters(
 		undefined,
 		victory ? gold : -goldLost,
 		victory ? totalWinXP : 0,
-		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
+		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
+		victory ? rawGold : -goldLost
 	);
 
 	const fighters = fightResult.fighters.map(f => {

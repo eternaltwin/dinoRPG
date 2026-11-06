@@ -1,3 +1,5 @@
+import type { GoldDiminishingCurve } from './utils/fightGold.mjs';
+
 const gameConfig: GameConfig = {
 	development: {
 		dinoz: {
@@ -15,7 +17,8 @@ const gameConfig: GameConfig = {
 		},
 		general: {
 			initialMoney: 1000000,
-			dailyGridRewards: 10
+			dailyGridRewards: 10,
+			fightGoldDiminishing: { start: 400000, end: 500000, floorRate: 0.1 }
 		}
 	},
 	production: {
@@ -34,7 +37,8 @@ const gameConfig: GameConfig = {
 		},
 		general: {
 			initialMoney: 200000,
-			dailyGridRewards: 5
+			dailyGridRewards: 5,
+			fightGoldDiminishing: { start: 400000, end: 500000, floorRate: 0.1 }
 		}
 	}
 };
@@ -57,6 +61,7 @@ export interface GameConfig {
 		general: {
 			initialMoney: number;
 			dailyGridRewards: number;
+			fightGoldDiminishing: GoldDiminishingCurve;
 		};
 	};
 }

@@ -205,7 +205,8 @@ export async function auth(request: Request, banByPass = false, tosByPass = fals
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig().general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards,
+				dailyFightGold: 0
 			});
 
 			const playerDinozData = await prisma.dinoz.findMany({
@@ -354,7 +355,8 @@ export async function noStrictAuth(request: Request, banByPass = false) {
 			await setPlayer(user.id, {
 				lastLogin: new Date(),
 				labruteDone: false,
-				dailyGridRewards: gameConfig().general.dailyGridRewards
+				dailyGridRewards: gameConfig().general.dailyGridRewards,
+				dailyFightGold: 0
 			});
 			const playerDinozData = await prisma.dinoz.findMany({
 				where: {
@@ -1349,6 +1351,23 @@ export async function spendMoney(playerId: string, money: number) {
 		await createLog(LogType.GoldLost, playerId, undefined, money.toString(), playerData.money.toString());
 
 		return true;
+	});
+}
+
+/** Adds raw gold to the player's daily fight total and returns the new total, in a single query. */
+export async function addDailyFightGold(playerId: string, rawGold: number) {
+	return withSpan(addDailyFightGold.name, async () => {
+		return prisma.player.update({
+			where: {
+				id: playerId
+			},
+			data: {
+				dailyFightGold: {
+					increment: rawGold
+				}
+			},
+			select: { dailyFightGold: true }
+		});
 	});
 }
 

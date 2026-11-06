@@ -27893,6 +27893,7 @@ export namespace Prisma {
     quetzuBought: number | null
     clanId: number | null
     dailyGridRewards: number | null
+    dailyFightGold: number | null
     archivedSiteId: number | null
     displayedNotifications: number | null
     banCaseId: number | null
@@ -27904,6 +27905,7 @@ export namespace Prisma {
     quetzuBought: number | null
     clanId: number | null
     dailyGridRewards: number | null
+    dailyFightGold: number | null
     archivedSiteId: number | null
     displayedNotifications: number | null
     banCaseId: number | null
@@ -27933,6 +27935,7 @@ export namespace Prisma {
     role: $Enums.AdminRole | null
     lang: $Enums.Lang | null
     dailyGridRewards: number | null
+    dailyFightGold: number | null
     skipFight: boolean | null
     skipLevel: boolean | null
     autoReequipItems: boolean | null
@@ -27969,6 +27972,7 @@ export namespace Prisma {
     role: $Enums.AdminRole | null
     lang: $Enums.Lang | null
     dailyGridRewards: number | null
+    dailyFightGold: number | null
     skipFight: boolean | null
     skipLevel: boolean | null
     autoReequipItems: boolean | null
@@ -28005,6 +28009,7 @@ export namespace Prisma {
     role: number
     lang: number
     dailyGridRewards: number
+    dailyFightGold: number
     skipFight: number
     skipLevel: number
     autoReequipItems: number
@@ -28026,6 +28031,7 @@ export namespace Prisma {
     quetzuBought?: true
     clanId?: true
     dailyGridRewards?: true
+    dailyFightGold?: true
     archivedSiteId?: true
     displayedNotifications?: true
     banCaseId?: true
@@ -28037,6 +28043,7 @@ export namespace Prisma {
     quetzuBought?: true
     clanId?: true
     dailyGridRewards?: true
+    dailyFightGold?: true
     archivedSiteId?: true
     displayedNotifications?: true
     banCaseId?: true
@@ -28066,6 +28073,7 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    dailyFightGold?: true
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
@@ -28102,6 +28110,7 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    dailyFightGold?: true
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
@@ -28138,6 +28147,7 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    dailyFightGold?: true
     skipFight?: true
     skipLevel?: true
     autoReequipItems?: true
@@ -28262,6 +28272,7 @@ export namespace Prisma {
     role: $Enums.AdminRole
     lang: $Enums.Lang
     dailyGridRewards: number
+    dailyFightGold: number
     skipFight: boolean
     skipLevel: boolean
     autoReequipItems: boolean
@@ -28318,6 +28329,7 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    dailyFightGold?: boolean
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -28397,6 +28409,7 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    dailyFightGold?: boolean
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -28436,6 +28449,7 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    dailyFightGold?: boolean
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -28475,6 +28489,7 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    dailyFightGold?: boolean
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -28489,7 +28504,7 @@ export namespace Prisma {
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "autoReequipItems" | "bypassGatheringGrid" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "tosAccepted" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "dailyFightGold" | "skipFight" | "skipLevel" | "autoReequipItems" | "bypassGatheringGrid" | "shareArchivedData" | "archivedSiteId" | "displayedNotifications" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "tosAccepted" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clan?: boolean | Player$clanArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -28611,6 +28626,7 @@ export namespace Prisma {
       role: $Enums.AdminRole
       lang: $Enums.Lang
       dailyGridRewards: number
+      dailyFightGold: number
       skipFight: boolean
       skipLevel: boolean
       autoReequipItems: boolean
@@ -29109,6 +29125,7 @@ export namespace Prisma {
     readonly role: FieldRef<"Player", 'AdminRole'>
     readonly lang: FieldRef<"Player", 'Lang'>
     readonly dailyGridRewards: FieldRef<"Player", 'Int'>
+    readonly dailyFightGold: FieldRef<"Player", 'Int'>
     readonly skipFight: FieldRef<"Player", 'Boolean'>
     readonly skipLevel: FieldRef<"Player", 'Boolean'>
     readonly autoReequipItems: FieldRef<"Player", 'Boolean'>
@@ -91641,6 +91658,7 @@ export namespace Prisma {
     role: 'role',
     lang: 'lang',
     dailyGridRewards: 'dailyGridRewards',
+    dailyFightGold: 'dailyFightGold',
     skipFight: 'skipFight',
     skipLevel: 'skipLevel',
     autoReequipItems: 'autoReequipItems',
@@ -93839,6 +93857,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntFilter<"Player"> | number
+    dailyFightGold?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
@@ -93917,6 +93936,7 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
@@ -94000,6 +94020,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntFilter<"Player"> | number
+    dailyFightGold?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
@@ -94076,6 +94097,7 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
@@ -94121,6 +94143,7 @@ export namespace Prisma {
     role?: EnumAdminRoleWithAggregatesFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangWithAggregatesFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntWithAggregatesFilter<"Player"> | number
+    dailyFightGold?: IntWithAggregatesFilter<"Player"> | number
     skipFight?: BoolWithAggregatesFilter<"Player"> | boolean
     skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
     autoReequipItems?: BoolWithAggregatesFilter<"Player"> | boolean
@@ -98860,6 +98883,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -98937,6 +98961,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -99012,6 +99037,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -99089,6 +99115,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -99165,6 +99192,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -99201,6 +99229,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -99237,6 +99266,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -104354,6 +104384,7 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
@@ -104373,6 +104404,7 @@ export namespace Prisma {
     quetzuBought?: SortOrder
     clanId?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     archivedSiteId?: SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
@@ -104402,6 +104434,7 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
@@ -104438,6 +104471,7 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     skipFight?: SortOrder
     skipLevel?: SortOrder
     autoReequipItems?: SortOrder
@@ -104456,6 +104490,7 @@ export namespace Prisma {
     quetzuBought?: SortOrder
     clanId?: SortOrder
     dailyGridRewards?: SortOrder
+    dailyFightGold?: SortOrder
     archivedSiteId?: SortOrder
     displayedNotifications?: SortOrder
     banCaseId?: SortOrder
@@ -114404,6 +114439,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -114480,6 +114516,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -115276,6 +115313,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -115352,6 +115390,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -117892,6 +117931,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -117968,6 +118008,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -118169,6 +118210,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -118245,6 +118287,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -118749,6 +118792,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -118825,6 +118869,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -118969,6 +119014,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -119045,6 +119091,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -121844,6 +121891,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -121920,6 +121968,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -122010,6 +122059,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -122086,6 +122136,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -122160,6 +122211,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -122236,6 +122288,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -122326,6 +122379,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -122402,6 +122456,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -122476,6 +122531,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -122552,6 +122608,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -122743,6 +122800,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -122819,6 +122877,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -123614,6 +123673,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -123690,6 +123750,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -123780,6 +123841,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -123856,6 +123918,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -123930,6 +123993,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124006,6 +124070,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124096,6 +124161,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -124172,6 +124238,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -124284,6 +124351,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124360,6 +124428,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124500,6 +124569,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -124576,6 +124646,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -124806,6 +124877,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124882,6 +124954,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -124972,6 +125045,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125048,6 +125122,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125122,6 +125197,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125198,6 +125274,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125288,6 +125365,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125364,6 +125442,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125438,6 +125517,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125514,6 +125594,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125604,6 +125685,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125680,6 +125762,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125754,6 +125837,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125830,6 +125914,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -125920,6 +126005,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -125996,6 +126082,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -126070,6 +126157,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126146,6 +126234,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126236,6 +126325,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -126312,6 +126402,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -126386,6 +126477,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126462,6 +126554,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126552,6 +126645,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -126628,6 +126722,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -126792,6 +126887,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126868,6 +126964,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -126992,6 +127089,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -127068,6 +127166,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -127248,6 +127347,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -127324,6 +127424,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -127572,6 +127673,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -127648,6 +127750,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -127871,6 +127974,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -127947,6 +128051,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -128149,6 +128254,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -128225,6 +128331,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -128517,6 +128624,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -128593,6 +128701,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -128683,6 +128792,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -128759,6 +128869,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -128939,6 +129050,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -129015,6 +129127,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -129217,6 +129330,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -129293,6 +129407,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -129391,6 +129506,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -129467,6 +129583,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -129785,6 +129902,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -129860,6 +129978,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -130051,6 +130170,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -130127,6 +130247,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -130441,6 +130562,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntFilter<"Player"> | number
+    dailyFightGold?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     autoReequipItems?: BoolFilter<"Player"> | boolean
@@ -130899,6 +131021,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -130975,6 +131098,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -131119,6 +131243,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -131195,6 +131320,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -131980,6 +132106,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -132056,6 +132183,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -132194,6 +132322,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -132270,6 +132399,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -132398,6 +132528,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -132474,6 +132605,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -132612,6 +132744,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -132688,6 +132821,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -132864,6 +132998,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -132940,6 +133075,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133084,6 +133220,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -133160,6 +133297,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -133442,6 +133580,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133518,6 +133657,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133597,6 +133737,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133673,6 +133814,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133752,6 +133894,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -133828,6 +133971,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -134078,6 +134222,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134154,6 +134299,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134239,6 +134385,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134315,6 +134462,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134400,6 +134548,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134476,6 +134625,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -134604,6 +134754,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -134680,6 +134831,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -134781,6 +134933,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -134857,6 +135010,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -134997,6 +135151,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135073,6 +135228,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135186,6 +135342,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135262,6 +135419,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135397,6 +135555,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -135473,6 +135632,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -135598,6 +135758,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135674,6 +135835,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -135806,6 +135968,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -135882,6 +136045,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136042,6 +136206,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -136118,6 +136283,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -136192,6 +136358,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136268,6 +136435,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136358,6 +136526,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -136434,6 +136603,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -136508,6 +136678,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136584,6 +136755,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136663,6 +136835,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136739,6 +136912,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136818,6 +136992,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -136894,6 +137069,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -137246,6 +137422,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -137322,6 +137499,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -137407,6 +137585,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -137483,6 +137662,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -137568,6 +137748,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -137644,6 +137825,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -138057,6 +138239,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -138133,6 +138316,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -138276,6 +138460,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -138352,6 +138537,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -139087,6 +139273,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -139163,6 +139350,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -139494,6 +139682,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -139570,6 +139759,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -139791,6 +139981,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -139867,6 +140058,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -139957,6 +140149,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -140033,6 +140226,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -140107,6 +140301,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -140183,6 +140378,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -140420,6 +140616,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -140496,6 +140693,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -143570,6 +143768,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    dailyFightGold?: number
     skipFight?: boolean
     skipLevel?: boolean
     autoReequipItems?: boolean
@@ -143855,6 +144054,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -143930,6 +144130,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
@@ -144005,6 +144206,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    dailyFightGold?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     autoReequipItems?: BoolFieldUpdateOperationsInput | boolean
