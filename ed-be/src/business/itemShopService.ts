@@ -8,12 +8,12 @@ import { shopList } from '@drpg/core/models/shop/ShopList';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
 import { Request } from 'express';
 import { createLog } from '../dao/logDao.js';
-import { auth, getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { auth, getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, spendMoney } from '../dao/playerDao.js';
+import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { decreaseIngredientQuantity, getIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import { consumeIngredient, getIngredientsDataRequest } from '../dao/playerIngredientDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 import { Player } from '@drpg/prisma';
@@ -152,13 +152,11 @@ export async function buyItem(req: Request) {
 		if (!playerIngredient || playerIngredient.quantity < itemFromShop.price * quantityBought) {
 			throw new ExpectedError(`You don't have enough for purchassing this quantity of coupons!`);
 		}
-		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
-		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList[Item.TREASURE_COUPON].itemId);
-		if (!playerTreasure) {
-			await insertItem(authed.id, { itemId: Item.TREASURE_COUPON, quantity: quantityBought });
-		} else {
-			await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, quantityBought);
+		if (!(await consumeIngredient(authed.id, itemReference.itemId, itemFromShop.price * quantityBought))) {
+			throw new ExpectedError(`You don't have enough for purchassing this quantity of coupons!`);
 		}
+		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList[Item.TREASURE_COUPON].itemId);
+		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, quantityBought);
 
 		await createLog(
 			LogType.ItemBought,
@@ -189,21 +187,16 @@ export async function buyItem(req: Request) {
 
 		// All checks passed related to gold, let's update the stuff
 
-		await removeMoney(authed.id, itemReference.price * quantityBought);
+		if (!(await spendMoney(authed.id, itemReference.price * quantityBought))) {
+			throw new ExpectedError(translate('notEnoughMoney', authed));
+		}
 	}
 
 	// Continue updating stuff that is common to normal and magic items
 
-	// Add items to the player's inventory
-	// Update entry if it already exists
+	// Add items to the player's inventory (upsert: concurrent purchases can't collide on the entry's creation)
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
-	if (playerItemData) {
-		await increaseItemQuantity(authed.id, itemReference.itemId, quantityBought);
-	}
-	// Else create it
-	else {
-		await insertItem(authed.id, { itemId: itemReference.itemId, quantity: quantityBought });
-	}
+	await increaseItemQuantity(authed.id, itemReference.itemId, quantityBought);
 
 	await createLog(
 		LogType.ItemBought,

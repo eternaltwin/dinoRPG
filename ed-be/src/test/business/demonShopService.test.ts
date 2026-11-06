@@ -16,20 +16,23 @@ import { LogType, UnavailableReason } from '@drpg/prisma';
 
 import { auth } from '../../dao/playerDao.js';
 import {
+	claimDinozForSacrifice,
+	claimDinozForUnsacrifice,
 	createMultipleDemonDinoz,
 	deleteDinozInDemonShopRequest,
 	getDinozDataForSacrificeRequest,
 	getDinozDataForUnsacrificeRequest,
 	getDinozFromDemonShopRequest,
 	getPlayerDemonShopRequest,
-	getSacrificedDinozRequest
+	getSacrificedDinozRequest,
+	releaseDinozFromUnsacrifice
 } from '../../dao/demonShopDao.js';
 import { getRandomArrayElement } from '../../utils/index.js';
 import { getDemonShopPrice, hasAnyActiveDinozAt, isAtMaxActiveDinoz } from '../../utils/dinoz.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { makeRequest } from '../helpers/req.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../../dao/playerItemDao.js';
+import { consumeItem, decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
 import { updateDinozCount, updatePoints } from '../../dao/rankingDao.js';
 import { createDinoz, getDinozFicheRequest, updateDinoz } from '../../dao/dinozDao.js';
 import { computeUSkillsForPlayer } from '../../business/skillService.js';
@@ -56,13 +59,16 @@ vi.mock('../../dao/demonShopDao.js', () => ({
 	getDinozDataForSacrificeRequest: vi.fn(),
 	getDinozDataForUnsacrificeRequest: vi.fn(),
 	deleteDinozInDemonShopRequest: vi.fn(),
-	getSacrificedDinozRequest: vi.fn().mockResolvedValue([])
+	getSacrificedDinozRequest: vi.fn().mockResolvedValue([]),
+	claimDinozForSacrifice: vi.fn(),
+	claimDinozForUnsacrifice: vi.fn(),
+	releaseDinozFromUnsacrifice: vi.fn()
 }));
 
 vi.mock('../../dao/playerItemDao.js', () => ({
+	consumeItem: vi.fn(),
 	decreaseItemQuantity: vi.fn(),
-	increaseItemQuantity: vi.fn(),
-	insertItem: vi.fn()
+	increaseItemQuantity: vi.fn()
 }));
 
 vi.mock('../../dao/rankingDao.js', () => ({
@@ -658,6 +664,7 @@ describe('sacrificeDinoz', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(claimDinozForSacrifice).mockResolvedValue(true);
 	});
 
 	// ── Input validation ────────────────────────────────────────────────────────
@@ -717,7 +724,7 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
-			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed, remaining: 0 });
+			expect(claimDinozForSacrifice).toHaveBeenCalledWith(1, DEFAULT_PLAYER_ID);
 			expect(increaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
@@ -737,11 +744,8 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
-			expect(updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.sacrificed, remaining: 0 });
-			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
-				itemId: Item.DEMON_TICKET,
-				quantity: getDemonShopPrice(LEVEL)
-			});
+			expect(claimDinozForSacrifice).toHaveBeenCalledWith(1, DEFAULT_PLAYER_ID);
+			expect(increaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
 			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
@@ -763,21 +767,15 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
-			expect(updateDinoz).toHaveBeenNthCalledWith(1, DEFAULT_DINOZ_ID, {
-				unavailableReason: UnavailableReason.sacrificed,
-				remaining: 0
-			});
-			let nthCall = 2;
+			expect(claimDinozForSacrifice).toHaveBeenCalledWith(DEFAULT_DINOZ_ID, DEFAULT_PLAYER_ID);
+			let nthCall = 1;
 			FOLLOWERS.forEach(f => {
 				expect(updateDinoz).toHaveBeenNthCalledWith(nthCall, f.id, {
 					leader: { disconnect: true }
 				});
 				nthCall++;
 			});
-			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
-				itemId: Item.DEMON_TICKET,
-				quantity: getDemonShopPrice(LEVEL)
-			});
+			expect(increaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
 			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
@@ -789,6 +787,16 @@ describe('sacrificeDinoz', () => {
 			);
 		});
 
+		it('credits nothing when a concurrent request already sacrificed the dinoz', async () => {
+			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(makeDinozWPlayer({ level: 10 }));
+			vi.mocked(claimDinozForSacrifice).mockResolvedValue(false);
+			await expect(sacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			expect(increaseItemQuantity).not.toHaveBeenCalled();
+			expect(updatePoints).not.toHaveBeenCalled();
+			expect(updateDinozCount).not.toHaveBeenCalled();
+			expect(createLog).not.toHaveBeenCalled();
+		});
+
 		it('normal flow - leave group if following', async () => {
 			const LEVEL = 10;
 			vi.mocked(getDinozDataForSacrificeRequest).mockResolvedValue(
@@ -798,17 +806,11 @@ describe('sacrificeDinoz', () => {
 
 			expect(result).toBeDefined();
 
+			expect(claimDinozForSacrifice).toHaveBeenCalledWith(DEFAULT_DINOZ_ID, DEFAULT_PLAYER_ID);
 			expect(updateDinoz).toHaveBeenNthCalledWith(1, DEFAULT_DINOZ_ID, {
-				unavailableReason: UnavailableReason.sacrificed,
-				remaining: 0
-			});
-			expect(updateDinoz).toHaveBeenNthCalledWith(2, DEFAULT_DINOZ_ID, {
 				leader: { disconnect: true }
 			});
-			expect(insertItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, {
-				itemId: Item.DEMON_TICKET,
-				quantity: getDemonShopPrice(LEVEL)
-			});
+			expect(increaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, -1);
 			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
@@ -826,6 +828,8 @@ describe('unsacrificeDinoz', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(claimDinozForUnsacrifice).mockResolvedValue(true);
+		vi.mocked(consumeItem).mockResolvedValue(true);
 		vi.mocked(hasAnyActiveDinozAt).mockResolvedValue(true);
 		vi.mocked(isAtMaxActiveDinoz).mockResolvedValue(false);
 	});
@@ -890,11 +894,8 @@ describe('unsacrificeDinoz', () => {
 
 			expect(result).toBeUndefined();
 
-			expect(updateDinoz).toHaveBeenCalledWith(1, {
-				unavailableReason: UnavailableReason.unsacrificing,
-				unavailableUntil: expect.any(Date)
-			});
-			expect(decreaseItemQuantity).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
+			expect(claimDinozForUnsacrifice).toHaveBeenCalledWith(1, DEFAULT_PLAYER_ID, expect.any(Date));
+			expect(consumeItem).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, Item.DEMON_TICKET, getDemonShopPrice(LEVEL));
 			expect(updatePoints).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, LEVEL);
 			expect(updateDinozCount).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, 1);
 			expect(computeUSkillsForPlayer).toHaveBeenCalledOnce();
@@ -904,6 +905,28 @@ describe('unsacrificeDinoz', () => {
 				DEFAULT_DINOZ_ID,
 				getDemonShopPrice(LEVEL)
 			);
+		});
+
+		it('costs nothing when a concurrent request already unsacrificed the dinoz', async () => {
+			vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
+				makeDinozWPlayer({ level: 10, unavailableReason: UnavailableReason.sacrificed })
+			);
+			vi.mocked(claimDinozForUnsacrifice).mockResolvedValue(false);
+			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.dinozNotAvailable');
+			expect(consumeItem).not.toHaveBeenCalled();
+			expect(updatePoints).not.toHaveBeenCalled();
+			expect(createLog).not.toHaveBeenCalled();
+		});
+
+		it('puts the dinoz back when a concurrent request spent the tickets first', async () => {
+			vi.mocked(getDinozDataForUnsacrificeRequest).mockResolvedValue(
+				makeDinozWPlayer({ level: 10, unavailableReason: UnavailableReason.sacrificed })
+			);
+			vi.mocked(consumeItem).mockResolvedValue(false);
+			await expect(unsacrificeDinoz(req({ dinozId: '1' }))).rejects.toThrow('error.notEnoughTickets');
+			expect(releaseDinozFromUnsacrifice).toHaveBeenCalledWith(1);
+			expect(updatePoints).not.toHaveBeenCalled();
+			expect(createLog).not.toHaveBeenCalled();
 		});
 	});
 });

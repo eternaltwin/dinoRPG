@@ -56,6 +56,26 @@ export const decreaseItemQuantity = async (playerId: string, itemId: number, qua
 	}
 };
 
+/**
+ * Remove items from a player only if they own enough of them. The check and the write are a single
+ * statement, so concurrent requests can't spend the same items twice.
+ * @returns `true` if the items were removed, `false` if the player does not have enough
+ */
+export const consumeItem = async (playerId: string, itemId: number, quantity: number): Promise<boolean> => {
+	const updated = await prisma.playerItem.updateMany({
+		where: { itemId, playerId, quantity: { gte: quantity } },
+		data: { quantity: { decrement: quantity } }
+	});
+
+	if (updated.count === 0) {
+		return false;
+	}
+
+	await prisma.playerItem.deleteMany({ where: { itemId, playerId, quantity: { lte: 0 } } });
+
+	return true;
+};
+
 export async function insertItem(playerId: string, newItem: Prisma.PlayerItemCreateInput) {
 	return prisma.playerItem.create({
 		data: {

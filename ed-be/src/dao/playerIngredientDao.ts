@@ -90,3 +90,23 @@ export async function setMultipleIngredient(ingredientList: Prisma.PlayerIngredi
 		data: ingredientList
 	});
 }
+
+/**
+ * Remove ingredients from a player only if they own enough of them. The check and the write are a single
+ * statement, so concurrent requests can't spend the same ingredients twice.
+ * @returns `true` if the ingredients were removed, `false` if the player does not have enough
+ */
+export const consumeIngredient = async (playerId: string, ingredientId: number, quantity: number): Promise<boolean> => {
+	const updated = await prisma.playerIngredient.updateMany({
+		where: { ingredientId, playerId, quantity: { gte: quantity } },
+		data: { quantity: { decrement: quantity } }
+	});
+
+	if (updated.count === 0) {
+		return false;
+	}
+
+	await prisma.playerIngredient.deleteMany({ where: { ingredientId, playerId, quantity: { lte: 0 } } });
+
+	return true;
+};

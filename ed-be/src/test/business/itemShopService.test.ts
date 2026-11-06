@@ -6,7 +6,7 @@ vi.mock('../../dao/playerDao.js', () => ({
 	auth: vi.fn(),
 	getPlayerShopItemsDataRequest: vi.fn(),
 	getPlayerShopOneItemDataRequest: vi.fn(),
-	removeMoney: vi.fn()
+	spendMoney: vi.fn()
 }));
 vi.mock('../../dao/playerItemDao.js', () => ({
 	decreaseItemQuantity: vi.fn(),
@@ -15,14 +15,15 @@ vi.mock('../../dao/playerItemDao.js', () => ({
 }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
 vi.mock('../../dao/playerIngredientDao.js', () => ({
-	decreaseIngredientQuantity: vi.fn(),
+	consumeIngredient: vi.fn(),
 	getIngredientsDataRequest: vi.fn()
 }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 
 import * as playerDao from '../../dao/playerDao.js';
 import * as playerItemDao from '../../dao/playerItemDao.js';
-import { getIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
+import { consumeIngredient, getIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
+import { createLog } from '../../dao/logDao.js';
 import { getItemsFromShop, buyItem } from '../../business/itemShopService.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
@@ -41,6 +42,8 @@ const playerData = (overrides = {}) => ({
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
+	vi.mocked(playerDao.spendMoney).mockResolvedValue(true as never);
+	vi.mocked(consumeIngredient).mockResolvedValue(true as never);
 });
 
 describe('getItemsFromShop', () => {
@@ -73,8 +76,8 @@ describe('buyItem', () => {
 	it('buys a classic item (new entry)', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);
 		const result = await buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '2' }));
-		expect(playerDao.removeMoney).toHaveBeenCalled();
-		expect(playerItemDao.insertItem).toHaveBeenCalled();
+		expect(playerDao.spendMoney).toHaveBeenCalled();
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('p1', 3, 2);
 		expect(result.itemId).toBe(3);
 	});
 	it('buys a classic item (increment existing)', async () => {
@@ -119,5 +122,25 @@ describe('buyItem', () => {
 		vi.mocked(getIngredientsDataRequest).mockResolvedValue({ quantity: 1000 } as never);
 		const result = await buyItem(req({ shopId: '20' }, { itemId: '1', quantity: '2' }));
 		expect(result.quantity).toBe(2);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
+	});
+	it('gives nothing when a concurrent request spent the gold first', async () => {
+		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);
+		vi.mocked(playerDao.spendMoney).mockResolvedValue(false as never);
+		await expect(buyItem(req({ shopId: '1' }, { itemId: '3', quantity: '2' }))).rejects.toThrow('notEnoughMoney');
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(createLog).not.toHaveBeenCalled();
+	});
+	it('gives no coupon when a concurrent request spent the ingredients first', async () => {
+		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(
+			playerData({ dinoz: [{ placeId: 2, status: [] }] }) as never
+		);
+		vi.mocked(getIngredientsDataRequest).mockResolvedValue({ quantity: 1000 } as never);
+		vi.mocked(consumeIngredient).mockResolvedValue(false as never);
+		await expect(buyItem(req({ shopId: '20' }, { itemId: '1', quantity: '2' }))).rejects.toThrow(
+			"You don't have enough"
+		);
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(createLog).not.toHaveBeenCalled();
 	});
 });

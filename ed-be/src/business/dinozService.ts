@@ -52,6 +52,7 @@ import { TemporaryStatus } from '../constants/index.js';
 import {
 	checkFrozenDinoz,
 	checkRestDinoz,
+	consumeRemainingAction,
 	createDinoz,
 	getAllUnavailableUntil,
 	getAvailableDinozToFollow,
@@ -82,12 +83,12 @@ import {
 	getPlayerCompletion,
 	ownsDinoz,
 	removeDailyGridRewards,
-	removeMoney
+	spendMoney
 } from '../dao/playerDao.js';
-import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
+import { claimDinozShop, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { consumeItem, decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -572,11 +573,15 @@ export async function buyDinoz(req: Request) {
 
 	const newDinozProps = initializeDinoz(race, dinozShopData.player.id, dinozShopData.display);
 
-	// Set player money
-	await removeMoney(dinozShopData.player.id, race.price);
+	// Reserve the purchase by emptying the shop, so concurrent purchases are refused
+	if (!(await claimDinozShop(authed.id, dinozId))) {
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
 
-	// Delete all dinoz from dinoz shop
-	await deleteDinozInShopRequest(authed.id);
+	// Set player money
+	if (!(await spendMoney(dinozShopData.player.id, race.price))) {
+		throw new ExpectedError(translate('notEnoughMoney', authed));
+	}
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(newDinozProps);
@@ -1498,20 +1503,34 @@ export async function useIrma(req: Request) {
 
 	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList[Item.POTION_IRMA].itemId);
 
-	const neededIrma = team.filter(d => d.remaining === 0 && (!d.fight || !d.gather)).length;
+	const dinozToRefresh = team.filter(d => !d.fight || !d.gather);
+	const expectedIrma = dinozToRefresh.filter(d => d.remaining <= 0).length;
 
-	if ((!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) && neededIrma > 0) {
+	if ((irmaQuantity?.quantity ?? 0) < expectedIrma) {
 		throw new ExpectedError(translate('notEnoughIrma', authed));
 	}
 
-	for (const dino of team.filter(d => !d.fight || !d.gather)) {
-		if (dino.remaining > 0) {
-			await updateDinoz(dino.id, {
-				fight: true,
-				gather: true,
-				remaining: { decrement: 1 }
-			});
-		} else {
+	// Free actions and potions are spent by conditional writes, before any action is granted: the values read
+	// above may already be outdated if the player sends concurrent requests.
+	const dinozNeedingIrma = [];
+	for (const dino of dinozToRefresh) {
+		if (dino.remaining <= 0 || !(await consumeRemainingAction(dino.id))) {
+			dinozNeedingIrma.push(dino);
+		}
+	}
+
+	if (dinozNeedingIrma.length > 0) {
+		if (!(await consumeItem(dinoz.player.id, itemList[Item.POTION_IRMA].itemId, dinozNeedingIrma.length))) {
+			throw new ExpectedError(translate('notEnoughIrma', authed));
+		}
+		await createLog(
+			LogType.ItemUsed,
+			dinoz.player.id,
+			dinoz.id,
+			itemList[Item.POTION_IRMA].itemId,
+			dinozNeedingIrma.length
+		);
+		for (const dino of dinozNeedingIrma) {
 			await updateDinoz(dino.id, {
 				fight: true,
 				gather: true
@@ -1519,13 +1538,9 @@ export async function useIrma(req: Request) {
 		}
 	}
 
-	if (neededIrma > 0) {
-		await decreaseItemQuantity(dinoz.player.id, itemList[Item.POTION_IRMA].itemId, neededIrma);
-		await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemList[Item.POTION_IRMA].itemId, neededIrma);
-	}
 	return {
 		category: ItemEffect.ACTION,
-		value: neededIrma
+		value: dinozNeedingIrma.length
 	};
 }
 
