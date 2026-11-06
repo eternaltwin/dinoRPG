@@ -50,17 +50,17 @@ function trimToContent(source: string): Promise<string> {
 import { onMounted, ref, watch } from 'vue';
 import { dino } from '@eternaltwin/dinorpg_animations';
 
-const props = defineProps<{ display: string; size: number }>();
+const props = defineProps<{ display: string; size: number; flip: boolean }>();
 const src = ref<string | undefined>();
 
-function renderImage(display: string): Promise<string | null> {
+function renderImage(display: string, flip: boolean): Promise<string | null> {
 	let promise = inFlight.get(display);
 	if (!promise) {
 		promise = new Promise<string | null>(resolve => {
 			try {
 				const d = new dino({
 					data: display,
-					flip: false,
+					flip: flip,
 					damages: 0,
 					dark: false,
 					scale: 1,
@@ -88,12 +88,13 @@ function renderImage(display: string): Promise<string | null> {
 
 async function render() {
 	const display = props.display;
+	const flip = props.flip;
 	const cached = cache.get(display);
 	if (cached) {
 		src.value = cached;
 		return;
 	}
-	const value = await renderImage(display);
+	const value = await renderImage(display, flip);
 	// The piece may show another dinoz by now
 	if (value && display === props.display) src.value = value;
 }
