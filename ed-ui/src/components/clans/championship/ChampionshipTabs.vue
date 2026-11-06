@@ -316,7 +316,7 @@ h4 {
 	.inventory-panel {
 		flex: 1 1 240px;
 		min-width: 0;
-		height: 150px;
+		height: 253px;
 		overflow: auto;
 		background-color: #d19860;
 	}
