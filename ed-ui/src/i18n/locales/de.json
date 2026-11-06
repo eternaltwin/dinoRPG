@@ -4695,7 +4695,7 @@
 		"AdminUpdateQuest": "**Admin ({playerId})** hat für den Spieler {targetId} den Fortschritt der Mission „{quest}“ um {progress} vorgespult/zurückgespult",
 		"AdminUpdatePlayer": "**Admin ({playerId})** hat {stat} des Spielers {targetId} auf {value} gesetzt",
 		"AdminUpdateSecret": "**Admin ({playerId})** hat den geheimen Schlüssel „{key}“ auf {value} gesetzt",
-		"BypassGatheringGridUpdated": "**{player} ({playerId})** a réglé le contournement de la grille de cueillette sur **{value}**.",
+		"BypassGatheringGridUpdated": "**{player} ({playerId})** hat das Überspringen des Sammelrasters auf **{value}** gesetzt.",
 		"ItemUsed": "**{player} ({playerId})** hat **{quantity}x {item}** mit dem Dinoz **{dinoz} ({dinozId})** benutzt.",
 		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft (Gesamt: {total}).",
 		"IngredientSold": "**{player} ({playerId})** hat **{quantity}x {item}** verkauft (Übrig: {amount}).",
