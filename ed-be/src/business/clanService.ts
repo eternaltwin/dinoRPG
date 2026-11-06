@@ -447,11 +447,8 @@ async function removeFromBoardsIfLeft(member: { playerId: string; clanId: number
 		LOGGER.error('removePlayerFromBoards failed', err);
 	}
 	try {
-		// The member no longer belongs to the clan: no more forum nor match channel for them.
-		kickPlayerFromWsChannels(member.playerId, [
-			`${WsChannel.CLAN_FORUM}.${member.clanId}`,
-			`${WsChannel.CLAN_CHAMPIONSHIP}.`
-		]);
+		// The member no longer belongs to the clan: no more clan socket for them.
+		kickPlayerFromWsChannels(member.playerId, [`${WsChannel.CLAN_FORUM}.${member.clanId}`]);
 	} catch (err) {
 		LOGGER.error('kickPlayerFromWsChannels failed', err);
 	}

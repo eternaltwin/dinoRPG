@@ -5535,6 +5535,7 @@
 		}
 	},
 	"clanChampionship": {
+		"connectionLost": "Verbindung zum Clan verloren, versuche es gleich noch einmal.",
 		"phase": {
 			"registration": "Anmeldung geöffnet",
 			"running": "Meisterschaft läuft",

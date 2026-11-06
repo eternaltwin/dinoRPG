@@ -57,20 +57,17 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toast-notification';
 
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
-import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
 import { WsMsgRequestCreation } from '@drpg/core/models/serverEvents/WsMsgRequestCreation';
 import { WsMsgRequestDeletion } from '@drpg/core/models/serverEvents/WsMsgRequestDeletion';
-import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
-import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 import { ClanService } from '../../services';
-import { ServerEventsService } from '../../services/ServerEventsService';
+import { clanSocket } from '../../services/clanSocket';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
 import MarktwinEditor from '../common/MarktwinEditor.vue';
@@ -88,7 +85,6 @@ const router = useRouter();
 const $toast = useToast();
 const instance = getCurrentInstance();
 
-const webSocket = ref<WebSocket | null>(null);
 const store = playerStore();
 
 const hasAccess = ref<boolean>(false);
@@ -96,7 +92,18 @@ const messages = ref<CreateClanMessage[]>([]);
 const page = ref<number>(1);
 const maxPage = ref<number>(1);
 const pageSelector = ref<number>(1);
-const isConnectionOk = ref<boolean | undefined>(undefined);
+const CONNECTION_GRACE = 3000;
+let stopListening: (() => void) | undefined;
+let stopWaitingForReady: (() => void) | undefined;
+let connectionTimer: ReturnType<typeof setTimeout> | undefined;
+const loadFailed = ref<boolean>(false);
+// undefined until the socket had a chance to connect: no error shown while the page loads
+const connectionAttempted = ref<boolean>(false);
+const isConnectionOk = computed<boolean | undefined>(() => {
+	if (loadFailed.value) return false;
+	if (clanSocket.connected.value) return true;
+	return connectionAttempted.value ? false : undefined;
+});
 const newMessage = ref<string>('');
 
 // helpers
@@ -128,8 +135,7 @@ async function createNewMessage(): Promise<void> {
 	if (!hasAccess.value || newMessage.value.trim().length === 0) return;
 	page.value = 1;
 	const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: newMessage.value };
-	webSocket.value?.send(JSON.stringify(payload));
-	newMessage.value = '';
+	if (clanSocket.send(payload)) newMessage.value = '';
 }
 
 async function deleteMessage(msg: CreateClanMessage): Promise<void> {
@@ -143,7 +149,7 @@ async function deleteMessage(msg: CreateClanMessage): Promise<void> {
 	});
 	if (!res) return;
 	const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
-	webSocket.value?.send(JSON.stringify(payload));
+	clanSocket.send(payload);
 }
 
 async function getClanMessages(): Promise<void> {
@@ -151,21 +157,6 @@ async function getClanMessages(): Promise<void> {
 	messages.value = await ClanService.getClanMessages(clanId, page.value);
 	const messagesCount = await ClanService.getClanMessagesCount(clanId);
 	maxPage.value = Math.floor((messagesCount.count + 19) / 20);
-}
-
-async function connectToWs(): Promise<void> {
-	const wsTicket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
-	let url: string;
-	if (import.meta.env.MODE === 'development') {
-		url = `ws://localhost:8082/ws?ticket=${wsTicket.ticket}`;
-	} else {
-		url = `wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`;
-	}
-	webSocket.value = new WebSocket(url);
-	webSocket.value.onmessage = (message: MessageEvent<WsMsgResponse>) => handleWsAction(message);
-	webSocket.value.onerror = () => (isConnectionOk.value = false);
-	webSocket.value.onclose = () => (isConnectionOk.value = false);
-	webSocket.value.onopen = () => (isConnectionOk.value = true);
 }
 
 async function changePage(n: number) {
@@ -180,12 +171,11 @@ async function goToSelectedPage() {
 	}
 }
 
-function handleWsAction(message: MessageEvent<WsMsgResponse>): void {
-	const msgData = JSON.parse(message.data.toString());
-	if (msgData.action === WsMessageAction.CREATE) {
-		updateMessages(msgData.payload);
-	} else if (msgData.action === WsMessageAction.DELETE) {
-		removeMsgFromMessages(msgData.msgId);
+function handleWsAction(message: Record<string, unknown>): void {
+	if (message.action === WsMessageAction.CREATE) {
+		updateMessages(message.payload as CreateClanMessage);
+	} else if (message.action === WsMessageAction.DELETE) {
+		removeMsgFromMessages(message.msgId as number);
 	}
 }
 
@@ -206,23 +196,25 @@ onMounted(async () => {
 		return;
 	}
 
+	stopListening = clanSocket.onMessage(handleWsAction);
+	// Messages may have been missed while the connection was down
+	stopWaitingForReady = clanSocket.onReady(() => void getClanMessages().catch(console.error));
+	connectionTimer = setTimeout(() => (connectionAttempted.value = true), CONNECTION_GRACE);
+
 	try {
 		await getClanMessages();
-		await connectToWs();
 	} catch (err) {
 		console.error(err);
-		isConnectionOk.value = false;
+		loadFailed.value = true;
 		// $toast from the app instance (if registered globally)
 		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
 	}
 });
 
 onBeforeUnmount(() => {
-	try {
-		webSocket.value?.close();
-	} catch (e) {
-		// noop: safe to ignore on unmount
-	}
+	stopListening?.();
+	stopWaitingForReady?.();
+	if (connectionTimer) clearTimeout(connectionTimer);
 });
 </script>
 

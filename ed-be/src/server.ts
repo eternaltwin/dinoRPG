@@ -17,6 +17,7 @@ import {
 	connectUserToWsChannel,
 	disconnectWsUser,
 	processWsIncomingMessage,
+	sendWsReady,
 	setWebSocketServer,
 	setWsConnectionToAlive
 } from './business/serverEventService.js';
@@ -129,10 +130,22 @@ export function mainWrapper() {
 
 function handleWsEvents(wss: WebSocketServer) {
 	wss.on('connection', async (ws: WebSocketCustom, req: IncomingMessage) => {
+		// Before the first await: an unhandled 'error' event would crash the process.
+		ws.on('close', () => {
+			try {
+				disconnectWsUser(ws);
+			} catch (err) {
+				console.error('Cannot close ws connection.', err);
+			}
+		});
+		ws.on('pong', () => setWsConnectionToAlive(ws));
+		ws.on('error', () => disconnectWsUser(ws));
+
 		try {
 			await connectUserToWsChannel(ws, req);
 		} catch (err) {
 			ws.close();
+			return;
 		}
 
 		ws.on('message', async (data: RawData) => {
@@ -145,17 +158,12 @@ function handleWsEvents(wss: WebSocketServer) {
 			}
 		});
 
-		ws.on('close', () => {
-			try {
-				disconnectWsUser(ws);
-			} catch (err) {
-				console.error('Cannot close ws connection.', err);
-			}
-		});
-
-		ws.on('pong', () => setWsConnectionToAlive(ws));
-
-		ws.on('error', () => disconnectWsUser(ws));
+		// Closed while registering: its close handler ran before there was anything to clean.
+		if (ws.readyState !== ws.OPEN) {
+			disconnectWsUser(ws);
+			return;
+		}
+		sendWsReady(ws);
 	});
 
 	const interval = setInterval(() => checkIfWsClientsAreAlive(wss as WebSocketServerCustom), 30000);

@@ -420,11 +420,11 @@ describe('championship board hooks on clan exit', () => {
 		await svc.leaveClanSelf(req());
 		expect(removePlayerFromBoards).toHaveBeenCalledWith('p2', 7);
 	});
-	it('disconnects the member from the clan forum and match channels', async () => {
+	it('disconnects the member from the clan socket', async () => {
 		vi.mocked(clansDao.leaveClanSelfRequest).mockResolvedValue(removed as never);
 		vi.mocked(prisma.clanMember.findUnique).mockResolvedValue(null as never);
 		await svc.leaveClanSelf(req());
-		expect(kickPlayerFromWsChannels).toHaveBeenCalledWith('p2', ['WsClanForum.7', 'WsClanChampionship.']);
+		expect(kickPlayerFromWsChannels).toHaveBeenCalledWith('p2', ['WsClanForum.7']);
 	});
 	it('does not disconnect a member who stays (leader)', async () => {
 		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue(removed as never);

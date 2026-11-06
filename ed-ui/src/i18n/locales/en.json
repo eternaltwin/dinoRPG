@@ -5525,6 +5525,7 @@
 		}
 	},
 	"clanChampionship": {
+		"connectionLost": "Clan connection lost, try again in a moment.",
 		"phase": {
 			"registration": "Registrations open",
 			"running": "Championship in progress",

@@ -30,7 +30,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import type { BoardDirection, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
 import { ClanChampionshipService } from '../../../services';
-import { useChampionshipSocket } from '../../../composables/useChampionshipSocket';
+import { clanSocket } from '../../../services/clanSocket';
 import { errorHandler } from '../../../utils';
 import { playerStore, useDinozStore } from '../../../store';
 import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
@@ -38,7 +38,6 @@ import ChampionshipBoard from './ChampionshipBoard.vue';
 import ChampionshipMatchTimer from './ChampionshipMatchTimer.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
 
-const REFETCH_DELAY = 60_000;
 const RETRY_DELAY = 5_000;
 
 const route = useRoute();
@@ -97,18 +96,15 @@ async function refetch(retry = true) {
 	}
 }
 
-useChampionshipSocket(
-	(v, pushedMatchId) => {
-		if (v === -1 || pushedMatchId !== matchId.value || v > version.value) void refetch();
-	},
-	// No board, no match channel: do not ask for tickets that cannot be granted
-	{ matchId, enabled: computed(() => matchId.value !== null) }
-);
-
-// Round transitions: while there is no live board, look for the next match every minute
-const timer = setInterval(() => {
-	if (!unmounted && loaded.value && (!board.value || board.value.status !== 'live')) void refetch();
-}, REFETCH_DELAY);
+// A board of another match means the next round started: this covers the round transitions too.
+const stopListening = clanSocket.onMessage(message => {
+	if (message.type !== 'boardChanged') return;
+	if (message.matchId !== matchId.value || (message.version as number) > version.value) void refetch();
+});
+// Pushes may have been missed while the connection was down
+const stopWaitingForReady = clanSocket.onReady(() => {
+	if (loaded.value) void refetch();
+});
 
 async function runAction(dinozId: number, action: () => Promise<void>) {
 	if (pending.value) return;
@@ -180,7 +176,8 @@ watch(
 );
 onBeforeUnmount(() => {
 	unmounted = true;
-	clearInterval(timer);
+	stopListening();
+	stopWaitingForReady();
 	if (retryTimer) clearTimeout(retryTimer);
 });
 

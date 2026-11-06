@@ -6,34 +6,34 @@ import {
 	FightJournalEntryDTO,
 	MatchBoardDTO
 } from '@drpg/core/models/clan/clanChampionship';
+import { WsClanAction } from '@drpg/core/models/serverEvents/WsClanSocket';
+import { clanSocket } from './clanSocket.js';
 
 export const ClanChampionshipService = {
+	/** Over HTTP: any player reads it, including from another clan's page or without a clan (so without a clan socket). */
 	async getCurrent(): Promise<ClanChampionshipDTO | null> {
 		const res = await http().get(`/clan/championship`);
 		return res.data;
 	},
 	async register(): Promise<void> {
-		await http().post(`/clan/championship/registration`);
+		await clanSocket.request(WsClanAction.CHAMPIONSHIP_REGISTER);
 	},
 	async unregister(): Promise<void> {
-		await http().delete(`/clan/championship/registration`);
+		await clanSocket.request(WsClanAction.CHAMPIONSHIP_UNREGISTER);
 	},
-	async getMatch(): Promise<MatchBoardDTO | null> {
-		const res = await http().get(`/clan/championship/match`);
-		return res.data;
+	getMatch(): Promise<MatchBoardDTO | null> {
+		return clanSocket.request(WsClanAction.CHAMPIONSHIP_GET_MATCH);
 	},
-	async getFights(matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
-		const res = await http().get(`/clan/championship/match/${matchId}/fights`, { params: { before } });
-		return res.data;
+	getFights(matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
+		return clanSocket.request(WsClanAction.CHAMPIONSHIP_GET_FIGHTS, { matchId, before });
 	},
 	async enter(dinozId: number): Promise<void> {
-		await http().post(`/clan/championship/match/enter`, { dinozId });
+		await clanSocket.request(WsClanAction.CHAMPIONSHIP_ENTER, { dinozId });
 	},
 	async leave(dinozId: number): Promise<void> {
-		await http().post(`/clan/championship/match/leave`, { dinozId });
+		await clanSocket.request(WsClanAction.CHAMPIONSHIP_LEAVE, { dinozId });
 	},
-	async move(dinozId: number, direction: BoardDirection): Promise<BoardMoveResult> {
-		const res = await http().post(`/clan/championship/match/move`, { dinozId, direction });
-		return res.data;
+	move(dinozId: number, direction: BoardDirection): Promise<BoardMoveResult> {
+		return clanSocket.request(WsClanAction.CHAMPIONSHIP_MOVE, { dinozId, direction });
 	}
 };

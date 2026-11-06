@@ -8,6 +8,7 @@ vi.mock('../../dao/clansDao.js', () => ({ playerHasRightRequest: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
 vi.mock('../../business/serverEventService.js', () => ({
 	publishToWsChannel: vi.fn(),
+	publishToWsChannelFamily: vi.fn(),
 	kickPlayerFromWsChannels: vi.fn()
 }));
 vi.mock('../../prisma.js', () => ({ prisma: {} }));

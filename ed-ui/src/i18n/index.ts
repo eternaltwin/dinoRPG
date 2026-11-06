@@ -42,6 +42,9 @@ export const Locales: Record<string, LangInfos> = {
 
 export const defaultLocale = LocalesEnum.FR;
 
+/** For code outside a component (once initI18n is done). */
+export const translate = (key: string): string => (i18n.global.t as (key: string) => string)(key);
+
 export const initI18n = async () => {
 	i18n = createI18n({
 		locale: localStore().getLanguage || LocalesEnum.FR,

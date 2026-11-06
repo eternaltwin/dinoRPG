@@ -265,3 +265,31 @@ test('the register button appears for the clan leader once an admin has opened r
 		await db.clan.deleteMany({ where: { id: clan.id } });
 	}
 });
+
+test('the clan socket opens as soon as a clan member is logged in, on any page', async ({ page, player, db }) => {
+	const clan = await db.clan.create({ data: { name: `e2e-S-${player.id.slice(0, 8)}`, leaderId: player.id } });
+	await db.clanMember.create({ data: { clanId: clan.id, playerId: player.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clan.id } });
+
+	const ready = new Promise<void>(resolve => {
+		page.on('websocket', socket => {
+			socket.on('framereceived', frame => {
+				if (String(frame.payload).includes('"ready"')) resolve();
+			});
+		});
+	});
+	await page.goto('/');
+	await ready;
+});
+
+test('a player without a clan has no clan socket', async ({ page, player }) => {
+	void player;
+	const sockets: string[] = [];
+	page.on('websocket', socket => {
+		// Vite's own hot reload socket does not count
+		if (socket.url().includes('ticket=')) sockets.push(socket.url());
+	});
+	await page.goto('/');
+	await page.waitForTimeout(2000);
+	expect(sockets).toEqual([]);
+});

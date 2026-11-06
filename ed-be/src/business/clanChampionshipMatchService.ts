@@ -10,7 +10,6 @@ import {
 	MatchBoardDTO,
 	PLACE_REVEAL_HOURS
 } from '@drpg/core/models/clan/clanChampionship';
-import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { CLAN_CHAMPIONSHIP_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
@@ -25,13 +24,11 @@ import {
 	UnavailableReason
 } from '@drpg/prisma';
 import { CronJob } from 'cron';
-import { Request } from 'express';
 import seedrandom from 'seedrandom';
 import { LocalTransactionClient } from '../dao/clansDao.js';
 import { archiveFight } from '../dao/archiveDao.js';
 import { getDinozForChampionshipFight } from '../dao/dinozDao.js';
-import { auth } from '../dao/playerDao.js';
-import { LOGGER } from '../context.js';
+import { Auth } from '../dao/playerDao.js';
 import { prisma } from '../prisma.js';
 import {
 	cellIndex,
@@ -52,7 +49,7 @@ import { getRandomArrayElement } from '../utils/tools.js';
 import { findActiveChampionshipEvent, findVisibleChampionshipEvent, parseEventConfig } from './clanEventService.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { finishChampionship, runChampionshipJob } from './clanChampionshipService.js';
-import { publishToWsChannel } from './serverEventService.js';
+import { publishBoardChanged, publishChampionshipChanged } from './clanChampionshipEvents.js';
 
 const HOUR_MS = 60 * 60 * 1000;
 const TICK_MS = BOARD_TICK_MINUTES * 60 * 1000;
@@ -82,15 +79,6 @@ async function bumpVersion(tx: LocalTransactionClient, matchId: string): Promise
 	return updated.version;
 }
 
-/** Tells the match channel that the board changed. Called after the commit; never throws. */
-function publishBoardChanged(matchId: string, version: number): void {
-	try {
-		publishToWsChannel(`${WsChannel.CLAN_CHAMPIONSHIP}.${matchId}`, { type: 'boardChanged', matchId, version });
-	} catch (err) {
-		LOGGER.error(`Cannot publish the board version of match ${matchId}`, err);
-	}
-}
-
 /** Reveals the place of a match by drawing it among the championship places. */
 export async function drawMatchPlace(tx: LocalTransactionClient, match: { id: string }, places: PlaceEnum[]) {
 	await tx.clanChampionshipMatch.update({
@@ -99,9 +87,12 @@ export async function drawMatchPlace(tx: LocalTransactionClient, match: { id: st
 	});
 }
 
-async function processMatch(matchId: string, places: PlaceEnum[], wallNow: Date): Promise<void> {
-	const version = await processMatchInTransaction(matchId, places, wallNow);
-	if (version !== null) publishBoardChanged(matchId, version);
+/** Returns whether the run changed the match. */
+async function processMatch(match: MatchClans, places: PlaceEnum[], wallNow: Date): Promise<boolean> {
+	const version = await processMatchInTransaction(match.id, places, wallNow);
+	if (version === null) return false;
+	publishBoardChanged(match, version);
+	return true;
 }
 
 /** Returns the new board version when the run changed the match (bumped once), null otherwise. */
@@ -213,11 +204,15 @@ export async function championshipTick(now: Date = new Date()): Promise<void> {
 
 	const open = await prisma.clanChampionshipMatch.findMany({
 		where: { eventId: event.id, status: { not: ClanChampionshipMatchStatus.finished } },
-		select: { id: true }
+		select: { id: true, homeClanId: true, awayClanId: true }
 	});
-	for (const { id } of open) {
-		await runChampionshipJob(`championshipMatch_${id}`, () => processMatch(id, config.places, now))();
+	let changed = false as boolean;
+	for (const match of open) {
+		await runChampionshipJob(`championshipMatch_${match.id}`, async () => {
+			if (await processMatch(match, config.places, now)) changed = true;
+		})();
 	}
+	if (changed) publishChampionshipChanged();
 
 	const remaining = await prisma.clanChampionshipMatch.count({
 		where: { eventId: event.id, status: { not: ClanChampionshipMatchStatus.finished } }
@@ -237,7 +232,8 @@ export function startChampionshipTicker(): CronJob {
 	);
 }
 
-type Authed = Awaited<ReturnType<typeof auth>>;
+type Authed = Auth;
+type MatchClans = { id: string; homeClanId: number | null; awayClanId: number | null };
 type MatchEntity = NonNullable<Awaited<ReturnType<typeof prisma.clanChampionshipMatch.findUnique>>>;
 type PieceEntity = NonNullable<Awaited<ReturnType<typeof prisma.clanChampionshipPiece.findUnique>>>;
 
@@ -440,10 +436,9 @@ function addLog(
 
 /** Runs an action on the player's live match, under the match lock and re-validating its liveness. */
 async function withLiveMatch<T>(
-	req: Request,
+	authed: Auth,
 	action: (tx: LocalTransactionClient, match: MatchEntity, authed: Authed, clanId: number, side: Side) => Promise<T>
 ): Promise<T> {
-	const authed = await auth(req);
 	const noLiveMatch = () => new ExpectedError(translate('clanChampionship.noLiveMatch', authed));
 	const clanId = authed.clanId;
 	if (clanId === null || clanId === undefined) throw noLiveMatch();
@@ -464,13 +459,12 @@ async function withLiveMatch<T>(
 		},
 		{ timeout: 15000 }
 	);
-	publishBoardChanged(found.id, version);
+	publishBoardChanged(found, version);
 	return result;
 }
 
-export async function enterBoard(req: Request): Promise<void> {
-	const dinozId = Number(req.body.dinozId);
-	await withLiveMatch(req, async (tx, match, authed, clanId, side) => {
+export async function enterBoard(authed: Auth, dinozId: number): Promise<void> {
+	await withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		// The membership may have changed since the match was found, before the lock.
 		const membership = await tx.clanMember.findUnique({ where: { playerId: authed.id }, select: { clanId: true } });
@@ -539,9 +533,8 @@ export async function enterBoard(req: Request): Promise<void> {
 	});
 }
 
-export async function leaveBoard(req: Request): Promise<void> {
-	const dinozId = Number(req.body.dinozId);
-	await withLiveMatch(req, async (tx, match, authed, clanId, side) => {
+export async function leaveBoard(authed: Auth, dinozId: number): Promise<void> {
+	await withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
@@ -561,10 +554,8 @@ export async function leaveBoard(req: Request): Promise<void> {
 	});
 }
 
-export async function moveOnBoard(req: Request): Promise<BoardMoveResult> {
-	const dinozId = Number(req.body.dinozId);
-	const direction = req.body.direction as BoardDirection;
-	return withLiveMatch(req, async (tx, match, authed, clanId, side) => {
+export async function moveOnBoard(authed: Auth, dinozId: number, direction: BoardDirection): Promise<BoardMoveResult> {
+	return withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
@@ -625,7 +616,7 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 		},
 		{ timeout: 15000 }
 	);
-	if (version !== null) publishBoardChanged(found.id, version);
+	if (version !== null) publishBoardChanged(found, version);
 }
 
 type JournalRow = {
@@ -653,8 +644,7 @@ function toJournalEntry(f: JournalRow, readerId: string): FightJournalEntryDTO {
 }
 
 /** One older page of a match journal (`id < before`, newest first); only the two clans of the match may read it. */
-export async function getMatchFights(req: Request, matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
-	const authed = await auth(req);
+export async function getMatchFights(authed: Auth, matchId: string, before: number): Promise<FightJournalEntryDTO[]> {
 	const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 	const clanId = authed.clanId;
 	if (clanId === null || clanId === undefined) throw fail('noLiveMatch');
@@ -672,8 +662,7 @@ export async function getMatchFights(req: Request, matchId: string, before: numb
 }
 
 /** The reader's clan board: its live match, else its latest finished match of the active championship. */
-export async function getMyMatchBoard(req: Request): Promise<MatchBoardDTO | null> {
-	const authed = await auth(req);
+export async function getMyMatchBoard(authed: Auth): Promise<MatchBoardDTO | null> {
 	const clanId = authed.clanId;
 	if (clanId === null || clanId === undefined) return null;
 

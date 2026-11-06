@@ -8,7 +8,7 @@ import { Request } from 'express';
 import { DISCORD, LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
-import { auth } from '../dao/playerDao.js';
+import { Auth, auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
 import { computeStandings } from '../utils/clanChampionship/standings.js';
 import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
@@ -19,6 +19,7 @@ import {
 	isMonday
 } from '../utils/clanChampionship/schedule.js';
 import { drawMatchPlace } from './clanChampionshipMatchService.js';
+import { publishChampionshipChanged } from './clanChampionshipEvents.js';
 import { shuffle } from '../utils/tools.js';
 import translate from '../utils/server/translate.js';
 import {
@@ -109,6 +110,7 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 			computeMatchSlots(new Date(config.registrationEnd), rounds)
 		);
 	});
+	publishChampionshipChanged();
 }
 
 /** running -> finished (called by the tick once every match is finished). */
@@ -121,6 +123,7 @@ export async function finishChampionship(eventId: string): Promise<void> {
 		if (config.phase !== 'running') return;
 		await tx.clanEvent.update({ where: { id: eventId }, data: { config: serializeConfig(config, 'finished') } });
 	});
+	publishChampionshipChanged();
 }
 
 /** Boot: re-arm (or run now if overdue) the close job of the active championship. */
@@ -200,6 +203,7 @@ export async function startClanChampionship(req: Request): Promise<{ id: string 
 		runChampionshipJob(`championshipClose_${event.id}`, () => closeRegistrations(event.id))
 	);
 
+	publishChampionshipChanged();
 	return { id: event.id };
 }
 
@@ -228,6 +232,7 @@ export async function openChampionshipRegistrations(req: Request): Promise<void>
 		}
 		await tx.clanEvent.update({ where: { id: event.id }, data: { startDate: now } });
 	});
+	publishChampionshipChanged();
 }
 
 /**
@@ -247,6 +252,7 @@ export async function startChampionshipMatches(req: Request): Promise<void> {
 			computeMatchSlotsFrom(now, count)
 		);
 	});
+	publishChampionshipChanged();
 }
 
 function isOpenForRegistration(event: { config: string; startDate: Date }): boolean {
@@ -289,8 +295,7 @@ async function assertCanManageRegistration(authed: { id: string; clanId: number 
 	return authed.clanId;
 }
 
-export async function registerClan(req: Request): Promise<void> {
-	const authed = await auth(req);
+export async function registerClan(authed: Auth): Promise<void> {
 	const clanId = await assertCanManageRegistration(authed);
 	const event = await getOpenRegistrationEvent(authed);
 
@@ -314,10 +319,10 @@ export async function registerClan(req: Request): Promise<void> {
 			throw error;
 		}
 	});
+	publishChampionshipChanged();
 }
 
-export async function unregisterClan(req: Request): Promise<void> {
-	const authed = await auth(req);
+export async function unregisterClan(authed: Auth): Promise<void> {
 	const clanId = await assertCanManageRegistration(authed);
 	const event = await getOpenRegistrationEvent(authed);
 
@@ -328,6 +333,7 @@ export async function unregisterClan(req: Request): Promise<void> {
 			throw new ExpectedError(translate('clanChampionship.notRegistered', authed));
 		}
 	});
+	publishChampionshipChanged();
 }
 
 export async function getCurrentChampionship(req: Request): Promise<ClanChampionshipDTO | null> {
