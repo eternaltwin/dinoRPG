@@ -1,5 +1,6 @@
 import {
 	BOARD_MATCH_QUOTA,
+	BOARD_MAX_STORED_AP,
 	BOARD_TICK_AP,
 	BOARD_TICK_MINUTES,
 	BoardDirection,
@@ -149,6 +150,14 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 						await tx.clanChampionshipPiece.updateMany({
 							where: { matchId, state: ClanChampionshipPieceState.onBoard },
 							data: { actionPoints: { increment: BOARD_TICK_AP * missed } }
+						});
+						await tx.clanChampionshipPiece.updateMany({
+							where: {
+								matchId,
+								state: ClanChampionshipPieceState.onBoard,
+								actionPoints: { gt: BOARD_MAX_STORED_AP }
+							},
+							data: { actionPoints: BOARD_MAX_STORED_AP }
 						});
 					}
 					ticksApplied = expected;
