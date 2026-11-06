@@ -3,7 +3,7 @@ import { makeRequest } from '../helpers/req.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
-import { groupGoldMultiplier, groupXpMultiplier } from '@drpg/core/constants';
+import { groupXpMultiplier } from '@drpg/core/constants';
 import type { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { UnavailableReason } from '@drpg/prisma';
 
@@ -287,11 +287,36 @@ describe('group rewards', () => {
 		expect(groupXpMultiplier(6)).toBe(2.5);
 	});
 
-	it('gives gold only a damped share of the same bonus', () => {
-		expect(groupGoldMultiplier(1)).toBe(1);
-		for (const size of [2, 3, 4, 6]) {
-			expect(groupGoldMultiplier(size)).toBeGreaterThan(1);
-			expect(groupGoldMultiplier(size)).toBeLessThan(groupXpMultiplier(size));
+	it('does not apply the group bonus to gold', async () => {
+		// Same monsters and same dice for everyone: only the per-Dinoz base and the team size malus may differ.
+		const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.5);
+		const monsters = Array.from({ length: 3 }, () => ({
+			...monsterList[Monster.GOUPIGNON],
+			level: 20,
+			gold: undefined
+		}));
+		const goldFor = async (size: number) => {
+			vi.mocked(playerDao.addMoney).mockClear();
+			const team = rewardTeam(size, 20);
+			await rewardFightVsMonsters(team as never, monsters, victoryOver(team) as never, PLACE, {
+				id: 'p1',
+				teacher: false
+			});
+			return vi.mocked(playerDao.addMoney).mock.calls[0][1];
+		};
+
+		try {
+			const solo = await goldFor(1);
+			expect(solo).toBeGreaterThan(0);
+			for (const [size, teamSizeMalus] of [
+				[2, 0.5],
+				[3, 0.45],
+				[4, 0.445]
+			]) {
+				expect(Math.abs((await goldFor(size)) - solo * size * teamSizeMalus)).toBeLessThanOrEqual(1);
+			}
+		} finally {
+			randomSpy.mockRestore();
 		}
 	});
 

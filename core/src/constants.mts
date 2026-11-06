@@ -26,21 +26,14 @@ import {
  *
  * The cap keeps a group of 6 from dwarfing every other way to play, and leaves room for
  * future monsters that give more xp.
+ *
+ * Gold does not get this bonus: growing the monster pool already raises a group's gold per
+ * action on its own, so a multiplier on top would inflate the economy.
  */
 export const GROUP_XP_MAX_MULTIPLIER = 2.5;
 
-/**
- * Gold gets a damped share of the same bonus: growing the monster pool already raises a
- * group's gold per action on its own, so applying the full xp multiplier here would inflate
- * the economy. Raise the divisor to damp further, or drop the multiplier entirely.
- */
-export const GROUP_GOLD_DAMPENING = 3;
-
 /** Total xp multiplier awarded to a team of `size` Dinoz. Always 1 for a lone Dinoz. */
 export const groupXpMultiplier = (size: number) => Math.min((size + 1) / 2, GROUP_XP_MAX_MULTIPLIER);
-
-/** Same bonus as groupXpMultiplier, damped, for gold. */
-export const groupGoldMultiplier = (size: number) => 1 + (groupXpMultiplier(size) - 1) / GROUP_GOLD_DAMPENING;
 
 /**
  * Mission xp is expressed as a percentage of the xp needed for the Dinoz's CURRENT level
