@@ -175,8 +175,14 @@ function init() {
 }
 
 onMounted(init);
-// The redirect only changes `:id`: the component is reused, so reload once the route is the right one
-watch(() => route.params.id, init);
+// The redirect only changes `:id`: the component is reused, so reload once the route is the right one.
+// Leaving the page also changes `:id` before the unmount: that must not redirect back to the board.
+watch(
+	() => route.params.id,
+	() => {
+		if (route.name === 'ClanChampionshipMatch') init();
+	}
+);
 onBeforeUnmount(() => {
 	unmounted = true;
 	clearInterval(timer);

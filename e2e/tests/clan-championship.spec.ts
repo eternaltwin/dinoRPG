@@ -123,6 +123,34 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 	}
 });
 
+test('the board page lets the player navigate to another view', async ({ page, player, db }) => {
+	const clan = await db.clan.create({ data: { name: `e2e-nav-${player.id.slice(0, 8)}`, leaderId: player.id } });
+	await db.clanMember.create({ data: { clanId: clan.id, playerId: player.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clan.id } });
+
+	try {
+		await page.goto(`/clan/${clan.id}/championship/match`);
+		await expect(page.locator('.championship-match')).toBeVisible();
+		await page.waitForLoadState('networkidle');
+
+		// Client-side navigation: a full page load would not run the leave of the mounted board page
+		await page.evaluate(async () => {
+			const app = (document.querySelector('#app') as unknown as { __vue_app__: any }).__vue_app__;
+			await app.config.globalProperties.$router.push('/help');
+		});
+
+		await expect(page).toHaveURL(/\/help$/);
+		await expect(page.locator('.championship-match')).toHaveCount(0);
+		// The redirect was asynchronous: make sure the URL stays on the requested view
+		await page.waitForLoadState('networkidle');
+		await expect(page).toHaveURL(/\/help$/);
+	} finally {
+		await db.player.update({ where: { id: player.id }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: clan.id } });
+		await db.clan.delete({ where: { id: clan.id } });
+	}
+});
+
 test('the championship page shows the standings and the next match', async ({ page, player, createPlayer, db }) => {
 	const suffix = player.id.slice(0, 8);
 	const rival = await createPlayer();
