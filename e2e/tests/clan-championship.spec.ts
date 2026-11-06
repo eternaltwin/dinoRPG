@@ -123,6 +123,134 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 	}
 });
 
+test('the selected piece shows its equipment and inventory, and can be healed and equipped from the board', async ({
+	page,
+	player,
+	createPlayer,
+	db
+}) => {
+	const CLOUD_BURGER = 3;
+	const POTION_IRMA = 1;
+	const suffix = player.id.slice(0, 8);
+	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
+	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	const rival = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
+	await db.clanMember.create({ data: { clanId: clanA.id, playerId: player.id, rights: [] } });
+	await db.clanMember.create({ data: { clanId: clanB.id, playerId: rival.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clanA.id } });
+	await db.player.update({ where: { id: rival.id }, data: { clanId: clanB.id } });
+	await db.playerItem.createMany({
+		data: [
+			{ playerId: player.id, itemId: CLOUD_BURGER, quantity: 3 },
+			{ playerId: player.id, itemId: POTION_IRMA, quantity: 1 }
+		]
+	});
+
+	const dinozData = {
+		raceId: 1,
+		level: 1,
+		nextUpElementId: 1,
+		nextUpAltElementId: 2,
+		canChangeName: false,
+		display: 'A093Rmo7JM3f2000',
+		maxLife: 100,
+		experience: 0,
+		nbrUpFire: 0,
+		nbrUpWood: 0,
+		nbrUpWater: 0,
+		nbrUpLightning: 0,
+		nbrUpAir: 0,
+		playerId: player.id
+	};
+	// Created first and without any item: it is the default dinoz, the panel must not fall back on it.
+	await db.dinoz.create({ data: { ...dinozData, name: `Other${suffix}`, placeId: PLACE_ID + 1, life: 100 } });
+	const dinoz = await db.dinoz.create({
+		data: {
+			...dinozData,
+			name: `Dino${suffix}`,
+			placeId: PLACE_ID,
+			life: 50,
+			items: { create: { itemId: CLOUD_BURGER } }
+		}
+	});
+
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * 60 * MINUTE).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	const match = await db.clanChampionshipMatch.create({
+		data: {
+			eventId: event.id,
+			round: 0,
+			homeClanId: clanA.id,
+			awayClanId: clanB.id,
+			homeClanName: clanA.name,
+			awayClanName: clanB.name,
+			startsAt: new Date(now - 5 * MINUTE),
+			endsAt: new Date(now + 2 * DAY),
+			placeId: PLACE_ID,
+			westClanId: clanA.id,
+			obstacles: [],
+			status: 'live',
+			ticksApplied: 0,
+			version: 0
+		}
+	});
+
+	try {
+		await page.goto(`/clan/${clanA.id}/championship/match`);
+		await page.getByTestId(`enter-${dinoz.id}`).click();
+		await expect(page.getByTestId('board-piece')).toHaveCount(1);
+
+		// A piece without action points cannot be selected on the board, but it can still be healed from the list
+		await page.locator('.cdc-tabs li.clickable', { hasText: dinoz.name }).click();
+
+		const hp = page.getByTestId('selection-hp');
+		await expect(hp).toContainText('50/100');
+		// The ":pv:" label is rendered as the icon, not as its HTML source
+		await expect(hp.locator('img')).toHaveCount(1);
+		const equipped = page.locator('.equip img[alt="cloud_burger"]');
+		await expect(equipped).toHaveCount(1);
+
+		// A dinoz locked on the board can only be healed: other items stay disabled
+		const inventory = page.getByTestId('selection-inventory');
+		await expect(inventory.getByTestId(`use-item-${CLOUD_BURGER}`)).toBeVisible();
+		await expect(inventory.getByTestId(`use-item-${POTION_IRMA}`)).toHaveCount(0);
+
+		await inventory.getByTestId(`use-item-${CLOUD_BURGER}`).click();
+		await page.getByTestId('confirm-accept').click();
+		await expect(hp).toContainText('60/100');
+		expect((await db.dinoz.findUniqueOrThrow({ where: { id: dinoz.id } })).life).toBe(60);
+
+		await inventory.getByTestId(`equip-item-${CLOUD_BURGER}`).click();
+		await expect(equipped).toHaveCount(2);
+		expect(await db.dinozItem.count({ where: { dinozId: dinoz.id } })).toBe(2);
+
+		await equipped.first().click();
+		await expect(equipped).toHaveCount(1);
+		await expect.poll(() => db.dinozItem.count({ where: { dinozId: dinoz.id } })).toBe(1);
+	} finally {
+		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.dinoz.deleteMany({ where: { playerId: player.id } });
+		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
+});
+
 test('the board page lets the player navigate to another view', async ({ page, player, db }) => {
 	const clan = await db.clan.create({ data: { name: `e2e-nav-${player.id.slice(0, 8)}`, leaderId: player.id } });
 	await db.clanMember.create({ data: { clanId: clan.id, playerId: player.id, rights: [] } });

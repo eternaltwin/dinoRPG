@@ -5600,7 +5600,6 @@
 		"noneOnBoard": "Aucun dinoz sur le damier.",
 		"hp": ":pv:",
 		"ap": "PA",
-		"position": "Position : ({x}, {y})",
 		"noSelection": "Aucun dinoz sélectionné.",
 		"won": "victoire",
 		"lost": "défaite",

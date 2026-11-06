@@ -54,17 +54,19 @@
 					<div>
 						<strong>{{ selected.name }}</strong>
 						<div>{{ $t('clanChampionship.level', { level: selected.level }) }}</div>
-						<div v-if="selected.life !== undefined">
-							{{ formatContent($t('clanChampionship.hp')) }} : {{ selected.life }}/{{ selected.maxLife }}
+						<div v-if="selected.life !== undefined" data-testid="selection-hp">
+							<span v-html="formatContent($t('clanChampionship.hp'))" /> : {{ selected.life }}/{{ selected.maxLife }}
 						</div>
 						<div v-if="selected.actionPoints !== undefined">
 							{{ $t('clanChampionship.ap') }} : {{ selected.actionPoints }}
 						</div>
 					</div>
-					<div>
-						<DinozEquip /></div>
-					<div class="inventory"><InventoryTab /></div>
-
+					<template v-if="!finished">
+						<DinozEquip :dinozId="selected.dinozId" />
+						<div class="inventory-panel" data-testid="selection-inventory">
+							<InventoryTab :dinozId="selected.dinozId" healOnly @itemUsed="emit('itemUsed', $event)" />
+						</div>
+					</template>
 				</div>
 				<DZButton v-if="canLeave" :off="pending" @click="emit('leave', selected.dinozId)">{{
 					$t('clanChampionship.leave')
@@ -120,11 +122,16 @@ import { ClanChampionshipService } from '../../../services';
 import { errorHandler } from '../../../utils';
 import DZButton from '../../common/DZButton.vue';
 import DinozIcon from './DinozIcon.vue';
-import DinozEquip from "../../dinoz/DinozEquip.vue";
-import InventoryTab from "../../common/InventoryTab.vue";
+import DinozEquip from '../../dinoz/DinozEquip.vue';
+import InventoryTab from '../../common/InventoryTab.vue';
 
 const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; pending: boolean }>();
-const emit = defineEmits<{ enter: [dinozId: number]; leave: [dinozId: number]; select: [dinozId: number] }>();
+const emit = defineEmits<{
+	enter: [dinozId: number];
+	leave: [dinozId: number];
+	select: [dinozId: number];
+	itemUsed: [dinozId: number];
+}>();
 
 const tabs = ['mine', 'selection', 'journal'] as const;
 const tab = ref<(typeof tabs)[number]>('mine');
@@ -301,9 +308,17 @@ h4 {
 	display: flex;
 	gap: 10px;
 	align-items: center;
-	.inventory {
+	flex-wrap: wrap;
+	strong {
+		color: inherit;
+	}
+	// Same background as the dinoz page tab panel: the inventory rows use white text
+	.inventory-panel {
+		flex: 1 1 240px;
+		min-width: 0;
 		height: 150px;
 		overflow: auto;
+		background-color: #d19860;
 	}
 }
 </style>

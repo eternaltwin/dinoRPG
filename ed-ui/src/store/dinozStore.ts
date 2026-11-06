@@ -145,6 +145,12 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		dinozToUpdate.items = items;
 	};
 
+	const setDinozLife = (dinozId: number, life: number): void => {
+		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
+		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+		dinozToUpdate.life = life;
+	};
+
 	const setDinozAttackTimer = (dinozId: number): void => {
 		const dinozToUpdate = dinozList.value.find(d => d.id === dinozId);
 		if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
@@ -197,6 +203,7 @@ export const useDinozStore = defineStore('useDinozStore', () => {
 		setNpc,
 		clearNpc,
 		setItems,
+		setDinozLife,
 		setDinozAttackTimer,
 		getDinozAttackTimer,
 		resetDinozAttackTimer,

@@ -33,12 +33,18 @@ import { useDinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozEquip',
+	props: {
+		// Dinoz to show. Defaults to the current one, whose id is in the route (dinoz page).
+		dinozId: { type: Number, default: undefined }
+	},
 	computed: {
 		itemList() {
 			return itemList;
 		},
 		getInventory(): number[] {
-			const dinoz = useDinozStore().getCurrentDinoz;
+			const store = useDinozStore();
+			const dinoz =
+				this.dinozId === undefined ? store.getCurrentDinoz : store.getDinozList.find(d => d.id === this.dinozId);
 			if (!dinoz) return [];
 			const placesToFill: number = dinoz.maxItems - dinoz.items.length;
 			return dinoz.items.concat(new Array(placesToFill).fill(undefined));
@@ -46,7 +52,7 @@ export default defineComponent({
 	},
 	methods: {
 		async unequip(itemId: number) {
-			const dinozId = parseInt(this.$route.params.id as string);
+			const dinozId = this.dinozId ?? parseInt(this.$route.params.id as string);
 			try {
 				const items = await InventoryService.equipInventoryItem(dinozId, itemId, false);
 				useDinozStore().setItems(
