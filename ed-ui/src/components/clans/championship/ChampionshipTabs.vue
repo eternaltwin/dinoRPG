@@ -55,13 +55,16 @@
 						<strong>{{ selected.name }}</strong>
 						<div>{{ $t('clanChampionship.level', { level: selected.level }) }}</div>
 						<div v-if="selected.life !== undefined">
-							{{ $t('clanChampionship.hp') }} : {{ selected.life }}/{{ selected.maxLife }}
+							{{ formatContent($t('clanChampionship.hp')) }} : {{ selected.life }}/{{ selected.maxLife }}
 						</div>
 						<div v-if="selected.actionPoints !== undefined">
 							{{ $t('clanChampionship.ap') }} : {{ selected.actionPoints }}
 						</div>
-						<div>{{ $t('clanChampionship.position', { x: selected.x, y: selected.y }) }}</div>
 					</div>
+					<div>
+						<DinozEquip /></div>
+					<div class="inventory"><InventoryTab /></div>
+
 				</div>
 				<DZButton v-if="canLeave" :off="pending" @click="emit('leave', selected.dinozId)">{{
 					$t('clanChampionship.leave')
@@ -117,6 +120,8 @@ import { ClanChampionshipService } from '../../../services';
 import { errorHandler } from '../../../utils';
 import DZButton from '../../common/DZButton.vue';
 import DinozIcon from './DinozIcon.vue';
+import DinozEquip from "../../dinoz/DinozEquip.vue";
+import InventoryTab from "../../common/InventoryTab.vue";
 
 const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; pending: boolean }>();
 const emit = defineEmits<{ enter: [dinozId: number]; leave: [dinozId: number]; select: [dinozId: number] }>();
@@ -296,5 +301,9 @@ h4 {
 	display: flex;
 	gap: 10px;
 	align-items: center;
+	.inventory {
+		height: 150px;
+		overflow: auto;
+	}
 }
 </style>

@@ -5598,7 +5598,7 @@
 		"elsewhere": "{count} dinoz ailleurs",
 		"onBoard": "Sur le damier",
 		"noneOnBoard": "Aucun dinoz sur le damier.",
-		"hp": "PV",
+		"hp": ":pv:",
 		"ap": "PA",
 		"position": "Position : ({x}, {y})",
 		"noSelection": "Aucun dinoz sélectionné.",
