@@ -17,8 +17,8 @@ export const DinozService = {
 		const res = await http().put(`/dinoz/setname/${id}`, { newName: newName });
 		return res.data;
 	},
-	async getDinozFiche(id: number): Promise<DinozFiche> {
-		const res = await http().get(`/dinoz/fiche/${id}`);
+	async getDinozFiche(id: number, silent = false): Promise<DinozFiche> {
+		const res = await http().get(`/dinoz/fiche/${id}`, { silent });
 		return res.data;
 	},
 	async getDinozSkill(id: number): Promise<Array<Skill>> {

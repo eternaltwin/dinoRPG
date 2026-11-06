@@ -49,13 +49,18 @@ apiClient.interceptors.request.use(
 // Intercepteur de Réponse
 apiClient.interceptors.response.use(
 	(response: AxiosResponse): AxiosResponse => {
-		const store = useLoadingStore();
-		store.setLoaderOff();
+		// A silent request never turned the loader on: it must not turn off the one of another request
+		if (!response.config.silent) {
+			const store = useLoadingStore();
+			store.setLoaderOff();
+		}
 		return response;
 	},
 	(error: AxiosError): Promise<AxiosError> => {
-		const store = useLoadingStore();
-		store.setLoaderOff();
+		if (!error.config?.silent) {
+			const store = useLoadingStore();
+			store.setLoaderOff();
+		}
 		return Promise.reject(error);
 	}
 );

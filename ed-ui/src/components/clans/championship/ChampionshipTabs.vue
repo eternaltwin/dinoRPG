@@ -64,7 +64,7 @@
 					<template v-if="!finished">
 						<DinozEquip :dinozId="selected.dinozId" />
 						<div class="inventory-panel" data-testid="selection-inventory">
-							<InventoryTab :dinozId="selected.dinozId" healOnly @itemUsed="emit('itemUsed', $event)" />
+							<InventoryTab :dinozId="selected.dinozId" healOnly silent @itemUsed="emit('itemUsed', $event)" />
 						</div>
 					</template>
 				</div>

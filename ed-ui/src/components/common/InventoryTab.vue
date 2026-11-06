@@ -112,7 +112,9 @@ export default defineComponent({
 		// Dinoz the items are used on. Defaults to the current one, whose id is in the route (dinoz page).
 		dinozId: { type: Number, default: undefined },
 		// A dinoz locked on the clan championship board can only be healed (see useItem in ed-be)
-		healOnly: { type: Boolean, default: false }
+		healOnly: { type: Boolean, default: false },
+		// Loads the items without the full page loader, which blocks the page it is embedded in
+		silent: { type: Boolean, default: false }
 	},
 	emits: ['itemUsed'],
 	data() {
@@ -265,7 +267,7 @@ export default defineComponent({
 			this.playerStore.setSortOption(this.sortOption);
 		},
 		async resfreshInventory(): Promise<void> {
-			const items = await InventoryService.getAllItemsData();
+			const items = await InventoryService.getAllItemsData(this.silent);
 			this.allItemsData = items.map(i => {
 				return {
 					...itemList[i.id],

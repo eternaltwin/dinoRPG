@@ -107,6 +107,11 @@ const stopWaitingForReady = clanSocket.onReady(() => {
 	if (loaded.value) void refetch();
 });
 
+// Best effort and silent: the full page loader would block the board on every action
+function refreshFiche(dinozId: number) {
+	dinozStore.refreshDinozFiche(dinozId, true).catch(() => undefined);
+}
+
 async function runAction(dinozId: number, action: () => Promise<void>) {
 	if (pending.value) return;
 	pending.value = true;
@@ -119,8 +124,7 @@ async function runAction(dinozId: number, action: () => Promise<void>) {
 	if (unmounted) return;
 	await refetch();
 	pending.value = false;
-	// Best effort, does not block the board
-	// dinozStore.refreshDinozFiche(dinozId).catch(() => undefined);
+	refreshFiche(dinozId);
 }
 
 async function onMove(direction: BoardDirection) {
@@ -152,8 +156,7 @@ async function onLeave(dinozId: number) {
 // The item was used through the inventory: only the displayed life is left to refresh
 async function onItemUsed(dinozId: number) {
 	await refetch();
-	const life = board.value?.pieces.find(p => p.dinozId === dinozId)?.life;
-	if (life !== undefined) dinozStore.setDinozLife(dinozId, life);
+	refreshFiche(dinozId);
 }
 
 // The board is the one of the player's own clan: any other clan id in the URL is redirected
