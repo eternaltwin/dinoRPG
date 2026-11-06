@@ -162,6 +162,7 @@ import {
 } from '../../business/dinozService.js';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
@@ -956,6 +957,40 @@ describe('gather', () => {
 		const result = await gatherWithDinoz(r);
 		expect(result).toBeDefined();
 		expect(increaseIngredientQuantity).toHaveBeenCalled();
+	});
+
+	describe('special gather token', () => {
+		beforeEach(() => {
+			vi.mocked(DinozUtils.actualPlace).mockReturnValue({
+				placeId: 1,
+				gather: undefined,
+				specialGather: GatherType.ANNIV
+			} as never);
+			vi.mocked(dinozDao.getDinozGatherData).mockResolvedValue(
+				gatherPlayer({ items: [{ itemId: Item.CANDLE_CARD, quantity: 1 }] }) as never
+			);
+			vi.mocked(getCommonGatherInfo).mockResolvedValue([
+				{ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: GatherType.ANNIV }
+			] as never);
+			vi.mocked(updateGrid).mockClear();
+			vi.mocked(createLog).mockClear();
+		});
+
+		it('spends the token before gathering', async () => {
+			vi.mocked(playerItemDao.consumeItem).mockResolvedValue(true as never);
+			const r = makeRequest({ params: { id: '1' }, body: { type: 'anniv', box: [0] } });
+			await gatherWithDinoz(r);
+			expect(playerItemDao.consumeItem).toHaveBeenCalledWith('p1', itemList[Item.CANDLE_CARD].itemId, 1);
+			expect(updateGrid).toHaveBeenCalled();
+		});
+
+		it('gives nothing when a concurrent request spent the token first', async () => {
+			vi.mocked(playerItemDao.consumeItem).mockResolvedValue(false as never);
+			const r = makeRequest({ params: { id: '1' }, body: { type: 'anniv', box: [0] } });
+			await expect(gatherWithDinoz(r)).rejects.toThrow('needed token');
+			expect(updateGrid).not.toHaveBeenCalled();
+			expect(createLog).not.toHaveBeenCalled();
+		});
 	});
 
 	it('gatherWithDinoz throws when no grid exists', async () => {

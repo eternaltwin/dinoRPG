@@ -9,7 +9,7 @@ import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
 import { Request } from 'express';
 import { createLog } from '../dao/logDao.js';
 import { auth, getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, spendMoney } from '../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { consumeItem, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
@@ -252,7 +252,9 @@ async function buyMagicItem(
 	}
 
 	// Set player golden napodino count
-	await decreaseItemQuantity(authed.id, itemList[Item.GOLDEN_NAPODINO].itemId, itemSold.price * quantityBought);
+	if (!(await consumeItem(authed.id, itemList[Item.GOLDEN_NAPODINO].itemId, itemSold.price * quantityBought))) {
+		throw new ExpectedError(translate('notEnoughNapo', authed));
+	}
 }
 
 // Check if player can access the shop

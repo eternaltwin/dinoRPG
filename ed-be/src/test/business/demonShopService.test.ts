@@ -19,7 +19,7 @@ import {
 	claimDinozForSacrifice,
 	claimDinozForUnsacrifice,
 	createMultipleDemonDinoz,
-	deleteDinozInDemonShopRequest,
+	claimDemonShop,
 	getDinozDataForSacrificeRequest,
 	getDinozDataForUnsacrificeRequest,
 	getDinozFromDemonShopRequest,
@@ -32,7 +32,7 @@ import { getDemonShopPrice, hasAnyActiveDinozAt, isAtMaxActiveDinoz } from '../.
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { makeRequest } from '../helpers/req.js';
-import { consumeItem, decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
+import { consumeItem, increaseItemQuantity } from '../../dao/playerItemDao.js';
 import { updateDinozCount, updatePoints } from '../../dao/rankingDao.js';
 import { createDinoz, getDinozFicheRequest, updateDinoz } from '../../dao/dinozDao.js';
 import { computeUSkillsForPlayer } from '../../business/skillService.js';
@@ -58,7 +58,7 @@ vi.mock('../../dao/demonShopDao.js', () => ({
 	getDinozFromDemonShopRequest: vi.fn(),
 	getDinozDataForSacrificeRequest: vi.fn(),
 	getDinozDataForUnsacrificeRequest: vi.fn(),
-	deleteDinozInDemonShopRequest: vi.fn(),
+	claimDemonShop: vi.fn(),
 	getSacrificedDinozRequest: vi.fn().mockResolvedValue([]),
 	claimDinozForSacrifice: vi.fn(),
 	claimDinozForUnsacrifice: vi.fn(),
@@ -67,7 +67,6 @@ vi.mock('../../dao/demonShopDao.js', () => ({
 
 vi.mock('../../dao/playerItemDao.js', () => ({
 	consumeItem: vi.fn(),
-	decreaseItemQuantity: vi.fn(),
 	increaseItemQuantity: vi.fn()
 }));
 
@@ -586,6 +585,8 @@ describe('buyDemonDinoz', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		vi.mocked(auth).mockResolvedValue(mockAuthed);
+		vi.mocked(claimDemonShop).mockResolvedValue(true);
+		vi.mocked(consumeItem).mockResolvedValue(true);
 	});
 
 	// ── Input validation ────────────────────────────────────────────────────────
@@ -642,12 +643,35 @@ describe('buyDemonDinoz', () => {
 			const result = await buyDemonDinoz(req({ id: '1' }));
 
 			expect(result).toBeDefined();
-			expect(decreaseItemQuantity).toHaveBeenCalledOnce();
+			expect(claimDemonShop).toHaveBeenCalledWith(DEFAULT_PLAYER_ID, 1);
+			expect(consumeItem).toHaveBeenCalledOnce();
 			expect(updatePoints).toHaveBeenCalledOnce();
 			expect(updateDinozCount).toHaveBeenCalledOnce();
-			expect(deleteDinozInDemonShopRequest).toHaveBeenCalledOnce();
 			expect(createDinoz).toHaveBeenCalledOnce();
 			expect(getDinozFicheRequest).toHaveBeenCalledOnce();
+		});
+
+		it('spends nothing when a concurrent purchase claimed the shop first', async () => {
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer());
+			vi.mocked(claimDemonShop).mockResolvedValue(false);
+
+			await expect(buyDemonDinoz(req({ id: '1' }))).rejects.toThrow('dinozNotFound');
+
+			expect(consumeItem).not.toHaveBeenCalled();
+			expect(updatePoints).not.toHaveBeenCalled();
+			expect(updateDinozCount).not.toHaveBeenCalled();
+			expect(createDinoz).not.toHaveBeenCalled();
+		});
+
+		it('creates no dinoz when a concurrent request spent the tickets first', async () => {
+			vi.mocked(getPlayerDemonShopRequest).mockResolvedValue(makePlayer());
+			vi.mocked(consumeItem).mockResolvedValue(false);
+
+			await expect(buyDemonDinoz(req({ id: '1' }))).rejects.toThrow('error.notEnoughTickets');
+
+			expect(updatePoints).not.toHaveBeenCalled();
+			expect(updateDinozCount).not.toHaveBeenCalled();
+			expect(createDinoz).not.toHaveBeenCalled();
 		});
 
 		it('dinoz disappear after creation', async () => {

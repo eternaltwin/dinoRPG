@@ -19,7 +19,7 @@ import {
 	getDinozDataForSacrificeRequest,
 	getPlayerDemonShopRequest,
 	createMultipleDemonDinoz,
-	deleteDinozInDemonShopRequest,
+	claimDemonShop,
 	getDinozFromDemonShopRequest,
 	getSacrificedDinozRequest,
 	claimDinozForSacrifice,
@@ -32,7 +32,7 @@ import translate from '../utils/server/translate.js';
 import { DinozSkill, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { createDinoz, getDinozFicheRequest, getDinozUnavailableReason, updateDinoz } from '../dao/dinozDao.js';
-import { consumeItem, decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { consumeItem, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { scheduleJob } from 'node-schedule';
@@ -349,15 +349,20 @@ export async function buyDemonDinoz(req: Request) {
 	}
 
 	// -- DB updates
-	const promises = [];
+	// Reserve the purchase by emptying the shop, so concurrent purchases are refused
+	if (!(await claimDemonShop(player.id, dinozId))) {
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
+	}
 	// Update demon tickets stockpile
-	promises.push(decreaseItemQuantity(player.id, Item.DEMON_TICKET, demon.price));
+	if (!(await consumeItem(player.id, Item.DEMON_TICKET, demon.price))) {
+		throw new ExpectedError(translate('error.notEnoughTickets', authed));
+	}
+
+	const promises = [];
 	// Update player ranking
 	promises.push(updatePoints(player.id, 10));
 	// Update player Dinoz count
 	promises.push(updateDinozCount(authed.id, 1));
-	// Delete shop for player
-	promises.push(deleteDinozInDemonShopRequest(player.id));
 	await Promise.all(promises);
 
 	// dinoz.nbrUp* already includes race + skill effects baked in at generation. maxLife isn't stored on

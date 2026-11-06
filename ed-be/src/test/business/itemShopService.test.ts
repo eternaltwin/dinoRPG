@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { ItemShopType } from '@drpg/core/models/shop/ShopFiche';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({
@@ -9,7 +13,7 @@ vi.mock('../../dao/playerDao.js', () => ({
 	spendMoney: vi.fn()
 }));
 vi.mock('../../dao/playerItemDao.js', () => ({
-	decreaseItemQuantity: vi.fn(),
+	consumeItem: vi.fn(),
 	increaseItemQuantity: vi.fn(),
 	insertItem: vi.fn()
 }));
@@ -19,6 +23,23 @@ vi.mock('../../dao/playerIngredientDao.js', () => ({
 	getIngredientsDataRequest: vi.fn()
 }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
+// No magical shop is open in the game for now: add one to test this path.
+vi.mock('@drpg/core/models/shop/ShopList', async importOriginal => {
+	const actual = await importOriginal<typeof import('@drpg/core/models/shop/ShopList')>();
+	return {
+		...actual,
+		shopList: {
+			...actual.shopList,
+			TEST_MAGIC_SHOP: {
+				shopId: 99,
+				name: 'magic',
+				placeId: PlaceEnum.ANYWHERE,
+				type: ShopType.MAGICAL,
+				listItemsSold: [{ id: 3, price: 2, type: ItemShopType.ITEM }]
+			}
+		}
+	};
+});
 
 import * as playerDao from '../../dao/playerDao.js';
 import * as playerItemDao from '../../dao/playerItemDao.js';
@@ -123,6 +144,25 @@ describe('buyItem', () => {
 		const result = await buyItem(req({ shopId: '20' }, { itemId: '1', quantity: '2' }));
 		expect(result.quantity).toBe(2);
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalled();
+	});
+	describe('magical shop', () => {
+		const napo = itemList[Item.GOLDEN_NAPODINO].itemId;
+		const withNapo = () => playerData({ items: [{ itemId: napo, quantity: 10 }] }) as never;
+
+		it('spends golden napodinos before giving the item', async () => {
+			vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(withNapo());
+			vi.mocked(playerItemDao.consumeItem).mockResolvedValue(true as never);
+			await buyItem(req({ shopId: '99' }, { itemId: '3', quantity: '2' }));
+			expect(playerItemDao.consumeItem).toHaveBeenCalledWith('p1', napo, 4);
+			expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('p1', 3, 2);
+		});
+		it('gives nothing when a concurrent request spent the napodinos first', async () => {
+			vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(withNapo());
+			vi.mocked(playerItemDao.consumeItem).mockResolvedValue(false as never);
+			await expect(buyItem(req({ shopId: '99' }, { itemId: '3', quantity: '2' }))).rejects.toThrow('notEnoughNapo');
+			expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+			expect(createLog).not.toHaveBeenCalled();
+		});
 	});
 	it('gives nothing when a concurrent request spent the gold first', async () => {
 		vi.mocked(playerDao.getPlayerShopOneItemDataRequest).mockResolvedValue(playerData() as never);

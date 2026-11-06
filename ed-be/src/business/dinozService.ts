@@ -88,7 +88,7 @@ import {
 import { claimDinozShop, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
-import { consumeItem, decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { consumeItem, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -1128,9 +1128,9 @@ export async function gatherWithDinoz(req: Request) {
 	// Consume token if it's a special gather. Done after every input check so an invalid
 	// request can never burn the token without gathering.
 	if (gatherPlace.special) {
-		const playerToken = player.items.find(item => item.itemId === gatherPlace.cost.itemId);
-		if (!playerToken) throw new ExpectedError(`You don't have the needed token to gather here.`);
-		await decreaseItemQuantity(player.id, gatherPlace.cost.itemId, 1);
+		if (!(await consumeItem(player.id, gatherPlace.cost.itemId, 1))) {
+			throw new ExpectedError(`You don't have the needed token to gather here.`);
+		}
 
 		await createLog(LogType.ItemUsed, player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
 	}
