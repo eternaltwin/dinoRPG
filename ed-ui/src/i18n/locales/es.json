@@ -4694,6 +4694,7 @@
 		"AdminUpdateQuest": "**Admin ({playerId})** ha incrementado/decrementado en {progress} la progresión de la misión {quest} del jugador {targetId}",
 		"AdminUpdatePlayer": "**Admin ({playerId})** ha actualizado {stat} a {value} del jugador {targetId}",
 		"AdminUpdateSecret": "**Admin ({playerId})** ha actualizado la clave {key} a {value}",
+		"BypassGatheringGridUpdated": "**{player} ({playerId})** a réglé le contournement de la grille de cueillette sur **{value}**.",
 		"ItemUsed": "**{player} ({playerId})** usó **{quantity}x {item}** con Dino **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** ha comprado **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** ha vendido **{quantity}x {item}** (restante {amount}).",
