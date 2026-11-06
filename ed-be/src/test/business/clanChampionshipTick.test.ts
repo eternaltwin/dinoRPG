@@ -157,6 +157,22 @@ describe('championshipTick', () => {
 		});
 	});
 
+	it('caps stored AP at 20 once the missed ticks are credited', async () => {
+		setup(live(), [piece(1, HOME, 5), piece(2, AWAY, 15)]);
+		await championshipTick(min(25));
+		const calls = p.clanChampionshipPiece.updateMany.mock.calls.map((c: any[]) => c[0].data);
+		const credit = calls.findIndex((d: any) => d.actionPoints?.increment !== undefined);
+		const cap = p.clanChampionshipPiece.updateMany.mock.calls.findIndex(
+			(c: any[]) => c[0].where.actionPoints?.gt === 20 && c[0].data.actionPoints === 20
+		);
+		expect(credit).toBeGreaterThanOrEqual(0);
+		expect(cap).toBeGreaterThan(credit);
+		expect(p.clanChampionshipPiece.updateMany.mock.calls[cap][0].where).toMatchObject({
+			matchId: expect.any(String),
+			state: 'onBoard'
+		});
+	});
+
 	it('maps the sides when the away clan is west', async () => {
 		setup(live({ westClanId: AWAY }), [piece(1, HOME, 15), piece(2, AWAY, 5)]);
 		await championshipTick(min(10));
