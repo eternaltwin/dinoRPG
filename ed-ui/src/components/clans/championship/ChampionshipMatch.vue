@@ -3,14 +3,7 @@
 		<p v-if="loadError" class="no-match error" data-testid="board-error">{{ $t('clanChampionship.loadError') }}</p>
 		<p v-if="loaded && !board && !loadError" class="no-match">{{ $t('clanChampionship.noMatch') }}</p>
 		<template v-else-if="board">
-			<ChampionshipScoreBar
-				:west="board.west"
-				:east="board.east"
-				:startsAt="board.startsAt"
-				:endsAt="board.endsAt"
-				:status="board.status"
-			/>
-			<p v-if="board.status === 'finished'" class="finished">{{ $t('clanChampionship.matchFinished') }}</p>
+			<ChampionshipScoreBar :west="board.west" :east="board.east" />
 			<ChampionshipBoard
 				:board="board"
 				:selectedDinozId="selectedDinozId"
@@ -18,6 +11,7 @@
 				@select="selectedDinozId = $event"
 				@move="onMove"
 			/>
+			<ChampionshipMatchTimer :startsAt="board.startsAt" :endsAt="board.endsAt" :status="board.status" />
 			<ChampionshipTabs
 				:board="board"
 				:selectedDinozId="selectedDinozId"
@@ -41,6 +35,7 @@ import { errorHandler } from '../../../utils';
 import { playerStore, useDinozStore } from '../../../store';
 import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import ChampionshipBoard from './ChampionshipBoard.vue';
+import ChampionshipMatchTimer from './ChampionshipMatchTimer.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
 
 const REFETCH_DELAY = 60_000;
@@ -62,8 +57,8 @@ const matchId = computed(() => board.value?.matchId ?? null);
 
 const readerIsWest = computed(() => !!board.value && board.value.west.clanId === player.clanId);
 const rootStyle = computed(() => {
-	const mine = '#2b6cb0';
-	const enemy = '#b03a2e';
+	const mine = '#3fd8c4';
+	const enemy = '#f0762a';
 	return {
 		'--cdc-mine': mine,
 		'--cdc-enemy': enemy,
@@ -201,8 +196,7 @@ defineExpose({ onEnter, onLeave });
 	gap: 8px;
 	padding-bottom: 5px;
 }
-.no-match,
-.finished {
+.no-match {
 	text-align: center;
 	font-weight: bold;
 }
