@@ -40,7 +40,8 @@
 					<td class="act">
 						<a
 							class="on"
-							v-if="item.canBeUsedNow"
+							v-if="canUse(item)"
+							:data-testid="`use-item-${item.itemId}`"
 							v-tippy="{
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
@@ -62,6 +63,7 @@
 						<a
 							class="on"
 							v-if="item.canBeEquipped"
+							:data-testid="`equip-item-${item.itemId}`"
 							v-tippy="{
 								content: formatContent($t('tooltip.item.equipTitle')),
 								theme: 'small'
@@ -106,6 +108,13 @@ export default defineComponent({
 	components: {
 		DZSelect
 	},
+	props: {
+		// Dinoz the items are used on. Defaults to the current one, whose id is in the route (dinoz page).
+		dinozId: { type: Number, default: undefined },
+		// A dinoz locked on the clan championship board can only be healed (see useItem in ed-be)
+		healOnly: { type: Boolean, default: false }
+	},
+	emits: ['itemUsed'],
 	data() {
 		return {
 			allItemsData: [] as Array<ItemFiche>,
@@ -119,7 +128,15 @@ export default defineComponent({
 			hidden: true as boolean
 		};
 	},
+	computed: {
+		targetDinozId(): number {
+			return this.dinozId ?? parseInt(this.$route.params.id as string);
+		}
+	},
 	methods: {
+		canUse(item: ItemFiche): boolean {
+			return item.canBeUsedNow && (!this.healOnly || item.effect?.category === ItemEffect.HEAL);
+		},
 		goToItemShop() {
 			this.$router.push({
 				name: 'ItemShopPage',
@@ -142,7 +159,6 @@ export default defineComponent({
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				const dinozId = this.$route.params.id as string;
 				const res = await this.$confirm({
 					message: this.$t(`inventory.confirmUse`, { name: this.$t(`item.name.${item.name}`) }),
 					header: this.$t('popup.attention'),
@@ -152,7 +168,8 @@ export default defineComponent({
 				});
 				if (!res) return;
 				try {
-					const toasts = await InventoryService.useInventoryItem(item.itemId, +dinozId);
+					const toasts = await InventoryService.useInventoryItem(item.itemId, this.targetDinozId);
+					this.$emit('itemUsed', this.targetDinozId);
 					for (const toast of toasts) {
 						await this.resfreshInventory();
 						if (toast.category === ItemEffect.EGG) {
@@ -204,7 +221,7 @@ export default defineComponent({
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
-				const dinozId = parseInt(this.$route.params.id as string);
+				const dinozId = this.targetDinozId;
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
