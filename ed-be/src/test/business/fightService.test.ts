@@ -5,7 +5,7 @@ import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { groupXpMultiplier } from '@drpg/core/constants';
 import type { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
-import { UnavailableReason } from '@drpg/prisma';
+import { LogType, UnavailableReason } from '@drpg/prisma';
 
 vi.mock('../../context.js', () => ({
 	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
@@ -14,7 +14,12 @@ vi.mock('../../context.js', () => ({
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozFightDataRequest: vi.fn(), updateDinoz: vi.fn() }));
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn(), removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
-vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), removeMoney: vi.fn() }));
+vi.mock('../../dao/playerDao.js', () => ({
+	addDailyFightGold: vi.fn(),
+	addMoney: vi.fn(),
+	auth: vi.fn(),
+	removeMoney: vi.fn()
+}));
 vi.mock('../../dao/dinozItemDao.js', () => ({ removeItemFromDinoz: vi.fn() }));
 vi.mock('../../dao/dinozCatchDao.js', () => ({ createCatch: vi.fn(), removeCatch: vi.fn(), updateCatch: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
@@ -33,6 +38,7 @@ import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { createCatch, removeCatch, updateCatch } from '../../dao/dinozCatchDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
+import { createLog } from '../../dao/logDao.js';
 import { getPlayerEventProgression } from '../../dao/eventsDao.js';
 import { getArchivedFightRequest } from '../../dao/archiveDao.js';
 import { movementListener } from '../../business/specialService.js';
@@ -113,6 +119,10 @@ describe('calculateFightBetweenPlayers', () => {
 });
 
 describe('rewardFightVsMonsters', () => {
+	beforeEach(() => {
+		vi.mocked(playerDao.addDailyFightGold).mockImplementation(async (_id, raw) => ({ dailyFightGold: raw }) as never);
+	});
+
 	it('grants rewards for a fight', async () => {
 		const team = [makeDinoz({ id: 1, life: 120 })];
 		const monsters = [{ ...monsterList[Monster.GOUPIGNON] }];
@@ -179,6 +189,56 @@ describe('rewardFightVsMonsters', () => {
 		expect(createCatch).toHaveBeenCalled();
 		expect(updateCatch).toHaveBeenCalled();
 		expect(removeCatch).toHaveBeenCalled();
+		expect(playerDao.addDailyFightGold).not.toHaveBeenCalled();
+	});
+
+	describe('daily gold diminishing', () => {
+		const reward = () =>
+			rewardFightVsMonsters(
+				[{ id: 1, level: 20, experience: 0, life: 120, placeId: PLACE, status: [], skills: [], items: [] }] as never,
+				[{ ...monsterList[Monster.GOUPIGNON] }],
+				{
+					outcome: FightOutcome.AttackerWin,
+					attackers: [{ dinozId: 1, hpLost: 10, statusGained: [], itemsUsed: [], goldLost: 0, playerId: 'p1' }],
+					defenders: [],
+					fighters: [],
+					catches: [],
+					steps: []
+				} as never,
+				PLACE,
+				{ id: 'p1', teacher: false } as never
+			);
+		const fightLog = () => vi.mocked(createLog).mock.calls.find(call => call[0] === LogType.Fight);
+
+		beforeEach(() => {
+			vi.mocked(createLog).mockClear();
+			vi.mocked(playerDao.addMoney).mockClear();
+			vi.mocked(playerDao.addDailyFightGold).mockClear();
+		});
+
+		it('pays the whole gain below the curve', async () => {
+			vi.mocked(playerDao.addDailyFightGold).mockImplementation(
+				async (_id, raw) => ({ dailyFightGold: 1_000 + raw }) as never
+			);
+			const result = await reward();
+			const raw = vi.mocked(playerDao.addDailyFightGold).mock.calls[0][1];
+			expect(raw).toBeGreaterThan(0);
+			expect(result.goldEarned).toBe(raw);
+			expect(playerDao.addMoney).toHaveBeenCalledWith('p1', raw);
+		});
+
+		it('pays the reduced gain everywhere once past the curve, and logs the raw gain', async () => {
+			vi.mocked(playerDao.addDailyFightGold).mockImplementation(
+				async (_id, raw) => ({ dailyFightGold: 1_000_000 + raw }) as never
+			);
+			const result = await reward();
+			const raw = vi.mocked(playerDao.addDailyFightGold).mock.calls[0][1];
+			const paid = Math.round(raw * 0.1);
+			expect(Math.abs(result.goldEarned - paid)).toBeLessThanOrEqual(1);
+			expect(playerDao.addMoney).toHaveBeenCalledWith('p1', result.goldEarned);
+			expect(fightLog()?.[3]).toBe(result.goldEarned);
+			expect(fightLog()?.[6]).toBe(raw);
+		});
 	});
 });
 

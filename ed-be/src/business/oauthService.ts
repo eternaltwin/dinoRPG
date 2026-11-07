@@ -199,7 +199,8 @@ export class OAuth {
 				await setPlayer(player.id, {
 					lastLogin: new Date(),
 					labruteDone: false,
-					dailyGridRewards: gameConfig().general.dailyGridRewards
+					dailyGridRewards: gameConfig().general.dailyGridRewards,
+					dailyFightGold: 0
 				});
 
 				// Tik bracelet regen (& alive)

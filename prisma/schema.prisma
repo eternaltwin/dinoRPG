@@ -285,6 +285,7 @@ model Player {
   role                   AdminRole               @default(PLAYER)
   lang                   Lang                    @default(fr)
   dailyGridRewards       Int                     @default(0)
+  dailyFightGold         Int                     @default(0)
   skipFight              Boolean                 @default(false)
   skipLevel              Boolean                 @default(false)
   autoReequipItems       Boolean                 @default(false)
