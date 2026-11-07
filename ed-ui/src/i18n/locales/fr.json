@@ -2636,7 +2636,8 @@
 		"completion": "Complétion",
 		"pantheon": "Panthéon",
 		"stats": "Stats",
-		"wars": "Guerres"
+		"wars": "Guerres",
+		"championship": "Championnat"
 	},
 	"layout": {
 		"fx": "Statuts",
@@ -4673,7 +4674,8 @@
 			"frozen": "Votre Dinoz est congelé. Vous pouvez le décongeler si vous le souhaitez, la décongélation se finit à minuit.",
 			"defending": "Votre Dinoz défend le château de votre clan.",
 			"selling": "Votre Dinoz est en vente.",
-			"superdom": "Votre Dinoz est au Super Dôme."
+			"superdom": "Votre Dinoz est au Super Dôme.",
+			"clanChampionship": "Votre Dinoz participe à un match du Championnat des Clans."
 		}
 	},
 	"logs": {
