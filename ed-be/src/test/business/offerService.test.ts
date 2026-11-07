@@ -57,7 +57,7 @@ vi.mock('node-schedule', () => {
 import * as offerDao from '../../dao/offerDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerItemDao from '../../dao/playerItemDao.js';
-import { getAllIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
+import { getAllIngredientsDataRequest, increaseIngredientQuantity } from '../../dao/playerIngredientDao.js';
 import * as playerDao from '../../dao/playerDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
 import { scheduleJob } from 'node-schedule';
@@ -129,6 +129,62 @@ describe('createOffer', () => {
 		);
 		expect(offerDao.insertOffer).toHaveBeenCalled();
 		expect(scheduleJob).toHaveBeenCalled();
+	});
+	it.each([
+		['negative', -5],
+		['zero', 0],
+		['fractional', 1.5],
+		['non-numeric', 'abc'],
+		['numeric string', '1'],
+		['missing', undefined]
+	])('rejects a %s item quantity', async (_label, count) => {
+		await expect(
+			createOffer(req({}, { total: 1000, ingredients: [], items: [{ name: 'pampleboum', count }] }))
+		).rejects.toThrow('Invalid quantity');
+		expect(offerDao.insertOffer).not.toHaveBeenCalled();
+		expect(playerItemDao.decreaseItemQuantity).not.toHaveBeenCalled();
+	});
+	it('rejects a negative ingredient quantity', async () => {
+		await expect(
+			createOffer(req({}, { total: 1000, ingredients: [{ name: 'merou_lujidane', count: -5 }], items: [] }))
+		).rejects.toThrow('Invalid quantity');
+		expect(offerDao.insertOffer).not.toHaveBeenCalled();
+	});
+	it('rejects the same item listed on two lines, each within stock', async () => {
+		await expect(
+			createOffer(
+				req(
+					{},
+					{
+						total: 1000,
+						ingredients: [],
+						items: [
+							{ name: 'pampleboum', count: 6 },
+							{ name: 'PAMPLEBOUM', count: 6 }
+						]
+					}
+				)
+			)
+		).rejects.toThrow('Duplicate line');
+		expect(offerDao.insertOffer).not.toHaveBeenCalled();
+	});
+	it('rejects the same ingredient listed on two lines, each within stock', async () => {
+		await expect(
+			createOffer(
+				req(
+					{},
+					{
+						total: 1000,
+						ingredients: [
+							{ name: 'merou_lujidane', count: 6 },
+							{ name: 'merou_lujidane', count: 6 }
+						],
+						items: []
+					}
+				)
+			)
+		).rejects.toThrow('Duplicate line');
+		expect(offerDao.insertOffer).not.toHaveBeenCalled();
 	});
 	it('creates an offer with a dinoz', async () => {
 		vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
@@ -485,15 +541,54 @@ describe('scheduling helpers', () => {
 		await scheduleEndedOffersExpiration();
 		expect(scheduleJob).toHaveBeenCalled();
 	});
-	it('refundEndedOffers refunds seller and bidder', async () => {
+	it('refundEndedOffers leaves a sold offer untouched so its winner can still claim it', async () => {
 		await refundEndedOffers({
 			id: 1,
 			sellerId: 's',
 			dinozId: 9,
 			endDate: new Date(),
-			items: [{ itemId: 9, quantity: 1, isIngredient: false }],
-			bids: [{ userId: 'w', value: 5 }]
+			items: [
+				{ itemId: 9, quantity: 1, isIngredient: false },
+				{ itemId: 3, quantity: 2, isIngredient: true }
+			],
+			bids: [
+				{ userId: 'outbid', value: 4 },
+				{ userId: 'w', value: 5 }
+			]
 		} as never);
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(increaseIngredientQuantity).not.toHaveBeenCalled();
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
+		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
+	});
+	it('refundEndedOffers gives an unsold offer back to its seller', async () => {
+		await refundEndedOffers({
+			id: 1,
+			sellerId: 's',
+			dinozId: 9,
+			endDate: new Date(),
+			items: [
+				{ itemId: 9, quantity: 1, isIngredient: false },
+				{ itemId: 3, quantity: 2, isIngredient: true }
+			],
+			bids: []
+		} as never);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
+		expect(increaseIngredientQuantity).toHaveBeenCalledWith('s', 3, 2);
+		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(9, { unavailableReason: null });
+		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
+	});
+	it('refundEndedOffers gives the offer back to its seller when the winning bidder no longer exists', async () => {
+		await refundEndedOffers({
+			id: 1,
+			sellerId: 's',
+			dinozId: null,
+			endDate: new Date(),
+			items: [{ itemId: 9, quantity: 1, isIngredient: false }],
+			bids: [{ userId: null, value: 5 }]
+		} as never);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledTimes(1);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
 		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
 	});
 });

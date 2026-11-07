@@ -196,6 +196,20 @@ export async function createOffer(req: Request) {
 		})
 	);
 
+	// The stock check below reads one line at a time: a negative quantity would credit the seller when
+	// it is deducted, and two lines of the same item would each pass while removing more than the stock.
+	const seenLines = new Set<string>();
+	for (const line of itemsAndIngredients) {
+		if (!Number.isInteger(line.quantity) || line.quantity <= 0) {
+			throw new ExpectedError('Invalid quantity');
+		}
+		const key = `${line.isIngredient}-${line.itemId}`;
+		if (seenLines.has(key)) {
+			throw new ExpectedError('Duplicate line');
+		}
+		seenLines.add(key);
+	}
+
 	// Get available items and ingredients
 	const availableItems = await getPlayerItems(authed.id);
 	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
@@ -672,6 +686,15 @@ export const scheduleEndedOffersExpiration = async () => {
 };
 
 export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bids: OfferBid[] }) => {
+	// A sold offer was paid to the seller when it ended: its content belongs to the winner, who can still claim it
+	const winningBid = offer.bids.reduce<OfferBid | null>(
+		(highest, bid) => (highest && highest.value > bid.value ? highest : bid),
+		null
+	);
+	if (winningBid?.userId) {
+		return;
+	}
+
 	const items = offer.items.filter(item => !item.isIngredient);
 	const ingredients = offer.items.filter(item => item.isIngredient);
 
@@ -683,12 +706,6 @@ export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bid
 		);
 		if (offer.dinozId) {
 			refundPromises.push(updateDinoz(offer.dinozId, { unavailableReason: null }));
-		}
-	}
-	if (offer.bids.length > 0) {
-		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
-		if (max.userId) {
-			refundPromises.push(increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value));
 		}
 	}
 	refundPromises.push(deleteOffer(offer.id));
