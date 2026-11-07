@@ -37,7 +37,7 @@
 					query: { ...$route.query, type: ClanRankingType.WAR_HISTORY, page: 1 }
 				}"
 				:class="{ active: rankingType === ClanRankingType.WAR_HISTORY }"
-			>{{ $t('tabs.wars') }}</RouterLink
+				>{{ $t('tabs.wars') }}</RouterLink
 			>
 		</li>
 		<li>
@@ -47,14 +47,21 @@
 					query: { ...$route.query, type: ClanRankingType.CHAMPIONSHIP, page: 1 }
 				}"
 				:class="{ active: rankingType === ClanRankingType.CHAMPIONSHIP }"
-			>{{ $t('tabs.wars') }}</RouterLink
+				>{{ $t('tabs.championship') }}</RouterLink
 			>
 		</li>
 	</ul>
 
 	<DZDisclaimer v-if="rankingType === ClanRankingType.TREASURE" content="ranking.disclaimer.clans" />
 	<DZDisclaimer v-if="rankingType === ClanRankingType.EVENT" content="ranking.disclaimer.clansEvent" />
-	<div v-if="rankingType === ClanRankingType.WAR || rankingType === ClanRankingType.EVENT || rankingType === ClanRankingType.TREASURE" class="wrapper">
+	<div
+		v-if="
+			rankingType === ClanRankingType.WAR ||
+			rankingType === ClanRankingType.EVENT ||
+			rankingType === ClanRankingType.TREASURE
+		"
+		class="wrapper"
+	>
 		<i18n-t keypath="ranking.disclaimer.clansCreation" tag="p" for="ranking.disclaimer.clansCreationLink">
 			<RouterLink :to="`/clans`">
 				{{ $t('ranking.disclaimer.clansCreationLink') }}
@@ -127,31 +134,43 @@
 		<WarHistory />
 	</div>
 	<div v-else-if="rankingType === ClanRankingType.CHAMPIONSHIP && championship">
-		<ChampionshipStandings :standings="championship.standings"/>
+		<div v-if="new Date(championship.registrationEnd).getDate() < new Date().getDate()">
+			<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
+			<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
+			<ul v-else class="registrations">
+				<li v-for="(r, i) in championship.registrations" :key="i" :class="{ mine: r.clanId === 1 }">
+					<RouterLink v-if="r.clanId !== null" :to="{ name: 'Clan', params: { id: r.clanId } }">{{
+						r.clanName
+					}}</RouterLink>
+					<span v-else>{{ r.clanName }}</span>
+				</li>
+			</ul>
+		</div>
+		<ChampionshipStandings v-else :standings="championship.standings" />
 	</div>
 	<SearchEntity background entityType="clan" placeHolder="ranking.placeholder.searchClan" @entity="goToClan" />
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue';
-import {ClanLite} from '@drpg/core/models/clan/clan';
-import {ClanChampionshipService, ClanService} from '../../services/index.js';
-import {errorHandler} from '../../utils/index.js';
+import { defineComponent, PropType } from 'vue';
+import { ClanLite } from '@drpg/core/models/clan/clan';
+import { ClanChampionshipService, ClanService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
-import {ClanRankingType} from '@drpg/core/models/rankings/clanRanking';
-import {currentEvents} from '@drpg/core/models/event/Events';
-import {SelectOption} from '../common/DZSelect.vue';
-import {clanStore} from '../../store/clanStore';
-import {formatNumber} from '@drpg/core/utils/string';
-import WarHistory from "./WarHistory.vue";
-import ChampionshipStandings from "../clans/championship/ChampionshipStandings.vue";
-import {ClanChampionshipDTO} from "@drpg/core/models/clan/clanChampionship";
+import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
+import { currentEvents } from '@drpg/core/models/event/Events';
+import { SelectOption } from '../common/DZSelect.vue';
+import { clanStore } from '../../store/clanStore';
+import { formatNumber } from '@drpg/core/utils/string';
+import WarHistory from './WarHistory.vue';
+import ChampionshipStandings from '../clans/championship/ChampionshipStandings.vue';
+import { ClanChampionshipDTO } from '@drpg/core/models/clan/clanChampionship';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: {ChampionshipStandings, WarHistory, Flags, SearchEntity, DZDisclaimer },
+	components: { ChampionshipStandings, WarHistory, Flags, SearchEntity, DZDisclaimer },
 	props: {
 		page: {
 			type: Number,
@@ -181,8 +200,8 @@ export default defineComponent({
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
-			if (this.witness) return
-			this.witness = true
+			if (this.witness) return;
+			this.witness = true;
 			try {
 				switch (this.rankingType) {
 					case ClanRankingType.CHAMPIONSHIP:
@@ -333,5 +352,22 @@ export default defineComponent({
 }
 .hidden {
 	display: none !important;
+}
+h3 {
+	color: #874a16;
+	text-transform: uppercase;
+	font-size: 0.9em;
+	letter-spacing: 1px;
+}
+.registrations {
+	columns: 2;
+
+	li {
+		list-style-type: none;
+		.mine a {
+		}
+
+		font-weight: bold;
+	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-	<div class="dinorpg">
-		<div id="centerHeader" :class="war ? 'war' : 'bg'" v-if="loaded">
+	<div class="dinorpg" :class="{cdc_bg: cdc}">
+		<div id="centerHeader" :class="{war: war, cdc: cdc}" v-if="loaded">
 			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
@@ -17,6 +17,7 @@ import { playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import { clanStore } from '../store/clanStore';
+import {ClanChampionshipService} from "../services";
 
 export default defineComponent({
 	name: 'MainPage',
@@ -26,7 +27,8 @@ export default defineComponent({
 			playerStore: playerStore(),
 			loaded: false as boolean,
 			clanStore: clanStore(),
-			war: false as boolean
+			war: false as boolean,
+			cdc: false as boolean
 		};
 	},
 	methods: {
@@ -39,6 +41,10 @@ export default defineComponent({
 				}
 				this.loaded = true;
 				this.war = !!this.clanStore.clanEvent;
+				const championship = await ClanChampionshipService.getCurrent()
+				if (championship) {
+					this.cdc = true;
+				}
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 				return;
@@ -61,6 +67,9 @@ export default defineComponent({
 	background-image: url('../assets/background/bg_ciel3.webp');
 	background-repeat: repeat-x;
 }
+.cdc_bg {
+	background-image: url('../assets/background/bg_ciel.webp');
+}
 #centerHeader {
 	min-height: 100vh;
 	padding-bottom: 50px;
@@ -75,6 +84,13 @@ export default defineComponent({
 	&.war {
 		background:
 			url('../assets/background/full_bg_war.webp') no-repeat,
+			url('../assets/background/full_core_bg.webp') repeat-y;
+		background-position-x: calc(50% + 247px);
+		background-position-y: top;
+	}
+	&.cdc {
+		background:
+			url('../assets/background/full_bg_cdc.webp') no-repeat,
 			url('../assets/background/full_core_bg.webp') repeat-y;
 		background-position-x: calc(50% + 247px);
 		background-position-y: top;
