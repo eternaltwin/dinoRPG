@@ -33,9 +33,9 @@
 <script setup lang="ts">
 import type { ClanChampionshipStandingDTO } from '@drpg/core/models/clan/clanChampionship';
 import DZTable from '../../common/DZTable.vue';
-import {clanStore} from "../../../store/clanStore";
+import { clanStore } from '../../../store/clanStore';
 
-defineProps<{ standings: ClanChampionshipStandingDTO[]}>();
+defineProps<{ standings: ClanChampionshipStandingDTO[] }>();
 
 function signed(n: number): string {
 	return n > 0 ? `+${n}` : `${n}`;

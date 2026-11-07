@@ -28,17 +28,6 @@
 			<DZButton v-else :off="loading" @click="register">{{ $t('clanChampionship.register') }}</DZButton>
 		</div>
 
-		<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
-		<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
-		<ul v-else class="registrations">
-			<li v-for="(r, i) in championship.registrations" :key="i" :class="{ mine: r.clanId === viewedClanId }">
-				<RouterLink v-if="r.clanId !== null" :to="{ name: 'Clan', params: { id: r.clanId } }">{{
-					r.clanName
-				}}</RouterLink>
-				<span v-else>{{ r.clanName }}</span>
-			</li>
-		</ul>
-
 		<template v-if="rounds.length > 0">
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">
@@ -76,7 +65,6 @@ import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZTable from '../common/DZTable.vue';
 import ChampionshipNextMatch from './championship/ChampionshipNextMatch.vue';
-import ChampionshipStandings from './championship/ChampionshipStandings.vue';
 import { ClanChampionshipService } from '../../services';
 import { clanSocket } from '../../services/clanSocket';
 import { errorHandler } from '../../utils';
@@ -86,7 +74,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'ClanChampionship',
-	components: { ChampionshipNextMatch, ChampionshipStandings, DZButton, DZDisclaimer, DZTable },
+	components: { ChampionshipNextMatch, DZButton, DZDisclaimer, DZTable },
 	data() {
 		return {
 			playerStore: playerStore(),

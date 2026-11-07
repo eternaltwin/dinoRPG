@@ -12,7 +12,7 @@ export interface BoardPiece {
 
 const LAST = BOARD_SIZE - 1;
 const MIN_PAIRS = 20;
-const MAX_PAIRS = 30;
+const MAX_PAIRS = 40;
 
 export const cellIndex = (x: number, y: number) => y * BOARD_SIZE + x;
 
