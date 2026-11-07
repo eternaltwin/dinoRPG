@@ -2636,7 +2636,8 @@
 		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
 		"stats": "Statistiken",
-		"wars": "Kriege"
+		"wars": "Kriege",
+		"championship": "Championnat"
 	},
 	"layout": {
 		"fx": "Status",
@@ -4673,7 +4674,8 @@
 			"frozen": "Dein Dinoz ist eingefroren. Du kannst ihn nach Belieben auftauen – der Vorgang wäre dann um Mitternacht abgeschlossen.",
 			"defending": "Dein Dinoz verteidigt eure Klanburg.",
 			"selling": "Dein Dinoz wird verkauft.",
-			"superdom": "Dein Dinoz ist am SuperDom."
+			"superdom": "Dein Dinoz ist am SuperDom.",
+			"clanChampionship": "Votre Dinoz participe à un match du Championnat des Clans."
 		}
 	},
 	"logs": {
@@ -5587,6 +5589,7 @@
 			"finished": "Beendet"
 		},
 		"tabs": {
+			"clan": "Dinoz du clan",
 			"mine": "Meine Dinoz",
 			"selection": "Auswahl",
 			"journal": "Protokoll"
