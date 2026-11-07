@@ -4,23 +4,23 @@ icon:
   name: small_attack
 ---
 
-Les **Clans** peuvent aussi s'affronter les uns aux autres lors du Championnat des Clans ! En voici les principes et les règles.
+**Clans** can also face each other during the Clan Championship ! Here are its principles and rules.
 
-# Le Championnat
+# The Championship
 
-Une fois un championnat démarré, plus aucun Clan ne peut rejoindre un classement ou changer de classement jusqu'à la fin de ce Championnat.
+Once a championship starts, Clans can no longer register nor change league.
 
-Tous les clans s'affrontent sur des batailles de 48 heures. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point. Une fois tous les clans affrontés, le championnat se termine.
+Clans face each other during 48--hour battles. A victory awards 4 points, a draw 1 point and a defeat 0 point. Once clans battled each other, the championship finishes.
 
-# Bataille
+# Battle
 
-Une bataille est lancée lorsque deux clans s'affrontent. Une bataille a une durée de _2 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+A battle brings two clans to the battlefield. It lasts _2 days_ and at the end the clan with the best **score** wins.
 
-Une bataille se déroule dans un lieu donné. Vous devrez déplacer vos Dinoz à ce lieu pour qu'ils puissent y participer. Un Clan est limité à _100 Dinoz_ par bataille.
+It happens in a specific location. You will have to move your Dinoz over there in order for them to join the battle. A clan is limited to _100 Dinoz_ per battle overall.
 
-Voici une vue de bataille simplifiée :
+Here is a detailed view of the battlefield:
 
-![Exemple de bataille simplifiée](@guide/battle_cdc)
+![Example of simplified battlefield](@guide/battle_cdc)
 
 En haut, vous pouvez voir le **score** actuel de la bataille et en bas le temps restant avant la fin de la bataille.
 
