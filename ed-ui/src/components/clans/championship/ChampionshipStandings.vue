@@ -11,7 +11,7 @@
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.scoreFor') }}</th>
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.points') }}</th>
 		</tr>
-		<tr v-for="(s, i) in standings" :key="i" :class="{ mine: s.clanId !== null && s.clanId === highlightClanId }">
+		<tr v-for="(s, i) in standings" :key="i" :class="{ mine: s.clanId !== null && s.clanId === clanStored.getClanId }">
 			<td>{{ s.rank }}</td>
 			<td class="clan">
 				<RouterLink v-if="s.clanId !== null" :to="{ name: 'Clan', params: { id: s.clanId } }">{{
@@ -33,12 +33,14 @@
 <script setup lang="ts">
 import type { ClanChampionshipStandingDTO } from '@drpg/core/models/clan/clanChampionship';
 import DZTable from '../../common/DZTable.vue';
+import {clanStore} from "../../../store/clanStore";
 
-defineProps<{ standings: ClanChampionshipStandingDTO[]; highlightClanId: number }>();
+defineProps<{ standings: ClanChampionshipStandingDTO[]}>();
 
 function signed(n: number): string {
 	return n > 0 ? `+${n}` : `${n}`;
 }
+const clanStored = clanStore();
 </script>
 
 <style lang="scss" scoped>

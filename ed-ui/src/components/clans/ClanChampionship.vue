@@ -39,11 +39,6 @@
 			</li>
 		</ul>
 
-		<template v-if="championship.phase === 'running' || championship.phase === 'finished'">
-			<h3>{{ $t('clanChampionship.standings') }}</h3>
-			<ChampionshipStandings :standings="championship.standings" :highlightClanId="viewedClanId" />
-		</template>
-
 		<template v-if="rounds.length > 0">
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">

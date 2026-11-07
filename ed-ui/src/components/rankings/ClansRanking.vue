@@ -30,11 +30,31 @@
 				>{{ $t(`ranking.button.clanWar`) }}</RouterLink
 			>
 		</li>
+		<li v-if="warInProgress">
+			<RouterLink
+				:to="{
+					name: 'RankingClans',
+					query: { ...$route.query, type: ClanRankingType.WAR_HISTORY, page: 1 }
+				}"
+				:class="{ active: rankingType === ClanRankingType.WAR_HISTORY }"
+			>{{ $t('tabs.wars') }}</RouterLink
+			>
+		</li>
+		<li>
+			<RouterLink
+				:to="{
+					name: 'RankingClans',
+					query: { ...$route.query, type: ClanRankingType.CHAMPIONSHIP, page: 1 }
+				}"
+				:class="{ active: rankingType === ClanRankingType.CHAMPIONSHIP }"
+			>{{ $t('tabs.wars') }}</RouterLink
+			>
+		</li>
 	</ul>
 
 	<DZDisclaimer v-if="rankingType === ClanRankingType.TREASURE" content="ranking.disclaimer.clans" />
 	<DZDisclaimer v-if="rankingType === ClanRankingType.EVENT" content="ranking.disclaimer.clansEvent" />
-	<div class="wrapper">
+	<div v-if="rankingType === ClanRankingType.WAR || rankingType === ClanRankingType.EVENT || rankingType === ClanRankingType.TREASURE" class="wrapper">
 		<i18n-t keypath="ranking.disclaimer.clansCreation" tag="p" for="ranking.disclaimer.clansCreationLink">
 			<RouterLink :to="`/clans`">
 				{{ $t('ranking.disclaimer.clansCreationLink') }}
@@ -103,26 +123,35 @@
 			</tr>
 		</table>
 	</div>
+	<div v-else-if="rankingType === ClanRankingType.WAR_HISTORY">
+		<WarHistory />
+	</div>
+	<div v-else-if="rankingType === ClanRankingType.CHAMPIONSHIP && championship">
+		<ChampionshipStandings :standings="championship.standings"/>
+	</div>
 	<SearchEntity background entityType="clan" placeHolder="ranking.placeholder.searchClan" @entity="goToClan" />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { ClanLite } from '@drpg/core/models/clan/clan';
-import { ClanService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
+import {defineComponent, PropType} from 'vue';
+import {ClanLite} from '@drpg/core/models/clan/clan';
+import {ClanChampionshipService, ClanService} from '../../services/index.js';
+import {errorHandler} from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
-import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
-import { currentEvents } from '@drpg/core/models/event/Events';
-import { SelectOption } from '../common/DZSelect.vue';
-import { clanStore } from '../../store/clanStore';
-import { formatNumber } from '@drpg/core/utils/string';
+import {ClanRankingType} from '@drpg/core/models/rankings/clanRanking';
+import {currentEvents} from '@drpg/core/models/event/Events';
+import {SelectOption} from '../common/DZSelect.vue';
+import {clanStore} from '../../store/clanStore';
+import {formatNumber} from '@drpg/core/utils/string';
+import WarHistory from "./WarHistory.vue";
+import ChampionshipStandings from "../clans/championship/ChampionshipStandings.vue";
+import {ClanChampionshipDTO} from "@drpg/core/models/clan/clanChampionship";
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { Flags, SearchEntity, DZDisclaimer },
+	components: {ChampionshipStandings, WarHistory, Flags, SearchEntity, DZDisclaimer },
 	props: {
 		page: {
 			type: Number,
@@ -136,7 +165,8 @@ export default defineComponent({
 	data() {
 		return {
 			clansList: [] as Array<ClanLite>,
-			witness: false as boolean
+			witness: false as boolean,
+			championship: null as ClanChampionshipDTO | null
 		};
 	},
 	watch: {
@@ -154,7 +184,18 @@ export default defineComponent({
 			if (this.witness) return
 			this.witness = true
 			try {
-				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
+				switch (this.rankingType) {
+					case ClanRankingType.CHAMPIONSHIP:
+						this.championship = await ClanChampionshipService.getCurrent();
+						break;
+					case ClanRankingType.EVENT:
+					case ClanRankingType.TREASURE:
+					case ClanRankingType.WAR:
+						this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
+						break;
+					default:
+						break;
+				}
 				this.witness = false;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
