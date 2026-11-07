@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { CLAN_JOIN_MONEY } from '@drpg/core/constants';
 
 vi.mock('../../dao/clansDao.js', () =>
 	Object.fromEntries(
@@ -181,10 +182,41 @@ describe('join flow', () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
 		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('cannot accept');
 	});
-	it('denyJoinRequest refunds and denies', async () => {
-		vi.mocked(clansDao.denyPlayerJoinRequest).mockResolvedValue({ ok: true } as never);
+	it('denyJoinRequest refunds the requester, not the clan member who denies', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'requester' } as never);
 		await svc.denyJoinRequest(req({ id: '1' }));
-		expect(playerDao.addMoney).toHaveBeenCalled();
+		expect(clansDao.playerHasRightRequest).toHaveBeenCalledWith(
+			1,
+			'p1',
+			ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
+		);
+		expect(clansDao.denyPlayerJoinRequest).toHaveBeenCalledWith(1);
+		expect(playerDao.addMoney).toHaveBeenCalledTimes(1);
+		expect(playerDao.addMoney).toHaveBeenCalledWith('requester', CLAN_JOIN_MONEY);
+	});
+	it('denyJoinRequest lets the requester cancel their own request without any clan right', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'p1' } as never);
+		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
+		await svc.denyJoinRequest(req({ id: '1' }));
+		expect(playerDao.addMoney).toHaveBeenCalledWith('p1', CLAN_JOIN_MONEY);
+	});
+	it('denyJoinRequest refuses a player who is neither the requester nor allowed by the clan', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'requester' } as never);
+		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
+		await expect(svc.denyJoinRequest(req({ id: '1' }))).rejects.toThrow('cannot deny');
+		expect(clansDao.denyPlayerJoinRequest).not.toHaveBeenCalled();
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it('denyJoinRequest pays nothing for a request that does not exist', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue(null as never);
+		await expect(svc.denyJoinRequest(req({ id: '1' }))).rejects.toThrow("doesn't exist");
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it('denyJoinRequest pays nothing when the request was already removed by a concurrent call', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'requester' } as never);
+		vi.mocked(clansDao.denyPlayerJoinRequest).mockRejectedValue(new Error('P2025') as never);
+		await expect(svc.denyJoinRequest(req({ id: '1' }))).rejects.toThrow('P2025');
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
 	});
 	it('getJoinRequest and getJoinRequestslist', async () => {
 		vi.mocked(clansDao.getPlayerJoinRequest).mockResolvedValue({ id: 1 } as never);
