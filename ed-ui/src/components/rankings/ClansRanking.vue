@@ -135,7 +135,8 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			clansList: [] as Array<ClanLite>
+			clansList: [] as Array<ClanLite>,
+			witness: false as boolean
 		};
 	},
 	watch: {
@@ -150,8 +151,11 @@ export default defineComponent({
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
+			if (this.witness) return
+			this.witness = true
 			try {
 				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
+				this.witness = false;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
