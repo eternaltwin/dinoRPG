@@ -22,7 +22,7 @@ Here is a detailed view of the battlefield:
 
 ![Example of simplified battlefield](@guide/battle_cdc)
 
-En haut, vous pouvez voir le **score** actuel de la bataille et en bas le temps restant avant la fin de la bataille.
+At the top, there is the current **score** of the battle and at the bottom there is the remaining time until the end.
 
 Les Dinoz qui ont rejoint la bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite.
 
