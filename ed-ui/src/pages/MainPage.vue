@@ -1,6 +1,6 @@
 <template>
-	<div class="dinorpg" :class="{cdc_bg: cdc}">
-		<div id="centerHeader" :class="{war: war, cdc: cdc}" v-if="loaded">
+	<div class="dinorpg" :class="{ cdc_bg: cdc }">
+		<div id="centerHeader" :class="{ war: war, cdc: cdc }" v-if="loaded">
 			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
@@ -17,7 +17,7 @@ import { playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import { clanStore } from '../store/clanStore';
-import {ClanChampionshipService} from "../services";
+import { ClanChampionshipService } from '../services';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -41,7 +41,7 @@ export default defineComponent({
 				}
 				this.loaded = true;
 				this.war = !!this.clanStore.clanEvent;
-				const championship = await ClanChampionshipService.getCurrent()
+				const championship = await ClanChampionshipService.getCurrent();
 				if (championship) {
 					this.cdc = true;
 				}
