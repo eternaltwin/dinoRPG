@@ -262,9 +262,26 @@ export async function acceptJoinRequest(req: Request): Promise<ClanMember> {
 export async function denyJoinRequest(req: Request) {
 	const authed = await auth(req);
 
-	await addMoney(authed.id, CLAN_JOIN_MONEY);
+	const joinRequest = await clanJoinRequest(+req.params.id);
+	if (!joinRequest) {
+		throw new ExpectedError(`Request doesn't exist.`);
+	}
 
-	const deny = await denyPlayerJoinRequest(Number(req.params.id));
+	// The requester can cancel their own request, otherwise it takes the clan right to deny it
+	if (joinRequest.playerId !== authed.id) {
+		const hasRight = await playerHasRightRequest(
+			joinRequest.clanId,
+			authed.id,
+			ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
+		);
+		if (!hasRight) {
+			throw new ExpectedError(`You cannot deny this request`);
+		}
+	}
+
+	// Delete first: it fails on a request already removed, so concurrent calls cannot refund twice
+	const deny = await denyPlayerJoinRequest(+req.params.id);
+	await addMoney(joinRequest.playerId, CLAN_JOIN_MONEY);
 	return deny;
 }
 
