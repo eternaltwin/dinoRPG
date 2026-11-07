@@ -24,38 +24,38 @@ Here is a detailed view of the battlefield:
 
 At the top, there is the current **score** of the battle and at the bottom there is the remaining time until the end.
 
-Les Dinoz qui ont rejoint la bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite.
+Upon joining the battlefield, Dinoz can move once. Then they need to wait to accumulate action points to move again. It is possible to cumulate actions points and not use them immediately.
 
-Tous les Dinoz gagnent un point d'action toutes les 10 minute.
+All Dinoz present on the battlefield earn one action point every 10 minutes.
 
-Vous pouvez cliquer sur un Dinoz pour pouvoir le déplacer ou savoir à qui il appartient. Seul le propriétaire d'un Dinoz peut le déplacer.
+You can click on one of your Dinoz to move it or know who it belongs to. Only the owner of a Dinoz can move it.
 
-_Nous rappelons que le prêt de compte entre joueurs est interdit et qu'en cas de violation du règlement tous les comptes concernés seront définitivement bloqués._
+_This is a reminder that sharing your account is forbidden and in violation of the game rule. All concerned accounts will be banned._
 
-Une bonne organisation entre les membres du Clan est donc nécessaire pour remporter la victoire.
+Good coordination between Clan members is necessary to achieve victory.
 
-# Score
+# Scoring
 
-Comme vous pouvez le voir sur l'affichage de la bataille, chaque Clan dispose d'une **ligne de score**, bleue pour le Clan de gauche et rouge pour le Clan de droite.
+In the battle display, each Clan has its own **score line**, blue for the left side and red for the right side.
 
-Toutes les _10 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Ainsi, dans l'exemple ci-dessus, le Clan de gauche (ligne bleue) va remporter 2 points et le Clan de droite (ligne rouge) 4 points.
+Every _10 minutes_, each Clan scores points based on how far is its score line. In the above example, the left side (blue line) will score 2 points, and the right side (red line) 4 points.
 
-La ligne de score est positionnée de la façon suivante : elle indique la position du premier Dinoz du Clan qui n'a pas été dépassé par un Dinoz du Clan adverse.
+The score line is determined as follows: it matches the position of the \*_first_ Dinoz of the Clan **not passed** by an opponent.
 
-**Attention !** Un Dinoz adverse peut ainsi effectuer une percée qui va repousser votre ligne de score, ce qui vous empêchera de marquer des points lors du prochain calcul.
+**Important!** A opponent can make a breakthrough and push back your score line, which will prevent you from scoring points on the next scoring round.
 
-Rappel : une bataille a une durée de _2 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+As a reminder, a battle last _2 days_ and at the end, the Clan with the best **score** wins.
 
-# Combats
+# Fights
 
-Si un Dinoz essaie de se déplacer sur l'emplacement occupé par un Dinoz adverse, un combat s'engage. Tous les Dinoz des 10 cases autour des deux combattants participent au combat, selon le schéma suivant :
+If a Dinoz attempts to move on the position of an opponent, a fight is triggered. All Dinoz in the 10 squares around the two Dinoz will take part in the fight according to the below diagram:
 
-![Exemple de combats pour le CDC](@guide/position_cdc)
+![Setup example for championship fight](@guide/position_cdc)
 
-Le placement des Dinoz est donc extrêmement important si vous ne voulez pas vous retrouver en désavantage numérique au cours d'un combat.
+Positioning of Dinoz is therefore extremely important if you don't want to end up outnumbered in a fight.
 
-Si un Dinoz attaque un adversaire par derrière, il le fait seul, l'adversaire sera pris par surprise et ne pourra pas appeler de renforts. Le combat sera alors en 1 contre 1.
+If a Dinoz attacks an opponent from behind, it will fight alone: the opponent is caught by surprise and can call reinforcements. The fight will be 1 versus 1.
 
-Si un Dinoz meurt au cours d'un combat, il est retiré de la bataille et ne pourra plus la rejoindre. Un Dinoz peut aussi quitter la bataille volontairement en retournant sur la ligne de touche de son Clan, il pourra alors retourner combattre.
+If a Dinoz perishes in a fight, it is removed from the battlefield and will not be able to join again. A Dinoz is also allowed to leave the battlefield by going back to the start line of its side, and it will be able to rejoin.
 
-Il est possible d'équiper et d'utiliser des objets sur votre Dinoz à n'importe quel moment durant la bataille.
+It is possible to use and equip items on your Dinoz at any time during the battle.
