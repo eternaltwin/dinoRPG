@@ -6,8 +6,41 @@
 			</li>
 		</ul>
 
-		<div v-if="tab === 'mine'" class="tab-body">
+		<div v-if="tab === 'clan'" class="tab-body">
+			<h4>{{ $t('clanChampionship.onBoard') }}</h4>
+			<ul v-if="clanPieces.length" class="list">
+				<li
+					v-for="p in clanPieces"
+					:key="p.dinozId"
+					class="clickable"
+					:class="{ selected: p.dinozId === selectedDinozId }"
+					@click="emit('select', p.dinozId)"
+				>
+					<DinozIcon :display="p.display" :size="32" />
+					<span class="name">{{ p.name }}</span>
+					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
+				</li>
+			</ul>
+			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
+		</div>
+
+		<div v-else-if="tab === 'mine'" class="tab-body">
 			<p class="place">{{ $t('clanChampionship.matchPlace', { place: placeName }) }}</p>
+			<h4>{{ $t('clanChampionship.onBoard') }}</h4>
+			<ul v-if="myPieces.length" class="list">
+				<li
+					v-for="p in myPieces"
+					:key="p.dinozId"
+					class="clickable"
+					:class="{ selected: p.dinozId === selectedDinozId }"
+					@click="emit('select', p.dinozId)"
+				>
+					<DinozIcon :display="p.display" :size="32" />
+					<span class="name">{{ p.name }}</span>
+					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
+				</li>
+			</ul>
+			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
 			<template v-if="!finished">
 				<ul v-if="eligible.length" class="list">
 					<li v-for="d in eligible" :key="d.id">
@@ -29,22 +62,6 @@
 				</ul>
 				<p v-if="elsewhere > 0" class="muted">{{ $t('clanChampionship.elsewhere', { count: elsewhere }) }}</p>
 			</template>
-			<h4>{{ $t('clanChampionship.onBoard') }}</h4>
-			<ul v-if="myPieces.length" class="list">
-				<li
-					v-for="p in myPieces"
-					:key="p.dinozId"
-					class="clickable"
-					:class="{ selected: p.dinozId === selectedDinozId }"
-					@click="emit('select', p.dinozId)"
-				>
-					<DinozIcon :display="p.display" :size="32" />
-					<span class="name">{{ p.name }}</span>
-					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
-					<span class="muted">({{ p.x }}, {{ p.y }})</span>
-				</li>
-			</ul>
-			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
 		</div>
 
 		<div v-else-if="tab === 'selection'" class="tab-body">
@@ -133,7 +150,7 @@ const emit = defineEmits<{
 	itemUsed: [dinozId: number];
 }>();
 
-const tabs = ['mine', 'selection', 'journal'] as const;
+const tabs = ['clan', 'mine', 'selection', 'journal'] as const;
 const tab = ref<(typeof tabs)[number]>('mine');
 const { locale, t } = useI18n();
 const route = useRoute();
@@ -186,6 +203,7 @@ async function loadMore(): Promise<void> {
 }
 
 const finished = computed(() => props.board.status === 'finished');
+const clanPieces = computed(() => props.board.pieces.filter(p => p.mine || p.ally));
 const myPieces = computed(() => props.board.pieces.filter(p => p.mine));
 const selected = computed(() => myPieces.value.find(p => p.dinozId === props.selectedDinozId) ?? null);
 

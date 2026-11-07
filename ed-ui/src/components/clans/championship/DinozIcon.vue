@@ -88,7 +88,7 @@ function renderImage(display: string, flip: boolean): Promise<string | null> {
 
 async function render() {
 	const display = props.display;
-	const flip = props.flip?? false;
+	const flip = props.flip ?? false;
 	const cached = cache.get(display);
 	if (cached) {
 		src.value = cached;
