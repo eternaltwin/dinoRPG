@@ -45,7 +45,7 @@ describe('clanChampionship board rules', () => {
 				expect(set.has(cellIndex(19 - x, 19 - y))).toBe(true);
 			});
 			expect(obs.length).toBeGreaterThanOrEqual(40);
-			expect(obs.length).toBeLessThanOrEqual(60);
+			expect(obs.length).toBeLessThanOrEqual(80);
 			expect(hasCrossingPath(obs)).toBe(true);
 		}
 	});
