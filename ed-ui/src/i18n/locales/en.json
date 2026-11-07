@@ -2637,7 +2637,7 @@
 		"pantheon": "Pantheon",
 		"stats": "Stats",
 		"wars": "Wars",
-		"championship": "Championnat"
+		"championship": "Championship"
 	},
 	"layout": {
 		"fx": "Statuses",
@@ -4675,7 +4675,7 @@
 			"defending": "Your Dinoz is defending your Clan castle.",
 			"selling": "Your Dinoz is on sale.",
 			"superdom": "Your Dinoz is at the Superdom.",
-			"clanChampionship": "Votre Dinoz participe à un match du Championnat des Clans."
+			"clanChampionship": "Your Dinoz participates in a battle for the Clan Championship."
 		}
 	},
 	"logs": {
@@ -4697,7 +4697,7 @@
 		"AdminUpdateQuest": "**Admin ({playerId})** has incremented/decremented of {progress} the progress of quest {quest} of player {targetId}",
 		"AdminUpdatePlayer": "**Admin ({playerId})** has updated {stat} to {value} of player {targetId}",
 		"AdminUpdateSecret": "**Admin ({playerId})** has updated the secret {key} to {value}",
-		"BypassGatheringGridUpdated": "**{player} ({playerId})** a réglé le contournement de la grille de cueillette sur **{value}**.",
+		"BypassGatheringGridUpdated": "**{player} ({playerId}) set the grid bypass to **{value}**.",
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** has purchased **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}** ({amount} remains).",
@@ -5589,10 +5589,10 @@
 			"finished": "Finished"
 		},
 		"tabs": {
-			"clan": "Dinoz du clan",
+			"clan": "Clan's Dinoz",
 			"mine": "My dinoz",
 			"selection": "Selection",
-			"journal": "Journal"
+			"journal": "Log"
 		},
 		"matchPlace": "Match location: {place}",
 		"enter": "Enter",
