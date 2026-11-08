@@ -59,6 +59,7 @@ import {
 } from '../business/moderationService.js';
 import { AdminRole, LogType } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { GLOBAL } from '../context.js';
 import { auth } from '../dao/playerDao.js';
 import { createLog } from '../dao/logDao.js';
 
@@ -474,18 +475,31 @@ routes.put(
 	}
 );
 
-routes.delete(`${commonPath}/truncateGame`, checkRole([AdminRole.ADMIN]), async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
+/** Refuses the request in production, before anything else runs. */
+const notInProduction = (_req: Request, res: Response, next: () => void) => {
+	if (GLOBAL.config.isProduction) {
+		return res.status(403).send('Not available in production');
 	}
+	next();
+};
 
-	try {
-		await truncateAll(req);
-		return res.status(200).send();
-	} catch (err) {
-		sendError(res, err);
+routes.delete(
+	`${commonPath}/truncateGame`,
+	notInProduction,
+	checkRole([AdminRole.ADMIN]),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await truncateAll(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 routes.get(
 	`${commonPath}/:dinoz1/:dinoz2/:seed/:type`,

@@ -603,55 +603,58 @@ export async function addSecret(req: Request) {
 	return secrets;
 }
 
+/**
+ * Wipes the game (not the players) and gives every player a fresh start. Refused in production: one call of
+ * an admin session would erase everything. The wipe runs in one transaction, so a failure leaves the game as
+ * it was and stops before the players are reset.
+ */
 export async function truncateAll(req: Request) {
 	const authed = await auth(req);
+	if (GLOBAL.config.isProduction) {
+		LOGGER.error(`${authed.id} attempted to truncate the game in production!`);
+		throw new ExpectedError(`Forbidden in production`);
+	}
 	const superAdmin = authed.id === GLOBAL.config.administrator;
 	if (!superAdmin) {
 		LOGGER.error(`${authed.id} attempted to truncate the game !`);
 		throw new ExpectedError(`Forbiden for you`);
 	}
 
-	try {
-		await prisma.$executeRaw`BEGIN;`;
+	// Raw BEGIN/COMMIT statements could each run on another connection of the pool: an interactive transaction
+	// keeps every statement on its own connection, and rolls everything back if one fails
+	await prisma.$transaction(
+		async tx => {
+			await tx.$executeRaw`SET CONSTRAINTS ALL DEFERRED;`;
 
-		await prisma.$executeRaw`SET CONSTRAINTS ALL DEFERRED;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Clan" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Conversation" CASCADE;`;
+			await tx.$executeRaw`DELETE FROM dinoz;`;
+			await tx.$executeRaw`TRUNCATE TABLE dojo CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "FBTournament" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "FightArchive" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE gamedinoz CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Log" CASCADE;`;
+			await tx.$executeRaw`DELETE FROM "Moderation";`;
+			await tx.$executeRaw`TRUNCATE TABLE news;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Notification" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Offer" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Pantheon" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_dinoz_shop CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_gather CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_ingredient CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_item CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_quest CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE player_reward CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "playerTracking" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "Tournament" CASCADE;`;
+			await tx.$executeRaw`TRUNCATE TABLE "UsernameHistory";`;
 
-		await prisma.$executeRaw`TRUNCATE TABLE "Clan" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Conversation" CASCADE;`;
-		await prisma.$executeRaw`DELETE FROM dinoz;`;
-		await prisma.$executeRaw`TRUNCATE TABLE dojo CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "FBTournament" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "FightArchive" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE gamedinoz CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Log" CASCADE;`;
-		await prisma.$executeRaw`DELETE FROM "Moderation";`;
-		await prisma.$executeRaw`TRUNCATE TABLE news;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Notification" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Offer" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Pantheon" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_dinoz_shop CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_gather CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_ingredient CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_item CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_quest CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE player_reward CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "playerTracking" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "Tournament" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "UsernameHistory";`;
+			await tx.$executeRaw`SET CONSTRAINTS ALL IMMEDIATE;`;
+		},
+		{ timeout: 120000 }
+	);
 
-		await prisma.$executeRaw`SET CONSTRAINTS ALL IMMEDIATE;`;
-
-		await prisma.$executeRaw`COMMIT;`;
-
-		LOGGER.log('Remise à zéro du jeu effectuée');
-	} catch (error) {
-		console.error('Erreur lors de la suppression des données:', error);
-		try {
-			await prisma.$executeRaw`ROLLBACK;`;
-		} catch (rollbackError) {
-			console.error('Erreur lors du rollback:', rollbackError);
-		}
-	}
+	LOGGER.log('Remise à zéro du jeu effectuée');
 
 	const players = await prisma.player.updateManyAndReturn({
 		data: {
