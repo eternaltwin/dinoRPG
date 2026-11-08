@@ -89,7 +89,7 @@ export async function createMyTeam(req: Request) {
 	}
 
 	// A new team comes with new opponents and resets the fights of the wave: it is refused once the waves of
-	// the day are over, and allowed once a day only (the first team is always allowed)
+	// the day are over, and a team selected today cannot be replaced before the day is over
 	if (myDojo.dailyReset >= DOJO_MAX_SERIES) {
 		throw new ExpectedError(translate('dojo.dailySeriesOver', authed));
 	}

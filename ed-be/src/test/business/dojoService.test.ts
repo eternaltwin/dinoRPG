@@ -133,7 +133,7 @@ describe('createMyTeam', () => {
 	it('creates a team with valid input', async () => {
 		const result = await createMyTeam(req({ team: [1, 2, 3, 4, 5] }));
 		expect(result).toEqual({ id: 'team' });
-		// The daily quota and the once-a-day replacement are checked by the conditional write
+		// The daily quota and the team already selected today are checked by the conditional write
 		expect(dojoDao.replaceMyTeamDao).toHaveBeenCalledWith(
 			[1, 2, 3, 4, 5],
 			expect.any(Array),
@@ -147,7 +147,7 @@ describe('createMyTeam', () => {
 		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dailySeriesOver');
 		expect(dojoDao.replaceMyTeamDao).not.toHaveBeenCalled();
 	});
-	it('refuses a second replacement of the team the same day', async () => {
+	it('refuses to replace a team selected today', async () => {
 		vi.mocked(dojoDao.replaceMyTeamDao).mockResolvedValue(null);
 		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('teamAlreadyChanged');
 	});
