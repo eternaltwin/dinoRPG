@@ -5601,7 +5601,7 @@
 		"elsewhere": "{count} Dinoz anderswo",
 		"onBoard": "Auf dem Brett",
 		"noneOnBoard": "Kein Dinoz auf dem Brett.",
-		"hp": ":pv:",
+		"hp": "LP",
 		"ap": "AP",
 		"noSelection": "Kein Dinoz ausgewählt.",
 		"won": "Sieg",
